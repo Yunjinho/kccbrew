@@ -1,9 +1,8 @@
-package kr.co.kccbrew.sysMng.logMng;
+package kr.co.kccbrew.comm.interceptor.config;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired; 
-
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.format.FormatterRegistry;
 import org.springframework.http.converter.HttpMessageConverter;
@@ -23,79 +22,20 @@ import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewResolverRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-/**
- * @ClassNmae : InterceptorConfig
- * @Decription : 인터셉터 설정 파일
- * 
- * @   수정일               수정자             				수정내용
- * ============      ==============     ==============
- * 2023-08-22				  이세은							 최초생성
- * @author LEESEEUN
- * @version 1.0
- */
+import kr.co.kccbrew.comm.interceptor.component.CertificationInterceptor;
 
 @Configuration
-public class InterceptorConfig implements WebMvcConfigurer {
+public class CertificationConfig implements WebMvcConfigurer {
 	
 	@Autowired
-	private LogInterceptor logInterceptor;
-
+	private CertificationInterceptor certificationInterceptor;
+	
+	//static 폴더 안에 있는 파일이나 루트 url 제외하고 전부 확인
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) { 
-		
-		registry.addInterceptor(logInterceptor)
-		.addPathPatterns("/logtest");
-//		.excludePathPatterns("/css/**", "/*.ico", "/error");
-	}
-
-	@Override
-	public void addFormatters(FormatterRegistry registry) {
-		// TODO Auto-generated method stub
-	}
-
-	@Override
-	public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
-	}
-
-	@Override
-	public Validator getValidator() {
-		return null;
-	}
-
-	@Override
-	public void addArgumentResolvers(List<HandlerMethodArgumentResolver> argumentResolvers) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void addReturnValueHandlers(List<HandlerMethodReturnValueHandler> returnValueHandlers) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void configureHandlerExceptionResolvers(List<HandlerExceptionResolver> exceptionResolvers) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void addViewControllers(ViewControllerRegistry registry) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void addResourceHandlers(ResourceHandlerRegistry registry) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
-		// TODO Auto-generated method stub
-		
+		registry.addInterceptor(certificationInterceptor)
+		.addPathPatterns("/**")
+		.excludePathPatterns("/","/css/**","/js/**","/img/**");
 	}
 
 	@Override
@@ -117,7 +57,31 @@ public class InterceptorConfig implements WebMvcConfigurer {
 	}
 
 	@Override
+	public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void addFormatters(FormatterRegistry registry) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void addResourceHandlers(ResourceHandlerRegistry registry) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
 	public void addCorsMappings(CorsRegistry registry) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void addViewControllers(ViewControllerRegistry registry) {
 		// TODO Auto-generated method stub
 		
 	}
@@ -129,7 +93,31 @@ public class InterceptorConfig implements WebMvcConfigurer {
 	}
 
 	@Override
+	public void addArgumentResolvers(List<HandlerMethodArgumentResolver> argumentResolvers) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void addReturnValueHandlers(List<HandlerMethodReturnValueHandler> returnValueHandlers) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
 	public void extendMessageConverters(List<HttpMessageConverter<?>> converters) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void configureHandlerExceptionResolvers(List<HandlerExceptionResolver> exceptionResolvers) {
 		// TODO Auto-generated method stub
 		
 	}
@@ -138,6 +126,12 @@ public class InterceptorConfig implements WebMvcConfigurer {
 	public void extendHandlerExceptionResolvers(List<HandlerExceptionResolver> exceptionResolvers) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public Validator getValidator() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override

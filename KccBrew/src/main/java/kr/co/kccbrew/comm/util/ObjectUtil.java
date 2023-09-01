@@ -1,4 +1,4 @@
-package kr.co.kccbrew.sysMng.logMng;
+package kr.co.kccbrew.comm.util;
 
 
 import org.springframework.stereotype.Component;
