@@ -2,7 +2,6 @@ package kr.co.kccbrew.comm.interceptor.config;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.format.FormatterRegistry;
 import org.springframework.http.converter.HttpMessageConverter;
@@ -27,7 +26,6 @@ import kr.co.kccbrew.comm.interceptor.component.CertificationInterceptor;
 @Configuration
 public class CertificationConfig implements WebMvcConfigurer {
 	
-	@Autowired
 	private CertificationInterceptor certificationInterceptor;
 	
 	//static 폴더 안에 있는 파일이나 루트 url 제외하고 전부 확인

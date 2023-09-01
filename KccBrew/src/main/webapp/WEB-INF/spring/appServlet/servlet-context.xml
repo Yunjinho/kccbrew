@@ -25,6 +25,7 @@
 	</beans:bean>
 	
 	<!-- Controller -->
+	
 	<context:component-scan base-package="kr.co.kccbrew" />
 	<context:component-scan base-package="kr.co.kccbrew.comm.login.controller" />
 	<context:component-scan base-package="kr.co.kccbrew.comm.main.controller" />
@@ -32,10 +33,31 @@
 	<context:component-scan base-package="kr.co.kccbrew.strMng.controller" />
 	<context:component-scan base-package="kr.co.kccbrew.sysMng.cdMng.controller" />
 	<context:component-scan base-package="kr.co.kccbrew.sysMng.logMng.controller" />
+	
 	<!-- Controller -->
 	
 	<!-- View -->
+	
 	<view-controller path="/" view-name="/home"/>
+	
 	<!-- View -->
+	
+	
+	<!-- inteceptor -->
+	
+    <interceptors>
+       <interceptor>
+           <mapping path="/**"/>
+           <beans:bean class="kr.co.kccbrew.comm.interceptor.component.CertificationInterceptor"/>
+       </interceptor>
+       
+       <interceptor>
+           <mapping path="/**"/>
+           <beans:bean class="kr.co.kccbrew.comm.interceptor.component.LogInterceptor"/>
+       </interceptor>
+       
+    </interceptors>
+	
+	<!-- inteceptor -->
 	
 </beans:beans>
