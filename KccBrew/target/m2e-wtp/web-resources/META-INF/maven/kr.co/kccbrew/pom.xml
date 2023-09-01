@@ -116,7 +116,8 @@
 			<version>4.7</version>
 			<scope>test</scope>
 		</dependency>  
-<!-- 추가 라이브러리 -->
+		
+		<!-- 추가 라이브러리 -->
 		
 		<!-- Jasypt 라이브러리 -->
 		<!-- properties 파일 암호화 -->		
@@ -138,6 +139,7 @@
 			<artifactId>mybatis-spring</artifactId>
 			<version>2.0.6</version>
 		</dependency>
+		
 		<!-- Spring JDBC -->
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -186,6 +188,21 @@
    			<artifactId>cglib</artifactId>
   			<version>2.2.2</version>
 		</dependency>
+		
+		<!-- File Upload -->
+		<dependency>
+			<groupId>commons-fileupload</groupId>
+			<artifactId>commons-fileupload</artifactId>
+			<version>1.4</version>
+		</dependency>
+		
+		<!-- XSS Filter -->
+		<dependency>
+			<groupId>org.jsoup</groupId>
+			<artifactId>jsoup</artifactId>
+			<version>1.15.3</version>
+		</dependency>
+		
 		<!-- 추가 라이브러리 -->   		
 		      
 	</dependencies>

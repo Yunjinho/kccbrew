@@ -19,12 +19,9 @@ import lombok.RequiredArgsConstructor;
 public class MainController {
 	private final MainService mainServiceImple;
 	
-	@RequestMapping(value="/main", method=RequestMethod.GET)
-	public String main() {
-		return "comm/main/main";
-	}
 	
-	@RequestMapping(value="/adminMain", method=RequestMethod.GET)
+	
+	@RequestMapping(value="/main", method=RequestMethod.GET)
 	public String adminMain(Model model) {
 		List<MainPageVo> assignList = mainServiceImple.showAllAssignList();          //a/s 배정 리스트
 		List<MainPageVo> asList 	= mainServiceImple.showAllAsInfoList();			   //a/s 접수 리스트
@@ -42,7 +39,7 @@ public class MainController {
 	    List<MainPageVo> weeklyData = mainServiceImple.getDataInRange(startOfWeek, endOfWeek);
 	    model.addAttribute("weeklyData", weeklyData);
 	
-		return "comm/main/adminMain";
+		return "views/comm/main";
 	}
 	
 	@RequestMapping(value="/managerMain", method=RequestMethod.GET)
