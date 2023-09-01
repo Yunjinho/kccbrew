@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.kccbrew.comm.login.dao.ILogInRepository">
+<!-- 사용자 salt값  -->
+<select id="selectUserSalt" parameterType="string" resultType="string">
+<![CDATA[
+	SELECT user_salt AS "userSalt" FROM users WHERE user_id=#{userId}
+]]>
+</select>
+
+<!-- 로그인 -->
+<select id="logIn" parameterType="kr.co.kccbrew.comm.login.model.LogInVo" resultType="kr.co.kccbrew.comm.login.model.LogInVo">
+<![CDATA[
+	SELECT user_id AS "userId", user_pwd AS "userPwd", user_type_cd AS "userTypeCd",approve_yn AS "approveYn"
+	FROM users 
+	WHERE user_id=#{userId} AND user_pwd=#{userPwd} AND use_yn='Y'
+]]>
+</select>
+
+</mapper>
