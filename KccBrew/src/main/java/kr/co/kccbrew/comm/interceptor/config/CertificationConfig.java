@@ -21,12 +21,12 @@ import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewResolverRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-import kr.co.kccbrew.comm.interceptor.component.CertificationInterceptor;
+import kr.co.kccbrew.comm.interceptor.component.MngAuthInterceptor;
 
 @Configuration
 public class CertificationConfig implements WebMvcConfigurer {
 	
-	private CertificationInterceptor certificationInterceptor;
+	private MngAuthInterceptor certificationInterceptor;
 	
 	//static 폴더 안에 있는 파일이나 루트 url 제외하고 전부 확인
 	@Override

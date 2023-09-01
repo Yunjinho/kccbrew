@@ -13,7 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Component
-public class CertificationInterceptor extends Interceptor { 
+public class MechaAuthInterceptor extends Interceptor { 
 	/**
 	 * 클라이언트 요청을 컨트롤러에 전달 전
 	 * 세션 값, 계정 권한 체크
@@ -22,11 +22,10 @@ public class CertificationInterceptor extends Interceptor {
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
 		HttpSession session = request.getSession();
-		System.out.println("ss");
-		if(session==null) {
-			 ModelAndView modelAndView = new ModelAndView("redirect:/");
-             modelAndView.addObject("msgCode", "세션이 만료되어 로그아웃 되었습니다. 다시 로그인 해주세요.");
-             throw new ModelAndViewDefiningException(modelAndView);
+		Object userId=session.getAttribute("userTypeCd");
+		if(userId != "03") {
+			response.sendRedirect(request.getContextPath()+"/main");
+			return false;
 		}
 		return true;
 	}
