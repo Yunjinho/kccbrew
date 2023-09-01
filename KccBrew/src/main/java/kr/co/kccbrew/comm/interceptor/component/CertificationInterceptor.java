@@ -22,6 +22,7 @@ public class CertificationInterceptor extends Interceptor {
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
 		HttpSession session = request.getSession();
+		System.out.println("ss");
 		if(session==null) {
 			 ModelAndView modelAndView = new ModelAndView("redirect:/");
              modelAndView.addObject("msgCode", "세션이 만료되어 로그아웃 되었습니다. 다시 로그인 해주세요.");
