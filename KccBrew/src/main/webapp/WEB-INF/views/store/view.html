@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<link rel="stylesheet" th:href="@{/css/store/view.css}" />
+<head>
+<meta charset="UTF-8">
+
+<title>점포리스트</title>
+<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+</head>
+<body>
+	<section id="notice" class="notice">
+		<div class="container">
+			<section class="category">
+				<span>점포관리 > 점포정보</span>
+			</section>
+			<table class="table text-center">
+				<tr>
+					<th>지점명</th>
+					<td>[[${store.storeNm}]]</td>
+					<th>점포연락처</th>
+					<td>[[${store.storeTelNo}]]</td>
+				</tr>
+				<tr>
+					<th>지역구분</th>
+					<td>[[${store.locationNm}]]</td>
+					<th>사용여부</th>
+					<td>[[${store.useYn}]]</td>
+				</tr>
+
+				<tr>
+					<th>점포주소</th>
+					<td colspan="3">[[${store.storeAddr}]], [[${store.storeAddrDtl}]]</td>
+				</tr>
+			</table>
+
+
+			<!-- 이미지 지도를 표시할 div 입니다 -->
+			<div id="staticMap" style="width: 780px; height: 455px;"></div>
+			<table class="table text-center">
+				<thead>
+					<tr>
+						<th scope="col">NO</th>
+						<th scope="col">점주이름</th>
+						<th scope="col">점주연락처</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="list, stat : ${list}">
+						<td>[[${stat.count}]]</td>
+						<td>[[${list.userNm}]]</td>
+						<td>[[${list.userTelNo}]]</td>
+					</tr>
+				</tbody>
+			</table>
+			<div class="updatecancle">
+			<a th:href="@{/store/update/__${store.storeSeq}__}">
+				<input type="button" class="update" value="수정"></a>
+				<input type="button" class="update" value="취소" onclick="window.close()">
+			</div>
+			
+		</div>
+	</section>
+	<script th:inline="javascript">
+		/*<![CDATA[*/
+		$(document).ready(
+				function() {
+					kakao.maps.load(function() {
+						// 이미지 지도에서 마커가 표시될 위치입니다 
+						var markerPosition = new kakao.maps.LatLng(
+						/*[[${store.latitude}]]*/+"", /*[[${store.longitude}]]*/
+						+"");
+
+						// 이미지 지도에 표시할 마커입니다
+						// 이미지 지도에 표시할 마커는 Object 형태입니다
+						var marker = {
+							position : markerPosition
+						};
+						var staticMapContainer = document
+								.getElementById('staticMap'), // 이미지 지도를 표시할 div  
+						staticMapOption = {
+							center : new kakao.maps.LatLng(
+							/*[[${store.latitude}]]*/+"", /*[[${store.longitude}]]*/
+							+""), // 이미지 지도의 중심좌표
+							level : 3,
+							marker : marker
+						// 이미지 지도의 확대 레벨
+						};
+
+						// 이미지 지도를 표시할 div와 옵션으로 이미지 지도를 생성합니다
+						var staticMap = new kakao.maps.StaticMap(
+								staticMapContainer, staticMapOption);
+					});
+				});
+		/*]]>*/
+	</script>
+	<script type="text/javascript"
+		src="//dapi.kakao.com/v2/maps/sdk.js?appkey=8ebfc94bdd15e21c9b4d64159a004634"></script>
+</body>
+</html>

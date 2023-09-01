@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<meta charset="UTF-8">
+<title>점포등록</title>
+<!-- Bootstrap CSS -->
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<link rel="stylesheet" th:href="@{/css/store/insert.css}" />
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!-- Google Maps API -->
+<script
+	src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAY5-GHYNs9VdzbExAcRYn5NPHIsu727XI&libraries=places&callback=initAutocomplete"
+	async defer></script>
+<!-- Daum Postcode API -->
+<script
+	src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+</head>
+
+<body>
+	<section id="notice" class="notice">
+		<section class="category">
+			<span>점포관리 > 점포등록</span>
+		</section>
+
+		<div class="container2">
+			<div class="div">점포등록</div>
+			<hr style="border: solid 1.2px; width: 97%;">
+			<form th:action="@{/store/insert}" method="post" id="storeForm"
+				onsubmit="return submitForm()">
+				<table class="text-center">
+					<tr>
+						<th>점포명</th>
+						<td><input type="text" id="storeNm" name="storeNm" required>
+
+							<input type="button" name="strnm" value="중복확인" class="check"
+							id="name-check-btn" required></td>
+						<input type="hidden" id="storeNmHidden" name="storeNm">
+					<tr>
+						<th>주소검색</th>
+						<td><input type="text" id="address_kakao" name="storeAddr"
+							placeholder="클릭해주세요" readonly /></td>
+					<tr>
+						<th>상세주소</th>
+						<td><input type="text" name="storeAddrDtl" id="storeAddrDtl" />
+						</td>
+					<tr>
+						<th>점포 전화번호</th>
+						<td><input type="text" id="storeTelNo" name="storeTelNo"
+							oninput="hypenTel(this)" maxlength="13"
+							placeholder="하이픈(-)은 자동입력 됩니다.."></td>
+					<tr>
+						<th>좌표</th>
+						<td><input class="field" id="lat" name="latitude"
+							placeholder="위도" /> <input class="field" id="lng"
+							name="longitude" placeholder="경도"></td>
+					<tr>
+						<th>지역분류</th>
+						<td><select id="location" name="locationCd" size="3"
+							th:attr="data-locationCd=${store.locationCd}">
+								<option value="" selected="selected">지역선택</option>
+								<option value="02">서울</option>
+								<option th:each="list : ${list}" th:value="${list.locationCd}"
+									th:text="${list.locationNm}"
+									th:selected="${store.locationCd}==${list.locationCd}" />
+						</select> <select id="locationSeoul" name="locationCdSeoul" size="3"
+							disabled>
+								<option value="" selected="selected">지역선택 상세</option>
+								<option th:each="list : ${seoullist}"
+									th:value="${list.locationCd}" th:text="${list.locationNm}"
+									th:selected="${store.locationCdSeoul}==${list.locationCd}" />
+						</select></td>
+					</tr>
+				</table>
+				<div class="savecancle">
+					<input type="submit" name="save" class="button" value="저장"
+						id="submitBtn" disabled><input type="button" class="update" value="취소" onclick="window.close()">
+				</div>
+			</form>
+		</div>
+	</section>
+</body>
+
+<script>
+    window.onload = function() {
+        document.getElementById("address_kakao").addEventListener("click", function() {
+            new daum.Postcode({
+                oncomplete: function(data) {
+                    document.getElementById("address_kakao").value = data.address;
+                    document.querySelector("input[name=storeAddrDtl]").focus();
+                    updateLatLng();
+                }
+            }).open();
+        });
+    }
+
+    var mallsEnabled = false;
+
+    function update_selected() {
+        var selectedValue = $("#location").val();
+        mallsEnabled = (selectedValue === "02");
+    }
+
+    $(function() {
+        update_selected();
+
+        $("#location").change(function() {
+            update_selected();
+
+            if (mallsEnabled) {
+                $("#locationSeoul").prop('disabled', false);
+            } else {
+                $("#locationSeoul").prop('disabled', true);
+            }
+        });
+    });
+
+    function updateLatLng() {
+        var address = document.getElementById("address_kakao").value;
+        var geocoder = new google.maps.Geocoder();
+        geocoder.geocode({
+            'address': address
+        }, function(results, status) {
+            if (status === google.maps.GeocoderStatus.OK) {
+                var lat = results[0].geometry.location.lat();
+                var lng = results[0].geometry.location.lng();
+                document.getElementById("lat").value = lat;
+                document.getElementById("lng").value = lng;
+            } else {
+                console.log('Geocode was not successful for the following reason: ' + status);
+            }
+        });
+    }
+
+    const hypenTel = (target) => {
+        target.value = target.value.replace(/[^0-9]/g, '').replace(/^(\d{2,3})(\d{3,4})(\d{4})$/, `$1-$2-$3`);
+    }
+    
+    const nameCheck = document.querySelector("#name-check-btn");
+    const storeNm = document.querySelector("#storeNm");
+    const storeNmHidden = document.querySelector("#storeNmHidden"); // 숨겨진 필드
+    const submitBtn = document.querySelector("#submitBtn"); // 폼 제출 버튼
+
+    nameCheck.addEventListener("click", () => {
+        const name = storeNm.value;
+        if (!name) { // 만약 name이 비어있다면
+            alert("점포명을 입력해주세요.");
+            return; // 중복 검사를 진행하지 않고 종료
+        }
+
+        const store = {
+            storetest: name,
+        };
+
+        const url = "/api/namecheck";
+        fetch(url, {
+            method: "POST",
+            body: JSON.stringify(store),
+            headers: {
+                "Content-Type": "application/json",
+            },
+        })
+        .then((response) => {
+            if (response.ok) {
+                // 중복 검사가 통과되었을 때만 폼 제출 버튼 활성화
+                submitBtn.disabled = false;
+                alert("사용가능한 점포명입니다.");
+                storeNm.disabled = true; // storeNm 필드 비활성화
+                storeNmHidden.value = name; // 숨겨진 필드에 값 설정
+            } else if (response.status === 400) {
+                submitBtn.disabled = true; // 중복 검사 실패 시 폼 제출 비활성화
+                alert("이미 존재하는 점포명입니다.");
+                throw new Error("이미 존재하는 점포명입니다.");
+            }
+        })
+        .catch((error) => {
+            console.error("에러 발생:", error);
+        });
+    });
+    function submitForm() {
+        var form = document.getElementById("storeForm");
+
+        // AJAX 요청 보내기
+        $.ajax({
+            type : "POST", // 또는 "GET" 등 요청 방식 설정
+            url : form.getAttribute("action"),
+            data : $(form).serialize(), // 폼 데이터 시리얼라이즈하여 전송
+            success : function(response) {
+                // 응답 처리 로직 추가
+                var Close = confirm("저장이 완료되었습니다. 창을 닫으시겠습니까?");
+                if (Close) {
+                    window.opener.location.reload();
+                    window.close(); // 팝업 창 닫기
+                }
+            },
+            error : function(error) {
+                console.error("AJAX 요청 실패:", error);
+                alert("저장에 실패하였습니다.");
+            }
+        });
+
+        return false; // 폼 제출 중단
+    }
+</script>
+
+</html>
