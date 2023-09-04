@@ -1,6 +1,7 @@
 package kr.co.kccbrew.sysMng.logMng.model;
 
 
+import java.sql.Date;
 import java.time.LocalDateTime;
 
 import org.springframework.stereotype.Component;
@@ -13,7 +14,7 @@ import lombok.Data;
 @Component
 public class LogMngVo {
 	private Integer logSeq;
-	private LocalDateTime date; 
+	private Date date; 
 	private String uri;
 	private String view;
 	private String userId;

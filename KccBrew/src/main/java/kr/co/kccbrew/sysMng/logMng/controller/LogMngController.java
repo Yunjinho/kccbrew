@@ -40,43 +40,48 @@ public class LogMngController {
 	}
 
 
-	   /* 로그조회 */
-	   @GetMapping("/log")
-	   public String getLogs(
-	         @RequestParam(defaultValue = "1") int currentPage,
-	         @ModelAttribute("searchContent") LogMngVo searchContent,
-	         Model model,
-	         HttpSession session
-	         ) {
+	/* 로그조회 */
+	@GetMapping("/log")
+	public String getLogs(
+			@RequestParam(defaultValue = "1") int currentPage,
+			@ModelAttribute("searchContent") LogMngVo searchContent,
+			Model model,
+			HttpSession session
+			) {
 
-	      log.info("이세은 LogController#log: currentPage={}, searchContent={}", currentPage, searchContent);
+		log.info("이세은 LogController#log: currentPage={}, searchContent={}", currentPage, searchContent);
 
-	      List<LogMngVo> logs = logService.getRetrievedLogs(searchContent);
-	      int totalPage = 0;
-	      int totalLog = 0;
+		List<LogMngVo> logs = logService.getRetrievedLogs(searchContent);
+		int totalPage = 0;
+		int totalLog = 0;
+		int sharePage = 0;
 
-	      //   paging처리
-	      if (logs != null && !logs.isEmpty()) {
-	         log.info("검색된 첫번째 로그 logs={}", logs.get(0));
-	         totalLog = logs.size();
-	         int partitionSize = 10;
-	         List<List<LogMngVo>> partitionedList = Lists.partition(logs, partitionSize);
-	         totalPage = partitionedList.size();
-	         logs = partitionedList.get(currentPage-1);
-	      } else {
-	         log.info("logs={}", logs);
-	      }
-	      
-	      int sharePage = currentPage / 10;
+		//   paging처리
+		if (logs != null && !logs.isEmpty()) {
+			log.info("검색된 첫번째 로그 logs={}", logs.get(0));
+			totalLog = logs.size();
+			int partitionSize = 10;
+			List<List<LogMngVo>> partitionedList = Lists.partition(logs, partitionSize);
+			totalPage = partitionedList.size();
+			logs = partitionedList.get(currentPage-1);
+		} else {
+			log.info("logs={}", logs);
+		}
 
-	      model.addAttribute("totalPage", totalPage);
-	      model.addAttribute("currentPage", currentPage);
-	      model.addAttribute("sharePage", sharePage);
+		if (currentPage == 1) {
+			sharePage = 0;
+		} else {
+			sharePage = (currentPage-1) / 10;
+		}
 
-	      model.addAttribute("totalLog", totalLog);
-	      model.addAttribute("logs", logs);
+		model.addAttribute("totalPage", totalPage);
+		model.addAttribute("currentPage", currentPage);
+		model.addAttribute("sharePage", sharePage);
+
+		model.addAttribute("totalLog", totalLog);
+		model.addAttribute("logs", logs);
 
 
-	      return "log/logMngList";
-	   }
+		return "log/logMngList";
+	}
 }

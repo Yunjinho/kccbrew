@@ -1,5 +1,6 @@
 package kr.co.kccbrew.comm.interceptor.component;
 
+import java.sql.Date;
 import java.time.LocalDateTime; 
 import java.util.UUID;
 
@@ -33,8 +34,12 @@ public class LogInterceptor extends Interceptor {
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 		log.info("컨트롤러 호출전 로깅테스트");
+		
 
-		LocalDateTime date = LocalDateTime.now();
+        LocalDateTime currentDateTime = LocalDateTime.now();
+        Date date = Date.valueOf(currentDateTime.toLocalDate());
+
+
 		String requestURI = request.getRequestURI(); // path
 		String uuid = UUID.randomUUID().toString(); // uuid
 		request.setAttribute(LOG_ID, uuid); 
@@ -84,7 +89,8 @@ public class LogInterceptor extends Interceptor {
 	public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
 		log.info("컨트롤러 호출완료 이후 로깅테스트");
 
-		LocalDateTime localDateTime = LocalDateTime.now();
+        LocalDateTime currentDateTime = LocalDateTime.now();
+        Date date = Date.valueOf(currentDateTime.toLocalDate());
 		String requestURI = request.getRequestURI(); 
 		String logId = (String)request.getAttribute(LOG_ID); 
 
@@ -115,7 +121,7 @@ public class LogInterceptor extends Interceptor {
 		} 
 
 		/* log객체에 값 주입 */
-		logVO.setDate(localDateTime);
+		logVO.setDate(date);
 		logVO.setIp(ip);
 		logVO.setStatusCode(null);
 		logVO.setUri(requestURI);
