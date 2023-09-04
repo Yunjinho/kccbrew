@@ -4,15 +4,28 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="sql" uri="http://java.sun.com/jsp/jstl/sql" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<link rel="stylesheet" href="${path}/resources/css/comm/reset.css" >
+<link rel="stylesheet" href="${path}/resources/css/comm/header.css" >
+<link rel="stylesheet" href="${path}/resources/css/comm/mainpage.css"/>
+<link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/fullcalendar@5.8.0/main.min.css'/>
+<script src="http://code.jquery.com/jquery-latest.js"></script> 
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.min.js" integrity="sha384-Rx+T1VzGupg4BHQYs2gCW9It+akI2MM/mndMCy36UVfodzcJcF0GGLxZIzObiEfa" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+<script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.8.0/main.min.js'></script>
+<script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.8.0/locales-all.min.js'></script>
+<script src="${path}/resources/js/comm/calendar.js"></script>
+<script src="${path}/resources/js/comm/comm.js"></script>
+<script src="${path}/resources/js/comm/header.js"></script>
 </head>
 <body>
 	<div class="body-wrapper">
-	
 	
 	<!------------------ 상단 메뉴 ---------------------------->
 		<div class="top-menu">
@@ -211,24 +224,22 @@
 									</tr>
 								</thead>
 								 <tbody>
-			                        <c:forEach var="main" items="${assignList}">
-			                            <c:if test="${fn:formatDate(main.visitDate, 'yyyy-MM-dd') == fn:formatDate(now(), 'yyyy-MM-dd')}">
-			                                <tr>
-			                                    <td><c:out value="${main.asAssignNum}" /></td>
-			                                    <td><fmt:formatDate value="${main.visitDate}" pattern="yyyy-MM-dd" /></td>
-			                                    <td>
-			                                        <c:choose>
-			                                            <c:when test="${main.machineCode == 'M_01'}">커피머신</c:when>
-			                                            <c:when test="${main.machineCode == 'M_02'}">냉장고</c:when>
-			                                            <c:when test="${main.machineCode == 'M_03'}">제빙기</c:when>
-			                                            <c:when test="${main.machineCode == 'M_04'}">에어컨</c:when>
-			                                            <c:when test="${main.machineCode == 'M_05'}">온수기</c:when>
-			                                        </c:choose>
-			                                    </td>
-			                                    <td>강남점</td>
-			                                    <td><c:out value="${main.mechanicName}" /></td>
-			                                </tr>
-			                            </c:if>
+			                        <c:forEach var="main" items="${dailyData}">
+		                                <tr>
+		                                    <td><c:out value="${main.asAssignNum}" /></td>
+		                                    <td><fmt:formatDate value="${main.visitDate}" pattern="yyyy-MM-dd" /></td>
+		                                    <td>
+		                                        <c:choose>
+		                                            <c:when test="${main.machineCode == 'M_01'}">커피머신</c:when>
+		                                            <c:when test="${main.machineCode == 'M_02'}">냉장고</c:when>
+		                                            <c:when test="${main.machineCode == 'M_03'}">제빙기</c:when>
+		                                            <c:when test="${main.machineCode == 'M_04'}">에어컨</c:when>
+		                                            <c:when test="${main.machineCode == 'M_05'}">온수기</c:when>
+		                                        </c:choose>
+		                                    </td>
+		                                    <td>강남점</td>
+		                                    <td><c:out value="${main.mechanicName}" /></td>
+		                                </tr>
 			                        </c:forEach>
 			                    </tbody>
 							</table>
@@ -277,24 +288,22 @@
 			                        </tr>
 			                    </thead>
 			                    <tbody>
-			                        <c:forEach var="main" items="${assignList}">
-			                            <c:if test="${fn:substring(main.visitDate, 0, 7) == fn:substring(now(), 0, 7)}">
-			                                <tr>
-			                                    <td><c:out value="${main.asAssignNum}" /></td>
-			                                    <td><fmt:formatDate value="${main.visitDate}" pattern="yyyy-MM-dd" /></td>
-			                                    <td>
-			                                        <c:choose>
-			                                            <c:when test="${main.machineCode == 'M_01'}">커피머신</c:when>
-			                                            <c:when test="${main.machineCode == 'M_02'}">냉장고</c:when>
-			                                            <c:when test="${main.machineCode == 'M_03'}">제빙기</c:when>
-			                                            <c:when test="${main.machineCode == 'M_04'}">에어컨</c:when>
-			                                            <c:when test="${main.machineCode == 'M_05'}">온수기</c:when>
-			                                        </c:choose>
-			                                    </td>
-			                                    <td>강남점</td>
-			                                    <td><c:out value="${main.mechanicName}" /></td>
-			                                </tr>
-			                            </c:if>
+			                    	<c:forEach var="main" items="${monthlyData}">
+			                            <tr>
+			                                <td><c:out value="${main.asAssignNum}" /></td>
+			                                <td><fmt:formatDate value="${main.visitDate}" pattern="yyyy-MM-dd" /></td>
+			                                <td>
+			                                    <c:choose>
+			                                        <c:when test="${main.machineCode == 'M_01'}">커피머신</c:when>
+			                                        <c:when test="${main.machineCode == 'M_02'}">냉장고</c:when>
+			                                        <c:when test="${main.machineCode == 'M_03'}">제빙기</c:when>
+			                                        <c:when test="${main.machineCode == 'M_04'}">에어컨</c:when>
+			                                        <c:when test="${main.machineCode == 'M_05'}">온수기</c:when>
+			                                    </c:choose>
+			                                </td>
+			                                <td>강남점</td>
+			                                <td><c:out value="${main.mechanicName}" /></td>
+			                            </tr>
 			                        </c:forEach>
 			                    </tbody>
 			                </table>
