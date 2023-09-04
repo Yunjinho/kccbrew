@@ -120,7 +120,7 @@ th {
 .pagination {
 	display: flex !important;
 	justify-content: center;
-	margin: 15px !important;
+	margin: 30px 15px !important;
 	flex-direction: row;
 	flex-wrap: nowrap;
 	align-content: center;
