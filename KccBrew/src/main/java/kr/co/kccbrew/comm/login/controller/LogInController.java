@@ -33,11 +33,11 @@ public class LogInController {
 	 */
 	private final ILogInService loginService;
 	
-	/** 로그인 페이지로 이동 *//*
+	/** 로그인 페이지로 이동 */
 	@RequestMapping(value="/" , method=RequestMethod.GET)
 	public String login() {
 		return "/comm/login/login";
-	}*/
+	}
 	
 	/** 로그인 처리 */
 	@ResponseBody

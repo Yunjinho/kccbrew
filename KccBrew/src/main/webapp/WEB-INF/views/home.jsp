@@ -3,6 +3,11 @@
 <html>
 <head>
 	<title>Home</title>
+	<script>
+	window.onload()=function(){
+		location.href=""
+	}
+	</script>
 </head>
 <body>
 <h1>
