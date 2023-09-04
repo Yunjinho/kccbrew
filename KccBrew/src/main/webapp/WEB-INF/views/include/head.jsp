@@ -1,8 +1,10 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head th:fragment="head">
-<title>KccBrew</title>
+<html>
+<head>
 <meta charset="UTF-8">
+<title>Insert title here</title>
 <link rel="stylesheet" href="css/comm/reset.css" >
 <link rel="stylesheet" href="css/comm/header.css" >
 <link rel="stylesheet" href="css/comm/mainpage.css"/>
