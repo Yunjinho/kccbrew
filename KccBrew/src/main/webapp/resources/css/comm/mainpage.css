@@ -1,0 +1,281 @@
+@charset "UTF-8";
+
+/**************** body 스타일 *******************8**/
+	@font-face {
+	font-family: 'notosans';
+	font-style: normal;
+	src: url("../../fonts/NotoSansKR-Regular.ttf")
+	}
+	
+	* {
+		box-sizing: border-box;
+	}
+	html, body {
+	  font-family: 'notosans';
+	  font-size: 14px;
+	}
+	html {
+		background-color: #eef4ff;
+		
+	}
+	ul, li {
+		list-style: none;
+	}
+	
+	p {
+		text-align: center;
+	}
+	
+	button {
+		background: none;
+		border: none;
+	}
+	.body-wrapper{
+		padding: 30px 200px;
+		height:100vh;
+		flex-direction: column;
+		margin-bottom:100px;
+	}
+		
+/*************** 상단 메뉴 *************************/
+	.top-menu {
+		background-color: #eef4ff;
+		flex:0.4;
+		display:flex;
+		justify-content:space-between;
+		overflow: hidden;
+		font-size: 0.8em;
+		margin-bottom: 10px;
+	}
+	.btm {
+		flex: 1;
+		padding:10px;
+		margin: 0 10px;
+		background-color: #ffffff;
+		border-top: 2px solid #f9b037;
+		border-bottom: 2px solid #f9b037;
+	}
+	.new-receipt {
+		height:217px;
+		overflow: auto;
+	}
+	.assigned-as {
+		height:217px;
+		overflow: auto;
+	}
+	.new-member-apply{
+		height:217px;
+		overflow: auto;
+	}
+	.as-result {
+		height:217px;
+		overflow: auto;
+	}
+	.tablecap {
+		font-size:1.3em;
+		font-weight: bold;
+		padding: 10px;
+	}
+	
+	.task-list {
+        width: 100%;
+        border-collapse: collapse;
+        border-spacing: 0;
+    }
+    
+    .task-list th, .task-list td {
+        padding: 10px;
+        text-align: center;
+        font-size: 0.5em;
+    }
+
+    .task-list th {
+        background-color: #f2f2f2;
+        font-weight: bold;
+    }
+    
+    .task-list tr:hover {
+        background-color: #ddd;
+    }
+	
+	
+/*********  하단 메뉴   **********/
+	.bottom-menu {
+		flex:0.6;
+		display: flex;
+		justify-content: space-between;
+		min-height: 700px;
+		padding:10px;
+	}
+
+/************* 회원 정보 및 as 안내 ******************/
+	.profileAndguide{
+		flex:0.2;
+		display:flex;
+		flex-direction:column;
+		justify-content:space-between;
+		min-height:700px;
+		background-color: #eef4ff;
+		color:#ffffff;
+		box-sizing: border-box;
+	}
+
+	.user-profile {
+		margin-bottom:10px;
+		box-sizing:border-box;
+		flex:1;
+		background-color: #4336da;
+	}
+	.inner-box {
+		padding:30px 20px;
+	}
+	.name {
+		font-size: 1.5em;
+	}
+	.job {
+		font-size: 1em;
+	}
+	.buttons {
+		text-align: center;
+	}
+	.chpwd {
+		color:#ffffff;
+		cursor: pointer;
+		font-weight: normal;
+		font-size:1.1em;
+	}
+	.logout {
+		color:#ffffff;
+		cursor: pointer;
+		font-weight: normal;
+		font-size:1.1em;
+	}
+	.as-guide {
+		flex:1;
+		margin-bottom:10px;
+		color:yellow;
+		background-color: green;
+	}
+	.something {
+		flex:1;
+		color:navy;
+		background-color: silver;
+	}
+	
+	
+/************ A/S 일정 **************/
+	.todoAndetc {
+		flex:0.5;	
+		display: flex;
+		flex-direction: column;
+	}
+
+	.to-do-list {
+		flex:0.5;
+		background-color:#ffffff;
+		min-height:300px;
+		margin-left: 20px;
+		margin-bottom: 30px;
+		border-top-left-radius: 5px;
+		border-top-right-radius: 5px;
+	}
+	
+	.to-do-list > p {
+	  font-size: 1.2em;
+	  font-weight: bold;
+	  margin: 0;
+	  padding: 10px;
+	  background-color: #f9b037;
+	  color: white;
+	  text-align: center;
+	  border-top-left-radius: 5px;
+	  border-top-right-radius: 5px;
+	}
+	
+	.tabnav {
+		font-size:0; 
+		border:1px solid #ddd;
+		padding:0;
+	}
+	.tabnav li{
+		left:0;
+		display: inline-block;  
+		height:46px; 
+		text-align:center; 
+		border-right:1px solid #ddd;
+	}
+	.tabnav li a:before{
+		content:""; 
+		position:absolute; 
+		left:0; 
+		top:0px; 
+		width:100%; 
+		height:3px; 
+	}
+	.tabnav li a.active:before{
+		background:#001EC9;
+	}
+	.tabnav li a.active{
+		border-bottom:1px solid #fff;
+	}
+	.tabnav li a{
+		position:relative; 
+		display:block; 
+		background: #f8f8f8; 
+		color: #000; 
+		padding:0 30px; 
+		line-height:46px; 
+		text-decoration:none; 
+		font-size:16px;
+	}
+	.tabnav li a:hover,	.tabnav li a.active{
+		background:#fff; 
+		color:#001EC9; 
+	}
+	.tabcontent{
+		background-color:#ffffff;
+		height:270px; 
+		border:1px solid #ddd; 
+		border-top:none;
+		font-size:1.5em;
+		overflow: auto;
+	}
+	.todoetc {
+		flex:0.5;
+		color:green;
+		background-color:yellow;
+		margin-left: 20px;
+	}
+	
+	
+/************* 달력 ******************/	
+
+	.calAndetc {
+		flex:0.3;
+		background-color:#ffffff;
+		margin-left:20px;
+		width:500px;
+		min-height:700px;
+		border-top-left-radius: 5px;
+		border-top-right-radius: 5px;
+	}
+	
+	#calendar-container > p {
+	  font-size: 1.2em;
+	  font-weight: bold;
+	  margin: 0;
+	  padding: 10px;
+	  background-color: #f9b037;
+	  color: white;
+	  text-align: center;
+	  border-top-left-radius: 5px;
+	  border-top-right-radius: 5px;
+	}
+	
+	/* 캘린더 위의 해더 스타일(날짜가 있는 부분) */
+	.fc-header-toolbar {
+	  padding-top: 1em;
+	  padding-left: 1em;
+	  padding-right: 1em;
+	  font-size:0.45em;
+	}

@@ -30,30 +30,12 @@ public class LogMngController {
 
 	private final LogMngService logService;
 
-	@Getter
-	@Setter
-	@NoArgsConstructor
-	public class UserVO {
-		private String userId = "seeun";
-		private String userType = "admin";
-	}
-
 	/* 로깅 테스트 컨트롤러 */
-	@RequestMapping("/log-test")
+	@RequestMapping("/logtest")
 	public String logTest(HttpServletRequest request, 
 			HttpServletResponse response) {
 
-		UserVO user = new UserVO();
-		HttpSession session = request.getSession();
-		session.setAttribute("user", user);
-
-		return "myfirstlog";
-	}
-
-	/* 두번째 로깅 컨트롤러 */
-	@RequestMapping("/second-log")
-	public String secondLog() {
-		return "mysecondlog";
+		return "log/logtest";
 	}
 
 
@@ -91,9 +73,6 @@ public class LogMngController {
 		model.addAttribute("totalLog", totalLog);
 		model.addAttribute("logs", logs);
 
-		return "sysMng/logMng/logMngList";
+		return "log/logMngList";
 	}
 }
-
-
-

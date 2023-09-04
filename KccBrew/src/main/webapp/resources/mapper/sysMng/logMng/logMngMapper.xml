@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+      PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper
+	namespace="kr.co.kccbrew.sysMng.logMng.dao.ILogMngRepository">
+	<resultMap id="logResult"
+		type="kr.co.kccbrew.sysMng.logMng.model.LogMngVo">
+		<result property="logSeq" column="LOG_SEQ" />
+		<result property="date" column="LOG_DTTM" />
+		<result property="ip" column="IP_ADDR" />
+		<result property="userId" column="USER_ID" />
+		<result property="uri" column="API_ENDPOINT" />
+		<result property="statusCode" column="RSPN_STTS_CODE" />
+		<result property="view" column="VIEW_TMPLT" />
+		<result property="userType" column="USR_TYP" />
+	</resultMap>
+
+	<!-- 로그 삽입 -->
+	<insert id="insertLog"
+		parameterType="kr.co.kccbrew.sysMng.logMng.model.LogMngVo">
+		<selectKey keyProperty="logSeq" resultType="int"
+			order="BEFORE">
+			SELECT LOG_SEQ.nextval FROM DUAL
+		</selectKey>
+  <![CDATA[
+    INSERT INTO LOG (
+      LOG_SEQ, 
+      LOG_DTTM, 
+      IP_ADDR, 
+      USER_ID, 
+      API_ENDPOINT,
+      RSPN_STTS_CODE,
+      VIEW_TMPLT,
+      USR_TYP
+    )
+    VALUES (
+      #{logSeq},
+      #{date}, 
+      #{ip}, 
+      #{userId},
+      #{uri},
+      #{statusCode},
+      #{view},
+      #{userType}
+    )
+  ]]>
+	</insert>
+
+	<!-- 로그 전체 조회 -->
+	<select id="selectAllLogs" resultMap="logResult">
+      <![CDATA[
+        select * from log order by LOG_SEQ asc
+      ]]>
+	</select>
+
+	<!-- 검색 조건에 따른 로그 조회 -->
+	<select id="selectRetrievedLogs" resultMap="logResult"
+		parameterType="kr.co.kccbrew.sysMng.logMng.model.LogMngVo">
+		SELECT * FROM log
+		WHERE 1=1
+		<if
+			test="startYr != null and startYr != '' and startMn != null and startMn != ''">
+        <![CDATA[
+        AND (
+            EXTRACT(YEAR FROM LOG_DTTM) > #{startYr}
+            OR (EXTRACT(YEAR FROM LOG_DTTM) = #{startYr} AND EXTRACT(MONTH FROM LOG_DTTM) >= #{startMn})
+        )
+        ]]>
+		</if>
+		<if
+			test="endYr != null and endYr != '' and endMn != null and endMn != ''">
+        <![CDATA[
+        AND (
+            EXTRACT(YEAR FROM LOG_DTTM) < #{endYr}
+            OR (EXTRACT(YEAR FROM LOG_DTTM) = #{endYr} AND EXTRACT(MONTH FROM LOG_DTTM) <= #{endMn})
+        )
+        ]]>
+		</if>
+		<if test="uri != null and uri != ''">
+			AND API_ENDPOINT = #{uri}
+		</if>
+		<if test="view != null and view != ''">
+			AND VIEW_TMPLT = #{view}
+		</if>
+		<if test="userId != null and userId != ''">
+			AND USER_ID = #{userId}
+		</if>
+		<if test="userType != null and userType != ''">
+			AND USR_TYP = #{userType}
+		</if>
+		<if test="ip != null and ip != ''">
+			AND IP_ADDR = #{ip}
+		</if>
+		<if test="statusCode != null and statusCode != ''">
+			AND RSPN_STTS_CODE = #{statusCode}
+		</if>
+		order by LOG_SEQ asc
+	</select>
+
+
+</mapper>

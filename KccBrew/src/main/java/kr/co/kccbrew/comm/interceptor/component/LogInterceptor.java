@@ -1,6 +1,6 @@
 package kr.co.kccbrew.comm.interceptor.component;
 
-import java.time.LocalDateTime;
+import java.time.LocalDateTime; 
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import kr.co.kccbrew.sysMng.logMng.controller.LogMngController.UserVO;
+
 import kr.co.kccbrew.sysMng.logMng.model.LogMngVo;
 import kr.co.kccbrew.sysMng.logMng.service.LogMngService;
 import lombok.extern.slf4j.Slf4j;
@@ -54,8 +54,8 @@ public class LogInterceptor extends Interceptor {
 		//세션에서 로그인 회원 정보 반환
 		HttpSession session = request.getSession();
 		Object user = session.getAttribute("user");
-		if (user instanceof UserVO) {
-			UserVO userVO = (UserVO) user;
+		if (user instanceof LogMngVo) {
+			LogMngVo userVO = (LogMngVo) user;
 			userId = userVO.getUserId();
 			userType = userVO.getUserType();
 		}
@@ -94,8 +94,8 @@ public class LogInterceptor extends Interceptor {
 		String userId = null; // userId
 		String userType = null; // userType
 		String ip = getClientIp(request); // ip
-		if (user2 instanceof UserVO) {
-			UserVO userVO = (UserVO) user2;
+		if (user2 instanceof LogMngVo) {
+			LogMngVo userVO = (LogMngVo) user2;
 			userId = userVO.getUserId();
 			userType = userVO.getUserType();
 		}
