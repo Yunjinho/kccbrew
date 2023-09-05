@@ -4,7 +4,7 @@
 <html lang="en">
 <head>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="<c:url value='/resources/css/code/code.css' />" />
+    <link rel="stylesheet" href="/resources/css/code/code.css" />
     <meta charset="UTF-8">
     <title>코드리스트</title>
 </head>
