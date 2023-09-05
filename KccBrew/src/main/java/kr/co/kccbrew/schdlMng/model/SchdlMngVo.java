@@ -9,6 +9,7 @@ import lombok.Data;
 @Component
 @Data
 public class SchdlMngVo {
+	private String userId;
 	private String userType;
 	private String userName;
 	private String userPhoneNumber;

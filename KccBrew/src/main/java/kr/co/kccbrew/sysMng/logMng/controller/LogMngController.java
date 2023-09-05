@@ -64,6 +64,7 @@ public class LogMngController {
 		log.info("이세은 LogController#log: currentPage={}, searchContent={}", currentPage, searchContent);
 
 		List<LogMngVo> selectedLogs = logService.selectSearchedLogs(searchContent, currentPage);
+		System.out.println("selectedLogs: " + selectedLogs);
 		int totalPage = 0;
 		int totalLogCount = logService.getSearchedLogsCount(searchContent);
 		int sharePage = 0;

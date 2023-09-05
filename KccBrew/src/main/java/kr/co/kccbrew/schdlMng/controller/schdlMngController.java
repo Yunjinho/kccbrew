@@ -22,14 +22,17 @@ import lombok.extern.slf4j.Slf4j;
 public class schdlMngController {
 	
 	/* 스케줄조회 */
-	@GetMapping("/schedule/{id}")
+	@GetMapping("/schedule/{userId}")
 	public String getLogs(
 			@RequestParam(defaultValue = "1") int currentPage,
 			@ModelAttribute("searchContent") SchdlMngVo searchContent,
-			@PathVariable("id") String userId,
+			@PathVariable("userId") String userId,
 			Model model,
-			HttpSession session
+			HttpSession session 
 			) {
+		
+		System.out.println("searchContent: " + searchContent);
+		System.out.println("userId: " + userId);
 		
 
 		/* 리스트 페이징 처리 */
@@ -59,6 +62,8 @@ public class schdlMngController {
 		model.addAttribute("totalPage", totalPage);
 		model.addAttribute("currentPage", currentPage);
 		model.addAttribute("sharePage", sharePage);
+		
+		model.addAttribute("schedules", schedules);
 
 
 		return "schdl/schdlMngList";

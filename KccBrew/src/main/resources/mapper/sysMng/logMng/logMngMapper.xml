@@ -76,9 +76,7 @@
 	<!-- 검색된 로그 조회 -->
 	<select id="selectSearchedLogs" resultMap="logResult"
 		parameterType="java.util.Map">
-		SELECT LOG_SEQ, TO_TIMESTAMP(TO_CHAR(LOG_DTTM, 'YYYY-MM-DD
-		HH24:MI:SS'), 'YYYY-MM-DD HH24:MI:SS') AS LOG_DTTM, IP_ADDR, USER_ID,
-		API_ENDPOINT, RSPN_STTS_CODE, USR_TYP, VIEW_TMPLT
+		SELECT LOG_SEQ, TO_TIMESTAMP(TO_CHAR(LOG_DTTM, 'YYYY-MM-DD HH24:MI:SS'), 'YYYY-MM-DD HH24:MI:SS') AS LOG_DTTM, IP_ADDR, USER_ID, API_ENDPOINT, RSPN_STTS_CODE, USR_TYP, VIEW_TMPLT
 		FROM (
 		SELECT
 		ROW_NUMBER() OVER(ORDER BY LOG_SEQ) AS ROW_NUM, LOG.*
@@ -87,7 +85,7 @@
 
 		<!-- 검색 조건 -->
 		<if
-			test="startYr != null and startYr != '' and startMn != null and startMn != ''">
+			test="logMngVo.startYr != null and logMngVo.startYr != '' and logMngVo.startMn != null and logMngVo.startMn != ''">
         <![CDATA[
         AND (
             EXTRACT(YEAR FROM LOG_DTTM) > #{logMngVo.startYr}
@@ -100,26 +98,26 @@
         <![CDATA[
         AND (
             EXTRACT(YEAR FROM LOG_DTTM) < #{logMngVo.endYr}
-            OR (EXTRACT(YEAR FROM LOG_DTTM) = #{endYr} AND EXTRACT(MONTH FROM LOG_DTTM) <= #{logMngVo.endMn})
+            OR (EXTRACT(YEAR FROM LOG_DTTM) = #{logMngVo.endYr} AND EXTRACT(MONTH FROM LOG_DTTM) <= #{logMngVo.endMn})
         )
         ]]>
 		</if>
-		<if test="uri != null and uri != ''">
+		<if test="logMngVo.uri != null and logMngVo.uri != ''">
 			AND API_ENDPOINT = #{logMngVo.uri}
 		</if>
-		<if test="view != null and view != ''">
+		<if test="logMngVo.view != null and logMngVo.view != ''">
 			AND VIEW_TMPLT = #{logMngVo.view}
 		</if>
-		<if test="userId != null and userId != ''">
+		<if test="logMngVo.userId != null and logMngVo.userId != ''">
 			AND USER_ID = #{logMngVo.userId}
 		</if>
-		<if test="userType != null and userType != ''">
+		<if test="logMngVo.userType != null and logMngVo.userType != ''">
 			AND USR_TYP = #{logMngVo.userType}
 		</if>
-		<if test="ip != null and ip != ''">
+		<if test="logMngVo.ip != null and logMngVo.ip != ''">
 			AND IP_ADDR = #{logMngVo.ip}
 		</if>
-		<if test="statusCode != null and statusCode != ''">
+		<if test="logMngVo.statusCode != null and logMngVo.statusCode != ''">
 			AND RSPN_STTS_CODE = #{logMngVo.statusCode}
 		</if>
 		)
@@ -144,8 +142,8 @@
 			test="startYr != null and startYr != '' and startMn != null and startMn != ''">
 		<![CDATA[
 		AND (
-			EXTRACT(YEAR FROM LOG_DTTM) > #{logMngVo.startYr}
-			OR (EXTRACT(YEAR FROM LOG_DTTM) = #{logMngVo.startYr} AND EXTRACT(MONTH FROM LOG_DTTM) >= #{logMngVo.startMn})
+			EXTRACT(YEAR FROM LOG_DTTM) > #{startYr}
+			OR (EXTRACT(YEAR FROM LOG_DTTM) = #{startYr} AND EXTRACT(MONTH FROM LOG_DTTM) >= #{startMn})
 		)
 		]]>
 		</if>
@@ -153,28 +151,28 @@
 			test="endYr != null and endYr != '' and endMn != null and endMn != ''">
 		<![CDATA[
 		AND (
-			EXTRACT(YEAR FROM LOG_DTTM) < #{logMngVo.endYr}
-			OR (EXTRACT(YEAR FROM LOG_DTTM) = #{endYr} AND EXTRACT(MONTH FROM LOG_DTTM) <= #{logMngVo.endMn})
+			EXTRACT(YEAR FROM LOG_DTTM) < #{endYr}
+			OR (EXTRACT(YEAR FROM LOG_DTTM) = #{endYr} AND EXTRACT(MONTH FROM LOG_DTTM) <= #{endMn})
 		)
 		]]>
 		</if>
 		<if test="uri != null and uri != ''">
-			AND API_ENDPOINT = #{logMngVo.uri}
+			AND API_ENDPOINT = #{uri}
 		</if>
 		<if test="view != null and view != ''">
-			AND VIEW_TMPLT = #{logMngVo.view}
+			AND VIEW_TMPLT = #{view}
 		</if>
 		<if test="userId != null and userId != ''">
-			AND USER_ID = #{logMngVo.userId}
+			AND USER_ID = #{userId}
 		</if>
 		<if test="userType != null and userType != ''">
-			AND USR_TYP = #{logMngVo.userType}
+			AND USR_TYP = #{userType}
 		</if>
 		<if test="ip != null and ip != ''">
-			AND IP_ADDR = #{logMngVo.ip}
+			AND IP_ADDR = #{ip}
 		</if>
 		<if test="statusCode != null and statusCode != ''">
-			AND RSPN_STTS_CODE = #{logMngVo.statusCode}
+			AND RSPN_STTS_CODE = #{statusCode}
 		</if>
 		) 
 	</select>

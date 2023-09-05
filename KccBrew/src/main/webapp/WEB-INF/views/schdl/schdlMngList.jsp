@@ -273,13 +273,14 @@
 									<div id="content">
 										<h2 class="heading">스케줄 조회</h2>
 										<!-- 로그 검색 -->
-										<form action="/schedule" method="get">
+										<form action="/schedule/{userId}" method="get">
 											<table id="search-box">
 												<!-- 1행 -->
 												<c:set var="today" value="<%=new java.util.Date()%>" />
 												<fmt:formatDate value="${today}" pattern="yyyy"
 													var="nowYear" />
 												<tr>
+
 													<th>근무구분</th>
 													<td><select class="tx2" name="dateType"
 														onchange="javascript:chg();">
@@ -341,23 +342,24 @@
 												<tr>
 													<th>ID</th>
 													<td colspan="2"><input type="search" name="userId"
-														placeholder="사용자ID를 입력하세요" value="${param.userId}"></td>
+														placeholder="사용자ID를 입력하세요" value="1"></td>
 													<th>이름</th>
-													<td colspan="2"><input type="search" name="userId"
-														placeholder="사용자ID를 입력하세요" value="${param.userId}"></td>
+													<td colspan="2"><input type="search" name="userName"
+														placeholder="사용자ID를 입력하세요" value="${param.userName}"></td>
 													<th>연락처</th>
-													<td colspan="2"><input type="search" name="userId"
-														placeholder="사용자ID를 입력하세요" value="${param.userId}"></td>
+													<td colspan="2"><input type="search"
+														name="userPhoneNumber" placeholder="사용자ID를 입력하세요"
+														value="${param.userPhoneNumber}"></td>
+
 													<th>지역</th>
 													<td><select class="tx2" name="location"
-														onchange="javascript:chg();">
+														onchange="chg()">
 															<option value="">지역 대분류</option>
 															<option value="2">서울</option>
 															<option value="31">경기도</option>
 															<option value="32">인천</option>
 													</select></td>
-													<td><select class="tx2" name="subLocation"
-														onchange="javascript:chg();">
+													<td><select class="tx2" name="subLocation" disabled>
 															<option value="">지역 소분류</option>
 															<option value="02-200">양천</option>
 															<option value="02-300">은평,마포,서대문</option>
@@ -366,8 +368,9 @@
 															<option value="02-700">마포, 용산, 종로</option>
 															<option value="031-200">수원시</option>
 													</select></td>
-
 												</tr>
+
+
 
 												<!-- 4행 -->
 												<tr>
@@ -380,6 +383,22 @@
 												</tr>
 											</table>
 										</form>
+
+										<!-- 로케이션을 서울로 지정 시, 서브로케이션 활성화 -->
+										<script>
+											function chg() {
+												var locationSelect = document
+														.querySelector("select[name='location']");
+												var subLocationSelect = document
+														.querySelector("select[name='subLocation']");
+
+												if (locationSelect.value === '2') {
+													subLocationSelect.disabled = false; // 서브 로케이션 활성화
+												} else {
+													subLocationSelect.disabled = true; // 서브 로케이션 비활성화
+												}
+											}
+										</script>
 
 
 
@@ -407,16 +426,16 @@
 													</tr>
 												</thead>
 												<tbody>
-													<c:forEach var="log" items="${logs}">
+													<c:forEach var="schedules" items="${schedules}">
 														<tr>
-															<td><c:out value="${log.logSeq}" /></td>
-															<td><c:out value="${log.date}" /></td>
-															<td><c:out value="${log.uri}" /></td>
-															<td><c:out value="${log.view}" /></td>
-															<td><c:out value="${log.userId}" /></td>
-															<td><c:out value="${log.userType}" /></td>
-															<td><c:out value="${log.ip}" /></td>
-															<td><c:out value="${log.statusCode}" /></td>
+															<td><c:out value="" /></td>
+															<td><c:out value="" /></td>
+															<td><c:out value="" /></td>
+															<td><c:out value="" /></td>
+															<td><c:out value="" /></td>
+															<td><c:out value="" /></td>
+															<td><c:out value="" /></td>
+															<td><c:out value="" /></td>
 														</tr>
 													</c:forEach>
 
@@ -433,15 +452,13 @@
 										<div class="paging pagination">
 
 											<!-- 앞으로 가는 버튼 -->
-											<a
-												href="/log?currentPage=1&startYr=${searchContent.startYr}&startMn=${searchContent.startMn}&endYr=${searchContent.endYr}&endMn=${searchContent.endMn}&uri=${searchContent.uri}&view=${searchContent.view}&userId=${searchContent.userId}&userType=${searchContent.userType}&ip=${searchContent.ip}&statusCode=${searchContent.statusCode}"><img
+											<a href="/schedule/1"><img
 												src="/resources/img/log/free-icon-left-chevron-6015759.png"
 												alt=" 처" /></a>
 
 											<c:choose>
 												<c:when test="${currentPage > 1}">
-													<a
-														href="/log?currentPage=${currentPage - 1}&startYr=${searchContent.startYr}&startMn=${searchContent.startMn}&endYr=${searchContent.endYr}&endMn=${searchContent.endMn}&uri=${searchContent.uri}&view=${searchContent.view}&userId=${searchContent.userId}&userType=${searchContent.userType}&ip=${searchContent.ip}&statusCode=${searchContent.statusCode}"><img
+													<a href="/schedule/1"><img
 														src="/resources/img/log/free-icon-left-arrow-271220.png"
 														alt="이" /></a>
 												</c:when>
@@ -458,8 +475,7 @@
 													<c:forEach var="page" begin="${sharePage * 10 + 1}"
 														end="${(sharePage + 1) * 10}" step="1">
 														<c:if test="${page <= totalPage}">
-															<a
-																href="/log?currentPage=${page}&startYr=${searchContent.startYr}&startMn=${searchContent.startMn}&endYr=${searchContent.endYr}&endMn=${searchContent.endMn}&uri=${searchContent.uri}&view=${searchContent.view}&userId=${searchContent.userId}&userType=${searchContent.userType}&ip=${searchContent.ip}&statusCode=${searchContent.statusCode}"
+															<a href="/schedule/1"
 																class="pagination page-btn ${currentPage == page ? 'selected' : ''}">
 																${page} </a>
 														</c:if>
@@ -469,22 +485,19 @@
 
 											<!-- 뒤로 가는 버튼 -->
 											<c:if test="${currentPage < totalPage}">
-												<a
-													href="/log?currentPage=${currentPage + 1}&startYr=${searchContent.startYr}&startMn=${searchContent.startMn}&endYr=${searchContent.endYr}&endMn=${searchContent.endMn}&uri=${searchContent.uri}&view=${searchContent.view}&userId=${searchContent.userId}&userType=${searchContent.userType}&ip=${searchContent.ip}&statusCode=${searchContent.statusCode}">
-													<img
+												<a href="/schedule/1"> <img
 													src="/resources/img/log/free-icon-right-arrow-271228.png"
 													alt="다" />
 												</a>
 											</c:if>
 											<c:if test="${currentPage == totalPage}">
-												<a href="javascript:void(0);" class="disabled-link"> <img
+												<a href="" class="disabled-link"> <img
 													src="/resources/img/log/free-icon-right-arrow-271228.png"
 													alt="다" />
 												</a>
 											</c:if>
 
-											<a
-												href="/log?currentPage=${totalPage}&startYr=${searchContent.startYr}&startMn=${searchContent.startMn}&endYr=${searchContent.endYr}&endMn=${searchContent.endMn}&uri=${searchContent.uri}&view=${searchContent.view}&userId=${searchContent.userId}&userType=${searchContent.userType}&ip=${searchContent.ip}&statusCode=${searchContent.statusCode}"><img
+											<a href="/schedule/1"><img
 												src="/resources/img/log/free-icon-fast-forward-double-right-arrows-symbol-54366.png"
 												alt="마" /></a>
 										</div>
