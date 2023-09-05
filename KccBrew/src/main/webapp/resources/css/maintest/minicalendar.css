@@ -1,0 +1,480 @@
+/**
+ * Default Setting for Mini Event Styles
+ * Last Modified: 2012-02-08
+ * Modifier: secrain, R&D, Saltware.
+ * Info: http://www.saltware.co.kr/
+ * M.C.: 010 8957 9389
+ */
+	@import url("font.css");
+	@font-face{font-family:NSL; font-weight:100; font-style:normal; src:url(fonts/NanumSquareL.eot); src:url(fonts/NanumSquareL.eot?#iefix) format('embedded-opentype'), url(fonts/NanumSquareL.woff) format("woff");}
+	@font-face{font-family:NS; font-weight:400; font-style:normal; src:url(fonts/NanumSquareR.eot); src:url(fonts/NanumSquareR.eot?#iefix) format('embedded-opentype'), url(fonts/NanumSquareR.woff) format("woff");}
+	@font-face{font-family:NSB; font-weight:600; font-style:normal; src:url(fonts/NanumSquareB.eot); src:url(fonts/NanumSquareB.eot?#iefix) format('embedded-opentype'), url(fonts/NanumSquareB.woff) format("woff");}
+
+body {}
+div.me img {
+	border: none;
+}
+
+div.me{
+	color: #222;
+	border-color: #fff;
+	border-style: solid;
+	margin: 0px auto;
+	width:232px !important;
+	height:420px !important;
+}
+div.me-header{ 
+	float: center;
+	width:232px !important;	
+}
+
+div.me-header-left{
+	float: left;
+	text-align: center;
+}
+div.me-header-left img.today{
+	position: relative;
+	width: 48px;
+	height: 14px;
+	cursor: pointer;
+}
+
+div.me-header-center { 
+	float: left;
+	text-align: center;
+	margin-left:10px;
+}
+div.me-header-center img.prev-button { 
+	position: relative;
+	width:12px;
+	height: 19px;
+	cursor: pointer;
+	float: center;
+}
+div.me-header-center img.month { 
+	position: relative;
+	width:48px;
+	height: 21px;
+	float: center;
+}
+div.me-header-center img.next-button { 
+	position: relative;
+	width:12px;
+	height: 19px;
+	cursor: pointer;
+	float: center;
+}
+
+div.me-header-right {
+	height: 100%;
+	float: right;
+	text-align: center;
+}
+div.me-header-right img.year_0 { 
+	position: relative;
+	width: 8px;
+	height: 12px;
+}
+div.me-header-right img.year_1 { 
+	position: relative;
+	width: 8px;
+	height: 12px;
+}
+div.me-header-right img.year_2 { 
+	position: relative;
+	width: 8px;
+	height: 12px;
+}
+div.me-header-right img.year_3 { 
+	position: relative;
+	width: 8px;
+	height: 12px;
+}
+div.me-header-right img.year_4 { 
+	position: relative;
+	width: 8px;
+	height: 12px;
+}
+div.me-header-right img.year_5 { 
+	position: relative;
+	width: 8px;
+	height: 12px;
+}
+div.me-header-right img.year_6 { 
+	position: relative;
+	width: 8px;
+	height: 12px;
+}
+div.me-header-right img.year_7 { 
+	position: relative;
+	width: 8px;
+	height: 12px;
+}
+div.me-header-right img.year_8 { 
+	position: relative;
+	width: 8px;
+	height: 12px;
+}
+div.me-header-right img.year_9 { 
+	position: relative;
+	width: 8px;
+	height: 12px;
+}
+
+
+div.me-calendar { 
+	height: auto; 
+	border: none;
+	width:232px !important;	
+}
+
+table.me-calendar-table { 
+	border-collapse: collapse;
+	width:232px !important;	
+}
+
+table.me-calendar-table  tr {
+	margin: 0px;
+}
+
+table.me-calendar-table td {
+	border: 1px solid #BBB;
+	text-align: center;	
+	height: 22px;
+	text-align: center; 
+	padding: 0px;
+	margin: 0px;
+	cursor: default;
+	vertical-align: middle;
+}
+
+table.me-calendar-table td.week { 
+	color: #555;
+}
+
+table.me-calendar-table td.date {
+	background: none;
+	color: #000;
+}
+
+table.me-calendar-table td.date:HOVER {
+	/* background-color: #dedede; */
+	background-color: #FD8;
+}
+
+
+table.me-calendar-table td div.sun { color: red; }
+table.me-calendar-table td div.sat { color:	blue; }
+
+table.me-calendar-table td.col_0 { border-left: 0px solid #BBB; }
+table.me-calendar-table td.col_6 { border-right: 0px solid #BBB; }
+
+
+table.me-calendar-table td.today {
+	cursor: pointer;
+	background-color: #ff8;
+	font-weight: bold;
+}
+
+table.me-calendar-table td.prevday {
+	border-right: 1px solid #000;
+}
+
+table.me-calendar-table td.prevweekday {
+	border-bottom: 1px solid #000;
+}
+
+table.me-calendar-table td.hasSchedules {
+	cursor: pointer;
+}
+
+table.me-calendar-table td div.other_month {
+	/* Theoretically for IE 8 & 9 (more valid) */       
+	 /* ...but not required as filter works too */        
+	 /* should come BEFORE filter */        
+	-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=50)"; 
+         
+	/* This works in IE 8 & 9 too */        
+	/* ... but also 5, 6, 7 */        
+	filter: alpha(opacity=50);          
+	 
+	/* Older than Firefox 0.9 */        
+	-moz-opacity: 0.5;           
+	
+	/* Safari 1.x (pre WebKit!) */        
+	-khtml-opacity: 0.5;           
+	
+	/* Modern! Firefox 0.9+, Safari 2?, Chrome any	Opera 9+, IE 9+ */        
+	opacity: 0.5; 
+}
+
+table.me-calendar-table td.group {
+	/* font-weight: bold; 
+	color: #00F;	 */
+	background-color: #ef3;
+	cursor: pointer;
+	
+}
+
+table.me-calendar-table td.private {
+	/* font-weight: bold; 
+	color: #00F;	 */
+	background-color: #CEF;
+	cursor: pointer;
+	
+}
+
+table.me-calendar-table td.public	{
+	/* font-weight: bold; 
+	color: #3A3;*/
+	background-color: #AF9;
+	cursor: pointer;
+}
+
+table.me-calendar-table td.selected {
+	font-weight: bold;
+	cursor: pointer;
+	/** background-color: #dedede; **/
+	/* background-color: #ff8; */
+	background-color: #FD8;
+}
+
+div.triangle {
+	border-color: transparent transparent transparent blue;
+	border-style: solid;
+	height: 0px;
+	width: 0px;
+	position: relative;
+	left: 0px;
+}
+
+table.me-calendar-table td.group-over {
+	font-weight: bold;
+	color: #00F;	
+	cursor: pointer;
+	background-color: #ccf;
+}
+
+table.me-calendar-table td.private-over {
+	font-weight: bold;
+	color: #00F;	
+	cursor: pointer;
+	background-color: #ccf;
+}
+
+table.me-calendar-table td.public-over	{
+	font-weight: bold;
+	color: #3A3;
+	cursor: pointer;
+	background-color: #ccf;
+}
+
+div.me-content { 
+	/* width: 183px; */
+	font-size: 11px;
+	font-family: gulim;
+	height: 111px;
+}
+
+div.me-content-title {
+	position: relative;
+	height: 27px;
+	text-align: left;
+	padding-left: 0;
+	border-bottom: 1px dotted #666;
+	line-height: 27px;
+	font-weight: bold;
+	margin-top:18px;
+	padding-bottom:10px;
+	font-family:NS;
+	font-size:16px;
+	letter-spacing:-1px;
+	font-weight:500;
+	color:#000;
+	
+}
+div.me-content-title2 {
+	position: relative;
+	height: 27px;
+	text-align: left;
+	padding-left: 10px;
+	border-bottom: 1px dotted #666;
+	line-height: 27px;
+	color: #555;
+	font-weight: bold;
+	
+}
+div.me-content-title img{ 
+	position: relative;
+	width: 89px;
+	height: 29px;
+	top: 0;
+	float: right;
+	margin-right: 0;
+	cursor: pointer;
+}
+
+div.me-content-title2 img{ 
+	position: relative;
+	width: 60px;
+	height: 19px;
+	top: -22px;
+	float: right;
+	margin-right: 10px;
+	cursor: pointer;
+}
+
+div.me-content-schedules-scrollpane{
+	height: 162px;
+	
+}
+div.me-content-schedules { 
+	position: relative;
+	height: 162px;	
+	overflow: auto;
+}
+table.me-calendar-table td.week{
+	font-family:NS !important;
+	font-weight:500 !important;
+	padding-top:2px !important;
+}
+div.me-content-schedule { 
+	position: relative;
+	text-align: left;
+	margin-left: 7px;
+	cursor: pointer;
+	width: 150px;
+	padding-left: 1px;
+	font-family:NS;
+	font-size:14px;
+	font-weight:300;
+	letter-spacing:-1px;
+	color:#555;
+	display:inline-block;
+	max-width:95%;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	overflow: hidden;
+	margin-top:10px;
+}
+
+div.me-content-schedule:HOVER {
+	padding-left: 0px;
+	border: 1px solid #aad;
+	background-color: #eef;
+}
+
+div.group {
+	color: #cc2;	
+}
+
+div.private {
+	color: #00f;	
+}
+
+div.public	{
+	color: #3a3;
+}
+
+div.me-content-noevents	{
+	position: relative;
+	text-align: left;
+	margin-left: 7px;
+	overflow: hidden;
+	cursor: default;
+	color: #323232;
+	font-weight: bold;
+}
+
+
+/*
+div.me-content-event:HOVER {
+	background-color: #ccf;
+}
+
+div.me-content-noevents:HOVER {
+	background-color: #ccf;
+}
+*/
+
+.schedulePopup {
+	position: relative;
+	font-family: gulim;
+	font-size:11px;
+	color: #666;
+	margin: 0 auto;
+	border: 1px solid #000000;
+	background-color: #FFF;
+	padding-top: 4px;
+	padding-left: 4px;
+	padding-right: 4px;
+	padding-bottom: 4px;
+	word-wrap: break-word;
+	
+	width: 218px;
+	height: 180px;
+	
+	z-index: 9999;
+}
+
+.schedulePopup div{
+}
+
+.schedulePopup div#popHeader{
+}
+
+.schedulePopup div#popStartTime{
+	position: relative;
+	float: left;
+	min-width: 36px;
+	height: 14px;
+}
+
+.schedulePopup div.popTtl{
+	position: relative;
+	float: left;
+	max-width: 158px;
+	height: 14px;
+}
+
+.schedulePopup div.close_button{
+	text-align: center;
+	position: relative;
+	border: 1px solid #333;
+	width: 40px;
+	cursor: pointer;
+	margin: 5px auto 3px auto;
+}
+
+.schedulePopup div.close_button:HOVER{
+	background-color: #eee;
+}
+
+.schedulePopup textarea.popCntt {
+	margin-top: 3px;
+	color: #666;
+	font-size: 11px;
+	font-family: gulim;
+	word-wrap: break-word;
+	overflow: auto;
+	border: 0px dashed #888;
+	border-top: 1px dashed #888;
+	border-bottom: 1px dashed #888;
+	height: 137px;
+	width: 208px;
+	padding-top: 2px;
+	
+	scrollbar-3dlight-color:#999; 
+	scrollbar-arrow-color:#999; 
+	scrollbar-base-color:#999; 
+	scrollbar-darkshadow-color:#fff; 
+	scrollbar-face-color:#fff; 
+	scrollbar-highlight-color:#fff; 
+	scrollbar-shadow-color:#999;	
+}
+
+.textCut {
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	overflow: hidden;
+}

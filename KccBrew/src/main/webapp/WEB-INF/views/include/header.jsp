@@ -2,6 +2,13 @@
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
+<head>
+<link rel="stylesheet" href="${path}/resources/css/comm/reset.css" >
+<link rel="stylesheet" href="${path}/resources/css/comm/header.css" >
+<script src="http://code.jquery.com/jquery-latest.js"></script> 
+<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+<script src="${path}/resources/js/comm/header.js"></script>
+</head>
 <header class="comm-nav" >
 	<div class="top-bar">
 		###(관리자)님 환영합니다
@@ -11,7 +18,7 @@
 	</div>
 	<nav class="nav-bar">
 		<div class="navbar-brand">
-			<img alt="logo"  src="/img/kcc.png">
+			<img alt="logo"  src="${path}/resources/img/kcc.png">
 		</div>
 		<div class="nav-box">
 			<ul class="nav-pills">
