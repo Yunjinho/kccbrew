@@ -1,0 +1,294 @@
+@charset "UTF-8";
+#register-form{
+	margin:7% auto;
+	display: flex;
+    box-sizing: border-box;
+    flex-direction: column;
+    width:50%;
+	height:100%;
+} 
+#img-box{
+	justify-content: left;
+	display: flex;
+}
+#engmng-register-form,#storemng-register-form{
+	display:none;
+}
+.register-info>input,select{
+	border:none;
+	outline: none;
+	padding: 1% 0%;
+	width:100%;
+}
+.register-info>label,img{
+	margin:auto;
+}
+.register-icons{
+	margin:1%;
+	width: 3%;
+	height: 3%;
+}
+#register-form>div{
+	padding:3% 0% 0% 0%
+}
+.search-store{
+	display: none; /* 모달 초기에는 숨김 상태로 설정 */
+	position: fixed; /* 화면에 고정 */
+	z-index: 1; /* 다른 요소보다 위에 표시되도록 설정 */
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0, 0, 0, 0.5); /* 반투명한 배경 색상 */
+	text-align: center;
+}
+.search-store-content{
+	background-color: #fefefe;
+	margin: 10% auto; /* 모달을 수직, 수평 가운데로 위치시킴 */
+	padding: 20px;
+	border: 1px solid #888;
+	width: 30%;
+	height: 55%;
+	border-radius: 20px;
+	display: flex;
+	flex-direction: column;
+}
+#select-store{
+	width:92px; 
+	-webkit-border-radius:100px;
+	background-color:#094a9a; 
+	font-size:18px; 
+	font-weight:400; 
+	color:#fff; 
+	text-align:center;
+}
+.search-store-content>table{
+	height:70%;
+	margin:3% 0%;
+}
+.search-input{
+	margin:3% 0%;
+	line-height: 2;
+}
+.register-msg{
+	margin:0px;
+}
+.register-msg>li{
+	font-size:0.8em;
+	color:red;
+	display:none;
+}
+.paging{
+	list-style-type: none;
+	display: flex;
+	margin:auto;
+	padding-left: 0px;
+}
+.page-number{
+	margin:0% 3% 0% 0%;
+	text-decoration: none;
+	cursor:pointer;
+}
+#locationCd{
+	display:none;
+}
+.insert-img{
+	width:60%;
+	border:1px solid black;
+	overflow: hidden;
+}
+.insert-img>div{
+	height:83%;
+	background-color: rgb(204,204,204);
+	color:white;
+	border:1px solid black;
+}
+.insert-img>div>p{
+	margin-top:38%;
+	text-align:center;
+}
+.insert-img>input{
+	font-size:0.7em;
+}
+.photo>img{
+	width:100%;
+	display:none;
+}
+.photo{
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border:1px soild black;
+}
+
+/*로그인에서 가져옴 */
+.wrap{
+	width:1200px; 
+	margin:0 auto ; 
+}
+
+.wrap:after{
+	clear:both; 
+	display:block; 
+	content:"";
+}
+.register #footer{
+	margin-top:80px;
+}
+.register{
+	background-color:#ebf2fc; 
+	padding:50px 0 0 0;
+}
+.register .registerbox{
+	margin:0 0 0 95px;
+}
+.register .registerbox .register_input{
+	width:550px; 
+	height:650px; 
+	background-color:#fff; 
+	border-bottom:3px solid #dfe6ef; 
+	padding:50px; 
+	box-sizing:border-box; 
+	float:left;
+	padding-top: 0px;
+    padding-bottom: 0px;
+}
+.register .registerbox .register_input h2{
+	display:flex; 
+    margin-bottom: 0px;
+    margin-top: 10px;
+}
+.register .registerbox .register_input h2 img{
+	display:inline-block; 
+}
+.register .registerbox .register_input h2 span em{
+	font-size:18px; 
+	color:#094b9f; 
+	font-weight:300;
+}
+.register .registerbox .register_01{
+	display:flex;
+}
+.register .registerbox .register_01 fieldset{
+	display:inline-block; 
+	width:255px;  
+	border:none;
+}
+
+.register .registerbox .register_01 fieldset div div {
+	display:flex;
+}
+
+.register .registerbox .register_01 fieldset div div img {
+	width:8%; 
+	margin:auto;
+}
+
+.register .registerbox .register_01 input,select{ 
+	border-top:none; 
+	border-right:none; 
+	border-left:none; 
+	border-bottom:1px solid #e6e6e6; 
+	width:300px;  
+	height:30px; 
+	line-height:39px; 
+	padding-left:28px; 
+	box-sizing:border-box;  
+	font-size:14px; 
+	color:#989898;
+}
+.register-button{
+	text-align:center;
+}
+.register-button button{
+	width:92px; 
+	-webkit-border-radius:100px;
+	background-color:#094a9a; 
+	font-size:18px; 
+	font-weight:400; 
+	color:#fff; 
+	text-align:center;
+}
+.register-button button:hover{
+	cursor:pointer;
+}
+
+.register .registerbox .register_01 p{
+	color:red;
+	font-size: 0.8em;
+	display:none;
+}
+
+.register .servicezone{
+	display:inline-block; 
+	width:350px; 
+	height:560px; 
+	background-color:#094b9f;
+	padding:50px; 
+	box-sizing:border-box;
+	margin-top:24px; 
+	float:left;
+}
+
+.register .servicezone div div:first-child{
+    border-radius: 50%;
+    background-color: rgb(108 136 213);
+    width: 86px;
+    height:80px;
+    margin: 3%;
+}
+
+
+.register .servicezone div{
+	display:flex;
+}
+.register .servicezone h4{
+	margin-bottom:20px;
+}
+
+.register .servicezone h4 p{
+	font-size:16px; 
+	color:#fff; 
+	font-weight:100; 
+}
+
+.register .servicezone h4 p.title span{
+	font-weight:bold; 
+}
+
+.register .servicezone h4 p.title{
+	font-size:40px; 
+	color:#fff; 
+	font-weight:lighter; 
+	margin-top:10px;
+}
+
+.register .servicezone a{
+	margin:11px 0; 
+	display:inline-block; 
+	height:86px; 
+	color:#fff;
+	width: 80%;
+	padding-left:15px;
+}
+.user-type div p{
+	color:#fff;
+	padding-left:15px;
+	font-size:25px;  
+	font-weight:600; 
+}
+.user-type>div>p,img:hover{
+	cursor: pointer;
+}
+.user-type div img{
+	width:50px; 
+	margin:auto;
+}
+#manger{
+ 	text-decoration: underline;
+ }
+ input[type=file]{
+ 	padding-bottom:30px;
+ }
