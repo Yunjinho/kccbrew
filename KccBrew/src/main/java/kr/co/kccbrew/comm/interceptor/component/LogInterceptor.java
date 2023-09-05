@@ -6,6 +6,7 @@ import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpServletResponseWrapper;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -81,6 +82,8 @@ public class LogInterceptor extends Interceptor {
 		HttpSession session = request.getSession();
 		session.setAttribute("view", view);
 		
+		
+		
 		log.info("view: {}", view);
 	}
 
@@ -105,9 +108,9 @@ public class LogInterceptor extends Interceptor {
 			userId = userVO.getUserId();
 			userType = userVO.getUserType();
 		}
-
-//		String status = String.valueOf(response.getStatus());
-		String status = null;
+		
+		
+		String status = String.valueOf(response.getStatus());
 		log.info("status={}", status);
 		
 		String view = (String) session.getAttribute("view");

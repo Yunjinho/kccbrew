@@ -92,9 +92,12 @@
 				class="kr.co.kccbrew.comm.interceptor.component.MechaAuthInterceptor" />
 		</interceptor>
 
-		<!-- <interceptor> <mapping path="/**"/> <exclude-mapping path="/resources/**/"/> 
-			<beans:bean class="kr.co.kccbrew.comm.interceptor.component.LogInterceptor"/> 
-			</interceptor> -->
+		<interceptor>
+			<mapping path="/logtest" />
+			<exclude-mapping path="/resources/**/" />
+			<beans:bean
+				class="kr.co.kccbrew.comm.interceptor.component.LogInterceptor" />
+		</interceptor>
 
 	</interceptors>
 
