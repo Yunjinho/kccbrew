@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="kr.co.kccbrew.sysMng.cdMng.dao.ICodeMngRepository">
+<mapper
+	namespace="kr.co.kccbrew.sysMng.cdMng.dao.ICdMngRepository">
 
 	<select id="selectNm"
 		resultType="kr.co.kccbrew.sysMng.cdMng.model.CdMngVo">
@@ -18,7 +19,7 @@
         ]]>
 	</select>
 
-	<select id="selectDetail" parameterType="string"
+	<select id="selectCd" parameterType="String"
 		resultType="kr.co.kccbrew.sysMng.cdMng.model.CdMngVo">
 		<if test='cdDtlId != "null"'>
 			select
@@ -47,9 +48,10 @@
 			where
 			a.grp_cd_id =
 			b.grp_cd_id(+)
-			AND a.grp_cd_id = #{cdId}
+			AND (a.grp_cd_id =
+			#{cdId}
 			AND b.grp_cd_dtl_id =
-			#{cdDtlId}
+			#{cdDtlId})
 		</if>
 		<if test='cdDtlId == "null"'>
 			select
@@ -79,7 +81,7 @@
 			(#{cdId}, #{cdNm}, SYSDATE, #{cdRegUser}, SYSDATE, #{cdModUser}, 'Y')
 	]]>
 	</insert>
-	
+
 	<insert id="insert2"
 		parameterType="kr.co.kccbrew.sysMng.cdMng.model.CdMngVo">
 		<![CDATA[
@@ -89,8 +91,8 @@
 			(#{cdDtlId}, #{cdId}, #{cdDtlNm}, SYSDATE, #{cdDtlRegUser}, SYSDATE, #{cdDtlModUser}, 'Y', group_code_idx.nextval)
 	]]>
 	</insert>
-	
-	<update id="update"
+
+	<update id="cdMod"
 		parameterType="kr.co.kccbrew.sysMng.cdMng.model.CdMngVo">
 	<![CDATA[
 		UPDATE 
@@ -107,39 +109,39 @@
 			
 	]]>
 	</update>
-	
-	
-	<select id="filter" resultType="kr.co.kccbrew.sysMng.cdMng.model.CdMngVo"
-	parameterType="kr.co.kccbrew.sysMng.cdMng.model.CdMngVo"
-	>
-		
-        select 
-        	b.group_code_idx	AS	"cdIdx", 
-        	a.grp_cd_id			AS	"cdId", 
-        	a.grp_cd_name		AS	"cdNm", 
-        	a.use_yn			AS	"cdUseYn", 
-        	b.grp_cd_dtl_id		AS	"cdDtlId", 
-        	b.grp_cd_dtl_nm 	AS	"cdDtlNm", 
-        	b.use_yn			AS	"cdDtlUseYn"
-		from 
-			group_code a, 
-			group_code_detail b
-		where 
-			a.grp_cd_id = b.grp_cd_id(+)
-		
-			<if test="cdUseYn != null and cdUseYn != ''">
+
+
+	<select id="filter"
+		resultType="kr.co.kccbrew.sysMng.cdMng.model.CdMngVo"
+		parameterType="kr.co.kccbrew.sysMng.cdMng.model.CdMngVo">
+
+		select
+		b.group_code_idx AS "cdIdx",
+		a.grp_cd_id AS "cdId",
+		a.grp_cd_name AS "cdNm",
+		a.use_yn AS "cdUseYn",
+		b.grp_cd_dtl_id AS "cdDtlId",
+		b.grp_cd_dtl_nm AS "cdDtlNm",
+		b.use_yn AS "cdDtlUseYn"
+		from
+		group_code a,
+		group_code_detail b
+		where
+		a.grp_cd_id = b.grp_cd_id(+)
+
+		<if test="cdUseYn != null and cdUseYn != ''">
 			and a.use_yn = #{cdUseYn}
-			</if>
-			<if test="keyword != null and keyword != ''">
+		</if>
+		<if test="keyword != null and keyword != ''">
 			AND
-	    		a.grp_cd_name LIKE '%'||#{keyword}||'%'
-			</if>
-		order by 
+			a.grp_cd_name LIKE '%'||#{keyword}||'%'
+		</if>
+		order by
 		b.group_code_idx
-       
+
 	</select>
-	
-	
+
+
 	<select id="selectGrpDetail" parameterType="string"
 		resultType="kr.co.kccbrew.sysMng.cdMng.model.CdMngVo">
 		<![CDATA[
@@ -159,10 +161,10 @@
 			grp_cd_id =
 			#{cdId}
 			 ]]>
-		</select>
-		
-		<update id="grpUpdate1"
-    parameterType="kr.co.kccbrew.sysMng.cdMng.model.CdMngVo">
+	</select>
+
+	<update id="grpUpdate1"
+		parameterType="kr.co.kccbrew.sysMng.cdMng.model.CdMngVo">
     <![CDATA[
     UPDATE 
         GROUP_CODE
@@ -174,30 +176,31 @@
     WHERE 
         grp_cd_id = #{cdId}
     ]]>
-</update>
+	</update>
 
-<update id="grpUpdate2" parameterType="kr.co.kccbrew.sysMng.cdMng.model.CdMngVo">
-    <if test="'N'.equals(cdUseYn)"> 
-        UPDATE 
-            GROUP_CODE_DETAIL
-        SET 
-            MOD_DTTM = SYSDATE,
-            MOD_USER = #{cdModUser},
-            use_yn = #{cdUseYn}  <!-- Change jdbcType to VARCHAR -->
-        WHERE 
-            grp_cd_id = #{cdId}
-    </if>
-    <if test="'Y'.equals(cdUseYn)"> 
-        UPDATE 
-            GROUP_CODE_DETAIL
-        SET 
-            use_yn = #{cdUseYn}  <!-- Change jdbcType to VARCHAR -->
-        WHERE 
-            grp_cd_id = #{cdId}
-            and
-            use_yn ='Y'
-    </if>
+	<update id="grpUpdate2"
+		parameterType="kr.co.kccbrew.sysMng.cdMng.model.CdMngVo">
+		<if test="'N'.equals(cdUseYn)">
+			UPDATE
+			GROUP_CODE_DETAIL
+			SET
+			MOD_DTTM = SYSDATE,
+			MOD_USER = #{cdModUser},
+			use_yn = #{cdUseYn}  <!-- Change jdbcType to VARCHAR -->
+			WHERE
+			grp_cd_id = #{cdId}
+		</if>
+		<if test="'Y'.equals(cdUseYn)">
+			UPDATE
+			GROUP_CODE_DETAIL
+			SET
+			use_yn = #{cdUseYn}  <!-- Change jdbcType to VARCHAR -->
+			WHERE
+			grp_cd_id = #{cdId}
+			and
+			use_yn ='Y'
+		</if>
 
-</update>
+	</update>
 
 </mapper>
