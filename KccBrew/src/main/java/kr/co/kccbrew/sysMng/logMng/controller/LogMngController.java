@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.common.collect.Lists;
 
@@ -39,6 +40,17 @@ public class LogMngController {
 		return "log/logtest";
 	}
 
+	/* 로깅 테스트 컨트롤러 */
+	@RequestMapping("/logtest2")
+	@ResponseBody
+	public String logTest2(HttpServletRequest request, 
+			HttpServletResponse response) {
+		LogMngVo logVo = new LogMngVo();
+		List<LogMngVo> logList = logService.selectSearchedLogs(logVo, 1);
+
+		return "i am log mapper";
+	}
+
 
 	/* 로그조회 */
 	@GetMapping("/log")
@@ -51,21 +63,15 @@ public class LogMngController {
 
 		log.info("이세은 LogController#log: currentPage={}, searchContent={}", currentPage, searchContent);
 
-		List<LogMngVo> logs = logService.getRetrievedLogs(searchContent);
+		List<LogMngVo> selectedLogs = logService.selectSearchedLogs(searchContent, currentPage);
 		int totalPage = 0;
-		int totalLog = 0;
+		int totalLogCount = logService.getSearchedLogsCount(searchContent);
 		int sharePage = 0;
 
 		//   paging처리
-		if (logs != null && !logs.isEmpty()) {
-			log.info("검색된 첫번째 로그 logs={}", logs.get(0));
-			totalLog = logs.size();
-			int partitionSize = 10;
-			List<List<LogMngVo>> partitionedList = Lists.partition(logs, partitionSize);
-			totalPage = partitionedList.size();
-			logs = partitionedList.get(currentPage-1);
+		if (selectedLogs != null && !selectedLogs.isEmpty()) {
+			totalPage = (int) Math.ceil(totalLogCount/10);
 		} else {
-			log.info("logs={}", logs);
 		}
 
 		if (currentPage == 1) {
@@ -78,8 +84,9 @@ public class LogMngController {
 		model.addAttribute("currentPage", currentPage);
 		model.addAttribute("sharePage", sharePage);
 
-		model.addAttribute("totalLog", totalLog);
-		model.addAttribute("logs", logs);
+		model.addAttribute("totalLog", totalLogCount);
+		model.addAttribute("logs", selectedLogs);
+
 
 
 		return "log/logMngList";

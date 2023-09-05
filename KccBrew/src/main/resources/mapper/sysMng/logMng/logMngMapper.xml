@@ -70,23 +70,28 @@
 		''"> AND USR_TYP = #{userType} </if> <if test="ip != null and ip != ''"> 
 		AND IP_ADDR = #{ip} </if> <if test="statusCode != null and statusCode != 
 		''"> AND RSPN_STTS_CODE = #{statusCode} </if> order by LOG_SEQ asc </select> -->
-	<select id="selectRetrievedLogs" resultMap="logResult"
-		parameterType="kr.co.kccbrew.sysMng.logMng.model.LogMngVo">
-		SELECT LOG_SEQ,
-		TO_TIMESTAMP(
-		TO_CHAR(LOG_DTTM, 'YYYY-MM-DD HH24:MI:SS'),
-		'YYYY-MM-DD HH24:MI:SS'
-		) AS LOG_DTTM,
-		IP_ADDR, USER_ID, API_ENDPOINT, RSPN_STTS_CODE, USR_TYP, VIEW_TMPLT
+
+
+
+	<!-- 검색된 로그 조회 -->
+	<select id="selectSearchedLogs" resultMap="logResult"
+		parameterType="java.util.Map">
+		SELECT LOG_SEQ, TO_TIMESTAMP(TO_CHAR(LOG_DTTM, 'YYYY-MM-DD
+		HH24:MI:SS'), 'YYYY-MM-DD HH24:MI:SS') AS LOG_DTTM, IP_ADDR, USER_ID,
+		API_ENDPOINT, RSPN_STTS_CODE, USR_TYP, VIEW_TMPLT
 		FROM (
-		SELECT * FROM log
+		SELECT
+		ROW_NUMBER() OVER(ORDER BY LOG_SEQ) AS ROW_NUM, LOG.*
+		FROM LOG
 		WHERE 1=1
+
+		<!-- 검색 조건 -->
 		<if
 			test="startYr != null and startYr != '' and startMn != null and startMn != ''">
         <![CDATA[
         AND (
-            EXTRACT(YEAR FROM LOG_DTTM) > #{startYr}
-            OR (EXTRACT(YEAR FROM LOG_DTTM) = #{startYr} AND EXTRACT(MONTH FROM LOG_DTTM) >= #{startMn})
+            EXTRACT(YEAR FROM LOG_DTTM) > #{logMngVo.startYr}
+            OR (EXTRACT(YEAR FROM LOG_DTTM) = #{logMngVo.startYr} AND EXTRACT(MONTH FROM LOG_DTTM) >= #{logMngVo.startMn})
         )
         ]]>
 		</if>
@@ -94,31 +99,84 @@
 			test="endYr != null and endYr != '' and endMn != null and endMn != ''">
         <![CDATA[
         AND (
-            EXTRACT(YEAR FROM LOG_DTTM) < #{endYr}
-            OR (EXTRACT(YEAR FROM LOG_DTTM) = #{endYr} AND EXTRACT(MONTH FROM LOG_DTTM) <= #{endMn})
+            EXTRACT(YEAR FROM LOG_DTTM) < #{logMngVo.endYr}
+            OR (EXTRACT(YEAR FROM LOG_DTTM) = #{endYr} AND EXTRACT(MONTH FROM LOG_DTTM) <= #{logMngVo.endMn})
         )
         ]]>
 		</if>
 		<if test="uri != null and uri != ''">
-			AND API_ENDPOINT = #{uri}
+			AND API_ENDPOINT = #{logMngVo.uri}
 		</if>
 		<if test="view != null and view != ''">
-			AND VIEW_TMPLT = #{view}
+			AND VIEW_TMPLT = #{logMngVo.view}
 		</if>
 		<if test="userId != null and userId != ''">
-			AND USER_ID = #{userId}
+			AND USER_ID = #{logMngVo.userId}
 		</if>
 		<if test="userType != null and userType != ''">
-			AND USR_TYP = #{userType}
+			AND USR_TYP = #{logMngVo.userType}
 		</if>
 		<if test="ip != null and ip != ''">
-			AND IP_ADDR = #{ip}
+			AND IP_ADDR = #{logMngVo.ip}
 		</if>
 		<if test="statusCode != null and statusCode != ''">
-			AND RSPN_STTS_CODE = #{statusCode}
+			AND RSPN_STTS_CODE = #{logMngVo.statusCode}
 		</if>
-		order by LOG_SEQ asc
 		)
+<![CDATA[ WHERE ROW_NUM BETWEEN #{firstRowNum} AND #{lastRowNum} ]]>
+	</select>
+
+
+
+
+	<!-- 검색된 로그 개수 조회 -->
+	<select id="getSearchedLogsCount"
+		parameterType="kr.co.kccbrew.sysMng.logMng.model.LogMngVo"
+		resultType="java.lang.Integer">
+		SELECT COUNT(*) FROM (
+		SELECT
+		ROW_NUMBER() OVER(ORDER BY LOG_SEQ) AS
+		ROW_NUM, LOG.*
+		FROM LOG
+		WHERE 1=1
+		<!-- 검색 조건 -->
+		<if
+			test="startYr != null and startYr != '' and startMn != null and startMn != ''">
+		<![CDATA[
+		AND (
+			EXTRACT(YEAR FROM LOG_DTTM) > #{logMngVo.startYr}
+			OR (EXTRACT(YEAR FROM LOG_DTTM) = #{logMngVo.startYr} AND EXTRACT(MONTH FROM LOG_DTTM) >= #{logMngVo.startMn})
+		)
+		]]>
+		</if>
+		<if
+			test="endYr != null and endYr != '' and endMn != null and endMn != ''">
+		<![CDATA[
+		AND (
+			EXTRACT(YEAR FROM LOG_DTTM) < #{logMngVo.endYr}
+			OR (EXTRACT(YEAR FROM LOG_DTTM) = #{endYr} AND EXTRACT(MONTH FROM LOG_DTTM) <= #{logMngVo.endMn})
+		)
+		]]>
+		</if>
+		<if test="uri != null and uri != ''">
+			AND API_ENDPOINT = #{logMngVo.uri}
+		</if>
+		<if test="view != null and view != ''">
+			AND VIEW_TMPLT = #{logMngVo.view}
+		</if>
+		<if test="userId != null and userId != ''">
+			AND USER_ID = #{logMngVo.userId}
+		</if>
+		<if test="userType != null and userType != ''">
+			AND USR_TYP = #{logMngVo.userType}
+		</if>
+		<if test="ip != null and ip != ''">
+			AND IP_ADDR = #{logMngVo.ip}
+		</if>
+		<if test="statusCode != null and statusCode != ''">
+			AND RSPN_STTS_CODE = #{logMngVo.statusCode}
+		</if>
+		) 
 	</select>
 
 
