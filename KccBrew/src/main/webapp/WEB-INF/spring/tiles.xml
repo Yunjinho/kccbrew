@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC
+  "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN"
+  "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+
+<tiles-definitions>
+
+	<!-- 기본 레이아웃 -->
+	<definition name="mainLayout" template="/WEB-INF/views/tiles/mainLayout.jsp">
+		<put-attribute name="title" value="" />
+		<put-attribute name="header" value="" />
+		<put-attribute name="contents" value="" />
+		<put-attribute name="footer" value="/WEB-INF/views/tiles/footer.jsp" />
+	</definition>
+ 	
+ 	
+ 	<!-- 관리자 페이지 -->
+	<definition name="adminPage" extends="mainLayout">
+		<put-attribute name="title" value="관리자 페이지" />
+		<put-attribute name="header" value="/WEB-INF/views/include/admin/adminheader.jsp" />
+		<put-attribute name="contents" value="/WEB-INF/views/include/admin/admincontents.jsp" />
+	</definition>
+	
+	<!-- 관리자 페이지 추가 확장,타이틀과 헤더 유지, contents만 변경 -->
+	<definition name="adminPageT1" extends="adminPage">
+		<put-attribute name="title" value="관리자 페이지" />
+		<put-attribute name="header" value="/WEB-INF/views/include/admin/adminheader.jsp" />
+		<put-attribute name="contents" value="" />
+	</definition>
+	
+	<!-- 수리기사 페이지 -->
+	<definition name="mechanicPage" extends="mainLayout">
+		<put-attribute name="title" value="수리 기사 페이지" />
+		<put-attribute name="header" value="/WEB-INF/views/include/mechanic/mechanicheader.jsp" />
+		<put-attribute name="contents" value="/WEB-INF/views/include/mechanic/mechaniccontents.jsp" />
+	</definition>
+	
+	
+	<!-- 점주 페이지 -->
+	<definition name="managerPage" extends="mainLayout">
+		<put-attribute name="title" value="점주 페이지" />
+		<put-attribute name="header" value="/WEB-INF/views/include/manager/managerheader.jsp" />
+		<put-attribute name="contents" value="/WEB-INF/views/include/manager/managercontents.jsp" />
+	</definition>
+	
+	<!-- 테스트 -->
+	<definition name="test" extends="mainLayout">
+		<put-attribute name="title" value="test" />
+		<put-attribute name="header" value="/WEB-INF/views/include/test/test.jsp" />
+		<put-attribute name="contents" value="/WEB-INF/views/include/test/test2.jsp" />
+	</definition>
+	
+</tiles-definitions>

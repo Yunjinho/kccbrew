@@ -1,0 +1,47 @@
+@charset "UTF-8";
+footer {
+    position: relative;
+    width: 100vw;
+    height: 100px;
+}
+#footer {
+	width:100vw;
+    color: #ffffff;
+}
+.f-top {
+	background-color: #636363;
+	display:flex;
+	justify-content:space-between;
+    width:100%;
+    height:40px;
+    line-height: 40px;
+    font-style: italic;
+    padding: 0 210px;
+}
+.f-btn {
+	font-style: normal;
+	background-color: #004080;
+	border: 1px solid #004080;
+	font-size:0.9em;
+	padding:0 5px;
+	cursor:pointer;
+}
+.num {
+	font-size:1em;
+	font-style: normal;
+}
+.f-bottom {
+	background-color:#4a4a4a;
+    width:100%;
+    height:60px;
+    line-height:30px;
+    font-size: 0.8em;
+    padding: 0 210px;
+}
+
+.f-info, .f-info2 {	
+	float:left;
+}
+.f-info2 {
+	clear:both;
+}

@@ -11,18 +11,13 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <link rel="stylesheet" href="${path}/resources/css/comm/reset.css" >
-<link rel="stylesheet" href="${path}/resources/css/comm/header.css" >
 <link rel="stylesheet" href="${path}/resources/css/comm/mainpage.css"/>
 <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/fullcalendar@5.8.0/main.min.css'/>
 <script src="http://code.jquery.com/jquery-latest.js"></script> 
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.min.js" integrity="sha384-Rx+T1VzGupg4BHQYs2gCW9It+akI2MM/mndMCy36UVfodzcJcF0GGLxZIzObiEfa" crossorigin="anonymous"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.8.0/main.min.js'></script>
 <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.8.0/locales-all.min.js'></script>
 <script src="${path}/resources/js/comm/calendar.js"></script>
-<script src="${path}/resources/js/comm/comm.js"></script>
-<script src="${path}/resources/js/comm/header.js"></script>
 </head>
 <body>
 	<div class="body-wrapper">
@@ -42,24 +37,24 @@
 					</thead>
 					<tbody>
 						<c:forEach var="main" items="${asList}">
-                            <c:if test="${main.asStatus == 'S_01'}">
+                            <c:if test="${main.asStatus == '01'}">
                                 <tr>
                                     <td><c:out value="${main.asInfoNum}" /></td>
                                     <td>
                                         <c:choose>
-                                            <c:when test="${main.asStatus == 'S_01'}">접수 중</c:when>
-                                            <c:when test="${main.asStatus == 'S_02'}">반려</c:when>
-                                            <c:when test="${main.asStatus == 'S_03'}">접수 완료</c:when>
-                                            <c:when test="${main.asStatus == 'S_04'}">처리 완료</c:when>
+                                            <c:when test="${main.asStatus == '01'}">접수 중</c:when>
+                                            <c:when test="${main.asStatus == '02'}">반려</c:when>
+                                            <c:when test="${main.asStatus == '03'}">접수 완료</c:when>
+                                            <c:when test="${main.asStatus == '04'}">처리 완료</c:when>
                                         </c:choose>
                                     </td>
                                     <td>
                                         <c:choose>
-                                            <c:when test="${main.machineCode == 'M_01'}">커피머신</c:when>
-                                            <c:when test="${main.machineCode == 'M_02'}">냉장고</c:when>
-                                            <c:when test="${main.machineCode == 'M_03'}">제빙기</c:when>
-                                            <c:when test="${main.machineCode == 'M_04'}">에어컨</c:when>
-                                            <c:when test="${main.machineCode == 'M_05'}">온수기</c:when>
+                                            <c:when test="${main.machineCode == '01'}">커피머신</c:when>
+                                            <c:when test="${main.machineCode == '02'}">냉장고</c:when>
+                                            <c:when test="${main.machineCode == '03'}">제빙기</c:when>
+                                            <c:when test="${main.machineCode == '04'}">에어컨</c:when>
+                                            <c:when test="${main.machineCode == '05'}">온수기</c:when>
                                         </c:choose>
                                     </td>
                                     <td><c:out value="${main.managerName}" /></td>
@@ -83,17 +78,17 @@
 						</tr>
 					</thead>
 					<tbody>
-						<c:forEach var="main" items="${assignList}">
+						<c:forEach var="main" items="${asAssignList}">
 							<tr>
 								<td><c:out value="${main.asAssignNum}"/></td>
 								<td><fmt:formatDate value="${main.visitDate}" pattern="yyyy-MM-dd" /></td>
 			                    <td>
 			                        <c:choose>
-			                            <c:when test="${main.machineCode == 'M_01'}">커피머신</c:when>
-			                            <c:when test="${main.machineCode == 'M_02'}">냉장고</c:when>
-			                            <c:when test="${main.machineCode == 'M_03'}">제빙기</c:when>
-			                            <c:when test="${main.machineCode == 'M_04'}">에어컨</c:when>
-			                            <c:when test="${main.machineCode == 'M_05'}">온수기</c:when>
+			                            <c:when test="${main.machineCode == '01'}">커피머신</c:when>
+			                            <c:when test="${main.machineCode == '02'}">냉장고</c:when>
+			                            <c:when test="${main.machineCode == '03'}">제빙기</c:when>
+			                            <c:when test="${main.machineCode == '04'}">에어컨</c:when>
+			                            <c:when test="${main.machineCode == '05'}">온수기</c:when>
 			                        </c:choose>
 			                    </td>
 			                    <td>강남점</td>
@@ -121,19 +116,19 @@
 								<td><c:out value="${main.asAssignNum}"/></td>
 								 <td>
 			                        <c:choose>
-			                            <c:when test="${main.machineCode == 'M_01'}">커피머신</c:when>
-			                            <c:when test="${main.machineCode == 'M_02'}">냉장고</c:when>
-			                            <c:when test="${main.machineCode == 'M_03'}">제빙기</c:when>
-			                            <c:when test="${main.machineCode == 'M_04'}">에어컨</c:when>
-			                            <c:when test="${main.machineCode == 'M_05'}">온수기</c:when>
+			                            <c:when test="${main.machineCode == '01'}">커피머신</c:when>
+			                            <c:when test="${main.machineCode == '02'}">냉장고</c:when>
+			                            <c:when test="${main.machineCode == '03'}">제빙기</c:when>
+			                            <c:when test="${main.machineCode == '04'}">에어컨</c:when>
+			                            <c:when test="${main.machineCode == '05'}">온수기</c:when>
 			                        </c:choose>
 			                    </td>
 								<td>
 									<c:choose>
-										<c:when test="${main.asStatus == 'S_01'}">접수 중</c:when>
-										<c:when test="${main.asStatus == 'S_02'}">반려</c:when>
-										<c:when test="${main.asStatus == 'S_03'}">접수 완료</c:when>
-										<c:when test="${main.asStatus == 'S_04'}">수리 완료</c:when>
+										<c:when test="${main.asStatus == '01'}">접수 중</c:when>
+										<c:when test="${main.asStatus == '02'}">반려</c:when>
+										<c:when test="${main.asStatus == '03'}">접수 완료</c:when>
+										<c:when test="${main.asStatus == '04'}">수리 완료</c:when>
 									</c:choose>
 								 </td>
 								<td>동대문점</td>
@@ -163,6 +158,7 @@
 									<td><c:out value="${main.userTelNo}"/></td>
 									<td>
 										<c:choose>
+											<c:when test="${main.userType == '01'}">관리자</c:when>
 											<c:when test="${main.userType == '02'}">점주</c:when>
 											<c:when test="${main.userType == '03'}">수리 기사</c:when>
 										</c:choose>
@@ -184,7 +180,7 @@
 				<div class="user-profile">
 					<div class="inner-box">
 						<span class="name">노건우</span>님 <br><br>
-						<span class="job">관리자</span> <br><br><br><br><br><br><br>
+						<span class="job">관리자</span> <br><br><br><br><br><br>
 					</div>
 					<div class="buttons">
 						<button class="chpwd">비밀번호 변경</button> 
@@ -197,9 +193,16 @@
 						as 접수 안내
 					</div>
 				</div>
-				<div class="something">
+				<div class="toKccBrew">
 					<div class="inner-box">
-						etc
+						<a href="#">
+							<img alt="logo"  src="${path}/resources/img/kcc.png">
+						</a>
+						<a href="#">
+							<button class="kcclink">
+								KccBrew 홈페이지로 이동 ▶
+							</button>
+						</a>
 					</div>
 				</div>
 			</div>
@@ -230,11 +233,11 @@
 		                                    <td><fmt:formatDate value="${main.visitDate}" pattern="yyyy-MM-dd" /></td>
 		                                    <td>
 		                                        <c:choose>
-		                                            <c:when test="${main.machineCode == 'M_01'}">커피머신</c:when>
-		                                            <c:when test="${main.machineCode == 'M_02'}">냉장고</c:when>
-		                                            <c:when test="${main.machineCode == 'M_03'}">제빙기</c:when>
-		                                            <c:when test="${main.machineCode == 'M_04'}">에어컨</c:when>
-		                                            <c:when test="${main.machineCode == 'M_05'}">온수기</c:when>
+		                                            <c:when test="${main.machineCode == '01'}">커피머신</c:when>
+		                                            <c:when test="${main.machineCode == '02'}">냉장고</c:when>
+		                                            <c:when test="${main.machineCode == '03'}">제빙기</c:when>
+		                                            <c:when test="${main.machineCode == '04'}">에어컨</c:when>
+		                                            <c:when test="${main.machineCode == '05'}">온수기</c:when>
 		                                        </c:choose>
 		                                    </td>
 		                                    <td>강남점</td>
@@ -262,11 +265,11 @@
 			                                <td><fmt:formatDate value="${main.visitDate}" pattern="yyyy-MM-dd" /></td>
 			                                <td>
 			                                    <c:choose>
-			                                        <c:when test="${main.machineCode == 'M_01'}">커피머신</c:when>
-			                                        <c:when test="${main.machineCode == 'M_02'}">냉장고</c:when>
-			                                        <c:when test="${main.machineCode == 'M_03'}">제빙기</c:when>
-			                                        <c:when test="${main.machineCode == 'M_04'}">에어컨</c:when>
-			                                        <c:when test="${main.machineCode == 'M_05'}">온수기</c:when>
+			                                        <c:when test="${main.machineCode == '01'}">커피머신</c:when>
+			                                        <c:when test="${main.machineCode == '02'}">냉장고</c:when>
+			                                        <c:when test="${main.machineCode == '03'}">제빙기</c:when>
+			                                        <c:when test="${main.machineCode == '04'}">에어컨</c:when>
+			                                        <c:when test="${main.machineCode == '05'}">온수기</c:when>
 			                                    </c:choose>
 			                                </td>
 			                                <td>강남점</td>
@@ -294,11 +297,11 @@
 			                                <td><fmt:formatDate value="${main.visitDate}" pattern="yyyy-MM-dd" /></td>
 			                                <td>
 			                                    <c:choose>
-			                                        <c:when test="${main.machineCode == 'M_01'}">커피머신</c:when>
-			                                        <c:when test="${main.machineCode == 'M_02'}">냉장고</c:when>
-			                                        <c:when test="${main.machineCode == 'M_03'}">제빙기</c:when>
-			                                        <c:when test="${main.machineCode == 'M_04'}">에어컨</c:when>
-			                                        <c:when test="${main.machineCode == 'M_05'}">온수기</c:when>
+			                                        <c:when test="${main.machineCode == '01'}">커피머신</c:when>
+			                                        <c:when test="${main.machineCode == '02'}">냉장고</c:when>
+			                                        <c:when test="${main.machineCode == '03'}">제빙기</c:when>
+			                                        <c:when test="${main.machineCode == '04'}">에어컨</c:when>
+			                                        <c:when test="${main.machineCode == '05'}">온수기</c:when>
 			                                    </c:choose>
 			                                </td>
 			                                <td>강남점</td>

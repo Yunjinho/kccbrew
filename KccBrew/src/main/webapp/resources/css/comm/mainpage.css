@@ -14,10 +14,7 @@
 	  font-family: 'notosans';
 	  font-size: 14px;
 	}
-	html {
-		background-color: #eef4ff;
-		
-	}
+	
 	ul, li {
 		list-style: none;
 	}
@@ -34,7 +31,6 @@
 		padding: 30px 200px;
 		height:100vh;
 		flex-direction: column;
-		margin-bottom:100px;
 	}
 		
 /*************** 상단 메뉴 *************************/
@@ -121,6 +117,7 @@
 	}
 
 	.user-profile {
+		height:226px;
 		margin-bottom:10px;
 		box-sizing:border-box;
 		flex:1;
@@ -138,28 +135,39 @@
 	.buttons {
 		text-align: center;
 	}
-	.chpwd {
+	.chpwd, .logout {
 		color:#ffffff;
 		cursor: pointer;
 		font-weight: normal;
-		font-size:1.1em;
+		font-size:1em;
+		margin-bottom: 5px;
 	}
-	.logout {
-		color:#ffffff;
-		cursor: pointer;
-		font-weight: normal;
-		font-size:1.1em;
+	.chpwd:hover, .logout:hover {
+		text-decoration: underline;
 	}
 	.as-guide {
+		height:226px;
 		flex:1;
 		margin-bottom:10px;
 		color:yellow;
 		background-color: green;
 	}
-	.something {
+	.toKccBrew {
+		height:226px;
+		text-align:center;
 		flex:1;
 		color:navy;
-		background-color: silver;
+		background-color: #ffffff;
+	}
+	.inner-box img{
+		width:160px;
+		height:160px;
+	}
+	.kcclink {
+		cursor:pointer;
+		border:3px solid #f9b037;
+		color:#111111;
+		border-radius: 10px;
 	}
 	
 	

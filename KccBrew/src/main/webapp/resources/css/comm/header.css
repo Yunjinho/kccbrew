@@ -37,6 +37,9 @@
 	color:#ffffff;
 	cursor: pointer;
 }
+.logout-btn:hover {
+	text-decoration: underline;
+}
 /********* nav 바 *************/
 .nav-bar{
 	position:relative;
