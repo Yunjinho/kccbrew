@@ -80,6 +80,7 @@ function movePage(page){
 			'page':page
 		},
 	    success : function(data) { // 결과 성공 콜백함수
+	    	console.log(data)
 			insertTableContent(data);
 			insertPageContent(data);					
 	    }
@@ -92,8 +93,8 @@ function insertPageContent(data){
 
 	
 	if (data[1].nowPageBlock > 1) {//첫 페이지 블럭
-		inputPagingString += '<li class="page-number">' + '<p onclick=movePage"'
-							+ (data[1].startPage - 1) + ')">◀</p>\n' + '</li>\n';
+		inputPagingString += '<li class="page-number">' + '<p onclick=movePage('
+							+ (data[1].startPage - 1) + ')>◀</p>\n' + '</li>\n';
 	}
 	for (var i = data[1].startPage; i <= data[1].endPage; i++) {
 		if (i == data[1].nowPage) {

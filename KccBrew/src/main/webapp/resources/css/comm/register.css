@@ -236,15 +236,14 @@
     border-radius: 50%;
     background-color: rgb(108 136 213);
     width: 86px;
+    height:80px;
     margin: 3%;
 }
 
 
 .register .servicezone div{
 	display:flex;
-	width:80%;
 }
-
 .register .servicezone h4{
 	margin-bottom:20px;
 }

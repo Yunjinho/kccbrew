@@ -3,9 +3,11 @@
 <html>
 <head>
 	<title>Home</title>
-	<script type="text/javascript">
-    	/* window.location.href = "/comm/main.jsp"; */
-	</script>
+<script>
+window.onload()=function(){
+	location.href=""
+}
+</script>
 </head>
 <body>
 <h1>

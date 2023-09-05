@@ -6,11 +6,6 @@
 	margin:0 auto ; 
 }
 
-.wrap:after{
-	clear:both; 
-	display:block; 
-	content:"";
-}
 .login #footer{
 	margin-top:80px;
 }
@@ -54,11 +49,6 @@
 .login .loginbox .login_01{
 	margin-top:25px; 
 }
-.login .loginbox .login_01:after{
-	clear:both;
-	 display:block; 
-	 content:"";
- }
 .login .loginbox .login_01 fieldset{
 	display:inline-block; 
 	width:255px;  
@@ -66,7 +56,6 @@
 	margin:6%; 
 	border:none;
 }
-
 .login .loginbox .login_01 fieldset div {
 	display:flex;
 	margin:5% 0%;
