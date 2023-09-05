@@ -3,20 +3,23 @@ package kr.co.kccbrew.strMng.controller;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import kr.co.kccbrew.strMng.model.StrMngVo;
 import kr.co.kccbrew.strMng.service.IStrMngService;
@@ -52,7 +55,7 @@ public class StrMngController {
 		StrMngVo store = storeService.storeDetail(storeSeq);
 		List<StrMngVo> list = storeService.ownerList(storeSeq);
 		model.addAttribute("list",list);
-		model.addAttribute(store);
+		model.addAttribute("store",store);
 		return "strMng/strMngDtl";
 	}
 	
@@ -68,12 +71,13 @@ public class StrMngController {
 	}
 	
 	/* 점포등록 */
-	@RequestMapping(value="/store/insert", method= RequestMethod.POST)
+	@RequestMapping(value="/store/insert", method= RequestMethod.POST, produces = "application/text; charset=utf8")
 	public String insert(StrMngVo store, Model model){
+		System.out.println(store);
 		store.setRegUser("test");
 		store.setModUser("test");
 		storeService.insert(store);
-		model.addAttribute(store);
+		model.addAttribute("store",store);
 		return "redirect:/store";
 	}
 	
@@ -83,9 +87,10 @@ public class StrMngController {
 		StrMngVo store = storeService.storeDetail(storeSeq);
 		List<StrMngVo> list = storeService.locationNm();
 		List<StrMngVo> seoullist = storeService.locationNmSeoul();//지역상세리스트
+		System.out.println(storeSeq);
 		model.addAttribute("seoullist",seoullist);
 		model.addAttribute("list",list);
-		model.addAttribute(store);
+		model.addAttribute("store",store);
 		return "strMng/strMngMod";
 	}
 	
@@ -94,26 +99,29 @@ public class StrMngController {
 	public String update(Model model, StrMngVo store) {
 		store.setModUser("test");
 		storeService.update(store);
-		model.addAttribute(store);
+		model.addAttribute("store",store);
 		return "redirect:/store";
 	}
 	
 	/* 점포명중복체크 */
-	@RequestMapping(value = "/api/namecheck", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<String> nameCheck(@RequestBody HashMap<String, Object> store) {
-		String storeNm = (String) store.get("storetest");
-
-		// 데이터베이스에서 이미 존재하는지 확인
-		StrMngVo existingStore = storeService.selectStoreByName(storeNm);
-		if (existingStore != null) {
-			// 이미 존재하는 에러 응답을 반환
-//			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("이미 존재하는 이름입니다.");
-			return null;
-		}
-
-		logger.info("storeNm: " + store.get("storeNm"));
-//		return ResponseEntity.status(HttpStatus.OK).body("사용가능한 점포명입니다.");
-		return null;
+	@RequestMapping(value = "/api/namecheck", method = RequestMethod.POST)
+	@ResponseBody
+	public String nameCheck(@RequestBody String storeNm) {
+		storeNm = storeNm.replaceAll("\"", "");
+	    System.out.println(storeNm);
+	    System.out.println("-------------------------------------------");
+	    String check;
+	    // 데이터베이스에서 이미 존재하는지 확인
+	    StrMngVo existingStore = storeService.selectStoreByName(storeNm);
+	    System.out.println(storeNm);
+	    System.out.println(existingStore);
+	   if(existingStore==null) {
+		   check="1";
+	   }else{
+		   check="2";
+	}
+	    System.out.println("dddddddddddddddddddddddddddddddddddddddddd");
+	    return check;
 	}
 	
 	/* 점포검색 */
