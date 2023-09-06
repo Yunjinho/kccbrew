@@ -11,7 +11,7 @@
 </head>
 <header class="comm-nav" >
 	<div class="top-bar">
-		###(관리자)님 환영합니다
+		###(수리기사)님 환영합니다
 		<button class="logout-btn">
 			로그아웃
 		</button>
