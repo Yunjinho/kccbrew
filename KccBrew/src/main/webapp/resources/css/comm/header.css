@@ -45,7 +45,7 @@
 	position:relative;
 	z-index:9990;
 	padding: 0 200px;
-	height: 60px;
+	height: 70px;
 	background-color: #ffffff;
 	display: flex;
 	justify-content: space-around;
@@ -56,12 +56,14 @@
 	flex:0.2;
 }
 
+.navbar-brand {
+	height:60px;
+	line-height: 60px;
+}
 /** 로고 이미지 **/
 .navbar-brand img{
-	position:relative;
-	top:-15px;
-	width:90px;
-	height:90px;
+	width:200px;
+	height:70px;
 	cursor: pointer;
 }
 
@@ -74,7 +76,7 @@
 }
 
 .nav-pills{
-	height:60px;
+	height:70px;
 	margin:0;
 	padding:0;
 	list-style:none;
@@ -87,8 +89,8 @@
 }
 
 .nav-link{
-	height:60px;
-	line-height:60px;
+	height:70px;
+	line-height:70px;
 	font-size:0.9em;
 	color:#111111;
 	text-decoration: none;

@@ -26,7 +26,11 @@ public class MainController {
 		return "loginPage";
 	}
 	
-	
+	/**************** 회원가입 페이지 *****************************/
+	@RequestMapping(value="/goRegisterPage", method=RequestMethod.GET)
+	public String goRegisterPage(Model model) {
+		return "registerPage";
+	}
 	
 	/******************  관리자 페이지 **************************/
 	@RequestMapping(value="/test", method=RequestMethod.GET)

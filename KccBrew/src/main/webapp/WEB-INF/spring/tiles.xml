@@ -16,9 +16,15 @@
  	<!-- 로그인 페이지 -->
  	<definition name="loginPage" extends="mainLayout">
 		<put-attribute name="title" value="로그인 페이지" />
-		<put-attribute name="contents" value="/WEB-INF/views/comm/login.jsp" />
+		<put-attribute name="contents" value="/WEB-INF/views/comm/login/login.jsp" />
 	</definition>
- 	
+	
+	<!-- 회원가입 페이지 -->
+ 	<definition name="registerPage" extends="mainLayout">
+		<put-attribute name="title" value="회원가입 페이지" />
+		<put-attribute name="contents" value="/WEB-INF/views/comm/register/register.jsp" />
+	</definition>
+	
  	<!-- 관리자 페이지 -->
 	<definition name="adminPage" extends="mainLayout">
 		<put-attribute name="title" value="관리자 페이지" />

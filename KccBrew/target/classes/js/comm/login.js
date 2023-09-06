@@ -31,7 +31,6 @@ function login(){
                         }
                     }
                 });
-				/*location.href="/main"*/
 			}else{
 				$("#login-msg").html(data);
 				$("#login-msg").css("display","block");

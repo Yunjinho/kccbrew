@@ -1,14 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
-<head>
-<link rel="stylesheet" href="${path}/resources/css/comm/reset.css" >
-<link rel="stylesheet" href="${path}/resources/css/comm/header.css" >
-<script src="http://code.jquery.com/jquery-latest.js"></script> 
-<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
-<script src="${path}/resources/js/comm/header.js"></script>
-</head>
+
 <header class="comm-nav" >
 	<div class="top-bar">
 		###(점주)님 환영합니다
@@ -18,7 +13,10 @@
 	</div>
 	<nav class="nav-bar">
 		<div class="navbar-brand">
-			<img alt="logo"  src="${path}/resources/img/kcc.png">
+			<c:url var="toMain" value="/managerMain" />
+			<a href="${toMain}">
+				<img alt="logo"  src="${path}/resources/img/logo.png">
+			</a>
 		</div>
 		<div class="nav-box">
 			<ul class="nav-pills">

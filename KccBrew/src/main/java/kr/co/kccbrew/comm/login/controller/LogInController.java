@@ -39,7 +39,7 @@ public class LogInController {
 	
 	@RequestMapping(value="/loginpage" , method=RequestMethod.GET)
 	public String login() {
-		return "comm/login";
+		return "loginPage";
 	}
 	
 	/** 로그인 처리 */
