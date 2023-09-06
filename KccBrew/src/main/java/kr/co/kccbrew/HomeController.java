@@ -24,6 +24,7 @@ public class HomeController {
 	
 	/**
 	 * Simply selects the home view to render by returning its name.
+	 */
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(Locale locale, Model model,HttpServletRequest httpServletRequest) {
 		logger.info("Welcome home! The client locale is {}.", locale);
@@ -40,5 +41,5 @@ public class HomeController {
         // 세션에 userId를 넣어줌
 		return "home";
 	}
-	*/
+	
 }

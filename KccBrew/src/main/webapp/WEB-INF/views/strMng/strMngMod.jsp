@@ -55,6 +55,7 @@
 					<th>지역분류</th>
 					<td><select id="location" name="locationCd" size="3">
 							<option value="">지역선택</option>
+							<option value="02">서울</option>
 							<c:forEach var="list" items="${list}">
 								<option value="${list.locationCd}"
 									${store.locationCd == list.locationCd ? 'selected' : ''}>${list.locationNm}</option>
@@ -157,7 +158,6 @@
 
     nameCheckBtn.addEventListener("click", function() {
         const storeNm = document.getElementById("storeNm").value;
-console.log(storeNm);
         if (!storeNm) {
             alert("점포명을 입력해주세요.");
             return;
@@ -181,7 +181,7 @@ console.log(storeNm);
                     document.getElementById("storeNmHidden").value = storeNm;
                 } else {
                     alert("이미 존재하는 점포명입니다.");
-                    // 이후 원하는 동작 수행
+                    document.getElementById("submitBtn").disabled = true;
                 }
             },
             error: function (error) {
@@ -193,13 +193,16 @@ console.log(storeNm);
     
     function submitForm() {
         var form = document.getElementById("storeForm");
+        storeNm.value = storeNm.value.replace(/,/g, ''); 
         console.log(storeNm);
         $.ajax({
             type: "POST",
             url: form.getAttribute("action"),
             data: $(form).serialize(),
-            contentType: "application/x-www-form-urlencoded; charset=UTF-8",  success: function (response) {
+            contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+            success: function (response) {
                 var Close = confirm("저장이 완료되었습니다. 창을 닫으시겠습니까?");
+                console.log(storeNm);
                 if (Close) {
                     window.opener.location.reload();
                     window.close();

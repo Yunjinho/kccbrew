@@ -74,7 +74,8 @@ public class RegisterController {
 		model.addAttribute("endPage", endPage);
 		model.addAttribute("storeList", storeList);
 		model.addAttribute("keyword", "");
-		return "/comm/register/register";
+		
+		return "/comm/register";
 	}
 	
 	/** 점포 검색 */
@@ -116,7 +117,7 @@ public class RegisterController {
 		}
 		result.add(storeJa);
 		
-		pageInfo.put("storeListCount", storeListCount);
+		pageInfo.put("productCount", storeListCount);
 		pageInfo.put("totalPageCount", totalPage);
 		pageInfo.put("nowPage", page);
 		pageInfo.put("totalPageBlock", totalPageBlock);
@@ -130,6 +131,7 @@ public class RegisterController {
 		JSONObject keywordJo= new JSONObject(searchWord);
 
 		result.add(keywordJo);
+		
 		return result;
 	}
 	
@@ -157,8 +159,9 @@ public class RegisterController {
 	/** 회원가입 처리*/
 	@RequestMapping(value="/register" , method=RequestMethod.POST)
 	public String register(RegisterVo user) {
+		System.out.println(user);
 		registerService.registerUser(user);
-		return "comm/login/login";
+		return "comm/login";
 	}
 	
 }
