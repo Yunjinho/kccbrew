@@ -13,8 +13,7 @@ public class SchdlMngVo {
 	private String userType;
 	private String userName;
 	private String userPhoneNumber;
-	private String location;
-	private String subLocation;
+	private String location; // sub-location이 있는경우는 sub-location 값 할당
 	private String dateType; // 근무·휴무 구분
 	private Date date;
 	

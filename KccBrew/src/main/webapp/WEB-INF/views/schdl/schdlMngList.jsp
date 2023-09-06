@@ -273,22 +273,22 @@
 									<div id="content">
 										<h2 class="heading">스케줄 조회</h2>
 										<!-- 로그 검색 -->
-										<form action="/schedule/{userId}" method="get">
+										<form action="/schedule/${userId}" method="get">
 											<table id="search-box">
 												<!-- 1행 -->
 												<c:set var="today" value="<%=new java.util.Date()%>" />
 												<fmt:formatDate value="${today}" pattern="yyyy"
 													var="nowYear" />
 												<tr>
-
 													<th>근무구분</th>
 													<td><select class="tx2" name="dateType"
 														onchange="javascript:chg();">
 															<option value="">근무구분</option>
-															<option value="근무">근무</option>
-															<option value="휴무">휴무</option>
+															<option value="근무"
+																${param.dateType == '근무' ? 'selected' : ''}>근무</option>
+															<option value="휴무"
+																${param.dateType == '휴무' ? 'selected' : ''}>휴무</option>
 													</select></td>
-
 													<th>기간</th>
 													<!-- 시작 연도 선택 필드 -->
 													<td><select class="tx2" name="startYr" id="yr"
@@ -300,7 +300,6 @@
 																	${param.startYr == year ? 'selected' : ''}>${year}년</option>
 															</c:forEach>
 													</select></td>
-
 													<!-- 시작 월 선택 필드 -->
 													<td><select class="tx2" name="startMn" id="mn">
 															<option value="">월</option>
@@ -309,9 +308,7 @@
 																	${param.startMn == month ? 'selected' : ''}>${month}월</option>
 															</c:forEach>
 													</select></td>
-
 													<td>~</td>
-
 													<!-- 종료 연도 선택 필드 -->
 													<td><select class="tx2" name="endYr" id="yr"
 														onchange="javascript:chg();">
@@ -322,7 +319,6 @@
 																	${param.endYr == year ? 'selected' : ''}>${year}년</option>
 															</c:forEach>
 													</select></td>
-
 													<!-- 종료 월 선택 필드 -->
 													<td><select class="tx2" name="endMn" id="mn">
 															<option value="">월</option>
@@ -331,18 +327,16 @@
 																	${param.endMn == month ? 'selected' : ''}>${month}월</option>
 															</c:forEach>
 													</select></td>
-
 													<td>
 														<button type="submit" onclick="" class="form-btn">이동</button>
 													</td>
 												</tr>
 
-
 												<!-- 2행 -->
 												<tr>
 													<th>ID</th>
 													<td colspan="2"><input type="search" name="userId"
-														placeholder="사용자ID를 입력하세요" value="1"></td>
+														placeholder="사용자ID를 입력하세요" value="${param.userId}"></td>
 													<th>이름</th>
 													<td colspan="2"><input type="search" name="userName"
 														placeholder="사용자ID를 입력하세요" value="${param.userName}"></td>
@@ -350,31 +344,38 @@
 													<td colspan="2"><input type="search"
 														name="userPhoneNumber" placeholder="사용자ID를 입력하세요"
 														value="${param.userPhoneNumber}"></td>
-
 													<th>지역</th>
 													<td><select class="tx2" name="location"
 														onchange="chg()">
 															<option value="">지역 대분류</option>
-															<option value="2">서울</option>
-															<option value="31">경기도</option>
-															<option value="32">인천</option>
+															<option value="2"
+																${param.location == '2' ? 'selected' : ''}>서울</option>
+															<option value="31"
+																${param.location == '31' ? 'selected' : ''}>경기도</option>
+															<option value="32"
+																${param.location == '32' ? 'selected' : ''}>인천</option>
 													</select></td>
 													<td><select class="tx2" name="subLocation" disabled>
 															<option value="">지역 소분류</option>
-															<option value="02-200">양천</option>
-															<option value="02-300">은평,마포,서대문</option>
-															<option value="02-400">송파,강동,중량,광진,선동</option>
-															<option value="02-500">서초,강남,과천시</option>
-															<option value="02-700">마포, 용산, 종로</option>
-															<option value="031-200">수원시</option>
+															<option value="02-200"
+																${param.subLocation == '02-200' ? 'selected' : ''}>양천</option>
+															<option value="02-300"
+																${param.subLocation == '02-300' ? 'selected' : ''}>은평,마포,서대문</option>
+															<option value="02-400"
+																${param.subLocation == '02-400' ? 'selected' : ''}>송파,강동,중량,광진,선동</option>
+															<option value="02-500"
+																${param.subLocation == '02-500' ? 'selected' : ''}>서초,강남,과천시</option>
+															<option value="02-700"
+																${param.subLocation == '02-700' ? 'selected' : ''}>마포,
+																용산, 종로</option>
+															<option value="031-200"
+																${param.subLocation == '031-200' ? 'selected' : ''}>수원시</option>
 													</select></td>
 												</tr>
 
-
-
 												<!-- 4행 -->
 												<tr>
-													<td colspan="7"
+													<td colspan="10"
 														style="text-align: center; border-bottom: 0px;">
 														<div>
 															<button type="submit" class="form-btn">검색</button>
@@ -383,6 +384,7 @@
 												</tr>
 											</table>
 										</form>
+
 
 										<!-- 로케이션을 서울로 지정 시, 서브로케이션 활성화 -->
 										<script>
