@@ -20,10 +20,10 @@
 <script src="${path}/resources/js/comm/header.js"></script>
 </head>
 	<div class="top-frame">
-    	<jsp:include page="/WEB-INF/views/include/admin/adminheader.jsp"/>
+    	<jsp:include page="/WEB-INF/views/include/admin/main/adminheader.jsp"/>
 	</div>
 	<div class="middle-frame">
-	    <jsp:include page="/WEB-INF/views/include/admin/admincontents.jsp"/>
+	    <jsp:include page="/WEB-INF/views/include/admin/main/admincontents.jsp"/>
 	</div>
 	<div class="bottom-frame">
 		<%@include file="/WEB-INF/views/include/footer.jsp" %>
