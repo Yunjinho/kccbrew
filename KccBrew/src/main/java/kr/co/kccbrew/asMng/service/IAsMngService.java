@@ -2,6 +2,8 @@ package kr.co.kccbrew.asMng.service;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import kr.co.kccbrew.asMng.model.AsMngVo;
 
 public interface IAsMngService {
@@ -9,7 +11,12 @@ public interface IAsMngService {
 	 * @param asMngVo : 검색 조건 들어있는 Vo
 	 * @return : 조건으로 검색한 as 리스트
 	 */
-	public List<AsMngVo>selectASList(AsMngVo asMngVo);
+	public List<AsMngVo>selectASList(AsMngVo asMngVo,int page);
+	/**
+	 * @return AS 리스트의 총 수
+	 */
+	public int countASList(AsMngVo asMngVo);
+	
 	/**
 	 * 장비 코드 리스트 조회
 	 * @return : 장비 코드 리스트
