@@ -1,0 +1,799 @@
+@charset "utf-8"; 
+/* CSS Document */
+@import url("common.css?version=20220528");
+
+
+
+/* common */
+.p_10{position:relative; width:292px; height:124px; background-color:#fff;  padding:30px; box-sizing:border-box; }
+.p_11{position:relative; width:292px; height:256px;  background-color:#fff;padding:30px; box-sizing:border-box;}
+.p_21{position:relative; width:592px; height:256px;  background-color:#fff; padding:30px; box-sizing:border-box;}
+.p_41{position:relative; width:292px; height:520px;  background-color:#fff; padding:30px; box-sizing:border-box;}
+.p_10:after{clear:both; display:block; content:"";}
+.p_21:after{clear:both; display:block; content:"";}
+.p_41:after{clear:both; display:block; content:"";}
+.p_41:after{clear:both; display:block; content:"";}
+.portlet-content{margin:8px 4px 0 4px;}
+.service, .approval, .schedule{position:relative; float:left; padding:30px; box-sizing:border-box;}
+h2{ font-size:19px; font-weight:600; color:#000;}
+h2 span.blue{  color:#2ea2db; margin-right:5px;}
+.more{position:absolute; position:absolute; top:30px; right:30px;}
+.yellow{background-color:#fcaf17;}
+}
+
+
+/*scroll*/
+/*IE*/
+.schedule ul, .quick ul, .approval_box ul{
+scrollbar-face-color:#fcaf17;
+scrollbar-track-color:#ebebeb;
+scrollbar-arrow-color:#ebebeb;
+scrollbar-highlight-color:#fcaf17;
+scrollbar-3dlignt-color:none;
+scrollbar-shadow-color:#fcaf17;
+scrollbar-darkshadow-color:none;
+}
+/*chrome*/
+::-webkit-scrollbar{
+	background-color:#fcaf17;
+}
+::-webkit-scrollbar-track {
+	background-color:#ebebeb;
+}
+::-webkit-scrollbar-thumb {
+	background-color:#fcaf17;
+}
+::-webkit-scrollbar-button {
+	background-color:#ebebeb;
+}
+::-webkit-scrollbar-corner {
+	background-color:#ebebeb;
+}
+
+
+/*Layout*/
+.wrap{width:1200px; margin:0 auto; }
+.wrap:after{clear:both; display:block; content:"";}
+#contents{width:100%; min-width:1200px; background-color:#ebf2fc;}
+.contents_warp{width:1200px; margin:0 auto; padding:40px 0;}
+#contents:after{clear:both; display:block; content:"";}
+
+
+
+/*고정영역 포틀릿*/
+/*전자결재*/
+/*#fixContent{padding-top:38px;}
+#fixContent:after{clear:both; display:block; content:"";}*/
+/*.approval{width:592px; height:210px; background-color:#fff; border-top:2px solid #153e73;border-bottom:1px solid #153e73;}
+.approval h2 span{ color:#787878;font-size:16px; font-weight: 400; margin-left:10px;}
+.approval h2 span em{ color:#f16051; font-weight: 600;}
+.approval_box{background:url(../images/main/approval_icon.png) no-repeat 12px top; margin-top:24px; padding-left:120px;}
+.approval_box>ul{display:inline-block; width:410px; height:110px; overflow-x:hidden;overflow-y:auto;}
+.approval_box ul ul{margin:10px 0 18px 0;}
+.approval_box ul ul:after{clear:both; display:block; content:"";}
+.approval_box li li{width:19%; float:left; text-align:center;}
+.approval_box li.title>span{display:inline-block; width:382px; height:30px; line-height:30px; background-color:#ebf2fc; border-radius:80px; -moz-border-radius:80px; -webkit-border-radius:80px; box-sizing:border-box; padding-left:20px; color:#153e73; font-size:15px; font-weight:600;}
+.approval_box li li span.number em{font-size:32px; color:#153e73; font-weight:600;}
+.approval_box li li span.number.full em{color:#f16051; }
+.approval_box li li span.txt{width:100%; display:inline-block; color:#000; font-size:15px; font-weight:500;}*/
+.approval{width:592px; height:210px; background-color:#fff; border-top:2px solid #153e73;border-bottom:1px solid #153e73;}
+.approval h2 span{ color:#787878;font-size:16px; font-weight: 400; margin-left:10px;}
+.approval h2 span em{ color:#f16051; font-weight: 600;}
+.approval_box{background:url(../images/main/approval_icon.png) no-repeat 12px top; margin-top:24px; padding-left:120px;}
+.approval_box ul ul, .more_approval ul ul{margin:10px 0 18px 0;}
+.approval_box ul ul:after{clear:both; display:block; content:"";}
+.more_approval ul ul:after{clear:both; display:block; content:"";}
+.approval_box li li, .more_approval li li{width:20%; float:left; text-align:center;}
+.approval_box li.title>span, .more_approval li.title>span{display:inline-block; width:100%; height:30px; line-height:30px; background-color:#ebf2fc; border-radius:80px; -moz-border-radius:80px; -webkit-border-radius:80px; box-sizing:border-box; padding-left:20px; color:#153e73; font-size:15px; font-weight:600;}
+.approval_box li li span.number em, .more_approval li li span.number em{font-size:32px; color:#153e73; font-weight:600;}
+.approval_box li li span.number.full em, .more_approval li li span.number.full em{color:#f16051; }
+.approval_box a.discount_appro{position:absolute; top:75px; left:95px; background-color:#f16051; display:inline-block; height:24px; padding:0 10px;line-height:24px; color:#fff;  font-size:14px; font-weight:600;  border-radius:80px;-moz-border-radius:80px; -webkit-border-radius:80px;}
+.approval_box li li span.txt, .more_approval li li span.txt{width:100%; display:inline-block; color:#000; font-size:15px; font-weight:500;}
+.btn_open_approval{position:absolute; right:0; bottom:0;}
+/*전자결재 레이어팝업*/
+.approval .more_approval{display:none; position:relative; top:-10px; left:-30px; width: 592px; height:480px;  padding-top:10px;background-color:#fff; z-index:99 !important; padding-right:30px; box-sizing:border-box; border-bottom:1px solid #153e73;}
+.approval .more_approval>ul{margin-left:150px; height:445px; overflow-y:auto; }
+.approval .more_approval a.btn_close{position:absolute; bottom:0; right:0;}
+
+
+
+/*강의시간표*/
+.schedule{width:592px; height:210px; background-color:#fff; border-top:2px solid #153e73;border-bottom:1px solid #153e73;}
+.schedule h2 span{ color:#787878;font-size:16px; font-weight: 400; margin-left:10px;}
+.schedule h2 span em{ color:#f16051; font-weight: 600;}
+.schedule ul{ margin-top:15px; height:115px; overflow-y:auto; padding-right:10px; box-sizing:border-box;}
+.schedule ul li{width:100%; height:30px; line-height:30px;}
+.schedule ul li span.time{ background-color:#e6edf5; font-size:14px; color:#0a4a9b; font-weight:500; border-radius:80px;-moz-border-radius:80px; -webkit-border-radius:80px; height:24px; line-height:24px; padding:0 10px; display:inline-block; margin-right: 10px;}
+.schedule ul li a{ max-width:55%; display:inline-block; text-overflow:ellipsis; overflow:hidden;white-space:nowrap; vertical-align:middle; font-size:14px;color:#555;}
+.schedule ul li a:hover{color:#000; font-weight:600; text-decoration:underline;}
+.schedule ul li span.place{ display:inline-block;float:right; text-align:right; background:url(../images/main/place_icon.png) no-repeat right center;padding-right:20px; font-size:14px;color:#555;}
+
+
+/*업무서비스*/
+.service{width:292px; height:210px; background-color:#fff; border-top:2px solid #fcaf17; border-bottom:1px solid #fcaf17; padding:30px 10px !important;}
+.service h2{margin-left:20px;}
+.service ul{margin-top:15px;}
+.service ul:after{clear:both; display:block; content:"";}
+.service li{width:49%; border-right:1px solid #f2f2f2; float:left; display:inline-block; text-align:center;}
+.service li.last{border-right:none; width:50%;}
+.service li span{width:100%; display:inline-block; color:#000; font-weight:400; font-size:15px; display:inline-block; margin-top:5px; }
+.service li span em{color:#f16051; font-weight:600; font-size:20px; margin-left:10px;}
+
+
+/*프로필*/
+.profile{background:url(../images/main/blue_bg.gif) repeat left top; color:#fff;}
+.profile h2{color:#fff;}
+.profile h2 span{font-weight:400;}
+.profile h2 span.lesson{ display:block;   font-size:15px; margin-top:10px;}
+.profile ul{ margin:10px 0;}
+.profile ul li{ height:24px; line-height:24px; font-size:14px; color:#fff;}
+.profile ul li .title{ font-weight:600; margin-right:10px;}
+.profile .inputbox{display:inline-block; position:relative;width:100%; border:none; background-color:#094188; height: 45px; line-height:45px; border-radius:80px;-moz-border-radius:80px; -webkit-border-radius:80px;  box-sizing:border-box; padding:0 20px; box-sizing:border-box;}
+.profile .inputbox .txt{position:absolute; left:20px; top:0; width:85%;height:100%; color:#fff;line-height:45px; font-size:13px; text-align:left; font-weight:400;  background:url(../images/main/select_arr.gif) no-repeat right center;}
+.profile .inputbox select{position: absolute; width:100% !important; left:-1px; top:-1px; cursor:pointer; padding-left:10px; opacity:0; filter:alpha(opacity=0); font-size:13px; font-weight:400; color:#fff; background-color:#094188;}
+.profile .btnArea ul{margin-top:0;}
+.profile .btnArea li{float:left; width:49%; padding:8px 0; text-align:center;}
+.profile .btnArea li a{ width:100%; height:16px; line-height:16px; font-size:16px; color:#fff; border-right:1px solid #4f7db7; display:inline-block; margin-top:10px;}
+.profile .btnArea li.last a{ border:none;}
+.profile .btnArea li a:hover{ text-decoration:underline; font-weight:600;}
+ 
+ 
+ 
+/*바로가기 서비스*/
+.quick ul{ margin-top:20px; display:inline-block; height:160px; overflow-y:auto;}
+.quick ul li{width:49%; margin-right:1%; float:left; box-sizing:border-box; height:32px; line-height:32px;}
+.quick ul li a{width:100%; display:inline-block; height:24px; line-height:24px;color:#555; font-size:15px;  font-weight:400; margin-left:5px; }
+.quick ul li a .number{width:37px; height:20px; line-height:20px; border:2px solid #b5c8e1; display:inline-block; text-align:center;  border-radius:80px;-moz-border-radius:80px; -webkit-border-radius:80px;  color:#0a4a9b; font-weight:600; font-size:14px;}
+.quick ul li a span.txt{margin-left:10px;}
+.quick ul li a:hover{ background:url(../images/main/quick_service_arr.gif) no-repeat 95% center #0a4a9b; border-radius:80px;-moz-border-radius:80px; -webkit-border-radius:80px; font-weight:500; color:#fff;}
+.quick ul li a:hover span.number{ border:none !important; color:#fff !important;}
+
+
+
+/*나의 일정*/
+.calender .cal_box{width:100%; height:200px; margin:5px 0;}
+.calender h3{font-size:18px; color:#000; font-weight:400; height:27px; line-height:27px; display: inline-block;}
+.calender h3 span{color:#f16051; }
+.calender a.add_cal{ width:87px; height:27px;; line-height:27px; border-radius:2px;-moz-border-radius:2px; -webkit-border-radius:2px;  border:1px solid #d5d5d5; display:inline-block; text-align:center; font-size:14px; color:#787878; float:right; }
+.calender a.add_cal span{ background:url(../images/main/plus_icon.gif) no-repeat left center; padding-left:15px;}
+.calender ul{margin-top:15px;}
+.calender ul li{height:32px; line-height:32px;}
+.calender ul li a{ color:#555; font-size:14px; font-weight:300; display:inline-block; text-overflow:ellipsis; overflow:hidden;white-space:nowrap; max-width:95%;}
+.calender ul li a:hover{ color:#000;  font-weight:500; text-decoration:underline;}
+
+
+
+/*부가서비스*/
+.addservice h2{height:24px; line-height:24px; }
+.addservice .case_number{ height:24px; padding:0 10px; line-height:24px; background-color:#f16051; display:inline-block;border-radius:80px; -moz-border-radius:80px; -webkit-border-radius:80px;  color:#fff; font-size:14px; font-weight:600; margin-left:10px;vertical-align:middle;}
+.addservice ul{margin:5px 0 10px 0;}
+.addservice h2.second{margin-top:25px;}
+.addservice ul li{ height:28px; line-height:28px; }
+.addservice ul li a{ color:#000; font-size:15px; cursor:default; }
+.addservice ul li a span.number{ color:#787878; font-size:15px; }
+.addservice ul li a span.number em{ color:#f16051; font-weight:600; font-size:20px; margin: 0 5px 0 10px;}
+
+
+/*list*/
+.list ul{margin-top:20px;}
+.list li{height:32px; line-height:32px; width:100%; letter-spacing:0;}
+.list li img{margin-right:5px; vertical-align:middle;}
+.list li .date{float:right;  color:#787878; font-size:14px; font-weight:300;}
+.list li a{ display:inline-block; text-overflow:ellipsis; overflow:hidden;white-space:nowrap; max-width:65%; vertical-align:middle;  color:#555; font-size:14px; font-weight:300;}
+.list li a.new{   color:#000; font-weight:500;}
+.list li a:hover{ color:#000;  font-weight:500; text-decoration:underline;}
+
+
+
+/*식당메뉴*/
+.menu ul{width: 232px; margin-top:20px; display:inline-block; height:410px; overflow-y:auto;}
+.menu ul>li{padding-left:70px; margin-bottom:30px; }
+.menu ul li{color:#000; font-weight:100; font-size:14px; margin-left:5px; line-height:24px;}
+.menu ul>li.morning{background:url(../images/main/menu_icon_01.png) no-repeat left top;}
+.menu ul>li.afternoon{background:url(../images/main/menu_icon_02.png) no-repeat left top;}
+.menu ul>li.corner{background:url(../images/main/menu_icon_03.png) no-repeat left top;}
+.menu ul>li.menu{background:url(../images/main/menu_icon_03.png) no-repeat left top;}
+.menu ul li p{color:#153e73; font-weight:600; font-size:17px;}
+.menu ul li p.menu{color:#000; font-weight:500; font-size:14px; line-height:24px !important; letter-spacing:0px !important;}
+
+
+
+
+/* Portlet_tab_normal_01 */
+.Portlet_tab_normal_01{ background-color:#fff !important; padding:0; height:256px !important;}
+.Portlet_tab_normal_01:after{display:block;clear:both;content:""}
+/* tab Deco */
+.Portlet_tab_normal_01 ul{position:relative; padding:30px;}
+.Portlet_tab_normal_01 ul:after{display:block;clear:both;content:""}
+.Portlet_tab_normal_01 li{float:left; height:25px; line-height:25px; padding-right:16px; background:url(../images/main/tab_bullet.gif) no-repeat right center; margin:-1px 14px 0 0;}
+.Portlet_tab_normal_01 li.last{background-image:none;}
+.Portlet_tab_normal_01 li:after{display:block;clear:both;content:""}
+.Portlet_tab_normal_01 li a{display:inline-block; }
+.Portlet_tab_normal_01 li a span{display:inline-block; height:25px; font-size:19px !important; font-weight:300; color:#787878;}
+.Portlet_tab_normal_01 li div{display:none; position:absolute; top:45px; left:0; width:100%;}
+.Portlet_tab_normal_01 li div:after{display:block;clear:both;content:""; }
+.Portlet_tab_normal_01.m1 .m1 a,
+.Portlet_tab_normal_01.m2 .m2 a,
+.Portlet_tab_normal_01.m3 .m3 a,
+.Portlet_tab_normal_01.m4 .m4 a,
+.Portlet_tab_normal_01.m5 .m5 a,
+.Portlet_tab_normal_01.m6 .m6 a{}
+.Portlet_tab_normal_01.m1 .m1 a span,
+.Portlet_tab_normal_01.m2 .m2 a span,
+.Portlet_tab_normal_01.m3 .m3 a span,
+.Portlet_tab_normal_01.m4 .m4 a span,
+.Portlet_tab_normal_01.m5 .m5 a span,
+.Portlet_tab_normal_01.m6 .m6 a span{ font-weight:600; color:#2ea2db; font-size:18px;}
+.Portlet_tab_normal_01.m1 .m1 div,
+.Portlet_tab_normal_01.m2 .m2 div,
+.Portlet_tab_normal_01.m3 .m3 div,
+.Portlet_tab_normal_01.m4 .m4 div,
+.Portlet_tab_normal_01.m5 .m5 div,
+.Portlet_tab_normal_01.m6 .m6 div{display:block; }
+.Portlet_tab_normal_01 ul li div .more{position:absolute; top:-15px; right:30px;}
+/*list_deco*/
+.Portlet_tab_normal_01 ul ul{ display:inline-block;width:100%;  padding-right:0px;}
+.Portlet_tab_normal_01 .normal_list ul{width:562px; box-sizing:border-box;}
+.Portlet_tab_normal_01 .normal_list li{background-image:none; width:100%;height:32px; line-height:32px; padding-right:0 !important; letter-spacing:0px; }
+.Portlet_tab_normal_01 .normal_list li img{margin-right:5px;}
+.Portlet_tab_normal_01 .normal_list li a{ display:inline-block; text-overflow:ellipsis; overflow:hidden;white-space:nowrap; max-width:65%; vertical-align:middle;  color:#555; font-size:14px; font-weight:500;}
+.Portlet_tab_normal_01 .normal_list li a:hover{  color:#000;   text-decoration:underline;}
+.Portlet_tab_normal_01 .normal_list li .date{letter-spacing:0;float:right;color:#787878; font-size:14px; font-weight:300;}
+.Portlet_tab_normal_01 li li a span{font-size:14px !important;}
+
+/* Portlet_tab_normal_02 */
+.Portlet_tab_normal_02{ background-color:#fff !important; padding:0; height:256px !important;}
+.Portlet_tab_normal_02:after{display:block;clear:both;content:""}
+/* tab Deco */
+.Portlet_tab_normal_02 ul{position:relative; padding:30px;}
+.Portlet_tab_normal_02 ul:after{display:block;clear:both;content:""}
+.Portlet_tab_normal_02 li{float:left; height:25px; line-height:25px; padding-right:16px; background:url(../images/main/tab_bullet.gif) no-repeat right center; margin:-1px 14px 0 0;}
+.Portlet_tab_normal_02 li.last{background-image:none;}
+.Portlet_tab_normal_02 li:after{display:block;clear:both;content:""}
+.Portlet_tab_normal_02 li a{display:inline-block; }
+.Portlet_tab_normal_02 li a span{display:inline-block; height:25px; font-size:19px !important; font-weight:300; color:#787878;}
+.Portlet_tab_normal_02 li div{display:none; position:absolute; top:45px; left:0; width:100%;}
+.Portlet_tab_normal_02 li div:after{display:block;clear:both;content:""; }
+.Portlet_tab_normal_02.m1 .m1 a,
+.Portlet_tab_normal_02.m2 .m2 a,
+.Portlet_tab_normal_02.m3 .m3 a,
+.Portlet_tab_normal_02.m4 .m4 a,
+.Portlet_tab_normal_02.m5 .m5 a,
+.Portlet_tab_normal_02.m6 .m6 a{}
+.Portlet_tab_normal_02.m1 .m1 a span,
+.Portlet_tab_normal_02.m2 .m2 a span,
+.Portlet_tab_normal_02.m3 .m3 a span,
+.Portlet_tab_normal_02.m4 .m4 a span,
+.Portlet_tab_normal_02.m5 .m5 a span,
+.Portlet_tab_normal_02.m6 .m6 a span{ font-weight:600; color:#2ea2db; font-size:18px;}
+.Portlet_tab_normal_02.m1 .m1 div,
+.Portlet_tab_normal_02.m2 .m2 div,
+.Portlet_tab_normal_02.m3 .m3 div,
+.Portlet_tab_normal_02.m4 .m4 div,
+.Portlet_tab_normal_02.m5 .m5 div,
+.Portlet_tab_normal_02.m6 .m6 div{display:block; }
+.Portlet_tab_normal_02 ul li div .more{position:absolute; top:-15px; right:30px;}
+/*list_deco*/
+.Portlet_tab_normal_02 ul ul{ display:inline-block;width:100%;  padding-right:0px;}
+.Portlet_tab_normal_02 .normal_list ul{width:562px; box-sizing:border-box;}
+.Portlet_tab_normal_02 .normal_list li{background-image:none; width:100%;height:32px; line-height:32px; padding-right:0 !important;  letter-spacing:0px;}
+.Portlet_tab_normal_02 .normal_list li img{margin-right:5px;}
+.Portlet_tab_normal_02 .normal_list li a{ display:inline-block; text-overflow:ellipsis; overflow:hidden;white-space:nowrap; max-width:65%; vertical-align:middle;  color:#555; font-size:14px; font-weight:500;}
+.Portlet_tab_normal_02 .normal_list li a:hover{  color:#000;  text-decoration:underline;}
+.Portlet_tab_normal_02 .normal_list li .date{letter-spacing:0;float:right;color:#787878; font-size:14px; font-weight:300;}
+.Portlet_tab_normal_02 li li a span{font-size:14px !important;}
+
+/*직원검색*/
+.searchbox h2{color:#fff; display:block; clear:both;}
+.searchbox form{margin:10px 0 30px 0;}
+.searchbox .orderbox fieldset{display:inline-block; float:left;}
+.searchbox .orderbox {width:100%; border:none; background-color:#e8a115; height: 45px; line-height:45px; border-radius:80px;-moz-border-radius:80px; -webkit-border-radius:80px;  box-sizing:border-box; padding:0 20px; box-sizing:border-box;}
+.searchbox .orderbox .inputbox{display:inline-block; position:relative; width:45px; float:left; display:inline-block;}
+.searchbox .orderbox .inputbox .txt{position:absolute; left:0px; top:0; width:100%;height:100%; color:#fff;line-height:45px; font-size:14px; text-align:left; font-weight:600;  background:url(../images/main/select_arr.gif) no-repeat right center;}
+.searchbox .orderbox .inputbox select{position: absolute; width:100% !important; left:-1px; top:-1px; cursor:pointer;  opacity:0; filter:alpha(opacity=0); font-size:13px; font-weight:400; color:#fff; background-color:#e8a115;}
+.searchbox .orderbox input{width:118px; background-color:#e8a115; color:#fff; border:none !important; margin-left:5px; height:35px; line-height:35px; font-size:14px; letter-spacing:-1px; padding:0px; float:none;}
+.searchbox .inputbox{display:inline-block; position:relative;width:100%; border:none; background-color:#e8a115; height: 45px; line-height:45px; border-radius:80px;-moz-border-radius:80px; -webkit-border-radius:80px;  box-sizing:border-box; padding:0 20px; box-sizing:border-box;}
+.searchbox .inputbox .txt{position:absolute; left:20px; top:0; width:85%;height:100%; color:#fff;line-height:45px; font-size:14px; text-align:left; font-weight:600;  background:url(../images/main/select_arr.gif) no-repeat right center;}
+.searchbox .inputbox select{position: absolute; width:100% !important; left:-1px; top:-1px; cursor:pointer; padding-left:10px; opacity:0; filter:alpha(opacity=0); font-size:13px; font-weight:400; color:#fff; background-color:#e8a115;}
+
+
+/*bannerzone*/
+.banner{padding:inherit;}
+
+
+/*직원검색디자인추가_김주연_171110*/
+.searchbox h2 a{float:right;font-size:15px; color:#fff; font-weight:500;}
+
+
+
+
+
+
+/* 학과학생현황 */
+.info_wrap {margin-top: 20px; font-size: 0px;}
+.info_wrap::after {display:block; content:""; clear:both;}
+
+/*.info_wrap-graph {display: flex; justify-content: space-between;}*/
+.info_wrap-graph > * {display: block; float: left;}
+/*.info_wrap-graph > p {width: 5%;}*/
+/*.info_wrap-graph > progress {width: 85%;}*/
+/*.info_wrap-graph > span {width: 10%;}*/
+.info_wrap-graph + .info_wrap-graph {margin-top: 19px;}
+.info_wrap-graph::after {clear:both; content:""; display:block;}
+
+/*.info_wrap-graph p {width: 24%; font-size: 15px; line-height: 24px;}
+.info_wrap-graph span {width: 24%; font-size:14px; line-height: 24px; text-align: right;}
+.info_wrap-graph span em {color: #f16051; font-weight: 600; margin-right: 3px;}*/
+.info_wrap-graph p {width: 14%; font-size: 15px; line-height: 24px;}
+.info_wrap-graph span {width: 20%; font-size:14px; line-height: 24px; text-align: right; }
+.info_wrap-graph span em {color: #f16051; font-weight: 600; margin-right: 3px;}
+
+/*.info_wrap-graph progress {width:100%; border-radius:0px; height: 24px;}*/
+/*.info_wrap-graph progress::-webkit-progress-bar {background:#eef1f5;}*/
+.info_wrap-graph .progress {width:66%; border-radius:0px; height: 24px;}
+.info_wrap-graph .progress {background:#eef1f5;}
+.info_wrap-graph .progress-rate {height: 100%; transition: 0.7s;}
+
+/*.info_wrap-graph progress::-ms-fill {background:#888;}
+.info_wrap-graph progress::-webkit-progress-value {background:#888;}
+.info_wrap-graph:nth-child(2) progress::-ms-fill {background:#0a4a9b;}
+.info_wrap-graph:nth-child(2) progress::-webkit-progress-value {background:#0a4a9b;}
+.info_wrap-graph:nth-child(3) progress::-ms-fill {background:#fcaf17;}
+.info_wrap-graph:nth-child(3) progress::-webkit-progress-value {background:#fcaf17;}
+.info_wrap-graph:nth-child(4) progress::-ms-fill {background:#f16051;}
+.info_wrap-graph:nth-child(4) progress::-webkit-progress-value {background:#f16051;}*/
+
+.info_wrap-graph .progress-rate{background:#888;}
+.info_wrap-graph:nth-child(2) .progress-rate{background:#0a4a9b;}
+.info_wrap-graph:nth-child(3) .progress-rate{background:#fcaf17;}
+.info_wrap-graph:nth-child(4) .progress-rate{background:#f16051;}
+
+/* 재학생충원율 */
+.rate p {margin-top: 20px; text-align: center; font-size: 15px; color: #787878;}
+.circle {position: relative;}
+.circle .circle_wrap {display: flex; justify-content: center; grid-gap: 30px; margin-top: 35px;}
+.circle .circle_wrap .chart {position: relative; width: 90px; height: 90px; border-radius: 50%; text-align: center;}
+.circle .circle_wrap .chart .center {background: #fff; position: absolute; top: 50%; left: 50%; width: 64px; height: 64px; line-height: 64px; border-radius: 50%; font-size: 13px; transform: translate(-50%, -50%);}
+.circle .circle_wrap .chart .center em {color: #f16051; font-weight: 600; margin-right: 1px;}
+.circle .circle_wrap p {margin-top: 10px; color: #000;}
+
+/* 상담현황 */
+.consult ul{margin-top: 36px;}
+.consult ul li{height: 44px; width: 50%; float: left; margin-bottom: 36px;}
+.consult ul li p{color:#000; font-size:15px; margin-bottom: 5px; padding-left:52px; }
+.consult ul>li.consult_01{background:url(../images/main/consult_01.png) no-repeat left;}
+.consult ul>li.consult_02{background:url(../images/main/consult_02.png) no-repeat left;}
+.consult ul>li.consult_03{background:url(../images/main/consult_03.png) no-repeat left;}
+.consult ul>li.consult_04{background:url(../images/main/consult_04.png) no-repeat left;}
+.consult ul li p em{color: #f16051; font-weight: 600; font-size: 20px;}
+.consult ul li p span{color: #787878;}
+
+/* 취업률현황 */
+.vertical_chart_box{position:relative;}
+.vertical_chart_box .chart_box{position:relative; margin: 20px 0 45px 0; /* padding-left:40px; */ box-sizing:border-box; height:130px;}
+
+.chart_box .axis_y{display:flex; flex-direction:column-reverse; align-items:center; justify-content:space-between; position:absolute; top: 12px; left:0; width:30px; height:100%; color:#888;}
+.chart_box .axis_y:before{content:''; position:absolute; top:6px; bottom:12px; right:-10px; width:1px; background:#d5d5d5;}
+
+.chart_box .axis_x{display:flex; justify-content:center; position:relative; padding:0; box-sizing:border-box; height:100%; border-bottom:1px solid #d5d5d5;}
+.item{flex:1; position:relative;}
+.chart_box .axis_x .text_box{display: flex; position:relative; flex-direction: column-reverse; margin: 0 auto;padding-top: 10px;left:50%; width: 100%; text-align: center; transform:translate(-50%,0);}
+.chart_box .axis_x .text_box .text{display:block; font-size:15px; color:#000;}
+
+.chart_box .axis_x .graph{display:flex; flex-direction:column-reverse; position:relative; margin:0 auto; width:34px; height:100%; background:#fff; overflow:hidden;}
+.chart_box .axis_x .graph .value{font-size: 13px; margin-bottom: 4px; text-align: center;}
+.chart_box .axis_x .graph .value em{color: #f16051; font-weight: 600; margin-right: 1px;}
+.chart_box .axis_x .graph span {transition: 0.7s;}
+.chart_box .axis_x .graph .data1{background:#888;}
+.chart_box .axis_x .graph .data2{background:#0a4a9b;}
+.chart_box .axis_x .graph .data3{background:#fcaf17;}
+
+
+
+
+
+/* media */
+@media all and (max-width:1240px)  {
+	.gridster div[id^=Enview] {position: unset !important;}
+	.gridster div[id^=Enview] > br {line-height: 0; font-size: 0;}
+
+	/* */
+
+	#fixContent>div{transition:opacity .3s,left .3s,top .3s,width .3s,height .3s;}
+	/*Layout*/
+	.main_warp .wrap{width:100%; margin:0 auto; }
+	.main_warp .wrap:after{clear:both; display:block; content:"";}
+	.main_warp #contents{width:100%; min-width:100%; background-color:#ebf2fc;}
+	.main_warp .contents_warp{width:900px; margin:0 auto; padding-bottom:40px;}
+	.main_warp #contents:after{clear:both; display:block; content:"";}
+	.main_warp .gridster{width:100% !important; position:relative;}
+	.sta .gridster{height:1496px !important;}
+	.pro .gridster{height:1500px !important;}
+	.pro2 .gridster{height:2050px !important;}
+	.stu .gridster{height:1636px !important;}
+	.approval{width:892px;}
+	.approval .more_approval{width:892px;}
+	.service{width:442px;}
+	.schedule{width:892px;}
+
+	.menu ul>li{min-height:60px;}
+}
+
+@media all and (max-width:920px)  {
+	.main_warp .contents_warp{width:600px;}
+	.sta .gridster{height:2040px !important;}
+	.pro .gridster{height:2040px !important;}
+	.pro2 .gridster{height:2550px !important;}
+	.stu .gridster{height:2040px !important;}
+	.approval{width:592px;}
+	.approval .more_approval{width:592px;}
+	.service{width:292px;}
+	.schedule{width:592px;}
+
+}
+
+@media all and (max-width:620px) {
+	.main_warp .contents_warp{width:100%; padding:0 20px; box-sizing:border-box; padding-bottom:20px;}
+	#fixContent{padding-top:20px;}
+	#fixContent>div{margin:4px 0;}
+	.gridster{box-sizing:border-box; margin-top:4px;}
+	.stu .gridster{height:3080px !important;}
+	.sta .gridster{height:3080px !important;}
+	.pro .gridster{height:3080px !important;}
+	.pro2 .gridster{height:4120px !important;}
+	.gridster .portlet-my{width:100%; position:static !important; margin:0 0 8px 0; display:block;}
+	.p_10, .p_11, .p_21, .p_41{width:100%; padding:30px 20px; position:static;}
+	.approval, .service, .schedule{width:100%;}
+	.more{top:25px; right:20px;}
+
+	/*바로가기서비스*/
+	.quick ul{display:block; padding-right:10px; box-sizing:border-box;}
+	.quick ul li{float: inherit; width:100%; margin:0; padding:0;}
+	.quick ul li a{margin:0; padding:0;}
+	/*강의시간표*/
+	.schedule h2 span{color:#787878;font-size:15px; font-weight: 400; margin-left:10px;}
+	.schedule ul li{height:40px; line-height:20px; margin-bottom:10px;}
+	.schedule ul li span.time{font-size:13px; height: 20px; line-height: 20px;}
+	.schedule ul li a{line-height:20px; max-width: 60%;}
+	.schedule ul li span.place{line-height:20px; display:block; float:inherit; text-align:left; background-position:100px center; padding:0 0 0 115px;}
+
+	/*업무서비스*/
+	.service{padding:24px 10px !important;}
+	.service h2{margin-left:10px;}
+
+	/*전자결재*/
+	div.approval{padding:30px 20px;}
+	.approval .approval_box{background:none; padding-left:0;}
+	/*전자결재 레이어팝업*/
+	.approval .more_approval{width:100%; padding:0 20px; box-sizing: content-box;  left:-20px;}
+	.approval_box a.discount_appro{top:29px; left:200px;}
+	.approval .more_approval>ul{margin-left:0;}
+
+	/*행사포틀릿*/
+	.Portlet_tab_normal_01{padding:0;}
+	.Portlet_tab_normal_01 ul{padding:30px 20px 0 20px;}
+	.Portlet_tab_normal_01 li{padding-right:6px; margin:-1px 4px 0 0;}
+	.Portlet_tab_normal_01 .normal_list ul{width:100%; padding:30px 20px;}
+	.Portlet_tab_normal_01 .normal_list li{padding:0; margin:0;}
+	.Portlet_tab_normal_01 .normal_list li a{max-width:50%;}
+
+	.Portlet_tab_normal_02{padding:0;}
+	.Portlet_tab_normal_02 ul{padding:30px 20px;}
+	.Portlet_tab_normal_02 li{padding-right:6px; margin:-1px 4px 0 0;}
+	.Portlet_tab_normal_02 .normal_list ul{width:100%; padding:30px 20px;}
+	.Portlet_tab_normal_02 .normal_list li{padding:0; margin:0;}
+	.Portlet_tab_normal_02 .normal_list li a{max-width:50%;}
+
+
+	/*검색포틀릿*/
+	.searchbox .orderbox{position:relative;}
+	.searchbox .orderbox fieldset a{position:absolute; top:10px; right:20px;}
+	.searchbox .orderbox input{height:43px; line-height:43px;}
+
+	.banner{padding:0;}
+	.banner img{width:100%; height:100%;}
+
+	/*재학생충원율 포틀릿 */
+	.rate .circle .circle_wrap{grid-gap:0;}
+	.rate .circle .circle_wrap > div{width:50%; text-align:center;}
+	.rate .circle .circle_wrap .chart{margin:0 auto;}
+
+	.menu ul{width:100%;}
+
+}
+@media all and (max-width:480px) {
+	.contents_warp{padding:0 10px;}
+	.approval_box li li span.number em, .more_approval li li span.number em{font-size:26px;}
+}
+@media all and (max-width:400px) {
+	span.date{display:none;}
+	.Portlet_tab_normal_01 .normal_list li a{max-width:60%;}
+	.Portlet_tab_normal_02 .normal_list li a{max-width:60%;}
+}
+
+/*포틀릿 레이아웃 */
+@media all and (max-width:1240px)  {
+
+	.pro .approval{position:absolute; top:4px; left:4px;}
+	.pro #EnviewConetntArea > div > div > div:nth-child(1) > div:nth-child(2) > div > div.portlet-content > div{position:absolute; top:222px; left:4px;}
+	.pro #EnviewConetntArea > div > div > div:nth-child(1) > div:nth-child(3) > div > div.portlet-content > div{position:absolute; top:222px; left:454px;}
+	.pro .profile{position:absolute; top:440px; left:4px;}
+	.pro .quick{position:absolute; top:440px; left:304px;}
+	/*.pro .calender{position:absolute; top:704px; left:304px;}*/
+	.pro .calender{position:absolute; top:968px; left:4px;}
+	.pro .list{position:absolute; top:968px; left:304px;}
+	.pro .student{top:700px; left:304px;}
+	.pro .rate{top:700px; left:604px;}
+	.pro .consult{top:532px; left:4px;}
+	/*.pro .employment{top:964px; left:304px;}*/
+	.pro .employment{position:absolute; top:704px; left:304px;}
+	.pro div.menu{position:absolute; top:1232px; left:604px;}
+	.pro .notice{top:1228px; left:4px;}
+	.pro .addservice{position:absolute; top:704px; left:4px;}
+	.pro .searchbox{position:absolute; top:1232px; left:304px;}
+	.pro .event{top:1492px; left:4px;}
+	.pro .Portlet_tab_normal_01{position: absolute; top:704px; left: 304px; width: 592px;}
+
+	.pro2 .approval{position:absolute; top:4px; left:4px;}
+	.pro2 #EnviewConetntArea > div > div > div:nth-child(1) > div:nth-child(2) > div > div.portlet-content > div{position:absolute; top:222px; left:4px;}
+	.pro2 #EnviewConetntArea > div > div > div:nth-child(1) > div:nth-child(3) > div > div.portlet-content > div{position:absolute; top:222px; left:454px;}
+	.pro2 .profile{position:absolute; top:440px; left:4px;}
+	.pro2 .quick{position:absolute; top:440px; left:304px;}
+	/*.pro2 .calender{position:absolute; top:704px; left:304px;}*/
+	.pro2 .calender{position:absolute; top:1496px; left:4px;}
+	.pro2 .list{position:absolute; top:1232px; left:304px;}
+	.pro2 .Portlet_tab_normal_01{position: absolute; top:1496px; left: 304px; width: 592px;}
+	.pro2 .student{position: absolute; top:704px; left: 304px;}
+	.pro2 .rate{position: absolute; top:704px; left:604px;}
+	.pro2 div.menu{position:absolute; top:968px; left:4px; height: 520px;}
+	.pro2 .consult{position: absolute; top:968px; left:304px;}
+	.pro2 .employment{position:absolute; top:968px; left:604px;}
+	.pro2 .notice{top:1228px; left:4px;}
+	.pro2 .addservice{position:absolute; top:704px; left:4px;}
+	.pro2 .searchbox{position:absolute; top:1760px; left:304px;}
+	.pro2 .event{top:1492px; left:4px;}
+
+
+	/*.pro .p_profile{top:4px; left:4px;}
+	.pro .p_quick{top:4px; left:304px;}
+	.pro .p_addservice{top:268px; left:4px;}
+	.pro .p_student{top:268px; left:304px;}
+	.pro .p_rate{top:268px; left:604px;}
+	.pro .p_consult{top:532px; left:4px;}
+	.pro .p_employment{top:532px; left:304px;}
+	.pro .p_menu{top:532px; left:604px;}
+	.pro .p_notice{top:796px; left:4px;}
+	.pro .p_calender{top:796px; left:604px;}
+	.pro .p_searchbox{top:1324px; left:4px;}
+	.pro .p_event{top:1060px; left:4px;}*/
+
+	.sta .approval{position:absolute; top:4px; left:4px;}
+	.sta #EnviewConetntArea > div > div > div:nth-child(1) > div:nth-child(2) > div > div.portlet-content > div{position:absolute; top:222px; left:4px;}
+	.sta #EnviewConetntArea > div > div > div:nth-child(1) > div:nth-child(3) > div > div.portlet-content > div{position:absolute; top:222px; left:454px;}
+	.sta .profile{position:absolute; top:440px; left:4px;}
+	.sta .quick{position:absolute; top:440px; left:304px;}
+	.sta .calender{position:absolute; top:704px; left:4px;}
+	.sta .addservice{position:absolute; top:704px; left:304px;}
+	.sta .list{position:absolute; top:968px; left:304px;}
+	.sta div.menu{position:absolute; top:704px; left:604px;}
+	.sta .Portlet_tab_normal_01{position:absolute; top:1232px; left:4px; width: 592px;}
+	.sta .searchbox{position:absolute; top:1232px; left:604px;}
+
+	/*.sta .p_profile{top:4px; left:4px;}
+	.sta .p_quick{top:4px; left:304px;}
+	.sta .p_calender{top:268px; left:4px;}
+	.sta .p_addservice{top:268px; left:304px;}
+	.sta .p_notice{top:532px; left:304px;}
+	.sta .p_menu{top:268px; left:604px;}
+	.sta .p_event{top:796px; left:4px;}
+	.sta .p_searchbox{top:796px; left:604px;}*/
+
+	.stu .schedule{position:absolute; top:4px; left:4px;}
+	.stu #EnviewConetntArea > div > div > div:nth-child(1) > div:nth-child(2) > div > div.portlet-content > div{position:absolute; top:222px; left:4px;}
+	.stu #EnviewConetntArea > div > div > div:nth-child(1) > div:nth-child(3) > div > div.portlet-content > div{position:absolute; top:222px; left:454px;}
+	.stu .profile{position:absolute; top:440px; left:4px;}
+	.stu .quick{position:absolute; top:440px; left:304px;}
+	.stu .calender{position:absolute; top:704px; left:4px;}
+	.stu .Portlet_tab_normal_01{position:absolute; top:704px; left:304px; width: 592px;}
+	.stu div.menu{position:absolute; top:1232px; left:4px; width: 892px; height: 256px;}
+	.stu div.menu ul{width: 842px; height: 160px;}
+	.stu .Portlet_tab_normal_02{position:absolute; top:968px; left:304px;}
+	.stu .searchbox{position:absolute; top:1496px; left:4px;}
+	.stu .banner{position:absolute; top:1496px; left:304px;}
+
+	/*.stu .p_profile{top:4px; left:4px;}
+	.stu .p_quick{top:4px; left:304px;}
+	.stu .p_calender{top:268px; left:4px;}
+	.stu .p_notice{top:268px; left:304px;}
+	.stu .p_menu{top:796px; left:4px;}
+	.stu .p_info{top:532px; left:304px;}
+	.stu .p_site{top:796px; left:304px;}
+	.stu .p_banner{top:796px; left:604px;}*/
+
+
+}
+
+@media all and (max-width:920px)  {
+
+	.pro .p_profile{position:absolute; top:4px; left:4px;}
+	.pro #EnviewConetntArea > div > div > div:nth-child(1) > div:nth-child(2) > div > div.portlet-content > div{position:absolute; top:218px; left:4px;}
+	.pro #EnviewConetntArea > div > div > div:nth-child(1) > div:nth-child(3) > div > div.portlet-content > div{position:absolute; top:218px; left:304px;}
+	.pro .profile{position:absolute; top:436px; left:4px;}
+	.pro .quick{position:absolute; top:700px; left:4px;}
+	/*.pro .p_addservice{position:absolute; top:4px; left:304px;}*/
+	.pro .addservice{position:absolute; top:436px; left:304px;}
+	.pro .student{position:absolute; top:532px; left:4px;}
+	.pro .rate{position:absolute; top:532px; left:304px;}
+	.pro .consult{position:absolute; top:796px; left:4px;}
+	.pro .employment{position:absolute; top:796px; left:304px;}
+	.pro div.menu{position:absolute; top:965px; left:4px;}
+	.pro .notice{position:absolute; top:1588px; left:4px;}
+	.pro .calender{position:absolute; top:965px; left:304px;}
+	.pro .searchbox{position:absolute; top:1229px; left:4px;}
+	.pro .event{position:absolute; top:1852px; left:4px;}
+	.pro .list{position:absolute; top:1493px; left:4px;}
+	.pro .Portlet_tab_normal_01{position: absolute; top:1758px; left: 4px; width: 592px;}
+
+	.pro2 .p_profile{position:absolute; top:4px; left:4px;}
+	.pro2 #EnviewConetntArea > div > div > div:nth-child(1) > div:nth-child(2) > div > div.portlet-content > div{position:absolute; top:218px; left:4px;}
+	.pro2 #EnviewConetntArea > div > div > div:nth-child(1) > div:nth-child(3) > div > div.portlet-content > div{position:absolute; top:218px; left:304px;}
+	.pro2 .profile{position:absolute; top:436px; left:4px;}
+	.pro2 .quick{position:absolute; top:700px; left:4px;}
+	/*.pro2 .p_addservice{position:absolute; top:4px; left:304px;}*/
+	.pro2 .addservice{position:absolute; top:436px; left:304px;}
+	.pro2 .student{position:absolute; top:965px; left:4px;}
+	.pro2 .rate{position:absolute; top:965px; left:304px;}
+	.pro2 .consult{position:absolute; top:1229px; left:4px;}
+	.pro2 .employment{position:absolute; top:1229px; left:304px;}
+	.pro2 div.menu{position:absolute; top:1493px; left:4px; height: 256px;}
+	.pro2 .notice{position:absolute; top:1588px; left:4px;}
+	.pro2 .calender{position:absolute; top:1493px; left:304px;}
+	.pro2 .searchbox{position:absolute; top:1757px; left:4px;}
+	.pro2 .event{position:absolute; top:1757px; left:4px;}
+	.pro2 .list{position:absolute; top:2021px; left:4px;}
+	.pro2 .Portlet_tab_normal_01{position: absolute; top:2286px; left: 4px; width: 592px;}
+
+	.sta .approval{position:absolute; top:4px; left:4px;}
+	.sta #EnviewConetntArea > div > div > div:nth-child(1) > div:nth-child(2) > div > div.portlet-content > div{position:absolute; top:218px; left:4px;}
+	.sta #EnviewConetntArea > div > div > div:nth-child(1) > div:nth-child(3) > div > div.portlet-content > div{position:absolute; top:218px; left:304px;}
+	.sta .profile{position:absolute; top:436px; left:4px;}
+	.sta .quick{position:absolute; top:700px; left:4px;}
+	.sta .calender{position:absolute; top:964px; left:4px;}
+	.sta .addservice{position:absolute; top:436px; left:304px;}
+	.sta .list{position:absolute; top:1492px; left:4px;}
+	.sta div.menu{position:absolute; top:964px; left:304px;}
+	.sta .Portlet_tab_normal_01{position:absolute; top:1756px; left:4px; width: 592px;}
+	.sta .searchbox{position:absolute; top:1228px; left:304px;}
+
+	/*.sta .p_profile{top:4px; left:4px;}
+	.sta .p_quick{top:268px; left:4px;}
+	.sta .p_calender{top:532px; left:4px;}
+	.sta .p_addservice{top:4px; left:304px;}
+	.sta .p_notice{top:1060px; left:4px;}
+	.sta .p_menu{top:532px; left:304px;}
+	.sta .p_event{top:1324px; left:4px;}
+	.sta .p_searchbox{top:796px; left:304px;}*/
+
+	.stu .schedule{position:absolute; top:4px; left:4px;}
+	.stu #EnviewConetntArea > div > div > div:nth-child(1) > div:nth-child(2) > div > div.portlet-content > div{position:absolute; top:222px; left:4px;}
+	.stu #EnviewConetntArea > div > div > div:nth-child(1) > div:nth-child(3) > div > div.portlet-content > div{position:absolute; top:222px; left:304px;}
+	.stu .profile{position:absolute; top:440px; left:4px;}
+	.stu .quick{position:absolute; top:704px; left:4px;}
+	.stu .calender{position:absolute; top:968px; left:4px;}
+	.stu .Portlet_tab_normal_01{position:absolute; top:1496px; left:4px; width: 592px;}
+	.stu div.menu{position:absolute; top:968px; left:304px; width: 292px; height: 520px;}
+	.stu div.menu ul{width: 232px; height: 410px;}
+	.stu .Portlet_tab_normal_02{position:absolute; top:1760px; left:4px;}
+	.stu .searchbox{position:absolute; top:440px; left:304px;}
+	.stu .banner{position:absolute; top:572px; left:304px;}
+
+	/*.stu .p_profile{top:4px; left:4px;}
+	.stu .p_quick{top:268px; left:4px;}
+	.stu .p_calender{top:532px; left:4px;}
+	.stu .p_notice{top:1060px; left:4px;}
+	.stu .p_menu{top:532px; left:304px;}
+	.stu .p_info{top:1324px; left:4px;}
+	.stu .p_site{top:4px; left:304px;}
+	.stu .p_banner{top:136px; left:304px;}*/
+}
+
+
+@media all and (max-width:620px)  {
+	.gridster div[id^=Enview] {width:100% !important; float:inherit !important;}
+
+	.p_10, .p_11, .p_21, .p_41, .approval, .service, .schedule{position:static !important; width:100% !important; top:0; left:0;}
+	.approval{position:relative !important; margin:8px 0 0 0; top:0 !important; left:0 !important;}
+	.schedule{position:relative !important; margin:8px 0 0 0; top:0 !important; left:0 !important;}
+	.service{margin:8px 0 0 0;}
+	.stu div.menu ul{width: 100%; height: 410px;}
+
+	.pro .Portlet_tab_normal_01 li div.normal_list{top:90px;}
+	.pro .Portlet_tab_normal_01 li div.normal_list ul{padding:0 20px;}
+	.pro .Portlet_tab_normal_01 li div.normal_list ul iframe{background:none !important; width:100% !important;}
+	.pro .Portlet_tab_normal_01 ul li div .more{top:-40px;}
+	.pro .p_profile{position:absolute; top:4px; left:4px;}
+	.pro #EnviewConetntArea > div > div > div:nth-child(1) > div:nth-child(2) > div > div.portlet-content > div{position:absolute; top:218px; left:4px;}
+	.pro #EnviewConetntArea > div > div > div:nth-child(1) > div:nth-child(3) > div > div.portlet-content > div{position:absolute; top:218px; left:304px;}
+	.pro .addservice{position:absolute; top:436px; left:304px;}
+	.pro .quick{position:absolute; top:700px; left:4px;}
+	.pro .student{position:absolute; top:532px; left:4px;}
+	.pro .rate{position:absolute; top:532px; left:304px;}
+	.pro .consult{position:absolute; top:796px; left:4px;}
+	.pro .employment{position:absolute; top:796px; left:304px;}
+	.pro div.menu{position:absolute; top:965px; left:4px;}
+	.pro .notice{position:absolute; top:1588px; left:4px;}
+	.pro .searchbox{position:absolute !important; top:1984px; left:4px;}
+	.pro .profile{position:absolute !important; top:2248px; left:4px;}
+	.pro .calender{position:absolute !important; top:2514px; left:4px;}
+	.pro .event{position:absolute; top:1852px; left:4px;}
+	.pro .list{position:absolute; top:1493px; left:4px;}
+	.pro .Portlet_tab_normal_01{position: absolute; top:2514px; left: 4px; width: 592px;}
+	
+	
+
+	.pro2 .approval{position: absolute !important; top: 8px; left: 0;}
+	.pro2 #EnviewConetntArea > div > div > div:nth-child(1) > div:nth-child(2) > div > div.portlet-content > div{position: absolute !important; top: 218px; left: 0;}
+	.pro2 #EnviewConetntArea > div > div > div:nth-child(1) > div:nth-child(3) > div > div.portlet-content > div{position: absolute !important; top: 436px; left: 0;}
+	.pro2 .p_21.quick{position: absolute !important; top: 662px; left: 0;}
+	.pro2 .p_11.addservice{position: absolute !important; top: 926px; left: 0;}
+	.pro2 .p_11.student{position: absolute !important; top: 1190px; left: 0;}
+	.pro2 .p_11.rate{position: absolute !important; top: 1454px; left: 0;}
+	.pro2 .p_11.consult{position: absolute !important; top: 1718px; left: 0;}
+	.pro2 .p_11.employment{position: absolute !important; top: 1982px; left: 0;}
+	.pro2 .p_11.menu{position: absolute !important; top: 2246px; left: 0;}
+	.pro2 .p_21.list{position: absolute !important; top: 2510px; left: 0;}
+	.pro2 .Portlet_tab_normal_01{position: absolute !important; top: 2774px; left: 0; width: 100%;}
+	.pro2 .p_11.searchbox.yellow{position: absolute !important; top: 3038px; left: 0;}
+	.pro2 .p_11.profile{position: absolute !important; top: 3302px; left: 0;}
+	.pro2 .p_41.calender{position: absolute !important; top: 3566px; left: 0;}
+	
+	
+
+	.pro2 .Portlet_tab_normal_01 li div.normal_list{top:90px;}
+	.pro2 .Portlet_tab_normal_01 li div.normal_list ul{padding:0 20px;}
+	.pro2 .Portlet_tab_normal_01 li div.normal_list ul iframe{background:none !important; width:100% !important;}
+	.pro2 .Portlet_tab_normal_01 ul li div .more{top:-40px;}
+
+
+
+    .sta .approval{position: absolute !important; top: 8px; left: 0;}
+	.sta #EnviewConetntArea > div > div > div:nth-child(1) > div:nth-child(2) > div > div.portlet-content > div{position: absolute !important; top: 218px; left: 0;}
+	.sta #EnviewConetntArea > div > div > div:nth-child(1) > div:nth-child(3) > div > div.portlet-content > div{position: absolute !important; top: 436px; left: 0;}
+	.sta .p_21.quick{position: absolute !important; top: 662px; left: 0;}
+	.sta .p_11.addservice{position: absolute !important; top: 926px; left: 0;}
+	.sta .p_11.menu{position: absolute !important; top: 1190px; left: 0;}
+	.sta .p_21.list{position: absolute !important; top: 1454px; left: 0;}
+	.sta .Portlet_tab_normal_01{position: absolute !important; top: 1718px; left: 0; width: 100%;}
+	.sta .p_11.searchbox.yellow{position: absolute !important; top: 1982px; left: 0;}
+    .sta .p_11.profile{position: absolute !important; top: 2246px; left: 0;}
+    .sta .p_41.calender{position: absolute !important; top: 2510px; left: 0;}
+
+
+	.sta .Portlet_tab_normal_01 li div.normal_list{top:90px;}
+	.sta .Portlet_tab_normal_01 li div.normal_list ul{padding:0 20px;}
+	.sta .Portlet_tab_normal_01 li div.normal_list ul iframe{background:none !important; width:100% !important;}
+	.sta .Portlet_tab_normal_01 ul li div .more{top:-40px;}
+
+
+	.stu .schedule{position: absolute !important; top: 8px; left: 0;}
+	.stu #EnviewConetntArea > div > div > div:nth-child(1) > div:nth-child(2) > div > div.portlet-content > div{position: absolute !important; top: 218px; left: 0;}
+	.stu #EnviewConetntArea > div > div > div:nth-child(1) > div:nth-child(3) > div > div.portlet-content > div{position: absolute !important; top: 436px; left: 0;}
+	.stu .p_21.quick{position: absolute !important; top: 662px; left: 0;}
+	.stu .p_41.menu{position: absolute !important; top: 926px; left: 0;}
+	.stu .Portlet_tab_normal_01{position: absolute !important; top: 1454px; left: 0; width: 100%;}
+	.stu .p_21.Portlet_tab_normal_02{position: absolute !important; top: 1718px; left: 0;}
+	.stu .p_10.banner{position: absolute !important; top: 1982px; left: 0;}
+	.stu .p_10.searchbox.yellow{position: absolute !important; top: 2114px; left: 0;}
+	.stu .p_11.profile{position: absolute !important; top: 2248px; left: 0;}
+	.stu .p_41.calender{position: absolute !important; top: 2514px; left: 0;}
+
+
+
+	.pro .list iframe{background:none !important; width:100% !important;}
+	.pro2 .list iframe{background:none !important; width:100% !important;}
+	.sta .list iframe{background:none !important; width:100% !important;}
+
+	.pro .Portlet_tab_normal_01 li div.normal_list ul iframe{background:none !important; width:100% !important;}
+	.pro2 .Portlet_tab_normal_01 li div.normal_list ul iframe{background:none !important; width:100% !important;}
+	.stu .Portlet_tab_normal_01 li div.normal_list ul iframe{background:none !important; width:100% !important;}
+}
