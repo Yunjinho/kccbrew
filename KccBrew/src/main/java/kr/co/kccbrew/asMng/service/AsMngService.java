@@ -28,7 +28,6 @@ public class AsMngService implements IAsMngService{
 		map.put("asVo", asMngVo);
 		map.put("start", page);
 		map.put("end", page+9);
-		System.out.println(map);
 		return asRepository.selectASList(map);
 	}
 	

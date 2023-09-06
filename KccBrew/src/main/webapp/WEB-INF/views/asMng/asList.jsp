@@ -36,7 +36,6 @@
 		<div id="page-container" class="">
 			<div id="page-content" class="clearfix">
 				<div id="page-content-wrap">
-
 					<!-- ********** 페이지 네비게이션 시작 ********** -->
 					<div class="page-content-navigation">
 						<ol class="breadcrumb">
@@ -52,7 +51,6 @@
 						</ol>
 					</div>
 					<!-- ********** 페이지 네비게이션 끝 ********** -->
-
 					<div id="region-main">
 						<div role="main">
 							<span id="maincontent"></span>
@@ -182,7 +180,7 @@
 									<div id="logTable">
 										<div>
 											<p class="data-info">
-												전체<b><span><c:out value="${totalLog}" /></span></b>건<span
+												전체<b><span><c:out value="${totalCount}" /></span></b>건<span
 													id="text-separator"> | </span><b><span><c:out
 															value="${currentPage}" /></span></b>/<b><span><c:out
 															value="${totalPage}" /></span></b>쪽
@@ -216,13 +214,13 @@
 									<div class="paging pagination">
 
 										<!-- 앞으로 가는 버튼 -->
-										<a href="/log?currentPage=1&startYr=${searchContent.startYr}&startMn=${searchContent.startMn}&endYr=${searchContent.endYr}&endMn=${searchContent.endMn}&uri=${searchContent.uri}&view=${searchContent.view}&userId=${searchContent.userId}&userType=${searchContent.userType}&ip=${searchContent.ip}&statusCode=${searchContent.statusCode}"><img
+										<a href="#"><img
 											src="/resources/img/log/free-icon-left-chevron-6015759.png"
 											alt=" 처" /></a>
 
 										<c:choose>
 											<c:when test="${currentPage > 1}">
-												<a href="/log?currentPage=${currentPage - 1}&startYr=${searchContent.startYr}&startMn=${searchContent.startMn}&endYr=${searchContent.endYr}&endMn=${searchContent.endMn}&uri=${searchContent.uri}&view=${searchContent.view}&userId=${searchContent.userId}&userType=${searchContent.userType}&ip=${searchContent.ip}&statusCode=${searchContent.statusCode}"><img
+												<a href="#"><img
 													src="/resources/img/log/free-icon-left-arrow-271220.png"
 													alt="이" /></a>
 											</c:when>
@@ -240,7 +238,7 @@
 													end="${(sharePage + 1) * 10}" step="1">
 													<c:if test="${page <= totalPage}">
 														<a
-															href="/log?currentPage=${page}&startYr=${searchContent.startYr}&startMn=${searchContent.startMn}&endYr=${searchContent.endYr}&endMn=${searchContent.endMn}&uri=${searchContent.uri}&view=${searchContent.view}&userId=${searchContent.userId}&userType=${searchContent.userType}&ip=${searchContent.ip}&statusCode=${searchContent.statusCode}"
+															href="#"
 															class="pagination page-btn ${currentPage == page ? 'selected' : ''}">
 															${page} </a>
 													</c:if>
@@ -250,7 +248,7 @@
 
 										<!-- 뒤로 가는 버튼 -->
 										<c:if test="${currentPage < totalPage}">
-											<a href="/log?currentPage=${currentPage + 1}&startYr=${searchContent.startYr}&startMn=${searchContent.startMn}&endYr=${searchContent.endYr}&endMn=${searchContent.endMn}&uri=${searchContent.uri}&view=${searchContent.view}&userId=${searchContent.userId}&userType=${searchContent.userType}&ip=${searchContent.ip}&statusCode=${searchContent.statusCode}"> <img
+											<a href="#"> <img
 												src="/resources/img/log/free-icon-right-arrow-271228.png"
 												alt="다" />
 											</a>
@@ -262,13 +260,11 @@
 											</a>
 										</c:if>
 
-										<a href="/log?currentPage=${totalPage}&startYr=${searchContent.startYr}&startMn=${searchContent.startMn}&endYr=${searchContent.endYr}&endMn=${searchContent.endMn}&uri=${searchContent.uri}&view=${searchContent.view}&userId=${searchContent.userId}&userType=${searchContent.userType}&ip=${searchContent.ip}&statusCode=${searchContent.statusCode}"><img
+										<a href="#	"><img
 											src="/resources/img/log/free-icon-fast-forward-double-right-arrows-symbol-54366.png"
 											alt="마" /></a>
 									</div>
-
 								</div>
-								<!-- ********** 세은 로그 관련 내용 끝 ********** -->
 							</div>
 						</div>
 					</div>

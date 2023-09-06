@@ -45,10 +45,22 @@ public class AsMngController {
 		list=asMngService.selectLocationCd();
 		model.addAttribute("locationCd", list);
 		
-		List<AsMngVo>asList=asMngService.selectASList(asMngVo,1);
-		System.out.println(asList);
-		
-		model.addAttribute("ASList",asList);
+		list=asMngService.selectASList(asMngVo,1);
+		int totalPage = 0;
+		int totalCount = asMngService.countASList(asMngVo);
+
+		//   paging처리
+		if (list != null && !list.isEmpty()) {
+			totalPage = (int)Math.ceil(totalCount/10.0);
+		}
+		System.out.println("duee");
+		model.addAttribute("totalPage", totalPage);
+		model.addAttribute("currentPage", 1);
+		model.addAttribute("sharePage", 0);
+
+		model.addAttribute("totalCount", totalCount);
+		model.addAttribute("searchContent",asMngVo);
+		model.addAttribute("ASList",list);
 		return "/asMng/asList";
 	}
 	/**
@@ -57,9 +69,33 @@ public class AsMngController {
 	 * @return
 	 */
 	@RequestMapping(value="/searchAsList",method=RequestMethod.GET)
-	public String ssearchAsList(@RequestParam(defaultValue = "1") int currentPage,AsMngVo asMngVo) {
-		System.out.println(asMngVo);
-		List<AsMngVo>lsit=asMngService.selectASList(asMngVo,currentPage);
+	public String ssearchAsList(@RequestParam(defaultValue = "1") int currentPage,AsMngVo asMngVo,Model model) {
+		List<AsMngVo> asList=asMngService.selectASList(asMngVo,currentPage);
+		
+		int totalPage = 0;
+		int totalCount = asMngService.countASList(asMngVo);
+		int sharePage = 0;
+
+		//   paging처리
+		if (asList != null && !asList.isEmpty()) {
+			totalPage = (int) Math.ceil(totalCount/10.0);
+		} 
+
+		if (currentPage == 1) {
+			sharePage = 0;
+		} else {
+			sharePage = (currentPage-1) / 10;
+		}
+
+		model.addAttribute("totalPage", totalPage);
+		model.addAttribute("currentPage", currentPage);
+		model.addAttribute("sharePage", sharePage);
+
+		model.addAttribute("totalCount", totalCount);
+		
+		model.addAttribute("searchContent",asMngVo);
+		model.addAttribute("ASList",asList);
+		
 		return "/asMng/asList";
 	}
 }
