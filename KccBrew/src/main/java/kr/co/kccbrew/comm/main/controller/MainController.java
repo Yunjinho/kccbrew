@@ -30,6 +30,11 @@ public class MainController {
 		return "adminPageT2";
 	}
 	
+	@RequestMapping(value="/test3", method=RequestMethod.GET)
+	public String test3(Model model) {
+		return "adminPageT3";
+	}
+	
 	@RequestMapping(value="/adminMain", method=RequestMethod.GET)
 	public String admMain(Model model) {
 		List<MainPageVo> asAssignList = mainServiceImple.showAllAssignList();          //a/s 배정 리스트

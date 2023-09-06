@@ -10,7 +10,5 @@
 <body>
 	A/S 접수 안내@@@@@@@@@@@@@@@@@
 	
-	<c:url var="test2" value="/test2" />
-	<a href="${test2}">다음 페이지로</a>
 </body>
 </html>

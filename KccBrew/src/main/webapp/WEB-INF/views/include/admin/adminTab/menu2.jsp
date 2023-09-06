@@ -16,7 +16,5 @@
 	5
 	6
 	7
-	<c:url var="test" value="/test" />
-	<a href="${test}">안내 페이지로</a>
 </body>
 </html>

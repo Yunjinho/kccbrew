@@ -29,8 +29,8 @@
 				<li class="nav-item">
 					<a class="nav-link" href="#" >A/S 관리</a>
 					<ul class="comm-nav-dropdown">
-						<c:url var="test" value="/test" />
-						<li><a href="${test}">A/S 접수 안내</a></li>
+						<c:url var="test" value="/test" />                  <!-- 여기에  매핑 url 선언 -->
+						<li><a href="${test}">A/S 접수 안내</a></li>			<!-- 매핑 url 변수 링크로 걸기 -->
 						<c:url var="test2" value="/test2" />
 						<li><a href="${test2}">A/S 내역 조회</a></li>
 					</ul>	
@@ -38,7 +38,8 @@
 				<li class="nav-item">
 					<a class="nav-link" href="#">점포 관리</a>
 					<ul class="comm-nav-dropdown">
-						<li><a href="#">점포 등록</a></li>
+						<c:url var="test3" value="/test3" />
+						<li><a href="${test3}">점포 등록</a></li>
 						<li><a href="#">점포 수정</a></li>
 						<li><a href="#">점포 삭제</a></li>
 						<li><a href="#">점포 조회</a></li>

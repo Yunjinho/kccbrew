@@ -31,6 +31,10 @@
 		<put-attribute name="contents" value="/WEB-INF/views/include/admin/adminTab/menu2.jsp" />
 	</definition>
 	
+	<definition name="adminPageT3" extends="adminPage">
+		<put-attribute name="contents" value="/WEB-INF/views/include/admin/adminTab/menu3.jsp" />
+	</definition>
+	
 	
 	
 	<!-- 수리기사 페이지 -->
