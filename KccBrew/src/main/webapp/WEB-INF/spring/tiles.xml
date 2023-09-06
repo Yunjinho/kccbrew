@@ -8,25 +8,30 @@
 	<!-- 기본 레이아웃 -->
 	<definition name="mainLayout" template="/WEB-INF/views/tiles/mainLayout.jsp">
 		<put-attribute name="title" value="" />
-		<put-attribute name="header" value="" />
-		<put-attribute name="contents" value="" />
-		<put-attribute name="footer" value="/WEB-INF/views/tiles/footer.jsp" />
+		<put-attribute name="header" value="/WEB-INF/views/tiles/baseheader.jsp" />   <!-- 빈 파일 -->
+		<put-attribute name="contents" value="/WEB-INF/views/tiles/basebody.jsp" />	  <!-- 빈 파일 -->
+		<put-attribute name="footer" value="/WEB-INF/views/tiles/basefooter.jsp" />	  <!-- 공통 푸터 -->
 	</definition>
  	
  	
  	<!-- 관리자 페이지 -->
 	<definition name="adminPage" extends="mainLayout">
 		<put-attribute name="title" value="관리자 페이지" />
-		<put-attribute name="header" value="/WEB-INF/views/include/admin/adminheader.jsp" />
-		<put-attribute name="contents" value="/WEB-INF/views/include/admin/admincontents.jsp" />
+		<put-attribute name="header" value="/WEB-INF/views/include/admin/main/adminheader.jsp" />
+		<put-attribute name="contents" value="/WEB-INF/views/include/admin/main/admincontents.jsp" />
+		<!-- 푸터 따로 명시하지 않으면 자동 상속 -->
 	</definition>
 	
-	<!-- 관리자 페이지 추가 확장,타이틀과 헤더 유지, contents만 변경 -->
+	<!-- 관리자 페이지 추가 확장, 타이틀과 헤더 유지, contents만 변경 -->
 	<definition name="adminPageT1" extends="adminPage">
-		<put-attribute name="title" value="관리자 페이지" />
-		<put-attribute name="header" value="/WEB-INF/views/include/admin/adminheader.jsp" />
-		<put-attribute name="contents" value="" />
+		<put-attribute name="contents" value="/WEB-INF/views/include/admin/adminTab/menu1.jsp" />
 	</definition>
+	
+	<definition name="adminPageT2" extends="adminPage">
+		<put-attribute name="contents" value="/WEB-INF/views/include/admin/adminTab/menu2.jsp" />
+	</definition>
+	
+	
 	
 	<!-- 수리기사 페이지 -->
 	<definition name="mechanicPage" extends="mainLayout">
@@ -36,6 +41,8 @@
 	</definition>
 	
 	
+	
+	
 	<!-- 점주 페이지 -->
 	<definition name="managerPage" extends="mainLayout">
 		<put-attribute name="title" value="점주 페이지" />
@@ -43,11 +50,6 @@
 		<put-attribute name="contents" value="/WEB-INF/views/include/manager/managercontents.jsp" />
 	</definition>
 	
-	<!-- 테스트 -->
-	<definition name="test" extends="mainLayout">
-		<put-attribute name="title" value="test" />
-		<put-attribute name="header" value="/WEB-INF/views/include/test/test.jsp" />
-		<put-attribute name="contents" value="/WEB-INF/views/include/test/test2.jsp" />
-	</definition>
+	
 	
 </tiles-definitions>

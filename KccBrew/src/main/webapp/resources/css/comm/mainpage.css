@@ -41,15 +41,15 @@
 		justify-content:space-between;
 		overflow: hidden;
 		font-size: 0.8em;
-		margin-bottom: 10px;
+		margin-bottom: 3px;
 	}
 	.btm {
 		flex: 1;
 		padding:10px;
-		margin: 0 10px;
+		margin: 0 3px;
 		background-color: #ffffff;
-		border-top: 2px solid #f9b037;
-		border-bottom: 2px solid #f9b037;
+		border-top: 1.5px solid #4336da;
+		border-bottom: 1.5px solid #4336da;
 	}
 	.new-receipt {
 		height:217px;
@@ -68,7 +68,7 @@
 		overflow: auto;
 	}
 	.tablecap {
-		font-size:1.3em;
+		font-size:1em;
 		font-weight: bold;
 		padding: 10px;
 	}
@@ -101,7 +101,7 @@
 		display: flex;
 		justify-content: space-between;
 		min-height: 700px;
-		padding:10px;
+		padding:4px;
 	}
 
 /************* 회원 정보 및 as 안내 ******************/
@@ -118,7 +118,7 @@
 
 	.user-profile {
 		height:226px;
-		margin-bottom:10px;
+		margin-bottom:5px;
 		box-sizing:border-box;
 		flex:1;
 		background-color: #4336da;
@@ -148,7 +148,7 @@
 	.as-guide {
 		height:226px;
 		flex:1;
-		margin-bottom:10px;
+		margin-bottom:5px;
 		color:yellow;
 		background-color: green;
 	}
@@ -165,7 +165,7 @@
 	}
 	.kcclink {
 		cursor:pointer;
-		border:3px solid #f9b037;
+		border:3px solid #4336da;
 		color:#111111;
 		border-radius: 10px;
 	}
@@ -176,33 +176,29 @@
 		flex:0.5;	
 		display: flex;
 		flex-direction: column;
+		margin-left: 5px;
 	}
 
 	.to-do-list {
 		flex:0.5;
 		background-color:#ffffff;
 		min-height:300px;
-		margin-left: 20px;
-		margin-bottom: 30px;
-		border-top-left-radius: 5px;
-		border-top-right-radius: 5px;
+		margin-bottom: 15px;
 	}
 	
 	.to-do-list > p {
-	  font-size: 1.2em;
+	  font-size: 1em;
 	  font-weight: bold;
-	  margin: 0;
 	  padding: 10px;
-	  background-color: #f9b037;
-	  color: white;
-	  text-align: center;
-	  border-top-left-radius: 5px;
-	  border-top-right-radius: 5px;
+	  background-color: #ffffff;
+	  color: #111111;
+	  text-align: left;
 	}
 	
 	.tabnav {
 		font-size:0; 
 		border:1px solid #ddd;
+		border-top:none;
 		padding:0;
 	}
 	.tabnav li{
@@ -210,6 +206,7 @@
 		display: inline-block;  
 		height:46px; 
 		text-align:center; 
+		border-top:1px solid #ddd;
 		border-right:1px solid #ddd;
 	}
 	.tabnav li a:before{
@@ -252,7 +249,6 @@
 		flex:0.5;
 		color:green;
 		background-color:yellow;
-		margin-left: 20px;
 	}
 	
 	
@@ -261,23 +257,19 @@
 	.calAndetc {
 		flex:0.3;
 		background-color:#ffffff;
-		margin-left:20px;
+		margin-left:5px;
 		width:500px;
 		min-height:700px;
-		border-top-left-radius: 5px;
-		border-top-right-radius: 5px;
 	}
 	
 	#calendar-container > p {
-	  font-size: 1.2em;
+	  font-size: 1em;
 	  font-weight: bold;
 	  margin: 0;
 	  padding: 10px;
-	  background-color: #f9b037;
-	  color: white;
-	  text-align: center;
-	  border-top-left-radius: 5px;
-	  border-top-right-radius: 5px;
+	  background-color: #ffffff;
+	  color: #111111;
+	  text-align: left;
 	}
 	
 	/* 캘린더 위의 해더 스타일(날짜가 있는 부분) */

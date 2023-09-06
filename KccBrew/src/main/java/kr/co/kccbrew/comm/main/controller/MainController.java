@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import kr.co.kccbrew.comm.main.model.MainPageVo;
 import kr.co.kccbrew.comm.main.service.MainService;
-import lombok.RequiredArgsConstructor;
 
 @Controller
 public class MainController {
@@ -23,7 +22,12 @@ public class MainController {
 	
 	@RequestMapping(value="/test", method=RequestMethod.GET)
 	public String test1(Model model) {
-		return "test";
+		return "adminPageT1";
+	}
+	
+	@RequestMapping(value="/test2", method=RequestMethod.GET)
+	public String test2(Model model) {
+		return "adminPageT2";
 	}
 	
 	@RequestMapping(value="/adminMain", method=RequestMethod.GET)

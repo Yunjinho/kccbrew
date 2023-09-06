@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -18,15 +19,20 @@
 	</div>
 	<nav class="nav-bar">
 		<div class="navbar-brand">
-			<img alt="logo"  src="${path}/resources/img/kcc.png">
+			<c:url var="toMain" value="/adminMain" />
+			<a href="${toMain}">
+				<img alt="logo"  src="${path}/resources/img/kcc.png">
+			</a>
 		</div>
 		<div class="nav-box">
 			<ul class="nav-pills">
 				<li class="nav-item">
 					<a class="nav-link" href="#" >A/S 관리</a>
 					<ul class="comm-nav-dropdown">
-						<li><a href="#">A/S 접수 안내</a></li>
-						<li><a href="#">A/S 내역 조회</a></li>
+						<c:url var="test" value="/test" />
+						<li><a href="${test}">A/S 접수 안내</a></li>
+						<c:url var="test2" value="/test2" />
+						<li><a href="${test2}">A/S 내역 조회</a></li>
 					</ul>	
 				</li>
 				<li class="nav-item">
