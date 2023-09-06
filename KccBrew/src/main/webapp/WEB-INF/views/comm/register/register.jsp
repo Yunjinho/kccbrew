@@ -14,6 +14,7 @@
 <script src="<c:url value="resources/js/comm/register.js"/>"></script>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 </head>
+
 <body class="register"onpageshow="if(event.persisted) noBack();" onunload="" marginwidth="0" marginheight="0">
 	<!-- wrap -->
 	<div class="wrap">
