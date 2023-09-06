@@ -1,35 +1,46 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="~{include/head::head}"></head>
-<link rel="stylesheet" th:href="@{/css/comm/register.css}">
-<script src="js/comm/register.js"></script>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" href="resources/css/comm/register.css">
+<link rel="stylesheet" href="resources/css/comm/common.css">
+<script src="http://code.jquery.com/jquery-latest.js"></script> 
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.min.js" integrity="sha384-Rx+T1VzGupg4BHQYs2gCW9It+akI2MM/mndMCy36UVfodzcJcF0GGLxZIzObiEfa" crossorigin="anonymous"></script>
+<script src="<c:url value="resources/js/comm/register.js"/>"></script>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+</head>
+
 <body class="register"onpageshow="if(event.persisted) noBack();" onunload="" marginwidth="0" marginheight="0">
 	<!-- wrap -->
 	<div class="wrap">
-		<a th:href="@{/}"><img th:src="@{/img/logo.png}" class="logo"></a>
+		<a href="/"><img src="<c:url value="resources/img/logo.png"/>" class="logo"></a>
 		<div class="registerbox">
 			<!-- 로그인 입력 -->
 			<div class="register_input">
 				<h2>
-					<img th:src="@{/img/register/register_text.png}" alt="로그인 텍스트 이미지">
+					<img src="<c:url value="resources/img/register/register_text.png"/>" alt="로그인 텍스트 이미지">
 				</h2>
 				<div class="register_01">
 					<!-- 로그인 입력 -->
 					<fieldset>
-							<form id="registerForm" name="registerForm" method="post" style="display: inline" th:action="@{/register}" enctype="multipart/form-data">
+							<form id="registerForm" name="registerForm" method="post" style="display: inline" action="/register" enctype="multipart/form-data">
 								<div>
 									<div class="register-info">
-										<img th:src="@{/img/register/register_id.png}"  >
+										<img src="<c:url value="resources/img/register/register_id.png"/>">
 										<input type="text" id="id" name="userId" title="아이디" placeholder="아이디">
 										<input type="hidden" name="userTypeCd">
 									</div>
 									<div class="register-info">
-										<img th:src="@{/img/register/register_pwd.png}"  >
+										<img src="<c:url value="resources/img/register/register_pwd.png"/>">
 								    	<input type="password" id="pw" name="userPwd" title="비밀번호" placeholder="비밀번호">
 									</div>
 									<div class="register-info">
-										<img th:src="@{/img/register/register_pwd.png}">
+										<img src="<c:url value="resources/img/register/register_pwd.png"/>">
 										<input type="password" name="userPwdConfirm"  placeholder="비밀번호 확인">
 									</div>
 								</div>
@@ -43,28 +54,28 @@
 								
 								<div>
 									<div class="register-info">
-										<img th:src="@{/img/register/register_id.png}" class="register-icons">
+										<img src="<c:url value="resources/img/register/register_id.png"/>" class="register-icons">
 										<input type="text" name="userNm"  placeholder="이름">
 									</div>
 									<div class="register-info">
-										<img th:src="@{/img/register/register_tel.png}" class="register-icons">
+										<img src="<c:url value="resources/img/register/register_tel.png"/>" class="register-icons">
 										<input type="text" name="userTelNo"  placeholder="연락처">
 									</div>
 									<div class="register-info">
-										<img th:src="@{/img/register/register_email.png}" class="register-icons">
+										<img src="<c:url value="resources/img/register/register_email.png"/>" class="register-icons">
 										<input type="email" name="userEmail"  placeholder="이메일">
 									</div>
 									<div class="register-info">
-										<img th:src="@{/img/register/register_addr.png}" class="register-icons">
+										<img src="<c:url value="resources/img/register/register_addr.png"/>" class="register-icons">
 										<input type="text" name="userAddr" id="address_kakao" placeholder="주소" readonly>
 									</div>
 									<div class="register-info">
-										<img th:src="@{/img/register/register_addr.png}" class="register-icons">
+										<img src="<c:url value="resources/img/register/register_addr.png"/>" class="register-icons">
 										<input type="text" name="userAddressDetail" placeholder="상세 주소">
 									</div>
 									<div class="register-info" id="insert-img-box">
-										<img th:src="@{/img/register/register_id.png}" class="register-icons">
-										<input type="file" value="이미지 등록(click)" name="imgFile" th:onchange="imgTypeCheck(this)">
+										<img src="<c:url value="resources/img/register/register_id.png"/>" class="register-icons">
+										<input type="file" value="이미지 등록(click)" name="imgFile" onchange="imgTypeCheck(this)">
 									</div>
 								</div>
 								<ul class="register-msg">
@@ -79,11 +90,11 @@
 								<div id="storemng-register-form">
 									<input type="hidden" name="storeId">
 									<div class="register-info">
-										<img th:src="@{/img/register/register_addr.png}" class="register-icons">
+										<img src="<c:url value="resources/img/register/register_addr.png"/>" class="register-icons">
 										<input type="text" name="storeAddr" id="store-addr" placeholder="주소" readonly>
 									</div>
 									<div class="register-info">
-										<img th:src="@{/img/register/register_store.png}" class="register-icons">
+										<img src="<c:url value="resources/img/register/register_store.png"/>" class="register-icons">
 										<input type="text" name="storeNm"  placeholder="점포명" readonly>
 									</div>
 								</div>
@@ -94,25 +105,29 @@
 								
 								<div id="engmng-register-form">
 									<div class="register-info">
-										<img th:src="@{/img/register/register_mechine.png}" class="register-icons">
+										<img src="<c:url value="resources/img/register/register_mechine.png"/>" class="register-icons">
 										<select name="eqpmnCd" form="register-form">
 											<option value="">장비 선택</option>
-							    			<option th:each="mechineList:${mechineList}"
-							    					th:value="${mechineList.grpCdId}+'_'+${mechineList.grpCdDtlId}" 
-							    					th:text="${mechineList.grpCdDtlNm}"/>
+											<c:forEach var="mechineList" items="${mechineList}">
+								    			<option value="${mechineList.grpCdDtlId}" >
+							    					${mechineList.grpCdDtlNm}
+								    			</option>
+											</c:forEach>
 										</select>
 									</div>
 									<div class="register-info">
-										<img th:src="@{/img/register/register_location.png}" class="register-icons">
-										<select name="location" form="register-form" th:onchange="changeLocationCd()">
+										<img src="<c:url value="resources/img/register/register_location.png"/>" class="register-icons">
+										<select name="location" form="register-form" onchange="changeLocationCd()">
 											<option value="">지역 선택</option>
-							    			<option th:each="locationList:${locationList}"
-							    					th:value="${locationList.grpCdDtlId}" 
-							    					th:text="${locationList.grpCdDtlNm}"/>
+											<c:forEach var="locationList" items="${locationList}">
+								    			<option value="${locationList.grpCdDtlId}">
+							    					${locationList.grpCdDtlNm}
+								    			</option> 
+											</c:forEach>
 										</select>
 									</div>
 									<div class="register-info">
-										<img th:src="@{/img/register/register_location.png}" class="register-icons">
+										<img src="<c:url value="resources/img/register/register_location.png"/>" class="register-icons">
 										<select name="locationCd" form="register-form">
 											<option value="">지역 상세 선택</option>
 										</select>
@@ -143,26 +158,26 @@
 			</h4>
 			<div class="user-type">
 				<div>
-					<img th:src="@{/img/register/register_manager.png}" th:onclick="changeType(01)">
+					<img src="<c:url value="resources/img/register/register_manager.png"/>" onclick="changeType(01)">
 				</div>
 				<div class="user-type">
-					<p id="manger" th:onclick="changeType(01)">관리자</p>
+					<p id="manger" onclick="changeType(01)">관리자</p>
 				</div>
 			</div>
 			<div class="user-type">
 				<div>
-					<img th:src="@{/img/register/register_store_manager.png}" th:onclick="changeType(02)">
+					<img src="<c:url value="resources/img/register/register_store_manager.png"/>" onclick="changeType(02)">
 				</div>
 				<div class="user-type">
-					<p id="store_manager" th:onclick="changeType(02)">가맹 점주</p>
+					<p id="store_manager" onclick="changeType(02)">가맹 점주</p>
 				</div>
 			</div>
 			<div class="user-type">
 				<div>
-					<img th:src="@{/img/register/register_mecha.png}" th:onclick="changeType(03)">
+					<img src="<c:url value="resources/img/register/register_mecha.png"/>" onclick="changeType(03)">
 				</div>
 				<div class="user-type">
-					<p id="mechanic" th:onclick="changeType(03)">수리 기사</p>
+					<p id="mechanic" onclick="changeType(03)">수리 기사</p>
 				</div>
 			</div>
 		</div>
@@ -182,33 +197,35 @@
 					</tr>
 				</thead>
 				<tbody class="table-group-divider">
-					<tr th:each="list:${storeList}">
-						<td scope="row">
-							<input type="radio" name="select-store">
-							<input type="hidden" th:value="${list.storeSeq}">
-						</td>
-						<td th:text="${list.storeNm}"/>
-						<td th:text="${list.storeAddr}"/>
-					</tr>
+					<c:forEach var="list" items="${storeList}">
+						<tr>
+							<td scope="row">
+								<input type="radio" name="select-store">
+								<input type="hidden" value="${list.storeSeq}">
+							</td>
+							<td>${list.storeNm}</td>
+							<td>${list.storeAddr}</td>
+						</tr>
+					</c:forEach>
 				</tbody>
 			</table>
 			
 			<div>
 				<ul class="paging">
-					<li class="page-number" th:if="${nowPageBlock}>1">
-						<p th:onclick="movePage([[${startPage}]] - 1)">◀</p>
-					</li>
-					<li class="page-number" th:each="i:${#numbers.sequence(startPage,endPage)}">
-						<p th:onclick="movePage([[${i}]])" th:text="${i}" ></p>
-					</li>
-					<li class="page-number" th:if="${nowPageBlock}<${totalPageBlock}">
-						<p th:onclick="movePage([[${endPage}]] + 1)">▶</p>
-					</li>
+					<c:forEach var ="i" begin='${startPage}' end='${endPage}'>
+						<li class="page-number">
+							<p onclick="movePage('${i}')">${i}</p>
+						</li>
+					</c:forEach>
+					<c:if test="${nowPageBlock lt totalPageBlock}">
+						<li class="page-number">
+							<p onclick="movePage('${endPage+1}')">▶</p>
+						</li>
+					</c:if>
 				</ul>
 			</div>
 			<input type="button" id="select-store" value="선택">
 		</div>
 	</div>
-<footer th:replace="~{include/footer::footer}"></footer>
 </body>
 </html>
