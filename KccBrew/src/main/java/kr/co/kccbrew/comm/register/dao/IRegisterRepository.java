@@ -2,15 +2,9 @@ package kr.co.kccbrew.comm.register.dao;
 
 import java.util.List;
 
-import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-import org.springframework.stereotype.Repository;
 
-import kr.co.kccbrew.comm.register.model.LocationListVo;
-import kr.co.kccbrew.comm.register.model.MechineListVo;
-import kr.co.kccbrew.comm.register.model.StoreListVo;
-import kr.co.kccbrew.comm.register.model.UserImgVo;
-import kr.co.kccbrew.comm.register.model.UserVo;
+import kr.co.kccbrew.comm.register.model.RegisterVo;
 
 public interface IRegisterRepository {
 	/**
@@ -20,7 +14,7 @@ public interface IRegisterRepository {
 	 * @param end : 끝 번호
 	 * @return 운영중인 점포 리스트
 	 */
-	public List<StoreListVo> selectStoreList(@Param("keyword")String keyword,@Param("start")int start,@Param("end")int end);
+	public List<RegisterVo> selectStoreList(@Param("keyword")String keyword,@Param("start")int start,@Param("end")int end);
 	
 	/**
 	 * 
@@ -33,7 +27,7 @@ public interface IRegisterRepository {
 	 * 사용중인 장비군 목록 조회
 	 * @return 사용중인 장비군 목록 리스트
 	 */
-	public List<MechineListVo> selectMechineCode();
+	public List<RegisterVo> selectMechineCode();
 	
 	/**
 	 * 아이디 중복 체크
@@ -46,31 +40,31 @@ public interface IRegisterRepository {
 	 * 사용자 회원가입
 	 * @param user : 회원가입 정보가 담긴 Vo
 	 */
-	public void registerUser(UserVo user);
+	public void registerUser(RegisterVo user);
 	
 	/**
 	 * 지역코드 목록 조회
 	 * @return 지역 코드 목록
 	 */
-	public List<LocationListVo> selectLocationCd();
+	public List<RegisterVo> selectLocationCd();
 	
 	/**
 	 * 지역코드 상세 목록 조회
 	 * @return 지역코드 상세
 	 */
-	public List<LocationListVo> selectLocationDtlCd(@Param("locationCd")String locationCd);
+	public List<RegisterVo> selectLocationDtlCd(@Param("locationCd")String locationCd);
 	
 	/**
 	 * 사용자 사진 파일 기본 정보 등록
 	 * @param vo : 사용자 사진 정보를 담고있는 vo
 	 */
-	public void insertFileInfo(UserImgVo vo);
+	public void insertFileInfo(RegisterVo vo);
 	
 	/**
 	 * 사용자 사진 파일 상세 정보 등록
 	 * @param vo : 사용자 사진 정보를 담고있는 vo
 	 */
-	public void insertFileDtlInfo(UserImgVo vo);
+	public void insertFileDtlInfo(RegisterVo vo);
 	
 	/**
 	 * 점주와 점포 mapper 테이블 등록

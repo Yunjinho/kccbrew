@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.kccbrew.asMng.dao.IAsMngRepository">
+
+<select id="selectASList" parameterType="java.util.Map" resultType="kr.co.kccbrew.asMng.model.AsMngVo">
+SELECT as_info_seq AS "asInfoSeq",
+        	as_status AS "statusCd", 
+        	store_nm AS "storeNm",
+        	store_addr AS "storeAddr",
+        	machine_cd AS "machineCd",
+    		reg_dttm AS "regDttm"
+FROM (SELECT as_info_seq ,status.as_status,s.store_nm, s.store_addr, machine.machine_cd, a.reg_dttm 
+		 FROM as_information a 
+		INNER JOIN store_user_map su ON a.store_mng_id=su.user_id
+		INNER JOIN users u ON su.user_id=u.user_id 
+		INNER JOIN store s ON s.store_seq=su.store_seq
+		INNER JOIN (select grp_cd_dtl_nm AS as_status ,grp_cd_dtl_id from group_code_detail where grp_cd_id LIKE 'S') status ON status.grp_cd_dtl_id=a.as_status
+		INNER JOIN (select grp_cd_dtl_nm AS machine_cd ,grp_cd_dtl_id from group_code_detail where grp_cd_id like 'M') machine on machine.grp_cd_dtl_id=a.machine_cd
+		)
+WHERE ROWNUM BETWEEN 1 AND 10
+</select>
+
+<select id="countASList" parameterType="kr.co.kccbrew.asMng.model.AsMngVo" resultType="Integer">
+	SELECT COUNT(*)
+	FROM as_information a 
+	INNER JOIN store_user_map su ON a.store_mng_id=su.user_id
+	INNER JOIN users u ON su.user_id=u.user_id 
+	INNER JOIN store s ON s.store_seq=su.store_seq
+	INNER JOIN (select grp_cd_dtl_nm AS as_status ,grp_cd_dtl_id from group_code_detail where grp_cd_id LIKE 'S') status ON status.grp_cd_dtl_id=a.as_status
+	INNER JOIN (select grp_cd_dtl_nm AS machine_cd ,grp_cd_dtl_id from group_code_detail where grp_cd_id like 'M') machine on machine.grp_cd_dtl_id=a.machine_cd
+	WHERE s.store_nm LIKE '%'||#{storeNm}||'%' AND
+	 	status.as_status LIKE '%'||#{statusCd}||'%' AND
+	 	machine.machine_cd LIKE '%'||#{machineCd}||'%' AND 
+	 	s.store_addr LIKE '%'||#{storeAddr}||'%'
+		<choose><when test="asInfoSeq != ''">AND a.as_info_seq = #{asInfoSeq} </when></choose>
+		<choose><when test="userId != ''">AND (u.user_id =#{userId} AND u.user_type_cd='03')</when></choose>
+		<choose>
+			<when test="startYr != ''">
+				<![CDATA[
+					AND EXTRACT(YEAR FROM a.mod_dttm) >= #{startYr}
+				]]>
+			</when>
+			<otherwise>
+				<![CDATA[
+					AND EXTRACT(YEAR FROM a.mod_dttm) >= TO_CHAR(SYSDATE-(INTERVAL '10' YEAR),'YYYY')
+				]]>
+			</otherwise>
+		</choose>
+		<choose>
+			<when test="startMn != ''">
+				AND
+				<![CDATA[
+					EXTRACT(MONTH FROM a.mod_dttm) >= #{startMn}
+				]]>
+			</when>
+		</choose>
+		<choose>
+			<when test="endYr != ''">
+				AND
+				<![CDATA[
+					EXTRACT(YEAR FROM a.mod_dttm) <= #{endYr}
+				]]>
+			</when>
+		</choose>
+		<choose>
+			<when test="endMn != ''">
+				AND
+				<![CDATA[
+					EXTRACT(MONTH FROM a.mod_dttm) <= #{endMn}
+				]]>
+			</when>
+		</choose>
+</select>
+
+<select id="selectMachineCd" resultType="kr.co.kccbrew.asMng.model.AsMngVo">
+<![CDATA[
+	SELECT grp_cd_dtl_id AS "grpCdDtlId", grp_cd_id AS "grpCdId", grp_cd_dtl_nm AS "grpCdDtlNm" 
+	FROM group_code_detail WHERE grp_cd_id LIKE 'M'
+]]>
+</select>
+
+<select id="selectAsStatusCd" resultType="kr.co.kccbrew.asMng.model.AsMngVo">
+<![CDATA[
+	SELECT grp_cd_dtl_id AS "grpCdDtlId", grp_cd_id AS "grpCdId", grp_cd_dtl_nm AS "grpCdDtlNm" 
+	FROM group_code_detail WHERE grp_cd_id LIKE 'S'
+]]>
+</select>
+
+<select id="selectLocationCd" resultType="kr.co.kccbrew.asMng.model.AsMngVo">
+<![CDATA[
+	SELECT grp_cd_dtl_id AS "grpCdDtlId", grp_cd_id AS "grpCdId", grp_cd_dtl_nm AS "grpCdDtlNm" 
+	FROM group_code_detail WHERE grp_cd_id LIKE 'LL'
+]]>
+</select>
+
+
+</mapper>
