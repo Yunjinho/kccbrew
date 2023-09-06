@@ -36,7 +36,6 @@ public class LogInController {
 	/** 로그인 페이지로 이동 */
 	@RequestMapping(value="/" , method=RequestMethod.GET)
 	public String login() {
-		System.out.println("/");
 		return "/comm/login/login";
 	}
 	
@@ -44,7 +43,6 @@ public class LogInController {
 	@ResponseBody
 	@RequestMapping(value="/login",method = RequestMethod.GET)
 	public String login(String id, String pwd,Model model,HttpServletRequest httpServletRequest) {
-		System.out.println("/login");
 		LogInVo vo = new LogInVo();
 		vo.setUserId(id);
 		vo.setUserPwd(pwd);
@@ -55,8 +53,8 @@ public class LogInController {
 		        httpServletRequest.getSession().invalidate();
 		        HttpSession session = httpServletRequest.getSession(true);  // Session이 없으면 생성
 		        // 세션에 userId를 넣어줌
-				session.setAttribute("userTypeCd", session);
-				session.setAttribute("userId", session);
+				session.setAttribute("userTypeCd", user.getUserTypeCd());
+				session.setAttribute("userId", user.getUserId());
 				session.setMaxInactiveInterval(1800); // Session이 30분동안 유지
 				return "1";
 			}else {

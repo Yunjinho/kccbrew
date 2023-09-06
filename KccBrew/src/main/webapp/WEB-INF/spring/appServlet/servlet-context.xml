@@ -3,9 +3,11 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:beans="http://www.springframework.org/schema/beans"
 	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:util="http://www.springframework.org/schema/util"
 	xsi:schemaLocation="http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd
 		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
-		http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
+		http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.3.xsd">
 
 	<!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
 	
@@ -27,8 +29,14 @@
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
 	
-	<!-- Controller -->
+	<!-- multipartResolver -->
+	<beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<beans:property name="maxUploadSize" value="50000000"/>
+	</beans:bean>
+	<!-- multipartResolver -->
 	
+
+	<!-- Controller -->
 	<context:component-scan base-package="kr.co.kccbrew" />
 	<context:component-scan base-package="kr.co.kccbrew.comm.login.controller" />
 	<context:component-scan base-package="kr.co.kccbrew.comm.main.controller" />
@@ -36,18 +44,15 @@
 	<context:component-scan base-package="kr.co.kccbrew.strMng.controller" />
 	<context:component-scan base-package="kr.co.kccbrew.sysMng.cdMng.controller" />
 	<context:component-scan base-package="kr.co.kccbrew.sysMng.logMng.controller" />
-	
+	<context:component-scan base-package="kr.co.kccbrew.asMng.contorller" />
 	<!-- Controller -->
 	
 	<!-- View -->
-	
 	<view-controller path="/" view-name="/home"/>
-	
 	<!-- View -->
 	
 	
 	<!-- inteceptor -->
-	
     <interceptors>
 		<!-- 로그인 세션 확인 -->
        <interceptor>
@@ -55,6 +60,7 @@
            <exclude-mapping path="/"/>
            <exclude-mapping path="/login"/>
            <exclude-mapping path="/register"/>
+           <exclude-mapping path="/searchAsList"/>
            <exclude-mapping path="/search-store-list"/>
            <exclude-mapping path="/resources/**/"/>
            <beans:bean class="kr.co.kccbrew.comm.interceptor.component.SessionInterceptor"/>
@@ -89,7 +95,7 @@
        </interceptor> -->
        
     </interceptors>
-	
 	<!-- inteceptor -->
+	
 	
 </beans:beans>

@@ -5,17 +5,13 @@ import java.util.List;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import kr.co.kccbrew.comm.register.model.LocationListVo;
-import kr.co.kccbrew.comm.register.model.MechineListVo;
-import kr.co.kccbrew.comm.register.model.StoreListVo;
-import kr.co.kccbrew.comm.register.model.UserVo;
+import kr.co.kccbrew.comm.register.model.RegisterVo;
 import kr.co.kccbrew.comm.register.service.IRegisterService;
 import lombok.RequiredArgsConstructor;
 
@@ -43,11 +39,11 @@ public class RegisterController {
 	@RequestMapping(value="/register" , method=RequestMethod.GET)
 	public String register(Model model) {
 		//장비 목록
-		List<MechineListVo> mechineList=registerService.selectMechineCode();
+		List<RegisterVo> mechineList=registerService.selectMechineCode();
 		//지역 코드 목록
-		List<LocationListVo> locationList=registerService.selectLocationCd();
+		List<RegisterVo> locationList=registerService.selectLocationCd();
 		//점포 목록
-		List<StoreListVo> storeList=registerService.selectStoreList("",1);
+		List<RegisterVo> storeList=registerService.selectStoreList("",1);
 		int storeListCount=registerService.countStoreList("");
 		int totalPage = 0;
 		if (storeListCount > 0) {
@@ -86,13 +82,13 @@ public class RegisterController {
 	@RequestMapping(value="/search-store-list" , method=RequestMethod.GET)
 	public JSONArray searchStoreList(String keyword,int page,Model model) {
 		HashMap<String, Integer> pageInfo= new HashMap<String, Integer>();
-		HashMap<String, StoreListVo> store= new HashMap<String, StoreListVo>();
+		HashMap<String, RegisterVo> store= new HashMap<String, RegisterVo>();
 		HashMap<String, String> searchWord= new HashMap<String, String>();
 		
 		JSONArray result = new JSONArray();
 		
 		//점포 목록
-		List<StoreListVo> storeList=registerService.selectStoreList(keyword,page);
+		List<RegisterVo> storeList=registerService.selectStoreList(keyword,page);
 		int storeListCount=registerService.countStoreList(keyword);
 		int totalPage = 0;
 		if (storeListCount > 0) {
@@ -115,7 +111,7 @@ public class RegisterController {
 		
 		//JSON 형식으로 데이터 삽입
 		JSONArray storeJa= new JSONArray();
-		for(StoreListVo l: storeList) {
+		for(RegisterVo l: storeList) {
 			storeJa.add(l);
 		}
 		result.add(storeJa);
@@ -141,9 +137,9 @@ public class RegisterController {
 	@ResponseBody
 	@RequestMapping(value="/search-location-code" , method=RequestMethod.GET)
 	public JSONArray searchLocationCode(String locCd) {
-		List<LocationListVo> list=registerService.selectLocationDtlCd(locCd);
+		List<RegisterVo> list=registerService.selectLocationDtlCd(locCd);
 		JSONArray result = new JSONArray();
-		for(LocationListVo l:list) {
+		for(RegisterVo l:list) {
 			result.add(l);
 		}
 		return result;
@@ -160,7 +156,7 @@ public class RegisterController {
 	
 	/** 회원가입 처리*/
 	@RequestMapping(value="/register" , method=RequestMethod.POST)
-	public String register(UserVo user) {
+	public String register(RegisterVo user) {
 		registerService.registerUser(user);
 		return "comm/login/login";
 	}

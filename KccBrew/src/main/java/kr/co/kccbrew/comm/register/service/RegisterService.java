@@ -1,25 +1,17 @@
 	package kr.co.kccbrew.comm.register.service;
 
 import java.io.File;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.security.MessageDigest;
 import java.security.SecureRandom;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
-import kr.co.kccbrew.comm.login.model.LogInVo;
 import kr.co.kccbrew.comm.register.dao.IRegisterRepository;
-import kr.co.kccbrew.comm.register.model.LocationListVo;
-import kr.co.kccbrew.comm.register.model.MechineListVo;
-import kr.co.kccbrew.comm.register.model.StoreListVo;
-import kr.co.kccbrew.comm.register.model.UserImgVo;
-import kr.co.kccbrew.comm.register.model.UserVo;
+import kr.co.kccbrew.comm.register.model.RegisterVo;
 import lombok.RequiredArgsConstructor;
 @Service
 @RequiredArgsConstructor
@@ -36,9 +28,9 @@ public class RegisterService implements IRegisterService{
 	 * @return 운영중인 점포 리스트
 	 */
 	@Override
-	public List<StoreListVo> selectStoreList(String keyword,int page) {
+	public List<RegisterVo> selectStoreList(String keyword,int page) {
 		int start=(page-1)*5+1;
-		List<StoreListVo> list = registerRepasotory.selectStoreList(keyword,start,start+4);
+		List<RegisterVo> list = registerRepasotory.selectStoreList(keyword,start,start+4);
 		return list;
 	}
 	
@@ -57,8 +49,8 @@ public class RegisterService implements IRegisterService{
 	 * @return 장비군 목록 리스트
 	 */
 	@Override
-	public List<MechineListVo> selectMechineCode() {
-		List<MechineListVo> list = registerRepasotory.selectMechineCode();
+	public List<RegisterVo> selectMechineCode() {
+		List<RegisterVo> list = registerRepasotory.selectMechineCode();
 		return list;
 	}
 	
@@ -77,8 +69,8 @@ public class RegisterService implements IRegisterService{
 	 * @return 지역 코드 목록
 	 */
 	@Override
-	public List<LocationListVo> selectLocationCd() {
-		List<LocationListVo> list=registerRepasotory.selectLocationCd();
+	public List<RegisterVo> selectLocationCd() {
+		List<RegisterVo> list=registerRepasotory.selectLocationCd();
 		return list;
 	}
 	
@@ -87,8 +79,8 @@ public class RegisterService implements IRegisterService{
 	 * @return 조회한 상세 지역 목록
 	 */
 	@Override
-	public List<LocationListVo> selectLocationDtlCd(String locCd) {
-		List<LocationListVo> list=registerRepasotory.selectLocationDtlCd(locCd);
+	public List<RegisterVo> selectLocationDtlCd(String locCd) {
+		List<RegisterVo> list=registerRepasotory.selectLocationDtlCd(locCd);
 		return list;
 	}
 	
@@ -97,7 +89,7 @@ public class RegisterService implements IRegisterService{
 	 */
 	@Override
 	@Transactional
-	public void registerUser(UserVo user) {
+	public void registerUser(RegisterVo user) {
 		//salt값 객체에 저장
 		user.setUserSalt(getSalt());
 		//암호화된 비밀번호 객체에 저장
@@ -123,8 +115,8 @@ public class RegisterService implements IRegisterService{
 	 * @return : 회원가입 사용자 정보 담긴 Vo
 	 */
 	@Transactional
-	private UserVo insertUserImg(UserVo user) {
-		UserImgVo vo=new UserImgVo();
+	private RegisterVo insertUserImg(RegisterVo user) {
+		RegisterVo vo=new RegisterVo();
 		vo.setUserId(user.getUserId());
 		//기본 파일정보 등록
 		registerRepasotory.insertFileInfo(vo);
