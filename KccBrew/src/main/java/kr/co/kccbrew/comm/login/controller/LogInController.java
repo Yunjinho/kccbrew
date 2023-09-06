@@ -33,15 +33,15 @@ public class LogInController {
 	 */
 	private final ILogInService loginService;
 	
-	/** 로그인 페이지로 이동 */
+	/** 로그인 페이지로 이동 *//*
 	@RequestMapping(value="/" , method=RequestMethod.GET)
 	public String login() {
 		return "/comm/login/login";
-	}
+	}*/
 	
 	/** 로그인 처리 */
 	@ResponseBody
-	@RequestMapping(value="/login",method = RequestMethod.GET)
+	@RequestMapping(value="login",method = RequestMethod.GET)
 	public String login(String id, String pwd,Model model,HttpServletRequest httpServletRequest) {
 		LogInVo vo = new LogInVo();
 		vo.setUserId(id);
@@ -56,12 +56,13 @@ public class LogInController {
 				session.setAttribute("userTypeCd", user.getUserTypeCd());
 				session.setAttribute("userId", user.getUserId());
 				session.setMaxInactiveInterval(1800); // Session이 30분동안 유지
-				return "1";
+				return "t";
 			}else {
-				return "2";
+				System.out.println(user);
+				return "인증 진행중인 계정입니다.";
 			}
 		}else {
-			return "3";
+			return "아이디(로그인 전용 아이디) 또는 비밀번호를 잘못 입력했습니다.<br> 입력하신 내용을 다시 확인해주세요.";
 		}
 	}
 	

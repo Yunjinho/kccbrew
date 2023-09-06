@@ -8,7 +8,7 @@
 .comm-nav{
 	font-family: 'notosans';
 	z-index:999;
-	font-size:1.5em;
+	font-size:1.2em;
 	height:90px;
 	line-height: 100px;
 	z-index:99999;
@@ -20,7 +20,7 @@
 	display:flex;
 	justify-content:flex-end;
 	padding: 0 200px;
-	font-size:0.8em;
+	font-size:0.7em;
 	color:#ffffff;
 	height: 30px;
 	line-height: 30px;
@@ -36,6 +36,9 @@
 	background-color: #0000a0;
 	color:#ffffff;
 	cursor: pointer;
+}
+.logout-btn:hover {
+	text-decoration: underline;
 }
 /********* nav 바 *************/
 .nav-bar{
