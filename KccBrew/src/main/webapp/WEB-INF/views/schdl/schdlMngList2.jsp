@@ -273,7 +273,7 @@
 									<div id="content">
 										<h2 class="heading">스케줄 조회</h2>
 										<!-- 로그 검색 -->
-										<form action="/schedule" method="get">
+										<form action="/schedule2" method="get">
 											<table id="search-box">
 												<!-- 1행 -->
 												<c:set var="today" value="<%=new java.util.Date()%>" />
@@ -420,29 +420,39 @@
 												<thead>
 													<tr>
 														<th>순번</th>
-														<th>스케줄구분</th>
-														<th>날짜</th>
-														<th>기사ID</th>
-														<th>기사이름</th>
-														<th>기사연락처</th>
+														<th>사용자구분</th>
+														<th>사용자ID</th>
+														<th>사용자명</th>
+														<th>사용자연락처</th>
 														<th>지점ID</th>
 														<th>지점명</th>
 														<th>지점연락처</th>
-														<th>지점위치</th>
+														<th>지점위치코드</th>
+														<th>날짜</th>
+														<th>스케줄구분</th>
 													</tr>
 												</thead>
 												<tbody>
-													<c:forEach var="schedule" items="${schedules}"
-														varStatus="loop">
+													<c:forEach var="schedule2" items="${schedules}">
 														<tr>
-															<td><c:out value="${loop.index + 1}" /></td>
-															<td><c:out value="${schedule.userType}" /></td>
-															<td><c:out value="${schedule.userId}" /></td>
-															<td><c:out value="${schedule.userName}" /></td>
-															<td><c:out value="${schedule.userPhoneNumber}" /></td>
-															<td><c:out value="${schedule.location}" /></td>
-															<td><c:out value="${schedule.scheduleDate}" /></td>
-															<td><c:out value="${schedule.scheduleType}" /></td>
+															<td><c:out value="${schedule2.rowNum}" /></td>
+															<td><c:out value="${schedule2.userType}" /></td>
+															<td><c:out value="${schedule2.userId}" /></td>
+															<td><c:out value="${schedule2.userName}" /></td>
+															<td><c:out value="${schedule2.userPhoneNumber}" /></td>
+															<td><c:choose>
+																	<c:when test="${schedule2.storeId != 0}">
+																		<c:out value="${schedule2.storeId}" />
+																	</c:when>
+																	<c:otherwise>
+																		<!-- 0인 경우 아무것도 표시하지 않음 -->
+																	</c:otherwise>
+																</c:choose></td>
+															<td><c:out value="${schedule2.storeName}" /></td>
+															<td><c:out value="${schedule2.storePhoneNumber}" /></td>
+															<td><c:out value="${schedule2.storeLocation}" /></td>
+															<td><c:out value="${schedule2.scheduleDate}" /></td>
+															<td><c:out value="${schedule2.scheduleType}" /></td>
 														</tr>
 													</c:forEach>
 											</table>

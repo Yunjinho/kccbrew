@@ -1,6 +1,6 @@
 package kr.co.kccbrew.schdlMng.model;
 
-import java.sql.Date; 
+import java.sql.Date;
 
 import org.springframework.stereotype.Component;
 
@@ -8,14 +8,18 @@ import lombok.Data;
 
 @Component
 @Data
-public class SchdlMngVo {
-	private String userId;
+public class SchdlMngVo2 {
+	private int rowNum;
+	private String scheduleType;
+	private int scheduleId;
 	private String userType;
+	private String userId;
 	private String userName;
 	private String userPhoneNumber;
-	private String location; 
-	private String sublocation;
-	private String scheduleType; // 근무·휴무 구분
+	private int storeId;
+	private String storeName;
+	private String storePhoneNumber;
+	private String storeLocation;
 	private Date scheduleDate;
 	
 	/*검색*/

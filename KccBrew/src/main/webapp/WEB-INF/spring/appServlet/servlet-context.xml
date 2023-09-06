@@ -92,6 +92,7 @@
 				class="kr.co.kccbrew.comm.interceptor.component.MechaAuthInterceptor" />
 		</interceptor>
 
+		<!-- 로그수집 및 저장 기능 -->
 		<interceptor>
 			<mapping path="/logtest" />
 			<exclude-mapping path="/resources/**/" />
