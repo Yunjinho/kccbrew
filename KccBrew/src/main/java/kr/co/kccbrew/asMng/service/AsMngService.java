@@ -1,5 +1,6 @@
 package kr.co.kccbrew.asMng.service;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -18,13 +19,25 @@ public class AsMngService implements IAsMngService{
 	private final IAsMngRepository asRepository;
 	
 	
-	
 	/**
 	 *  조회한 검색 결과
 	 */
 	@Override
-	public List<AsMngVo> selectASList(AsMngVo asMngVo) {
-		return asRepository.selectASList(asMngVo);
+	public List<AsMngVo> selectASList(AsMngVo asMngVo,int page) {
+		HashMap<String, Object> map=new HashMap<String, Object>();
+		map.put("asVo", asMngVo);
+		map.put("start", page);
+		map.put("end", page+9);
+		System.out.println(map);
+		return asRepository.selectASList(map);
+	}
+	
+	/**
+	 * 조회할 AS 리스트의 수
+	 */
+	@Override
+	public int countASList(AsMngVo asMngVo) {
+		return asRepository.countASList(asMngVo);
 	}
 	
 	/**
@@ -54,5 +67,7 @@ public class AsMngService implements IAsMngService{
 	public List<AsMngVo> selectLocationCd() {
 		return asRepository.selectLocationCd();
 	}
+
+
 
 }
