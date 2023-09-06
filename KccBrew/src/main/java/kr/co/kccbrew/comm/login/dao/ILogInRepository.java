@@ -17,5 +17,5 @@ public interface ILogInRepository {
 	 * @return : 사용자 아이디 salt값
 	 */
 	public String selectUserSalt(String userId);
-	
+
 }

@@ -12,7 +12,26 @@ function login(){
 		},
 	    success : function(data) { // 결과 성공 콜백함수
 			if(data=="t"){
-				location.href="/main"
+				//로그인 성공 시 userTypeCd 값을 받아와서 사용자 유형 확인
+				$.ajax({
+                    type: "GET",
+                    url: "/getUserTypeCd", // 사용자의 userTypeCd 값을 가져오는 컨트롤러 경로
+                    dataType: "text",
+                    success: function(userTypeCd) {
+                        // userTypeCd 값에 따라 다른 페이지로 리다이렉트
+                        if (userTypeCd === "01") {
+                            location.href = "/adminMain";
+                        } else if (userTypeCd === "02") {
+                            location.href = "/managerMain";
+                        } else if (userTypeCd === "03") {
+                            location.href = "/mechanicMain";
+                        } else {
+                            // 다른 경우에 대한 처리
+                            alert("알 수 없는 사용자 유형 코드: " + userTypeCd);
+                        }
+                    }
+                });
+				/*location.href="/main"*/
 			}else{
 				$("#login-msg").html(data);
 				$("#login-msg").css("display","block");

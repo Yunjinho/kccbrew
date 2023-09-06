@@ -185,7 +185,7 @@
 				<div class="user-profile">
 					<div class="inner-box">
 						<span class="name">노건우</span>님 <br><br>
-						<span class="job">관리자</span> <br><br><br><br><br><br><br>
+						<span class="job">수리기사</span> <br><br><br><br><br><br><br>
 					</div>
 					<div class="buttons">
 						<button class="chpwd">비밀번호 변경</button> 
