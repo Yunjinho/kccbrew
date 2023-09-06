@@ -109,7 +109,7 @@ public class StrMngController {
 	    System.out.println(store);
 	    
 	    return "redirect:/store";
-	}
+	} 
 
 	/* 점포명중복체크 */
 	@RequestMapping(value = "/api/namecheck", method = RequestMethod.POST)
