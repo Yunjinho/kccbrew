@@ -2,13 +2,6 @@
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
-<head>
-<link rel="stylesheet" href="${path}/resources/css/comm/reset.css" >
-<link rel="stylesheet" href="${path}/resources/css/comm/footer.css" >
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/xeicon@2.3.3/xeicon.min.css">
-<script src="http://code.jquery.com/jquery-latest.js"></script> 
-<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
-</head>
 <footer>
     <div id="footer">
         <div class="f-top">

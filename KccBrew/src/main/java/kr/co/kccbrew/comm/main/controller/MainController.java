@@ -3,8 +3,8 @@ package kr.co.kccbrew.comm.main.controller;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
-import java.time.Month;
 import java.util.List;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,6 +20,19 @@ public class MainController {
 	@Autowired
 	MainService mainServiceImple;
 	
+	/**************** 로그인 페이지 *****************************/
+	@RequestMapping(value="/goLoginPage", method=RequestMethod.GET)
+	public String goLoginPage(Model model) {
+		return "loginPage";
+	}
+	
+	/**************** 회원가입 페이지 *****************************/
+	@RequestMapping(value="/goRegisterPage", method=RequestMethod.GET)
+	public String goRegisterPage(Model model) {
+		return "registerPage";
+	}
+	
+	/******************  관리자 페이지 **************************/
 	@RequestMapping(value="/test", method=RequestMethod.GET)
 	public String test1(Model model) {
 		return "adminPageT1";
@@ -35,6 +48,58 @@ public class MainController {
 		return "adminPageT3";
 	}
 	
+	
+	
+	
+	
+	
+	
+	
+	
+	/************************ 점주 페이지 ******************************/
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	/*************************** 수리 기사 페이지 **************************/
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	//사용자 유형별 페이지 구분 ==> 건우야 이거 jsp에서 구분해도돼~
+//	@RequestMapping(value="/homepage", method=RequestMethod.GET)  
+//	public String homePage(Model model, HttpServletRequest request) {
+//		HttpSession session = request.getSession();
+//		String userTypeCd = (String) session.getAttribute("userTypeCd");
+//		
+//		if ("01".equals(userTypeCd)) { 				//관리자
+//	        return "adminPage";
+//	    } else if ("02".equals(userTypeCd)) {		//점주
+//	        return "managerPage";
+//	    } else if ("03".equals(userTypeCd)) {		//수리 기사
+//	        return "mechanicPage";
+//	    } else {
+//	        return "adminPageT1";
+//	    }
+//	}
+	
 	@RequestMapping(value="/adminMain", method=RequestMethod.GET)
 	public String admMain(Model model) {
 		List<MainPageVo> asAssignList = mainServiceImple.showAllAssignList();          //a/s 배정 리스트
@@ -46,7 +111,6 @@ public class MainController {
 		model.addAttribute("waitingList", waitingList);
 		model.addAttribute("resultList", resultList);
 		
-		// 이번 주 범위 구하기
 		LocalDate now = LocalDate.now(); // 현재 날짜
 		
 		//하루 구하기
@@ -84,7 +148,6 @@ public class MainController {
 		model.addAttribute("waitingList", waitingList);
 		model.addAttribute("resultList", resultList);
 		
-		// 이번 주 범위 구하기
 		LocalDate now = LocalDate.now(); // 현재 날짜
 		
 		//하루 구하기
@@ -122,7 +185,6 @@ public class MainController {
 		model.addAttribute("waitingList", waitingList);
 		model.addAttribute("resultList", resultList);
 		
-		// 이번 주 범위 구하기
 		LocalDate now = LocalDate.now(); // 현재 날짜
 		
 		//하루 구하기

@@ -66,8 +66,11 @@
 				</div>
 				<a href="/register" class="icon_02">
 					<dl>
-						<dd>회원 가입</dd>
-						<dt>어서오세요!</dt>
+						<c:url var="toRegister" value="/goRegisterPage" />
+						<a href="${toRegister}">
+							<dd>회원 가입</dd>
+							<dt>어서오세요!</dt>
+						</a>
 					</dl>
 				</a>
 			</div>

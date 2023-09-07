@@ -22,7 +22,7 @@
 		<div class="navbar-brand">
 			<c:url var="toMain" value="/adminMain" />
 			<a href="${toMain}">
-				<img alt="logo"  src="${path}/resources/img/kcc.png">
+				<img alt="logo"  src="${path}/resources/img/logo.png">
 			</a>
 		</div>
 		<div class="nav-box">
@@ -30,7 +30,8 @@
 				<li class="nav-item">
 					<a class="nav-link" href="#" >A/S 관리</a>
 					<ul class="comm-nav-dropdown">
-						<li><a href="/as-list">A/S 조회</a></li>			<!-- 매핑 url 변수 링크로 걸기 -->
+						<c:url var="test" value="/test" />          <!-- 여기에  매핑 url 선언 -->
+						<li><a href="${test}">A/S 접수 안내</a></li>	<!-- 매핑 url 변수 링크로 걸기 -->
 						<c:url var="test2" value="/test2" />
 						<li><a href="${test2}">A/S 내역 조회</a></li>
 					</ul>	

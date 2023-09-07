@@ -12,13 +12,25 @@
 		<put-attribute name="contents" value="/WEB-INF/views/tiles/basebody.jsp" />	  <!-- 빈 파일 -->
 		<put-attribute name="footer" value="/WEB-INF/views/tiles/basefooter.jsp" />	  <!-- 공통 푸터 -->
 	</definition>
-
+ 	
+ 	<!-- 로그인 페이지 -->
+ 	<definition name="loginPage" extends="mainLayout">
+		<put-attribute name="title" value="로그인 페이지" />
+		<put-attribute name="contents" value="/WEB-INF/views/comm/login/login.jsp" />
+	</definition>
+	
+	<!-- 회원가입 페이지 -->
+ 	<definition name="registerPage" extends="mainLayout">
+		<put-attribute name="title" value="회원가입 페이지" />
+		<put-attribute name="contents" value="/WEB-INF/views/comm/register/register.jsp" />
+	</definition>
+	
  	<!-- 관리자 페이지 -->
 	<definition name="adminPage" extends="mainLayout">
 		<put-attribute name="title" value="관리자 페이지" />
 		<put-attribute name="header" value="/WEB-INF/views/include/admin/main/adminheader.jsp" />
 		<put-attribute name="contents" value="/WEB-INF/views/include/admin/main/admincontents.jsp" />
-		<!-- 푸터 따로 명시하지 않으면 자동 상속 -->
+		<!-- 속성 따로 명시하지 않으면 부모 속성 자동 상속 -->
 	</definition>
 	
 	<!-- 관리자 페이지 추가 확장, 타이틀과 헤더 유지, contents만 변경 -->
@@ -54,15 +66,4 @@
 		<put-attribute name="header" value="/WEB-INF/views/include/manager/managerheader.jsp" />
 		<put-attribute name="contents" value="/WEB-INF/views/include/manager/managercontents.jsp" />
 	</definition>
-	
-	<definition name="asList1" extends="adminPage">
-		<put-attribute name="contents" value="/WEB-INF/views/asMng/asList.jsp" />
-	</definition>		
-	
-	<definition name="asList2" extends="managerPage">
-		<put-attribute name="contents" value="/WEB-INF/views/asMng/asList.jsp" />
-	</definition>	
-	
-
-	
 </tiles-definitions>

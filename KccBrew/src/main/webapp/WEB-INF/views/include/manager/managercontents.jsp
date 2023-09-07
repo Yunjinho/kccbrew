@@ -158,7 +158,7 @@
 				<div class="user-profile">
 					<div class="inner-box">
 						<span class="name">노건우</span>님 <br><br>
-						<span class="job">점주</span> <br><br><br><br><br><br><br>
+						<span class="job">점주</span> <br><br><br><br><br><br>
 					</div>
 					<div class="buttons">
 						<button class="chpwd">비밀번호 변경</button> 
@@ -171,9 +171,16 @@
 						as 접수 안내
 					</div>
 				</div>
-				<div class="something">
+				<div class="toKccBrew">
 					<div class="inner-box">
-						etc
+						<a href="#">
+							<img alt="logo"  src="${path}/resources/img/kcc.png">
+						</a>
+						<a href="#">
+							<button class="kcclink">
+								KccBrew 홈페이지로 이동 ▶
+							</button>
+						</a>
 					</div>
 				</div>
 			</div>
@@ -199,7 +206,6 @@
 								</thead>
 								 <tbody>
 			                        <c:forEach var="main" items="${dailyData}">
-			                        <!-- 아이디 별로 데이터 구분해서 출력할 것 -->
 		                                <tr>
 		                                    <td><c:out value="${main.asAssignNum}" /></td>
 		                                    <td><fmt:formatDate value="${main.visitDate}" pattern="yyyy-MM-dd" /></td>

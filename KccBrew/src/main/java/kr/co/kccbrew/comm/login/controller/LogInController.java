@@ -4,8 +4,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -33,11 +35,12 @@ public class LogInController {
 	 */
 	private final ILogInService loginService;
 	
-	/** 로그인 페이지로 이동 *//*
-	@RequestMapping(value="/" , method=RequestMethod.GET)
+	/** 로그인 페이지로 이동 */
+	
+	@RequestMapping(value="/loginpage" , method=RequestMethod.GET)
 	public String login() {
-		return "/comm/login/login";
-	}*/
+		return "loginPage";
+	}
 	
 	/** 로그인 처리 */
 	@ResponseBody
@@ -53,9 +56,11 @@ public class LogInController {
 		        httpServletRequest.getSession().invalidate();
 		        HttpSession session = httpServletRequest.getSession(true);  // Session이 없으면 생성
 		        // 세션에 userId를 넣어줌
-				session.setAttribute("userTypeCd", user.getUserTypeCd());
-				session.setAttribute("userId", user.getUserId());
+				//session.setAttribute("userTypeCd", session);
+		        session.setAttribute("userTypeCd", user.getUserTypeCd());
+				session.setAttribute("userId", session);
 				session.setMaxInactiveInterval(1800); // Session이 30분동안 유지
+				
 				return "t";
 			}else {
 				System.out.println(user);
@@ -64,6 +69,19 @@ public class LogInController {
 		}else {
 			return "아이디(로그인 전용 아이디) 또는 비밀번호를 잘못 입력했습니다.<br> 입력하신 내용을 다시 확인해주세요.";
 		}
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="getUserTypeCd",method = RequestMethod.GET)
+	public String getCd(HttpServletRequest httpServletRequest) {
+		HttpSession session = httpServletRequest.getSession(false);
+		if(session != null) {
+			String userTypeCd = (String) session.getAttribute("userTypeCd");
+	        if (userTypeCd != null) {
+	            return userTypeCd;
+	        }
+		}
+		return "ERROR";
 	}
 	
 }
