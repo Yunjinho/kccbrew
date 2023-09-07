@@ -42,9 +42,6 @@
 		<put-attribute name="contents" value="/WEB-INF/views/include/mechanic/mechaniccontents.jsp" />
 	</definition>
 
-	<definition name="asList" extends="mechanicPage">
-		<put-attribute name="contents" value="/WEB-INF/views/asMng/asList.jsp" />
-	</definition>	
 	
 	
 	
@@ -55,13 +52,6 @@
 		<put-attribute name="contents" value="/WEB-INF/views/include/manager/managercontents.jsp" />
 	</definition>
 	
-	<definition name="asList1" extends="adminPage">
-		<put-attribute name="contents" value="/WEB-INF/views/asMng/asList.jsp" />
-	</definition>		
-	
-	<definition name="asList2" extends="managerPage">
-		<put-attribute name="contents" value="/WEB-INF/views/asMng/asList.jsp" />
-	</definition>	
 	
 
 	

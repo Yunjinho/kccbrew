@@ -1,0 +1,64 @@
+@charset "UTF-8";
+
+/* 바디 */
+body {
+	font-family: 'Noto Sans', 'Noto Sans KR', sans-serif !important;
+}
+
+/* 헤더 */
+.brand-logo {
+	width: 100%;
+	height: 100%;
+}
+
+.header-icon {
+	width: 100%;
+	color: white;
+}
+
+.user-image {
+	border-radius: 50px;
+}
+
+.header-icon-background {
+	width: 20px;
+	height: 20px;
+}
+
+.breadcrumb{
+	display:flex;
+}
+input{
+   width: 100%;
+   font-size: 14px;
+   line-height: 1.42857143;
+   border: 1px solid #ccc;
+   border-radius: 4px;
+   padding: 6px 12px;
+}
+select[name=machineCd]{
+    width: 100%;
+    max-width: initial;
+}
+#receipt-form>div{
+	display:flex;
+	text-align: center;
+	margin-bottom:10px
+}
+#receipt-form>div>div{
+	flex:1;
+}
+#content{
+	background-color: #FFFFFF;
+    margin: 0px 100px;
+    padding: 3px 100px;
+}
+.tag-image{
+	width:25px;
+}
+.flex-label-div{
+	justify-content: space-between;
+}
+.flex-label-div>div{
+	flex:0.5
+}

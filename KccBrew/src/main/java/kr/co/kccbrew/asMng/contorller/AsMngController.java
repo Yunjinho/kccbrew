@@ -115,4 +115,9 @@ public class AsMngController {
 		
 		return "/asMng/asList";
 	}
+	
+	@RequestMapping(value="/as-receipt",method=RequestMethod.GET)
+	public String asReceipt(Model model) {
+		return "/asMng/asReceipt";
+	}
 }

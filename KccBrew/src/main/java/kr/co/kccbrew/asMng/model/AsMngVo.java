@@ -1,6 +1,9 @@
 package kr.co.kccbrew.asMng.model;
 
 import java.sql.Date;
+import java.util.List;
+
+import org.springframework.web.multipart.MultipartFile;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -12,13 +15,16 @@ import lombok.Data;
 @AllArgsConstructor
 @Data
 public class AsMngVo {
-	//List 조회
+	//AS 번호
 	private String asInfoSeq;
+	//조회 날짜 구간
 	private String startYr;
 	private String startMn;
 	private String endYr;
 	private String endMn;
+	//등록 날짜
 	private Date regDttm;
+	//기본 정보들..
 	private String userId;
 	private String storeAddr;
 	private String machineCd;
@@ -29,6 +35,13 @@ public class AsMngVo {
 	private Date modDttm;
 	private int fileSeq;
 	private String asContent;
+	
+	//신청 희망일 시작~끝
+	private Date wishingStartDate;
+	private Date wishingEndDate;
+	//AS 신청 이미지
+	private List<MultipartFile> imgFile;
+	
 	
 	//장비 코드 리스트
 	//as 상태 코드 리스트

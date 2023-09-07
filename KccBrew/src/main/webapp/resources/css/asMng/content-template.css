@@ -50485,12 +50485,10 @@ a {
 }
 
 #page-mask {
-	margin-left: 190px;
 	background-color: #f7f9fa
 }
 
 #page-container {
-	float: left;
 	width: 100%;
 	background: url('/theme/coursemosv2/pix/layout/side_menu_bg.png')
 		repeat-y 218px #f7f9fa
@@ -50502,7 +50500,7 @@ a {
 }
 
 #page-content {
-	margin-left: 218px;
+	margin: 0px 218px;
 	position: relative
 }
 
@@ -51345,7 +51343,6 @@ a {
 }
 
 #page-header .usermenu .lang_select a, a:hover, a:focus, a:visited {
-	color: #000;
 	text-decoration: none
 }
 

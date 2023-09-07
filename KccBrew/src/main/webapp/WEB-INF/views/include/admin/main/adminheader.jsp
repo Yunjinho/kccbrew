@@ -10,7 +10,6 @@
 <script src="${path}/resources/js/comm/header.js"></script>
 <script src="${path}/resources/js/admin/adminheader.js"></script>
 </head>
-<c:if test="어드민 계쩡">
 <header class="comm-nav"  >
 	<div class="top-bar">
 		###(관리자)님 환영합니다
@@ -69,5 +68,4 @@
 		</div>
 	</nav>
 </header>
-</c:if>
 </html>

@@ -6,6 +6,6 @@ window.onload=function(){
 	history.replaceState({}, null, location.pathname);
 	
 	$("#receipt-as").click(function(){
-		
+		location.href="/as-receipt"
 	})
 }

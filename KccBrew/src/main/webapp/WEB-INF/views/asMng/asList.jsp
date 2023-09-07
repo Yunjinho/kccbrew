@@ -6,13 +6,12 @@
 <%@ page import="java.time.LocalDateTime"%>
 <%@ page import="java.time.format.DateTimeFormatter"%>
 
-<%@ taglib prefix="jk" tagdir="/WEB-INF/tags"%>
 
 <!DOCTYPE html>
 <html>
 <head>
 <!-- css -->
-<link rel="stylesheet" href="/resources/css/asMng/asMng.css" />
+<link rel="stylesheet" href="/resources/css/asMng/asList.css" />
 <link rel="stylesheet" href="/resources/css/asMng/content-template.css" />
 <!-- font -->
 <!-- notoSans -->
@@ -164,7 +163,7 @@
 												<td colspan="5" style="border-bottom:none;"></td>
 												<td style="text-align: center; border-bottom: 0px;">
 													<div>
-														<button type="submit" class="form-btn" id="receipt-as">AS 접수</button>
+														<a href="/as-receipt" class="form-btn">AS 접수</a>
 													</div>
 												</td>
 												<td style="text-align: center; border-bottom: 0px;">
@@ -274,5 +273,4 @@
 		</div>
 	</div>
 </body>
-<input type="text" value="/tiles/getSession.jsp">
 </html>
