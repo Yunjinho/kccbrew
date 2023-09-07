@@ -45,21 +45,74 @@ public class AsMngController {
 		list=asMngService.selectLocationCd();
 		model.addAttribute("locationCd", list);
 		
-		List<AsMngVo>asList=asMngService.selectASList(asMngVo,1);
-		System.out.println(asList);
+		list=asMngService.selectASList(asMngVo,1);
+		int totalPage = 0;
+		int totalCount = asMngService.countASList(asMngVo);
+
+		//   paging처리
+		if (list != null && !list.isEmpty()) {
+			totalPage = (int)Math.ceil(totalCount/10.0);
+		}
 		
-		model.addAttribute("ASList",asList);
+		int startPage=(0 * 10) + 1;
+		int endPage=(0 + 1) * 10;
+		
+		model.addAttribute("totalPage", totalPage);
+		model.addAttribute("currentPage", 1);
+		
+		model.addAttribute("startPage", startPage);
+		model.addAttribute("endPage", endPage);
+
+		model.addAttribute("totalCount", totalCount);
+		model.addAttribute("searchContent",asMngVo);
+		model.addAttribute("searchContent",asMngVo);
+		model.addAttribute("ASList",list);
 		return "/asMng/asList";
 	}
+	
+	
+	
+	
 	/**
 	 * 
 	 * @param asMngVo : select 조회 조건으로 검색한 AS 목록
 	 * @return
 	 */
 	@RequestMapping(value="/searchAsList",method=RequestMethod.GET)
-	public String ssearchAsList(@RequestParam(defaultValue = "1") int currentPage,AsMngVo asMngVo) {
-		System.out.println(asMngVo);
-		List<AsMngVo>lsit=asMngService.selectASList(asMngVo,currentPage);
+	public String ssearchAsList(@RequestParam(defaultValue = "1") int currentPage,AsMngVo asMngVo,Model model) {
+		List<AsMngVo> list=asMngService.selectMachineCd();
+		model.addAttribute("machineCd", list);
+		
+		list=asMngService.selectAsStatusCd();
+		model.addAttribute("asStatusCd", list);
+		
+		list=asMngService.selectLocationCd();
+		model.addAttribute("locationCd", list);
+		
+		
+		List<AsMngVo> asList=asMngService.selectASList(asMngVo,currentPage);
+
+		int totalPage = 0;
+		int totalCount = asMngService.countASList(asMngVo);
+
+		//   paging처리
+		if (asList != null && !asList.isEmpty()) {
+			totalPage = (int) Math.ceil(totalCount/10.0);
+		} 
+
+		int startPage=((int)Math.ceil(currentPage/10) * 10) + 1;
+		int endPage=((int)Math.ceil(currentPage/10) + 1) * 10;
+		
+		model.addAttribute("totalPage", totalPage);
+		model.addAttribute("currentPage", currentPage);
+		model.addAttribute("startPage", startPage);
+		model.addAttribute("endPage", endPage);
+
+		model.addAttribute("totalCount", totalCount);
+		
+		model.addAttribute("searchContent",asMngVo);
+		model.addAttribute("ASList",asList);
+		
 		return "/asMng/asList";
 	}
 }
