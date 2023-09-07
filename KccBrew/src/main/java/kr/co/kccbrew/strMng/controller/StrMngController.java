@@ -14,6 +14,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -47,10 +49,45 @@ public class StrMngController {
 	private final IStrMngService storeService;
 
 	/* 점포조회 */
-	@RequestMapping("/store")
+	/*@RequestMapping("/store")
 	public String storeAll(Model model) {
 		List<StrMngVo> list = storeService.storeAll(); // 점포목록
 		model.addAttribute("list", list);
+		return "strMng/strMngList"; // strMngList.jsp로 반환
+	}*/
+	
+	/* 점포조회 */
+	@GetMapping("/store")
+	public String store(Model model,@RequestParam(defaultValue = "1") int currentPage,
+			@ModelAttribute("searchContent") StrMngVo searchContent, HttpSession session) {
+		List<StrMngVo> list = storeService.strFilter(searchContent, currentPage); // 점포목록
+		List<StrMngVo> List = storeService.locationNm(); // 지역코드리스트
+		List<StrMngVo> seoulList = storeService.locationNmSeoul();// 상세지역코드리스트
+		System.out.println("searchContent: " + searchContent);
+		System.out.println("dfsssssssssssssssssssssssssssssssssssssssssssssss ");
+		int totalPage = 0;
+		int totalLogCount = storeService.getStrFilterCount(searchContent);
+		int sharePage = 0;
+		if (list != null && !list.isEmpty()) {
+			totalPage = (int) Math.ceil(totalLogCount/10);
+		} else {
+		}
+
+		if (currentPage == 1) {
+			sharePage = 0;
+		} else {
+			sharePage = (currentPage-1) / 10;
+		}
+
+		model.addAttribute("totalPage", totalPage);
+		model.addAttribute("currentPage", currentPage);
+		model.addAttribute("sharePage", sharePage);
+
+		model.addAttribute("totalLog", totalLogCount);
+
+		model.addAttribute("list", list);
+		model.addAttribute("List", List);
+		model.addAttribute("seoulList", seoulList);
 		return "strMng/strMngList"; // strMngList.jsp로 반환
 	}
 
