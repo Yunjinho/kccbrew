@@ -101,6 +101,7 @@
 										
 										<div  class="flex-label-div">
 											<div>
+											
 												<h6><img src="/resources/img/asMng/check.png" class="tag-image">사진 첨부 파일</h6>
 											</div>
 											<div>
