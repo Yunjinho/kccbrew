@@ -12,6 +12,7 @@
 <!-- css -->
 <link rel="stylesheet" href="/resources/css/log/mylogtest.css" />
 <link rel="stylesheet" href="/resources/css/log/content-template.css" />
+<link rel="stylesheet" href="${path}/resources/css/comm/header.css" >
 
 <!-- font -->
 <!-- notoSans -->

@@ -13,6 +13,7 @@
 <link rel="stylesheet" href="${path}/resources/css/comm/reset.css" >
 <link rel="stylesheet" href="${path}/resources/css/comm/header.css" >
 <link rel="stylesheet" href="${path}/resources/css/comm/mainpage.css"/>
+<link rel="stylesheet" href="${path}/resources/css/comm/footer.css"/>
 <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/fullcalendar@5.8.0/main.min.css'/>
 <script src="http://code.jquery.com/jquery-latest.js"></script> 
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
@@ -30,50 +31,10 @@
 	
 	<!------------------ 상단 메뉴 ---------------------------->
 		<div class="top-menu">
-			<div class="new-receipt btm">
-				<table class="task-list">
-					<caption class="tablecap">미확인 A/S 신청건</caption>
-					<thead>	
-						<tr>
-							<th>접수번호</th>
-							<th>접수 상태</th>
-							<th>접수 장비</th>
-							<th>점주 이름</th>
-						</tr>
-					</thead>
-					<tbody>
-						<c:forEach var="main" items="${asList}">
-                            <c:if test="${main.asStatus == '01'}">
-                                <tr>
-                                    <td><c:out value="${main.asInfoNum}" /></td>
-                                    <td>
-                                        <c:choose>
-                                            <c:when test="${main.asStatus == '01'}">접수 중</c:when>
-                                            <c:when test="${main.asStatus == '02'}">반려</c:when>
-                                            <c:when test="${main.asStatus == '03'}">접수 완료</c:when>
-                                            <c:when test="${main.asStatus == '04'}">처리 완료</c:when>
-                                        </c:choose>
-                                    </td>
-                                    <td>
-                                        <c:choose>
-                                            <c:when test="${main.machineCode == '01'}">커피머신</c:when>
-                                            <c:when test="${main.machineCode == '02'}">냉장고</c:when>
-                                            <c:when test="${main.machineCode == '03'}">제빙기</c:when>
-                                            <c:when test="${main.machineCode == '04'}">에어컨</c:when>
-                                            <c:when test="${main.machineCode == '05'}">온수기</c:when>
-                                        </c:choose>
-                                    </td>
-                                    <td><c:out value="${main.managerName}" /></td>
-                                </tr>
-                            </c:if>
-                        </c:forEach>
-					</tbody>
-				</table>
-			</div>
 		
 			<div class="assigned-as btm">
 				<table class="task-list">
-					<caption class="tablecap">미처리 A/S 신청건</caption>
+					<caption class="tablecap">내게 온 A/S 배정건</caption>
 					<thead>
 						<tr>
 							<th>배정번호</th>
@@ -107,7 +68,7 @@
 				
 			<div class="as-result btm">
 				<table class="task-list">
-					<caption class="tablecap">처리 완료 A/S 신청건</caption>
+					<caption class="tablecap">처리 완료한 A/S</caption>
 					<thead>
 						<tr>
 							<th>배정번호</th>
@@ -143,38 +104,6 @@
 					</tbody>
 				</table>
 			</div>
-			
-			<div class="new-member-apply btm">
-				<table class="task-list">
-					<caption class="tablecap">회원 가입 대기</caption>
-					<thead>
-						<tr>
-							<th>아이디</th>
-							<th>이름</th>
-							<th>전화번호</th>
-							<th>사용자 구분</th>
-						</tr>
-					</thead>
-					<tbody>
-						<c:forEach var="main" items="${waitingList}">
-							<c:if test="${main.approveStatus == 'N'}">
-								<tr>
-									<td><c:out value="${main.userId}"/></td>
-									<td><c:out value="${main.userName}"/></td>
-									<td><c:out value="${main.userTelNo}"/></td>
-									<td>
-										<c:choose>
-											<c:when test="${main.userType == '01'}">관리자</c:when>
-											<c:when test="${main.userType == '02'}">점주</c:when>
-											<c:when test="${main.userType == '03'}">수리 기사</c:when>
-										</c:choose>
-									</td>
-								</tr>
-							</c:if>
-						</c:forEach>
-					</tbody>
-				</table>
-			</div>
 		</div>
 		
 		
@@ -185,13 +114,18 @@
 			<div class="profileAndguide">
 				<div class="user-profile">
 					<div class="inner-box">
-						<span class="name">노건우</span>님 <br><br>
+						<span class="name">###</span>님 <br><br>
 						<span class="job">수리기사</span> <br><br><br><br><br><br>
 					</div>
 					<div class="buttons">
 						<button class="chpwd">비밀번호 변경</button> 
 						<span> | </span> 
-						<button class="logout">로그아웃</button>
+						<c:url var="toLogin" value="/loginpage" />
+						<a href="${toLogin}">
+							<button class="logout">
+								로그아웃
+							</button>
+						</a>
 					</div>
 				</div>
 				<div class="as-guide">

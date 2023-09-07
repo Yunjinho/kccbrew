@@ -71,6 +71,7 @@ public class LogInController {
 		}
 	}
 	
+	/** 사용자 유형 코드 가져오기 **/
 	@ResponseBody
 	@RequestMapping(value="getUserTypeCd",method = RequestMethod.GET)
 	public String getCd(HttpServletRequest httpServletRequest) {

@@ -13,6 +13,7 @@
 <link rel="stylesheet" href="${path}/resources/css/comm/reset.css" >
 <link rel="stylesheet" href="${path}/resources/css/comm/header.css" >
 <link rel="stylesheet" href="${path}/resources/css/comm/mainpage.css"/>
+<link rel="stylesheet" href="${path}/resources/css/comm/footer.css"/>
 <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/fullcalendar@5.8.0/main.min.css'/>
 <script src="http://code.jquery.com/jquery-latest.js"></script> 
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
@@ -32,7 +33,7 @@
 		<div class="top-menu">
 			<div class="new-receipt btm">
 				<table class="task-list">
-					<caption class="tablecap">접수 중인 나의 신청 내역</caption>
+					<caption class="tablecap">나의 접수 목록</caption>
 					<thead>	
 						<tr>
 							<th>접수번호</th>
@@ -74,7 +75,7 @@
 		
 			<div class="assigned-as btm">
 				<table class="task-list">
-					<caption class="tablecap">배정된 나의 접수 내역</caption>
+					<caption class="tablecap">배정 완료 목록</caption>
 					<thead>
 						<tr>
 							<th>배정번호</th>
@@ -86,22 +87,24 @@
 					</thead>
 					<tbody>
 						<c:forEach var="main" items="${asAssignList}">
-						<!-- c:if로 사용자 아이디 조건 추가하기 -->
-							<tr>
-								<td><c:out value="${main.asAssignNum}"/></td>
-								<td><fmt:formatDate value="${main.visitDate}" pattern="yyyy-MM-dd" /></td>
-			                    <td>
-			                        <c:choose>
-			                            <c:when test="${main.machineCode == '01'}">커피머신</c:when>
-			                            <c:when test="${main.machineCode == '02'}">냉장고</c:when>
-			                            <c:when test="${main.machineCode == '03'}">제빙기</c:when>
-			                            <c:when test="${main.machineCode == '04'}">에어컨</c:when>
-			                            <c:when test="${main.machineCode == '05'}">온수기</c:when>
-			                        </c:choose>
-			                    </td>
-			                    <td>강남점</td>
-			                    <td><c:out value="${main.mechanicName}" /></td>
-							</tr>
+							<c:if test="${main.asStatus == '03'}">
+							<!-- c:if로 사용자 아이디 조건 추가하기 -->
+								<tr>
+									<td><c:out value="${main.asAssignNum}"/></td>
+									<td><fmt:formatDate value="${main.visitDate}" pattern="yyyy-MM-dd" /></td>
+				                    <td>
+				                        <c:choose>
+				                            <c:when test="${main.machineCode == '01'}">커피머신</c:when>
+				                            <c:when test="${main.machineCode == '02'}">냉장고</c:when>
+				                            <c:when test="${main.machineCode == '03'}">제빙기</c:when>
+				                            <c:when test="${main.machineCode == '04'}">에어컨</c:when>
+				                            <c:when test="${main.machineCode == '05'}">온수기</c:when>
+				                        </c:choose>
+				                    </td>
+				                    <td>강남점</td>
+				                    <td><c:out value="${main.mechanicName}" /></td>
+								</tr>
+							</c:if>
 						</c:forEach>
 					</tbody>
 				</table>
@@ -109,7 +112,7 @@
 				
 			<div class="as-result btm">
 				<table class="task-list">
-					<caption class="tablecap">처리 완료 A/S 신청건</caption>
+					<caption class="tablecap">처리 완료 목록</caption>
 					<thead>
 						<tr>
 							<th>배정번호</th>
@@ -120,27 +123,29 @@
 					</thead>
 					<tbody>
 						<c:forEach var="main" items="${resultList}">
-							<tr>
-								<td><c:out value="${main.asAssignNum}"/></td>
-								 <td>
-			                        <c:choose>
-			                            <c:when test="${main.machineCode == '01'}">커피머신</c:when>
-			                            <c:when test="${main.machineCode == '02'}">냉장고</c:when>
-			                            <c:when test="${main.machineCode == '03'}">제빙기</c:when>
-			                            <c:when test="${main.machineCode == '04'}">에어컨</c:when>
-			                            <c:when test="${main.machineCode == '05'}">온수기</c:when>
-			                        </c:choose>
-			                    </td>
-								<td>
-									<c:choose>
-										<c:when test="${main.asStatus == '01'}">접수 중</c:when>
-										<c:when test="${main.asStatus == '02'}">반려</c:when>
-										<c:when test="${main.asStatus == '03'}">접수 완료</c:when>
-										<c:when test="${main.asStatus == '04'}">수리 완료</c:when>
-									</c:choose>
-								 </td>
-								<td>동대문점</td>
-							</tr>
+							<c:if test="${main.asStatus == '04'}">
+								<tr>
+									<td><c:out value="${main.asAssignNum}"/></td>
+									 <td>
+				                        <c:choose>
+				                            <c:when test="${main.machineCode == '01'}">커피머신</c:when>
+				                            <c:when test="${main.machineCode == '02'}">냉장고</c:when>
+				                            <c:when test="${main.machineCode == '03'}">제빙기</c:when>
+				                            <c:when test="${main.machineCode == '04'}">에어컨</c:when>
+				                            <c:when test="${main.machineCode == '05'}">온수기</c:when>
+				                        </c:choose>
+				                    </td>
+									<td>
+										<c:choose>
+											<c:when test="${main.asStatus == '01'}">접수 중</c:when>
+											<c:when test="${main.asStatus == '02'}">반려</c:when>
+											<c:when test="${main.asStatus == '03'}">접수 완료</c:when>
+											<c:when test="${main.asStatus == '04'}">수리 완료</c:when>
+										</c:choose>
+									 </td>
+									<td>동대문점</td>
+								</tr>
+							</c:if>
 						</c:forEach>
 					</tbody>
 				</table>
@@ -157,13 +162,18 @@
 			<div class="profileAndguide">
 				<div class="user-profile">
 					<div class="inner-box">
-						<span class="name">노건우</span>님 <br><br>
+						<span class="name">###</span>님 <br><br>
 						<span class="job">점주</span> <br><br><br><br><br><br>
 					</div>
 					<div class="buttons">
 						<button class="chpwd">비밀번호 변경</button> 
 						<span> | </span> 
-						<button class="logout">로그아웃</button>
+						<c:url var="toLogin" value="/loginpage" />
+						<a href="${toLogin}">
+							<button class="logout">
+								로그아웃
+							</button>
+						</a>
 					</div>
 				</div>
 				<div class="as-guide">

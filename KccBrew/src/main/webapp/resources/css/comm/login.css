@@ -1,6 +1,9 @@
 @charset "utf-8"; 
 /* CSS Document */
-
+.login{
+	background-color:#ebf2fc; 
+	padding:50px 0 0 0;
+}
 .wrap{
 	width:1200px; 
 	margin:0 auto ; 
@@ -14,10 +17,7 @@
 .login #footer{
 	margin-top:80px;
 }
-.login{
-	background-color:#ebf2fc; 
-	padding:50px 0 0 0;
-}
+
 .login .loginbox{
 	margin:0 0 0 95px;
 }
@@ -35,16 +35,18 @@
 	display:flex; 
 }
 .login .loginbox .login_input h2 img{
-	display:inline-block; 
+	flex:0.5;
 	float:left; 
 	margin-right:20px; 
+	width:170px;
+	height:60px;
 }
 .login .loginbox .login_input h2 span{
-	display:inline-block;  
-	font-size:16px; 
+	flex:0.5;
+	height:80px;
+	font-size:0.9em; 
 	color:#222; 
 	font-weight:200; 
-	margin-top:10px;
 }
 .login .loginbox .login_input h2 span em{
 	font-size:18px; 
