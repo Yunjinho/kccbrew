@@ -6,63 +6,57 @@
 <%@ page import="java.time.LocalDateTime"%>
 <%@ page import="java.time.format.DateTimeFormatter"%>
 
+
 <!DOCTYPE html>
 <html>
 <head>
 <!-- css -->
-<link rel="stylesheet" href="${path}/resources/css/comm/header.css" >
 <link rel="stylesheet" href="/resources/css/asMng/asList.css" />
 <link rel="stylesheet" href="/resources/css/asMng/content-template.css" />
 <!-- font -->
 <!-- notoSans -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link
-	href="https://fonts.googleapis.com/css2?family=Noto+Sans&display=swap"
-	rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans&display=swap" rel="stylesheet">
 <!-- notoSans Kr -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link
-	href="https://fonts.googleapis.com/css2?family=Noto+Sans&family=Noto+Sans+KR&display=swap"
-	rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans&family=Noto+Sans+KR&display=swap" rel="stylesheet">
+<script src="<c:url value="resources/js/asMng/asList.js"/>"></script>
+<script src="http://code.jquery.com/jquery-latest.js"></script> 
 <meta charset="UTF-8">
 <title>Insert title here</title>
-
 </head>
-
 <body>
 	<div id="page-mask">
 		<div id="page-container" class="">
 			<div id="page-content" class="clearfix">
 				<div id="page-content-wrap">
-
 					<!-- ********** 페이지 네비게이션 시작 ********** -->
 					<div class="page-content-navigation">
 						<ol class="breadcrumb">
-							<li class="breadcrumb-home"><a href="">시스템관리</a></li>
+							<li class="breadcrumb-home"><a href="">AS 관리</a></li>
 							<li>
 								<div class="header-icon-background">
 									<img
-										src="<c:url value='/img/log/free-icon-right-arrow-271228.png' />"
+										src="<c:url value='resources/img/asMng/free-icon-right-arrow-271228.png' />"
 										alt="Check List" class="header-icon" />
 								</div>
 							</li>
-							<li><a href="<c:url value='/log' />">로그조회</a></li>
+							<li><a href="<c:url value='/as-list' />">AS 조회</a></li>
 						</ol>
 					</div>
 					<!-- ********** 페이지 네비게이션 끝 ********** -->
-
 					<div id="region-main">
 						<div role="main">
 							<span id="maincontent"></span>
 							<div class="user-past">
 
-								<!-- ********** 세은 로그 관련 내용 시작 ********** -->
+								<!-- ********** AS 리스트 조회 ********** -->
 								<div id="content">
 									<h2 class="heading">AS 조회</h2>
 									<!-- AS 조회-->
-									<form action="/searchAsList" method="get">
+									<form action="/searchAsList" method="get" id="search-form">
 										<table id="search-box">
 											<!-- 1행 -->
 											<c:set var="today" value="<%=new java.util.Date()%>" />
@@ -187,7 +181,7 @@
 									<div id="logTable">
 										<div>
 											<p class="data-info">
-												전체<b><span><c:out value="${totalLog}" /></span></b>건<span
+												전체<b><span><c:out value="${totalCount}" /></span></b>건<span
 													id="text-separator"> | </span><b><span><c:out
 															value="${currentPage}" /></span></b>/<b><span><c:out
 															value="${totalPage}" /></span></b>쪽
@@ -221,19 +215,19 @@
 									<div class="paging pagination">
 
 										<!-- 앞으로 가는 버튼 -->
-										<a href="/log?currentPage=1&startYr=${searchContent.startYr}&startMn=${searchContent.startMn}&endYr=${searchContent.endYr}&endMn=${searchContent.endMn}&uri=${searchContent.uri}&view=${searchContent.view}&userId=${searchContent.userId}&userType=${searchContent.userType}&ip=${searchContent.ip}&statusCode=${searchContent.statusCode}"><img
-											src="/resources/img/log/free-icon-left-chevron-6015759.png"
-											alt=" 처" /></a>
+										<a href="#"><img
+											src="/resources/img/asMng/free-icon-left-chevron-6015759.png"
+											alt=" 처" onclick="movePage(1)"/></a>
 
 										<c:choose>
 											<c:when test="${currentPage > 1}">
-												<a href="/log?currentPage=${currentPage - 1}&startYr=${searchContent.startYr}&startMn=${searchContent.startMn}&endYr=${searchContent.endYr}&endMn=${searchContent.endMn}&uri=${searchContent.uri}&view=${searchContent.view}&userId=${searchContent.userId}&userType=${searchContent.userType}&ip=${searchContent.ip}&statusCode=${searchContent.statusCode}"><img
-													src="/resources/img/log/free-icon-left-arrow-271220.png"
-													alt="이" /></a>
+												<a href="#"><img
+													src="/resources/img/asMng/free-icon-left-arrow-271220.png"
+													alt="이" onclick="movePage(${currentPage-1})"/></a>
 											</c:when>
 											<c:otherwise>
 												<a href="#" disabled="disabled"><img
-													src="/resources/img/log/free-icon-left-arrow-271220.png"
+													src="/resources/img/asMng/free-icon-left-arrow-271220.png"
 													alt="이" /></a>
 											</c:otherwise>
 										</c:choose>
@@ -241,11 +235,10 @@
 										<!-- 리스트 목록 나열 -->
 										<div id="number-list">
 											<div class="page-btn">
-												<c:forEach var="page" begin="${sharePage * 10 + 1}"
-													end="${(sharePage + 1) * 10}" step="1">
+												<c:forEach var="page" begin="${startPage}"
+													end="${endPage}" step="1">
 													<c:if test="${page <= totalPage}">
-														<a
-															href="/log?currentPage=${page}&startYr=${searchContent.startYr}&startMn=${searchContent.startMn}&endYr=${searchContent.endYr}&endMn=${searchContent.endMn}&uri=${searchContent.uri}&view=${searchContent.view}&userId=${searchContent.userId}&userType=${searchContent.userType}&ip=${searchContent.ip}&statusCode=${searchContent.statusCode}"
+														<a href="#" onclick="movePage(${page})"
 															class="pagination page-btn ${currentPage == page ? 'selected' : ''}">
 															${page} </a>
 													</c:if>
@@ -255,25 +248,23 @@
 
 										<!-- 뒤로 가는 버튼 -->
 										<c:if test="${currentPage < totalPage}">
-											<a href="/log?currentPage=${currentPage + 1}&startYr=${searchContent.startYr}&startMn=${searchContent.startMn}&endYr=${searchContent.endYr}&endMn=${searchContent.endMn}&uri=${searchContent.uri}&view=${searchContent.view}&userId=${searchContent.userId}&userType=${searchContent.userType}&ip=${searchContent.ip}&statusCode=${searchContent.statusCode}"> <img
-												src="/resources/img/log/free-icon-right-arrow-271228.png"
+											<a href="#" onclick="movePage(${currentPage+1})"> <img
+												src="/resources/img/asMng/free-icon-right-arrow-271228.png"
 												alt="다" />
 											</a>
 										</c:if>
 										<c:if test="${currentPage == totalPage}">
 											<a href="javascript:void(0);" class="disabled-link"> <img
-												src="/resources/img/log/free-icon-right-arrow-271228.png"
+												src="/resources/img/asMng/free-icon-right-arrow-271228.png"
 												alt="다" />
 											</a>
 										</c:if>
 
-										<a href="/log?currentPage=${totalPage}&startYr=${searchContent.startYr}&startMn=${searchContent.startMn}&endYr=${searchContent.endYr}&endMn=${searchContent.endMn}&uri=${searchContent.uri}&view=${searchContent.view}&userId=${searchContent.userId}&userType=${searchContent.userType}&ip=${searchContent.ip}&statusCode=${searchContent.statusCode}"><img
-											src="/resources/img/log/free-icon-fast-forward-double-right-arrows-symbol-54366.png"
+										<a href="#" onclick="movePage(${totalPage})" ><img
+											src="/resources/img/asMng/free-icon-fast-forward-double-right-arrows-symbol-54366.png"
 											alt="마" /></a>
 									</div>
-
 								</div>
-								<!-- ********** 세은 로그 관련 내용 끝 ********** -->
 							</div>
 						</div>
 					</div>
@@ -281,7 +272,5 @@
 			</div>
 		</div>
 	</div>
-<script src="<c:url value='/js/bootstrap.min.js' />"></script>
-<script src="<c:url value='/js/jquery.min.js' />"></script>
 </body>
 </html>

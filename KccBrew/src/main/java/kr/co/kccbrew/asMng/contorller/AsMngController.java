@@ -118,6 +118,9 @@ public class AsMngController {
 	
 	@RequestMapping(value="/as-receipt",method=RequestMethod.GET)
 	public String asReceipt(Model model) {
+		List<AsMngVo> list=asMngService.selectMachineCd();
+		model.addAttribute("machineCd", list);
+		
 		return "/asMng/asReceipt";
 	}
 }
