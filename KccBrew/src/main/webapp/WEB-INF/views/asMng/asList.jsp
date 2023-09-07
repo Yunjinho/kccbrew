@@ -22,7 +22,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans&family=Noto+Sans+KR&display=swap" rel="stylesheet">
-<script src="<c:url value="resources/js/asMng/asMng.js"/>"></script>
+<script src="<c:url value="resources/js/asMng/asList.js"/>"></script>
 <script src="http://code.jquery.com/jquery-latest.js"></script> 
 <meta charset="UTF-8">
 <title>Insert title here</title>
@@ -52,7 +52,7 @@
 							<span id="maincontent"></span>
 							<div class="user-past">
 
-								<!-- ********** 세은 로그 관련 내용 시작 ********** -->
+								<!-- ********** AS 리스트 조회 ********** -->
 								<div id="content">
 									<h2 class="heading">AS 조회</h2>
 									<!-- AS 조회-->
