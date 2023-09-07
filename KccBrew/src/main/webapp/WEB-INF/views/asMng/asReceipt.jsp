@@ -6,7 +6,6 @@
 <%@ page import="java.time.LocalDateTime"%>
 <%@ page import="java.time.format.DateTimeFormatter"%>
 
-<%@ taglib prefix="jk" tagdir="/WEB-INF/tags"%>
 
 <!DOCTYPE html>
 <html>
