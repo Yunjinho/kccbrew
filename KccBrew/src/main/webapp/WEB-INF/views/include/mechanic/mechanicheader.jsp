@@ -11,7 +11,7 @@
 </head>
 <header class="comm-nav" >
 	<div class="top-bar">
-		###(관리자)님 환영합니다
+		###(수리기사)님 환영합니다
 		<button class="logout-btn">
 			로그아웃
 		</button>
@@ -25,7 +25,7 @@
 				<li class="nav-item">
 					<a class="nav-link" href="#" >A/S 관리</a>
 					<ul class="comm-nav-dropdown">
-						<li><a href="#">A/S 접수 안내</a></li>
+						<li><a href="/as-list">A/S 조회</a></li>	
 						<li><a href="#">A/S 신청</a></li>
 						<li><a href="#">A/S 내역 조회</a></li>
 					</ul>	

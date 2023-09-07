@@ -53,16 +53,26 @@ public class AsMngController {
 		if (list != null && !list.isEmpty()) {
 			totalPage = (int)Math.ceil(totalCount/10.0);
 		}
-		System.out.println("duee");
+		
+		int startPage=(0 * 10) + 1;
+		int endPage=(0 + 1) * 10;
+		
 		model.addAttribute("totalPage", totalPage);
 		model.addAttribute("currentPage", 1);
-		model.addAttribute("sharePage", 0);
+		
+		model.addAttribute("startPage", startPage);
+		model.addAttribute("endPage", endPage);
 
 		model.addAttribute("totalCount", totalCount);
+		model.addAttribute("searchContent",asMngVo);
 		model.addAttribute("searchContent",asMngVo);
 		model.addAttribute("ASList",list);
 		return "/asMng/asList";
 	}
+	
+	
+	
+	
 	/**
 	 * 
 	 * @param asMngVo : select 조회 조건으로 검색한 AS 목록
@@ -70,26 +80,33 @@ public class AsMngController {
 	 */
 	@RequestMapping(value="/searchAsList",method=RequestMethod.GET)
 	public String ssearchAsList(@RequestParam(defaultValue = "1") int currentPage,AsMngVo asMngVo,Model model) {
-		List<AsMngVo> asList=asMngService.selectASList(asMngVo,currentPage);
+		List<AsMngVo> list=asMngService.selectMachineCd();
+		model.addAttribute("machineCd", list);
 		
+		list=asMngService.selectAsStatusCd();
+		model.addAttribute("asStatusCd", list);
+		
+		list=asMngService.selectLocationCd();
+		model.addAttribute("locationCd", list);
+		
+		
+		List<AsMngVo> asList=asMngService.selectASList(asMngVo,currentPage);
+
 		int totalPage = 0;
 		int totalCount = asMngService.countASList(asMngVo);
-		int sharePage = 0;
 
 		//   paging처리
 		if (asList != null && !asList.isEmpty()) {
 			totalPage = (int) Math.ceil(totalCount/10.0);
 		} 
 
-		if (currentPage == 1) {
-			sharePage = 0;
-		} else {
-			sharePage = (currentPage-1) / 10;
-		}
-
+		int startPage=((int)Math.ceil(currentPage/10) * 10) + 1;
+		int endPage=((int)Math.ceil(currentPage/10) + 1) * 10;
+		
 		model.addAttribute("totalPage", totalPage);
 		model.addAttribute("currentPage", currentPage);
-		model.addAttribute("sharePage", sharePage);
+		model.addAttribute("startPage", startPage);
+		model.addAttribute("endPage", endPage);
 
 		model.addAttribute("totalCount", totalCount);
 		

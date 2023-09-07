@@ -12,8 +12,7 @@
 		<put-attribute name="contents" value="/WEB-INF/views/tiles/basebody.jsp" />	  <!-- 빈 파일 -->
 		<put-attribute name="footer" value="/WEB-INF/views/tiles/basefooter.jsp" />	  <!-- 공통 푸터 -->
 	</definition>
- 	
- 	
+
  	<!-- 관리자 페이지 -->
 	<definition name="adminPage" extends="mainLayout">
 		<put-attribute name="title" value="관리자 페이지" />
@@ -34,8 +33,7 @@
 	<definition name="adminPageT3" extends="adminPage">
 		<put-attribute name="contents" value="/WEB-INF/views/include/admin/adminTab/menu3.jsp" />
 	</definition>
-	
-	
+
 	
 	<!-- 수리기사 페이지 -->
 	<definition name="mechanicPage" extends="mainLayout">
@@ -43,7 +41,10 @@
 		<put-attribute name="header" value="/WEB-INF/views/include/mechanic/mechanicheader.jsp" />
 		<put-attribute name="contents" value="/WEB-INF/views/include/mechanic/mechaniccontents.jsp" />
 	</definition>
-	
+
+	<definition name="asList" extends="mechanicPage">
+		<put-attribute name="contents" value="/WEB-INF/views/asMng/asList.jsp" />
+	</definition>	
 	
 	
 	
@@ -54,6 +55,14 @@
 		<put-attribute name="contents" value="/WEB-INF/views/include/manager/managercontents.jsp" />
 	</definition>
 	
+	<definition name="asList1" extends="adminPage">
+		<put-attribute name="contents" value="/WEB-INF/views/asMng/asList.jsp" />
+	</definition>		
 	
+	<definition name="asList2" extends="managerPage">
+		<put-attribute name="contents" value="/WEB-INF/views/asMng/asList.jsp" />
+	</definition>	
+	
+
 	
 </tiles-definitions>

@@ -41,7 +41,7 @@ public class LogInController {
 	
 	/** 로그인 처리 */
 	@ResponseBody
-	@RequestMapping(value="login",method = RequestMethod.GET)
+	@RequestMapping(value="/login",method = RequestMethod.GET)
 	public String login(String id, String pwd,Model model,HttpServletRequest httpServletRequest) {
 		LogInVo vo = new LogInVo();
 		vo.setUserId(id);

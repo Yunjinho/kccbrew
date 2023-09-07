@@ -75,7 +75,6 @@
            <exclude-mapping path="/"/>
            <exclude-mapping path="/login"/>
            <exclude-mapping path="/register"/>
-           <exclude-mapping path="/searchAsList"/>
            <exclude-mapping path="/search-store-list"/>
            <exclude-mapping path="/resources/**/"/>
            <beans:bean class="kr.co.kccbrew.comm.interceptor.component.SessionInterceptor"/>

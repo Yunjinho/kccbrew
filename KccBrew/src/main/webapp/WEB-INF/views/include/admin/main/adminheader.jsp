@@ -10,7 +10,8 @@
 <script src="${path}/resources/js/comm/header.js"></script>
 <script src="${path}/resources/js/admin/adminheader.js"></script>
 </head>
-<header class="comm-nav" >
+<c:if test="어드민 계쩡">
+<header class="comm-nav"  >
 	<div class="top-bar">
 		###(관리자)님 환영합니다
 		<button class="logout-btn">
@@ -29,8 +30,7 @@
 				<li class="nav-item">
 					<a class="nav-link" href="#" >A/S 관리</a>
 					<ul class="comm-nav-dropdown">
-						<c:url var="test" value="/test" />                  <!-- 여기에  매핑 url 선언 -->
-						<li><a href="${test}">A/S 접수 안내</a></li>			<!-- 매핑 url 변수 링크로 걸기 -->
+						<li><a href="/as-list">A/S 조회</a></li>			<!-- 매핑 url 변수 링크로 걸기 -->
 						<c:url var="test2" value="/test2" />
 						<li><a href="${test2}">A/S 내역 조회</a></li>
 					</ul>	
@@ -69,4 +69,5 @@
 		</div>
 	</nav>
 </header>
+</c:if>
 </html>
