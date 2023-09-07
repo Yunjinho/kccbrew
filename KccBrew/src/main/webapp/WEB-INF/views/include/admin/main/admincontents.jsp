@@ -13,6 +13,7 @@
 <link rel="stylesheet" href="${path}/resources/css/comm/reset.css" >
 <link rel="stylesheet" href="${path}/resources/css/comm/header.css" >
 <link rel="stylesheet" href="${path}/resources/css/comm/mainpage.css"/>
+<link rel="stylesheet" href="${path}/resources/css/comm/footer.css"/>
 <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/fullcalendar@5.8.0/main.min.css'/>
 <script src="http://code.jquery.com/jquery-latest.js"></script> 
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
@@ -32,7 +33,7 @@
 		<div class="top-menu">
 			<div class="new-receipt btm">
 				<table class="task-list">
-					<caption class="tablecap">미확인 A/S 신청건</caption>
+					<caption class="tablecap">접수 대기  리스트</caption>
 					<thead>	
 						<tr>
 							<th>접수번호</th>
@@ -73,7 +74,7 @@
 		
 			<div class="assigned-as btm">
 				<table class="task-list">
-					<caption class="tablecap">미처리 A/S 신청건</caption>
+					<caption class="tablecap">접수 중인  A/S</caption>
 					<thead>
 						<tr>
 							<th>배정번호</th>
@@ -107,7 +108,7 @@
 				
 			<div class="as-result btm">
 				<table class="task-list">
-					<caption class="tablecap">처리 완료 A/S 신청건</caption>
+					<caption class="tablecap">처리 완료 A/S </caption>
 					<thead>
 						<tr>
 							<th>배정번호</th>
@@ -185,13 +186,18 @@
 			<div class="profileAndguide">
 				<div class="user-profile">
 					<div class="inner-box">
-						<span class="name">노건우</span>님 <br><br>
+						<span class="name">###</span>님 <br><br>
 						<span class="job">관리자</span> <br><br><br><br><br><br>
 					</div>
 					<div class="buttons">
 						<button class="chpwd">비밀번호 변경</button> 
 						<span> | </span> 
-						<button class="logout">로그아웃</button>
+						<c:url var="toLogin" value="/loginpage" />
+						<a href="${toLogin}">
+							<button class="logout">
+								로그아웃
+							</button>
+						</a>
 					</div>
 				</div>
 				<div class="as-guide">

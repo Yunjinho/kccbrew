@@ -6,32 +6,65 @@
 <tiles-definitions>
 
 	<!-- 기본 레이아웃 -->
-	<definition name="mainLayout" template="/WEB-INF/views/tiles/mainLayout.jsp">
+	<definition name="mainLayout" template="/WEB-INF/views/tiles/default/mainLayout.jsp">
 		<put-attribute name="title" value="" />
-		<put-attribute name="header" value="/WEB-INF/views/tiles/baseheader.jsp" />   <!-- 빈 파일 -->
-		<put-attribute name="contents" value="/WEB-INF/views/tiles/basebody.jsp" />	  <!-- 빈 파일 -->
-		<put-attribute name="footer" value="/WEB-INF/views/tiles/basefooter.jsp" />	  <!-- 공통 푸터 -->
+		<!-- <put-attribute name="head" value="/WEB-INF/views/tiles/default/head.jsp" /> -->
+		<put-attribute name="header" value="/WEB-INF/views/tiles/default/commheader.jsp" />   <!-- 공통 헤더 -->
+		<put-attribute name="contents" value="/WEB-INF/views/tiles/default/basebody.jsp" />	  <!-- 빈 파일 -->
+		<put-attribute name="footer" value="/WEB-INF/views/tiles/default/basefooter.jsp" />	  <!-- 공통 푸터 -->
 	</definition>
  	
  	<!-- 로그인 페이지 -->
  	<definition name="loginPage" extends="mainLayout">
 		<put-attribute name="title" value="로그인 페이지" />
-		<put-attribute name="contents" value="/WEB-INF/views/comm/login/login.jsp" />
+		<put-attribute name="header" value="" /> <!-- 빈 헤더 -->
+		<put-attribute name="contents" value="/WEB-INF/views/comm/login/login2.jsp" />
 	</definition>
 	
 	<!-- 회원가입 페이지 -->
- 	<definition name="registerPage" extends="mainLayout">
+ 	<definition name="registerpage" extends="mainLayout">
 		<put-attribute name="title" value="회원가입 페이지" />
+		<put-attribute name="header" value="" /> <!-- 빈 헤더 -->
 		<put-attribute name="contents" value="/WEB-INF/views/comm/register/register.jsp" />
 	</definition>
 	
+ 	<!-- 사용자 별 메인페이지 -->
  	<!-- 관리자 페이지 -->
 	<definition name="adminPage" extends="mainLayout">
 		<put-attribute name="title" value="관리자 페이지" />
-		<put-attribute name="header" value="/WEB-INF/views/include/admin/main/adminheader.jsp" />
 		<put-attribute name="contents" value="/WEB-INF/views/include/admin/main/admincontents.jsp" />
-		<!-- 속성 따로 명시하지 않으면 부모 속성 자동 상속 -->
 	</definition>
+	
+	<!-- 수리기사 페이지 -->
+	<definition name="mechanicPage" extends="mainLayout">
+		<put-attribute name="title" value="수리 기사 페이지" />
+		<put-attribute name="contents" value="/WEB-INF/views/include/mechanic/mechaniccontents.jsp" />
+	</definition>
+	
+	<!-- 점주 페이지 -->
+	<definition name="managerPage" extends="mainLayout">
+		<put-attribute name="title" value="점주 페이지" />
+		<put-attribute name="contents" value="/WEB-INF/views/include/manager/managercontents.jsp" />
+	</definition>
+
+	
+	<!-- 관리자 A/S 리스트 페이지 -->
+	<definition name="adminASList" extends="adminPage">
+		<put-attribute name="contents" value="/WEB-INF/views/asMng/asList.jsp" />
+	</definition>
+	
+	<!-- 수리기사 A/S 리스트 페이지 -->
+	<definition name="mechanicASList" extends="mechanicPage">
+		<put-attribute name="contents" value="/WEB-INF/views/asMng/asList.jsp" />
+	</definition>
+
+	
+	<!-- 점주 A/S 리스트 페이지 -->
+	<definition name="managerASList" extends="managerPage">
+		<put-attribute name="contents" value="/WEB-INF/views/asMng/asList.jsp" />
+	</definition>
+	
+			
 	
 	<!-- 관리자 페이지 추가 확장, 타이틀과 헤더 유지, contents만 변경 -->
 	<definition name="adminPageT1" extends="adminPage">
@@ -45,25 +78,6 @@
 	<definition name="adminPageT3" extends="adminPage">
 		<put-attribute name="contents" value="/WEB-INF/views/include/admin/adminTab/menu3.jsp" />
 	</definition>
-
-	
-	<!-- 수리기사 페이지 -->
-	<definition name="mechanicPage" extends="mainLayout">
-		<put-attribute name="title" value="수리 기사 페이지" />
-		<put-attribute name="header" value="/WEB-INF/views/include/mechanic/mechanicheader.jsp" />
-		<put-attribute name="contents" value="/WEB-INF/views/include/mechanic/mechaniccontents.jsp" />
-	</definition>
-
-	<definition name="asList" extends="mechanicPage">
-		<put-attribute name="contents" value="/WEB-INF/views/asMng/asList.jsp" />
-	</definition>	
 	
 	
-	
-	<!-- 점주 페이지 -->
-	<definition name="managerPage" extends="mainLayout">
-		<put-attribute name="title" value="점주 페이지" />
-		<put-attribute name="header" value="/WEB-INF/views/include/manager/managerheader.jsp" />
-		<put-attribute name="contents" value="/WEB-INF/views/include/manager/managercontents.jsp" />
-	</definition>
 </tiles-definitions>

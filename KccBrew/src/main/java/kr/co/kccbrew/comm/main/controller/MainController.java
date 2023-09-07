@@ -27,9 +27,9 @@ public class MainController {
 	}
 	
 	/**************** 회원가입 페이지 *****************************/
-	@RequestMapping(value="/goRegisterPage", method=RequestMethod.GET)
+	@RequestMapping(value="/registerpage", method=RequestMethod.GET)
 	public String goRegisterPage(Model model) {
-		return "registerPage";
+		return "registerpage";
 	}
 	
 	/******************  관리자 페이지 **************************/
@@ -48,7 +48,22 @@ public class MainController {
 		return "adminPageT3";
 	}
 	
+	/************** A/S 리스트 테스트 ********************/
 	
+	@RequestMapping(value="/adminaslist", method=RequestMethod.GET)
+	public String adminASList(Model model) {
+		return "adminASList";
+	}
+	
+	@RequestMapping(value="/mechanicaslist", method=RequestMethod.GET)
+	public String mechanicASList(Model model) {
+		return "mechanicASList";
+	}
+	
+	@RequestMapping(value="/manageraslist", method=RequestMethod.GET)
+	public String managerASList(Model model) {
+		return "managerASList";
+	}
 	
 	
 	
@@ -79,26 +94,7 @@ public class MainController {
 	
 	
 	
-	
-	
-	
-	
-	//사용자 유형별 페이지 구분 ==> 건우야 이거 jsp에서 구분해도돼~
-//	@RequestMapping(value="/homepage", method=RequestMethod.GET)  
-//	public String homePage(Model model, HttpServletRequest request) {
-//		HttpSession session = request.getSession();
-//		String userTypeCd = (String) session.getAttribute("userTypeCd");
-//		
-//		if ("01".equals(userTypeCd)) { 				//관리자
-//	        return "adminPage";
-//	    } else if ("02".equals(userTypeCd)) {		//점주
-//	        return "managerPage";
-//	    } else if ("03".equals(userTypeCd)) {		//수리 기사
-//	        return "mechanicPage";
-//	    } else {
-//	        return "adminPageT1";
-//	    }
-//	}
+
 	
 	@RequestMapping(value="/adminMain", method=RequestMethod.GET)
 	public String admMain(Model model) {
