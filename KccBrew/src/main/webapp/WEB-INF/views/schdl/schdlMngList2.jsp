@@ -251,7 +251,7 @@
 						<!-- ********** 페이지 네비게이션 시작 ********** -->
 						<div class="page-content-navigation">
 							<ol class="breadcrumb">
-								<li class="breadcrumb-home"><a href="">시스템관리</a></li>
+								<li class="breadcrumb-home"><a href="">스케줄관리</a></li>
 								<li>
 									<div class="header-icon-background">
 										<img
@@ -259,7 +259,7 @@
 											alt="Check List" class="header-icon" />
 									</div>
 								</li>
-								<li><a href="<c:url value='/log' />">로그조회</a></li>
+								<li><a href="<c:url value='/schedule2' />">스케줄조회</a></li>
 							</ol>
 						</div>
 						<!-- ********** 페이지 네비게이션 끝 ********** -->
@@ -273,8 +273,10 @@
 									<div id="content">
 										<h2 class="heading">스케줄 조회</h2>
 										<!-- 로그 검색 -->
+
 										<form action="/schedule2" method="get">
 											<table id="search-box">
+
 												<!-- 1행 -->
 												<c:set var="today" value="<%=new java.util.Date()%>" />
 												<fmt:formatDate value="${today}" pattern="yyyy"
@@ -291,6 +293,7 @@
 															<option value="휴무"
 																${param.scheduleType == '휴무' ? 'selected' : ''}>휴무</option>
 													</select></td>
+
 													<th>기간</th>
 													<!-- 시작 연도 선택 필드 -->
 													<td><select class="tx2" name="startYr" id="yr"
@@ -336,42 +339,62 @@
 
 												<!-- 2행 -->
 												<tr>
-													<th>ID</th>
-													<td colspan="2"><input type="search" name="userId"
+													<th>사용자유형</th>
+													<td colspan="2"><select class="tx2" name="userType"
+														onchange="javascript:chg();">
+															<option value="">사용자유형</option>
+															<option value="기사"
+																${param.userType == '기사' ? 'selected' : ''}>기사</option>
+															<option value="점주"
+																${param.userType == '점주' ? 'selected' : ''}>점주</option>
+													</select></td>
+
+													<th>사용자ID</th>
+													<td colspan="3"><input type="search" name="userId"
 														placeholder="ID를 입력하세요" value="${param.userId}"></td>
-													<th>이름</th>
-													<td colspan="2"><input type="search" name="userName"
+
+													<th>사용자이름</th>
+													<td colspan="3"><input type="search" name="userName"
 														placeholder="이름을 입력하세요" value="${param.userName}"></td>
-													<th>연락처</th>
-													<td colspan="2"><input type="search"
-														name="userPhoneNumber" placeholder="연락처를 입력하세요"
-														value="${param.userPhoneNumber}"></td>
-													<th>지역</th>
-													<td><select class="tx2" name="location"
+												</tr>
+
+												<tr>
+													<th>지점ID</th>
+													<td colspan="2"><input type="search" name="storeId"
+														placeholder="지점ID를 입력하세요" value="${param.storeId}"></td>
+
+													<th>지점명</th>
+													<td colspan="2"><input type="search" name="storeName"
+														placeholder="지점명을 입력하세요" value="${param.storeName}"></td>
+
+													<th>지점위치</th>
+													<td><select class="tx2" name="storeLocation"
 														onchange="chg()">
 															<option value="">지역 대분류</option>
 															<option value="2"
-																${param.location == '2' ? 'selected' : ''}>서울</option>
+																${param.storeLocation == '2' ? 'selected' : ''}>서울</option>
 															<option value="31"
-																${param.location == '31' ? 'selected' : ''}>경기도</option>
+																${param.storeLocation == '31' ? 'selected' : ''}>경기도</option>
 															<option value="32"
-																${param.location == '32' ? 'selected' : ''}>인천</option>
+																${param.storeLocation == '32' ? 'selected' : ''}>인천</option>
 													</select></td>
-													<td><select class="tx2" name="subLocation" disabled>
+
+													<td><select class="tx2" name="storeSubLocation"
+														disabled>
 															<option value="">지역 소분류</option>
 															<option value="02-200"
-																${param.subLocation == '02-200' ? 'selected' : ''}>양천</option>
+																${param.storeSubLocation == '02-200' ? 'selected' : ''}>양천</option>
 															<option value="02-300"
-																${param.subLocation == '02-300' ? 'selected' : ''}>은평,마포,서대문</option>
+																${param.storeSubLocation == '02-300' ? 'selected' : ''}>은평,마포,서대문</option>
 															<option value="02-400"
-																${param.subLocation == '02-400' ? 'selected' : ''}>송파,강동,중량,광진,선동</option>
+																${param.storeSubLocation == '02-400' ? 'selected' : ''}>송파,강동,중량,광진,선동</option>
 															<option value="02-500"
-																${param.subLocation == '02-500' ? 'selected' : ''}>서초,강남,과천시</option>
+																${param.storeSubLocation == '02-500' ? 'selected' : ''}>서초,강남,과천시</option>
 															<option value="02-700"
-																${param.subLocation == '02-700' ? 'selected' : ''}>마포,
-																용산, 종로</option>
+																${param.storeSubLocation == '02-700' ? 'selected' : ''}>마포,용산,
+																종로</option>
 															<option value="031-200"
-																${param.subLocation == '031-200' ? 'selected' : ''}>수원시</option>
+																${param.storeSubLocation == '031-200' ? 'selected' : ''}>수원시</option>
 													</select></td>
 												</tr>
 
@@ -392,9 +415,9 @@
 										<script>
 											function chg() {
 												var locationSelect = document
-														.querySelector("select[name='location']");
+														.querySelector("select[name='storeLocation']");
 												var subLocationSelect = document
-														.querySelector("select[name='subLocation']");
+														.querySelector("select[name='storeSubLocation']");
 
 												if (locationSelect.value === '2') {
 													subLocationSelect.disabled = false; // 서브 로케이션 활성화
@@ -410,7 +433,7 @@
 										<div id="logTable">
 											<div>
 												<p class="data-info">
-													전체<b><span><c:out value="${totalLog}" /></span></b>건<span
+													전체<b><span><c:out value="${totalDataNumber}" /></span></b>건<span
 														id="text-separator"> | </span><b><span><c:out
 																value="${currentPage}" /></span></b>/<b><span><c:out
 																value="${totalPage}" /></span></b>쪽
@@ -461,21 +484,34 @@
 										<!-- 페이징 -->
 										<div class="paging pagination">
 
-											<!-- 앞으로 가는 버튼 -->
-											<a href="/schedule/1"><img
+											<!-- 맨 앞으로 가는 버튼 -->
+											<a
+												href="/schedule2?currentPage=1
+&startYr=${searchContent.startYr}&startMn=${searchContent.startMn}&endYr=${searchContent.endYr}&endMn=${searchContent.endMn}
+&userType=${searchContent.userType}
+&userId=${searchContent.userId}
+&userName=${searchContent.userName}
+&storeId=${searchContent.storeId}
+&storeName=${searchContent.storeName}
+&storeLocation=${searchContent.storeLocation}
+&scheduleType=${searchContent.scheduleType}"><img
 												src="/resources/img/log/free-icon-left-chevron-6015759.png"
-												alt=" 처" /></a>
+												alt=" 처음" /></a>
 
 											<c:choose>
 												<c:when test="${currentPage > 1}">
-													<a href="/schedule/1"><img
+													<a
+														href="/schedule2?currentPage=${currentPage - 1}&startYr=${searchContent.startYr}&startMn=${searchContent.startMn}&endYr=${searchContent.endYr}&endMn=${searchContent.endMn}&userType=${searchContent.userType}&userId=${searchContent.userId}&userName=${searchContent.userName}&storeId=${searchContent.storeId}&storeName=${searchContent.storeName}&storeLocation=${searchContent.storeLocation}&scheduleType=${searchContent.scheduleType}">
+														<img
 														src="/resources/img/log/free-icon-left-arrow-271220.png"
-														alt="이" /></a>
+														alt="이전" />
+													</a>
 												</c:when>
 												<c:otherwise>
-													<a href="#" disabled="disabled"><img
+													<a href="#" class="disabled-link"> <img
 														src="/resources/img/log/free-icon-left-arrow-271220.png"
-														alt="이" /></a>
+														alt="이전" />
+													</a>
 												</c:otherwise>
 											</c:choose>
 
@@ -485,7 +521,16 @@
 													<c:forEach var="page" begin="${sharePage * 10 + 1}"
 														end="${(sharePage + 1) * 10}" step="1">
 														<c:if test="${page <= totalPage}">
-															<a href="/schedule/1"
+															<a
+																href="/schedule2?currentPage=${page}
+&startYr=${searchContent.startYr}&startMn=${searchContent.startMn}&endYr=${searchContent.endYr}&endMn=${searchContent.endMn}
+&userType=${searchContent.userType}
+&userId=${searchContent.userId}
+&userName=${searchContent.userName}
+&storeId=${searchContent.storeId}
+&storeName=${searchContent.storeName}
+&storeLocation=${searchContent.storeLocation}
+&scheduleType=${searchContent.scheduleType}"
 																class="pagination page-btn ${currentPage == page ? 'selected' : ''}">
 																${page} </a>
 														</c:if>
@@ -495,21 +540,40 @@
 
 											<!-- 뒤로 가는 버튼 -->
 											<c:if test="${currentPage < totalPage}">
-												<a href="/schedule/1"> <img
+												<a
+													href="/schedule2?currentPage=${currentPage + 1}
+&startYr=${searchContent.startYr}&startMn=${searchContent.startMn}&endYr=${searchContent.endYr}&endMn=${searchContent.endMn}
+&userType=${searchContent.userType}
+&userId=${searchContent.userId}
+&userName=${searchContent.userName}
+&storeId=${searchContent.storeId}
+&storeName=${searchContent.storeName}
+&storeLocation=${searchContent.storeLocation}
+&scheduleType=${searchContent.scheduleType}">
+													<img
 													src="/resources/img/log/free-icon-right-arrow-271228.png"
-													alt="다" />
+													alt="다음" />
 												</a>
 											</c:if>
 											<c:if test="${currentPage == totalPage}">
 												<a href="" class="disabled-link"> <img
 													src="/resources/img/log/free-icon-right-arrow-271228.png"
-													alt="다" />
+													alt="다음" />
 												</a>
 											</c:if>
 
-											<a href="/schedule/1"><img
+											<a
+												href="/schedule2?currentPage=${totalPage}
+&startYr=${searchContent.startYr}&startMn=${searchContent.startMn}&endYr=${searchContent.endYr}&endMn=${searchContent.endMn}
+&userType=${searchContent.userType}
+&userId=${searchContent.userId}
+&userName=${searchContent.userName}
+&storeId=${searchContent.storeId}
+&storeName=${searchContent.storeName}
+&storeLocation=${searchContent.storeLocation}
+&scheduleType=${searchContent.scheduleType}"><img
 												src="/resources/img/log/free-icon-fast-forward-double-right-arrows-symbol-54366.png"
-												alt="마" /></a>
+												alt="마지막" /></a>
 										</div>
 
 									</div>

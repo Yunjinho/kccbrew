@@ -14,5 +14,6 @@ import kr.co.kccbrew.schdlMng.model.SchdlMngVo2;
 public interface ISchdlMngRepository {
 	public List<SchdlMngVo> selectMechaSchedules(Map<String, Object> map);
 	
-	public List<SchdlMngVo2> selectMechaSchedules2(Map<String, Object> map);
+	public List<SchdlMngVo2> selectSchedules2(Map<String, Object> map);
+	public Integer selectSchedule2Count(Map<String, Object> map);
 }

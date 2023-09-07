@@ -9,5 +9,6 @@ public interface ISchdlMngService {
 	public List<SchdlMngVo> getMechaSchedules(int currentPage, SchdlMngVo searchContent);
 	/*public int getMechaScheduleCount(SchdlMngVo serchContent);*/
 	
-	public List<SchdlMngVo2> getMechaSchedules2(int currentPage, SchdlMngVo2 searchContent);
+	public List<SchdlMngVo2> getSchedules2(int currentPage, SchdlMngVo2 searchContent);
+	public int getSchedule2Count(SchdlMngVo2 searchContent);
 }

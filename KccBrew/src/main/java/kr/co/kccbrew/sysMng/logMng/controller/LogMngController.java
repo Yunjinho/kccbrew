@@ -56,7 +56,7 @@ public class LogMngController {
 	@GetMapping("/log")
 	public String getLogs(
 			@RequestParam(defaultValue = "1") int currentPage,
-			@ModelAttribute("searchContent") LogMngVo searchContent,
+			@ModelAttribute("searchContent") LogMngVo searchContent, // Model에 'searchContent' 자동추가
 			Model model,
 			HttpSession session
 			) {
@@ -71,7 +71,7 @@ public class LogMngController {
 
 		//   paging처리
 		if (selectedLogs != null && !selectedLogs.isEmpty()) {
-			totalPage = (int) Math.ceil(totalLogCount/10);
+			totalPage = (int) Math.ceil((double) totalLogCount/10);
 		} else {
 		}
 

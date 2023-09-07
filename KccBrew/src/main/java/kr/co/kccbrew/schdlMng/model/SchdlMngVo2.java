@@ -11,15 +11,16 @@ import lombok.Data;
 public class SchdlMngVo2 {
 	private int rowNum;
 	private String scheduleType;
-	private int scheduleId;
+	private Integer scheduleId;
 	private String userType;
 	private String userId;
 	private String userName;
 	private String userPhoneNumber;
-	private int storeId;
+	private Integer storeId;
 	private String storeName;
 	private String storePhoneNumber;
 	private String storeLocation;
+	private String storeSubLocation;
 	private Date scheduleDate;
 	
 	/*검색*/

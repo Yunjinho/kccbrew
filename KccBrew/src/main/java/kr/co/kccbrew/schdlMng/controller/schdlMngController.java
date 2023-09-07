@@ -93,28 +93,25 @@ public class schdlMngController {
 		/*파라미터 확인*/
 		System.out.println("searchContent: " + searchContent);
 		
-		/* 리스트 페이징 처리 */
-		List<SchdlMngVo2> schedules = schdlMngService.getMechaSchedules2(currentPage, searchContent);
+		/* 스케줄리스트 데이터 */
+		List<SchdlMngVo2> schedules = schdlMngService.getSchedules2(currentPage, searchContent);
+		int scheduleCount = schdlMngService.getSchedule2Count(searchContent);
 		
 		/*DB 데이터 확인*/
 		System.out.println("schedules: " + schedules);
+		System.out.println("scheduleCount: " + scheduleCount);
 		
 		int totalPage = 0;
-		int totalLog = 0;
 		int sharePage = 0;
-
-
+		
+		//   totalPage 구하기
 		if (schedules != null && !schedules.isEmpty()) {
-			log.info("검색된 첫번째 로그 logs={}", schedules.get(0));
-			totalLog = schedules.size();
-			int partitionSize = 10;
-			List<List<SchdlMngVo2>> partitionedList = Lists.partition(schedules, partitionSize);
-			totalPage = partitionedList.size();
-			schedules = partitionedList.get(currentPage-1);
+			totalPage = (int) Math.ceil((double) scheduleCount / 10);
+			System.out.println("totalPage: " + totalPage);
 		} else {
-			log.info("logs={}", schedules);
 		}
 
+		// sharePage 구하기
 		if (currentPage == 1) {
 			sharePage = 0;
 		} else {
@@ -124,7 +121,8 @@ public class schdlMngController {
 		model.addAttribute("totalPage", totalPage);
 		model.addAttribute("currentPage", currentPage);
 		model.addAttribute("sharePage", sharePage);
-		
+
+		model.addAttribute("totalDataNumber", scheduleCount);
 		model.addAttribute("schedules", schedules);
 
 
