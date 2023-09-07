@@ -92,6 +92,7 @@
            <mapping path="/점포만 가능한  API"/>
            <exclude-mapping path="/"/>
            <exclude-mapping path="/resources/**/"/>
+           <exclude-mapping path="/as-receipt"/>
            <beans:bean class="kr.co.kccbrew.comm.interceptor.component.StrAuthInterceptor"/>
        </interceptor>
 		<!--  -->

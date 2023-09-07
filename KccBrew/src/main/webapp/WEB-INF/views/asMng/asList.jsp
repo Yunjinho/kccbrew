@@ -10,10 +10,9 @@
 <html>
 <head>
 <!-- css -->
-<link rel="stylesheet" href="/resources/css/log/mylogtest.css" />
-<link rel="stylesheet" href="/resources/css/log/content-template.css" />
 <link rel="stylesheet" href="${path}/resources/css/comm/header.css" >
-
+<link rel="stylesheet" href="/resources/css/asMng/asList.css" />
+<link rel="stylesheet" href="/resources/css/asMng/content-template.css" />
 <!-- font -->
 <!-- notoSans -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -167,7 +166,12 @@
 												</td>
 											</tr>
 											<tr>
-												<td colspan="6" style="border-bottom:none;"></td>
+												<td colspan="5" style="border-bottom:none;"></td>
+												<td style="text-align: center; border-bottom: 0px;">
+													<div>
+														<a href="/as-receipt" class="form-btn">AS 접수</a>
+													</div>
+												</td>
 												<td style="text-align: center; border-bottom: 0px;">
 													<div>
 														<button type="submit" class="form-btn">검색</button>

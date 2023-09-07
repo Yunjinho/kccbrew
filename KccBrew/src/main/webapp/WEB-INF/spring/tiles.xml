@@ -79,5 +79,27 @@
 		<put-attribute name="contents" value="/WEB-INF/views/include/admin/adminTab/menu3.jsp" />
 	</definition>
 	
+<<<<<<< HEAD
+=======
+	<!-- 수리기사 페이지 -->
+	<definition name="mechanicPage" extends="mainLayout">
+		<put-attribute name="title" value="수리 기사 페이지" />
+		<put-attribute name="header" value="/WEB-INF/views/include/mechanic/mechanicheader.jsp" />
+		<put-attribute name="contents" value="/WEB-INF/views/include/mechanic/mechaniccontents.jsp" />
+	</definition>
+
+	
+	
+	
+	<!-- 점주 페이지 -->
+	<definition name="managerPage" extends="mainLayout">
+		<put-attribute name="title" value="점주 페이지" />
+		<put-attribute name="header" value="/WEB-INF/views/include/manager/managerheader.jsp" />
+		<put-attribute name="contents" value="/WEB-INF/views/include/manager/managercontents.jsp" />
+	</definition>
+	
+	
+
+>>>>>>> feature/as-receipt
 	
 </tiles-definitions>
