@@ -79,8 +79,6 @@
 		<put-attribute name="contents" value="/WEB-INF/views/include/admin/adminTab/menu3.jsp" />
 	</definition>
 	
-<<<<<<< HEAD
-=======
 	<!-- 수리기사 페이지 -->
 	<definition name="mechanicPage" extends="mainLayout">
 		<put-attribute name="title" value="수리 기사 페이지" />
@@ -100,6 +98,5 @@
 	
 	
 
->>>>>>> feature/as-receipt
 	
 </tiles-definitions>
