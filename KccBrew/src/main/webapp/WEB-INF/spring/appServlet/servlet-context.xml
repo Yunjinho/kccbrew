@@ -4,9 +4,11 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:beans="http://www.springframework.org/schema/beans"
 	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:util="http://www.springframework.org/schema/util"
 	xsi:schemaLocation="http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd
 		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
-		http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
+		http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.3.xsd">
 
 	<!-- DispatcherServlet Context: defines this servlet's request-processing 
 		infrastructure -->
@@ -27,32 +29,51 @@
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<beans:property name="prefix" value="/WEB-INF/views/" />
 		<beans:property name="suffix" value=".jsp" />
+		<beans:property name="order" value="2" />
 	</beans:bean>
 
+
+	<!-- multipartResolver -->
+	<beans:bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<beans:property name="maxUploadSize" value="50000000" />
+	</beans:bean>
+	<!-- multipartResolver -->
+
+	<!-- Tiles -->
+	<beans:bean id="tilesConfigurer"
+		class="org.springframework.web.servlet.view.tiles3.TilesConfigurer">
+		<beans:property name="definitions">
+			<beans:list>
+				<beans:value>/WEB-INF/spring/tiles.xml</beans:value>
+			</beans:list>
+		</beans:property>
+	</beans:bean>
+	<beans:bean id="tilesViewResolver"
+		class="org.springframework.web.servlet.view.UrlBasedViewResolver">
+		<beans:property name="viewClass"
+			value="org.springframework.web.servlet.view.tiles3.TilesView" />
+		<beans:property name="order" value="1" />
+	</beans:bean>
+
+
+
+	<!-- Controller -->
+	<context:component-scan base-package="kr.co.kccbrew" />
+	<context:component-scan base-package="kr.co.kccbrew.comm.login.controller" />
+	<context:component-scan base-package="kr.co.kccbrew.comm.main.controller" />
+	<context:component-scan base-package="kr.co.kccbrew.comm.register.controller" />
+	<context:component-scan base-package="kr.co.kccbrew.strMng.controller" />
+	<context:component-scan base-package="kr.co.kccbrew.sysMng.cdMng.controller" />
+	<context:component-scan base-package="kr.co.kccbrew.sysMng.logMng.controller" />
+	<context:component-scan base-package="kr.co.kccbrew.asMng.contorller" />
+	<context:component-scan base-package="kr.co.kccbrew.schdlMng.contorller" />
 	<!-- Controller -->
 
-	<context:component-scan
-		base-package="kr.co.kccbrew" />
-	<context:component-scan
-		base-package="kr.co.kccbrew.comm.login.controller" />
-	<context:component-scan
-		base-package="kr.co.kccbrew.comm.main.controller" />
-	<context:component-scan
-		base-package="kr.co.kccbrew.comm.register.controller" />
-	<context:component-scan
-		base-package="kr.co.kccbrew.strMng.controller" />
-	<context:component-scan
-		base-package="kr.co.kccbrew.sysMng.cdMng.controller" />
-	<context:component-scan
-		base-package="kr.co.kccbrew.sysMng.logMng.controller" />
 
-	<!-- Controller -->
-
-	<!-- View -->
 
 	<view-controller path="/" view-name="/home" />
 
-	<!-- View -->
 
 
 	<!-- inteceptor -->
@@ -62,14 +83,18 @@
 		<interceptor>
 			<mapping path="/**" />
 			<exclude-mapping path="/" />
+			<exclude-mapping path="/login" />
+			<exclude-mapping path="/register" />
+			<exclude-mapping path="/search-store-list" />
 			<exclude-mapping path="/resources/**/" />
 			<beans:bean
 				class="kr.co.kccbrew.comm.interceptor.component.SessionInterceptor" />
 		</interceptor>
 
+		<!-- 회원유형별 접근가능 페이지 설정 -->
 		<interceptor>
 			<mapping path="/관리자만 가능한  API" />
-			<!-- <mapping path="/log"/> -->
+			<mapping path="/log" />
 			<exclude-mapping path="/" />
 			<exclude-mapping path="/resources/**/" />
 			<beans:bean
@@ -80,6 +105,7 @@
 			<mapping path="/점포만 가능한  API" />
 			<exclude-mapping path="/" />
 			<exclude-mapping path="/resources/**/" />
+			<exclude-mapping path="/as-receipt" />
 			<beans:bean
 				class="kr.co.kccbrew.comm.interceptor.component.StrAuthInterceptor" />
 		</interceptor>
@@ -92,7 +118,7 @@
 				class="kr.co.kccbrew.comm.interceptor.component.MechaAuthInterceptor" />
 		</interceptor>
 
-		<!-- 로그수집 및 저장 기능 -->
+		<!-- 로그수집 및 저장 -->
 		<interceptor>
 			<mapping path="/logtest" />
 			<exclude-mapping path="/resources/**/" />
@@ -102,6 +128,5 @@
 
 	</interceptors>
 
-	<!-- inteceptor -->
 
 </beans:beans>
