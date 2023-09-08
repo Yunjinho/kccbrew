@@ -22,9 +22,6 @@
 <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.8.0/main.min.js'></script>
 <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.8.0/locales-all.min.js'></script>
 <script src="${path}/resources/js/comm/calendar.js"></script>
-<script src="${path}/resources/js/comm/comm.js"></script>
-<script src="${path}/resources/js/comm/header.js"></script>
-<script src="${path}/resources/js/comm/main.js"></script>
 </head>
 <body>
 	<div class="body-wrapper">
@@ -74,7 +71,7 @@
 		
 			<div class="assigned-as btm">
 				<table class="task-list">
-					<caption class="tablecap">접수 중인  A/S</caption>
+					<caption class="tablecap">배정 완료  A/S</caption>
 					<thead>
 						<tr>
 							<th>배정번호</th>
@@ -208,7 +205,7 @@
 				<div class="toKccBrew">
 					<div class="inner-box">
 						<a href="#">
-							<img alt="logo"  src="${path}/resources/img/kcc.png">
+							<img alt="logo"  src="${path}/resources/img/logo.png">
 						</a>
 						<a href="#">
 							<button class="kcclink">

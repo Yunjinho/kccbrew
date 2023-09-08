@@ -1,15 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <!DOCTYPE html>
 <html>
-
-
+<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+<script src="${path}/resources/js/comm/login.js"></script>
 <c:choose>
 	<c:when test="${sessionScope.userTypeCd eq '01'}">
 		<header class="comm-nav">
 			<div class="top-bar">
-				###(관리자)님 환영합니다
+				<p>
+					(관리자)님 환영합니다
+				</p>
 				<c:url var="toLogin" value="/loginpage" />
 				<a href="${toLogin}">
 					<button class="logout-btn">
@@ -72,9 +75,12 @@
 	</c:when>
 	
 	<c:when test="${sessionScope.userTypeCd eq '02'}">
+		<c:set var="userName" value="${sessionScope.userName}"/>
 		<header class="comm-nav" >
 			<div class="top-bar">
-				###(점주)님 환영합니다
+				<p>
+					${userName}(점주)님 환영합니다
+				</p>
 				<c:url var="toLogin" value="/loginpage" />
 				<a href="${toLogin}">
 					<button class="logout-btn">
@@ -122,7 +128,9 @@
 	<c:when test="${sessionScope.userTypeCd eq '03'}">
 		<header class="comm-nav" >
 			<div class="top-bar">
-				###(수리기사)님 환영합니다
+				<p>
+					<span id="userName"></span>(수리기사)님 환영합니다
+				</p>
 				<c:url var="toLogin" value="/loginpage" />
 				<a href="${toLogin}">
 					<button class="logout-btn">
