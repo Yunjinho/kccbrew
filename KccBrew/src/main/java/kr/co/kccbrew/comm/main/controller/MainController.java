@@ -137,8 +137,8 @@ public class MainController {
 			return "loginPage";
 		} else {
 			String userId = userIdInSession;
-			List<MainPageVo> asAssignListById = mainServiceImple.showAsInfoListbyId(userId);          //a/s 배정 리스트
-			List<MainPageVo> asListById 	= mainServiceImple.showAsAssiginListbyId(userId);		   //a/s 접수 리스트
+			List<MainPageVo> asAssignListById = mainServiceImple.showAsAssiginListbyId(userId);          //a/s 배정 리스트
+			List<MainPageVo> asListById 	= mainServiceImple.showAsInfoListbyId(userId);		   //a/s 접수 리스트
 			List<MainPageVo> resultListById = mainServiceImple.showAsResultListbyId(userId);		// a/s 결과 리스트
 			model.addAttribute("asAssignListById", asAssignListById);
 			model.addAttribute("asListById", asListById);
