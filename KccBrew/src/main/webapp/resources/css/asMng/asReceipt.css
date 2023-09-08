@@ -42,7 +42,6 @@ select[name=machineCd]{
 }
 #receipt-form>div{
 	display:flex;
-	text-align: center;
 	margin-bottom:10px
 }
 #receipt-form>div>div{
@@ -62,3 +61,39 @@ select[name=machineCd]{
 .flex-label-div>div{
 	flex:0.5
 }
+.flex-label-div>div>h6{
+	margin:0;
+}
+.in-decrease{
+	float:right;
+	margin:0px 10px
+}
+.in-decrease>span{
+	color:#ccc;
+	cursor:pointer
+}
+.in-decrease>span:hover{
+	color:black;
+}
+.file-upload-div{
+	display:block !important;
+}
+.file-upload-div>div{
+	margin-bottom: 10px;
+}
+.form-btn {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background-color: navy;
+	color: white;
+	border: none;
+	padding: 5px 10px;
+	border-radius: 4px;
+	margin: auto;
+	width:80px;
+}
+.form-btn:hover{
+	background-color: #E6E6E6;
+}
+	

@@ -22,7 +22,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans&family=Noto+Sans+KR&display=swap" rel="stylesheet">
-<script src="<c:url value="resources/js/asMng/asMng.js"/>"></script>
+<script src="<c:url value="resources/js/asMng/asReceipt.js"/>"></script>
 <script src="http://code.jquery.com/jquery-latest.js"></script> 
 <meta charset="UTF-8">
 <title>Insert title here</title>
@@ -59,7 +59,7 @@
 											<div>
 												<input type="date" name="wishingStartDate">
 											</div>
-											<div style="font-size:2em;">
+											<div style="font-size:2em; text-align:center;">
 												~
 											</div>
 											<div>
@@ -69,13 +69,13 @@
 
 										<h6><img src="/resources/img/asMng/check.png" class="tag-image">점포 정보</h6>
 										<div>
-											<div style="font-size:1.5em; flex:0.5;">
+											<div style="font-size:1.5em; flex:0.5;text-align:center;">
 												점포명 
 											</div>
 											<div style="flex:0.5;">
 												<input type="text" name="storeNm" readonly>
 											</div>
-											<div style="font-size:1.5em; flex:0.5;">
+											<div style="font-size:1.5em; flex:0.5;text-align:center;">
 												점포 주소 
 											</div>
 											<div style="flex:2;">
@@ -87,7 +87,12 @@
 										<div>
 											<div>
 												<select name="machineCd">
-													<option>장비 코드</option>
+													<option value="">장비 코드</option>
+													<c:forEach var="list" items="${machineCd}">
+														<option value="${list.grpCdDtlId}">
+															${list.grpCdDtlNm}
+														</option>
+													</c:forEach>
 												</select>
 											</div>
 										</div>
@@ -104,21 +109,34 @@
 											
 												<h6><img src="/resources/img/asMng/check.png" class="tag-image">사진 첨부 파일</h6>
 											</div>
-											<div>
-												<div>
-													<span>파일 추가</span>
+											<div >
+												<div class="in-decrease">
+													<span onclick="addFile()">파일 추가</span>
 												</div>
-												<div>
-													<span>파일 제거</span>
+												<div class="in-decrease">
+													<span onclick="removeFile()">파일 제거</span>
 												</div>
+											</div>
+										</div>
+										<div class="file-upload-div">
+											<div>	
+												<input type="file" name="imgFile">
+											</div>
+											<div>	
+												<input type="file" name="imgFile">
+											</div>
+											<div>	
+												<input type="file" name="imgFile">
 											</div>
 										</div>
 										<div>
-											<div>	
-												<input type="file">
+											<div>
+												<a href="#" class="form-btn">접수</a>
+											</div>
+											<div>
+												<a href="/as-list" class="form-btn">취소</a>
 											</div>
 										</div>
-
 									</form>
 								</div>
 							</div>
