@@ -125,13 +125,13 @@ public class schdlMngController {
 	}
 	
 	/*관리자 캘린더 조회*/
-	@GetMapping("/calender")
+	@GetMapping("/calendar")
 	public String getCalendar() {
 		return "schdl/schdlMngclndr";
 	}
 	
 	/*회원 캘린더 조회*/
-	@GetMapping("/calender/{userId}")
+	@GetMapping("/calendar/{userId}")
 	public String getUserCalendar(@PathVariable String userId) {
 		System.out.println("userId: " + userId);
 		return "schdl/schdlMngclndr";
@@ -143,9 +143,6 @@ public class schdlMngController {
 		/*매개변수 확인*/
 		System.out.println("year: " + year);
 		System.out.println("month: " + month);
-
-		
-		
 		
 		return "schdl/schdlMngclndr";
 	}
