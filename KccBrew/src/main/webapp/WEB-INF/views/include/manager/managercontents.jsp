@@ -43,7 +43,7 @@
 						</tr>
 					</thead>
 					<tbody>
-						<c:forEach var="main" items="${asList}">
+						<c:forEach var="main" items="${asListById}">
                             <c:if test="${main.asStatus == '01'}">
                             <!-- 사용자 ID 조건도 추가 && main.userId == userId -->
                                 <tr>
@@ -86,9 +86,8 @@
 						</tr>
 					</thead>
 					<tbody>
-						<c:forEach var="main" items="${asAssignList}">
+						<c:forEach var="main" items="${asAssignListById}">
 							<c:if test="${main.asStatus == '03'}">
-							<!-- c:if로 사용자 아이디 조건 추가하기 -->
 								<tr>
 									<td><c:out value="${main.asAssignNum}"/></td>
 									<td><fmt:formatDate value="${main.visitDate}" pattern="yyyy-MM-dd" /></td>
@@ -122,7 +121,7 @@
 						</tr>
 					</thead>
 					<tbody>
-						<c:forEach var="main" items="${resultList}">
+						<c:forEach var="main" items="${resultListById}">
 							<c:if test="${main.asStatus == '04'}">
 								<tr>
 									<td><c:out value="${main.asAssignNum}"/></td>
@@ -184,7 +183,7 @@
 				<div class="toKccBrew">
 					<div class="inner-box">
 						<a href="#">
-							<img alt="logo"  src="${path}/resources/img/kcc.png">
+							<img alt="logo"  src="${path}/resources/img/logo.png">
 						</a>
 						<a href="#">
 							<button class="kcclink">

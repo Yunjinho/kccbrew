@@ -34,7 +34,7 @@
 		
 			<div class="assigned-as btm">
 				<table class="task-list">
-					<caption class="tablecap">내게 온 A/S 배정건</caption>
+					<caption class="tablecap">내게 온 A/S 배정</caption>
 					<thead>
 						<tr>
 							<th>배정번호</th>
@@ -136,7 +136,7 @@
 				<div class="toKccBrew">
 					<div class="inner-box">
 						<a href="#">
-							<img alt="logo"  src="${path}/resources/img/kcc.png">
+							<img alt="logo"  src="${path}/resources/img/logo.png">
 						</a>
 						<a href="#">
 							<button class="kcclink">

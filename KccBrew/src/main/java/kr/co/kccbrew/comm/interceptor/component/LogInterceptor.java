@@ -1,10 +1,12 @@
 package kr.co.kccbrew.comm.interceptor.component;
 
-import java.time.LocalDateTime;
+import java.sql.Date;
+import java.time.LocalDateTime; 
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpServletResponseWrapper;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +14,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import kr.co.kccbrew.sysMng.logMng.controller.LogMngController.UserVO;
+
 import kr.co.kccbrew.sysMng.logMng.model.LogMngVo;
 import kr.co.kccbrew.sysMng.logMng.service.LogMngService;
 import lombok.extern.slf4j.Slf4j;
@@ -33,8 +35,12 @@ public class LogInterceptor extends Interceptor {
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 		log.info("컨트롤러 호출전 로깅테스트");
+		
 
-		LocalDateTime date = LocalDateTime.now();
+        LocalDateTime currentDateTime = LocalDateTime.now();
+        Date date = Date.valueOf(currentDateTime.toLocalDate());
+
+
 		String requestURI = request.getRequestURI(); // path
 		String uuid = UUID.randomUUID().toString(); // uuid
 		request.setAttribute(LOG_ID, uuid); 
@@ -54,8 +60,8 @@ public class LogInterceptor extends Interceptor {
 		//세션에서 로그인 회원 정보 반환
 		HttpSession session = request.getSession();
 		Object user = session.getAttribute("user");
-		if (user instanceof UserVO) {
-			UserVO userVO = (UserVO) user;
+		if (user instanceof LogMngVo) {
+			LogMngVo userVO = (LogMngVo) user;
 			userId = userVO.getUserId();
 			userType = userVO.getUserType();
 		}
@@ -76,6 +82,8 @@ public class LogInterceptor extends Interceptor {
 		HttpSession session = request.getSession();
 		session.setAttribute("view", view);
 		
+		
+		
 		log.info("view: {}", view);
 	}
 
@@ -84,7 +92,8 @@ public class LogInterceptor extends Interceptor {
 	public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
 		log.info("컨트롤러 호출완료 이후 로깅테스트");
 
-		LocalDateTime localDateTime = LocalDateTime.now();
+        LocalDateTime currentDateTime = LocalDateTime.now();
+        Date date = Date.valueOf(currentDateTime.toLocalDate());
 		String requestURI = request.getRequestURI(); 
 		String logId = (String)request.getAttribute(LOG_ID); 
 
@@ -94,14 +103,14 @@ public class LogInterceptor extends Interceptor {
 		String userId = null; // userId
 		String userType = null; // userType
 		String ip = getClientIp(request); // ip
-		if (user2 instanceof UserVO) {
-			UserVO userVO = (UserVO) user2;
+		if (user2 instanceof LogMngVo) {
+			LogMngVo userVO = (LogMngVo) user2;
 			userId = userVO.getUserId();
 			userType = userVO.getUserType();
 		}
-
-//		String status = String.valueOf(response.getStatus());
-		String status = null;
+		
+		
+		String status = String.valueOf(response.getStatus());
 		log.info("status={}", status);
 		
 		String view = (String) session.getAttribute("view");
@@ -115,7 +124,7 @@ public class LogInterceptor extends Interceptor {
 		} 
 
 		/* log객체에 값 주입 */
-		logVO.setDate(localDateTime);
+		logVO.setDate(date);
 		logVO.setIp(ip);
 		logVO.setStatusCode(null);
 		logVO.setUri(requestURI);

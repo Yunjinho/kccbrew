@@ -9,7 +9,8 @@ import kr.co.kccbrew.sysMng.cdMng.model.CdMngVo;
  
 public interface ICdMngService {
 	List<CdMngVo> selectNm();
-	List<CdMngVo> filter(CdMngVo codeMng);
+	List<CdMngVo> filter(CdMngVo codeMng, int currentPage);
+	int getCdFilterCount(CdMngVo codeMng);
 	CdMngVo selectCd(String cdId, String cdDtlId);
 	CdMngVo selectGrpDetail(String cdId);
 	void insert1(CdMngVo codeMng);

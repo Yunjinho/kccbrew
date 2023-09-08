@@ -134,6 +134,7 @@ public class AsMngController {
 		
 		return "/asMng/asReceipt";
 	}
+
 	@RequestMapping(value="/receipt",method=RequestMethod.POST)
 	public String asReceipt(@Value("#{serverImgPath['asReceiptPath']}")String path,AsMngVo asMngVo,HttpSession session) {
 		asMngVo.setUserId((String)session.getAttribute("userId"));
@@ -143,3 +144,4 @@ public class AsMngController {
 	}
 	
 }
+
