@@ -94,7 +94,7 @@
 		<!-- 회원유형별 접근가능 페이지 설정 -->
 		<interceptor>
 			<mapping path="/관리자만 가능한  API" />
-			<mapping path="/log" />
+			<!-- <mapping path="/log" /> -->
 			<exclude-mapping path="/" />
 			<exclude-mapping path="/resources/**/" />
 			<beans:bean
