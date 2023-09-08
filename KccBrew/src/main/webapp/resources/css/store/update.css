@@ -10,22 +10,13 @@ body {
 
 .notice {
 	padding: 20px 0;
-	width: 1500px;
+	width: 800px;
 	margin-left: auto;
 	margin-right: auto;
 	background-color: white;
 	margin-top:  30px;
 }
 
-.category {
-	width: 97%;
-	height: 50px;
-	margin-left: auto;
-	margin-right: auto;
-	background-color: #E0E0E0;
-	font-size: 1rem;
-	margin-bottom: 20px;
-}
 
 .category>span {
 	left: 30px;
