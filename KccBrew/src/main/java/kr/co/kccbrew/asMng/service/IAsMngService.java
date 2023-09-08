@@ -2,8 +2,6 @@ package kr.co.kccbrew.asMng.service;
 
 import java.util.List;
 
-import org.apache.ibatis.annotations.Param;
-
 import kr.co.kccbrew.asMng.model.AsMngVo;
 
 public interface IAsMngService {
@@ -32,4 +30,16 @@ public interface IAsMngService {
 	 * @return : 지역 코드 리스트
 	 */
 	public List<AsMngVo> selectLocationCd();
+	
+	/**
+	 * 점포 정보 조회
+	 * @return 로그인한 아이디로 매핑된 점포 정보 
+	 */
+	public AsMngVo selectStrInfo(String userId);
+	
+	/**
+	 * AS 등록
+	 * @param asMngVo AS 정보가 담겨있는 vo
+	 */
+	public void insertAs(AsMngVo asMngVo);
 }

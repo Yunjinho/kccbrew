@@ -59,27 +59,40 @@
 
 
 	<!-- Controller -->
-	<context:component-scan base-package="kr.co.kccbrew" />
-	<context:component-scan base-package="kr.co.kccbrew.comm.login.controller" />
-	<context:component-scan base-package="kr.co.kccbrew.comm.main.controller" />
-	<context:component-scan base-package="kr.co.kccbrew.comm.register.controller" />
-	<context:component-scan base-package="kr.co.kccbrew.strMng.controller" />
-	<context:component-scan base-package="kr.co.kccbrew.sysMng.cdMng.controller" />
-	<context:component-scan base-package="kr.co.kccbrew.sysMng.logMng.controller" />
-	<context:component-scan base-package="kr.co.kccbrew.asMng.contorller" />
-	<context:component-scan base-package="kr.co.kccbrew.schdlMng.contorller" />
+	<context:component-scan
+		base-package="kr.co.kccbrew" />
+	<context:component-scan
+		base-package="kr.co.kccbrew.comm.login.controller" />
+	<context:component-scan
+		base-package="kr.co.kccbrew.comm.main.controller" />
+	<context:component-scan
+		base-package="kr.co.kccbrew.comm.register.controller" />
+	<context:component-scan
+		base-package="kr.co.kccbrew.strMng.controller" />
+	<context:component-scan
+		base-package="kr.co.kccbrew.sysMng.cdMng.controller" />
+	<context:component-scan
+		base-package="kr.co.kccbrew.sysMng.logMng.controller" />
+	<context:component-scan
+		base-package="kr.co.kccbrew.asMng.contorller" />
+	<context:component-scan
+		base-package="kr.co.kccbrew.schdlMng.contorller" />
 	<!-- Controller -->
 
 
 
 	<view-controller path="/" view-name="/home" />
-
+	<util:properties id="serverImgPath"
+		location="classpath:/config/application.properties" />
 
 
 	<!-- inteceptor -->
 
 	<interceptors>
 		<!-- 로그인 세션 확인 -->
+
+		<!-- Properties 파일을 읽어 오기 위한 태그 Java코드에서 @Value('#{id['properties속성']}') -->
+
 		<interceptor>
 			<mapping path="/**" />
 			<exclude-mapping path="/" />
@@ -127,6 +140,5 @@
 		</interceptor>
 
 	</interceptors>
-
 
 </beans:beans>

@@ -7,6 +7,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -37,10 +38,31 @@ public class CdMngController {
 	private final ICdMngService cdMngService;
 
 	/* 코드 조회 */
-	@RequestMapping("/code")
-	public String selectAll(@ModelAttribute("searchContent") CdMngVo searchContent,Model model) {
-		List<CdMngVo> list = cdMngService.filter(searchContent);
-			
+	@GetMapping("/code")
+	public String selectAll(@RequestParam(defaultValue = "1") int currentPage, @ModelAttribute("searchContent") CdMngVo searchContent, Model model, HttpSession session) {
+		List<CdMngVo> List = cdMngService.selectNm();
+		List<CdMngVo> list = cdMngService.filter(searchContent, currentPage);
+		System.out.println(searchContent);
+		int totalPage = 0;
+		int totalLogCount = cdMngService.getCdFilterCount(searchContent);
+		int sharePage = 0;
+		if (list != null && !list.isEmpty()) {
+			totalPage = (int) Math.ceil(totalLogCount/10);
+		} else {
+		}
+
+		if (currentPage == 1) {
+			sharePage = 0;
+		} else {
+			sharePage = (currentPage-1) / 10;
+		}
+		model.addAttribute("List", List);
+		model.addAttribute("totalPage", totalPage);
+		model.addAttribute("currentPage", currentPage);
+		model.addAttribute("sharePage", sharePage);
+
+		model.addAttribute("totalLog", totalLogCount);
+
 			model.addAttribute("list", list);
 		return "sysMng/cdMng/cdMngList";
 	}

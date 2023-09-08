@@ -105,7 +105,8 @@ public class StrMngController {
 	@RequestMapping(value = "/store/insert", method = RequestMethod.GET)
 	public String insert(Model model, HttpSession session) {
 		String userId = (String) session.getAttribute("userId"); //세션에서 아이디
-		//String userTypeCd = (String) session.getAttribute("userTypeCd"); 로그인 구현 완료 이후에 주석 해제
+		String userTypeCd = (String) session.getAttribute("userTypeCd"); //로그인 구현 완료 이후에 주석 해제
+		System.out.println(userId);
 		//로그인
 		if (userId != null && !userId.equals("")) { 
 			model.addAttribute("userId", userId);
@@ -118,7 +119,7 @@ public class StrMngController {
 			//로그아웃 로그인페이지로 이동
 		} else {			
 			model.addAttribute("message", "로그인 하지 않은 사용자입니다.");
-			return "";
+			return "loginpage";
 
 		}
 	}

@@ -73,7 +73,7 @@
                             <td><input type="text" name="cdDtlNm" class="radio-value-detail"></td>
                         </tr>
                     </table>
-                    <div class="savecancle">
+                    <div class="savecancle" style="text-align: center;">
                         <input type="button" name="save" class="button" onClick="submitForm2()" value="저장">
                         <input type="button" class="update" value="취소" onclick="window.close()">
                     </div>

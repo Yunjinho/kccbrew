@@ -58,7 +58,9 @@ public class LogInController {
 		        // 세션에 userId를 넣어줌
 				//session.setAttribute("userTypeCd", session);
 		        session.setAttribute("userTypeCd", user.getUserTypeCd());
-				session.setAttribute("userId", session);
+		        session.setAttribute("userName", user.getUserNm());
+				//session.setAttribute("userId", session);
+		        session.setAttribute("userId", user.getUserId());
 				session.setMaxInactiveInterval(1800); // Session이 30분동안 유지
 				
 				return "t";
@@ -85,4 +87,21 @@ public class LogInController {
 		return "ERROR";
 	}
 	
+	/** 사용자 이름 가져오기 **/
+	@ResponseBody
+	@RequestMapping(value="getUserName", method = RequestMethod.GET)
+	public String getName(HttpServletRequest httpServletRequest) {
+		HttpSession session = httpServletRequest.getSession(false);
+		String userName = (String)session.getAttribute("userName");
+		return userName;
+	}
+	
+	/** 사용자 아이디 가져오기 **/
+	@ResponseBody
+	@RequestMapping(value="getUserId", method = RequestMethod.GET)
+	public String getId(HttpServletRequest httpServletRequest) {
+		HttpSession session = httpServletRequest.getSession(false);
+		String userId = (String)session.getAttribute("userId");
+		return userId;
+	}
 }

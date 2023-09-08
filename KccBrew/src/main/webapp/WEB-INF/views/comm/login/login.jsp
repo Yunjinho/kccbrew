@@ -41,7 +41,7 @@
 							<div>
 								<img src="<c:url value="resources/img/login/login_pwd.png"/>" alt="로그인 텍스트 이미지">
 						    	<label for="pw"></label>
-						    	<input type="password" id="pw" name="userPwd" title="비밀번호" placeholder="비밀번호">
+						    	<input onkeyup="enterkey();" type="password" id="pw" name="userPwd" title="비밀번호" placeholder="비밀번호">
 							</div>
 						</form>
 					</fieldset>
