@@ -1,0 +1,38 @@
+@charset "UTF-8";
+
+/* 캘린더 */
+.fc-header-toolbar.fc-toolbar.fc-toolbar-ltr {
+	/* 여기에 CSS 스타일을 추가하세요 */
+	/* 예: */
+	background-color: #e6e6e6;
+	color: #333;
+	font-size: 16px;
+	/* 다른 스타일 속성을 추가하세요 */
+}
+
+.fc .fc-button-group>.fc-button {
+	display: grid;
+	align-content: center;
+}
+
+
+.fc .fc-button {
+	display: flex !important;
+	align-items: center !important;
+}
+
+.fc-scrollgrid-sync-inner > a {
+	color: black !important;
+}
+
+.fc-daygrid-day-top > a {
+	color: black !important;
+}
+
+.fc-toolbar-title {
+	font-weight: bold;
+}
+
+.fc-event-title.fc-sticky {
+	color: black !important;
+}

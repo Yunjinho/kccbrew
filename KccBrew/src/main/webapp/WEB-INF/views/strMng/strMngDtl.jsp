@@ -13,9 +13,6 @@
 <body>
     <section id="notice" class="notice">
         <div class="container">
-            <section class="category">
-                <span>점포관리 > 점포정보</span>
-            </section>
             <table class="table text-center">
                 <tr>
                     <th>지점명</th>
@@ -37,7 +34,7 @@
             </table>
 
             <!-- 이미지 지도를 표시할 div 입니다 -->
-            <div id="staticMap" style="width: 780px; height: 455px;"></div>
+            <div id="staticMap" style="width: 650px; height: 355px;"></div>
             <table class="table text-center">
                 <thead>
                     <tr>

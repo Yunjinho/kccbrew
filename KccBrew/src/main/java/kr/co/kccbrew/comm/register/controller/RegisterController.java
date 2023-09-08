@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -158,8 +159,8 @@ public class RegisterController {
 	
 	/** 회원가입 처리*/
 	@RequestMapping(value="/register" , method=RequestMethod.POST)
-	public String register(RegisterVo user) {
-		System.out.println(user);
+	public String register(RegisterVo user,@Value("#{serverImgPath['userPath']}")String path) {
+		user.setStorageLocation(path);
 		registerService.registerUser(user);
 		return "comm/login";
 	}

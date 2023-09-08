@@ -14,9 +14,7 @@
 </head>
 <body>
 	<section id="notice" class="notice">
-		<section class="category">
-			<span>점포관리 &gt; 점포정보 &gt; 점포수정</span>
-		</section>
+		
 		<form action="/store/update" method="post" id="storeForm"
 			onsubmit="return submitForm()">
 			<table class="table text-center">
@@ -35,8 +33,8 @@
 				<tr>
 					<th>좌표</th>
 					<td><input class="field" id="lat" name="latitude"
-						value="${store.latitude}" />, <input class="field" id="lng"
-						name="longitude" value="${store.longitude}"></td>
+						value="${store.latitude}" size="12" />, <input class="field" id="lng"
+						name="longitude" value="${store.longitude}" size="12"></td>
 
 					<th>사용여부</th>
 					<td><select name="useYn">
@@ -45,15 +43,15 @@
 					</select></td>
 				</tr>
 				<tr>
-					<th>주소</th>
-					<td><input type="text" id="address_kakao" name="storeAddr"
-						placeholder="클릭해주세요" value="${store.storeAddr}" readonly /> <input
+					<th colspan="1">주소</th>
+					<td colspan="3"><input type="text" id="address_kakao" name="storeAddr"
+						placeholder="클릭해주세요" value="${store.storeAddr}"  size="50" readonly />, <input
 						type="text" name="storeAddrDtl" id="storeAddrDtl"
 						value="${store.storeAddrDtl}" required /></td>
 				</tr>
 				<tr>
-					<th>지역분류</th>
-					<td><select id="location" name="locationCd" size="3">
+					<th colspan="1">지역분류</th>
+					<td colspan="3"><select id="location" name="locationCd" size="3">
 							<option value="">지역선택</option>
 							<option value="02">서울</option>
 							<c:forEach var="list" items="${list}">
@@ -70,7 +68,7 @@
 					</select></td>
 				</tr>
 			</table>
-			<div id="staticMap" style="width: 780px; height: 455px;"></div>
+			<div id="staticMap" style="width: 650px; height: 355px;"></div>
 			<div class="updatecancle">
 				<input type="hidden" name="storeSeq" value="${store.storeSeq}">
 				<input type="submit" name="save" class="button" value="저장"

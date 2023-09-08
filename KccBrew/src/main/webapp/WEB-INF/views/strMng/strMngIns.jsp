@@ -11,9 +11,6 @@
 </head>
 <body>
 	<section id="notice" class="notice">
-		<section class="category">
-			<span>점포관리 > 점포등록</span>
-		</section>
 		<div class="container2">
 			<div class="div">점포등록</div>
 			<hr style="border: solid 1.2px; width: 97%;">

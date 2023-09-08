@@ -1,7 +1,9 @@
 package kr.co.kccbrew.sysMng.logMng.service;
 
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
@@ -18,27 +20,27 @@ public class LogMngService implements ILogMngService{
 
 	@Override
 	public void insertlogVO(LogMngVo logVO) {
-//		switch(logVO.getStatusCode()) {
-//		case "200": 
-//			logVO.setStatusCode("200 OK");
-//			break;
-//		case "201":
-//			logVO.setStatusCode("201 Created");
-//			break;
-//		case "400":
-//			logVO.setStatusCode("400 Bad Request");
-//			break;
-//		case "403":
-//			logVO.setStatusCode("403 Forbidden");
-//			break;
-//		case "404":
-//			logVO.setStatusCode("404 Not Found");
-//			break;
-//		case "500":
-//			logVO.setStatusCode("500 Internal Server Error");
-//			break;
-//		}
-		
+		//		switch(logVO.getStatusCode()) {
+		//		case "200": 
+		//			logVO.setStatusCode("200 OK");
+		//			break;
+		//		case "201":
+		//			logVO.setStatusCode("201 Created");
+		//			break;
+		//		case "400":
+		//			logVO.setStatusCode("400 Bad Request");
+		//			break;
+		//		case "403":
+		//			logVO.setStatusCode("403 Forbidden");
+		//			break;
+		//		case "404":
+		//			logVO.setStatusCode("404 Not Found");
+		//			break;
+		//		case "500":
+		//			logVO.setStatusCode("500 Internal Server Error");
+		//			break;
+		//		}
+
 		if (logVO.getUserId() == null || logVO.getUserId().isEmpty()) {
 			logVO.setUserId("non-member");
 		}
@@ -51,20 +53,35 @@ public class LogMngService implements ILogMngService{
 		log.info("Service에서의 logVO객체:{}", logVO);
 		logRepository.insertLog(logVO);
 	}
-	
+
 	@Override
 	public List<LogMngVo> getAllLogs() {
 		return logRepository.selectAllLogs();
 	}
 
-	@Override
+
+	/*조건에 따른 로그리스트 가져오기*/
+	/*	@Override
 	public List<LogMngVo> getRetrievedLogs(LogMngVo logVO) {
 		// TODO Auto-generated method stub
 		return logRepository.selectRetrievedLogs(logVO);
+	}*/
+
+	@Override
+	public List<LogMngVo> selectSearchedLogs(LogMngVo logVO, int currentPage) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("logMngVo", logVO);
+		map.put("firstRowNum", currentPage*10-9);
+		map.put("lastRowNum", currentPage*10);
+
+		return logRepository.selectSearchedLogs(map);
 	}
-	
-	
-	
-	
-	
+
+	@Override
+	public int getSearchedLogsCount(LogMngVo logVO) {
+		return logRepository.getSearchedLogsCount(logVO);
+	}
+
+
+
 }

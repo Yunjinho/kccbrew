@@ -8,6 +8,7 @@ import org.springframework.web.multipart.MultipartFile;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
 /**
  * 점포관리를 위한 Vo
  * 
@@ -31,7 +32,7 @@ public class StrMngVo {
 	String regUser;
 	Date modDttm;
 	String modUser;
-	char useYn;
+	String useYn;
 	String userNm;
 	String userTelNo;
 	int storeSeq;

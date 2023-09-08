@@ -16,7 +16,9 @@
 	<mybatis-spring:scan base-package="kr.co.kccbrew.strMng.dao"/>
 	<mybatis-spring:scan base-package="kr.co.kccbrew.sysMng.cdMng.dao"/>
 	<mybatis-spring:scan base-package="kr.co.kccbrew.sysMng.logMng.dao"/>
+	<mybatis-spring:scan base-package="kr.co.kccbrew.schdlMng.dao"/>
 	<mybatis-spring:scan base-package="kr.co.kccbrew.asMng.dao"/>
+
 	<!-- DAO -->
 	
 	<!--Service -->
@@ -26,7 +28,9 @@
 	<context:component-scan base-package="kr.co.kccbrew.strMng.service"/>
 	<context:component-scan base-package="kr.co.kccbrew.sysMng.cdMng.service"/>
 	<context:component-scan base-package="kr.co.kccbrew.sysMng.logMng.service"/>
+	<context:component-scan base-package="kr.co.kccbrew.schdlMng.service"/>
 	<context:component-scan base-package="kr.co.kccbrew.asMng.service"/>
+
 	<!--Service -->
 	<!-- @Transactional 사용하기 위한 태그 -->
 	<tx:annotation-driven/>

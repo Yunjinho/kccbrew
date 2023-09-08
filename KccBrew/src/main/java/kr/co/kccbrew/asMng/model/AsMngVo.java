@@ -22,27 +22,37 @@ public class AsMngVo {
 	private String startMn;
 	private String endYr;
 	private String endMn;
-	//등록 날짜
-	private Date regDttm;
 	//기본 정보들..
 	private String userId;
-	private String storeAddr;
+	private String userTypeCd;
+	private String searchId;
 	private String machineCd;
 	private String statusCd;
-	private String storeNm;
 	private String locationCd;
-	
+	private Date regDttm;
 	private Date modDttm;
 	private int fileSeq;
 	private String asContent;
-	
 	//신청 희망일 시작~끝
-	private Date wishingStartDate;
-	private Date wishingEndDate;
-	//AS 신청 이미지
+	private String wishingStartDate;
+	private String wishingEndDate;
+
+	//AS 신청 이미지 정보
 	private List<MultipartFile> imgFile;
+	private String fileOriginalNm;
+	private String fileServerNm;
+	private String fileFmt;
+	private String storageLocation;
 	
+	//점포 정보
+	private String storeNm;
+	private String storeAddr;
+	private String storeAddrDtl;
+	private String latitude;
+	private String longitude;
+	private String storeTelNo;
 	
+	//그룸코드
 	//장비 코드 리스트
 	//as 상태 코드 리스트
 	//지역 리스트

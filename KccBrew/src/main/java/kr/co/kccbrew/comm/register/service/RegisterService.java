@@ -1,13 +1,15 @@
 	package kr.co.kccbrew.comm.register.service;
 
-import java.io.File;
+import java.io.FileOutputStream;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.security.MessageDigest;
 import java.security.SecureRandom;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import kr.co.kccbrew.comm.register.dao.IRegisterRepository;
@@ -21,8 +23,6 @@ public class RegisterService implements IRegisterService{
 	 */
 	private final IRegisterRepository registerRepasotory;
 	
-	@Value("${resouse.img.user}")
-	private String storageLocation;
 	/**
 	 * 검색한 키워드를 통해 운영하고 있는 점포 리스트를 조회한다.
 	 * @return 운영중인 점포 리스트
@@ -124,16 +124,16 @@ public class RegisterService implements IRegisterService{
 		vo.setFileOriginalNm(imgFile.getOriginalFilename());
 		vo.setFileServerNm(user.getUserId()+"_"+imgFile.getOriginalFilename());
 		vo.setFileFmt(imgFile.getContentType());
-		vo.setStorageLocation(storageLocation);
+		vo.setStorageLocation(user.getStorageLocation());
 		user.setFileSeq(vo.getFileSeq());
 		//파일 상세 정보 등록
 		registerRepasotory.insertFileDtlInfo(vo);
 		//이미지 파일 저장
-		//File path = Paths.get(storageLocation).toAbsolutePath().normalize();
-        //File targetPath = path.resolve(vo.getFileServerNm()).normalize();
-		File path= new File(storageLocation);
+		Path path = Paths.get(vo.getStorageLocation()).toAbsolutePath().normalize();
+        Path targetPath = path.resolve(vo.getFileServerNm()).normalize();
 		try {
-			imgFile.transferTo(path);
+			//imgFile.transferTo(targetPath);
+			FileCopyUtils.copy(imgFile.getInputStream(), new FileOutputStream(targetPath.toFile()));
 		}catch (Exception e) {
 			System.out.println(e.getMessage());
 		}

@@ -11,23 +11,26 @@
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
 		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
-	<!-- 
-		Database Config
-		database.properties 파일 src/main/resources에 추가 해서 값 넣기 
-		프로젝트 진행 시 url 통일 
-	-->
-	<bean id="environmentVariablesConfiguration" class="org.jasypt.encryption.pbe.config.EnvironmentPBEConfig">
-		<property name="algorithm" value="PBEWithMD5AndDES"/>
-		<property name="passwordEnvName" value="APP_ENCRIPTION_PASSWORD"/>
+	<!-- Database Config database.properties 파일 src/main/resources에 추가 해서 값 
+		넣기 프로젝트 진행 시 url 통일 -->
+	<bean id="environmentVariablesConfiguration"
+		class="org.jasypt.encryption.pbe.config.EnvironmentPBEConfig">
+		<property name="algorithm" value="PBEWithMD5AndDES" />
+		<property name="passwordEnvName"
+			value="APP_ENCRIPTION_PASSWORD" />
 	</bean>
-	
-	<bean id="configurationEncryptor" class="org.jasypt.encryption.pbe.StandardPBEStringEncryptor">
-		<property name="config" ref="environmentVariablesConfiguration"/>
-		<property name="password" value="wnstjd"/>
+
+	<bean id="configurationEncryptor"
+		class="org.jasypt.encryption.pbe.StandardPBEStringEncryptor">
+		<property name="config"
+			ref="environmentVariablesConfiguration" />
+		<property name="password" value="kkccccbbrreeww" />
+
 	</bean>
-	
-	<bean id="propertiyConfigurer" class="org.jasypt.spring3.properties.EncryptablePropertyPlaceholderConfigurer">
-		<constructor-arg ref="configurationEncryptor"/>
+
+	<bean id="propertiyConfigurer"
+		class="org.jasypt.spring3.properties.EncryptablePropertyPlaceholderConfigurer">
+		<constructor-arg ref="configurationEncryptor" />
 		<property name="locations">
 			<list>
 				<value>classpath:config/jdbc.properties</value>
@@ -35,25 +38,40 @@
 			</list>
 		</property>
 	</bean>
-		
-	<bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource">
-		<property name="driverClassName" value="${jdbc.driverClassName}"></property>
-		<property name="url" value="${jdbc.url}"/>
-		<property name="username" value="${jdbc.username}"/>
-		<property name="password" value="${jdbc.password}"/>
+
+<!-- 	<bean id="dataSource"
+		class="org.apache.commons.dbcp2.BasicDataSource">
+		<property name="driverClassName"
+			value="${jdbc.driverClassName}"></property>
+		<property name="url" value="${jdbc.url}" />
+		<property name="username" value="${jdbc.username}" />
+		<property name="password" value="${jdbc.password}" />
+	</bean> -->
+
+	<bean id="dataSource"
+		class="org.apache.commons.dbcp2.BasicDataSource">
+		<property name="driverClassName"
+			value="net.sf.log4jdbc.sql.jdbcapi.DriverSpy" />
+		<property name="url"
+			value="jdbc:log4jdbc:oracle:thin:@112.221.241.99:11521:xe" />
+		<property name="username" value="${jdbc.username}" />
+		<property name="password" value="${jdbc.password}" />
 	</bean>
-	
+
 	<!-- @Transactional -->
-	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
- 		<property name="dataSource" ref="dataSource"/>
- 	</bean>
- 	
- 	<tx:annotation-driven/>
- 	
- 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
- 		<property name="dataSource" ref="dataSource"/>
- 		<property name="mapperLocations" value="classpath:mapper/**/*.xml" />
- 	</bean>
- 	
+	<bean id="transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+
+	<tx:annotation-driven />
+
+	<bean id="sqlSessionFactory"
+		class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="mapperLocations"
+			value="classpath:mapper/**/*.xml" />
+	</bean>
+
 
 </beans>

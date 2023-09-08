@@ -52,10 +52,11 @@
 							<span id="maincontent"></span>
 							<div class="user-past">
 
-								<!-- ********** AS 리스트 조회 ********** -->
+								<!-- ********** 관리자 AS 리스트 조회 ********** -->
 								<div id="content">
 									<h2 class="heading">AS 조회</h2>
-									<!-- AS 조회-->
+									<!-- 관리자  AS 조건-->
+									<c:if test="${sessionScope.userTypeCd eq '01'}">
 									<form action="/searchAsList" method="get" id="search-form">
 										<table id="search-box">
 											<!-- 1행 -->
@@ -119,29 +120,130 @@
 												<th>AS 번호</th>
 												<!-- Input field for URI -->
 												<td>
-													<input type="search" name="asInfoSeq" placeholder="AS 번호를 입력하세요" value="">
+													<input type="search" name="asInfoSeq" placeholder="AS 번호를 입력하세요" value="${searchContent.asInfoSeq}">
 												</td>
 												<th>점포 이름</th>
 												<td>
-													<input type="search" name="storeNm" placeholder="점포명을 입력하세요" value="">
+													<input type="search" name="storeNm" placeholder="점포명을 입력하세요" value="${searchContent.storeNm}">
 												</td>
 												<th>점포 주소</th>
 												<td colspan="2">
-													<input type="search" name="storeAddr" placeholder="점포 주소를 입력하세요" value="">
+													<input type="search" name="storeAddr" placeholder="점포 주소를 입력하세요" value="${searchContent.storeAddr}">
 												</td>
 											</tr>
 											<!-- 3행 -->
 											<tr>
 												<th>사용자 ID</th>
 												<td >
-													<input type="search" name="userId" placeholder="사용자ID를 입력하세요" value="">
+													<input type="search" name="searchId" placeholder="사용자ID를 입력하세요" value="">
 												</td>
 												<th>장비 구분</th>
 												<td>
-													<select class="tx2" name="machineCd" id="" onchange="javascript:chg();">
+													<select class="tx2" name="machineCd" onchange="javascript:chg();">
 															<option value="">장비 구분</option>
 															<c:forEach var="empCd" items="${machineCd}">
 																<option value="${empCd.grpCdDtlId}">
+																	${empCd.grpCdDtlNm}
+																</option>
+															</c:forEach>
+													</select>
+												</td>
+												<th>AS 상태</th>
+												<td colspan="2">
+													<select class="tx2" name="statusCd" value="${searchContent.statusCd}" onchange="javascript:chg();">
+															<option value="">AS 상태</option>
+															<c:forEach var="asCd" items="${asStatusCd}">
+																<option value="${asCd.grpCdDtlId}">
+																	${asCd.grpCdDtlNm}
+																</option>
+															</c:forEach>
+													</select>
+												</td>
+											</tr>
+											<tr>
+												<td colspan="6" style="border-bottom:none;"></td>
+												<td style="text-align: center; border-bottom: 0px;">
+													<div>
+														<button type="submit" class="form-btn">검색</button>
+													</div>
+												</td>
+											</tr>											
+										</table>
+									</form>
+									</c:if>
+									<!-- 가맹 점주 AS 조건 -->
+									<c:if test="${sessionScope.userTypeCd eq '02'}">
+									<form action="/searchAsList" method="get" id="search-form">
+										<table id="search-box">
+											<!-- 1행 -->
+											<c:set var="today" value="<%=new java.util.Date()%>" />
+											<fmt:formatDate value="${today}" pattern="yyyy"
+												var="nowYear" />
+											<tr>
+												<th>조회 기간</th>
+												<!-- 시작 연도 선택 필드 -->
+												<td><select class="tx2" name="startYr" id="yr"
+													onchange="javascript:chg();">
+														<option value="">연도</option>
+														<c:forEach var="i" begin="0" end="9">
+															<c:set var="year" value="${nowYear - i}" />
+															<option value="${year}"
+																${param.startYr == year ? 'selected' : ''}>${year}년</option>
+														</c:forEach>
+												</select></td>
+
+												<!-- 시작 월 선택 필드 -->
+												<td><select class="tx2" name="startMn" id="mn">
+														<option value="">월</option>
+														<c:forEach var="month" begin="1" end="12">
+															<option value="${month}"
+																${param.startMn == month ? 'selected' : ''}>${month}월</option>
+														</c:forEach>
+												</select></td>
+
+												<td>~</td>
+
+												<!-- 종료 연도 선택 필드 -->
+												<td>
+													<select class="tx2" name="endYr" id="yr" onchange="javascript:chg();">
+														<option value="">연도</option>
+														<c:forEach var="i" begin="0" end="9">
+															<c:set var="year" value="${nowYear - i}" />
+															<option value="${year}"
+																${param.endYr == year ? 'selected' : ''}>${year}년</option>
+														</c:forEach>
+													</select>
+												</td>
+
+												<!-- 종료 월 선택 필드 -->
+												<td>
+													<select class="tx2" name="endMn" id="mn">
+														<option value="">월</option>
+														<c:forEach var="month" begin="1" end="12">
+															<option value="${month}"
+																${param.endMn == month ? 'selected' : ''}>${month}월</option>
+														</c:forEach>
+													</select>
+												</td>
+												<td>
+													<button type="submit" onclick="" class="form-btn">이동</button>
+												</td>
+											</tr>
+
+
+											<!-- 2행 -->
+											<tr>
+												<th>AS 번호</th>
+												<!-- Input field for URI -->
+												<td>
+													<input type="search" name="asInfoSeq" placeholder="AS 번호를 입력하세요" value="${searchContent.asInfoSeq}">
+												</td>
+												<th>장비 구분</th>
+												<td>
+													<select class="tx2" name="machineCd" onchange="javascript:chg();">
+															<option value="">장비 구분</option>
+															<c:forEach var="empCd" items="${machineCd}">
+																<option value="${empCd.grpCdDtlId}" selected>
 																	${empCd.grpCdDtlNm}
 																</option>
 															</c:forEach>
@@ -174,7 +276,119 @@
 											</tr>											
 										</table>
 									</form>
+									</c:if>
+									<!-- 수리 기사 AS 조건 -->
+									<c:if test="${sessionScope.userTypeCd eq '03'}">
+									<form action="/searchAsList" method="get" id="search-form">
+										<table id="search-box">
+											<!-- 1행 -->
+											<c:set var="today" value="<%=new java.util.Date()%>" />
+											<fmt:formatDate value="${today}" pattern="yyyy"
+												var="nowYear" />
+											<tr>
+												<th>조회 기간</th>
+												<!-- 시작 연도 선택 필드 -->
+												<td><select class="tx2" name="startYr" id="yr"
+													onchange="javascript:chg();">
+														<option value="">연도</option>
+														<c:forEach var="i" begin="0" end="9">
+															<c:set var="year" value="${nowYear - i}" />
+															<option value="${year}"
+																${param.startYr == year ? 'selected' : ''}>${year}년</option>
+														</c:forEach>
+												</select></td>
 
+												<!-- 시작 월 선택 필드 -->
+												<td><select class="tx2" name="startMn" id="mn">
+														<option value="">월</option>
+														<c:forEach var="month" begin="1" end="12">
+															<option value="${month}"
+																${param.startMn == month ? 'selected' : ''}>${month}월</option>
+														</c:forEach>
+												</select></td>
+
+												<td>~</td>
+
+												<!-- 종료 연도 선택 필드 -->
+												<td>
+													<select class="tx2" name="endYr" id="yr" onchange="javascript:chg();">
+														<option value="">연도</option>
+														<c:forEach var="i" begin="0" end="9">
+															<c:set var="year" value="${nowYear - i}" />
+															<option value="${year}"
+																${param.endYr == year ? 'selected' : ''}>${year}년</option>
+														</c:forEach>
+													</select>
+												</td>
+
+												<!-- 종료 월 선택 필드 -->
+												<td >
+													<select class="tx2" name="endMn" id="mn">
+														<option value="">월</option>
+														<c:forEach var="month" begin="1" end="12">
+															<option value="${month}"
+																${param.endMn == month ? 'selected' : ''}>${month}월</option>
+														</c:forEach>
+													</select>
+												</td>
+												<td>
+													<button type="submit" onclick="" class="form-btn">이동</button>
+												</td>
+											</tr>
+
+
+											<!-- 2행 -->
+											<tr>
+												<th>AS 번호</th>
+												<!-- Input field for URI -->
+												<td>
+													<input type="search" name="asInfoSeq" placeholder="AS 번호를 입력하세요" value="">
+												</td>
+												<th>점포 이름</th>
+												<td>
+													<input type="search" name="storeNm" placeholder="점포명을 입력하세요" value="">
+												</td>
+												<th>점포 주소</th>
+												<td colspan="2">
+													<input type="search" name="storeAddr" placeholder="점포 주소를 입력하세요" value="">
+												</td>
+											</tr>
+											<!-- 3행 -->
+											<tr>
+												<th >장비 구분</th>
+												<td colspan="2">
+													<select class="tx2" name="machineCd" id="" onchange="javascript:chg();">
+															<option value="">장비 구분</option>
+															<c:forEach var="empCd" items="${machineCd}">
+																<option value="${empCd.grpCdDtlId}">
+																	${empCd.grpCdDtlNm}
+																</option>
+															</c:forEach>
+													</select>
+												</td>
+												<th>AS 상태</th>
+												<td colspan="3">
+													<select class="tx2" name="statusCd" id="" onchange="javascript:chg();">
+															<option value="">AS 상태</option>
+															<c:forEach var="asCd" items="${asStatusCd}">
+																<option value="${asCd.grpCdDtlId}">
+																	${asCd.grpCdDtlNm}
+																</option>
+															</c:forEach>
+													</select>
+												</td>
+											</tr>
+											<tr>
+												<td colspan="6" style="border-bottom:none;"></td>
+												<td style="text-align: center; border-bottom: 0px;">
+													<div>
+														<button type="submit" class="form-btn">검색</button>
+													</div>
+												</td>
+											</tr>											
+										</table>
+									</form>
+									</c:if>
 
 
 									<!-- 로그 리스트 -->

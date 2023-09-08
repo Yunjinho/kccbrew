@@ -142,6 +142,7 @@
 													<th>사용여부</th>
 													<td><select name="useYn" class="tx2" id="yn"
 														onchange="javascript:chg();">
+														<option value="">선택</option>
 															<option value="Y" ${param.useYn == 'Y' ? 'selected' : ''}>Y</option>
 															<option value="N" ${param.useYn == 'N' ? 'selected' : ''}>N</option>
 													</select></td>
@@ -275,7 +276,7 @@
         function popup(storeSeq) {
             var url = "store/view/" + storeSeq;
             var name = "popup test";
-            var option = "width=1300, height=700, top=100, left=200, scrollbars=yes, directories=no, location=no";
+            var option = "width=900, height=750, top=100, left=400, scrollbars=yes, directories=no, location=no";
             window.open(url, name, option);
             window.close();
         }
@@ -283,7 +284,7 @@
         function popup1() {
             var url = "store/insert";
             var name = "popup test";
-            var option = "width=700, height=600, top=200, left=500, scrollbars=yes, directories=no, location=no";
+            var option = "width=800, height=600, top=130, left=450, scrollbars=yes, directories=no, location=no";
             window.open(url, name, option);
             window.close();
         }
