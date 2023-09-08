@@ -2,6 +2,9 @@ package kr.co.kccbrew.asMng.contorller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,6 +21,8 @@ import lombok.RequiredArgsConstructor;
  * @   수정일               수정자             수정내용
  * ============      ==============     ==============
  * 2023-09-05			윤진호				최초생성
+ * 2023-09-06			윤진호				AS 조회 구현
+ * 2023-09-07			윤진호				AS 접수
  * @author YUNJINHO
  * @version 1.0
  */
@@ -34,8 +39,11 @@ public class AsMngController {
 	 * @return 
 	 */
 	@RequestMapping(value="/as-list",method=RequestMethod.GET)
-	public String as(Model model) {
+	public String as(Model model,HttpSession session) {
 		AsMngVo asMngVo=new AsMngVo();
+		asMngVo.setUserId((String)session.getAttribute("userId"));
+		asMngVo.setUserTypeCd((String)session.getAttribute("userTypeCd"));
+		
 		List<AsMngVo> list=asMngService.selectMachineCd();
 		model.addAttribute("machineCd", list);
 		
@@ -79,7 +87,7 @@ public class AsMngController {
 	 * @return
 	 */
 	@RequestMapping(value="/searchAsList",method=RequestMethod.GET)
-	public String ssearchAsList(@RequestParam(defaultValue = "1") int currentPage,AsMngVo asMngVo,Model model) {
+	public String ssearchAsList(@RequestParam(defaultValue = "1") int currentPage,AsMngVo asMngVo,Model model,HttpSession session) {
 		List<AsMngVo> list=asMngService.selectMachineCd();
 		model.addAttribute("machineCd", list);
 		
@@ -89,7 +97,8 @@ public class AsMngController {
 		list=asMngService.selectLocationCd();
 		model.addAttribute("locationCd", list);
 		
-		
+		asMngVo.setUserId((String)session.getAttribute("userId"));
+		asMngVo.setUserTypeCd((String)session.getAttribute("userTypeCd"));
 		List<AsMngVo> asList=asMngService.selectASList(asMngVo,currentPage);
 
 		int totalPage = 0;
@@ -117,10 +126,22 @@ public class AsMngController {
 	}
 	
 	@RequestMapping(value="/as-receipt",method=RequestMethod.GET)
-	public String asReceipt(Model model) {
+	public String asReceipt(Model model,HttpSession session) {
 		List<AsMngVo> list=asMngService.selectMachineCd();
 		model.addAttribute("machineCd", list);
+		AsMngVo vo=asMngService.selectStrInfo((String)session.getAttribute("userId"));
+		model.addAttribute("strInfo", vo);
 		
 		return "/asMng/asReceipt";
 	}
+
+	@RequestMapping(value="/receipt",method=RequestMethod.POST)
+	public String asReceipt(@Value("#{serverImgPath['asReceiptPath']}")String path,AsMngVo asMngVo,HttpSession session) {
+		asMngVo.setUserId((String)session.getAttribute("userId"));
+		asMngVo.setStorageLocation(path);
+		asMngService.insertAs(asMngVo);
+		return "/asMng/asList";
+	}
+	
 }
+

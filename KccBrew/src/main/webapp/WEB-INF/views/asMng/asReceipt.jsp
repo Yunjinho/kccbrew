@@ -53,17 +53,17 @@
 									<h2 class="heading">AS 접수</h2>
 									<hr>
 									<!-- AS 접수-->
-									<form action="/searchAsList" method="post" id="receipt-form" enctype="multipart/form-data">
+									<form action="/receipt" method="post" id="receipt-form" enctype="multipart/form-data">
 										<h6><img src="/resources/img/asMng/check.png" class="tag-image">희망 신청일</h6>
 										<div>
 											<div>
-												<input type="date" name="wishingStartDate">
+												<input type="date" value="" name="wishingStartDate">
 											</div>
 											<div style="font-size:2em; text-align:center;">
 												~
 											</div>
 											<div>
-												<input type="date" name="wishingEndDate">
+												<input type="date" value="" name="wishingEndDate">
 											</div>
 										</div>
 
@@ -73,20 +73,20 @@
 												점포명 
 											</div>
 											<div style="flex:0.5;">
-												<input type="text" name="storeNm" readonly>
+												<input type="text" name="storeNm" value="${strInfo.storeNm}"readonly>
 											</div>
 											<div style="font-size:1.5em; flex:0.5;text-align:center;">
 												점포 주소 
 											</div>
 											<div style="flex:2;">
-												<input style=" max-width: initial; width:100%;"type="text" name="storeAddr" readonly>
+												<input name="storeAddr" value="${strInfo.storeAddr},${strInfo.storeAddrDtl}" style=" max-width: initial; width:100%;"type="text"  readonly>
 											</div>
 										</div>
 										
 										<h6><img src="/resources/img/asMng/check.png" class="tag-image">AS 신청 장비</h6>
 										<div>
 											<div>
-												<select name="machineCd">
+												<select name="machineCd" required="required">
 													<option value="">장비 코드</option>
 													<c:forEach var="list" items="${machineCd}">
 														<option value="${list.grpCdDtlId}">
@@ -100,7 +100,7 @@
 										<h6><img src="/resources/img/asMng/check.png" class="tag-image">AS 신청 내용</h6>
 										<div>
 											<div>
-												<textarea name="asContent"></textarea>
+												<textarea name="asContent" required="required"></textarea>
 											</div>
 										</div>
 										
@@ -120,18 +120,18 @@
 										</div>
 										<div class="file-upload-div">
 											<div>	
-												<input type="file" name="imgFile">
+												<input type="file" name="imgFile" value="" onchange="imgTypeCheck(this)">
 											</div>
 											<div>	
-												<input type="file" name="imgFile">
+												<input type="file" name="imgFile" value="" onchange="imgTypeCheck(this)">
 											</div>
 											<div>	
-												<input type="file" name="imgFile">
+												<input type="file" name="imgFile" value="" onchange="imgTypeCheck(this)">
 											</div>
 										</div>
 										<div>
 											<div>
-												<a href="#" class="form-btn">접수</a>
+												<button type="submit" class="form-btn">접수</button>
 											</div>
 											<div>
 												<a href="/as-list" class="form-btn">취소</a>
