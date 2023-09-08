@@ -39,7 +39,6 @@
         JOIN group_code_detail b ON a.location_cd = b.grp_cd_dtl_id
         WHERE
             (b.grp_cd_id='L' OR b.grp_cd_id='LL')
-            <!-- 검색 조건 -->
             <if test="StrMngVo.startYr != null and StrMngVo.startYr != '' and StrMngVo.startMn != null and StrMngVo.startMn != ''">
                  <![CDATA[
                   AND (
