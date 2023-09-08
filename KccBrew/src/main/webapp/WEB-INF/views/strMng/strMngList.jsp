@@ -142,6 +142,7 @@
 													<th>사용여부</th>
 													<td><select name="useYn" class="tx2" id="yn"
 														onchange="javascript:chg();">
+														<option value="">선택</option>
 															<option value="Y" ${param.useYn == 'Y' ? 'selected' : ''}>Y</option>
 															<option value="N" ${param.useYn == 'N' ? 'selected' : ''}>N</option>
 													</select></td>
