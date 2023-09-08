@@ -54,6 +54,15 @@ public class SchdlMngService implements ISchdlMngService {
 		int intDataCount = dataCount != null ? dataCount.intValue() : 0;
 		return intDataCount;
 	}
+
+	/*회원 캘린더 조회*/
+	@Override
+	public List<SchdlMngVo2> getCalendarSchedule(SchdlMngVo2 schdlMngVo) {
+		return schdlMngRepository.selectCalendarSchedule(schdlMngVo);
+	}
+	
+	
+	
 	
 	
  
