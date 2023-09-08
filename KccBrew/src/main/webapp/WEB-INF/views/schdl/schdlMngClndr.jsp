@@ -310,8 +310,7 @@
 																	.stringify(response);
 
 															var events = [];
-															
-															console.log("response 개수: " + response.length);
+
 
 															for (var i = 0; i < response.length; i++) {
 																var schedule = response[i];
@@ -329,12 +328,6 @@
 															calendar.setOption(
 																	'events',
 																	events);
-
-															/* 이벤트 확인 */
-															console
-																	.log("events: "
-																			+ JSON
-																					.stringify(events));
 
 														},
 
@@ -357,11 +350,11 @@
 
 																	{
 																		initialView : 'dayGridMonth',
-																		events : [
+																		/* events : [
 																				{
 																					title : '예제 이벤트',
 																					date : '2023-09-07'
-																				}, ],
+																				}, ], */
 
 																		headerToolbar : {
 																			left : 'prev,next',
