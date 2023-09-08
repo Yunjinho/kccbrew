@@ -18,7 +18,7 @@
  	<definition name="loginPage" extends="mainLayout">
 		<put-attribute name="title" value="로그인 페이지" />
 		<put-attribute name="header" value="" /> <!-- 빈 헤더 -->
-		<put-attribute name="contents" value="/WEB-INF/views/comm/login/login2.jsp" />
+		<put-attribute name="contents" value="/WEB-INF/views/comm/login/login.jsp" />
 	</definition>
 	
 	<!-- 회원가입 페이지 -->

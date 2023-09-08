@@ -37,7 +37,8 @@ public class HomeController {
 		model.addAttribute("serverTime", formattedDate );
 		httpServletRequest.getSession().invalidate();
         HttpSession session = httpServletRequest.getSession();  // Session이 없으면 생성
-        session.setAttribute("userId", "z");
+        session.setAttribute("userId", "ngw01");
+        session.setAttribute("userTypeCd", "02");
         // 세션에 userId를 넣어줌
 		return "home";
 	}

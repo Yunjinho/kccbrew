@@ -23,7 +23,7 @@
 	
 	<bean id="configurationEncryptor" class="org.jasypt.encryption.pbe.StandardPBEStringEncryptor">
 		<property name="config" ref="environmentVariablesConfiguration"/>
-		<property name="password" value="wnstjd"/>
+		<property name="password" value="kkccccbbrreeww"/>
 	</bean>
 	
 	<bean id="propertiyConfigurer" class="org.jasypt.spring3.properties.EncryptablePropertyPlaceholderConfigurer">

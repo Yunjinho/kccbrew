@@ -72,12 +72,11 @@
 
 <!-- 사용자 사진 기본 정보 등록 -->
 <insert id="insertFileInfo" parameterType="kr.co.kccbrew.comm.register.model.RegisterVo">
-	INSERT INTO file_info VALUES(file_seq.NEXTVAL,'F',SYSDATE,#{userId},SYSDATE,#{userId})
+	INSERT INTO file_info VALUES(file_seq.NEXTVAL,'01',SYSDATE,#{userId},SYSDATE,#{userId})
 	<selectKey resultType="int" keyProperty="fileSeq" order="AFTER">
 			SELECT NVL(MAX(file_seq), 0) AS "fileSeq" FROM file_info
 	</selectKey>
 </insert>
-
 <!-- 사용자 사진 상세 정보 등록 -->
 <insert id="insertFileDtlInfo" parameterType="kr.co.kccbrew.comm.register.model.RegisterVo">
 <![CDATA[
@@ -143,4 +142,5 @@
 	INSERT INTO store_user_map VALUES(#{storeId},#{userId})
 ]]>
 </insert>
+
 </mapper>
