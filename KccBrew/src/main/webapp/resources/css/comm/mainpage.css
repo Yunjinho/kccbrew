@@ -156,15 +156,22 @@
 		background-color: green;
 	}
 	.toKccBrew {
+		position:relative;
 		height:226px;
 		text-align:center;
 		flex:1;
 		color:navy;
 		background-color: #ffffff;
 	}
+	.toKccBrew .inner-box {
+		position:absolute;
+		transform: translate(-50%, -50%);
+		top:50%;
+		left:50%;
+	}
 	.inner-box img{
-		width:160px;
-		height:160px;
+		width:200px;
+		height:100px;
 	}
 	.kcclink {
 		cursor:pointer;

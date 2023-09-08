@@ -22,7 +22,7 @@
 	</definition>
 	
 	<!-- 회원가입 페이지 -->
- 	<definition name="registerpage" extends="mainLayout">
+ 	<definition name="registerPage" extends="mainLayout">
 		<put-attribute name="title" value="회원가입 페이지" />
 		<put-attribute name="header" value="" /> <!-- 빈 헤더 -->
 		<put-attribute name="contents" value="/WEB-INF/views/comm/register/register.jsp" />
