@@ -1,7 +1,12 @@
 package kr.co.kccbrew.schdlMng.controller;
 
-import java.util.List; 
 
+import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +17,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.common.collect.Lists;
 
@@ -127,24 +133,47 @@ public class schdlMngController {
 	/*관리자 캘린더 조회*/
 	@GetMapping("/calendar")
 	public String getCalendar() {
-		return "schdl/schdlMngclndr";
+		return "schdl/schdlMngClndr";
 	}
 	
 	/*회원 캘린더 조회*/
 	@GetMapping("/calendar/{userId}")
 	public String getUserCalendar(@PathVariable String userId) {
 		System.out.println("userId: " + userId);
-		return "schdl/schdlMngclndr";
+		return "schdl/schdlMngClndr";
 	}
 	
-	/*캘린더 날짜별 조회*/
+	/*회원 캘린더 월별 조회*/
 	@PostMapping("/calendar")
-	public String getUserCalendar(@RequestParam("year") Integer year, @RequestParam("month") Integer month ) {
+	@ResponseBody
+	public List<SchdlMngVo2> getUserCalendar(HttpServletRequest request, 
+			@RequestParam("year") Integer year, @RequestParam("month") Integer month,  
+			Model model) {
 		/*매개변수 확인*/
 		System.out.println("year: " + year);
 		System.out.println("month: " + month);
 		
-		return "schdl/schdlMngclndr";
+		/*세션에서 회원정보 추출해서 dto에 저장*/
+		HttpSession session = request.getSession();
+		SchdlMngVo2 schdlMngVo = new SchdlMngVo2();
+		schdlMngVo.setUserId("bsy01");
+		
+		
+		/*파라미터에서 날짜정보 추출해서 dto에 저장*/
+/*		try {
+		    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+		    java.util.Date jsDate = dateFormat.parse(dateInfo);
+		    Date sqlDate = new Date(jsDate.getTime());
+			schdlMngVo.setScheduleDate(sqlDate);
+
+		} catch (ParseException e) {
+		    e.printStackTrace();
+		}*/
+		
+		List<SchdlMngVo2> schedules = schdlMngService.getCalendarSchedule(schdlMngVo);
+		
+		
+		return schedules;
 	}
 	
 	/*캘린더 테스트*/

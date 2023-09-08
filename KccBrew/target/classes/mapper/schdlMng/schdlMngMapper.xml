@@ -3,116 +3,7 @@
 <mapper
 	namespace="kr.co.kccbrew.schdlMng.dao.ISchdlMngRepository">
 
-
-	<select id="selectMechaSchedules"
-		resultType="kr.co.kccbrew.schdlMng.model.SchdlMngVo"
-		parameterType="java.util.Map">
-		SELECT USER_TYPE AS "userType", USER_ID AS "userId", USER_NM AS
-		"userName", USER_TELNO AS "userPhoneNumber", LOCATION_CD AS
-		"location",
-		<!-- 스케줄 유형: 휴무 / 배정 / 근무 -->
-		CASE
-		WHEN HOLIDAY IS NOT NULL THEN HOLIDAY
-		WHEN VISIT_DTTM IS NOT NULL
-		THEN VISIT_DTTM
-		ELSE result_dttm
-		END AS "scheduleDate", SCHEDULE_TYPE AS
-		"scheduleType"
-
-		<!-- 조인한 테이블 -->
-		FROM(SELECT
-		u.USER_ID,
-		u.USER_NM,
-		u.USER_TELNO,
-		u.LOCATION_CD,
-		g.GRP_CD_DTL_NM AS USER_TYPE,
-		h.HOLIDAY AS holiday,
-		NULL AS VISIT_DTTM,
-		NULL AS result_dttm,
-		'휴무' AS SCHEDULE_TYPE
-		FROM
-		USERS u
-		JOIN
-		GROUP_CODE_DETAIL g ON u.USER_TYPE_CD = g.GRP_CD_DTL_ID
-		LEFT JOIN
-		HOLIDAY h ON u.USER_ID = h.USER_ID
-		WHERE
-		g.GRP_CD_ID = 'U'
-		AND
-		g.GRP_CD_DTL_ID IN ('03')
-
-		UNION
-
-		SELECT
-		u.USER_ID,
-		u.USER_NM,
-		u.USER_TELNO,
-		u.LOCATION_CD,
-		g.GRP_CD_DTL_NM AS USER_TYPE,
-		NULL AS holiday,
-		a.VISIT_DTTM,
-		NULL AS result_dttm,
-		'배정' AS SCHEDULE_TYPE
-		FROM
-		USERS u
-		JOIN
-		GROUP_CODE_DETAIL g ON u.USER_TYPE_CD = g.GRP_CD_DTL_ID
-		JOIN
-		AS_ASSIGN a
-		ON u.USER_ID = a.MECHANIC_ID
-		WHERE
-		g.GRP_CD_ID = 'U'
-		AND g.GRP_CD_DTL_ID
-		IN ('03')
-
-		UNION
-
-		SELECT
-		u.USER_ID,
-		u.USER_NM,
-		u.USER_TELNO,
-		u.LOCATION_CD,
-		g.GRP_CD_DTL_NM AS USER_TYPE,
-		NULL AS holiday,
-		NULL AS VISIT_DTTM,
-		r.result_dttm,
-		'근무' AS SCHEDULE_TYPE
-		FROM
-		USERS u
-		JOIN
-		GROUP_CODE_DETAIL g
-		ON u.USER_TYPE_CD = g.GRP_CD_DTL_ID
-		JOIN
-		AS_ASSIGN a ON u.USER_ID =
-		a.MECHANIC_ID
-		JOIN
-		AS_RESULT r ON a.AS_ASSIGN_SEQ = r.AS_ASSIGN_SEQ
-		WHERE
-		g.GRP_CD_ID = 'U'
-		AND g.GRP_CD_DTL_ID IN ('03'))
-
-		<!-- 검색조건 -->
-		WHERE 1=1
-		<if
-			test="searchContent.userId != null and searchContent.userId != ''">AND USER_ID = #{searchContent.userId}</if>
-		<if
-			test="searchContent.userName != null and searchContent.userName != ''">AND USER_NM = #{searchContent.userName}</if>
-		<if
-			test="searchContent.userPhoneNumber != null and searchContent.userPhoneNumber != ''">AND USER_TELNO = #{searchContent.userPhoneNumber}</if>
-		<if
-			test="searchContent.location != null and searchContent.location != ''">AND LOCATION_CD = #{searchContent.location}</if>
-		<if
-			test="searchContent.subLocation != null and searchContent.subLocation != ''">AND LOCATION_CD = #{searchContent.subLocation}</if>
-		<if
-			test="searchContent.scheduleType != null and searchContent.scheduleType != ''">AND SCHEDULE_TYPE = #{searchContent.scheduleType}</if>
-
-
-	</select>
-
-
-
-
-	<!-- 테스트2 -->
+	<!-- 검색에 따른 스케줄 리스트 반환 -->
 	<select id="selectSchedules2"
 		resultType="kr.co.kccbrew.schdlMng.model.SchdlMngVo2"
 		parameterType="java.util.Map">
@@ -278,19 +169,12 @@
 			AND STORE_NM = #{searchContent.storeName}
 		</if>
 
-<!-- 		<if
-			test="searchContent.storeLocation != null and searchContent.storeLocation != ''">
-			<if
-				test="searchContent.storeSubLocation != null and searchContent.storeSubLocation != ''">
-				storeSubLocation 값이 있으면 해당 값을 사용합니다.
-				AND LOCATION_CD = #{searchContent.storeSubLocation}
-			</if>
-			<if
-				test="searchContent.storeSubLocation == null or searchContent.storeSubLocation == ''">
-				storeSubLocation 값이 없으면 storeLocation 값을 사용합니다.
-				AND LOCATION_CD = #{searchContent.storeLocation}
-			</if>
-		</if> -->
+		<!-- <if test="searchContent.storeLocation != null and searchContent.storeLocation 
+			!= ''"> <if test="searchContent.storeSubLocation != null and searchContent.storeSubLocation 
+			!= ''"> storeSubLocation 값이 있으면 해당 값을 사용합니다. AND LOCATION_CD = #{searchContent.storeSubLocation} 
+			</if> <if test="searchContent.storeSubLocation == null or searchContent.storeSubLocation 
+			== ''"> storeSubLocation 값이 없으면 storeLocation 값을 사용합니다. AND LOCATION_CD = 
+			#{searchContent.storeLocation} </if> </if> -->
 
 
 		<!-- 스케줄 검색 -->
@@ -458,6 +342,94 @@
 			test="searchContent.scheduleType != null and searchContent.scheduleType != ''">
 			AND SCHEDULE_TYPE = #{searchContent.scheduleType}
 		</if>
+
+	</select>
+
+
+
+
+	<!-- 회원 캘린더에 표시할 스케줄 리스트 반환 -->
+	<select id="selectCalendarSchedule"
+		resultType="kr.co.kccbrew.schdlMng.model.SchdlMngVo2"
+		parameterType="kr.co.kccbrew.schdlMng.model.SchdlMngVo2">
+
+		SELECT
+		USER_TYPE AS "userType",
+		USER_ID AS "userId",
+		USER_NM AS "userName", 
+		USER_TELNO AS "userPhoneNumber",
+		STORE_SEQ AS "storeId",
+		STORE_NM AS "storeName",
+		STORE_TELNO AS "storePhoneNumber",
+		LOCATION_CD AS "storeLocation",
+		SCHEDULE_DATE AS "scheduleDate",
+		SCHEDULE_TYPE AS "scheduleType",
+		SCHEDULE_ID AS "scheduleId"
+		FROM
+		(SELECT '기사' AS "USER_TYPE", u."USER_ID", u."USER_NM", u."USER_TELNO",
+		su."STORE_SEQ", s."STORE_NM", s."STORE_TELNO", s."LOCATION_CD",
+		aa."VISIT_DTTM" AS SCHEDULE_DATE, '배정' AS "SCHEDULE_TYPE",
+		aa."AS_ASSIGN_SEQ" AS SCHEDULE_ID
+		FROM AS_ASSIGN aa
+		LEFT OUTER JOIN USERS u ON aa.mechanic_id = u.user_id
+		LEFT OUTER JOIN AS_INFORMATION ai ON aa."AS_INFO_SEQ" = ai."AS_INFO_SEQ"
+		LEFT OUTER JOIN STORE_USER_MAP su ON ai."STORE_MNG_ID" = su."USER_ID"
+		LEFT OUTER JOIN STORE s ON su."STORE_SEQ" = s."STORE_SEQ"
+
+		UNION ALL
+
+		SELECT
+
+		CASE
+		WHEN h."GRP_CD_DTL_ID" = '02' THEN '점주'
+		WHEN h."GRP_CD_DTL_ID" = '03' THEN '기사'
+		ELSE NULL
+		END AS "USER_TYPE",
+		h."USER_ID",
+		u."USER_NM",
+		u."USER_TELNO",
+		s."STORE_SEQ",
+		st."STORE_NM",
+		st."STORE_TELNO",
+		st."LOCATION_CD",
+		h."HOLIDAY" AS SCHEDULE_DATE,
+		'휴무' AS "SCHEDULE_TYPE",
+		h."HOLIDAY_SEQ" AS SCHEDULE_ID
+		FROM "HR"."HOLIDAY" h
+		LEFT JOIN "HR"."STORE_USER_MAP" s ON h."USER_ID" = s."USER_ID"
+		LEFT JOIN "HR"."USERS" u ON h."USER_ID" = u."USER_ID"
+		LEFT JOIN "HR"."STORE" st ON s."STORE_SEQ" = st."STORE_SEQ"
+
+		UNION ALL
+
+		SELECT '기사' AS "USER_TYPE", u."USER_ID", u."USER_NM", u."USER_TELNO",
+		su."STORE_SEQ", s."STORE_NM", s."STORE_TELNO", s."LOCATION_CD",
+		aa."VISIT_DTTM" AS SCHEDULE_DATE, '근무' AS "SCHEDULE_TYPE",
+		ar."AS_RESULT_SEQ" AS SCHEDULE_ID
+		FROM AS_RESULT ar
+		LEFT OUTER JOIN AS_ASSIGN aa ON ar."AS_ASSIGN_SEQ" = aa."AS_ASSIGN_SEQ"
+		LEFT OUTER JOIN USERS u ON aa.mechanic_id = u.user_id
+		LEFT OUTER JOIN AS_INFORMATION ai ON aa."AS_INFO_SEQ" = ai."AS_INFO_SEQ"
+		LEFT OUTER JOIN STORE_USER_MAP su ON ai."STORE_MNG_ID" = su."USER_ID"
+		LEFT OUTER JOIN STORE s ON su."STORE_SEQ" = s."STORE_SEQ" )
+
+		<!-- 검색조건 -->
+		WHERE 1=1
+
+		<!-- 사용자 검색 -->
+		<if test="userId != null and userId != ''">
+			AND USER_ID = #{userId}
+		</if>
+
+		<!-- 날짜 검색 -->
+		<if test="scheduleDate != null and scheduleDate != '' ">
+        <![CDATA[
+        AND 
+EXTRACT(YEAR FROM SCHEDULE_DATE) = 2023 AND EXTRACT(MONTH FROM SCHEDULE_DATE) = 9
+
+        ]]>
+		</if>
+
 
 	</select>
 
