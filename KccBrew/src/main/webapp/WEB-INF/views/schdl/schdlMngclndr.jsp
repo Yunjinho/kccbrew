@@ -12,6 +12,7 @@
 <!-- css -->
 <link rel="stylesheet" href="/resources/css/log/mylogtest.css" />
 <link rel="stylesheet" href="/resources/css/log/content-template.css" />
+<link rel="stylesheet" href="/resources/css/schdl/mycalendar.css" />
 
 <!-- font -->
 <!-- notoSans -->
@@ -26,6 +27,18 @@
 <link
 	href="https://fonts.googleapis.com/css2?family=Noto+Sans&family=Noto+Sans+KR&display=swap"
 	rel="stylesheet">
+
+<!-- 캘린더 -->
+<meta charset='utf-8' />
+<link
+	href='https://cdn.jsdelivr.net/npm/fullcalendar@5.10.0/main.min.css'
+	rel='stylesheet' />
+<script
+	src='https://cdn.jsdelivr.net/npm/fullcalendar@5.10.0/main.min.js'></script>
+
+<!-- jqeury -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 <meta charset="UTF-8">
 <title>Insert title here</title>
 
@@ -251,7 +264,7 @@
 						<!-- ********** 페이지 네비게이션 시작 ********** -->
 						<div class="page-content-navigation">
 							<ol class="breadcrumb">
-								<li class="breadcrumb-home"><a href="">시스템관리</a></li>
+								<li class="breadcrumb-home"><a href="">스케줄관리</a></li>
 								<li>
 									<div class="header-icon-background">
 										<img
@@ -259,7 +272,7 @@
 											alt="Check List" class="header-icon" />
 									</div>
 								</li>
-								<li><a href="<c:url value='/log' />">로그조회</a></li>
+								<li><a href="<c:url value='/calendar' />">나의 캘린더</a></li>
 							</ol>
 						</div>
 						<!-- ********** 페이지 네비게이션 끝 ********** -->
@@ -269,241 +282,105 @@
 								<span id="maincontent"></span>
 								<div class="user-past">
 
-									<!-- ********** 세은 로그 관련 내용 시작 ********** -->
-									<div id="content">
-										<h2 class="heading">스케줄 조회</h2>
-										<!-- 로그 검색 -->
-										<form action="/schedule" method="get">
-											<table id="search-box">
-												<!-- 1행 -->
-												<c:set var="today" value="<%=new java.util.Date()%>" />
-												<fmt:formatDate value="${today}" pattern="yyyy"
-													var="nowYear" />
-												<tr>
-													<th>근무구분</th>
-													<td><select class="tx2" name="scheduleType"
-														onchange="javascript:chg();">
-															<option value="">근무구분</option>
-															<option value="배정"
-																${param.scheduleType == '배정' ? 'selected' : ''}>배정</option>
-															<option value="근무"
-																${param.scheduleType == '근무' ? 'selected' : ''}>근무</option>
-															<option value="휴무"
-																${param.scheduleType == '휴무' ? 'selected' : ''}>휴무</option>
-													</select></td>
-													<th>기간</th>
-													<!-- 시작 연도 선택 필드 -->
-													<td><select class="tx2" name="startYr" id="yr"
-														onchange="javascript:chg();">
-															<option value="">연도</option>
-															<c:forEach var="i" begin="0" end="9">
-																<c:set var="year" value="${nowYear - i}" />
-																<option value="${year}"
-																	${param.startYr == year ? 'selected' : ''}>${year}년</option>
-															</c:forEach>
-													</select></td>
-													<!-- 시작 월 선택 필드 -->
-													<td><select class="tx2" name="startMn" id="mn">
-															<option value="">월</option>
-															<c:forEach var="month" begin="1" end="12">
-																<option value="${month}"
-																	${param.startMn == month ? 'selected' : ''}>${month}월</option>
-															</c:forEach>
-													</select></td>
-													<td>~</td>
-													<!-- 종료 연도 선택 필드 -->
-													<td><select class="tx2" name="endYr" id="yr"
-														onchange="javascript:chg();">
-															<option value="">연도</option>
-															<c:forEach var="i" begin="0" end="9">
-																<c:set var="year" value="${nowYear - i}" />
-																<option value="${year}"
-																	${param.endYr == year ? 'selected' : ''}>${year}년</option>
-															</c:forEach>
-													</select></td>
-													<!-- 종료 월 선택 필드 -->
-													<td><select class="tx2" name="endMn" id="mn">
-															<option value="">월</option>
-															<c:forEach var="month" begin="1" end="12">
-																<option value="${month}"
-																	${param.endMn == month ? 'selected' : ''}>${month}월</option>
-															</c:forEach>
-													</select></td>
-													<td>
-														<button type="submit" onclick="" class="form-btn">이동</button>
-													</td>
-												</tr>
+									<!-- ********** 세은 컨텐츠 ********** -->
+									<div id="calendar"></div>
+									<script
+										src="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.0/main.min.js"></script>
+									<script>
+										document
+												.addEventListener(
+														'DOMContentLoaded',
+														function() {
+															var calendarEl = document
+																	.getElementById('calendar');
 
-												<!-- 2행 -->
-												<tr>
-													<th>ID</th>
-													<td colspan="2"><input type="search" name="userId"
-														placeholder="ID를 입력하세요" value="${param.userId}"></td>
-													<th>이름</th>
-													<td colspan="2"><input type="search" name="userName"
-														placeholder="이름을 입력하세요" value="${param.userName}"></td>
-													<th>연락처</th>
-													<td colspan="2"><input type="search"
-														name="userPhoneNumber" placeholder="연락처를 입력하세요"
-														value="${param.userPhoneNumber}"></td>
-													<th>지역</th>
-													<td><select class="tx2" name="location"
-														onchange="chg()">
-															<option value="">지역 대분류</option>
-															<option value="2"
-																${param.location == '2' ? 'selected' : ''}>서울</option>
-															<option value="31"
-																${param.location == '31' ? 'selected' : ''}>경기도</option>
-															<option value="32"
-																${param.location == '32' ? 'selected' : ''}>인천</option>
-													</select></td>
-													<td><select class="tx2" name="subLocation" disabled>
-															<option value="">지역 소분류</option>
-															<option value="02-200"
-																${param.subLocation == '02-200' ? 'selected' : ''}>양천</option>
-															<option value="02-300"
-																${param.subLocation == '02-300' ? 'selected' : ''}>은평,마포,서대문</option>
-															<option value="02-400"
-																${param.subLocation == '02-400' ? 'selected' : ''}>송파,강동,중량,광진,선동</option>
-															<option value="02-500"
-																${param.subLocation == '02-500' ? 'selected' : ''}>서초,강남,과천시</option>
-															<option value="02-700"
-																${param.subLocation == '02-700' ? 'selected' : ''}>마포,
-																용산, 종로</option>
-															<option value="031-200"
-																${param.subLocation == '031-200' ? 'selected' : ''}>수원시</option>
-													</select></td>
-												</tr>
+															var calendar = new FullCalendar.Calendar(
+																	calendarEl,
+																	{
+																		initialView : 'dayGridMonth',
+																		events : [], // 초기에 빈 events 배열로 시작
 
-												<!-- 4행 -->
-												<tr>
-													<td colspan="10"
-														style="text-align: center; border-bottom: 0px;">
-														<div>
-															<button type="submit" class="form-btn">검색</button>
-														</div>
-													</td>
-												</tr>
-											</table>
-										</form>
+																		headerToolbar : {
+																			left : 'prev,next',
+																			center : 'title',
+																			right : 'today',
+																		},
+																		dateClick : function(
+																				info) {
+																			// 날짜를 클릭하면 datepicker를 열어서 날짜를 선택하게 합니다.
+																			var selectedDate = prompt(
+																					'날짜를 선택하세요 (YYYY-MM-DD)',
+																					info.dateStr);
+
+																			if (selectedDate) {
+																				// 입력받은 날짜 문자열을 Date 객체로 변환합니다.
+																				var dateObj = new Date(
+																						selectedDate);
+
+																				// 연도와 월을 추출합니다.
+																				var year = dateObj
+																						.getFullYear();
+																				var month = dateObj
+																						.getMonth() + 1; // getMonth()는 0부터 시작하므로 1을 더해줍니다.
+
+																				console
+																						.log("selectedYear: "
+																								+ year);
+																				console
+																						.log("selectedMonth: "
+																								+ month);
+
+																				// 서버로 데이터를 보내는 Ajax 요청을 수행합니다.
+																				$.ajax({
+																							url : '/calendar',
+																							method : 'POST',
+																							data : {
+																								"year" : year,
+																								"month" : month
+																							},
+																							success : function(
+																									response) {
+																								// Ajax 요청이 성공했을 때의 처리
+																								console
+																										.log("Ajax 요청 성공!");
+
+																								// 서버에서 받은 일정 데이터를 events 배열에 추가
+																								var schedules = response.schedules; // 서버에서 받은 일정 데이터
+																								schedules
+																										.forEach(function(
+																												schedule) {
+																											calendar
+																													.addEvent({
+																														title : schedule.title,
+																														start : schedule.startDate,
+																													// 필요에 따라 다른 이벤트 속성 추가
+																													});
+																										});
+																							},
+																							error : function(
+																									error) {
+																								// Ajax 요청이 실패했을 때의 처리
+																								console
+																										.error("Ajax 요청 실패: "
+																												+ error);
+																							}
+																						});
+																			}
+																		},
+																	});
+
+															var view = calendar.view;
+															console
+																	.log(
+																			"현재 뷰(View)의 정보:",
+																			view.title);
+
+															calendar.render();
+														});
+									</script>
 
 
-										<!-- 로케이션을 서울로 지정 시, 서브로케이션 활성화 -->
-										<script>
-											function chg() {
-												var locationSelect = document
-														.querySelector("select[name='location']");
-												var subLocationSelect = document
-														.querySelector("select[name='subLocation']");
-
-												if (locationSelect.value === '2') {
-													subLocationSelect.disabled = false; // 서브 로케이션 활성화
-												} else {
-													subLocationSelect.disabled = true; // 서브 로케이션 비활성화
-												}
-											}
-										</script>
-
-
-
-										<!-- 로그 리스트 -->
-										<div id="logTable">
-											<div>
-												<p class="data-info">
-													전체<b><span><c:out value="${totalLog}" /></span></b>건<span
-														id="text-separator"> | </span><b><span><c:out
-																value="${currentPage}" /></span></b>/<b><span><c:out
-																value="${totalPage}" /></span></b>쪽
-												</p>
-											</div>
-											<table>
-												<thead>
-													<tr>
-														<th>순번</th>
-														<th>스케줄구분</th>
-														<th>날짜</th>
-														<th>기사ID</th>
-														<th>기사이름</th>
-														<th>기사연락처</th>
-														<th>지점ID</th>
-														<th>지점명</th>
-														<th>지점연락처</th>
-														<th>지점위치</th>
-													</tr>
-												</thead>
-												<tbody>
-													<c:forEach var="schedule" items="${schedules}"
-														varStatus="loop">
-														<tr>
-															<td><c:out value="${loop.index + 1}" /></td>
-															<td><c:out value="${schedule.userType}" /></td>
-															<td><c:out value="${schedule.userId}" /></td>
-															<td><c:out value="${schedule.userName}" /></td>
-															<td><c:out value="${schedule.userPhoneNumber}" /></td>
-															<td><c:out value="${schedule.location}" /></td>
-															<td><c:out value="${schedule.scheduleDate}" /></td>
-															<td><c:out value="${schedule.scheduleType}" /></td>
-														</tr>
-													</c:forEach>
-											</table>
-										</div>
-
-										<!-- 페이징 -->
-										<div class="paging pagination">
-
-											<!-- 앞으로 가는 버튼 -->
-											<a href="/schedule/1"><img
-												src="/resources/img/log/free-icon-left-chevron-6015759.png"
-												alt=" 처" /></a>
-
-											<c:choose>
-												<c:when test="${currentPage > 1}">
-													<a href="/schedule/1"><img
-														src="/resources/img/log/free-icon-left-arrow-271220.png"
-														alt="이" /></a>
-												</c:when>
-												<c:otherwise>
-													<a href="#" disabled="disabled"><img
-														src="/resources/img/log/free-icon-left-arrow-271220.png"
-														alt="이" /></a>
-												</c:otherwise>
-											</c:choose>
-
-											<!-- 리스트 목록 나열 -->
-											<div id="number-list">
-												<div class="page-btn">
-													<c:forEach var="page" begin="${sharePage * 10 + 1}"
-														end="${(sharePage + 1) * 10}" step="1">
-														<c:if test="${page <= totalPage}">
-															<a href="/schedule/1"
-																class="pagination page-btn ${currentPage == page ? 'selected' : ''}">
-																${page} </a>
-														</c:if>
-													</c:forEach>
-												</div>
-											</div>
-
-											<!-- 뒤로 가는 버튼 -->
-											<c:if test="${currentPage < totalPage}">
-												<a href="/schedule/1"> <img
-													src="/resources/img/log/free-icon-right-arrow-271228.png"
-													alt="다" />
-												</a>
-											</c:if>
-											<c:if test="${currentPage == totalPage}">
-												<a href="" class="disabled-link"> <img
-													src="/resources/img/log/free-icon-right-arrow-271228.png"
-													alt="다" />
-												</a>
-											</c:if>
-
-											<a href="/schedule/1"><img
-												src="/resources/img/log/free-icon-fast-forward-double-right-arrows-symbol-54366.png"
-												alt="마" /></a>
-										</div>
-
-									</div>
-									<!-- ********** 세은 로그 관련 내용 끝 ********** -->
+									<!-- ********** 세은 컨텐츠 끝 ********** -->
 								</div>
 							</div>
 						</div>
@@ -512,7 +389,6 @@
 			</div>
 		</div>
 	</div>
-	<script src="<c:url value='/js/bootstrap.min.js' />"></script>
-	<script src="<c:url value='/js/jquery.min.js' />"></script>
+
 </body>
 </html>
