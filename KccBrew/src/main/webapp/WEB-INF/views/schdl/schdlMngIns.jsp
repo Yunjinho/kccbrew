@@ -12,7 +12,6 @@
 <!-- css -->
 <link rel="stylesheet" href="/resources/css/log/mylogtest.css" />
 <link rel="stylesheet" href="/resources/css/log/content-template.css" />
-<link rel="stylesheet" href="/resources/css/schdl/mycalendar.css" />
 
 <!-- font -->
 <!-- notoSans -->
@@ -27,18 +26,6 @@
 <link
 	href="https://fonts.googleapis.com/css2?family=Noto+Sans&family=Noto+Sans+KR&display=swap"
 	rel="stylesheet">
-
-<!-- 캘린더 -->
-<meta charset='utf-8' />
-<link
-	href='https://cdn.jsdelivr.net/npm/fullcalendar@5.10.0/main.min.css'
-	rel='stylesheet' />
-<script
-	src='https://cdn.jsdelivr.net/npm/fullcalendar@5.10.0/main.min.js'></script>
-
-<!-- jqeury -->
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
 <meta charset="UTF-8">
 <title>Insert title here</title>
 
@@ -272,7 +259,7 @@
 											alt="Check List" class="header-icon" />
 									</div>
 								</li>
-								<li><a href="<c:url value='/calendar' />">캘린더</a></li>
+								<li><a href="<c:url value='/schedule2' />">휴일등록</a></li>
 							</ol>
 						</div>
 						<!-- ********** 페이지 네비게이션 끝 ********** -->
@@ -282,314 +269,248 @@
 								<span id="maincontent"></span>
 								<div class="user-past">
 
-									<!-- ********** 세은 컨텐츠 ********** -->
+									<!-- ********** 세은 로그 관련 내용 시작 ********** -->
 									<div id="content">
-										<h2 class="heading">캘린더</h2>
-										<div id="calendar"></div>
-										<script
-											src="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.0/main.min.js"></script>
+										<h2 class="heading">휴일등록</h2>
+										<!-- 로그 검색 -->
+
+										<div class="subtitle">수리기사</div>
+										<table id="search-box">
+
+											<!-- 1행 -->
+											<tr>
+												<th>유형</th>
+												<td><c:out value="${datatest}" /></td>
+
+												<th>ID</th>
+												<td><c:out value="${datatest}" /></td>
+
+												<th>이름</th>
+												<td><c:out value="${datatest}" /></td>
+												
+												<th>연락처</th>
+												<td><c:out value="${datatest}" /></td>
+
+											</tr>
+
+											<tr>
+												<th>사용장비코드</th>
+												<td><c:out value="${datatest}" /></td>
+												
+												<th>장비명</th>
+												<td><c:out value="${datatest}" /></td>
+
+												<th>지역코드</th>
+												<td><c:out value="${datatest}" /></td>
+												
+												<th>지역명</th>
+												<td><c:out value="${datatest}" /></td>
+												
+											</tr>
+										</table>
+
+
+										<!-- 점포일 경우 -->
+										<div class="subtitle">점포</div>
+										<table id="search-box">
+											<tr>
+												<th>유형</th>
+												<td><c:out value="${datatest}" /></td>
+
+												<th>ID</th>
+												<td><c:out value="${datatest}" /></td>
+
+												<th>이름</th>
+												<td><c:out value="${datatest}" /></td>
+
+												<th>연락처</th>
+												<td><c:out value="${datatest}" /></td>
+
+											</tr>
+
+											<tr>
+												<th>점포명</th>
+												<td><c:out value="${datatest}" /></td>
+
+												<th>주소</th>
+												<td><c:out value="${datatest}" /></td>
+
+												<th>점포연락처</th>
+												<td><c:out value="${datatest}" /></td>
+
+											</tr>
+										</table>
+
+
+
+										<!-- 로케이션을 서울로 지정 시, 서브로케이션 활성화 -->
 										<script>
-											/* 전역변수 */
-											var calendar;
-											var year;
-											var month;
-											var dateInfo;
+											function chg() {
+												var locationSelect = document
+														.querySelector("select[name='storeLocation']");
+												var subLocationSelect = document
+														.querySelector("select[name='storeSubLocation']");
 
-											/* ajax로 날짜 정보 보내는 함수 */
-											function sendAjaxRequest(year,
-													month) {
-												$
-														.ajax({
-															url : '/calendar',
-															method : 'POST',
-															data : {
-																"year" : year,
-																"month" : month,
-																"dateInfo" : dateInfo
-															},
-															success : function(
-																	response) {
-																var schedules = JSON
-																		.stringify(response);
-
-																var events = [];
-
-																for (var i = 0; i < response.length; i++) {
-																	var schedule = response[i];
-																	var scheduleType = schedule.scheduleType;
-																	var scheduleDate = schedule.scheduleDate;
-
-																	events
-																			.push({
-																				title : scheduleType,
-																				date : scheduleDate
-																			});
-																}
-
-																calendar
-																		.setOption(
-																				'events',
-																				events);
-
-															},
-
-															error : function(
-																	error) {
-																console
-																		.error("Ajax 요청 실패: "
-																				+ error);
-															}
-														});
+												if (locationSelect.value === '2') {
+													subLocationSelect.disabled = false; // 서브 로케이션 활성화
+												} else {
+													subLocationSelect.disabled = true; // 서브 로케이션 비활성화
+												}
 											}
-
-											$(document)
-													.ready(
-															function() {
-																var calendarEl = document
-																		.getElementById('calendar');
-
-																calendar = new FullCalendar.Calendar(
-																		calendarEl,
-
-																		{
-																			initialView : 'dayGridMonth',
-																			/* events : [
-																					{
-																						title : '예제 이벤트',
-																						date : '2023-09-07'
-																					}, ], */
-
-																			headerToolbar : {
-																				left : 'prev,next',
-																				center : 'title',
-																				right : 'today',
-																			},
-
-																			dateClick : function(
-																					info) {
-																				var selectedDate = prompt(
-																						'날짜를 선택하세요 (YYYY-MM-DD)',
-																						info.dateStr);
-
-																				if (selectedDate) {
-																					var dateObj = new Date(
-																							selectedDate);
-																					calendar
-																							.gotoDate(selectedDate);
-
-																					/* 이벤트 확인 */
-																					console
-																							.log("datepicker 날짜 선택")
-
-																					/* 날짜 정보 추출 */
-																					dateInfo = new Date(
-																							calendar.view.title);
-																					year = dateInfo
-																							.getFullYear();
-																					month = dateInfo
-																							.getMonth() + 1;
-
-																					console
-																							.log("year: "
-																									+ year);
-																					console
-																							.log("month: "
-																									+ month);
-
-																					/* ajax함수로 데이터 서버로 전송 */
-																					sendAjaxRequest(
-																							year,
-																							month,
-																							dateInfo);
-																				}
-																			},
-
-																		});
-
-																var view = calendar.view;
-																console
-																		.log(
-																				"현재 뷰(View)의 정보:",
-																				view);
-
-																calendar
-																		.render();
-															});
-
-											$(document)
-													.ready(
-															function() {
-
-																$(
-																		"button[title='Previous month']")
-																		.attr(
-																				'id',
-																				'prevButton');
-																$(
-																		"button[title='Next month']")
-																		.attr(
-																				'id',
-																				'nextButton');
-																$(
-																		"button[title='This month']")
-																		.attr(
-																				'id',
-																				'thisButton');
-
-																// 이전 달 버튼 클릭 이벤트 핸들러
-																$('#prevButton')
-																		.click(
-																				function() {
-																					/* 로그 확인 */
-																					console
-																							.log("prevButton 버튼 클릭")
-
-																					/* 날짜 정보 추출 */
-																					dateInfo = new Date(
-																							calendar.view.title);
-																					year = dateInfo
-																							.getFullYear();
-																					month = dateInfo
-																							.getMonth() + 1;
-
-																					console
-																							.log("year: "
-																									+ year);
-																					console
-																							.log("month: "
-																									+ month);
-
-																					/* ajax함수로 데이터 서버로 전송 */
-																					sendAjaxRequest(
-																							year,
-																							month,
-																							dateInfo);
-
-																				});
-
-																// 다음 달 버튼 클릭 이벤트 핸들러
-																$('#nextButton')
-																		.click(
-																				function() {
-																					/* 로그 확인 */
-																					console
-																							.log("nextButton 버튼 클릭")
-
-																					/* 날짜 정보 추출 */
-																					dateInfo = new Date(
-																							calendar.view.title);
-																					year = dateInfo
-																							.getFullYear();
-																					month = dateInfo
-																							.getMonth() + 1;
-
-																					console
-																							.log("year: "
-																									+ year);
-																					console
-																							.log("month: "
-																									+ month);
-
-																					/* ajax함수로 데이터 서버로 전송 */
-																					sendAjaxRequest(
-																							year,
-																							month,
-																							dateInfo);
-
-																				});
-
-																// 이번 달 버튼 클릭 이벤트 핸들러
-																$('#thisButton')
-																		.click(
-																				function() {
-																					/* 로그 확인 */
-																					console
-																							.log("thisButton 버튼 클릭")
-
-																					/* 날짜 정보 추출 */
-																					dateInfo = new Date(
-																							calendar.view.title);
-																					year = dateInfo
-																							.getFullYear();
-																					month = dateInfo
-																							.getMonth() + 1;
-
-																					console
-																							.log("year: "
-																									+ year);
-																					console
-																							.log("month: "
-																									+ month);
-
-																					/* ajax함수로 데이터 서버로 전송 */
-																					sendAjaxRequest(
-																							year,
-																							month,
-																							dateInfo);
-
-																				});
-															});
 										</script>
 
 
 
-										<!-- 이전, 다음 버튼 클릭 시 날짜 정보 받아오기 -->
-										<!-- 		<script>
-										$(document)
-												.ready(
-														function() {
-															var calendarEl = document
-																	.getElementById('calendar');
-															var calendar = new FullCalendar.Calendar(
-																	calendarEl,
-																	{
-																	// 캘린더 설정 옵션들
-																	});
+										<!-- 로그 리스트 -->
+										<div id="logTable">
+										<div class="subtitle">휴가신청내역</div>
+											<div>
+												<p class="data-info">
+													전체<b><span><c:out value="${totalDataNumber}" /></span></b>건<span
+														id="text-separator"> | </span><b><span><c:out
+																value="${currentPage}" /></span></b>/<b><span><c:out
+																value="${totalPage}" /></span></b>쪽
+												</p>
+											</div>
+											<table>
+												<thead>
+													<tr>
+														<th>순번</th>
+														<th>사용자구분</th>
+														<th>사용자ID</th>
+														<th>사용자명</th>
+														<th>사용자연락처</th>
+														<th>지점ID</th>
+														<th>지점명</th>
+														<th>지점연락처</th>
+														<th>지점위치코드</th>
+														<th>날짜</th>
+														<th>스케줄구분</th>
+													</tr>
+												</thead>
+												<tbody>
+													<c:forEach var="schedule2" items="${schedules}">
+														<tr>
+															<td><c:out value="${schedule2.rowNum}" /></td>
+															<td><c:out value="${schedule2.userType}" /></td>
+															<td><c:out value="${schedule2.userId}" /></td>
+															<td><c:out value="${schedule2.userName}" /></td>
+															<td><c:out value="${schedule2.userPhoneNumber}" /></td>
+															<td><c:choose>
+																	<c:when test="${schedule2.storeId != 0}">
+																		<c:out value="${schedule2.storeId}" />
+																	</c:when>
+																	<c:otherwise>
+																		<!-- 0인 경우 아무것도 표시하지 않음 -->
+																	</c:otherwise>
+																</c:choose></td>
+															<td><c:out value="${schedule2.storeName}" /></td>
+															<td><c:out value="${schedule2.storePhoneNumber}" /></td>
+															<td><c:out value="${schedule2.storeLocation}" /></td>
+															<td><c:out value="${schedule2.scheduleDate}" /></td>
+															<td><c:out value="${schedule2.scheduleType}" /></td>
+														</tr>
+													</c:forEach>
+											</table>
+										</div>
 
-															// 이전 달 버튼 찾아 id 속성 추가
-															$(
-																	"button[title='Previous month']")
-																	.attr('id',
-																			'prevButton');
-															// 다음 달 버튼 찾아 id 속성 추가
-															$(
-																	"button[title='Next month']")
-																	.attr('id',
-																			'nextButton');
+										<!-- 페이징 -->
+										<div class="paging pagination">
 
-															// 이전 달 버튼 클릭 이벤트 핸들러
-															$('#prevButton')
-																	.click(
-																			function() {
-																				calendar
-																						.prev(); // 이전 달로 이동
-																				var info = calendar
-																						.getCalendar()
-																						.getView(); // 현재 보이는 뷰 정보 가져오기
-																				console
-																						.log(info);
-																			});
+											<!-- 맨 앞으로 가는 버튼 -->
+											<a
+												href="/schedule2?currentPage=1
+&startYr=${searchContent.startYr}&startMn=${searchContent.startMn}&endYr=${searchContent.endYr}&endMn=${searchContent.endMn}
+&userType=${searchContent.userType}
+&userId=${searchContent.userId}
+&userName=${searchContent.userName}
+&storeId=${searchContent.storeId}
+&storeName=${searchContent.storeName}
+&storeLocation=${searchContent.storeLocation}
+&scheduleType=${searchContent.scheduleType}"><img
+												src="/resources/img/log/free-icon-left-chevron-6015759.png"
+												alt=" 처음" /></a>
 
-															// 다음 달 버튼 클릭 이벤트 핸들러
-															$('#nextButton')
-																	.click(
-																			function() {
-																				calendar
-																						.next(); // 다음 달로 이동
-																				var info = calendar
-																						.getCalendar()
-																						.getView(); // 현재 보이는 뷰 정보 가져오기
-																				console
-																						.log(info);
-																			});
+											<c:choose>
+												<c:when test="${currentPage > 1}">
+													<a
+														href="/schedule2?currentPage=${currentPage - 1}&startYr=${searchContent.startYr}&startMn=${searchContent.startMn}&endYr=${searchContent.endYr}&endMn=${searchContent.endMn}&userType=${searchContent.userType}&userId=${searchContent.userId}&userName=${searchContent.userName}&storeId=${searchContent.storeId}&storeName=${searchContent.storeName}&storeLocation=${searchContent.storeLocation}&scheduleType=${searchContent.scheduleType}">
+														<img
+														src="/resources/img/log/free-icon-left-arrow-271220.png"
+														alt="이전" />
+													</a>
+												</c:when>
+												<c:otherwise>
+													<a href="#" class="disabled-link"> <img
+														src="/resources/img/log/free-icon-left-arrow-271220.png"
+														alt="이전" />
+													</a>
+												</c:otherwise>
+											</c:choose>
 
-															calendar.render();
-														});
-									</script> -->
+											<!-- 리스트 목록 나열 -->
+											<div id="number-list">
+												<div class="page-btn">
+													<c:forEach var="page" begin="${sharePage * 10 + 1}"
+														end="${(sharePage + 1) * 10}" step="1">
+														<c:if test="${page <= totalPage}">
+															<a
+																href="/schedule2?currentPage=${page}
+&startYr=${searchContent.startYr}&startMn=${searchContent.startMn}&endYr=${searchContent.endYr}&endMn=${searchContent.endMn}
+&userType=${searchContent.userType}
+&userId=${searchContent.userId}
+&userName=${searchContent.userName}
+&storeId=${searchContent.storeId}
+&storeName=${searchContent.storeName}
+&storeLocation=${searchContent.storeLocation}
+&scheduleType=${searchContent.scheduleType}"
+																class="pagination page-btn ${currentPage == page ? 'selected' : ''}">
+																${page} </a>
+														</c:if>
+													</c:forEach>
+												</div>
+											</div>
+
+											<!-- 뒤로 가는 버튼 -->
+											<c:if test="${currentPage < totalPage}">
+												<a
+													href="/schedule2?currentPage=${currentPage + 1}
+&startYr=${searchContent.startYr}&startMn=${searchContent.startMn}&endYr=${searchContent.endYr}&endMn=${searchContent.endMn}
+&userType=${searchContent.userType}
+&userId=${searchContent.userId}
+&userName=${searchContent.userName}
+&storeId=${searchContent.storeId}
+&storeName=${searchContent.storeName}
+&storeLocation=${searchContent.storeLocation}
+&scheduleType=${searchContent.scheduleType}">
+													<img
+													src="/resources/img/log/free-icon-right-arrow-271228.png"
+													alt="다음" />
+												</a>
+											</c:if>
+											<c:if test="${currentPage == totalPage}">
+												<a href="" class="disabled-link"> <img
+													src="/resources/img/log/free-icon-right-arrow-271228.png"
+													alt="다음" />
+												</a>
+											</c:if>
+
+											<a
+												href="/schedule2?currentPage=${totalPage}
+&startYr=${searchContent.startYr}&startMn=${searchContent.startMn}&endYr=${searchContent.endYr}&endMn=${searchContent.endMn}
+&userType=${searchContent.userType}
+&userId=${searchContent.userId}
+&userName=${searchContent.userName}
+&storeId=${searchContent.storeId}
+&storeName=${searchContent.storeName}
+&storeLocation=${searchContent.storeLocation}
+&scheduleType=${searchContent.scheduleType}"><img
+												src="/resources/img/log/free-icon-fast-forward-double-right-arrows-symbol-54366.png"
+												alt="마지막" /></a>
+										</div>
+
 									</div>
-
-
-									<!-- ********** 세은 컨텐츠 끝 ********** -->
+									<!-- ********** 세은 로그 관련 내용 끝 ********** -->
 								</div>
 							</div>
 						</div>
@@ -598,6 +519,7 @@
 			</div>
 		</div>
 	</div>
-
+	<script src="<c:url value='/js/bootstrap.min.js' />"></script>
+	<script src="<c:url value='/js/jquery.min.js' />"></script>
 </body>
 </html>

@@ -27,6 +27,17 @@ import kr.co.kccbrew.schdlMng.service.SchdlMngService;
 import kr.co.kccbrew.sysMng.logMng.model.LogMngVo;
 import lombok.extern.slf4j.Slf4j;
 
+/**
+ * @ClassNmae : schdlMngController
+ * @Decription : 스케줄 관리를 위한 controller
+ * 
+ * @   수정일                    수정자                        수정내용
+ * ============      ==============     ==============
+ * 2023-09-01			           이세은			             최초생성
+ * @author YUNJINHO
+ * @version 1.0
+ */
+
 @Controller
 @Slf4j
 public class schdlMngController {
@@ -154,8 +165,9 @@ public class schdlMngController {
 		System.out.println("month: " + month);
 		/*System.out.println("dateInfo: " + dateInfo);*/
 		
-		/*세션에서 회원정보 추출해서 dto에 저장*/
+		/*세션에서 회원정보 추출해서 vo에 저장*/
 		HttpSession session = request.getSession();
+		/*SchdlMngVo2 schdlMngVo = (SchdlMngVo2) session.getAttribute("userVo");*/
 		SchdlMngVo2 schdlMngVo = new SchdlMngVo2();
 		schdlMngVo.setUserId("bsy01");
 		
@@ -182,6 +194,18 @@ public class schdlMngController {
 	@GetMapping("/cal-test")
 	public String calendarTest() {
 		return "schdl/calendartest";
+	}
+	
+	/*회원 휴일 등록 페이지*/
+	@GetMapping("/holiday")
+	public String holidayPage(Model model) {
+		
+		model.addAttribute("datatest", "테스트");
+		model.addAttribute("userVo", "테스트");
+		model.addAttribute("storeListVo", "테스트");
+		model.addAttribute("storeListVo", "테스트");
+		
+		return "schdl/schdlMngIns";
 	}
 	
 	
