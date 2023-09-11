@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.kccbrew.sysMng.fileMng.dao.IFileMngRepository">
+
+	<select id="fileList" parameterType="java.util.Map"
+	resultType="kr.co.kccbrew.sysMng.fileMng.model.FileMngVo">
+	SELECT 
+		a.file_seq 			AS	"fileSeq",
+		a.file_dtl_seq		AS 	"fileDtlSeq",
+		a.file_original_nm	AS	"fileOriginNm",
+		a.file_reg_dttm		AS	"fileRegDttm",
+		a.file_server_nm	AS 	"fileServerNm",
+		a.file_fmt			AS 	"fileFmt",
+		a.grp_cd_dtl_nm		AS	"grpCdDtlNm"
+	FROM (
+		SELECT
+		ROW_NUMBER() OVER(ORDER BY a.file_seq) AS ROW_NUM,
+		a.file_seq ,
+		b.file_dtl_seq,
+		b.file_original_nm,
+		a.file_reg_dttm,
+		b.file_server_nm,
+		b.file_fmt,
+		c.grp_cd_dtl_nm
+	FROM file_info a, file_detail_info b, group_code_detail c
+	<![CDATA[
+	WHERE 
+		c.grp_cd_id='F'
+	AND
+
+		a.file_seq(+) = b.file_seq 
+		]]>
+	AND	
+		a.grp_cd_dtl_id = c.grp_cd_dtl_id
+		<if test="FileMngVo.startYr != null and FileMngVo.startYr != '' and FileMngVo.startMn != null and FileMngVo.startMn != ''">
+                 <![CDATA[
+                  AND (
+                    EXTRACT(YEAR FROM a.FILE_REG_DTTM) > #{FileMngVo.startYr}
+                    OR (EXTRACT(YEAR FROM a.FILE_REG_DTTM) = #{FileMngVo.startYr} AND EXTRACT(MONTH FROM a.FILE_REG_DTTM) >= #{FileMngVo.startMn})
+                )
+                  ]]>
+            </if>
+            <if test="FileMngVo.endYr != null and FileMngVo.endYr != '' and FileMngVo.endMn != null and FileMngVo.endMn != ''">
+                  <![CDATA[
+                AND (
+                    EXTRACT(YEAR FROM a.FILE_REG_DTTM) < #{FileMngVo.endYr}
+                    OR (EXTRACT(YEAR FROM a.FILE_REG_DTTM) = #{FileMngVo.endYr} AND EXTRACT(MONTH FROM a.FILE_REG_DTTM) <= #{FileMngVo.endMn})
+                )
+                  ]]>
+            </if>
+             <if test="FileMngVo.grpCdDtlId != null and FileMngVo.grpCdDtlId != ''">
+            AND
+            	a.grp_cd_dtl_id = #{FileMngVo.grpCdDtlId}
+            
+            </if>
+            <if test="FileMngVo.fileRegUser != null and FileMngVo.fileRegUser != ''">
+               AND
+			a.file_reg_user LIKE '%'||#{FileMngVo.fileRegUser}||'%'
+            </if>
+            <if test="FileMngVo.fileOriginNm != null and FileMngVo.fileOriginNm != ''">
+               AND
+			b.file_original_nm LIKE '%'||#{FileMngVo.fileOriginNm}||'%'
+            </if>
+            <if test="FileMngVo.fileServerNm != null and FileMngVo.fileServerNm != ''">
+               AND
+			b.file_server_nm LIKE '%'||#{FileMngVo.fileServerNm}||'%'
+            </if>
+		) a
+		
+		WHERE ROW_NUM BETWEEN #{firstRowNum} AND #{lastRowNum}
+	
+	</select>
+	
+	<select id="getFileCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+	select COUNT(*) FROM(
+	SELECT
+		ROW_NUMBER() OVER(ORDER BY a.file_seq) AS ROW_NUM,
+		a.file_seq 			AS	"fileSeq",
+		b.file_dtl_seq		AS 	"fileDtlSeq",
+		b.file_original_nm	AS	"fileOriginNm",
+		a.file_reg_dttm		AS	"fileRegDttm",
+		b.file_server_nm	AS 	"fileServerNm",
+		b.file_fmt			AS 	"fileFmt",
+		c.grp_cd_dtl_nm		AS	"grpCdDtlNm"
+		FROM file_info a, file_detail_info b, group_code_detail c
+	WHERE 
+	<![CDATA[
+		c.grp_cd_id='F'
+	
+	AND
+		a.file_seq(+) = b.file_seq ]]>
+	AND	
+		a.grp_cd_dtl_id = c.grp_cd_dtl_id
+		<if test="FileMngVo.startYr != null and FileMngVo.startYr != '' and FileMngVo.startMn != null and FileMngVo.startMn != ''">
+                 <![CDATA[
+                  AND (
+                    EXTRACT(YEAR FROM a.FILE_REG_DTTM) > #{FileMngVo.startYr}
+                    OR (EXTRACT(YEAR FROM a.FILE_REG_DTTM) = #{FileMngVo.startYr} AND EXTRACT(MONTH FROM a.FILE_REG_DTTM) >= #{FileMngVo.startMn})
+                )
+                  ]]>
+            </if>
+            <if test="FileMngVo.endYr != null and FileMngVo.endYr != '' and FileMngVo.endMn != null and FileMngVo.endMn != ''">
+                  <![CDATA[
+                AND (
+                    EXTRACT(YEAR FROM a.FILE_REG_DTTM) < #{FileMngVo.endYr}
+                    OR (EXTRACT(YEAR FROM a.FILE_REG_DTTM) = #{FileMngVo.endYr} AND EXTRACT(MONTH FROM a.FILE_REG_DTTM) <= #{FileMngVo.endMn})
+                )
+                  ]]>
+            </if>
+             <if test="FileMngVo.grpCdDtlId != null and FileMngVo.grpCdDtlId != ''">
+            AND
+            	a.grp_cd_dtl_id = #{FileMngVo.grpCdDtlId}
+            
+            </if>
+            <if test="FileMngVo.fileRegUser != null and FileMngVo.fileRegUser != ''">
+               AND
+			a.file_reg_user LIKE '%'||#{FileMngVo.fileRegUser}||'%'
+            </if>
+            <if test="FileMngVo.fileOriginNm != null and FileMngVo.fileOriginNm != ''">
+               AND
+			b.file_original_nm LIKE '%'||#{FileMngVo.fileOriginNm}||'%'
+            </if>
+            <if test="FileMngVo.fileServerNm != null and FileMngVo.fileServerNm != ''">
+               AND
+			b.file_server_nm LIKE '%'||#{FileMngVo.fileServerNm}||'%'
+            </if>
+	)
+	
+	</select>
+	
+	<select id="fileTypeList" resultType="kr.co.kccbrew.sysMng.fileMng.model.FileMngVo">
+	<![CDATA[
+	select distinct 
+	grp_cd_dtl_nm		AS "grpCdDtlNm",
+	grp_cd_dtl_id		AS "grpCdDtlId"
+	from group_code_detail
+	where	grp_cd_id ='F'
+	]]>
+	</select>
+
+</mapper>
