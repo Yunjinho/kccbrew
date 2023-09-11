@@ -110,8 +110,10 @@ public class AsMngService implements IAsMngService{
 				vo.setFileServerNm(asMngVo.getUserId()+"_"+new Date(System.currentTimeMillis())+"_"+imgFile.getOriginalFilename());
 				vo.setFileFmt(imgFile.getContentType());
 				vo.setStorageLocation(asMngVo.getStorageLocation());
+				
 				Path path = Paths.get(vo.getStorageLocation()).toAbsolutePath().normalize();
 		        Path targetPath = path.resolve(vo.getFileServerNm()).normalize();
+		        
 				try {
 					//imgFile.transferTo(targetPath);
 					FileCopyUtils.copy(imgFile.getInputStream(), new FileOutputStream(targetPath.toFile()));

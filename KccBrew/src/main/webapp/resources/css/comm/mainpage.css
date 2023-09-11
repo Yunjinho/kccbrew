@@ -48,8 +48,8 @@
 		padding:10px;
 		margin: 0 3px;
 		background-color: #ffffff;
-		border-top: 1.5px solid #4336da;
-		border-bottom: 1.5px solid #4336da;
+		border-top: 1.5px solid #0D406E;
+		border-bottom: 1.5px solid #0D406E;
 	}
 	.new-receipt {
 		height:217px;
@@ -124,7 +124,7 @@
 		display:flex;
 		flex-direction:column;
 		justify-content:space-between;
-		background-color: #4336da;
+		background-color: #0D406E;
 	}
 	.inner-box {
 		padding:30px 20px;
@@ -175,7 +175,7 @@
 	}
 	.kcclink {
 		cursor:pointer;
-		border:3px solid #4336da;
+		border:3px solid #0D406E;
 		color:#111111;
 		border-radius: 10px;
 	}
@@ -207,7 +207,7 @@
 	
 	.tabnav {
 		font-size:0; 
-		border:1px solid #ddd;
+		border:1px solid #c0c0c0;
 		border-right:none;
 		border-top:none;
 		padding:0;
@@ -217,8 +217,8 @@
 		display: inline-block;  
 		height:46px; 
 		text-align:center; 
-		border-top:1px solid #ddd;
-		border-right:1px solid #ddd;
+		border-top:1px solid #c0c0c0;
+		border-right:1px solid #c0c0c0;
 	}
 	.tabnav li a:before{
 		content:""; 
@@ -229,7 +229,7 @@
 		height:3px; 
 	}
 	.tabnav li a.active:before{
-		background:#001EC9;
+		background:#0D406E;
 	}
 	.tabnav li a.active{
 		border-bottom:1px solid #fff;
@@ -251,7 +251,7 @@
 	.tabcontent{
 		background-color:#ffffff;
 		height:270px; 
-		border:1px solid #ddd; 
+		border:1px solid #c0c0c0; 
 		border-top:none;
 		font-size:1.5em;
 		overflow: auto;

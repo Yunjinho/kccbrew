@@ -14,6 +14,8 @@ public interface IMainService {
 	List<MainPageVo> showAsAssiginListbyId(String userId);
 	List<MainPageVo> showAsInfoListbyId(String userId);
 	List<MainPageVo> showAsResultListbyId(String userId);
+	List<MainPageVo> showAsAssignListbyMechaId(String userId);
+	List<MainPageVo> showAsResultListbyMechaId(String userId);
 	List<MainPageVo> getDataInRange(LocalDate startOfWeek, LocalDate endOfWeek);    //이번 주 범위 구하기
 	String getUserName(String userId);
 }

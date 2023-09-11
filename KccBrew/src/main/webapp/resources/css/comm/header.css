@@ -9,7 +9,7 @@
 	font-family: 'notosans';
 	z-index:999;
 	font-size:1.2em;
-	height:90px;
+	height:100px;
 	line-height: 100px;
 	z-index:99999;
 	position: relative;
@@ -25,14 +25,14 @@
 	height: 30px;
 	line-height: 30px;
 	text-align: right;
-	background-color: #4336da;
+	background-color: #0D406E;
 }
 /****** 로그아웃 버튼 *******/
 .logout-btn {
 	margin-left:10px;
 	padding: 5px 15px;
-	border: 1px solid #0000a0;
-	background-color: #0000a0;
+	border: 1px solid #00006f;
+	background-color: #00006f;
 	color:#ffffff;
 	cursor: pointer;
 }
@@ -109,7 +109,7 @@
     margin:3px auto;
     width: 0;
     height: 4px; 
-    background-color: #4336da; 
+    background-color: #0D406E; 
     opacity: 0; 
     transition: opacity 0.5s ease, width 0.5s ease; 
 }
@@ -132,7 +132,7 @@
 	z-index:99999;
 	display: none;
 	min-height: 200px;
-	border-bottom: 2px solid #4336da;
+	border-bottom: 2px solid #0D406E;
 	background-color: #ffffff;
 }
 

@@ -50,6 +50,7 @@ public class LogInController {
 		vo.setUserId(id);
 		vo.setUserPwd(pwd);
 		LogInVo user=loginService.logIn(vo);
+		System.out.println(user.getUserNm());
 		if(user.getUserId()!=null) {
 			if(user.getApproveYn().equals("Y")) {
 				// 세션을 생성하기 전에 기존의 세션 파기
@@ -92,7 +93,8 @@ public class LogInController {
 	@RequestMapping(value="getUserName", method = RequestMethod.GET)
 	public String getName(HttpServletRequest httpServletRequest) {
 		HttpSession session = httpServletRequest.getSession(false);
-		String userName = (String)session.getAttribute("userName");
+		Object getName = session.getAttribute("userName");
+		String userName = (String)getName;
 		return userName;
 	}
 	

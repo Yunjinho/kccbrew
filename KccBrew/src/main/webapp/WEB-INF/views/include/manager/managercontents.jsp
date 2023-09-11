@@ -10,21 +10,8 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link rel="stylesheet" href="${path}/resources/css/comm/reset.css" >
-<link rel="stylesheet" href="${path}/resources/css/comm/header.css" >
-<link rel="stylesheet" href="${path}/resources/css/comm/mainpage.css"/>
-<link rel="stylesheet" href="${path}/resources/css/comm/footer.css"/>
-<link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/fullcalendar@5.8.0/main.min.css'/>
-<script src="http://code.jquery.com/jquery-latest.js"></script> 
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.min.js" integrity="sha384-Rx+T1VzGupg4BHQYs2gCW9It+akI2MM/mndMCy36UVfodzcJcF0GGLxZIzObiEfa" crossorigin="anonymous"></script>
-<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
-<script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.8.0/main.min.js'></script>
-<script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.8.0/locales-all.min.js'></script>
-<script src="${path}/resources/js/comm/calendar.js"></script>
-<script src="${path}/resources/js/comm/comm.js"></script>
-<script src="${path}/resources/js/comm/header.js"></script>
-<script src="${path}/resources/js/comm/main.js"></script>
+<script>
+</script>
 </head>
 <body>
 	<div class="body-wrapper">
@@ -39,13 +26,12 @@
 							<th>접수번호</th>
 							<th>접수 상태</th>
 							<th>접수 장비</th>
-							<th>점주 이름</th>
+							<th>점주</th>
 						</tr>
 					</thead>
 					<tbody>
 						<c:forEach var="main" items="${asListById}">
                             <c:if test="${main.asStatus == '01'}">
-                            <!-- 사용자 ID 조건도 추가 && main.userId == userId -->
                                 <tr>
                                     <td><c:out value="${main.asInfoNum}" /></td>
                                     <td>
@@ -82,7 +68,7 @@
 							<th>방문 예정일</th>
 							<th>접수 장비</th>
 							<th>지점</th>
-							<th>수리 기사 이름</th>
+							<th>수리 기사</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -161,7 +147,7 @@
 			<div class="profileAndguide">
 				<div class="user-profile">
 					<div class="inner-box">
-						<span class="name">###</span>님 <br><br>
+						<span class="name">${sessionScope.userName}</span>님 <br><br>
 						<span class="job">점주</span> <br><br><br><br><br><br>
 					</div>
 					<div class="buttons">
@@ -210,7 +196,7 @@
 										<th>방문 예정일</th>
 										<th>접수 장비</th>
 										<th>지점</th>
-										<th>수리 기사 이름</th>
+										<th>수리 기사</th>
 									</tr>
 								</thead>
 								 <tbody>
@@ -242,7 +228,7 @@
 			                            <th>방문 예정일</th>
 			                            <th>접수 장비</th>
 			                            <th>지점</th>
-			                            <th>수리 기사 이름</th>
+			                            <th>수리 기사</th>
 			                        </tr>
 			                    </thead>
 			                    <tbody>
@@ -274,7 +260,7 @@
 			                            <th>방문 예정일</th>
 			                            <th>접수 장비</th>
 			                            <th>지점</th>
-			                            <th>수리 기사 이름</th>
+			                            <th>수리 기사</th>
 			                        </tr>
 			                    </thead>
 			                    <tbody>

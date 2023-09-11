@@ -76,4 +76,16 @@ public class MainService implements IMainService{
 		return asResultListById;
 	}
 
+	@Override
+	public List<MainPageVo> showAsAssignListbyMechaId(String userId) {
+		List<MainPageVo> asAssignListbyMechaId = mainRepository.showAsAssignListbyMechaId(userId);
+		return asAssignListbyMechaId;
+	}
+
+	@Override
+	public List<MainPageVo> showAsResultListbyMechaId(String userId) {
+		List<MainPageVo> asResultListbyMechaId = mainRepository.showAsResultListbyMechaId(userId);
+		return asResultListbyMechaId;
+	}
+
 }

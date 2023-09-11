@@ -2,6 +2,7 @@ package kr.co.kccbrew.asMng.contorller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -136,7 +137,8 @@ public class AsMngController {
 	}
 
 	@RequestMapping(value="/receipt",method=RequestMethod.POST)
-	public String asReceipt(@Value("#{serverImgPath['asReceiptPath']}")String path,AsMngVo asMngVo,HttpSession session) {
+	public String asReceipt(@Value("#{serverImgPath['asReceiptPath']}")String path,AsMngVo asMngVo,HttpSession session, HttpServletRequest request) {
+		String realPath = request.getServletContext().getRealPath("/");
 		asMngVo.setUserId((String)session.getAttribute("userId"));
 		asMngVo.setStorageLocation(path);
 		asMngService.insertAs(asMngVo);

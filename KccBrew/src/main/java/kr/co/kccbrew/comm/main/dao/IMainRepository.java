@@ -20,6 +20,8 @@ public interface IMainRepository {
 	List<MainPageVo> showAsAssiginListbyId(String userId);
 	List<MainPageVo> showAsInfoListbyId(String userId);
 	List<MainPageVo> showAsResultListbyId(String userId);
+	List<MainPageVo> showAsAssignListbyMechaId(String userId);
+	List<MainPageVo> showAsResultListbyMechaId(String userId);
 	List<MainPageVo> getDataInRange(@Param("startOfWeek") LocalDate startOfWeek, @Param("endOfWeek") LocalDate endOfWeek);
     String getUserName(String userId);
 }

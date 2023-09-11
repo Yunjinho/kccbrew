@@ -25,7 +25,6 @@
 <link
 	href="https://fonts.googleapis.com/css2?family=Noto+Sans&family=Noto+Sans+KR&display=swap"
 	rel="stylesheet">
-<link rel="stylesheet" href="/resources/css/store/store.css" />
 <meta charset="UTF-8">
 
 <title>점포리스트</title>

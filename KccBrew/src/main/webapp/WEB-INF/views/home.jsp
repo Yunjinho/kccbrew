@@ -4,6 +4,9 @@
 <html>
 <head>
 	<title>Home</title>
+<script type="text/javascript">
+	location.href="/loginpage";
+</script>
 </head>
 <body>
 <h1>

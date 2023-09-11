@@ -47,36 +47,66 @@
 		<put-attribute name="contents" value="/WEB-INF/views/include/manager/managercontents.jsp" />
 	</definition>
 		
+
 	
-	<!-- 관리자 페이지 추가 확장, 타이틀과 헤더 유지, contents만 변경 -->
-	<definition name="adminPageT1" extends="adminPage">
-		<put-attribute name="contents" value="/WEB-INF/views/include/admin/adminTab/menu1.jsp" />
-	</definition>
 	
-	<definition name="adminPageT2" extends="adminPage">
-		<put-attribute name="contents" value="/WEB-INF/views/include/admin/adminTab/menu2.jsp" />
-	</definition>
-	
-	<definition name="adminPageT3" extends="adminPage">
-		<put-attribute name="contents" value="/WEB-INF/views/include/admin/adminTab/menu3.jsp" />
-	</definition>
-	
-	<!-- 관리자 A/S 리스트 페이지 -->
-	<definition name="adminASList" extends="adminPage">
+	<!--  관리자 페이지 추가 확장, 타이틀과 헤더 유지, contents만 변경   -->
+	<!--  A/S 내역 조회 페이지  -->
+	<definition name="adminPageA1" extends="adminPage">
 		<put-attribute name="contents" value="/WEB-INF/views/asMng/asList.jsp" />
 	</definition>
 	
-	<!-- 수리기사 A/S 리스트 페이지 -->
-	<definition name="mechanicASList" extends="mechanicPage">
+	<!-- 점포 등록 페이지 -->
+	<definition name="adminPageS1" extends="adminPage">
+		<put-attribute name="contents" value="/WEB-INF/views/strMng/strMngIns.jsp" />
+	</definition>
+	
+	<!-- 점포 조회 페이지 -->
+	<definition name="adminPageS2" extends="adminPage">
+		<put-attribute name="contents" value="/WEB-INF/views/strMng/strMngList.jsp" />
+	</definition>
+	
+	<!-- 점포 검색 페이지 -->
+	<definition name="adminPageS3" extends="adminPage">
+		<put-attribute name="contents" value="/WEB-INF/views/strMng/strMngSearch.jsp" />
+	</definition>
+	
+	<!-- 로그 관리 페이지 -->
+	<definition name="adminPageL1" extends="adminPage">
+		<put-attribute name="contents" value="/WEB-INF/views/log/logMngList.jsp" />
+	</definition>
+	
+	
+
+	<!-- 점주 페이지 추가 확장, 타이틀과 헤더 유지, contents만 변경 -->
+	
+	<!-- 점주 A/S 신청 페이지 -->
+	<definition name="managerPageA1" extends="managerPage">
+		<put-attribute name="contents" value="/WEB-INF/views/asMng/asReceipt.jsp" />
+	</definition>
+	
+	<!-- 점주 A/S 내역 조회 페이지  -->
+	<definition name="managerPageA2" extends="managerPage">
 		<put-attribute name="contents" value="/WEB-INF/views/asMng/asList.jsp" />
 	</definition>
 	
-	<!-- 점주 A/S 리스트 페이지 -->
-	<definition name="managerASList" extends="managerPage">
-		<put-attribute name="contents" value="/WEB-INF/views/asMng/asList.jsp" />
+	<!-- 점주 점포 조회 페이지  -->
+	<definition name="managerPageS1" extends="managerPage">
+		<put-attribute name="contents" value="/WEB-INF/views/strMng/strMngList.jsp" />
+	</definition>
+	
+	<!-- 점주 점포 조회 페이지  -->
+	<definition name="managerPageS2" extends="managerPage">
+		<put-attribute name="contents" value="/WEB-INF/views/strMng/strMngMod.jsp" />
 	</definition>
 	
 	
+	<!-- 수리기사 페이지 추가 확장, 타이틀과 헤더 유지, contents만 변경 -->
+	
+	<!-- A/S 목록 조회 -->
+	<definition name="mechanicPageA1" extends="mechanicPage">
+		<put-attribute name="contents" value="/WEB-INF/views/asMng/asList.jsp" />
+	</definition>
 	
 	
 </tiles-definitions>

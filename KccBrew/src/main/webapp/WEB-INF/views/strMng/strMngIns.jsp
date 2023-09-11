@@ -4,8 +4,8 @@
 <html>
 <head>
 <title>점포등록</title>
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<!-- <link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"> -->
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/css/store/insert.css" />
 </head>
@@ -67,9 +67,8 @@
 					</tr>
 				</table>
 				<div class="savecancle">
-					<input type="submit" name="save" class="button" value="저장"
-						id="submitBtn" disabled> <input type="button"
-						class="update" value="취소" onclick="window.close()">
+					<input type="submit" name="save" class="save-btn" value="저장"	id="submitBtn" disabled> 
+					<input type="button" class="cancel-btn" value="취소" onclick="window.close()">
 				</div>
 			</form>
 		</div>

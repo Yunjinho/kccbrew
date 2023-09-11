@@ -4,14 +4,12 @@
 
 <!DOCTYPE html>
 <html>
-<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
-<script src="${path}/resources/js/comm/login.js"></script>
 <c:choose>
 	<c:when test="${sessionScope.userTypeCd eq '01'}">
 		<header class="comm-nav">
 			<div class="top-bar">
 				<p>
-					(관리자)님 환영합니다
+					<c:out value="${userName}"/> (관리자)님 환영합니다
 				</p>
 				<c:url var="toLogin" value="/loginpage" />
 				<a href="${toLogin}">
@@ -32,20 +30,19 @@
 						<li class="nav-item">
 							<a class="nav-link" href="#" >A/S 관리</a>
 							<ul class="comm-nav-dropdown">
-								<c:url var="test" value="/test" />          <!-- 여기에  매핑 url 선언 -->
-								<li><a href="${test}">A/S 접수 안내</a></li>	<!-- 매핑 url 변수 링크로 걸기 -->
-								<c:url var="toAsList" value="/adminaslist" />
-								<li><a href="${toAsList}">A/S 내역 조회</a></li>
+								<c:url var="toAsList" value="/adminaslistpage" />	<!-- 여기에  매핑 url 선언 -->
+								<li><a href="${toAsList}">A/S 내역 조회</a></li>	<!-- 매핑 url 변수 링크로 걸기 -->
 							</ul>	
 						</li>
 						<li class="nav-item">
 							<a class="nav-link" href="#">점포 관리</a>
 							<ul class="comm-nav-dropdown">
-								<c:url var="test3" value="/test3" />
-								<li><a href="${test3}">점포 등록</a></li>
-								<li><a href="#">점포 수정</a></li>
-								<li><a href="#">점포 삭제</a></li>
-								<li><a href="#">점포 조회</a></li>
+								<c:url var="toStoreRegPage" value="/adminstoreregpage" />
+								<li><a href="${toStoreRegPage}">점포 등록</a></li>
+								<c:url var="toStoreListPage" value="/adminstorelistpage" />
+								<li><a href="${toStoreListPage}">점포 조회</a></li>
+								<c:url var="toStoreSearchPage" value="/adminstoresearchpage" />
+								<li><a href="${toStoreSearchPage}">점포 검색</a></li>
 							</ul>
 						</li>
 						<li class="nav-item">
@@ -58,7 +55,8 @@
 						<li class="nav-item">
 							<a class="nav-link" href="#">시스템 관리</a>
 							<ul class="comm-nav-dropdown">
-								<li><a href="#">로그 조회</a></li>
+								<c:url var="toAdminLogPage" value="/adminlogpage" />
+								<li><a href="${toAdminLogPage}">로그 조회</a></li>
 								<li><a href="#">파일 조회</a></li>
 							</ul>
 						</li>
@@ -75,11 +73,10 @@
 	</c:when>
 	
 	<c:when test="${sessionScope.userTypeCd eq '02'}">
-		<c:set var="userName" value="${sessionScope.userName}"/>
 		<header class="comm-nav" >
 			<div class="top-bar">
 				<p>
-					${userName}(점주)님 환영합니다
+					<c:out value="${userName}"/> (점주)님 환영합니다
 				</p>
 				<c:url var="toLogin" value="/loginpage" />
 				<a href="${toLogin}">
@@ -100,17 +97,19 @@
 						<li class="nav-item">
 							<a class="nav-link" href="#" >A/S 관리</a>
 							<ul class="comm-nav-dropdown">
-								<li><a href="#">A/S 접수 안내</a></li>
-								<li><a href="#">A/S 신청</a></li>
-								<c:url var="toAsList" value="/manageraslist" />
+								<c:url var="toASReceipt" value="/asreceiptpage" />
+								<li><a href="${toASReceipt}">A/S 신청</a></li>
+								<c:url var="toAsList" value="/aslistpage" />
 								<li><a href="${toAsList}">A/S 내역 조회</a></li>
 							</ul>	
 						</li>
 						<li class="nav-item">
 							<a class="nav-link" href="#">점포 관리</a>
 							<ul class="comm-nav-dropdown">
-								<li><a href="#">점포 조회</a></li>
-								<li><a href="#">점포 정보 수정</a></li>
+								<c:url var="toStoreList" value="/storesearchpage" />
+								<li><a href="${toStoreList}">점포 조회</a></li>
+								<c:url var="toStoreModPage" value="/storemodpage" />
+								<li><a href="${toStoreModPage}">점포 정보 수정</a></li>
 							</ul>
 						</li>
 						<li class="nav-item">
@@ -129,7 +128,7 @@
 		<header class="comm-nav" >
 			<div class="top-bar">
 				<p>
-					<span id="userName"></span>(수리기사)님 환영합니다
+					<c:out value="${userName}"/> (수리기사)님 환영합니다
 				</p>
 				<c:url var="toLogin" value="/loginpage" />
 				<a href="${toLogin}">
@@ -150,7 +149,7 @@
 						<li class="nav-item">
 							<a class="nav-link" href="#" >A/S 관리</a>
 							<ul class="comm-nav-dropdown">
-								<c:url var="toAsList" value="/mechanicaslist" />
+								<c:url var="toAsList" value="/mechanicaslistpage" />
 								<li><a href="${toAsList}">A/S 내역 조회</a></li>
 							</ul>	
 						</li>

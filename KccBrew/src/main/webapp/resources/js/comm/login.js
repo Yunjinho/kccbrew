@@ -1,6 +1,8 @@
 function login(){
 	var id=$("input[name=userId]").val();
 	var pwd=$("input[name=userPwd]").val();
+//	var userName = $("#userName").text();
+//	$("#userName").text("userName");
 
 	$.ajax({
 	    type : "get",           // 타입 (get, post, put 등등)
@@ -37,7 +39,6 @@ function login(){
 					url: "/getUserName",
 					dataType:"text",
 					success:function(userName){
-						console.log("Received userName:", userName)
 						$("#userName").text(userName);
 					}
 				});
