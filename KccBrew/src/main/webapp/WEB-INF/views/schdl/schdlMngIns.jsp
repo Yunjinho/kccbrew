@@ -34,6 +34,18 @@
 </head>
 
 <body>
+	<%-- Import the necessary Java classes --%>
+	<%@ page import="java.util.Date"%>
+
+	<%-- Get the current date and time --%>
+	<%
+		Date now = new Date();
+	%>
+
+	<%-- Set the "now" variable using JSTL --%>
+	<c:set var="now" value="<%=now%>" />	
+
+
 	<div id="page" class="page-nosubmenu">
 		<!-- ********** header영역 시작********** -->
 		<div id="page-header">
@@ -382,7 +394,7 @@
 															<th>휴가시작일</th>
 															<th>휴가종료일</th>
 															<th>일수</th>
-															<th>실제사용</th>
+															<th>사용</th>
 															<th>선택</th>
 														</tr>
 													</thead>
@@ -404,14 +416,16 @@
 																		value="${dateDifference}" /> <c:out
 																		value="${formattedDateDifference}" /></td>
 																<td><c:out value="${holiday.actualUse}" /></td>
+
+
+
 																<td><c:choose>
 																		<c:when test="${holiday.startDate <= now}">
 																			<input type="checkbox" name="selectedHolidays"
-																				value="${holiday.holidaySeq}" disabled />
+																				disabled />
 																		</c:when>
 																		<c:otherwise>
-																			<input type="checkbox" name="selectedHolidays"
-																				value="${holiday.holidaySeq}" />
+																			<input type="checkbox" name="selectedHolidays" />
 																		</c:otherwise>
 																	</c:choose></td>
 															</tr>
@@ -439,7 +453,7 @@
 													<th>휴가일</th>
 													<td><input type="date" name="startDate" id="startDate" />
 														~ <input type="date" name="endDate" id="endDate" />
-														(사용일수: <span id="daysRemaining"></span> / 잔여일수: <span
+														(사용일수: <span id="usedDays"></span> / 잔여일수: <span
 														id="remainingDays"></span>)</td>
 												</tr>
 											</table>
@@ -459,11 +473,12 @@
         var endDate = new Date(document.getElementById("endDate").value);
 
         if (!isNaN(startDate) && !isNaN(endDate)) {
-            var timeDiff = endDate - startDate;
-            var daysDiff = Math.ceil(timeDiff / (1000 * 3600 * 24)); // 일수 계산
-            document.getElementById("daysRemaining").textContent = daysDiff;
+            var timeDiff = endDate - startDate + 1;
+            var daysDiff = Math.ceil(timeDiff / (1000 * 3600 * 24)); 
+            document.getElementById("usedDays").textContent = daysDiff;
+            document.getElementById("remainingDays").textContent = remainingDays - daysDiff;
         } else {
-            document.getElementById("daysRemaining").textContent = "";
+            document.getElementById("usedDays").textContent = "";
         }
     }
 
@@ -478,7 +493,7 @@
         document.getElementById("endDate").value = "";
 
         // 일수 및 잔여일수를 초기 상태로 되돌림
-        document.getElementById("daysRemaining").textContent = "";
+        document.getElementById("usedDays").textContent = "";
         document.getElementById("remainingDays").textContent = remainingDays;
     });
 </script>
