@@ -29,6 +29,8 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 </head>
 
 <body>
@@ -259,7 +261,7 @@
 											alt="Check List" class="header-icon" />
 									</div>
 								</li>
-								<li><a href="<c:url value='/schedule2' />">휴일등록</a></li>
+								<li><a href="<c:url value='/schedule2' />">휴가등록</a></li>
 							</ol>
 						</div>
 						<!-- ********** 페이지 네비게이션 끝 ********** -->
@@ -271,41 +273,39 @@
 
 									<!-- ********** 세은 로그 관련 내용 시작 ********** -->
 									<div id="content">
-										<h2 class="heading">휴일등록</h2>
+										<h2 class="heading">휴가등록</h2>
 										<!-- 로그 검색 -->
 
 										<div class="subtitle">수리기사</div>
 										<table id="search-box">
-
-											<!-- 1행 -->
 											<tr>
 												<th>유형</th>
-												<td><c:out value="${datatest}" /></td>
+												<td><c:out value="" /></td>
 
 												<th>ID</th>
-												<td><c:out value="${datatest}" /></td>
+												<td><c:out value="" /></td>
 
 												<th>이름</th>
-												<td><c:out value="${datatest}" /></td>
-												
+												<td><c:out value="" /></td>
+
 												<th>연락처</th>
-												<td><c:out value="${datatest}" /></td>
+												<td><c:out value="" /></td>
 
 											</tr>
 
 											<tr>
 												<th>사용장비코드</th>
-												<td><c:out value="${datatest}" /></td>
-												
+												<td><c:out value="" /></td>
+
 												<th>장비명</th>
-												<td><c:out value="${datatest}" /></td>
+												<td><c:out value="" /></td>
 
 												<th>지역코드</th>
-												<td><c:out value="${datatest}" /></td>
-												
+												<td><c:out value="" /></td>
+
 												<th>지역명</th>
-												<td><c:out value="${datatest}" /></td>
-												
+												<td><c:out value="" /></td>
+
 											</tr>
 										</table>
 
@@ -313,30 +313,35 @@
 										<!-- 점포일 경우 -->
 										<div class="subtitle">점포</div>
 										<table id="search-box">
+											<!-- 점주정보 -->
 											<tr>
 												<th>유형</th>
-												<td><c:out value="${datatest}" /></td>
+												<td><c:out value="점주" /></td>
 
-												<th>ID</th>
-												<td><c:out value="${datatest}" /></td>
+												<th>점주ID</th>
+												<td><c:out value="${user.userId}" /></td>
 
-												<th>이름</th>
-												<td><c:out value="${datatest}" /></td>
+												<th>점주이름</th>
+												<td><c:out value="" /></td>
 
-												<th>연락처</th>
-												<td><c:out value="${datatest}" /></td>
+												<th>점주연락처</th>
+												<td><c:out value="" /></td>
 
 											</tr>
 
+											<!-- 점포정보 -->
 											<tr>
-												<th>점포명</th>
-												<td><c:out value="${datatest}" /></td>
+												<th>점포ID</th>
+												<td><c:out value="${store.storeSeq}" /></td>
 
-												<th>주소</th>
-												<td><c:out value="${datatest}" /></td>
+												<th>점포명</th>
+												<td><c:out value="${store.storeNm}" /></td>
+
+												<th>점포주소</th>
+												<td><c:out value="" /></td>
 
 												<th>점포연락처</th>
-												<td><c:out value="${datatest}" /></td>
+												<td><c:out value="" /></td>
 
 											</tr>
 										</table>
@@ -363,145 +368,122 @@
 
 										<!-- 로그 리스트 -->
 										<div id="logTable">
-										<div class="subtitle">휴가신청내역</div>
-											<div>
-												<p class="data-info">
-													전체<b><span><c:out value="${totalDataNumber}" /></span></b>건<span
-														id="text-separator"> | </span><b><span><c:out
-																value="${currentPage}" /></span></b>/<b><span><c:out
-																value="${totalPage}" /></span></b>쪽
-												</p>
+											<div class="subtitle">
+												휴가신청내역(전체<b><span><c:out
+															value="${totalDataNumber}" /></span></b>건)
 											</div>
-											<table>
-												<thead>
-													<tr>
-														<th>순번</th>
-														<th>휴일아이디</th>
-														<th>날짜</th>
-													</tr>
-												</thead>
-												<tbody>
-													<c:forEach var="schedule2" items="${schedules}">
+											<form id="deleteForm" action="/delete-holidays" method="post">
+												<table>
+													<thead>
 														<tr>
-															<td><c:out value="${schedule2.rowNum}" /></td>
-															<td><c:out value="${schedule2.userType}" /></td>
-															<td><c:out value="${schedule2.userId}" /></td>
-															<td><c:out value="${schedule2.userName}" /></td>
-															<td><c:out value="${schedule2.userPhoneNumber}" /></td>
-															<td><c:choose>
-																	<c:when test="${schedule2.storeId != 0}">
-																		<c:out value="${schedule2.storeId}" />
-																	</c:when>
-																	<c:otherwise>
-																		<!-- 0인 경우 아무것도 표시하지 않음 -->
-																	</c:otherwise>
-																</c:choose></td>
-															<td><c:out value="${schedule2.storeName}" /></td>
-															<td><c:out value="${schedule2.storePhoneNumber}" /></td>
-															<td><c:out value="${schedule2.storeLocation}" /></td>
-															<td><c:out value="${schedule2.scheduleDate}" /></td>
-															<td><c:out value="${schedule2.scheduleType}" /></td>
+															<th>순번</th>
+															<!-- <th>휴가아이디</th> -->
+															<th>휴가신청일</th>
+															<th>휴가시작일</th>
+															<th>휴가종료일</th>
+															<th>일수</th>
+															<th>실제사용</th>
+															<th>선택</th>
 														</tr>
-													</c:forEach>
+													</thead>
+													<tbody>
+														<c:forEach var="holiday" items="${holidays}"
+															varStatus="loop">
+															<tr>
+																<td><c:out value="${loop.index + 1}" /></td>
+																<%-- <td><c:out value="${holiday.holidaySeq}" /></td> --%>
+																<td><c:out value="${holiday.appDate}" /></td>
+																<td><c:out value="${holiday.startDate}" /></td>
+																<td><c:out value="${holiday.endDate}" /></td>
+																<td><c:set var="startDate"
+																		value="${holiday.startDate.time}" /> <c:set
+																		var="endDate" value="${holiday.endDate.time}" /> <c:set
+																		var="dateDifference"
+																		value="${(endDate - startDate) / (1000 * 3600 * 24) + 1}" />
+																	<fmt:formatNumber var="formattedDateDifference"
+																		value="${dateDifference}" /> <c:out
+																		value="${formattedDateDifference}" /></td>
+																<td><c:out value="${holiday.actualUse}" /></td>
+																<td><c:choose>
+																		<c:when test="${holiday.startDate <= now}">
+																			<input type="checkbox" name="selectedHolidays"
+																				value="${holiday.holidaySeq}" disabled />
+																		</c:when>
+																		<c:otherwise>
+																			<input type="checkbox" name="selectedHolidays"
+																				value="${holiday.holidaySeq}" />
+																		</c:otherwise>
+																	</c:choose></td>
+															</tr>
+														</c:forEach>
+													</tbody>
+												</table>
+												<button type="submit">선택된 항목 삭제</button>
+											</form>
+
+											<script>
+												var now = new Date();
+											</script>
+
+										</div>
+
+										<!-- 휴가신청폼 -->
+										<div class="subtitle">휴가신청</div>
+										<form action="/holiday" method="post">
+											<table id="search-box">
+												<tr>
+													<th>휴가신청일</th>
+													<td><c:out
+															value="<%=new java.text.SimpleDateFormat(\"yyyy-MM-dd\").format(new java.util.Date())%>" /></td>
+
+													<th>휴가일</th>
+													<td><input type="date" name="startDate" id="startDate" />
+														~ <input type="date" name="endDate" id="endDate" />
+														(사용일수: <span id="daysRemaining"></span> / 잔여일수: <span
+														id="remainingDays"></span>)</td>
+												</tr>
 											</table>
-										</div>
 
-										<!-- 페이징 -->
-										<div class="paging pagination">
+											<button type="submit">저장</button>
+											<button type="reset" id="resetButton">초기화</button>
+										</form>
 
-											<!-- 맨 앞으로 가는 버튼 -->
-											<a
-												href="/schedule2?currentPage=1
-&startYr=${searchContent.startYr}&startMn=${searchContent.startMn}&endYr=${searchContent.endYr}&endMn=${searchContent.endMn}
-&userType=${searchContent.userType}
-&userId=${searchContent.userId}
-&userName=${searchContent.userName}
-&storeId=${searchContent.storeId}
-&storeName=${searchContent.storeName}
-&storeLocation=${searchContent.storeLocation}
-&scheduleType=${searchContent.scheduleType}"><img
-												src="/resources/img/log/free-icon-left-chevron-6015759.png"
-												alt=" 처음" /></a>
 
-											<c:choose>
-												<c:when test="${currentPage > 1}">
-													<a
-														href="/schedule2?currentPage=${currentPage - 1}&startYr=${searchContent.startYr}&startMn=${searchContent.startMn}&endYr=${searchContent.endYr}&endMn=${searchContent.endMn}&userType=${searchContent.userType}&userId=${searchContent.userId}&userName=${searchContent.userName}&storeId=${searchContent.storeId}&storeName=${searchContent.storeName}&storeLocation=${searchContent.storeLocation}&scheduleType=${searchContent.scheduleType}">
-														<img
-														src="/resources/img/log/free-icon-left-arrow-271220.png"
-														alt="이전" />
-													</a>
-												</c:when>
-												<c:otherwise>
-													<a href="#" class="disabled-link"> <img
-														src="/resources/img/log/free-icon-left-arrow-271220.png"
-														alt="이전" />
-													</a>
-												</c:otherwise>
-											</c:choose>
+										<script>
+    // 모델에서 잔여일수 데이터 가져와서 표시
+    var remainingDays = ${remainingDays};
+    document.getElementById("remainingDays").textContent = remainingDays;
 
-											<!-- 리스트 목록 나열 -->
-											<div id="number-list">
-												<div class="page-btn">
-													<c:forEach var="page" begin="${sharePage * 10 + 1}"
-														end="${(sharePage + 1) * 10}" step="1">
-														<c:if test="${page <= totalPage}">
-															<a
-																href="/schedule2?currentPage=${page}
-&startYr=${searchContent.startYr}&startMn=${searchContent.startMn}&endYr=${searchContent.endYr}&endMn=${searchContent.endMn}
-&userType=${searchContent.userType}
-&userId=${searchContent.userId}
-&userName=${searchContent.userName}
-&storeId=${searchContent.storeId}
-&storeName=${searchContent.storeName}
-&storeLocation=${searchContent.storeLocation}
-&scheduleType=${searchContent.scheduleType}"
-																class="pagination page-btn ${currentPage == page ? 'selected' : ''}">
-																${page} </a>
-														</c:if>
-													</c:forEach>
-												</div>
-											</div>
+    function calculateDays() {
+        var startDate = new Date(document.getElementById("startDate").value);
+        var endDate = new Date(document.getElementById("endDate").value);
 
-											<!-- 뒤로 가는 버튼 -->
-											<c:if test="${currentPage < totalPage}">
-												<a
-													href="/schedule2?currentPage=${currentPage + 1}
-&startYr=${searchContent.startYr}&startMn=${searchContent.startMn}&endYr=${searchContent.endYr}&endMn=${searchContent.endMn}
-&userType=${searchContent.userType}
-&userId=${searchContent.userId}
-&userName=${searchContent.userName}
-&storeId=${searchContent.storeId}
-&storeName=${searchContent.storeName}
-&storeLocation=${searchContent.storeLocation}
-&scheduleType=${searchContent.scheduleType}">
-													<img
-													src="/resources/img/log/free-icon-right-arrow-271228.png"
-													alt="다음" />
-												</a>
-											</c:if>
-											<c:if test="${currentPage == totalPage}">
-												<a href="" class="disabled-link"> <img
-													src="/resources/img/log/free-icon-right-arrow-271228.png"
-													alt="다음" />
-												</a>
-											</c:if>
+        if (!isNaN(startDate) && !isNaN(endDate)) {
+            var timeDiff = endDate - startDate;
+            var daysDiff = Math.ceil(timeDiff / (1000 * 3600 * 24)); // 일수 계산
+            document.getElementById("daysRemaining").textContent = daysDiff;
+        } else {
+            document.getElementById("daysRemaining").textContent = "";
+        }
+    }
 
-											<a
-												href="/schedule2?currentPage=${totalPage}
-&startYr=${searchContent.startYr}&startMn=${searchContent.startMn}&endYr=${searchContent.endYr}&endMn=${searchContent.endMn}
-&userType=${searchContent.userType}
-&userId=${searchContent.userId}
-&userName=${searchContent.userName}
-&storeId=${searchContent.storeId}
-&storeName=${searchContent.storeName}
-&storeLocation=${searchContent.storeLocation}
-&scheduleType=${searchContent.scheduleType}"><img
-												src="/resources/img/log/free-icon-fast-forward-double-right-arrows-symbol-54366.png"
-												alt="마지막" /></a>
-										</div>
+    // input 필드 값이 변경될 때마다 calculateDays 함수 호출
+    document.getElementById("startDate").addEventListener("change", calculateDays);
+    document.getElementById("endDate").addEventListener("change", calculateDays);
 
+    // 초기화 버튼을 눌렀을 때
+    document.getElementById("resetButton").addEventListener("click", function () {
+        // 입력 필드를 초기화
+        document.getElementById("startDate").value = "";
+        document.getElementById("endDate").value = "";
+
+        // 일수 및 잔여일수를 초기 상태로 되돌림
+        document.getElementById("daysRemaining").textContent = "";
+        document.getElementById("remainingDays").textContent = remainingDays;
+    });
+</script>
 									</div>
+
 									<!-- ********** 세은 로그 관련 내용 끝 ********** -->
 								</div>
 							</div>
@@ -511,7 +493,5 @@
 			</div>
 		</div>
 	</div>
-	<script src="<c:url value='/js/bootstrap.min.js' />"></script>
-	<script src="<c:url value='/js/jquery.min.js' />"></script>
 </body>
 </html>

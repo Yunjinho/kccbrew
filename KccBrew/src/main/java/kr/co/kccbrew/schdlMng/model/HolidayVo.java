@@ -12,6 +12,9 @@ public class HolidayVo {
 	private Integer holidaySeq;
 	private String groupCodeDetailId; // 사용자 유형: 점주 또는 기사
 	private String userId;
-	private Date holiday;
+	private Date startDate;
+	private Date endDate;
+	private Date appDate;
+	private String actualUse;
 	
 }

@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kr.co.kccbrew.schdlMng.dao.ISchdlMngRepository;
+import kr.co.kccbrew.schdlMng.model.HolidayVo;
 import kr.co.kccbrew.schdlMng.model.SchdlMngVo;
 import kr.co.kccbrew.schdlMng.model.SchdlMngVo2;
 
@@ -59,6 +60,13 @@ public class SchdlMngService implements ISchdlMngService {
 	@Override
 	public List<SchdlMngVo2> getCalendarSchedule(SchdlMngVo2 schdlMngVo) {
 		return schdlMngRepository.selectCalendarSchedule(schdlMngVo);
+	}
+
+	
+	/*휴일조회*/
+	@Override
+	public List<HolidayVo> getHoliday(String userId) {
+		return schdlMngRepository.selectHoliday(userId);
 	}
 	
 	

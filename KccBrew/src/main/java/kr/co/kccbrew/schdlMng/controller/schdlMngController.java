@@ -23,6 +23,7 @@ import com.google.common.collect.Lists;
 
 import kr.co.kccbrew.comm.register.model.StoreListVo;
 import kr.co.kccbrew.comm.register.model.UserVo;
+import kr.co.kccbrew.schdlMng.model.HolidayVo;
 import kr.co.kccbrew.schdlMng.model.SchdlMngVo;
 import kr.co.kccbrew.schdlMng.model.SchdlMngVo2;
 import kr.co.kccbrew.schdlMng.service.SchdlMngService;
@@ -47,6 +48,8 @@ public class schdlMngController {
 
 	@Autowired
 	private SchdlMngService schdlMngService;
+
+
 
 	/* 관리자 스케줄조회 */
 	@GetMapping("/schedule2")
@@ -199,26 +202,64 @@ public class schdlMngController {
 	}
 
 
+	/*휴가 권한구분*/
+	@GetMapping("/holiday")
+	public String holidayPage(Model model, HttpSession session) {
+
+		/*세션에서 사용자 정보 반환*/
+		UserVo user = new UserVo();
+
+
+		/*세션에 사용자정보가 저장되어 있는 경우*/
+		String userType = "manager";
+		String dynamicURL = "/" + userType + "/holiday";
+
+		return "redirect:" + dynamicURL;
+
+		/*세션에 사용자 정보가 저장되어 있지 않은 경우 -> 로그인페이지*/
+
+	}
+
+
+
 	/*점주 휴일 등록 페이지*/
 	@GetMapping("/manager/holiday")
 	public String holidayPage(Model model) {
-		
+
 		/*세션에서 점주 및 점포 정보 확인*/
 		UserVo user = new UserVo();
 		user.setUserId("ngw01");
-		
+		String userId = user.getUserId();
+
 		StoreListVo store = new StoreListVo();
 		store.setStoreSeq("35");
 		store.setStoreNm("잠실점");
-		
-		/*휴일정보 확인*/
 
-		model.addAttribute("datatest", "테스트");
-		model.addAttribute("userVo", "테스트");
-		model.addAttribute("storeListVo", "테스트");
-		model.addAttribute("storeListVo", "테스트");
+		/*휴일정보 확인*/
+		List<HolidayVo> holidays = schdlMngService.getHoliday(userId);
+		int totalDataNumber = holidays.size();
+		int remainingDays = 15 - totalDataNumber;
+
+		model.addAttribute("holidays", holidays);
+		model.addAttribute("user", user);
+		model.addAttribute("store", store);
+		model.addAttribute("totalDataNumber", totalDataNumber);
+		model.addAttribute("remainingDays", remainingDays);
 
 		return "schdl/schdlMngIns";
+	}
+
+	/*휴가신청*/
+	@PostMapping("/holiday")
+	public String addHoliday(@ModelAttribute HolidayVo holiday, HttpSession session ) {
+
+		/*파라미터 데이터 확인*/
+		System.out.println("holiday: " + holiday);
+
+		/*세션에서 사용자ID, 사용자코드 정보 추출*/
+		/*session.getAttribute("user");*/
+
+		return "redirect:/holiday";
 	}
 
 
