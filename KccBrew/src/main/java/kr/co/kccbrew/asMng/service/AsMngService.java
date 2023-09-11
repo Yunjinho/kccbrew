@@ -1,11 +1,10 @@
 package kr.co.kccbrew.asMng.service;
 
 import java.io.FileOutputStream;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.sql.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -103,18 +102,19 @@ public class AsMngService implements IAsMngService{
 		asRepository.insertFile(vo);
 		asMngVo.setFileSeq(vo.getFileSeq());
 		
+		
 		for(MultipartFile imgFile:asMngVo.getImgFile()) {
 			vo.setFileOriginalNm(imgFile.getOriginalFilename());
 			if(imgFile.getOriginalFilename()!="") {
+				UUID pk = UUID.randomUUID();
 				vo.setFileOriginalNm(imgFile.getOriginalFilename());
-				vo.setFileServerNm(asMngVo.getUserId()+"_"+new Date(System.currentTimeMillis())+"_"+imgFile.getOriginalFilename());
+				vo.setFileServerNm(asMngVo.getUserId()+"_"+pk+"_"+imgFile.getOriginalFilename());
 				vo.setFileFmt(imgFile.getContentType());
 				vo.setStorageLocation(asMngVo.getStorageLocation());
-				Path path = Paths.get(vo.getStorageLocation()).toAbsolutePath().normalize();
-		        Path targetPath = path.resolve(vo.getFileServerNm()).normalize();
+		        String targetPath=asMngVo.getStorageLocation()+"\\"+vo.getFileServerNm();
 				try {
 					//imgFile.transferTo(targetPath);
-					FileCopyUtils.copy(imgFile.getInputStream(), new FileOutputStream(targetPath.toFile()));
+					FileCopyUtils.copy(imgFile.getInputStream(), new FileOutputStream(targetPath));
 				}catch (Exception e) {
 					System.out.println(e.getMessage());
 				}

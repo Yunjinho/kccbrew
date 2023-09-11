@@ -1,12 +1,17 @@
 package kr.co.kccbrew.asMng.contorller;
 
+import java.io.File;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.ResourceUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -100,7 +105,6 @@ public class AsMngController {
 		asMngVo.setUserId((String)session.getAttribute("userId"));
 		asMngVo.setUserTypeCd((String)session.getAttribute("userTypeCd"));
 		List<AsMngVo> asList=asMngService.selectASList(asMngVo,currentPage);
-
 		int totalPage = 0;
 		int totalCount = asMngService.countASList(asMngVo);
 
@@ -136,9 +140,17 @@ public class AsMngController {
 	}
 
 	@RequestMapping(value="/receipt",method=RequestMethod.POST)
-	public String asReceipt(@Value("#{serverImgPath['asReceiptPath']}")String path,AsMngVo asMngVo,HttpSession session) {
+	public String asReceipt(@Value("#{serverImgPath['asReceiptPath']}")String path,AsMngVo asMngVo,HttpServletRequest request) {
+
+		String folderPath=request.getServletContext().getRealPath("")+path;
+		File folder = new File(folderPath);
+        // 폴더가 존재하지 않으면 폴더를 생성합니다.
+        if (!folder.exists()) {
+            boolean success = folder.mkdirs(); // 폴더 생성 메소드
+        }
+		HttpSession session=request.getSession();
 		asMngVo.setUserId((String)session.getAttribute("userId"));
-		asMngVo.setStorageLocation(path);
+		asMngVo.setStorageLocation(folderPath);
 		asMngService.insertAs(asMngVo);
 		return "/asMng/asList";
 	}

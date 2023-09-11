@@ -27,7 +27,9 @@ public class AsMngVo {
 	private String userTypeCd;
 	private String searchId;
 	private String machineCd;
-	private String statusCd;
+	private String asStatusCd;
+	private String asStatusNm;
+	private String machineCdNm;
 	private String locationCd;
 	private Date regDttm;
 	private Date modDttm;
@@ -62,17 +64,38 @@ public class AsMngVo {
 	private String grpCdDtlNm;
 	
 	//인자 없는 생성자
+
 	public AsMngVo() {
-		this.asInfoSeq="";
-		this.startYr="";
-		this.startMn="";
-		this.endYr="";
-		this.endMn="";
-		this.userId="";
-		this.storeAddr="";
-		this.machineCd="";
-		this.statusCd="";
-		this.storeNm="";
+		this.asInfoSeq = "";
+		this.startYr = "";
+		this.startMn = "";
+		this.endYr = "";
+		this.endMn = "";
+		this.userId = "";
+		this.userTypeCd = "";
+		this.searchId = "";
+		this.machineCd = "";
+		this.asStatusCd = "";
+		this.asStatusNm = "";
+		this.machineCdNm = "";
+		this.locationCd = "";
+		this.asContent = "";
+		this.wishingStartDate = "";
+		this.wishingEndDate = "";
+		this.fileOriginalNm = "";
+		this.fileServerNm = "";
+		this.fileFmt = "";
+		this.storageLocation = "";
+		this.storeNm = "";
+		this.storeAddr = "";
+		this.storeAddrDtl = "";
+		this.latitude = "";
+		this.longitude = "";
+		this.storeTelNo = "";
+		this.grpCdDtlId = "";
+		this.grpCdId = "";
+		this.grpCdNm = "";
+		this.grpCdDtlNm = "";
 	}
 
 	
