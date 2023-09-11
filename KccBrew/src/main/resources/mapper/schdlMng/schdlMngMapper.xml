@@ -485,6 +485,41 @@ EXTRACT(YEAR FROM SCHEDULE_DATE) = 2023 AND EXTRACT(MONTH FROM SCHEDULE_DATE) = 
 	</select>
 
 
+	<!-- 휴가ID로 휴가취소 -->
+	<update id="cancelHoliday" parameterType="java.lang.Integer">
+		UPDATE holiday
+		SET
+		ACTL_USE = 'N'
+		WHERE HOLIDAY_SEQ = #{holidaySeq}
+	</update>
+
+
+	<!-- 사용한 휴가일수 -->
+	<select id="selectUsedHoliday" resultType="int"
+		parameterType="String">
+    <![CDATA[
+    SELECT COUNT(*) FROM holiday
+    WHERE USER_ID=#{userId} AND ACTL_USE='Y'
+    ]]>
+	</select>
+
+
+	<!-- 휴가등록 -->
+	<insert id="insertHoliday"
+		parameterType="kr.co.kccbrew.schdlMng.model.HolidayVo">
+		<selectKey keyProperty="holidaySeq" resultType="int"
+			order="BEFORE">
+			SELECT HOLIDAY_SEQ.nextval FROM DUAL
+		</selectKey>
+  <![CDATA[
+    INSERT INTO holiday (HOLIDAY_SEQ, GRP_CD_DTL_ID, USER_ID, HLDY_APP, HLDY_STAR, HLDY_END)
+    VALUES (#{holidaySeq}, #{groupCodeDetailId}, #{userId}, #{appDate}, #{startDate}, #{endDate})
+  ]]>
+	</insert>
+
+
+
+
 
 
 </mapper>

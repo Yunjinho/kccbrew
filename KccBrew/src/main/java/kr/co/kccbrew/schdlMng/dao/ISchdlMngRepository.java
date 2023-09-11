@@ -24,4 +24,13 @@ public interface ISchdlMngRepository {
 	
 	/*휴일 정보 조회*/
 	public List<HolidayVo> selectHoliday(String userId);
+	
+	/*휴가취소*/
+	public void cancelHoliday(Integer holidaySeq);
+	
+	/*사용한 휴가일수*/
+	public int selectUsedHoliday(String userId);
+	
+	/*휴가등록*/
+	public void insertHoliday(HolidayVo holiday);
 }

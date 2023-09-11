@@ -19,4 +19,13 @@ public interface ISchdlMngService {
 	
 	/*휴일 조회*/
 	public List<HolidayVo> getHoliday(String userId);
+	
+	/*휴가취소*/
+	public void cancelHoliday(Integer holidaySeq);
+	
+	/*휴가일수*/
+	public int getUsedHoliday(String userId);
+	
+	/*휴가등록*/
+	public void addHoliday(HolidayVo holiday);
 }

@@ -12,6 +12,7 @@
 <!-- css -->
 <link rel="stylesheet" href="/resources/css/log/mylogtest.css" />
 <link rel="stylesheet" href="/resources/css/log/content-template.css" />
+<link rel="stylesheet" href="/resources/css/schdl/myinsertform.css" />
 
 <!-- font -->
 <!-- notoSans -->
@@ -43,7 +44,7 @@
 	%>
 
 	<%-- Set the "now" variable using JSTL --%>
-	<c:set var="now" value="<%=now%>" />	
+	<c:set var="now" value="<%=now%>" />
 
 
 	<div id="page" class="page-nosubmenu">
@@ -384,7 +385,8 @@
 												휴가신청내역(전체<b><span><c:out
 															value="${totalDataNumber}" /></span></b>건)
 											</div>
-											<form id="deleteForm" action="/delete-holidays" method="post">
+											<!-- 휴가신청 조회 및 삭제 -->
+											<form id="deleteForm" action="/holiday/delete" method="post">
 												<table>
 													<thead>
 														<tr>
@@ -394,13 +396,14 @@
 															<th>휴가시작일</th>
 															<th>휴가종료일</th>
 															<th>일수</th>
-															<th>사용</th>
+															<th>실제사용</th>
 															<th>선택</th>
 														</tr>
 													</thead>
 													<tbody>
 														<c:forEach var="holiday" items="${holidays}"
 															varStatus="loop">
+
 															<tr>
 																<td><c:out value="${loop.index + 1}" /></td>
 																<%-- <td><c:out value="${holiday.holidaySeq}" /></td> --%>
@@ -420,30 +423,79 @@
 
 
 																<td><c:choose>
-																		<c:when test="${holiday.startDate <= now}">
-																			<input type="checkbox" name="selectedHolidays"
-																				disabled />
+																		<c:when
+																			test="${holiday.actualUse == 'N' || holiday.startDate <= now}">
+																			<input type="checkbox" name="holidaySeq" disabled />
 																		</c:when>
 																		<c:otherwise>
-																			<input type="checkbox" name="selectedHolidays" />
+																			<input type="checkbox" name="holidaySeq"
+																				value="${holiday.holidaySeq}" />
 																		</c:otherwise>
 																	</c:choose></td>
+
 															</tr>
+
+
 														</c:forEach>
 													</tbody>
 												</table>
-												<button type="submit">선택된 항목 삭제</button>
+												<button type="button" id="cancelButton">휴가 취소</button>
 											</form>
+											
+  <div id="myModal" class="modal">
+        <div class="modal-content">
+            <h2>휴가 취소 확인</h2>
+            <p>휴가를 취소하시겠습니까?</p>
+            <button id="confirmYes">예</button>
+            <button id="confirmNo">아니오</button>
+        </div>
+    </div>
+    
+    <script>
+ // 휴가 취소 버튼 클릭 시 모달 창 열기
+    document.getElementById("cancelButton").addEventListener("click", function() {
 
-											<script>
-												var now = new Date();
-											</script>
+        var modal = document.getElementById("myModal");
+        modal.classList.add("active");
+    });
+
+    // 예 버튼 클릭 시
+    document.getElementById("confirmYes").addEventListener("click", function() {
+        // 여기에서 취소 로직을 수행하거나, 폼을 서버로 제출할 수 있습니다.
+        // 폼을 서버로 제출하려면 JavaScript를 사용하여 폼을 선택하고 submit() 메서드를 호출하면 됩니다.
+        var form = document.getElementById("deleteForm");
+        form.submit();
+        
+        // 모달 창 닫기
+        var modal = document.getElementById("myModal");
+        modal.classList.remove("active");
+    });
+
+    // 아니오 버튼 클릭 시 모달 창 닫기
+    document.getElementById("confirmNo").addEventListener("click", function() {
+        var modal = document.getElementById("myModal");
+        modal.classList.remove("active");
+    });
+    </script>
+
+
+
 
 										</div>
 
-										<!-- 휴가신청폼 -->
+										<!-- 휴가신청 -->
 										<div class="subtitle">휴가신청</div>
-										<form action="/holiday" method="post">
+										
+										<div id="applyModal" class="modal">
+    <div class="modal-content">
+        <h2>휴가 신청 확인</h2>
+        <p>휴가를 신청하시겠습니까?</p>
+        <button id="applyYes">예</button>
+        <button id="applyNo">아니오</button>
+    </div>
+</div>
+										
+										<form action="/holiday/add" method="post">
 											<table id="search-box">
 												<tr>
 													<th>휴가신청일</th>
@@ -458,7 +510,7 @@
 												</tr>
 											</table>
 
-											<button type="submit">저장</button>
+											<button type="button" id="applyButton">휴가신청</button>
 											<button type="reset" id="resetButton">초기화</button>
 										</form>
 
@@ -496,6 +548,32 @@
         document.getElementById("usedDays").textContent = "";
         document.getElementById("remainingDays").textContent = remainingDays;
     });
+</script>
+
+<script>
+//휴가신청 버튼 클릭 시 모달 창 열기
+document.getElementById("applyButton").addEventListener("click", function() {
+ var modal = document.getElementById("applyModal");
+ modal.classList.add("active");
+});
+
+//예 버튼 클릭 시
+document.getElementById("applyYes").addEventListener("click", function() {
+ // 여기에서 휴가 신청 로직을 수행하거나, 폼을 서버로 제출할 수 있습니다.
+ // 폼을 서버로 제출하려면 JavaScript를 사용하여 폼을 선택하고 submit() 메서드를 호출하면 됩니다.
+ var form = document.querySelector("form");
+ form.submit();
+ 
+ // 모달 창 닫기
+ var modal = document.getElementById("applyModal");
+ modal.classList.remove("active");
+});
+
+//아니오 버튼 클릭 시 모달 창 닫기
+document.getElementById("applyNo").addEventListener("click", function() {
+ var modal = document.getElementById("applyModal");
+ modal.classList.remove("active");
+});
 </script>
 									</div>
 

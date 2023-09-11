@@ -4,6 +4,7 @@ package kr.co.kccbrew.schdlMng.controller;
 import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -48,8 +49,6 @@ public class schdlMngController {
 
 	@Autowired
 	private SchdlMngService schdlMngService;
-
-
 
 	/* 관리자 스케줄조회 */
 	@GetMapping("/schedule2")
@@ -238,7 +237,7 @@ public class schdlMngController {
 		/*휴일정보 확인*/
 		List<HolidayVo> holidays = schdlMngService.getHoliday(userId);
 		int totalDataNumber = holidays.size();
-		int remainingDays = 15 - totalDataNumber;
+		int remainingDays = 15 - schdlMngService.getUsedHoliday(userId);
 
 		model.addAttribute("holidays", holidays);
 		model.addAttribute("user", user);
@@ -250,14 +249,41 @@ public class schdlMngController {
 	}
 
 	/*휴가신청*/
-	@PostMapping("/holiday")
+	@PostMapping("/holiday/add")
 	public String addHoliday(@ModelAttribute HolidayVo holiday, HttpSession session ) {
 
-		/*파라미터 데이터 확인*/
-		System.out.println("holiday: " + holiday);
+		Calendar calendar = Calendar.getInstance();
+		java.util.Date utilDate = calendar.getTime();
+		java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
 
 		/*세션에서 사용자ID, 사용자코드 정보 추출*/
 		/*session.getAttribute("user");*/
+		String userId = "ngw01";
+		String groupCodeDetailId = "02";
+		holiday.setUserId(userId);
+		holiday.setGroupCodeDetailId(groupCodeDetailId);
+		holiday.setAppDate(sqlDate);
+		
+		System.out.println("보정한 holiday확인: " + holiday);
+
+		/*휴가등록*/
+		schdlMngService.addHoliday(holiday);
+
+		return "redirect:/holiday";
+	}
+
+	/*휴가취소*/
+	@PostMapping("/holiday/delete")
+	public String deleteHoliday(@RequestParam("holidaySeq") Integer holidaySeq, HttpSession session ) {
+
+		/*파라미터 데이터 확인*/
+		System.out.println("uri: /holiday/delete, holidaySeq: " + holidaySeq);
+
+		/*세션에서 사용자ID, 사용자코드 정보 추출*/
+		/*session.getAttribute("user");*/
+
+		/*휴가취소*/
+		schdlMngService.cancelHoliday(holidaySeq);
 
 		return "redirect:/holiday";
 	}
