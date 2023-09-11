@@ -6,6 +6,7 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Mapper; 
 import org.springframework.stereotype.Repository;
 
+import kr.co.kccbrew.schdlMng.model.HolidayVo;
 import kr.co.kccbrew.schdlMng.model.SchdlMngVo;
 import kr.co.kccbrew.schdlMng.model.SchdlMngVo2;
 
@@ -20,4 +21,7 @@ public interface ISchdlMngRepository {
 	
 	/*회원 캘린더 조회 */
 	public List<SchdlMngVo2> selectCalendarSchedule(SchdlMngVo2 schdlMngVo);
+	
+	/*휴일 정보 조회*/
+	public List<HolidayVo> selectHoliday(String userId);
 }
