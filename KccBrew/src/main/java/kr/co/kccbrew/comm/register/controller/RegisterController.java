@@ -1,7 +1,10 @@
 package kr.co.kccbrew.comm.register.controller;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -159,8 +162,14 @@ public class RegisterController {
 	
 	/** 회원가입 처리*/
 	@RequestMapping(value="/register" , method=RequestMethod.POST)
-	public String register(RegisterVo user,@Value("#{serverImgPath['userPath']}")String path) {
-		user.setStorageLocation(path);
+	public String register(RegisterVo user,@Value("#{serverImgPath['userPath']}")String path,HttpServletRequest request) {
+		String folderPath=request.getServletContext().getRealPath("")+path;
+		File folder = new File(folderPath);
+        // 폴더가 존재하지 않으면 폴더를 생성합니다.
+        if (!folder.exists()) {
+            boolean success = folder.mkdirs(); // 폴더 생성 메소드
+        }
+		user.setStorageLocation(folderPath);
 		registerService.registerUser(user);
 		return "comm/login";
 	}

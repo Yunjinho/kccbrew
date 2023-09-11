@@ -4,24 +4,25 @@
 
 <select id="selectASList" parameterType="java.util.Map" resultType="kr.co.kccbrew.asMng.model.AsMngVo">
 SELECT as_info_seq AS "asInfoSeq",
-        	as_status AS "statusCd", 
         	store_nm AS "storeNm",
         	store_addr AS "storeAddr",
-        	machine_cd AS "machineCd",
-    		reg_dttm AS "regDttm"
-FROM (SELECT as_info_seq ,status.as_status,s.store_nm, s.store_addr, machine.machine_cd, a.reg_dttm 
+    		reg_dttm AS "regDttm",
+            as_status_nm AS "asStatusNm",
+            as_status_cd AS "asStatusCd",
+            machine_cd_nm AS "machineCdNm",
+            machine_cd AS "machineCd"
+FROM (SELECT as_info_seq ,s.store_nm, s.store_addr, a.reg_dttm , status.as_status_nm,status.as_status_cd,machine.machine_cd_nm,machine.machine_cd
 		 FROM as_information a 
 		INNER JOIN store_user_map su ON a.store_mng_id=su.user_id
 		INNER JOIN users u ON su.user_id=u.user_id 
 		INNER JOIN store s ON s.store_seq=su.store_seq
-		INNER JOIN (select grp_cd_dtl_nm AS as_status ,grp_cd_dtl_id from group_code_detail where grp_cd_id LIKE 'S') status ON status.grp_cd_dtl_id=a.as_status
-		INNER JOIN (select grp_cd_dtl_nm AS machine_cd ,grp_cd_dtl_id from group_code_detail where grp_cd_id like 'M') machine on machine.grp_cd_dtl_id=a.machine_cd
+		INNER JOIN (select grp_cd_dtl_nm AS as_status_nm ,grp_cd_dtl_id AS as_status_cd from group_code_detail where grp_cd_id LIKE 'S') status ON status.as_status_cd=a.as_status
+		INNER JOIN (select grp_cd_dtl_nm AS machine_cd_nm ,grp_cd_dtl_id as machine_cd from group_code_detail where grp_cd_id like 'M') machine on machine.machine_cd=a.machine_cd
 		WHERE s.store_nm LIKE '%'||#{asVo.storeNm}||'%' AND
-			status.as_status LIKE '%'||#{asVo.statusCd}||'%' AND
+			status.as_status_cd LIKE '%'||#{asVo.asStatusCd}||'%' AND
 	 		machine.machine_cd LIKE '%'||#{asVo.machineCd}||'%' AND 
 	 		s.store_addr LIKE '%'||#{asVo.storeAddr}||'%' 
  		<if test="asVo.asInfoSeq != ''">AND a.as_info_seq = #{asVo.asInfoSeq} </if>
-		<if test="asVo.userId != ''">AND (u.user_id =#{asVo.userId} AND u.user_type_cd='03')</if>
 		<choose>
 			<when test="asVo.startYr != ''">
 				<![CDATA[
@@ -63,14 +64,13 @@ WHERE ROWNUM BETWEEN #{start} AND #{end}
 	INNER JOIN store_user_map su ON a.store_mng_id=su.user_id
 	INNER JOIN users u ON su.user_id=u.user_id 
 	INNER JOIN store s ON s.store_seq=su.store_seq
-	INNER JOIN (select grp_cd_dtl_nm AS as_status ,grp_cd_dtl_id from group_code_detail where grp_cd_id LIKE 'S') status ON status.grp_cd_dtl_id=a.as_status
-	INNER JOIN (select grp_cd_dtl_nm AS machine_cd ,grp_cd_dtl_id from group_code_detail where grp_cd_id like 'M') machine on machine.grp_cd_dtl_id=a.machine_cd
-	WHERE s.store_nm LIKE '%'||#{storeNm}||'%' AND
-	 	status.as_status LIKE '%'||#{statusCd}||'%' AND
+	INNER JOIN (select grp_cd_dtl_nm AS as_status_nm ,grp_cd_dtl_id AS as_status_cd from group_code_detail where grp_cd_id LIKE 'S') status ON status.as_status_cd=a.as_status
+	INNER JOIN (select grp_cd_dtl_nm AS machine_cd_nm ,grp_cd_dtl_id as machine_cd from group_code_detail where grp_cd_id like 'M') machine on machine.machine_cd=a.machine_cd
+		WHERE s.store_nm LIKE '%'||#{storeNm}||'%' AND
+		status.as_status_cd LIKE '%'||#{asStatusCd}||'%' AND
 	 	machine.machine_cd LIKE '%'||#{machineCd}||'%' AND 
 	 	s.store_addr LIKE '%'||#{storeAddr}||'%'
 		<choose><when test="asInfoSeq != ''">AND a.as_info_seq = #{asInfoSeq} </when></choose>
-		<choose><when test="userId != ''">AND (u.user_id =#{userId} AND u.user_type_cd='03')</when></choose>
 		<choose>
 			<when test="startYr != ''">
 				<![CDATA[

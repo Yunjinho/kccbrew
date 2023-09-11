@@ -135,27 +135,45 @@
 											<tr>
 												<th>사용자 ID</th>
 												<td >
-													<input type="search" name="searchId" placeholder="사용자ID를 입력하세요" value="">
+													<input type="search" name="searchId" placeholder="사용자ID를 입력하세요" value="${searchContent.searchId}">
 												</td>
 												<th>장비 구분</th>
 												<td>
 													<select class="tx2" name="machineCd" onchange="javascript:chg();">
 															<option value="">장비 구분</option>
 															<c:forEach var="empCd" items="${machineCd}">
-																<option value="${empCd.grpCdDtlId}">
-																	${empCd.grpCdDtlNm}
-																</option>
+																<c:choose>
+																	<c:when test="${searchContent.machineCd == empCd.grpCdDtlId}">
+																		<option value="${empCd.grpCdDtlId}" selected>
+																			${empCd.grpCdDtlNm}
+																		</option>
+																	</c:when>
+																	<c:otherwise>
+																		<option value="${empCd.grpCdDtlId}">
+																			${empCd.grpCdDtlNm}
+																		</option>
+																	</c:otherwise>
+																</c:choose>
 															</c:forEach>
 													</select>
 												</td>
 												<th>AS 상태</th>
 												<td colspan="2">
-													<select class="tx2" name="statusCd" value="${searchContent.statusCd}" onchange="javascript:chg();">
+													<select class="tx2" name="asStatusCd" value="${searchContent.asStatusCd}" onchange="javascript:chg();">
 															<option value="">AS 상태</option>
 															<c:forEach var="asCd" items="${asStatusCd}">
-																<option value="${asCd.grpCdDtlId}">
-																	${asCd.grpCdDtlNm}
-																</option>
+																<c:choose>
+																	<c:when test="${searchContent.asStatusCd == asCd.grpCdDtlId}">
+																		<option value="${asCd.grpCdDtlId}" selected>
+																			${asCd.grpCdDtlNm}
+																		</option>
+																	</c:when>
+																	<c:otherwise>
+																		<option value="${asCd.grpCdDtlId}" selected>
+																			${asCd.grpCdDtlNm}
+																		</option>
+																	</c:otherwise>
+																</c:choose>
 															</c:forEach>
 													</select>
 												</td>
@@ -243,20 +261,38 @@
 													<select class="tx2" name="machineCd" onchange="javascript:chg();">
 															<option value="">장비 구분</option>
 															<c:forEach var="empCd" items="${machineCd}">
-																<option value="${empCd.grpCdDtlId}" selected>
-																	${empCd.grpCdDtlNm}
-																</option>
+																<c:choose>
+																	<c:when test="${searchContent.machineCd == empCd.grpCdDtlId}">
+																		<option value="${empCd.grpCdDtlId}" selected>
+																			${empCd.grpCdDtlNm}
+																		</option>
+																	</c:when>
+																	<c:otherwise>
+																		<option value="${empCd.grpCdDtlId}">
+																			${empCd.grpCdDtlNm}
+																		</option>
+																	</c:otherwise>
+																</c:choose>
 															</c:forEach>
 													</select>
 												</td>
 												<th>AS 상태</th>
 												<td colspan="2">
-													<select class="tx2" name="statusCd" id="" onchange="javascript:chg();">
+													<select class="tx2" name="asStatusCd" id="" onchange="javascript:chg();">
 															<option value="">AS 상태</option>
 															<c:forEach var="asCd" items="${asStatusCd}">
-																<option value="${asCd.grpCdDtlId}">
-																	${asCd.grpCdDtlNm}
-																</option>
+																<c:choose>
+																	<c:when test="${searchContent.asStatusCd == asCd.grpCdDtlId}">
+																		<option value="${asCd.grpCdDtlId}" selected>
+																			${asCd.grpCdDtlNm}
+																		</option>
+																	</c:when>
+																	<c:otherwise>
+																		<option value="${asCd.grpCdDtlId}">
+																			${asCd.grpCdDtlNm}
+																		</option>
+																	</c:otherwise>
+																</c:choose>
 															</c:forEach>
 													</select>
 												</td>
@@ -342,15 +378,15 @@
 												<th>AS 번호</th>
 												<!-- Input field for URI -->
 												<td>
-													<input type="search" name="asInfoSeq" placeholder="AS 번호를 입력하세요" value="">
+													<input type="search" name="asInfoSeq" placeholder="AS 번호를 입력하세요" value="${searchContent.asInfoSeq}">
 												</td>
 												<th>점포 이름</th>
 												<td>
-													<input type="search" name="storeNm" placeholder="점포명을 입력하세요" value="">
+													<input type="search" name="storeNm" placeholder="점포명을 입력하세요" value="${searchContent.storeNm}">
 												</td>
 												<th>점포 주소</th>
 												<td colspan="2">
-													<input type="search" name="storeAddr" placeholder="점포 주소를 입력하세요" value="">
+													<input type="search" name="storeAddr" placeholder="점포 주소를 입력하세요" value="${searchContent.storeAddr}">
 												</td>
 											</tr>
 											<!-- 3행 -->
@@ -360,20 +396,38 @@
 													<select class="tx2" name="machineCd" id="" onchange="javascript:chg();">
 															<option value="">장비 구분</option>
 															<c:forEach var="empCd" items="${machineCd}">
-																<option value="${empCd.grpCdDtlId}">
-																	${empCd.grpCdDtlNm}
-																</option>
+																<c:choose>
+																	<c:when test="${searchContent.machineCd == empCd.grpCdDtlId}">
+																		<option value="${empCd.grpCdDtlId}" selected>
+																			${empCd.grpCdDtlNm}
+																		</option>
+																	</c:when>
+																	<c:otherwise>
+																		<option value="${empCd.grpCdDtlId}">
+																			${empCd.grpCdDtlNm}
+																		</option>
+																	</c:otherwise>
+																</c:choose>
 															</c:forEach>
 													</select>
 												</td>
 												<th>AS 상태</th>
 												<td colspan="3">
-													<select class="tx2" name="statusCd" id="" onchange="javascript:chg();">
+													<select class="tx2" name="asStatusCd" id="" onchange="javascript:chg();">
 															<option value="">AS 상태</option>
 															<c:forEach var="asCd" items="${asStatusCd}">
-																<option value="${asCd.grpCdDtlId}">
-																	${asCd.grpCdDtlNm}
-																</option>
+																<c:choose>
+																	<c:when test="${searchContent.asStatusCd == asCd.grpCdDtlId}">
+																		<option value="${asCd.grpCdDtlId}" selected>
+																			${asCd.grpCdDtlNm}
+																		</option>
+																	</c:when>
+																	<c:otherwise>
+																		<option value="${asCd.grpCdDtlId}">
+																			${asCd.grpCdDtlNm}
+																		</option>
+																	</c:otherwise>
+																</c:choose>
 															</c:forEach>
 													</select>
 												</td>
@@ -416,7 +470,7 @@
 													<tr>
 														<td><c:out value="${list.asInfoSeq}" /></td>
 														<td><c:out value="${list.regDttm}" /></td>
-														<td><c:out value="${list.statusCd}" /></td>
+														<td><c:out value="${list.asStatusNm}" /></td>
 														<td><c:out value="${list.storeNm}" /></td>
 														<td><c:out value="${list.storeAddr}" /></td>
 													</tr>

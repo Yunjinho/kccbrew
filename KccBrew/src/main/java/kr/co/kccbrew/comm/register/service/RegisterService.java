@@ -6,6 +6,7 @@ import java.nio.file.Paths;
 import java.security.MessageDigest;
 import java.security.SecureRandom;
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -117,23 +118,23 @@ public class RegisterService implements IRegisterService{
 	@Transactional
 	private RegisterVo insertUserImg(RegisterVo user) {
 		RegisterVo vo=new RegisterVo();
+		UUID pk = UUID.randomUUID();
 		vo.setUserId(user.getUserId());
 		//기본 파일정보 등록
 		registerRepasotory.insertFileInfo(vo);
 		MultipartFile imgFile = user.getImgFile();
 		vo.setFileOriginalNm(imgFile.getOriginalFilename());
-		vo.setFileServerNm(user.getUserId()+"_"+imgFile.getOriginalFilename());
+		vo.setFileServerNm(user.getUserId()+"_"+pk+"_"+imgFile.getOriginalFilename());
 		vo.setFileFmt(imgFile.getContentType());
 		vo.setStorageLocation(user.getStorageLocation());
 		user.setFileSeq(vo.getFileSeq());
 		//파일 상세 정보 등록
 		registerRepasotory.insertFileDtlInfo(vo);
 		//이미지 파일 저장
-		Path path = Paths.get(vo.getStorageLocation()).toAbsolutePath().normalize();
-        Path targetPath = path.resolve(vo.getFileServerNm()).normalize();
+        String targetPath=user.getStorageLocation()+"\\"+vo.getFileServerNm();
 		try {
 			//imgFile.transferTo(targetPath);
-			FileCopyUtils.copy(imgFile.getInputStream(), new FileOutputStream(targetPath.toFile()));
+			FileCopyUtils.copy(imgFile.getInputStream(), new FileOutputStream(targetPath));
 		}catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
