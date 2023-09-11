@@ -40763,7 +40763,6 @@ button.disabled, input.form-submit.disabled, input[type="button"].disabled,
 	fieldset[disabled] button.active, fieldset[disabled] input.form-submit.active,
 	fieldset[disabled] input[type="button"].active, fieldset[disabled] input[type="submit"].active,
 	fieldset[disabled] input[type="reset"].active {
-	background-color: #fff;
 	border-color: #ccc
 }
 
