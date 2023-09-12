@@ -17,8 +17,8 @@ public class MainService implements IMainService{
 
 	//배정 리스트
 	@Override
-	public List<MainPageVo> showAllAssignList() {
-		List<MainPageVo> assignList = mainRepository.showAllAssignList();
+	public List<MainPageVo> showAllAsAssignList() {
+		List<MainPageVo> assignList = mainRepository.showAllAsAssignList();
 		return assignList;
 	}
 
@@ -47,6 +47,33 @@ public class MainService implements IMainService{
 	@Override
 	public List<MainPageVo> getDataInRange(LocalDate startOfWeek, LocalDate endOfWeek) {
 		return mainRepository.getDataInRange(startOfWeek, endOfWeek);
+	}
+
+	//아이디로 이름 찾기
+	@Override
+	public String getUserName(String userId) {
+		return mainRepository.getUserName(userId);
+	}
+
+	//특정 아이디에 해당하는 A/S 배정 데이터 조회
+	@Override
+	public List<MainPageVo> showAsAssiginListbyId(String userId) {
+		List<MainPageVo> assinListById = mainRepository.showAsAssiginListbyId(userId);
+		return assinListById;
+	}
+
+	//특정 아이디에 해당하는 A/S 접수 데이터 조회
+	@Override
+	public List<MainPageVo> showAsInfoListbyId(String userId) {
+		List<MainPageVo> asInfoListById = mainRepository.showAsInfoListbyId(userId);
+		return asInfoListById;
+	}
+	
+	//특정 아이디에 해당하는 처리 결과 데이터 조회
+	@Override
+	public List<MainPageVo> showAsResultListbyId(String userId) {
+		List<MainPageVo> asResultListById = mainRepository.showAsResultListbyId(userId);
+		return asResultListById;
 	}
 
 }

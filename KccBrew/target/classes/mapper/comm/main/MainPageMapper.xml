@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.kccbrew.comm.main.dao.IMainRepository">
+
+
+	<!-- 전체 a/s 배정 리스트 -->
+	<select id="showAllAsAssignList" parameterType="kr.co.kccbrew.comm.main.model.MainPageVo" resultType="kr.co.kccbrew.comm.main.model.MainPageVo">
+		<![CDATA[
+			SELECT
+				a.as_assign_seq				AS "asAssignNum",      
+				a.visit_dttm				AS "visitDate",
+				a.mechanic_id				AS "mechanicId",
+				u.user_nm					AS "mechanicName",
+				i.machine_cd				AS "machineCode",
+				i.as_status					AS "asStatus"
+			FROM as_assign a, users u, as_information i
+			WHERE a.mechanic_id = u.user_id	AND a.as_info_seq = i.as_info_seq
+			ORDER BY a.visit_dttm ASC
+		]]>
+	</select>
+	
+	<!-- 전체 a/s 접수 리스트 -->
+	<select id="showAllAsInfoList" parameterType="kr.co.kccbrew.comm.main.model.MainPageVo" resultType="kr.co.kccbrew.comm.main.model.MainPageVo">
+		<![CDATA[
+			SELECT
+				i.as_info_seq									AS "asInfoNum",     
+				i.as_status										AS "asStatus",
+				i.machine_cd									AS "machineCode",
+				i.store_mng_id									AS "managerId",
+				u.user_nm										AS "managerName"
+			FROM as_information i, users u
+			WHERE i.store_mng_id = u.user_id
+		]]>
+	</select>
+	
+	<!-- 전체 회원 승인 대기 리스트 -->
+	<select id="showWaitingMemberList" parameterType="kr.co.kccbrew.comm.main.model.MainPageVo" resultType="kr.co.kccbrew.comm.main.model.MainPageVo">
+		<![CDATA[
+			SELECT
+				user_id							AS "userId",     
+				user_nm							AS "userName",
+				user_telno						AS "userTelNo",
+				user_type_cd					AS "userType",
+				approve_yn						AS "approveStatus"
+			FROM users
+		]]>
+	</select>
+	
+	<!-- 전체 a/s 결과 리스트 -->
+	<select id="showAsResultList" parameterType="kr.co.kccbrew.comm.main.model.MainPageVo" resultType="kr.co.kccbrew.comm.main.model.MainPageVo">
+		<![CDATA[
+			SELECT
+				r.as_assign_seq					AS "asAssignNum",     
+				i.machine_cd					AS "machineCode",
+				i.as_status						AS "asStatus"
+			FROM as_result r, as_assign a, as_information i
+			WHERE r.as_assign_seq = a.as_assign_seq AND a.as_info_seq = i.as_info_seq
+		]]>
+	</select>
+	
+	<!-- 날짜 범위 구하기 -->
+	<select id="getDataInRange" parameterType="java.time.LocalDate" resultType="kr.co.kccbrew.comm.main.model.MainPageVo">
+    <![CDATA[
+        SELECT
+            a.as_assign_seq             AS "asAssignNum",
+            a.visit_dttm                AS "visitDate",
+            a.mechanic_id               AS "mechanicId",
+            u.user_nm                   AS "mechanicName",
+            i.machine_cd                AS "machineCode",
+            i.as_status                 AS "asStatus"
+        FROM as_assign a, users u, as_information i
+        WHERE a.mechanic_id = u.user_id   AND a.as_info_seq = i.as_info_seq
+              AND a.visit_dttm BETWEEN #{startOfWeek} AND #{endOfWeek}
+        ORDER BY a.visit_dttm ASC
+    ]]>
+	</select>
+	
+	<!-- 특정 사용자의 a/s 접수 리스트 -->
+	<select id="showAsInfoListbyId" parameterType="kr.co.kccbrew.comm.main.model.MainPageVo" resultType="kr.co.kccbrew.comm.main.model.MainPageVo">
+		<![CDATA[
+			SELECT
+				i.as_info_seq									AS "asInfoNum",     
+				i.as_status										AS "asStatus",
+				i.machine_cd									AS "machineCode",
+				i.store_mng_id									AS "managerId",
+				u.user_nm										AS "managerName"
+			FROM as_information i, users u
+			WHERE i.store_mng_id = u.user_id AND i.store_mng_id=#{userId}
+		]]>
+	</select>
+	
+	<!-- 특정 사용자의 a/s 배정 리스트 -->
+	<select id="showAsAssiginListbyId" parameterType="kr.co.kccbrew.comm.main.model.MainPageVo" resultType="kr.co.kccbrew.comm.main.model.MainPageVo">
+		<![CDATA[
+			SELECT
+			    a.as_assign_seq           AS "asAssignNum",
+			    i.as_info_seq             AS "asInfoNum",
+			    i.as_status               AS "asStatus",
+			    i.machine_cd              AS "machineCode",
+			    i.store_mng_id            AS "managerId",
+			    u.user_nm                 AS "managerName",
+			    a.mechanic_id             AS "mechanicId",
+			    a.visit_dttm			  AS "visitDate"
+			FROM as_information i
+			INNER JOIN USERS u ON i.store_mng_id = u.user_id
+			INNER JOIN as_assign a ON i.as_info_seq = a.as_info_seq
+			WHERE i.store_mng_id = #{userId}
+			ORDER BY a.visit_dttm ASC
+		]]>
+	</select>
+	
+	<!-- 특정 사용자의 a/s 결과 리스트 -->
+	<select id="showAsResultListbyId" parameterType="kr.co.kccbrew.comm.main.model.MainPageVo" resultType="kr.co.kccbrew.comm.main.model.MainPageVo">
+		<![CDATA[
+			SELECT
+				r.as_assign_seq					AS "asAssignNum",     
+				i.machine_cd					AS "machineCode",
+				i.as_status						AS "asStatus",
+				u.user_id						AS "managerId"
+			FROM as_result r, as_assign a, as_information i, users u
+			WHERE r.as_assign_seq = a.as_assign_seq AND a.as_info_seq = i.as_info_seq AND i.store_mng_id = u.user_id AND user_id=#{userId}
+		]]>
+	</select>
+</mapper>

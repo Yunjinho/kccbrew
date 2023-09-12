@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC
+  "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN"
+  "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+
+<tiles-definitions>
+
+	<!-- 기본 레이아웃 뼈대 역할 -->
+	<definition name="mainLayout" template="/WEB-INF/views/tiles/default/mainLayout.jsp">
+		<put-attribute name="title" value="" />
+		<put-attribute name="header" value="/WEB-INF/views/tiles/default/commheader.jsp" />   <!-- 공통 헤더 -->
+		<put-attribute name="contents" value="/WEB-INF/views/tiles/default/basebody.jsp" />	  <!-- 빈 파일 -->
+		<put-attribute name="footer" value="/WEB-INF/views/tiles/default/basefooter.jsp" />	  <!-- 공통 푸터 -->
+	</definition>
+ 	
+ 	<!-- 로그인 페이지 -->
+ 	<definition name="loginPage" extends="mainLayout">
+ 		<!-- 속성 따로 명시하지 않으면 기본 레이아웃 뼈대 자동 상속 -->
+		<put-attribute name="title" value="로그인 페이지" />
+		<put-attribute name="header" value="" /> <!-- 빈 헤더 -->
+		<put-attribute name="contents" value="/WEB-INF/views/comm/login/login.jsp" />
+	</definition>
+	
+	<!-- 회원가입 페이지 -->
+ 	<definition name="registerPage" extends="mainLayout">
+		<put-attribute name="title" value="회원가입 페이지" />
+		<put-attribute name="header" value="" /> <!-- 빈 헤더 -->
+		<put-attribute name="contents" value="/WEB-INF/views/comm/register/register.jsp" />
+	</definition>
+	
+ 	<!-- 사용자 별 메인페이지 -->
+ 	<!-- 관리자 페이지 -->
+	<definition name="adminPage" extends="mainLayout">
+		<put-attribute name="title" value="관리자 페이지" />
+		<put-attribute name="contents" value="/WEB-INF/views/include/admin/main/admincontents.jsp" />
+	</definition>
+	
+	<!-- 수리기사 페이지 -->
+	<definition name="mechanicPage" extends="mainLayout">
+		<put-attribute name="title" value="수리 기사 페이지" />
+		<put-attribute name="contents" value="/WEB-INF/views/include/mechanic/mechaniccontents.jsp" />
+	</definition>
+	
+	<!-- 점주 페이지 -->
+	<definition name="managerPage" extends="mainLayout">
+		<put-attribute name="title" value="점주 페이지" />
+		<put-attribute name="contents" value="/WEB-INF/views/include/manager/managercontents.jsp" />
+	</definition>
+		
+	
+	<!-- 관리자 페이지 추가 확장, 타이틀과 헤더 유지, contents만 변경 -->
+	<definition name="adminPageT1" extends="adminPage">
+		<put-attribute name="contents" value="/WEB-INF/views/include/admin/adminTab/menu1.jsp" />
+	</definition>
+	
+	<definition name="adminPageT2" extends="adminPage">
+		<put-attribute name="contents" value="/WEB-INF/views/include/admin/adminTab/menu2.jsp" />
+	</definition>
+	
+	<definition name="adminPageT3" extends="adminPage">
+		<put-attribute name="contents" value="/WEB-INF/views/include/admin/adminTab/menu3.jsp" />
+	</definition>
+	
+	<!-- 관리자 A/S 리스트 페이지 -->
+	<definition name="adminASList" extends="adminPage">
+		<put-attribute name="contents" value="/WEB-INF/views/asMng/asList.jsp" />
+	</definition>
+	
+	<!-- 수리기사 A/S 리스트 페이지 -->
+	<definition name="mechanicASList" extends="mechanicPage">
+		<put-attribute name="contents" value="/WEB-INF/views/asMng/asList.jsp" />
+	</definition>
+	
+	<!-- 점주 A/S 리스트 페이지 -->
+	<definition name="managerASList" extends="managerPage">
+		<put-attribute name="contents" value="/WEB-INF/views/asMng/asList.jsp" />
+	</definition>
+	
+	
+	
+	
+</tiles-definitions>

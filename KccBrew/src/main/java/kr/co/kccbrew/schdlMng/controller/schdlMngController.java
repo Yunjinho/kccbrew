@@ -20,15 +20,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.google.common.collect.Lists;
-
-import kr.co.kccbrew.comm.register.model.StoreListVo;
-import kr.co.kccbrew.comm.register.model.UserVo;
+import kr.co.kccbrew.comm.register.model.RegisterVo;
 import kr.co.kccbrew.schdlMng.model.HolidayVo;
-import kr.co.kccbrew.schdlMng.model.SchdlMngVo;
 import kr.co.kccbrew.schdlMng.model.SchdlMngVo2;
 import kr.co.kccbrew.schdlMng.service.SchdlMngService;
-import kr.co.kccbrew.sysMng.logMng.model.LogMngVo;
+import kr.co.kccbrew.strMng.model.StrMngVo;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -169,7 +165,6 @@ public class schdlMngController {
 		/*매개변수 확인*/
 		System.out.println("year: " + year);
 		System.out.println("month: " + month);
-		/*System.out.println("dateInfo: " + dateInfo);*/
 
 		/*세션에서 회원정보 추출해서 dto에 저장*/
 		HttpSession session = request.getSession();
@@ -190,8 +185,6 @@ public class schdlMngController {
 
 		List<SchdlMngVo2> schedules = schdlMngService.getCalendarSchedule(schdlMngVo);
 
-
-
 		return schedules;
 	}
 
@@ -207,7 +200,7 @@ public class schdlMngController {
 	public String holidayPage(Model model, HttpSession session) {
 
 		/*세션에서 사용자 정보 반환*/
-		UserVo user = new UserVo();
+		RegisterVo user = new RegisterVo();
 
 
 		/*세션에 사용자정보가 저장되어 있는 경우*/
@@ -227,12 +220,12 @@ public class schdlMngController {
 	public String holidayPage(Model model) {
 
 		/*세션에서 점주 및 점포 정보 확인*/
-		UserVo user = new UserVo();
+		RegisterVo  user = new RegisterVo();
 		user.setUserId("ngw01");
 		String userId = user.getUserId();
 
-		StoreListVo store = new StoreListVo();
-		store.setStoreSeq("35");
+		StrMngVo store = new StrMngVo();
+		store.setStoreSeq(35);
 		store.setStoreNm("잠실점");
 
 		/*휴일정보 확인*/

@@ -8,7 +8,7 @@
 .comm-nav{
 	font-family: 'notosans';
 	z-index:999;
-	font-size:1.5em;
+	font-size:1.2em;
 	height:90px;
 	line-height: 100px;
 	z-index:99999;
@@ -31,18 +31,20 @@
 .logout-btn {
 	margin-left:10px;
 	padding: 5px 15px;
-	font-size:0.7em;
 	border: 1px solid #0000a0;
 	background-color: #0000a0;
 	color:#ffffff;
 	cursor: pointer;
+}
+.logout-btn:hover {
+	text-decoration: underline;
 }
 /********* nav 바 *************/
 .nav-bar{
 	position:relative;
 	z-index:9990;
 	padding: 0 200px;
-	height: 60px;
+	height: 70px;
 	background-color: #ffffff;
 	display: flex;
 	justify-content: space-around;
@@ -53,12 +55,14 @@
 	flex:0.2;
 }
 
+.navbar-brand {
+	height:60px;
+	line-height: 60px;
+}
 /** 로고 이미지 **/
 .navbar-brand img{
-	position:relative;
-	top:-15px;
-	width:90px;
-	height:90px;
+	width:200px;
+	height:70px;
 	cursor: pointer;
 }
 
@@ -71,7 +75,7 @@
 }
 
 .nav-pills{
-	height:60px;
+	height:70px;
 	margin:0;
 	padding:0;
 	list-style:none;
@@ -84,8 +88,8 @@
 }
 
 .nav-link{
-	height:60px;
-	line-height:60px;
+	height:70px;
+	line-height:70px;
 	font-size:0.9em;
 	color:#111111;
 	text-decoration: none;
