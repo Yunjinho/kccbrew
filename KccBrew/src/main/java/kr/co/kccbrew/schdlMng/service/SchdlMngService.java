@@ -1,5 +1,6 @@
 package kr.co.kccbrew.schdlMng.service;
 
+import java.sql.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -86,6 +87,13 @@ public class SchdlMngService implements ISchdlMngService {
 	@Override
 	public void addHoliday(HolidayVo holiday) {
 		schdlMngRepository.insertHoliday(holiday);
+	}
+
+	
+	/*AS배정일 조회*/
+	@Override
+	public List<Date> getAssignDates(String userId) {
+		return schdlMngRepository.selectAssignDates(userId);
 	}
 	
 	

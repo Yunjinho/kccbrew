@@ -3,6 +3,14 @@
 <mapper
 	namespace="kr.co.kccbrew.schdlMng.dao.ISchdlMngRepository">
 
+<!-- 	<resultMap id="assignResult" type="java.util.Map">
+		<result property="asAssignSeq" column="AS_ASSIGN_SEQ" />
+		<result property="asInfoSeq" column="AS_INFO_SEQ" />
+		<result property="visitDate" column="VISIT_DTTM" />
+		<result property="mechanicId" column="MECHANIC_ID" />
+		<result property="managerId" column="STORE_MNG_ID" />
+	</resultMap> -->
+
 	<resultMap id="holidayResult"
 		type="kr.co.kccbrew.schdlMng.model.HolidayVo">
 		<result property="holidaySeq" column="HOLIDAY_SEQ" />
@@ -516,6 +524,18 @@ EXTRACT(YEAR FROM SCHEDULE_DATE) = 2023 AND EXTRACT(MONTH FROM SCHEDULE_DATE) = 
     VALUES (#{holidaySeq}, #{groupCodeDetailId}, #{userId}, #{appDate}, #{startDate}, #{endDate})
   ]]>
 	</insert>
+
+
+
+	<!-- AS배정날짜 목록 조회 -->
+	<select id="selectAssignDates" parameterType="string"
+		resultType="java.sql.Date">
+		SELECT assign.VISIT_DTTM
+		FROM AS_ASSIGN assign
+		INNER JOIN AS_INFORMATION info ON assign.AS_INFO_SEQ = info.AS_INFO_SEQ
+		WHERE assign.MECHANIC_ID = #{userId} OR info.STORE_MNG_ID = #{userId}
+	</select>
+
 
 
 

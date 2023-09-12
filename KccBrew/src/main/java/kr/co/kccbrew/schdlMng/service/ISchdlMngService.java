@@ -1,5 +1,6 @@
 package kr.co.kccbrew.schdlMng.service;
 
+import java.sql.Date;
 import java.util.List;
 
 import kr.co.kccbrew.schdlMng.model.HolidayVo;
@@ -28,4 +29,8 @@ public interface ISchdlMngService {
 	
 	/*휴가등록*/
 	public void addHoliday(HolidayVo holiday);
+	
+	/*AS배정일 조회*/
+	public List<Date> getAssignDates(String userId);
+	
 }

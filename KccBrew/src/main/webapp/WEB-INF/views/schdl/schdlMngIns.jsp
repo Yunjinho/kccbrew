@@ -9,10 +9,11 @@
 <!DOCTYPE html>
 <html>
 <head>
+<meta charset="UTF-8">
 <!-- css -->
+<link rel="stylesheet" href="/resources/css/schdl/myinsertform.css" />
 <link rel="stylesheet" href="/resources/css/log/mylogtest.css" />
 <link rel="stylesheet" href="/resources/css/log/content-template.css" />
-<link rel="stylesheet" href="/resources/css/schdl/myinsertform.css" />
 
 <!-- font -->
 <!-- notoSans -->
@@ -387,11 +388,12 @@
 											</div>
 											<!-- 휴가신청 조회 및 삭제 -->
 											<form id="deleteForm" action="/holiday/delete" method="post">
+											<div class="scroll-container">
 												<table>
 													<thead>
 														<tr>
 															<th>순번</th>
-															<!-- <th>휴가아이디</th> -->
+															<th>휴가아이디</th>
 															<th>휴가신청일</th>
 															<th>휴가시작일</th>
 															<th>휴가종료일</th>
@@ -406,7 +408,7 @@
 
 															<tr>
 																<td><c:out value="${loop.index + 1}" /></td>
-																<%-- <td><c:out value="${holiday.holidaySeq}" /></td> --%>
+																<td><c:out value="${holiday.holidaySeq}" /></td>
 																<td><c:out value="${holiday.appDate}" /></td>
 																<td><c:out value="${holiday.startDate}" /></td>
 																<td><c:out value="${holiday.endDate}" /></td>
@@ -429,7 +431,7 @@
 																				value="" disabled />
 																		</c:when>
 																		<c:otherwise>
-																			<input type="radio" name="selectedHolidaySeq"
+																			<input type="radio" name="holidaySeq"
 																				value="${holiday.holidaySeq}" />
 																		</c:otherwise>
 																	</c:choose></td>
@@ -440,9 +442,11 @@
 														</c:forEach>
 													</tbody>
 												</table>
+												</div>
 												<button type="button" id="cancelButton">휴가 취소</button>
 											</form>
 
+											<!-- 휴가등록 모달창 -->
 											<div id="myModal" class="modal">
 												<div class="modal-content">
 													<h2>휴가 취소 확인</h2>
@@ -451,6 +455,7 @@
 													<button id="confirmNo">아니오</button>
 												</div>
 											</div>
+
 
 											<script>
 												// 휴가 취소 버튼 클릭 시 모달 창 열기
@@ -510,15 +515,6 @@
 										<!-- 휴가신청 -->
 										<div class="subtitle">휴가신청</div>
 
-										<div id="applyModal" class="modal">
-											<div class="modal-content">
-												<h2>휴가 신청 확인</h2>
-												<p>휴가를 신청하시겠습니까?</p>
-												<button id="applyYes">예</button>
-												<button id="applyNo">아니오</button>
-											</div>
-										</div>
-
 										<form id="addForm" action="/holiday/add" method="post">
 											<table id="search-box">
 												<tr>
@@ -534,7 +530,7 @@
 												</tr>
 											</table>
 
-											<button type="button" id="applyButton">휴가신청</button>
+											<button type="submit" id="applyButton">휴가신청</button>
 											<button type="reset" id="resetButton">초기화</button>
 										</form>
 
@@ -600,51 +596,111 @@
 															});
 										</script>
 
+										<!-- 확인 모달 창 -->
+										<div id="confirmModal" class="modal">
+											<div class="modal-content">
+												<span class="close">&times;</span>
+												<p>정말로 휴가를 신청하시겠습니까?</p>
+												<button id="applyYes">예</button>
+												<button id="applyNo">아니오</button>
+											</div>
+										</div>
+
+										<!-- 결과 모달 창 -->
+										<div id="resultModal" class="modal">
+											<div class="modal-content">
+												<span class="close">&times;</span>
+												<p id="modalMessage"></p>
+											</div>
+										</div>
+
 										<script>
-											//휴가신청 버튼 클릭 시 모달 창 열기
-											document
-													.getElementById(
-															"applyButton")
-													.addEventListener(
-															"click",
-															function() {
-																var modal = document
-																		.getElementById("applyModal");
-																modal.classList
-																		.add("active");
+											// 폼 제출 이벤트 리스너
+											$("#addForm")
+													.submit(
+															function(event) {
+																event
+																		.preventDefault();
+
+																// 확인 모달 창 열기
+																var confirmModal = document
+																		.getElementById("confirmModal");
+																confirmModal.style.display = "block";
 															});
 
-											//예 버튼 클릭 시
+											// 확인 모달 창에서 "예" 버튼 클릭 시
 											document
 													.getElementById("applyYes")
 													.addEventListener(
 															"click",
 															function() {
-																// 여기에서 휴가 신청 로직을 수행하거나, 폼을 서버로 제출할 수 있습니다.
-																// 폼을 서버로 제출하려면 JavaScript를 사용하여 폼을 선택하고 submit() 메서드를 호출하면 됩니다.
-																var form = document
-																		.getElementById("addForm");
-																form.submit();
+																// 확인 모달 창 닫기
+																var confirmModal = document
+																		.getElementById("confirmModal");
+																confirmModal.style.display = "none";
 
-																// 모달 창 닫기
-																var modal = document
-																		.getElementById("applyModal");
-																modal.classList
-																		.remove("active");
+																// 폼 데이터를 직렬화
+																var formData = $(
+																		"#addForm")
+																		.serialize();
+
+																// AJAX 요청으로 휴가 등록을 수행하고 결과 메시지를 받아옴
+																$
+																		.ajax({
+																			url : "/holiday/add",
+																			type : "POST",
+																			data : formData,
+																			success : function(
+																					message) {
+																				// 결과 모달 창 열고 메시지 표시
+																				var resultModal = document
+																						.getElementById("resultModal");
+																				var modalMessage = document
+																						.getElementById("modalMessage");
+																				modalMessage.innerText = message;
+																				resultModal.style.display = "block";
+																			},
+																			error : function() {
+																				// 오류 메시지를 결과 모달 창에 표시
+																				var resultModal = document
+																						.getElementById("resultModal");
+																				var modalMessage = document
+																						.getElementById("modalMessage");
+																				modalMessage.innerText = "오류 발생";
+																				resultModal.style.display = "block";
+																			}
+																		});
 															});
 
-											//아니오 버튼 클릭 시 모달 창 닫기
-											document
-													.getElementById("applyNo")
-													.addEventListener(
-															"click",
-															function() {
-																var modal = document
-																		.getElementById("applyModal");
-																modal.classList
-																		.remove("active");
-															});
+											// 모달 창 닫기
+											var closeBtns = document
+													.querySelectorAll(".close");
+											closeBtns
+													.forEach(function(btn) {
+														btn
+																.addEventListener(
+																		"click",
+																		function() {
+																			var modal = btn.parentElement.parentElement;
+																			modal.style.display = "none";
+																		});
+													});
+
+											// 모달 창 닫기 함수
+											function closeModal() {
+												var modal = document
+														.getElementById("confirmModal");
+												modal.style.display = "none";
+											}
+
+											// 아니오 버튼 클릭 이벤트 처리
+											document.getElementById("applyNo")
+													.addEventListener("click",
+															closeModal);
 										</script>
+
+
+
 									</div>
 
 									<!-- ********** 세은 로그 관련 내용 끝 ********** -->

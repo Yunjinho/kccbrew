@@ -8,9 +8,12 @@ import java.util.Calendar;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -243,8 +246,11 @@ public class schdlMngController {
 	}
 
 	/*휴가신청*/
-	@PostMapping("/holiday/add")
-	public String addHoliday(@ModelAttribute HolidayVo holiday, HttpSession session ) {
+	@PostMapping(value = "/holiday/add", produces = "text/plain; charset=utf-8")
+	@ResponseBody
+	public String addHoliday(@ModelAttribute HolidayVo holiday, HttpSession session, HttpServletResponse response ) {
+	    
+		String message = null;
 
 		Calendar calendar = Calendar.getInstance();
 		java.util.Date utilDate = calendar.getTime();
@@ -260,15 +266,21 @@ public class schdlMngController {
 
 		System.out.println("보정한 holiday확인: " + holiday);
 
-		if (isOverlapDate(holiday.getStartDate(), holiday.getEndDate()) || isBeforeToday(holiday.getStartDate().toString())) {
-			System.out.println("부적절한 날짜 선택!");
+		if(isAsAssignDate(holiday.getStartDate(), holiday.getEndDate())) {
+			message = "등록실패: 수리배정일과 동일한 날짜 선택!";
+			System.out.println(message);
+		}
+		else if (isOverlapDate(holiday.getStartDate(), holiday.getEndDate()) || isBeforeToday(holiday.getStartDate().toString())) {
+			message = "등록실패: 부적절한 날짜 선택!";
+			System.out.println(message);
 		}
 		else {
 			/*휴가등록*/
 			schdlMngService.addHoliday(holiday);
+			message = "등록완료!";
 		}
 
-		return "redirect:/holiday";
+		return message;
 	}
 
 
@@ -331,20 +343,15 @@ public class schdlMngController {
 		String userId = "ngw01";
 
 		/*수리배정일 리스트*/
-		List<HolidayVo> vacationDates = schdlMngService.getHoliday(userId);
-		Date startDateToCheck = startDate;
-		Date endDateToCheck = endDate;
+		List<Date> asAssignDates = schdlMngService.getAssignDates(userId);
 
 		boolean isOverlap = false;
 
 		/* 휴가일 중복 검사*/
-		for (HolidayVo vacation : vacationDates) {
-			Date existingStartDate = vacation.getStartDate();
-			Date existingEndDate = vacation.getEndDate();
-
-			if (startDateToCheck.compareTo(existingEndDate) <= 0 && endDateToCheck.compareTo(existingStartDate) >= 0) {
+		for (Date date : asAssignDates) {
+			if (date.compareTo(startDate) >= 0 && date.compareTo(endDate) <= 0) {
 				isOverlap = true;
-				break; 
+				break;
 			}
 		}
 		return isOverlap;
