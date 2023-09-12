@@ -39,6 +39,7 @@ import lombok.extern.slf4j.Slf4j;
  * ============      ==============     ==============
  * 2023-09-01			           이세은			             최초생성
  * 2023-09-11                       이세은               휴일등록 메서드 작성
+ * 2023-09-12                       이세은               휴일기간 중복방지 유효성검사 메서드작성
  * @author YUNJINHO
  * @version 1.0
  */
@@ -263,14 +264,99 @@ public class schdlMngController {
 		holiday.setUserId(userId);
 		holiday.setGroupCodeDetailId(groupCodeDetailId);
 		holiday.setAppDate(sqlDate);
-		
+
 		System.out.println("보정한 holiday확인: " + holiday);
 
-		/*휴가등록*/
-		schdlMngService.addHoliday(holiday);
+		if (isOverlapDate(holiday.getStartDate(), holiday.getEndDate()) || isBeforeToday(holiday.getStartDate().toString())) {
+			System.out.println("부적절한 날짜 선택!");
+		}
+		else {
+			/*휴가등록*/
+			schdlMngService.addHoliday(holiday);
+		}
 
 		return "redirect:/holiday";
 	}
+
+
+	/*휴가 중복 검사*/
+	public boolean isOverlapDate(Date startDate, Date endDate) {
+
+		/*세션으로 회원정보 확인*/
+		String userId = "ngw01";
+
+		List<HolidayVo> vacationDates = schdlMngService.getHoliday(userId);
+		Date startDateToCheck = startDate;
+		Date endDateToCheck = endDate;
+
+		boolean isOverlap = false;
+
+		/* 휴가일 중복 검사*/
+		for (HolidayVo vacation : vacationDates) {
+			Date existingStartDate = vacation.getStartDate();
+			Date existingEndDate = vacation.getEndDate();
+
+			if (startDateToCheck.compareTo(existingEndDate) <= 0 && endDateToCheck.compareTo(existingStartDate) >= 0) {
+				isOverlap = true;
+				break; 
+			}
+		}
+
+		/*겹치는 경우 또는 겹치지 않는 경우의 처리*/
+		if (isOverlap) {
+			return isOverlap;
+		} else {
+			return isOverlap;
+		}
+
+	}
+
+	/*지난날 휴가신청 유효검사*/
+	public static boolean isBeforeToday(String startDateStr) {
+		try {
+
+			java.util.Date today = new java.util.Date();
+
+			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+			java.util.Date startDate = (java.util.Date) dateFormat.parse(startDateStr);
+
+			if (startDate.before(today)) {
+				return true;
+			}
+			return false;
+		} catch (ParseException e) {
+			e.printStackTrace();
+			return true;
+		}
+	}
+
+
+	/*수리 배정일 중복검사*/
+	public boolean isAsAssignDate(Date startDate, Date endDate) {
+
+		/*세션으로 회원정보 확인*/
+		String userId = "ngw01";
+
+		/*수리배정일 리스트*/
+		List<HolidayVo> vacationDates = schdlMngService.getHoliday(userId);
+		Date startDateToCheck = startDate;
+		Date endDateToCheck = endDate;
+
+		boolean isOverlap = false;
+
+		/* 휴가일 중복 검사*/
+		for (HolidayVo vacation : vacationDates) {
+			Date existingStartDate = vacation.getStartDate();
+			Date existingEndDate = vacation.getEndDate();
+
+			if (startDateToCheck.compareTo(existingEndDate) <= 0 && endDateToCheck.compareTo(existingStartDate) >= 0) {
+				isOverlap = true;
+				break; 
+			}
+		}
+		return isOverlap;
+	}
+
 
 	/*휴가취소*/
 	@PostMapping("/holiday/delete")

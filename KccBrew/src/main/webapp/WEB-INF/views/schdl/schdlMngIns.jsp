@@ -425,10 +425,11 @@
 																<td><c:choose>
 																		<c:when
 																			test="${holiday.actualUse == 'N' || holiday.startDate <= now}">
-																			<input type="checkbox" name="holidaySeq" disabled />
+																			<input type="radio" name="selectedHolidaySeq"
+																				value="" disabled />
 																		</c:when>
 																		<c:otherwise>
-																			<input type="checkbox" name="holidaySeq"
+																			<input type="radio" name="selectedHolidaySeq"
 																				value="${holiday.holidaySeq}" />
 																		</c:otherwise>
 																	</c:choose></td>
@@ -441,42 +442,65 @@
 												</table>
 												<button type="button" id="cancelButton">휴가 취소</button>
 											</form>
-											
-  <div id="myModal" class="modal">
-        <div class="modal-content">
-            <h2>휴가 취소 확인</h2>
-            <p>휴가를 취소하시겠습니까?</p>
-            <button id="confirmYes">예</button>
-            <button id="confirmNo">아니오</button>
-        </div>
-    </div>
-    
-    <script>
- // 휴가 취소 버튼 클릭 시 모달 창 열기
-    document.getElementById("cancelButton").addEventListener("click", function() {
 
-        var modal = document.getElementById("myModal");
-        modal.classList.add("active");
-    });
+											<div id="myModal" class="modal">
+												<div class="modal-content">
+													<h2>휴가 취소 확인</h2>
+													<p>휴가를 취소하시겠습니까?</p>
+													<button id="confirmYes">예</button>
+													<button id="confirmNo">아니오</button>
+												</div>
+											</div>
 
-    // 예 버튼 클릭 시
-    document.getElementById("confirmYes").addEventListener("click", function() {
-        // 여기에서 취소 로직을 수행하거나, 폼을 서버로 제출할 수 있습니다.
-        // 폼을 서버로 제출하려면 JavaScript를 사용하여 폼을 선택하고 submit() 메서드를 호출하면 됩니다.
-        var form = document.getElementById("deleteForm");
-        form.submit();
-        
-        // 모달 창 닫기
-        var modal = document.getElementById("myModal");
-        modal.classList.remove("active");
-    });
+											<script>
+												// 휴가 취소 버튼 클릭 시 모달 창 열기
+												document
+														.getElementById(
+																"cancelButton")
+														.addEventListener(
+																"click",
+																function() {
 
-    // 아니오 버튼 클릭 시 모달 창 닫기
-    document.getElementById("confirmNo").addEventListener("click", function() {
-        var modal = document.getElementById("myModal");
-        modal.classList.remove("active");
-    });
-    </script>
+																	var modal = document
+																			.getElementById("myModal");
+																	modal.classList
+																			.add("active");
+																});
+
+												// 예 버튼 클릭 시
+												document
+														.getElementById(
+																"confirmYes")
+														.addEventListener(
+																"click",
+																function() {
+																	// 여기에서 취소 로직을 수행하거나, 폼을 서버로 제출할 수 있습니다.
+																	// 폼을 서버로 제출하려면 JavaScript를 사용하여 폼을 선택하고 submit() 메서드를 호출하면 됩니다.
+																	var form = document
+																			.getElementById("deleteForm");
+																	form
+																			.submit();
+
+																	// 모달 창 닫기
+																	var modal = document
+																			.getElementById("myModal");
+																	modal.classList
+																			.remove("active");
+																});
+
+												// 아니오 버튼 클릭 시 모달 창 닫기
+												document
+														.getElementById(
+																"confirmNo")
+														.addEventListener(
+																"click",
+																function() {
+																	var modal = document
+																			.getElementById("myModal");
+																	modal.classList
+																			.remove("active");
+																});
+											</script>
 
 
 
@@ -485,17 +509,17 @@
 
 										<!-- 휴가신청 -->
 										<div class="subtitle">휴가신청</div>
-										
+
 										<div id="applyModal" class="modal">
-    <div class="modal-content">
-        <h2>휴가 신청 확인</h2>
-        <p>휴가를 신청하시겠습니까?</p>
-        <button id="applyYes">예</button>
-        <button id="applyNo">아니오</button>
-    </div>
-</div>
-										
-										<form action="/holiday/add" method="post">
+											<div class="modal-content">
+												<h2>휴가 신청 확인</h2>
+												<p>휴가를 신청하시겠습니까?</p>
+												<button id="applyYes">예</button>
+												<button id="applyNo">아니오</button>
+											</div>
+										</div>
+
+										<form id="addForm" action="/holiday/add" method="post">
 											<table id="search-box">
 												<tr>
 													<th>휴가신청일</th>
@@ -516,65 +540,111 @@
 
 
 										<script>
-    // 모델에서 잔여일수 데이터 가져와서 표시
-    var remainingDays = ${remainingDays};
-    document.getElementById("remainingDays").textContent = remainingDays;
+											// 모델에서 잔여일수 데이터 가져와서 표시
+											var remainingDays = ${remainingDays};
+											document.getElementById("remainingDays").textContent = remainingDays;
 
-    function calculateDays() {
-        var startDate = new Date(document.getElementById("startDate").value);
-        var endDate = new Date(document.getElementById("endDate").value);
+											function calculateDays() {
+												var startDate = new Date(
+														document
+																.getElementById("startDate").value);
+												var endDate = new Date(
+														document
+																.getElementById("endDate").value);
 
-        if (!isNaN(startDate) && !isNaN(endDate)) {
-            var timeDiff = endDate - startDate + 1;
-            var daysDiff = Math.ceil(timeDiff / (1000 * 3600 * 24)); 
-            document.getElementById("usedDays").textContent = daysDiff;
-            document.getElementById("remainingDays").textContent = remainingDays - daysDiff;
-        } else {
-            document.getElementById("usedDays").textContent = "";
-        }
-    }
+												if (!isNaN(startDate)
+														&& !isNaN(endDate)) {
+													var timeDiff = endDate
+															- startDate + 1;
+													var daysDiff = Math
+															.ceil(timeDiff
+																	/ (1000 * 3600 * 24));
+													document
+															.getElementById("usedDays").textContent = daysDiff;
+													document
+															.getElementById("remainingDays").textContent = remainingDays
+															- daysDiff;
+												} else {
+													document
+															.getElementById("usedDays").textContent = "";
+												}
+											}
 
-    // input 필드 값이 변경될 때마다 calculateDays 함수 호출
-    document.getElementById("startDate").addEventListener("change", calculateDays);
-    document.getElementById("endDate").addEventListener("change", calculateDays);
+											// input 필드 값이 변경될 때마다 calculateDays 함수 호출
+											document
+													.getElementById("startDate")
+													.addEventListener("change",
+															calculateDays);
+											document.getElementById("endDate")
+													.addEventListener("change",
+															calculateDays);
 
-    // 초기화 버튼을 눌렀을 때
-    document.getElementById("resetButton").addEventListener("click", function () {
-        // 입력 필드를 초기화
-        document.getElementById("startDate").value = "";
-        document.getElementById("endDate").value = "";
+											// 초기화 버튼을 눌렀을 때
+											document
+													.getElementById(
+															"resetButton")
+													.addEventListener(
+															"click",
+															function() {
+																// 입력 필드를 초기화
+																document
+																		.getElementById("startDate").value = "";
+																document
+																		.getElementById("endDate").value = "";
 
-        // 일수 및 잔여일수를 초기 상태로 되돌림
-        document.getElementById("usedDays").textContent = "";
-        document.getElementById("remainingDays").textContent = remainingDays;
-    });
-</script>
+																// 일수 및 잔여일수를 초기 상태로 되돌림
+																document
+																		.getElementById("usedDays").textContent = "";
+																document
+																		.getElementById("remainingDays").textContent = remainingDays;
+															});
+										</script>
 
-<script>
-//휴가신청 버튼 클릭 시 모달 창 열기
-document.getElementById("applyButton").addEventListener("click", function() {
- var modal = document.getElementById("applyModal");
- modal.classList.add("active");
-});
+										<script>
+											//휴가신청 버튼 클릭 시 모달 창 열기
+											document
+													.getElementById(
+															"applyButton")
+													.addEventListener(
+															"click",
+															function() {
+																var modal = document
+																		.getElementById("applyModal");
+																modal.classList
+																		.add("active");
+															});
 
-//예 버튼 클릭 시
-document.getElementById("applyYes").addEventListener("click", function() {
- // 여기에서 휴가 신청 로직을 수행하거나, 폼을 서버로 제출할 수 있습니다.
- // 폼을 서버로 제출하려면 JavaScript를 사용하여 폼을 선택하고 submit() 메서드를 호출하면 됩니다.
- var form = document.querySelector("form");
- form.submit();
- 
- // 모달 창 닫기
- var modal = document.getElementById("applyModal");
- modal.classList.remove("active");
-});
+											//예 버튼 클릭 시
+											document
+													.getElementById("applyYes")
+													.addEventListener(
+															"click",
+															function() {
+																// 여기에서 휴가 신청 로직을 수행하거나, 폼을 서버로 제출할 수 있습니다.
+																// 폼을 서버로 제출하려면 JavaScript를 사용하여 폼을 선택하고 submit() 메서드를 호출하면 됩니다.
+																var form = document
+																		.getElementById("addForm");
+																form.submit();
 
-//아니오 버튼 클릭 시 모달 창 닫기
-document.getElementById("applyNo").addEventListener("click", function() {
- var modal = document.getElementById("applyModal");
- modal.classList.remove("active");
-});
-</script>
+																// 모달 창 닫기
+																var modal = document
+																		.getElementById("applyModal");
+																modal.classList
+																		.remove("active");
+															});
+
+											//아니오 버튼 클릭 시 모달 창 닫기
+											document
+													.getElementById("applyNo")
+													.addEventListener(
+															"click",
+															function() {
+																var modal = document
+																		.getElementById("applyModal");
+																modal.classList
+																		.remove("active");
+															});
+										</script>
 									</div>
 
 									<!-- ********** 세은 로그 관련 내용 끝 ********** -->
