@@ -9,15 +9,15 @@
 <script src="http://code.jquery.com/jquery-latest.js"></script> 
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.min.js" integrity="sha384-Rx+T1VzGupg4BHQYs2gCW9It+akI2MM/mndMCy36UVfodzcJcF0GGLxZIzObiEfa" crossorigin="anonymous"></script>
-<script src="<c:url value="resources/js/comm/login.js"/>"></script>
+<script src="<c:url value="resources/js/comm/login.js"/>" charset="UTF-8"></script>
 <link href="<c:url value="resources/css/comm/login.css"/>" rel="stylesheet" type="text/css">
 <link href="<c:url value="resources/css/comm/common.css"/>" rel="stylesheet" type="text/css">
 <link rel="stylesheet" href="${path}/resources/css/comm/footer.css"/>
 <link rel="stylesheet" href="${path}/resources/css/comm/reset.css"/>
 </head>
 <body class="login" onpageshow="if(event.persisted) noBack();" onunload="" marginwidth="0" marginheight="0">
-	<a href="/"><img src="<c:url value="resources/img/logo.png"/>" class="logo"></a>
 	<div class="wrap">
+	<a href="/"><img src="<c:url value="resources/img/logo.png"/>" class="logo"></a>
 		<!-- 로그인 영역 -->
 		<div class="loginbox">
 			<!-- 로그인 입력 -->
@@ -36,7 +36,7 @@
 							<div>
 								<label for="id"></label>
 								<img src="<c:url value="resources/img/login/login_id.png"/>" alt="로그인 텍스트 이미지">
-								<input type="text" id="id" name="userId" title="아이디" placeholder="아이디">
+								<input type="text" id="id" name="userId" value="" title="아이디" placeholder="아이디">
 							</div>
 							<div>
 								<img src="<c:url value="resources/img/login/login_pwd.png"/>" alt="로그인 텍스트 이미지">
@@ -65,13 +65,10 @@
 				<div>
 					<img src="<c:url value="resources/img/login/login_signup.png"/>" >
 				</div>
-				<a href="/register" class="icon_02">
+				<a href="/register-form" class="icon_02">
 					<dl>
-						<c:url var="toRegister" value="/registerpage" />
-						<a href="${toRegister}">
-							<dd>회원 가입</dd>
-							<dt>어서오세요!</dt>
-						</a>
+						<dd>회원 가입</dd>
+						<dt>어서오세요!</dt>
 					</dl>
 				</a>
 			</div>

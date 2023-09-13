@@ -1,11 +1,9 @@
 package kr.co.kccbrew.comm.register.model;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.multipart.MultipartFile;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 /**
  * 사용자 회원가입을 위한 Vo
@@ -13,13 +11,13 @@ import lombok.NoArgsConstructor;
  *
  */
 @AllArgsConstructor
-@NoArgsConstructor
 @Data
 public class RegisterVo {
 	//공통 데이터
 	private String userTypeCd;
 	private String userId;
 	private String userPwd;
+	private String userPwdConfirm;
 	private String userNm;
 	private String userTelNo;
 	private String userEmail;
@@ -34,6 +32,7 @@ public class RegisterVo {
 	//수리 기사 데이터
 	private String eqpmnCd;
 	private String locationCd;
+	private String location;
 	
 	/**
 	 * 회원가입시 등록된  장비군,지역코드를 조회하기 위한 Vo
@@ -63,5 +62,38 @@ public class RegisterVo {
 	private String fileFmt;
 	
 	private String storageLocation;
+	//멤버 로컬 저장 위치
+	private String localSavePath;
+	private String serverSavePath;
+	
+	public RegisterVo() {
+		this.userTypeCd = "";
+		this.userId = "";
+		this.userPwd = "";
+		this.userNm = "";
+		this.userTelNo = "";
+		this.userEmail = "";
+		this.userAddr = "";
+		this.userAddressDetail = "";
+		this.userSalt = "";
+		this.approveYn = "";
+		this.eqpmnCd = "";
+		this.locationCd = "";
+		this.grpCdDtlId = "";
+		this.grpCdId = "";
+		this.grpCdNm = "";
+		this.grpCdDtlNm = "";
+		this.storeSeq = "";
+		this.storeNm = "";
+		this.storeAddr = "";
+		this.storeTelNo = "";
+		this.fileOriginalNm = "";
+		this.fileServerNm = "";
+		this.fileFmt = "";
+		this.storageLocation = "";
+		this.localSavePath = "";
+		this.serverSavePath = "";
+	}
+	
 	
 }

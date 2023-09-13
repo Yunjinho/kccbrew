@@ -45,7 +45,7 @@
 	z-index:9990;
 	padding: 0 200px;
 	height: 70px;
-	background-color: #ffffff;
+	background-color: rgb(247,249,250);
 	display: flex;
 	justify-content: space-around;
 }
@@ -58,6 +58,7 @@
 .navbar-brand {
 	height:60px;
 	line-height: 60px;
+	padding-top: 0px !important;
 }
 /** 로고 이미지 **/
 .navbar-brand img{

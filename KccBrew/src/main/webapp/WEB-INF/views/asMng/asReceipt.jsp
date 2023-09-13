@@ -34,7 +34,7 @@
 				<div id="page-content-wrap">
 					<div class="page-content-navigation">
 						<ol class="breadcrumb">
-							<li class="breadcrumb-home"><a href="">AS 관리</a></li>
+							<li class="breadcrumb-home"><a href="#">AS 관리</a></li>
 							<li>
 								<div class="header-icon-background">
 									<img
@@ -42,7 +42,7 @@
 										alt="Check List" class="header-icon" />
 								</div>
 							</li>
-							<li><a href="<c:url value='/as-list' />">AS 접수</a></li>
+							<li><a href="<c:url value='/as-receipt' />">AS 접수</a></li>
 						</ol>
 					</div>
 					<div id="region-main">
