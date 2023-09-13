@@ -6,7 +6,6 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-
 </head>
 <body class="login" onpageshow="if(event.persisted) noBack();" onunload="" marginwidth="0" marginheight="0">
 	<a href="/"><img src="<c:url value="resources/img/logo.png"/>" class="logo"></a>

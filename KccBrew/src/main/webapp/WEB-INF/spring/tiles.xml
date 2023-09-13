@@ -13,6 +13,12 @@
 		<put-attribute name="footer" value="/WEB-INF/views/tiles/default/basefooter.jsp" />	  <!-- 공통 푸터 -->
 	</definition>
  	
+ 	<!-- test 페이지 -->
+ 	<definition name="testPage" extends="managerPage">
+		<put-attribute name="title" value="점주 페이지" />
+		<put-attribute name="contents" value="/WEB-INF/views/test.jsp" />
+	</definition>
+ 	
  	<!-- 로그인 페이지 -->
  	<definition name="loginPage" extends="mainLayout">
  		<!-- 속성 따로 명시하지 않으면 기본 레이아웃 뼈대 자동 상속 -->

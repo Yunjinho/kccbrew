@@ -10,34 +10,7 @@
 <html>
 <head>
 <!-- css -->
-<link rel="stylesheet" href="/resources/css/log/mylogtest.css" />
 <link rel="stylesheet" href="/resources/css/log/content-template.css" />
-<link rel="stylesheet" href="/resources/css/schdl/mycalendar.css" />
-
-<!-- font -->
-<!-- notoSans -->
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link
-	href="https://fonts.googleapis.com/css2?family=Noto+Sans&display=swap"
-	rel="stylesheet">
-<!-- notoSans Kr -->
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link
-	href="https://fonts.googleapis.com/css2?family=Noto+Sans&family=Noto+Sans+KR&display=swap"
-	rel="stylesheet">
-
-<!-- 캘린더 -->
-<meta charset='utf-8' />
-<link
-	href='https://cdn.jsdelivr.net/npm/fullcalendar@5.10.0/main.min.css'
-	rel='stylesheet' />
-<script
-	src='https://cdn.jsdelivr.net/npm/fullcalendar@5.10.0/main.min.js'></script>
-
-<!-- jqeury -->
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <meta charset="UTF-8">
 <title>Insert title here</title>

@@ -29,10 +29,9 @@
 <!--------------------- 메인 페이지 및 공통 CSS ------------------>
 <link rel="stylesheet" href="${path}/resources/css/comm/mainLayout.css"><link rel="stylesheet" href="${path}/resources/css/comm/reset.css" >
 <link rel="stylesheet" href="${path}/resources/css/comm/reset.css" >
-<link rel="stylesheet" href="${path}/resources/css/comm/header.css" >
 <link rel="stylesheet" href="${path}/resources/css/comm/mainpage.css"/>
 <link rel="stylesheet" href="${path}/resources/css/comm/footer.css"/>
-<!-- <link rel="stylesheet" href="/resources/css/asMng/content-template.css" /> -->
+
 
 <!--------------------- BootStrap CSS -------------------------->
 <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"> -->
@@ -103,6 +102,7 @@
 <script src="<c:url value="resources/js/comm/login.js"/>"></script>
 <script src="<c:url value="resources/js/comm/register.js"/>"></script>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+
 </head>
 
 

@@ -4,6 +4,9 @@
 
 <!DOCTYPE html>
 <html>
+<head>
+<link rel="stylesheet" href="${path}/resources/css/comm/header.css" >
+</head>
 <c:choose>
 	<c:when test="${sessionScope.userTypeCd eq '01'}">
 		<header class="comm-nav">

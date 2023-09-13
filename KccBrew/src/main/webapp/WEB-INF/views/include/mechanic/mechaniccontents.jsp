@@ -135,7 +135,7 @@
 			</div>
 			<div class="todoAndetc">
 				<div class="to-do-list">
-					<p>  A/S 일정  </p>
+					<p> A/S 방문 일정  </p>
 					<ul class="tabnav">
 						<li><a href="#today">오늘</a></li>
 						<li><a href="#weekly">주간</a></li>
@@ -154,7 +154,7 @@
 									</tr>
 								</thead>
 								 <tbody>
-			                        <c:forEach var="main" items="${dailyData}">
+			                        <c:forEach var="main" items="${mechaDailyData}">
 		                                <tr>
 		                                    <td><c:out value="${main.asAssignNum}" /></td>
 		                                    <td><fmt:formatDate value="${main.visitDate}" pattern="yyyy-MM-dd" /></td>
@@ -186,7 +186,7 @@
 			                        </tr>
 			                    </thead>
 			                    <tbody>
-			                        <c:forEach var="main" items="${weeklyData}">
+			                        <c:forEach var="main" items="${mechaWeeklyData}">
 			                            <tr>
 			                                <td><c:out value="${main.asAssignNum}" /></td>
 			                                <td><fmt:formatDate value="${main.visitDate}" pattern="yyyy-MM-dd" /></td>
@@ -218,7 +218,7 @@
 			                        </tr>
 			                    </thead>
 			                    <tbody>
-			                    	<c:forEach var="main" items="${monthlyData}">
+			                    	<c:forEach var="main" items="${mechaMonthlyData}">
 			                            <tr>
 			                                <td><c:out value="${main.asAssignNum}" /></td>
 			                                <td><fmt:formatDate value="${main.visitDate}" pattern="yyyy-MM-dd" /></td>

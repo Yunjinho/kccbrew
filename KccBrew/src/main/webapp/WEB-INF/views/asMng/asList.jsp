@@ -6,10 +6,12 @@
 <%@ page import="java.time.LocalDateTime"%>
 <%@ page import="java.time.format.DateTimeFormatter"%>
 
+
 <!DOCTYPE html>
 <html>
 <head>
-
+<!-- css -->
+<link rel="stylesheet" href="/resources/css/asMng/content-template.css" />
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>

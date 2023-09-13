@@ -3,6 +3,8 @@ package kr.co.kccbrew.comm.main.service;
 import java.time.LocalDate;
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import kr.co.kccbrew.comm.main.model.MainPageVo;
 
 public interface IMainService {
@@ -17,5 +19,7 @@ public interface IMainService {
 	List<MainPageVo> showAsAssignListbyMechaId(String userId);
 	List<MainPageVo> showAsResultListbyMechaId(String userId);
 	List<MainPageVo> getDataInRange(LocalDate startOfWeek, LocalDate endOfWeek);    //이번 주 범위 구하기
+	List<MainPageVo> getMechaDataInRangeById(@Param("userId") String userId, @Param("startOfWeek") LocalDate startOfWeek, @Param("endOfWeek") LocalDate endOfWeek);
+	List<MainPageVo> getDataInRangeById(@Param("userId") String userId, @Param("startOfWeek") LocalDate startOfWeek, @Param("endOfWeek") LocalDate endOfWeek);
 	String getUserName(String userId);
 }

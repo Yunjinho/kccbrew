@@ -88,4 +88,14 @@ public class MainService implements IMainService{
 		return asResultListbyMechaId;
 	}
 
+	@Override
+	public List<MainPageVo> getMechaDataInRangeById(String userId, LocalDate startOfWeek, LocalDate endOfWeek) {
+		return mainRepository.getMechaDataInRangeById(userId, startOfWeek, endOfWeek);
+	}
+
+	@Override
+	public List<MainPageVo> getDataInRangeById(String userId, LocalDate startOfWeek, LocalDate endOfWeek) {
+		return mainRepository.getDataInRangeById(userId, startOfWeek, endOfWeek);
+	}
+
 }

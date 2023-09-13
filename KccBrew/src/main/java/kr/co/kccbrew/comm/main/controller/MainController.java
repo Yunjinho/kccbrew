@@ -27,6 +27,11 @@ public class MainController {
 	public String goRegisterPage(Model model) {
 		return "registerPage";
 	}
+	/***** 테스트 ******/
+	@RequestMapping(value="/testpage", method=RequestMethod.GET)
+	public String goTestPage(Model model) {
+		return "testPage";
+	}
 	
 	/****************** 관리자 페이지 **************************/
 	//A/S 내역 조회 페이지
@@ -152,7 +157,7 @@ public class MainController {
 	/************************** 점주 메인 ***************************/
 	@RequestMapping(value="/managerMain", method=RequestMethod.GET)
 	public String mngMain(Model model, HttpSession session, RedirectAttributes redirectAttributes) {
-		String userIdInSession = String.valueOf(session.getAttribute("userId"));
+		String userIdInSession = (String)session.getAttribute("userId");
 		if (userIdInSession == "null") {
 			//redirectAttributes.addFlashAttribute("userState", "로그인");
 			return "loginPage";
@@ -179,14 +184,14 @@ public class MainController {
 		    LocalDate startOfMonth = now.withDayOfMonth(1); //이번 달 시작일
 		    LocalDate endOfMonth = now.withDayOfMonth(now.lengthOfMonth()); //이번 달 종료일
 		    
-		    List<MainPageVo> dailyData = mainServiceImple.getDataInRange(startOfDay, endOfDay);
-		    List<MainPageVo> weeklyData = mainServiceImple.getDataInRange(startOfWeek, endOfWeek);
-		    List<MainPageVo> monthlyData = mainServiceImple.getDataInRange(startOfMonth, endOfMonth);
+		    List<MainPageVo> managerDailyData = mainServiceImple.getDataInRangeById(userId, startOfDay, endOfDay);
+		    List<MainPageVo> managerWeeklyData = mainServiceImple.getDataInRangeById(userId, startOfWeek, endOfWeek);
+		    List<MainPageVo> managerMonthlyData = mainServiceImple.getDataInRangeById(userId, startOfMonth, endOfMonth);
 		    
-		    model.addAttribute("dailyData", dailyData);
-		    model.addAttribute("weeklyData", weeklyData);
-		    model.addAttribute("monthlyData", monthlyData);
-		
+		    model.addAttribute("managerDailyData", managerDailyData);
+		    model.addAttribute("managerWeeklyData", managerWeeklyData);
+		    model.addAttribute("managerMonthlyData", managerMonthlyData);
+
 			return "managerPage";
 		}
 		
@@ -195,7 +200,7 @@ public class MainController {
 	/************************** 수리 기사 메인 ***************************/
 	@RequestMapping(value="/mechanicMain", method=RequestMethod.GET)
 	public String mecMain(Model model, HttpSession session, RedirectAttributes redirectAttributes) {
-		String userIdInSession = String.valueOf(session.getAttribute("userId"));
+		String userIdInSession = (String)session.getAttribute("userId");
 		if (userIdInSession == "null") {
 			//redirectAttributes.addFlashAttribute("userState", "로그인");
 			return "loginPage";
@@ -220,13 +225,13 @@ public class MainController {
 		    LocalDate startOfMonth = now.withDayOfMonth(1); //이번 달 시작일
 		    LocalDate endOfMonth = now.withDayOfMonth(now.lengthOfMonth()); //이번 달 종료일
 		    
-		    List<MainPageVo> dailyData = mainServiceImple.getDataInRange(startOfDay, endOfDay);
-		    List<MainPageVo> weeklyData = mainServiceImple.getDataInRange(startOfWeek, endOfWeek);
-		    List<MainPageVo> monthlyData = mainServiceImple.getDataInRange(startOfMonth, endOfMonth);
+		    List<MainPageVo> mechaDailyData = mainServiceImple.getMechaDataInRangeById(userId, startOfDay, endOfDay);
+		    List<MainPageVo> mechaWeeklyData = mainServiceImple.getMechaDataInRangeById(userId, startOfWeek, endOfWeek);
+		    List<MainPageVo> mechaMonthlyData = mainServiceImple.getMechaDataInRangeById(userId, startOfMonth, endOfMonth);
 		    
-		    model.addAttribute("dailyData", dailyData);
-		    model.addAttribute("weeklyData", weeklyData);
-		    model.addAttribute("monthlyData", monthlyData);
+		    model.addAttribute("mechaDailyData", mechaDailyData);
+		    model.addAttribute("mechaWeeklyData", mechaWeeklyData);
+		    model.addAttribute("mechaMonthlyData", mechaMonthlyData);
 		
 			return "mechanicPage";
 		}

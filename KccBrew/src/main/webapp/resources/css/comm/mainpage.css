@@ -39,46 +39,81 @@
 		flex:0.4;
 		display:flex;
 		justify-content:space-between;
-		overflow: hidden;
 		font-size: 0.8em;
 		margin-bottom: 3px;
 	}
 	.btm {
+		align-items: center;
+		position:relative;
+        width: 100%;
+        height:217px;
+        max-height:100%;
 		flex: 1;
-		padding:10px;
 		margin: 0 3px;
 		background-color: #ffffff;
-		border-top: 1.5px solid #0D406E;
-		border-bottom: 1.5px solid #0D406E;
+		border-top: 1.5px solid #1A55A1;
+		border-bottom: 1.5px solid #1A55A1;
+		overflow-y: auto;
 	}
-	.new-receipt {
-		height:217px;
-		overflow: auto;
+	.btm thead th {
+		position: sticky;
+		top:33.44px;
+		border: none;
+		border-top: 1px solid #1A55A1;
+        border-bottom: 1.5px solid #1A55A1;
+		z-index:1;
 	}
-	.assigned-as {
-		height:217px;
-		overflow: auto;
+	.btm thead th:after, .btm thead th:before {
+		content: "";
+		position: absolute;
+		left:0;
+		width:100%;
+		background-color: #1A55A1;
 	}
-	.new-member-apply{
-		height:217px;
-		overflow: auto;
+	.btm thead th:after {
+		height:2px;
+		top:-1.0px;
 	}
-	.as-result {
-		height:217px;
-		overflow: auto;
+	.btm thead th:before {
+		height:1.5px;
+		bottom:-1px;
 	}
-	.tablecap {
-		font-size:1em;
-		font-weight: bold;
-		padding: 10px;
+
+	.btm::-webkit-scrollbar {
+	    width:5px;
+	}
+	.btm::-webkit-scrollbar-thumb{
+	    background-color: #1A55A1;
+	}
+	.btm::-webkit-scrollbar-track {
+    	background-color: #c0c0c0;
+    	border-top: 1.5px solid #c0c0c0;
 	}
 	
-	.task-list {
-        width: 100%;
+	.tablecap {
+		text-align: left;
+		font-size:1.2em;
+		font-weight: bold;
+		padding: 10px 10px;
+		position: sticky;
+		top:0;
+		background-color: #ffffff;
+	}
+	
+    .task-list {
+    	width:100%;
+    	max-height: 100vh;
         border-collapse: collapse;
         border-spacing: 0;
+        display: block;
     }
     
+    .task-list thead{
+    	width:100%;
+    }
+    .task-list tbody {
+    	width:100%; 
+    }
     .task-list th, .task-list td {
         padding: 10px;
         text-align: center;
@@ -86,12 +121,15 @@
     }
 
     .task-list th {
-        background-color: #f2f2f2;
-        font-weight: bold;
+        background-color: #ffffff;
+        font-weight: bold;        
+    }
+    .task-list td {
+       border: none;
     }
     
     .task-list tr:hover {
-        background-color: #ddd;
+        background-color: #e4e4e4;
     }
 	
 	
@@ -124,7 +162,7 @@
 		display:flex;
 		flex-direction:column;
 		justify-content:space-between;
-		background-color: #0D406E;
+		background-color: #1A55A1;
 	}
 	.inner-box {
 		padding:30px 20px;
@@ -134,6 +172,14 @@
 	}
 	.job {
 		font-size: 1em;
+	}
+	
+	.last-ip, .last-login {
+		font-size: 0.8em;
+		font-weight: 600;
+	}
+	.ip, .time {
+		font-size:0.8em;
 	}
 	.buttons {
 		text-align: center;
@@ -152,8 +198,39 @@
 		height:226px;
 		flex:1;
 		margin-bottom:5px;
-		color:yellow;
-		background-color: green;
+		color: #111111;
+		background-color: #ffffff;
+	}
+	.as-guide p{
+		text-align: left;
+		font-size:1.2em;
+		font-weight: bold;
+	}
+	.shortcut-list {
+		
+	}
+	.shortcuts {
+		margin-bottom: 10px;
+		color: #717171;
+	}
+	.round-btn {
+		display:inline-block;
+		text-align:center;
+		font-size:0.9em;
+		width:30px;
+		height:20px;
+		line-height:18px;
+		color: #1A55A1;
+		border:1.5px solid #1A55A1;
+		font-weight: bold;
+		border-radius:75px/ 75px;
+	}
+	.shortcuts a {
+		font-weight: normal;
+		color: #717171;
+	}
+	.shortcuts a:hover {
+		text-decoration: underline;
 	}
 	.toKccBrew {
 		position:relative;
@@ -171,11 +248,11 @@
 	}
 	.inner-box img{
 		width:200px;
-		height:100px;
+		height:80px;
 	}
 	.kcclink {
 		cursor:pointer;
-		border:3px solid #0D406E;
+		border:3px solid #1A55A1;
 		color:#111111;
 		border-radius: 10px;
 	}
@@ -190,10 +267,12 @@
 	}
 
 	.to-do-list {
-		flex:0.5;
+		flex:0.6;
 		background-color:#ffffff;
 		min-height:300px;
-		margin-bottom: 15px;
+		margin-bottom: 5px;
+		display: flex;
+		flex-direction: column;
 	}
 	
 	.to-do-list > p {
@@ -203,6 +282,43 @@
 	  background-color: #ffffff;
 	  color: #111111;
 	  text-align: left;
+	}
+	
+	.tab-pane {
+		overflow-y : auto;
+		height:100%;
+	}
+	.tab-pane thead th {
+		position: sticky;
+		top:0;
+		border: none;
+		border-top: 1px solid #1A55A1;
+        border-bottom: 1px solid #1A55A1;
+	}
+	.tab-pane thead th:after, .tab-pane thead th:before {
+		content: "";
+		position: absolute;
+		left:0;
+		width:100%;
+		background-color: #1A55A1;
+	}
+	.tab-pane thead th:after {
+		height:2px;
+		top:-1.0px;
+	}
+	.tab-pane thead th:before {
+		height:1.5px;
+		bottom:-0.5px;
+	}
+	.tab-pane::-webkit-scrollbar {
+	    width:5px;
+	}
+	.tab-pane::-webkit-scrollbar-thumb{
+	    background-color: #1A55A1;
+	}
+	.tab-pane::-webkit-scrollbar-track {
+    	background-color: #c0c0c0;
+    	border-top: 1.5px solid #c0c0c0;
 	}
 	
 	.tabnav {
@@ -226,13 +342,13 @@
 		left:0; 
 		top:0px; 
 		width:100%; 
-		height:3px; 
+		height:2px; 
 	}
 	.tabnav li a.active:before{
-		background:#0D406E;
+		background:#1A55A1;
 	}
 	.tabnav li a.active{
-		border-bottom:1px solid #fff;
+		border-bottom:1px solid #ffffff;
 	}
 	.tabnav li a{
 		position:relative; 
@@ -245,10 +361,12 @@
 		font-size:16px;
 	}
 	.tabnav li a:hover,	.tabnav li a.active{
-		background:#fff; 
-		color:#001EC9; 
+		background:#ffffff; 
+		border-bottom: 1px solid #1A55A1;
+		color: #1A55A1; 
 	}
 	.tabcontent{
+		flex-grow:1;
 		background-color:#ffffff;
 		height:270px; 
 		border:1px solid #c0c0c0; 
@@ -257,7 +375,7 @@
 		overflow: auto;
 	}
 	.todoetc {
-		flex:0.5;
+		flex:0.4;
 		color:green;
 		background-color:yellow;
 	}
@@ -288,5 +406,5 @@
 	  padding-top: 1em;
 	  padding-left: 1em;
 	  padding-right: 1em;
-	  font-size:0.45em;
+	  font-size:0.1em;
 	}
