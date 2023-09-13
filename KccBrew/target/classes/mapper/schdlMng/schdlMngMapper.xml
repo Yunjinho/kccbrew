@@ -3,13 +3,11 @@
 <mapper
 	namespace="kr.co.kccbrew.schdlMng.dao.ISchdlMngRepository">
 
-<!-- 	<resultMap id="assignResult" type="java.util.Map">
-		<result property="asAssignSeq" column="AS_ASSIGN_SEQ" />
-		<result property="asInfoSeq" column="AS_INFO_SEQ" />
-		<result property="visitDate" column="VISIT_DTTM" />
-		<result property="mechanicId" column="MECHANIC_ID" />
-		<result property="managerId" column="STORE_MNG_ID" />
-	</resultMap> -->
+	<!-- <resultMap id="assignResult" type="java.util.Map"> <result property="asAssignSeq" 
+		column="AS_ASSIGN_SEQ" /> <result property="asInfoSeq" column="AS_INFO_SEQ" 
+		/> <result property="visitDate" column="VISIT_DTTM" /> <result property="mechanicId" 
+		column="MECHANIC_ID" /> <result property="managerId" column="STORE_MNG_ID" 
+		/> </resultMap> -->
 
 	<resultMap id="holidayResult"
 		type="kr.co.kccbrew.schdlMng.model.HolidayVo">
@@ -22,147 +20,87 @@
 		<result property="actualUse" column="ACTL_USE" />
 	</resultMap>
 
+	<resultMap id="scheduleResult"
+		type="kr.co.kccbrew.schdlMng.model.SchdlMngVo2">
+		<result property="rowNumber" column="ROW_NUMBER" />
+		<result property="userType" column="USER_TYPE" />
+		<result property="userId" column="USER_ID" />
+		<result property="userName" column="USER_NM" />
+		<result property="userPhoneNumber" column="USER_TELNO" />
+		<result property="storeId" column="STORE_SEQ" />
+		<result property="storeName" column="STORE_NM" />
+		<result property="storePhoneNumber" column="STORE_TELNO" />
+		<result property="locationCd" column="LOCATION_CD" />
+		<result property="scheduleId" column="SCHEDULE_ID" />
+		<result property="appDate" column="HLDY_APP" />
+		<result property="startDate" column="START_DATE" />
+		<result property="endDate" column="END_DATE" />
+		<result property="actualUse" column="ACTL_USE" />
+	</resultMap>
 
-	<!-- 검색에 따른 스케줄 리스트 반환 -->
-	<select id="selectSchedules2"
-		resultType="kr.co.kccbrew.schdlMng.model.SchdlMngVo2"
-		parameterType="java.util.Map">
 
+	<!-- 휴가사용현황 조회 -->
+	<select id="selectSchedules2" resultMap="scheduleResult">
+		SELECT ROWNUM AS
+		ROW_NUMBER, subquery.*
+		FROM (
 		SELECT
-		ROW_NUM AS "rowNum", USER_TYPE
-		AS "userType",
-		USER_ID AS "userId",
-		USER_NM AS "userName", USER_TELNO
-		AS
-		"userPhoneNumber",
-		STORE_SEQ AS
-		"storeId",
-		STORE_NM AS "storeName",
-		STORE_TELNO AS "storePhoneNumber",
-		LOCATION_CD AS "storeLocation",
-		SCHEDULE_DATE AS "scheduleDate",
-		SCHEDULE_TYPE AS "scheduleType",
-		SCHEDULE_ID AS "scheduleId"
-
-		FROM(
-		SELECT ROW_NUMBER() OVER(ORDER BY SCHEDULE_DATE) AS ROW_NUM,
-		subquery.*
-		FROM(
-		SELECT '기사' AS
-		"USER_TYPE", u."USER_ID", u."USER_NM",
-		u."USER_TELNO",
-		su."STORE_SEQ",
-		s."STORE_NM", s."STORE_TELNO",
-		s."LOCATION_CD",
-		aa."VISIT_DTTM" AS
-		SCHEDULE_DATE, '배정' AS
-		"SCHEDULE_TYPE",
-		aa."AS_ASSIGN_SEQ" AS
-		SCHEDULE_ID
-		FROM AS_ASSIGN aa
-		LEFT
-		OUTER JOIN USERS
-		u ON aa.mechanic_id
-		= u.user_id
-		LEFT OUTER JOIN
-		AS_INFORMATION ai ON
-		aa."AS_INFO_SEQ" =
-		ai."AS_INFO_SEQ"
-		LEFT OUTER JOIN
-		STORE_USER_MAP su ON
-		ai."STORE_MNG_ID"
-		= su."USER_ID"
-		LEFT OUTER JOIN
-		STORE s ON
-		su."STORE_SEQ" =
-		s."STORE_SEQ"
-
-		UNION ALL
-
-		SELECT
-
+		gc.GRP_CD_DTL_NM AS
+		USER_TYPE,
+		users.USER_ID,
+		users.USER_NM,
+		users.USER_TELNO,
+		store.STORE_SEQ,
+		STORE.STORE_NM,
+		STORE.STORE_TELNO,
 		CASE
 		WHEN
-		h."GRP_CD_DTL_ID"
-		= '02' THEN
-		'점주'
-		WHEN h."GRP_CD_DTL_ID" = '03' THEN
-		'기사'
+		gc.GRP_CD_DTL_NM = '기사' THEN
+		users.LOCATION_CD
+		WHEN gc.GRP_CD_DTL_NM =
+		'점주' THEN STORE.LOCATION_CD
 		ELSE NULL
-		END AS
-		"USER_TYPE",
-		h."USER_ID",
-		u."USER_NM",
-		u."USER_TELNO",
-		s."STORE_SEQ",
-		st."STORE_NM",
-		st."STORE_TELNO",
-		st."LOCATION_CD",
-		h."HOLIDAY" AS
-		SCHEDULE_DATE,
-		'휴무' AS "SCHEDULE_TYPE",
-		h."HOLIDAY_SEQ" AS SCHEDULE_ID
-		FROM "HR"."HOLIDAY" h
-		LEFT JOIN
-		"HR"."STORE_USER_MAP" s ON h."USER_ID"
-		=
-		s."USER_ID"
-		LEFT JOIN
-		"HR"."USERS" u ON h."USER_ID" = u."USER_ID"
-		LEFT
-		JOIN "HR"."STORE" st
-		ON
-		s."STORE_SEQ" = st."STORE_SEQ"
-
-		UNION ALL
-
-		SELECT
-		'기사' AS "USER_TYPE",
-		u."USER_ID", u."USER_NM", u."USER_TELNO",
-		su."STORE_SEQ", s."STORE_NM",
-		s."STORE_TELNO", s."LOCATION_CD",
-		aa."VISIT_DTTM" AS SCHEDULE_DATE,
-		'근무' AS "SCHEDULE_TYPE",
-		ar."AS_RESULT_SEQ" AS SCHEDULE_ID
+		END AS LOCATION_CD,
+		holiday.HOLIDAY_SEQ AS SCHEDULE_ID,
+		holiday.HLDY_APP,
+		holiday.HLDY_STAR
+		AS START_DATE,
+		holiday.HLDY_END AS
+		END_DATE,
+		holiday.ACTL_USE
 		FROM
-		AS_RESULT ar
-		LEFT OUTER JOIN
-		AS_ASSIGN aa ON ar."AS_ASSIGN_SEQ" =
-		aa."AS_ASSIGN_SEQ"
-		LEFT OUTER JOIN
-		USERS u ON aa.mechanic_id = u.user_id
-		LEFT OUTER JOIN AS_INFORMATION ai
-		ON aa."AS_INFO_SEQ" =
-		ai."AS_INFO_SEQ"
-		LEFT OUTER JOIN STORE_USER_MAP
-		su
-		ON ai."STORE_MNG_ID"
-		=
-		su."USER_ID"
-		LEFT OUTER JOIN STORE s ON
-		su."STORE_SEQ" = s."STORE_SEQ")
-		subquery
-
-		<!-- 검색조건 -->
-		WHERE 1=1
-		<!-- 날짜검색 -->
+		holiday
+		LEFT OUTER JOIN users ON
+		holiday.USER_ID = users.USER_ID
+		LEFT
+		OUTER JOIN GROUP_CODE_DETAIL gc ON
+		users.USER_TYPE_CD =
+		gc.GRP_CD_DTL_ID
+		LEFT OUTER JOIN STORE_USER_MAP sum
+		ON users.USER_ID =
+		sum.USER_ID
+		LEFT OUTER JOIN STORE ON sum.STORE_SEQ =
+		STORE.STORE_SEQ
+		WHERE gc.GRP_CD_ID = 'U'
+		ORDER BY START_DATE DESC
+		) subquery
+		
+		WHERE 1=1 
+		and ACTL_USE='Y'
+			<!-- 날짜검색 -->
 		<if
-			test="searchContent.startYr != null and searchContent.startYr != '' and searchContent.startMn != null and searchContent.startMn != ''">
-        <![CDATA[
-        AND (
-            EXTRACT(YEAR FROM SCHEDULE_DATE) > #{searchContent.startYr}
-            OR (EXTRACT(YEAR FROM SCHEDULE_DATE) = #{searchContent.startYr} AND EXTRACT(MONTH FROM SCHEDULE_DATE) >= #{searchContent.startMn})
-        )
-        ]]>
-		</if>
-		<if
-			test="searchContent.endYr != null and searchContent.endYr != '' and searchContent.endMn != null and searchContent.endMn != ''">
-        <![CDATA[
-        AND (
-            EXTRACT(YEAR FROM SCHEDULE_DATE) < #{searchContent.endYr}
-            OR (EXTRACT(YEAR FROM SCHEDULE_DATE) = #{searchContent.endYr} AND EXTRACT(MONTH FROM SCHEDULE_DATE) <= #{searchContent.endMn})
-        )
-        ]]>
+			test="searchContent.startYr != null and searchContent.startYr != '' and searchContent.startMn != null and searchContent.startMn != '' and
+          searchContent.endYr != null and searchContent.endYr != '' and searchContent.endMn != null and searchContent.endMn != ''">
+			AND (
+			(YEAR(START_DATE) * 10000 + MONTH(START_DATE) * 100 +
+			DAY(START_DATE))
+			BETWEEN
+			(#{searchContent.startYr} * 10000 +
+			#{searchContent.startMn} * 100 + 01)
+			AND
+			(#{searchContent.endYr} *
+			10000 + #{searchContent.endMn} * 100 + 31)
+			)
 		</if>
 
 		<!-- 사용자 검색 -->
@@ -189,147 +127,82 @@
 			AND STORE_NM = #{searchContent.storeName}
 		</if>
 
-		<!-- <if test="searchContent.storeLocation != null and searchContent.storeLocation 
-			!= ''"> <if test="searchContent.storeSubLocation != null and searchContent.storeSubLocation 
-			!= ''"> storeSubLocation 값이 있으면 해당 값을 사용합니다. AND LOCATION_CD = #{searchContent.storeSubLocation} 
-			</if> <if test="searchContent.storeSubLocation == null or searchContent.storeSubLocation 
-			== ''"> storeSubLocation 값이 없으면 storeLocation 값을 사용합니다. AND LOCATION_CD = 
-			#{searchContent.storeLocation} </if> </if> -->
-
-
 		<!-- 스케줄 검색 -->
 		<if
 			test="searchContent.scheduleType != null and searchContent.scheduleType != ''">
 			AND SCHEDULE_TYPE = #{searchContent.scheduleType}
 		</if>
-		) 
 
-		<![CDATA[ WHERE ROW_NUM BETWEEN #{firstRowNum} AND #{lastRowNum} ]]>
 	</select>
 
 
-	<!-- 스케줄 리스트 개수 반환 -->
+
+
+
+
+	<!-- 휴가사용현황 개수 조회 -->
 	<select id="selectSchedule2Count" resultType="Integer"
 		parameterType="java.util.Map">
 
 		SELECT COUNT(*)
-		FROM(
-		SELECT '기사' AS
-		"USER_TYPE", u."USER_ID",
-		u."USER_NM",
-		u."USER_TELNO",
-		su."STORE_SEQ",
-		s."STORE_NM",
-		s."STORE_TELNO",
-		s."LOCATION_CD",
-		aa."VISIT_DTTM" AS
-		SCHEDULE_DATE, '배정'
-		AS
-		"SCHEDULE_TYPE",
-		aa."AS_ASSIGN_SEQ" AS
-		SCHEDULE_ID
-		FROM AS_ASSIGN aa
-		LEFT OUTER JOIN USERS
-		u ON aa.mechanic_id
-		= u.user_id
-		LEFT OUTER JOIN
-		AS_INFORMATION ai ON
-		aa."AS_INFO_SEQ" =
-		ai."AS_INFO_SEQ"
-		LEFT OUTER JOIN
-		STORE_USER_MAP su ON
-		ai."STORE_MNG_ID"
-		= su."USER_ID"
-		LEFT OUTER JOIN
-		STORE s ON
-		su."STORE_SEQ" =
-		s."STORE_SEQ"
-
-		UNION ALL
-
+		FROM (
+		SELECT ROWNUM AS ROW_NUMBER, subquery.*
+		FROM (
 		SELECT
-
+		gc.GRP_CD_DTL_NM AS
+		USER_TYPE,
+		users.USER_ID,
+		users.USER_NM,
+		users.USER_TELNO,
+		store.STORE_SEQ,
+		STORE.STORE_NM,
+		STORE.STORE_TELNO,
 		CASE
 		WHEN
-		h."GRP_CD_DTL_ID"
-		= '02' THEN
-		'점주'
-		WHEN h."GRP_CD_DTL_ID" = '03' THEN
-		'기사'
+		gc.GRP_CD_DTL_NM = '기사' THEN users.LOCATION_CD
+		WHEN
+		gc.GRP_CD_DTL_NM =
+		'점주' THEN STORE.LOCATION_CD
 		ELSE NULL
 		END AS
-		"USER_TYPE",
-		h."USER_ID",
-		u."USER_NM",
-		u."USER_TELNO",
-		s."STORE_SEQ",
-		st."STORE_NM",
-		st."STORE_TELNO",
-		st."LOCATION_CD",
-		h."HOLIDAY" AS
-		SCHEDULE_DATE,
-		'휴무' AS "SCHEDULE_TYPE",
-		h."HOLIDAY_SEQ" AS SCHEDULE_ID
-		FROM "HR"."HOLIDAY" h
-		LEFT JOIN
-		"HR"."STORE_USER_MAP" s ON h."USER_ID"
-		=
-		s."USER_ID"
-		LEFT JOIN
-		"HR"."USERS" u ON h."USER_ID" = u."USER_ID"
-		LEFT
-		JOIN "HR"."STORE" st
-		ON
-		s."STORE_SEQ" = st."STORE_SEQ"
-
-		UNION ALL
-
-		SELECT
-		'기사' AS "USER_TYPE",
-		u."USER_ID", u."USER_NM", u."USER_TELNO",
-		su."STORE_SEQ", s."STORE_NM",
-		s."STORE_TELNO", s."LOCATION_CD",
-		aa."VISIT_DTTM" AS SCHEDULE_DATE,
-		'근무' AS "SCHEDULE_TYPE",
-		ar."AS_RESULT_SEQ" AS SCHEDULE_ID
+		LOCATION_CD,
+		holiday.HOLIDAY_SEQ AS SCHEDULE_ID,
+		holiday.HLDY_APP,
+		holiday.HLDY_STAR
+		AS START_DATE,
+		holiday.HLDY_END AS END_DATE,
+		holiday.ACTL_USE
 		FROM
-		AS_RESULT ar
-		LEFT OUTER JOIN
-		AS_ASSIGN aa ON ar."AS_ASSIGN_SEQ" =
-		aa."AS_ASSIGN_SEQ"
-		LEFT OUTER JOIN
-		USERS u ON aa.mechanic_id = u.user_id
-		LEFT OUTER JOIN AS_INFORMATION ai
-		ON aa."AS_INFO_SEQ" =
-		ai."AS_INFO_SEQ"
-		LEFT OUTER JOIN STORE_USER_MAP
-		su
-		ON ai."STORE_MNG_ID"
+		holiday
+		LEFT OUTER JOIN users ON holiday.USER_ID =
+		users.USER_ID
+		LEFT
+		OUTER JOIN GROUP_CODE_DETAIL gc ON users.USER_TYPE_CD
 		=
-		su."USER_ID"
-		LEFT OUTER JOIN STORE s ON
-		su."STORE_SEQ" = s."STORE_SEQ")
-
-		<!-- 검색조건 -->
+		gc.GRP_CD_DTL_ID
+		LEFT OUTER JOIN STORE_USER_MAP sum ON users.USER_ID =
+		sum.USER_ID
+		LEFT OUTER JOIN STORE ON sum.STORE_SEQ = STORE.STORE_SEQ
+		WHERE gc.GRP_CD_ID = 'U'
+		ORDER BY START_DATE DESC
+		) subquery
 		WHERE 1=1
-		<!-- 날짜 검색 -->
+		and ACTL_USE='Y'
+
+		<!-- 날짜검색 -->
 		<if
-			test="searchContent.startYr != null and searchContent.startYr != '' and searchContent.startMn != null and searchContent.startMn != ''">
-        <![CDATA[
-        AND (
-            EXTRACT(YEAR FROM SCHEDULE_DATE) > #{searchContent.startYr}
-            OR (EXTRACT(YEAR FROM SCHEDULE_DATE) = #{searchContent.startYr} AND EXTRACT(MONTH FROM SCHEDULE_DATE) >= #{searchContent.startMn})
-        )
-        ]]>
-		</if>
-		<if
-			test="searchContent.endYr != null and searchContent.endYr != '' and searchContent.endMn != null and searchContent.endMn != ''">
-        <![CDATA[
-        AND (
-            EXTRACT(YEAR FROM SCHEDULE_DATE) < #{searchContent.endYr}
-            OR (EXTRACT(YEAR FROM SCHEDULE_DATE) = #{searchContent.endYr} AND EXTRACT(MONTH FROM SCHEDULE_DATE) <= #{searchContent.endMn})
-        )
-        ]]>
+			test="searchContent.startYr != null and searchContent.startYr != '' and searchContent.startMn != null and searchContent.startMn != '' and
+          searchContent.endYr != null and searchContent.endYr != '' and searchContent.endMn != null and searchContent.endMn != ''">
+			AND (
+			(YEAR(START_DATE) * 10000 + MONTH(START_DATE) * 100 +
+			DAY(START_DATE))
+			BETWEEN
+			(#{searchContent.startYr} * 10000 +
+			#{searchContent.startMn} * 100 + 01)
+			AND
+			(#{searchContent.endYr} *
+			10000 + #{searchContent.endMn} * 100 + 31)
+			)
 		</if>
 
 		<!-- 사용자 검색 -->
@@ -356,12 +229,12 @@
 			AND STORE_NM = #{searchContent.storeName}
 		</if>
 
-
 		<!-- 스케줄 검색 -->
 		<if
 			test="searchContent.scheduleType != null and searchContent.scheduleType != ''">
 			AND SCHEDULE_TYPE = #{searchContent.scheduleType}
 		</if>
+		)
 
 	</select>
 
@@ -430,25 +303,31 @@
 		st."STORE_NM",
 		st."STORE_TELNO",
 		st."LOCATION_CD",
-		h."HOLIDAY" AS SCHEDULE_DATE,
+
 		'휴무' AS
 		"SCHEDULE_TYPE",
 		h."HOLIDAY_SEQ" AS SCHEDULE_ID
 		FROM "HR"."HOLIDAY" h
-		LEFT JOIN "HR"."STORE_USER_MAP" s ON h."USER_ID" = s."USER_ID"
+		LEFT JOIN
+		"HR"."STORE_USER_MAP" s ON h."USER_ID" = s."USER_ID"
 		LEFT
-		JOIN "HR"."USERS" u ON h."USER_ID" = u."USER_ID"
+		JOIN
+		"HR"."USERS" u ON h."USER_ID" = u."USER_ID"
 		LEFT JOIN "HR"."STORE"
-		st ON s."STORE_SEQ" = st."STORE_SEQ"
+		st ON
+		s."STORE_SEQ" = st."STORE_SEQ"
 
 		UNION ALL
 
 		SELECT '기사' AS
-		"USER_TYPE", u."USER_ID", u."USER_NM", u."USER_TELNO",
+		"USER_TYPE",
+		u."USER_ID", u."USER_NM", u."USER_TELNO",
 		su."STORE_SEQ",
-		s."STORE_NM", s."STORE_TELNO", s."LOCATION_CD",
+		s."STORE_NM",
+		s."STORE_TELNO", s."LOCATION_CD",
 		aa."VISIT_DTTM" AS
-		SCHEDULE_DATE, '근무' AS "SCHEDULE_TYPE",
+		SCHEDULE_DATE, '근무'
+		AS "SCHEDULE_TYPE",
 		ar."AS_RESULT_SEQ" AS
 		SCHEDULE_ID
 		FROM AS_RESULT ar
@@ -456,11 +335,14 @@
 		ar."AS_ASSIGN_SEQ" = aa."AS_ASSIGN_SEQ"
 		LEFT OUTER JOIN USERS u ON
 		aa.mechanic_id = u.user_id
-		LEFT OUTER JOIN AS_INFORMATION ai ON
+		LEFT OUTER JOIN
+		AS_INFORMATION ai ON
 		aa."AS_INFO_SEQ" = ai."AS_INFO_SEQ"
-		LEFT OUTER JOIN STORE_USER_MAP su
+		LEFT OUTER JOIN
+		STORE_USER_MAP su
 		ON ai."STORE_MNG_ID" = su."USER_ID"
-		LEFT OUTER JOIN STORE s ON
+		LEFT OUTER JOIN
+		STORE s ON
 		su."STORE_SEQ" = s."STORE_SEQ" )
 
 		<!-- 검색조건 -->
@@ -532,8 +414,10 @@ EXTRACT(YEAR FROM SCHEDULE_DATE) = 2023 AND EXTRACT(MONTH FROM SCHEDULE_DATE) = 
 		resultType="java.sql.Date">
 		SELECT assign.VISIT_DTTM
 		FROM AS_ASSIGN assign
-		INNER JOIN AS_INFORMATION info ON assign.AS_INFO_SEQ = info.AS_INFO_SEQ
-		WHERE assign.MECHANIC_ID = #{userId} OR info.STORE_MNG_ID = #{userId}
+		INNER JOIN
+		AS_INFORMATION info ON assign.AS_INFO_SEQ = info.AS_INFO_SEQ
+		WHERE
+		assign.MECHANIC_ID = #{userId} OR info.STORE_MNG_ID = #{userId}
 	</select>
 
 

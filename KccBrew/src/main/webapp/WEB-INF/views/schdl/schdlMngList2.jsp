@@ -259,7 +259,7 @@
 											alt="Check List" class="header-icon" />
 									</div>
 								</li>
-								<li><a href="<c:url value='/schedule2' />">스케줄조회</a></li>
+								<li><a href="<c:url value='/schedule2' />">휴가사용현황</a></li>
 							</ol>
 						</div>
 						<!-- ********** 페이지 네비게이션 끝 ********** -->
@@ -271,33 +271,20 @@
 
 									<!-- ********** 세은 로그 관련 내용 시작 ********** -->
 									<div id="content">
-										<h2 class="heading">스케줄 조회</h2>
+										<h2 class="heading">휴가사용현황</h2>
 										<!-- 로그 검색 -->
 
 										<form action="/schedule2" method="get">
 											<table id="search-box">
-
 												<!-- 1행 -->
 												<c:set var="today" value="<%=new java.util.Date()%>" />
 												<fmt:formatDate value="${today}" pattern="yyyy"
 													var="nowYear" />
 												<tr>
-													<th>근무구분</th>
-													<td><select class="tx2" name="scheduleType"
-														onchange="javascript:chg();">
-															<option value="">근무구분</option>
-															<option value="배정"
-																${param.scheduleType == '배정' ? 'selected' : ''}>배정</option>
-															<option value="근무"
-																${param.scheduleType == '근무' ? 'selected' : ''}>근무</option>
-															<option value="휴무"
-																${param.scheduleType == '휴무' ? 'selected' : ''}>휴무</option>
-													</select></td>
 
 													<th>기간</th>
 													<!-- 시작 연도 선택 필드 -->
-													<td><select class="tx2" name="startYr" id="yr"
-														onchange="javascript:chg();">
+													<td><select class="tx2" name="startYr" id="startYr">
 															<option value="">연도</option>
 															<c:forEach var="i" begin="0" end="9">
 																<c:set var="year" value="${nowYear - i}" />
@@ -306,7 +293,7 @@
 															</c:forEach>
 													</select></td>
 													<!-- 시작 월 선택 필드 -->
-													<td><select class="tx2" name="startMn" id="mn">
+													<td><select class="tx2" name="startMn" id="startMn">
 															<option value="">월</option>
 															<c:forEach var="month" begin="1" end="12">
 																<option value="${month}"
@@ -315,8 +302,7 @@
 													</select></td>
 													<td>~</td>
 													<!-- 종료 연도 선택 필드 -->
-													<td><select class="tx2" name="endYr" id="yr"
-														onchange="javascript:chg();">
+													<td><select class="tx2" name="endYr" id="endYr">
 															<option value="">연도</option>
 															<c:forEach var="i" begin="0" end="9">
 																<c:set var="year" value="${nowYear - i}" />
@@ -325,52 +311,21 @@
 															</c:forEach>
 													</select></td>
 													<!-- 종료 월 선택 필드 -->
-													<td><select class="tx2" name="endMn" id="mn">
+													<td><select class="tx2" name="endMn" id="endMn">
 															<option value="">월</option>
 															<c:forEach var="month" begin="1" end="12">
 																<option value="${month}"
 																	${param.endMn == month ? 'selected' : ''}>${month}월</option>
 															</c:forEach>
 													</select></td>
-													<td>
-														<button type="submit" onclick="" class="form-btn">이동</button>
-													</td>
-												</tr>
-
-												<!-- 2행 -->
-												<tr>
-													<th>사용자유형</th>
-													<td colspan="2"><select class="tx2" name="userType"
-														onchange="javascript:chg();">
-															<option value="">사용자유형</option>
-															<option value="기사"
-																${param.userType == '기사' ? 'selected' : ''}>기사</option>
-															<option value="점주"
-																${param.userType == '점주' ? 'selected' : ''}>점주</option>
-													</select></td>
-
-													<th>사용자ID</th>
-													<td colspan="3"><input type="search" name="userId"
-														placeholder="ID를 입력하세요" value="${param.userId}"></td>
-
-													<th>사용자이름</th>
-													<td colspan="3"><input type="search" name="userName"
-														placeholder="이름을 입력하세요" value="${param.userName}"></td>
 												</tr>
 
 												<tr>
-													<th>지점ID</th>
-													<td colspan="2"><input type="search" name="storeId"
-														placeholder="지점ID를 입력하세요" value="${param.storeId}"></td>
+													<th>위치</th>
 
-													<th>지점명</th>
-													<td colspan="2"><input type="search" name="storeName"
-														placeholder="지점명을 입력하세요" value="${param.storeName}"></td>
-
-													<th>지점위치</th>
 													<td><select class="tx2" name="storeLocation"
 														onchange="chg()">
-															<option value="">지역 대분류</option>
+															<option>지역 대분류</option>
 															<option value="2"
 																${param.storeLocation == '2' ? 'selected' : ''}>서울</option>
 															<option value="31"
@@ -379,53 +334,151 @@
 																${param.storeLocation == '32' ? 'selected' : ''}>인천</option>
 													</select></td>
 
-													<td><select class="tx2" name="storeSubLocation"
-														disabled>
-															<option value="">지역 소분류</option>
-															<option value="02-200"
-																${param.storeSubLocation == '02-200' ? 'selected' : ''}>양천</option>
-															<option value="02-300"
-																${param.storeSubLocation == '02-300' ? 'selected' : ''}>은평,마포,서대문</option>
-															<option value="02-400"
-																${param.storeSubLocation == '02-400' ? 'selected' : ''}>송파,강동,중량,광진,선동</option>
-															<option value="02-500"
-																${param.storeSubLocation == '02-500' ? 'selected' : ''}>서초,강남,과천시</option>
-															<option value="02-700"
-																${param.storeSubLocation == '02-700' ? 'selected' : ''}>마포,용산,
-																종로</option>
-															<option value="031-200"
-																${param.storeSubLocation == '031-200' ? 'selected' : ''}>수원시</option>
+													<td><select class="tx2" name="storeSubLocation" disabled>
+															<option>지역 소분류</option>
 													</select></td>
+
+													<th>유형</th>
+													<td><select class="tx2" name="userType"
+														onchange="updateUserType()">
+															<option value="">사용자 유형</option>
+															<option value="기사"
+																${param.userType == '기사' ? 'selected' : ''}>기사</option>
+															<option value="점주"
+																${param.userType == '점주' ? 'selected' : ''}>점주</option>
+													</select></td>
+
+													<th>검색어</th>
+													<td><select class="tx2" name="searchKeword"
+														onchange="chgName(this)">
+															<option value="">검색어</option>
+															<option value="회원ID"
+																${param.searchKeword == '회원ID' ? 'selected' : ''}>회원ID</option>
+															<option value="회원이름"
+																${param.searchKeword == '회원이름' ? 'selected' : ''}>회원이름</option>
+															<option value="지점ID"
+																${param.searchKeword == '지점ID' ? 'selected' : ''}>지점ID</option>
+															<option value="지점명"
+																${param.searchKeword == '지점명' ? 'selected' : ''}>지점명</option>
+													</select></td>
+													<td><input type="text" id="search-word"
+														name="searchKeword" placeholder="키워드 선택 후 입력해주세요" required
+														disabled></td>
+
 												</tr>
 
-												<!-- 4행 -->
-												<tr>
-													<td colspan="10"
-														style="text-align: center; border-bottom: 0px;">
-														<div>
-															<button type="submit" class="form-btn">검색</button>
-														</div>
-													</td>
-												</tr>
 											</table>
+											<button type="submit" class="form-btn">검색</button>
+											<button type="reset" class="form-btn">초기화</button>
 										</form>
+
+
+
+
+										<!-- 검색어 선택한 것이 input요소의 name으로 설정 -->
+										<script>
+											function chgName(selectElement) {
+												const selectedValue = selectElement.value; // 선택한 값
+												const inputElement = document
+														.getElementById('search-word'); // 검색어 입력 필드
+
+												if (selectedValue === '') {
+													// 선택한 값이 빈 문자열인 경우, input 요소를 비활성화
+													inputElement.disabled = true;
+												} else {
+													// 선택한 값이 빈 문자열이 아닌 경우, input 요소를 활성화
+													inputElement.disabled = false;
+												}
+											}
+										</script>
+
+
+										<!-- 사용자 유형 선택에 따른 검색어 추출 -->
+										<script>
+											function updateUserType() {
+
+												const userTypeSelect = document
+														.getElementsByName('userType')[0]; // 사용자 유형 선택 요소
+												const searchSelect = document
+														.getElementsByName('searchKeword')[0]; // 검색어 선택 요소
+
+												if (userTypeSelect.value === '기사') {
+													// '기사'가 선택된 경우, '회원ID'와 '회원이름' 옵션만 남기고 나머지는 삭제
+													removeAllOptions(searchSelect);
+													addOption(searchSelect,
+															'검색어', '');
+													addOption(searchSelect,
+															'회원ID', 'userId');
+													addOption(searchSelect,
+															'회원이름', 'userName');
+												} else {
+													removeAllOptions(searchSelect);
+													addOption(searchSelect,
+															'검색어', '');
+													addOption(searchSelect,
+															'회원ID', 'userId');
+													addOption(searchSelect,
+															'회원이름', 'userName');
+													addOption(searchSelect,
+															'지점ID', 'storeId');
+													addOption(searchSelect,
+															'지점명', 'storeName');
+												}
+
+												if (typeof searchSelect.onchange === 'function') {
+													searchSelect.onchange();
+												}
+											}
+
+											function removeAllOptions(
+													selectElement) {
+												while (selectElement.options.length > 0) {
+													selectElement.remove(0);
+												}
+											}
+
+											function addOption(selectElement,
+													text, value) {
+												const option = new Option(text,
+														value);
+												selectElement.add(option);
+											}
+										</script>
 
 
 										<!-- 로케이션을 서울로 지정 시, 서브로케이션 활성화 -->
 										<script>
-											function chg() {
-												var locationSelect = document
-														.querySelector("select[name='storeLocation']");
-												var subLocationSelect = document
-														.querySelector("select[name='storeSubLocation']");
+function chg() {
+  const storeLocationSelect = document.getElementsByName('storeLocation')[0];
+  const storeSubLocationSelect = document.getElementsByName('storeSubLocation')[0];
 
-												if (locationSelect.value === '2') {
-													subLocationSelect.disabled = false; // 서브 로케이션 활성화
-												} else {
-													subLocationSelect.disabled = true; // 서브 로케이션 비활성화
-												}
-											}
-										</script>
+  // 대분류 선택값 가져오기
+  const selectedStoreLocation = storeLocationSelect.value;
+
+  // 소분류 옵션 초기화
+  storeSubLocationSelect.innerHTML = '<option>지역 소분류</option>';
+
+  // 대분류에 따라 소분류 옵션 추가
+  if (selectedStoreLocation === '2') {
+    storeSubLocationSelect.innerHTML += `
+      <option value="02-200" ${param.storeSubLocation == '02-200' ? 'selected' : ''}>양천</option>
+      <option value="02-300" ${param.storeSubLocation == '02-300' ? 'selected' : ''}>은평,마포,서대문</option>
+  	<option value="02-400"
+		${param.storeSubLocation == '02-400' ? 'selected' : ''}>송파,강동,중량,광진,선동</option>
+	<option value="02-500"
+		${param.storeSubLocation == '02-500' ? 'selected' : ''}>서초,강남,과천시</option>
+	<option value="02-700"
+		${param.storeSubLocation == '02-700' ? 'selected' : ''}>마포,용산,종로</option>
+	<option value="031-200"
+		${param.storeSubLocation == '031-200' ? 'selected' : ''}>수원시</option>
+    `;
+    storeSubLocationSelect.disabled = false;
+  } else {
+	    storeSubLocationSelect.disabled = true;
+	  }
+}
+</script>
+
 
 
 
@@ -443,26 +496,24 @@
 												<thead>
 													<tr>
 														<th>순번</th>
-														<th>사용자구분</th>
-														<th>사용자ID</th>
-														<th>사용자명</th>
-														<th>사용자연락처</th>
+														<th>회원구분</th>
+														<th>회원ID</th>
+														<th>회원이름</th>
 														<th>지점ID</th>
 														<th>지점명</th>
-														<th>지점연락처</th>
-														<th>지점위치코드</th>
-														<th>날짜</th>
-														<th>스케줄구분</th>
+														<th>위치코드</th>
+														<th>신청일</th>
+														<th>시작일</th>
+														<th>종료일</th>
 													</tr>
 												</thead>
 												<tbody>
 													<c:forEach var="schedule2" items="${schedules}">
 														<tr>
-															<td><c:out value="${schedule2.rowNum}" /></td>
+															<td><c:out value="${schedule2.rowNumber}" /></td>
 															<td><c:out value="${schedule2.userType}" /></td>
 															<td><c:out value="${schedule2.userId}" /></td>
 															<td><c:out value="${schedule2.userName}" /></td>
-															<td><c:out value="${schedule2.userPhoneNumber}" /></td>
 															<td><c:choose>
 																	<c:when test="${schedule2.storeId != 0}">
 																		<c:out value="${schedule2.storeId}" />
@@ -472,17 +523,17 @@
 																	</c:otherwise>
 																</c:choose></td>
 															<td><c:out value="${schedule2.storeName}" /></td>
-															<td><c:out value="${schedule2.storePhoneNumber}" /></td>
-															<td><c:out value="${schedule2.storeLocation}" /></td>
-															<td><c:out value="${schedule2.scheduleDate}" /></td>
-															<td><c:out value="${schedule2.scheduleType}" /></td>
+															<td><c:out value="${schedule2.locationCd}" /></td>
+															<td><c:out value="${schedule2.appDate}" /></td>
+															<td><c:out value="${schedule2.startDate}" /></td>
+															<td><c:out value="${schedule2.endDate}" /></td>
 														</tr>
 													</c:forEach>
 											</table>
 										</div>
 
 										<!-- 페이징 -->
-										<div class="paging pagination">
+										<%-- 									<div class="paging pagination">
 
 											<!-- 맨 앞으로 가는 버튼 -->
 											<a
@@ -574,8 +625,7 @@
 &scheduleType=${searchContent.scheduleType}"><img
 												src="/resources/img/log/free-icon-fast-forward-double-right-arrows-symbol-54366.png"
 												alt="마지막" /></a>
-										</div>
-
+										</div> --%>
 									</div>
 									<!-- ********** 세은 로그 관련 내용 끝 ********** -->
 								</div>

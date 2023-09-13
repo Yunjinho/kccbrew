@@ -99,7 +99,7 @@ public class schdlMngController {
 	}
 
 	/* 회원 스케줄조회 */
-	@GetMapping("/schedule2/{userId}")
+	/*@GetMapping("/schedule2/{userId}")
 	public String getUserLogs(
 			@RequestParam(defaultValue = "1") int currentPage,
 			@ModelAttribute("searchContent") SchdlMngVo2 searchContent,
@@ -107,14 +107,14 @@ public class schdlMngController {
 			HttpSession session 
 			) {
 
-		/*파라미터 확인*/
+		파라미터 확인
 		System.out.println("searchContent: " + searchContent);
 
-		/* 스케줄리스트 데이터 */
+		 스케줄리스트 데이터 
 		List<SchdlMngVo2> schedules = schdlMngService.getSchedules2(currentPage, searchContent);
 		int scheduleCount = schdlMngService.getSchedule2Count(searchContent);
 
-		/*DB 데이터 확인*/
+		DB 데이터 확인
 		System.out.println("schedules: " + schedules);
 		System.out.println("scheduleCount: " + scheduleCount);
 
@@ -144,7 +144,7 @@ public class schdlMngController {
 
 
 		return "schdl/schdlMngList2";
-	}
+	}*/
 
 	/*관리자 캘린더 조회*/
 	@GetMapping("/calendar")

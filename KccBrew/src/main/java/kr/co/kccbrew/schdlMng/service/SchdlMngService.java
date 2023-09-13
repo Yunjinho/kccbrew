@@ -35,7 +35,7 @@ public class SchdlMngService implements ISchdlMngService {
 	}*/
 
 
-	/*테스트2*/
+	/*검색에 따른 휴가리스트 조회*/
 	@Override
 	public List<SchdlMngVo2> getSchedules2(int currentPage, SchdlMngVo2 searchContent) {
 		Map<String, Object> map = new HashMap<String, Object>();
