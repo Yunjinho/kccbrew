@@ -163,7 +163,6 @@ public class schdlMngController {
 		/*매개변수 확인*/
 		System.out.println("year: " + year);
 		System.out.println("month: " + month);
-		/*System.out.println("dateInfo: " + dateInfo);*/
 		
 		/*세션에서 회원정보 추출해서 vo에 저장*/
 		HttpSession session = request.getSession();
@@ -184,7 +183,6 @@ public class schdlMngController {
 		}*/
 		
 		List<SchdlMngVo2> schedules = schdlMngService.getCalendarSchedule(schdlMngVo);
-		
 		
 		
 		return schedules;

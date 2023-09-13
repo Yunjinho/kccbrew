@@ -9,4 +9,6 @@ public interface ILogInService {
 	 * @return : 로그인 성공 실패
 	 */
 	public LogInVo logIn(LogInVo vo);
+	
+	
 }
