@@ -481,8 +481,6 @@ window.onload = function(){
 		if(userTypeCd=="03"){
 			if(!checkEqpmnCd())return;
 		}
-		
-		
 		$("#registerForm").submit();
 	})
 }

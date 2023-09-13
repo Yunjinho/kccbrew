@@ -19,7 +19,6 @@
 </style>
 </head>
 <body>
-	<div id="container">
 		<div id="header">
 			<tiles:insertAttribute name="header"/>
 		</div>
@@ -31,6 +30,5 @@
 		<div id="footer">
 			<tiles:insertAttribute name="footer"/>
 		</div>
-	</div>
 </body>
 </html>

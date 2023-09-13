@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans:beans
-	xmlns="http://www.springframework.org/schema/mvc"
+<beans:beans xmlns="http://www.springframework.org/schema/mvc"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:beans="http://www.springframework.org/schema/beans"
 	xmlns:context="http://www.springframework.org/schema/context"
@@ -59,46 +58,48 @@
 
 
 	<!-- Controller -->
-	<context:component-scan
-		base-package="kr.co.kccbrew" />
-	<context:component-scan
-		base-package="kr.co.kccbrew.comm.login.controller" />
-	<context:component-scan
-		base-package="kr.co.kccbrew.comm.main.controller" />
-	<context:component-scan
-		base-package="kr.co.kccbrew.comm.register.controller" />
-	<context:component-scan
-		base-package="kr.co.kccbrew.strMng.controller" />
-	<context:component-scan
-		base-package="kr.co.kccbrew.sysMng.cdMng.controller" />
-	<context:component-scan
-		base-package="kr.co.kccbrew.sysMng.logMng.controller" />
-	<context:component-scan
-		base-package="kr.co.kccbrew.asMng.contorller" />
-	<context:component-scan
-		base-package="kr.co.kccbrew.schdlMng.contorller" />
+	<context:component-scan base-package="kr.co.kccbrew" />
+	<context:component-scan base-package="kr.co.kccbrew.comm.login.controller" />
+	<context:component-scan base-package="kr.co.kccbrew.comm.main.controller" />
+	<context:component-scan base-package="kr.co.kccbrew.comm.register.controller" />
+	<context:component-scan base-package="kr.co.kccbrew.strMng.controller" />
+	<context:component-scan base-package="kr.co.kccbrew.sysMng.cdMng.controller" />
+	<context:component-scan base-package="kr.co.kccbrew.sysMng.logMng.controller" />
+	<context:component-scan base-package="kr.co.kccbrew.asMng.contorller" />
+	<context:component-scan base-package="kr.co.kccbrew.userMng.contorller" />
+	<context:component-scan base-package="kr.co.kccbrew.schdlMng.contorller" />
+	<context:component-scan base-package="kr.co.kccbrew.sysMng.fileMng.contorller" />
 	<!-- Controller -->
 
 
 
 	<view-controller path="/" view-name="/home" />
-	<util:properties id="serverImgPath"
-		location="classpath:/config/application.properties" />
 
+	<util:properties id="serverImgPath" location="classpath:/config/application.properties"/>
 
 	<!-- inteceptor -->
-
+ 	 
 	<interceptors>
 		<!-- 로그인 세션 확인 -->
 
-		<!-- Properties 파일을 읽어 오기 위한 태그 Java코드에서 @Value('#{id['properties속성']}') -->
+	  <!-- 
+      Properties 파일을 읽어 오기 위한 태그 
+      Java코드에서 @Value('#{id['properties속성']}')
+   		-->
+ 	 
 
 		<interceptor>
 			<mapping path="/**" />
 			<exclude-mapping path="/" />
 			<exclude-mapping path="/login" />
+			<exclude-mapping path="/loginpage" />
+			<exclude-mapping path="/register-form" />
 			<exclude-mapping path="/register" />
 			<exclude-mapping path="/search-store-list" />
+			<exclude-mapping path="/check_user_id" />
+			<exclude-mapping path="/check_user_id" />
+			<exclude-mapping path="/search-location-code" />
+			<exclude-mapping path="/search-location-cd" />
 			<exclude-mapping path="/resources/**/" />
 			<beans:bean
 				class="kr.co.kccbrew.comm.interceptor.component.SessionInterceptor" />
@@ -116,9 +117,9 @@
 
 		<interceptor>
 			<mapping path="/점포만 가능한  API" />
+			<mapping path="/as-receipt" />
 			<exclude-mapping path="/" />
 			<exclude-mapping path="/resources/**/" />
-			<exclude-mapping path="/as-receipt" />
 			<beans:bean
 				class="kr.co.kccbrew.comm.interceptor.component.StrAuthInterceptor" />
 		</interceptor>

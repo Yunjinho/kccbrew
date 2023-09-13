@@ -50,26 +50,23 @@ public class LogInController {
 		vo.setUserId(id);
 		vo.setUserPwd(pwd);
 		LogInVo user=loginService.logIn(vo);
-		if(user.getUserId()!=null) {
+		System.out.println(user);
+		if(user!=null && user.getUserId()!=null) {
 			if(user.getApproveYn().equals("Y")) {
 				// 세션을 생성하기 전에 기존의 세션 파기
 		        httpServletRequest.getSession().invalidate();
 		        HttpSession session = httpServletRequest.getSession(true);  // Session이 없으면 생성
 		        // 세션에 userId를 넣어줌
-				//session.setAttribute("userTypeCd", session);
 		        session.setAttribute("userTypeCd", user.getUserTypeCd());
 		        session.setAttribute("userName", user.getUserNm());
-				//session.setAttribute("userId", session);
 		        session.setAttribute("userId", user.getUserId());
 				session.setMaxInactiveInterval(1800); // Session이 30분동안 유지
-				
 				return "t";
 			}else {
-				System.out.println(user);
-				return "인증 진행중인 계정입니다.";
+				return "n";
 			}
 		}else {
-			return "아이디(로그인 전용 아이디) 또는 비밀번호를 잘못 입력했습니다.<br> 입력하신 내용을 다시 확인해주세요.";
+			return "f";
 		}
 	}
 	

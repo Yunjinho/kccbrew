@@ -251,27 +251,24 @@
 
 	<update id="grpUpdate2"
 		parameterType="kr.co.kccbrew.sysMng.cdMng.model.CdMngVo">
-		<if test="'N'.equals(cdUseYn)">
+		<if test="'N'.toString() == cdUseYn">
 			UPDATE
 			GROUP_CODE_DETAIL
 			SET
 			MOD_DTTM = SYSDATE,
 			MOD_USER = #{cdModUser},
-			use_yn = #{cdUseYn}  <!-- Change jdbcType to VARCHAR -->
+			use_yn = #{cdUseYn} 
 			WHERE
 			grp_cd_id = #{cdId}
 		</if>
-		<if test="'Y'.equals(cdUseYn)">
-			UPDATE
-			GROUP_CODE_DETAIL
-			SET
-			use_yn = #{cdUseYn}  <!-- Change jdbcType to VARCHAR -->
-			WHERE
-			grp_cd_id = #{cdId}
-			and
-			use_yn ='Y'
-		</if>
-
+		<if test="'Y'.toString() == cdUseYn">
+		 UPDATE 
+        GROUP_CODE
+   			 SET 
+        grp_cd_name = #{cdNm}
+         WHERE 
+        grp_cd_id = #{cdId}
+        </if>
 	</update>
 
 </mapper>

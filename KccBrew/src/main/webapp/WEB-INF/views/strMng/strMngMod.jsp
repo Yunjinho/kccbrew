@@ -1,23 +1,25 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>점포등록</title>
-<!-- Bootstrap CSS -->
 <link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-<link rel="stylesheet" href="${path}/resources/css/store/update.css"
-	type="text/css">
+    href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<link rel="stylesheet" href="/resources/css/code/cdMngDtl.css" />
+<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+<meta charset="UTF-8">
+<title>점포수정</title>
 </head>
 <body>
 	<section id="notice" class="notice">
-		
+		 <div class="container2">
+            <div class="category">점포정보</div>
+            <hr style="border: solid 1.2px; width: 97%;">
+            
 		<form action="/store/update" method="post" id="storeForm"
-			onsubmit="return submitForm()">
-			<table class="table text-center">
+			onsubmit="return submitForm()" style="margin-top:20px">
+			<table id="search-box">
 				<tr>
 					<th>지점명</th>
 					<td><input type="text" id="storeNm" name="storeNm"
@@ -68,16 +70,18 @@
 					</select></td>
 				</tr>
 			</table>
-			<div id="staticMap" style="width: 650px; height: 355px;"></div>
-			<div class="updatecancle">
-				<input type="hidden" name="storeSeq" value="${store.storeSeq}">
-				<input type="submit" name="save" class="button" value="저장"
-					id="submitBtn"> <input type="button" class="update"
-					value="취소" onclick="history.back()">
+			
+		  <div id="staticMap" style="width: 550px; height: 300px; margin: auto;"></div>
+			 <div class="updatecancle" style="text-align: center;">
+				<input type="hidden" name="storeSeq" value="${store.storeSeq}" style="">
+				<button type="submit" name="save"  class="form-btn" value="저장"
+					id="submitBtn" style="display: inline-block;  margin-left: 5px;  margin-right: 5px;">저장</button> 
+					<button type="button"  class="form-btn"
+					value="취소" onclick="history.back()" style="display: inline-block;  margin-left: 5px;  margin-right: 5px;">취소</button>
 			</div>
 		</form>
+		</div>
 	</section>
-	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	<!-- Google Maps API -->
 	<script
 		src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAY5-GHYNs9VdzbExAcRYn5NPHIsu727XI&libraries=places&callback=initAutocomplete"
@@ -208,44 +212,36 @@
             },
             error: function (error) {
                 console.error("AJAX 요청 실패:", error);
-                alert("저장에 실패하였습니다.");
+                alert("빈칸을 모두 입력해주세요.");
             }
         });
 
         return false;
     }
 </script>
-	<script type="text/javascript">
-    function loadKakaoMap() {
-        var script = document.createElement("script");
-        script.type = "text/javascript";
-        script.src = "//dapi.kakao.com/v2/maps/sdk.js?appkey=8ebfc94bdd15e21c9b4d64159a004634";
-        script.onload = initializeKakaoMap; // Kakao 지도 초기화 함수 호출
-        document.head.appendChild(script);
-    }
+	 <script type="text/javascript"
+        src="//dapi.kakao.com/v2/maps/sdk.js?appkey=8ebfc94bdd15e21c9b4d64159a004634"></script>
+    <script type="text/javascript">
+        function initializeKakaoMap() {
+            kakao.maps.load(function () {
+                // Kakao 지도 초기화 코드
+                var markerPosition = new kakao.maps.LatLng(${store.latitude}, ${store.longitude});
+                var marker = {
+                    position: markerPosition
+                };
+                var staticMapContainer = document.getElementById('staticMap');
+                var staticMapOption = {
+                    center: new kakao.maps.LatLng(${store.latitude}, ${store.longitude}),
+                    level: 3,
+                    marker: marker
+                };
+                var staticMap = new kakao.maps.StaticMap(staticMapContainer, staticMapOption);
+            });
+        }
 
-    function initializeKakaoMap() {
-        kakao.maps.load(function () {
-            // Kakao 지도 초기화 코드
-            var markerPosition = new kakao.maps.LatLng(${store.latitude}, ${store.longitude});
-            var marker = {
-                position: markerPosition
-            };
-            var staticMapContainer = document.getElementById('staticMap');
-            var staticMapOption = {
-                center: new kakao.maps.LatLng(${store.latitude}, ${store.longitude}),
-                level: 3,
-                marker: marker
-            };
-            var staticMap = new kakao.maps.StaticMap(staticMapContainer, staticMapOption);
-        });
-    }
-
-    // 페이지 로드 시 Kakao 지도 스크립트 로드 시작
-    loadKakaoMap();
-</script>
-	<script type="text/javascript"
-		src="//dapi.kakao.com/v2/maps/sdk.js?appkey=8ebfc94bdd15e21c9b4d64159a004634"></script>
+        // Kakao 지도 스크립트 로드 후 호출되도록 이벤트 핸들러 추가
+        window.addEventListener('load', initializeKakaoMap);
+    </script>
 </body>
 </html>
 

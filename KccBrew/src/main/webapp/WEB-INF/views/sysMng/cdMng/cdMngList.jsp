@@ -100,29 +100,6 @@
 																	${param.endMn == month ? 'selected' : ''}>${month}월</option>
 															</c:forEach>
 													</select></td>
-												</tr>
-												<!-- 2행 -->
-												<tr>
-
-													<th>그룹코드</th>
-													<td colspan="2"><select class="tx2" name="cdId"
-														onchange="chg()">
-															<option value="">그룹코드명</option>
-															<c:forEach var="list" items="${List}">
-																<option value="${list.cdId}"
-																	${param.cdId == list.cdId ? 'selected' : ''}>${list.cdNm}</option>
-															</c:forEach>
-													</select></td>
-													
-
-												</tr>
-												<!-- 3행 -->
-
-												<tr>
-													<th>상세코드명</th>
-													<!-- Input field for URI -->
-													<td colspan="2"><input type="search" name="keyword"
-														placeholder="상세코드명 입력하세요" value="${param.keyword}"></td>
 													<th>그룹코드 사용여부</th>
 													<td><select name="cdUseYn" class="tx2" id="yn"
 														onchange="javascript:chg();">
@@ -130,13 +107,31 @@
 															<option value="Y" ${param.cdUseYn == 'Y' ? 'selected' : ''}>Y</option>
 															<option value="N" ${param.cdUseYn == 'N' ? 'selected' : ''}>N</option>
 													</select></td>
+												</tr>
+												<!-- 2행 -->
+												<tr>
+
+													<th>그룹코드</th>
+													<td colspan="3"><select class="tx2" name="cdId"
+														onchange="chg()">
+															<option value="">그룹코드명</option>
+															<c:forEach var="list" items="${List}">
+																<option value="${list.cdId}"
+																	${param.cdId == list.cdId ? 'selected' : ''}>${list.cdNm}</option>
+															</c:forEach>
+													</select></td>
+
+													<th>상세코드명</th>
+													<!-- Input field for URI -->
+													<td colspan="3"><input type="search" name="keyword"
+														placeholder="상세코드명 입력하세요" value="${param.keyword}" size="30"> </td>
 
 												</tr>
 
 
 												<!-- 4행 -->
 												<tr>
-													<td colspan="6"
+													<td colspan="8"
 														style="text-align: center; border-bottom: 0px;">
 														<div class="find-btn" style="text-align: center;">
 															<button type="submit" class="form-btn" id="find-btn1">검색</button>
@@ -274,7 +269,7 @@
 								function popup() {
 									var url = "<c:url value='/code/insert' />";
 									var name = "팝업 테스트";
-									var option = "width=900,height=600,top=170,left=400,scrollbars=yes,directories=no,location=no";
+									var option = "width=800,height=550,top=200,left=450,scrollbars=yes,directories=no,location=no";
 									window.open(url, name, option);
 									// 팝업 창을 열고 난 후에 window.close(); 함수를 제거하면 팝업 창이 열린 상태로 유지됩니다.
 								}
@@ -291,7 +286,7 @@
 								function popup2(cdId) {
 									var url = "<c:url value='/code/' />" + cdId;
 									var name = "팝업 테스트";
-									var option = "width=1200,height=600,top=100,left=200,scrollbars=yes,directories=no,location=no";
+									var option = "width=800,height=500,top=200,left=450,scrollbars=yes,directories=no,location=no";
 									window.open(url, name, option);
 									// 팝업 창을 열고 난 후에 window.close(); 함수를 제거하면 팝업 창이 열린 상태로 유지됩니다.
 								}

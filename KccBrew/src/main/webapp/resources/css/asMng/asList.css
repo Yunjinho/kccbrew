@@ -34,7 +34,6 @@ body {
 	display: inline-flex;
 }
 
-/* 로그리스트 */
 #content {
 	margin: 50px auto;
 	width: 90%;
@@ -44,7 +43,10 @@ body {
 form {
 	margin: 50px 0;
 }
-
+input{
+	width: 100%;
+    line-height: 2 !important;
+}
 #search-box {
 	width: 100%;
 	border-collapse: collapse;
@@ -74,7 +76,7 @@ form {
 	background-color: #E6E6E6;
 }
 .tx2 {
-	width: 80%;
+	width: 100%;
 	padding: 5px;
 }
 

@@ -1,7 +1,10 @@
 package kr.co.kccbrew.comm.register.controller;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -37,7 +40,7 @@ public class RegisterController {
 	private final IRegisterService registerService;
 
 	/** 회원가입 페이지로 이동*/
-	@RequestMapping(value="/register" , method=RequestMethod.GET)
+	@RequestMapping(value="/register-form" , method=RequestMethod.GET)
 	public String register(Model model) {
 		//장비 목록
 		List<RegisterVo> mechineList=registerService.selectMechineCode();
@@ -76,7 +79,7 @@ public class RegisterController {
 		model.addAttribute("storeList", storeList);
 		model.addAttribute("keyword", "");
 		
-		return "/comm/register";
+		return "registerPage";
 	}
 	
 	/** 점포 검색 */
@@ -159,10 +162,26 @@ public class RegisterController {
 	
 	/** 회원가입 처리*/
 	@RequestMapping(value="/register" , method=RequestMethod.POST)
-	public String register(RegisterVo user,@Value("#{serverImgPath['userPath']}")String path) {
+	public String register(RegisterVo user,@Value("#{serverImgPath['localPath']}")String localPath,@Value("#{serverImgPath['userPath']}")String path,HttpServletRequest request) {
+		String folderPath=request.getServletContext().getRealPath("")+path;
+		File folder = new File(folderPath);
+        // 폴더가 존재하지 않으면 폴더를 생성합니다.
+        if (!folder.exists()) {
+            boolean success = folder.mkdirs(); // 폴더 생성 메소드
+        }
 		user.setStorageLocation(path);
+		user.setServerSavePath(folderPath);
+		
+		//local 저장 위치 배포할땐 삭제
+		File folder2 = new File(localPath+path);
+		// 폴더가 존재하지 않으면 폴더를 생성합니다.
+		if (!folder2.exists()) {
+			boolean success = folder2.mkdirs(); // 폴더 생성 메소드
+		}
+		user.setLocalSavePath(localPath+path);
 		registerService.registerUser(user);
-		return "comm/login";
+		
+		return "redirect:/loginpage";
 	}
 	
 }
