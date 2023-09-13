@@ -67,7 +67,7 @@
 	INNER JOIN (select grp_cd_dtl_nm AS as_status ,grp_cd_dtl_id from group_code_detail where grp_cd_id LIKE 'S') status ON status.grp_cd_dtl_id=a.as_status
 	INNER JOIN (select grp_cd_dtl_nm AS machine_cd ,grp_cd_dtl_id from group_code_detail where grp_cd_id like 'M') machine on machine.grp_cd_dtl_id=a.machine_cd
 	WHERE s.store_nm LIKE '%'||#{storeNm}||'%' AND
-	 	status.as_status LIKE '%'||#{statusCd}||'%' AND
+	 	status.as_status LIKE '%'||#{asStatusCd}||'%' AND
 	 	machine.machine_cd LIKE '%'||#{machineCd}||'%' AND 
 	 	s.store_addr LIKE '%'||#{storeAddr}||'%'
 		<choose><when test="asInfoSeq != ''">AND a.as_info_seq = #{asInfoSeq} </when></choose>

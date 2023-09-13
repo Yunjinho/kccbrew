@@ -149,14 +149,9 @@
 												</td>
 												<th>AS 상태</th>
 												<td colspan="2">
-													<select class="tx2" name="statusCd" value="${searchContent.statusCd}" onchange="javascript:chg();">
+													<select class="tx2" name="asStatusCd" value="${searchContent.asStatusCd}" onchange="javascript:chg();">
 															<option value="">AS 상태</option>
 															<c:forEach var="asCd" items="${asStatusCd}">
-<<<<<<< HEAD
-																<option value="${asCd.grpCdDtlId}">
-																	${asCd.grpCdDtlNm}
-																</option>
-=======
 																<c:choose>
 																	<c:when test="${searchContent.asStatusCd == asCd.grpCdDtlId}">
 																		<option value="${asCd.grpCdDtlId}" selected>
@@ -169,7 +164,6 @@
 																		</option>
 																	</c:otherwise>
 																</c:choose>
->>>>>>> feature/as-assign
 															</c:forEach>
 													</select>
 												</td>
@@ -265,7 +259,7 @@
 												</td>
 												<th>AS 상태</th>
 												<td colspan="2">
-													<select class="tx2" name="statusCd" id="" onchange="javascript:chg();">
+													<select class="tx2" name="asStatusCd" id="" onchange="javascript:chg();">
 															<option value="">AS 상태</option>
 															<c:forEach var="asCd" items="${asStatusCd}">
 																<option value="${asCd.grpCdDtlId}">
@@ -382,7 +376,7 @@
 												</td>
 												<th>AS 상태</th>
 												<td colspan="3">
-													<select class="tx2" name="statusCd" id="" onchange="javascript:chg();">
+													<select class="tx2" name="asStatusCd" id="" onchange="javascript:chg();">
 															<option value="">AS 상태</option>
 															<c:forEach var="asCd" items="${asStatusCd}">
 																<option value="${asCd.grpCdDtlId}">
@@ -431,7 +425,7 @@
 													<tr>
 														<td><c:out value="${list.asInfoSeq}" /></td>
 														<td><c:out value="${list.regDttm}" /></td>
-														<td><c:out value="${list.statusCd}" /></td>
+														<td><c:out value="${list.asStatusCd}" /></td>
 														<td><c:out value="${list.storeNm}" /></td>
 														<td><c:out value="${list.storeAddr}" /></td>
 														<td><a href="#" onclick="selectAsDetail(${list.asInfoSeq})"class="form-btn">조회</a></td>
