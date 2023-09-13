@@ -41,7 +41,9 @@
 
 	<!-- 휴가사용현황 조회 -->
 	<select id="selectSchedules2" resultMap="scheduleResult">
-		SELECT ROWNUM AS
+		SELECT *
+		FROM
+		(SELECT ROWNUM AS
 		ROW_NUMBER, subquery.*
 		FROM (
 		SELECT
@@ -73,21 +75,25 @@
 		LEFT OUTER JOIN users ON
 		holiday.USER_ID = users.USER_ID
 		LEFT
-		OUTER JOIN GROUP_CODE_DETAIL gc ON
+		OUTER JOIN
+		GROUP_CODE_DETAIL gc ON
 		users.USER_TYPE_CD =
 		gc.GRP_CD_DTL_ID
-		LEFT OUTER JOIN STORE_USER_MAP sum
+		LEFT OUTER
+		JOIN STORE_USER_MAP sum
 		ON users.USER_ID =
 		sum.USER_ID
-		LEFT OUTER JOIN STORE ON sum.STORE_SEQ =
+		LEFT OUTER JOIN
+		STORE ON sum.STORE_SEQ =
 		STORE.STORE_SEQ
 		WHERE gc.GRP_CD_ID = 'U'
-		ORDER BY START_DATE DESC
+		ORDER
+		BY START_DATE DESC
 		) subquery
-		
-		WHERE 1=1 
+
+		WHERE 1=1
 		and ACTL_USE='Y'
-			<!-- 날짜검색 -->
+		<!-- 날짜검색 -->
 		<if
 			test="searchContent.startYr != null and searchContent.startYr != '' and searchContent.startMn != null and searchContent.startMn != '' and
           searchContent.endYr != null and searchContent.endYr != '' and searchContent.endMn != null and searchContent.endMn != ''">
@@ -131,7 +137,9 @@
 		<if
 			test="searchContent.scheduleType != null and searchContent.scheduleType != ''">
 			AND SCHEDULE_TYPE = #{searchContent.scheduleType}
-		</if>
+		</if>)
+		
+		<![CDATA[ WHERE ROW_NUMBER BETWEEN #{firstRowNum} AND #{lastRowNum} ]]>
 
 	</select>
 

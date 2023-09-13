@@ -322,7 +322,6 @@
 
 												<tr>
 													<th>위치</th>
-
 													<td><select class="tx2" name="storeLocation"
 														onchange="chg()">
 															<option>지역 대분류</option>
@@ -334,7 +333,8 @@
 																${param.storeLocation == '32' ? 'selected' : ''}>인천</option>
 													</select></td>
 
-													<td><select class="tx2" name="storeSubLocation" disabled>
+													<td><select class="tx2" name="storeSubLocation"
+														disabled>
 															<option>지역 소분류</option>
 													</select></td>
 
@@ -352,13 +352,13 @@
 													<td><select class="tx2" name="searchKeword"
 														onchange="chgName(this)">
 															<option value="">검색어</option>
-															<option value="회원ID"
+															<option value="userId"
 																${param.searchKeword == '회원ID' ? 'selected' : ''}>회원ID</option>
-															<option value="회원이름"
+															<option value="userName"
 																${param.searchKeword == '회원이름' ? 'selected' : ''}>회원이름</option>
-															<option value="지점ID"
+															<option value="storeId"
 																${param.searchKeword == '지점ID' ? 'selected' : ''}>지점ID</option>
-															<option value="지점명"
+															<option value="storeName"
 																${param.searchKeword == '지점명' ? 'selected' : ''}>지점명</option>
 													</select></td>
 													<td><input type="text" id="search-word"
@@ -388,6 +388,7 @@
 												} else {
 													// 선택한 값이 빈 문자열이 아닌 경우, input 요소를 활성화
 													inputElement.disabled = false;
+													inputElement.name = selectedValue;
 												}
 											}
 										</script>
@@ -398,12 +399,11 @@
 											function updateUserType() {
 
 												const userTypeSelect = document
-														.getElementsByName('userType')[0]; // 사용자 유형 선택 요소
+														.getElementsByName('userType')[0]; 
 												const searchSelect = document
-														.getElementsByName('searchKeword')[0]; // 검색어 선택 요소
+														.getElementsByName('searchKeword')[0]; 
 
 												if (userTypeSelect.value === '기사') {
-													// '기사'가 선택된 경우, '회원ID'와 '회원이름' 옵션만 남기고 나머지는 삭제
 													removeAllOptions(searchSelect);
 													addOption(searchSelect,
 															'검색어', '');
@@ -533,26 +533,36 @@ function chg() {
 										</div>
 
 										<!-- 페이징 -->
-										<%-- 									<div class="paging pagination">
+										<div class="paging pagination">
 
 											<!-- 맨 앞으로 가는 버튼 -->
 											<a
 												href="/schedule2?currentPage=1
-&startYr=${searchContent.startYr}&startMn=${searchContent.startMn}&endYr=${searchContent.endYr}&endMn=${searchContent.endMn}
-&userType=${searchContent.userType}
-&userId=${searchContent.userId}
-&userName=${searchContent.userName}
-&storeId=${searchContent.storeId}
-&storeName=${searchContent.storeName}
-&storeLocation=${searchContent.storeLocation}
-&scheduleType=${searchContent.scheduleType}"><img
+															&startYr=${searchContent.startYr}&startMn=${searchContent.startMn}
+															&endYr=${searchContent.endYr}&endMn=${searchContent.endMn}
+															&storeLocation=${searchContent.storeLocation}
+															&storeSubLocation=${searchContentstoreSubLocation}
+															&userType=${searchContent.userType}
+															&userId=${searchContent.userId}
+															&userName=${searchContent.userName}
+															&storeId=${searchContent.storeId}
+															&storeName=${searchContent.storeName}"><img
 												src="/resources/img/log/free-icon-left-chevron-6015759.png"
 												alt=" 처음" /></a>
 
 											<c:choose>
 												<c:when test="${currentPage > 1}">
 													<a
-														href="/schedule2?currentPage=${currentPage - 1}&startYr=${searchContent.startYr}&startMn=${searchContent.startMn}&endYr=${searchContent.endYr}&endMn=${searchContent.endMn}&userType=${searchContent.userType}&userId=${searchContent.userId}&userName=${searchContent.userName}&storeId=${searchContent.storeId}&storeName=${searchContent.storeName}&storeLocation=${searchContent.storeLocation}&scheduleType=${searchContent.scheduleType}">
+														href="/schedule2?currentPage=${currentPage - 1}
+															&startYr=${searchContent.startYr}&startMn=${searchContent.startMn}
+															&endYr=${searchContent.endYr}&endMn=${searchContent.endMn}
+															&storeLocation=${searchContent.storeLocation}
+															&storeSubLocation=${searchContentstoreSubLocation}
+															&userType=${searchContent.userType}
+															&userId=${searchContent.userId}
+															&userName=${searchContent.userName}
+															&storeId=${searchContent.storeId}
+															&storeName=${searchContent.storeName}">
 														<img
 														src="/resources/img/log/free-icon-left-arrow-271220.png"
 														alt="이전" />
@@ -574,14 +584,15 @@ function chg() {
 														<c:if test="${page <= totalPage}">
 															<a
 																href="/schedule2?currentPage=${page}
-&startYr=${searchContent.startYr}&startMn=${searchContent.startMn}&endYr=${searchContent.endYr}&endMn=${searchContent.endMn}
-&userType=${searchContent.userType}
-&userId=${searchContent.userId}
-&userName=${searchContent.userName}
-&storeId=${searchContent.storeId}
-&storeName=${searchContent.storeName}
-&storeLocation=${searchContent.storeLocation}
-&scheduleType=${searchContent.scheduleType}"
+																			&startYr=${searchContent.startYr}&startMn=${searchContent.startMn}
+																			&endYr=${searchContent.endYr}&endMn=${searchContent.endMn}
+																			&storeLocation=${searchContent.storeLocation}
+																			&storeSubLocation=${searchContentstoreSubLocation}
+																			&userType=${searchContent.userType}
+																			&userId=${searchContent.userId}
+																			&userName=${searchContent.userName}
+																			&storeId=${searchContent.storeId}
+																			&storeName=${searchContent.storeName}"
 																class="pagination page-btn ${currentPage == page ? 'selected' : ''}">
 																${page} </a>
 														</c:if>
@@ -593,14 +604,15 @@ function chg() {
 											<c:if test="${currentPage < totalPage}">
 												<a
 													href="/schedule2?currentPage=${currentPage + 1}
-&startYr=${searchContent.startYr}&startMn=${searchContent.startMn}&endYr=${searchContent.endYr}&endMn=${searchContent.endMn}
-&userType=${searchContent.userType}
-&userId=${searchContent.userId}
-&userName=${searchContent.userName}
-&storeId=${searchContent.storeId}
-&storeName=${searchContent.storeName}
-&storeLocation=${searchContent.storeLocation}
-&scheduleType=${searchContent.scheduleType}">
+															&startYr=${searchContent.startYr}&startMn=${searchContent.startMn}
+															&endYr=${searchContent.endYr}&endMn=${searchContent.endMn}
+															&storeLocation=${searchContent.storeLocation}
+															&storeSubLocation=${searchContentstoreSubLocation}
+															&userType=${searchContent.userType}
+															&userId=${searchContent.userId}
+															&userName=${searchContent.userName}
+															&storeId=${searchContent.storeId}
+															&storeName=${searchContent.storeName}">
 													<img
 													src="/resources/img/log/free-icon-right-arrow-271228.png"
 													alt="다음" />
@@ -615,17 +627,18 @@ function chg() {
 
 											<a
 												href="/schedule2?currentPage=${totalPage}
-&startYr=${searchContent.startYr}&startMn=${searchContent.startMn}&endYr=${searchContent.endYr}&endMn=${searchContent.endMn}
-&userType=${searchContent.userType}
-&userId=${searchContent.userId}
-&userName=${searchContent.userName}
-&storeId=${searchContent.storeId}
-&storeName=${searchContent.storeName}
-&storeLocation=${searchContent.storeLocation}
-&scheduleType=${searchContent.scheduleType}"><img
+															&startYr=${searchContent.startYr}&startMn=${searchContent.startMn}
+															&endYr=${searchContent.endYr}&endMn=${searchContent.endMn}
+															&storeLocation=${searchContent.storeLocation}
+															&storeSubLocation=${searchContentstoreSubLocation}
+															&userType=${searchContent.userType}
+															&userId=${searchContent.userId}
+															&userName=${searchContent.userName}
+															&storeId=${searchContent.storeId}
+															&storeName=${searchContent.storeName}"><img
 												src="/resources/img/log/free-icon-fast-forward-double-right-arrows-symbol-54366.png"
 												alt="마지막" /></a>
-										</div> --%>
+										</div>
 									</div>
 									<!-- ********** 세은 로그 관련 내용 끝 ********** -->
 								</div>

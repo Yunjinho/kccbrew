@@ -55,22 +55,6 @@
       ]]>
 	</select>
 
-	<!-- 검색 조건에 따른 로그 조회 -->
-	<!-- <select id="selectRetrievedLogs" resultMap="logResult" parameterType="kr.co.kccbrew.sysMng.logMng.model.LogMngVo"> 
-		SELECT * FROM log WHERE 1=1 <if test="startYr != null and startYr != '' and 
-		startMn != null and startMn != ''"> <![CDATA[ AND ( EXTRACT(YEAR FROM LOG_DTTM) 
-		> #{startYr} OR (EXTRACT(YEAR FROM LOG_DTTM) = #{startYr} AND EXTRACT(MONTH 
-		FROM LOG_DTTM) >= #{startMn}) ) ]]> </if> <if test="endYr != null and endYr 
-		!= '' and endMn != null and endMn != ''"> <![CDATA[ AND ( EXTRACT(YEAR FROM 
-		LOG_DTTM) < #{endYr} OR (EXTRACT(YEAR FROM LOG_DTTM) = #{endYr} AND EXTRACT(MONTH 
-		FROM LOG_DTTM) <= #{endMn}) ) ]]> </if> <if test="uri != null and uri != 
-		''"> AND API_ENDPOINT = #{uri} </if> <if test="view != null and view != ''"> 
-		AND VIEW_TMPLT = #{view} </if> <if test="userId != null and userId != ''"> 
-		AND USER_ID = #{userId} </if> <if test="userType != null and userType != 
-		''"> AND USR_TYP = #{userType} </if> <if test="ip != null and ip != ''"> 
-		AND IP_ADDR = #{ip} </if> <if test="statusCode != null and statusCode != 
-		''"> AND RSPN_STTS_CODE = #{statusCode} </if> order by LOG_SEQ asc </select> -->
-
 
 
 	<!-- 검색된 로그 조회 -->
