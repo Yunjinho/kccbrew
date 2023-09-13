@@ -161,7 +161,7 @@ public class RegisterController {
 	
 	
 	/** 회원가입 처리*/
-	@RequestMapping(value="/register" , method=RequestMethod.POST)
+/*	@RequestMapping(value="/register" , method=RequestMethod.POST)
 	public String register(RegisterVo user,@Value("#{serverImgPath['localPath']}")String localPath,@Value("#{serverImgPath['userPath']}")String path,HttpServletRequest request) {
 		String folderPath=request.getServletContext().getRealPath("")+path;
 		File folder = new File(folderPath);
@@ -182,6 +182,6 @@ public class RegisterController {
 		registerService.registerUser(user);
 		
 		return "redirect:/loginpage";
-	}
+	}*/
 	
 }

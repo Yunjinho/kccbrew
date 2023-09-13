@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper
+	namespace="kr.co.kccbrew.comm.security.dao.IUserRepository">
+
+	<resultMap id="userResult"
+		type="kr.co.kccbrew.comm.security.model.UserVo">
+		<result property="userId" column="USER_ID" />
+		<result property="userPwd" column="USER_PWD" />
+		<result property="userTypeCd" column="USER_TYPE_CD" />
+	</resultMap>
+
+	<!-- 회원가입 -->
+	<insert id="registerUser"
+		parameterType="kr.co.kccbrew.comm.security.model.UserVo">
+		INSERT INTO users
+		VALUES(
+		#{userId},
+		#{userPwd},
+		#{userNm},
+		#{userTelNo},
+		#{userEmail},
+		#{userAddr},
+		<choose>
+			<when test="eqpmnCd != ''">
+				#{eqpmnCd},
+			</when>
+			<otherwise>
+				null,
+			</otherwise>
+		</choose>
+		<choose>
+			<when test="fileSeq != null">
+				#{fileSeq},
+			</when>
+			<otherwise>
+				null,
+			</otherwise>
+		</choose>
+		<choose>
+			<when test="locationCd != ''">
+				#{locationCd},
+			</when>
+			<otherwise>
+				null,
+			</otherwise>
+		</choose>
+		#{userTypeCd},
+		SYSDATE,
+		SYSDATE,
+		'Y',
+		#{userSalt},
+		'N',
+		null
+		)
+	</insert>
+
+	<!-- ID로 회원정보 가져오기 -->
+	<select id="getUserById" parameterType="String"
+		resultType="kr.co.kccbrew.comm.security.model.UserVo">
+		SELECT users.USER_ID AS userId, users.USER_PWD AS userPwd,
+		users.USER_TYPE_CD AS userTypeCd
+		FROM users WHERE
+		USER_ID = #{userId}
+	</select>
+
+</mapper>

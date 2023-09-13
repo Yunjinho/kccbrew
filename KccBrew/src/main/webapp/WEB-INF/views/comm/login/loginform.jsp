@@ -43,7 +43,8 @@
 				<div class="login_01">
 					<!-- 로그인 입력 -->
 					<fieldset>
-						<form action="./login" method="post">
+						<form id="LoginForm" name="LoginForm" method="post"
+							style="display: inline" action="./login">
 							<div>
 								<label for="id"></label> <img
 									src="<c:url value="resources/img/login/login_id.png"/>"

@@ -1,22 +1,32 @@
 package kr.co.kccbrew.comm.security.controller;
 
-import java.util.ArrayList;
+import java.util.ArrayList; 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Service;
 
+import kr.co.kccbrew.comm.security.dao.IUserRepository;
+import kr.co.kccbrew.comm.security.model.UserVo;
+
+@Service
 public class CustomUserDetailsService implements UserDetailsService{
+	@Autowired
+	private IUserRepository userRepository;
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-
-		String authorityCode = null;
-		String roleName;
+		
+		UserVo userVo = userRepository.getUserById(username);
+		String password = userVo.getUserPwd();
+		String authorityCode = userVo.getUserTypeCd();
+		String roleName=null;
 
 		switch (authorityCode) {
 		case "01":
@@ -29,14 +39,14 @@ public class CustomUserDetailsService implements UserDetailsService{
 			roleName = "ROLE_MECHA";
 			break;
 		default:
-			roleName = "ROLE_USER"; // 기본 권한 설정
+			roleName = "ROLE_USER"; 
 		}
 
-		// 사용자 정보를 생성하고 권한을 설정
 		List<GrantedAuthority> authorities = new ArrayList<>();
+		authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
 		authorities.add(new SimpleGrantedAuthority(roleName));
 
-		return new User(username, "password", authorities);
+		return new User(username, password, authorities);
 
 	}
 }
