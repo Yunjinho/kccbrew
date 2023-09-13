@@ -1,22 +1,30 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
-<html>
+<!DOCTYPE html>
+<html lang="en">
+
+<link rel="stylesheet" href="/resources/css/code/cdMngDtl.css" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link
+	href="https://fonts.googleapis.com/css2?family=Noto+Sans&family=Noto+Sans+KR&display=swap"
+	rel="stylesheet">
 <head>
-<title>점포등록</title>
-<!-- <link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"> -->
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/resources/css/store/insert.css" />
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 </head>
 <body>
 	<section id="notice" class="notice">
+		<div class="category">등록 선택</div>
+				<hr style="border: solid 1.2px; width: 97%;">
 		<div class="container2">
-			<div class="div">점포등록</div>
-			<hr style="border: solid 1.2px; width: 97%;">
-			<form action="${pageContext.request.contextPath}/store/insert"
+		<form action="${pageContext.request.contextPath}/store/insert"
 				method="post" id="storeForm" onsubmit="return submitForm()">
-				<table class="text-center">
+					<table id="search-box">
 					<tr>
 						<th>점포명</th>
 						<td><input type="text" id="storeNm" name="storeNm" required>
@@ -66,9 +74,10 @@
 						</select></td>
 					</tr>
 				</table>
-				<div class="savecancle">
-					<input type="submit" name="save" class="save-btn" value="저장"	id="submitBtn" disabled> 
-					<input type="button" class="cancel-btn" value="취소" onclick="window.close()">
+				<div class="updatecancle" style="text-align: center;">
+					<button type="submit" name="save" class="form-btn" value="저장"
+						id="submitBtn" style="display: inline-block;  margin-left: 5px;  margin-right: 5px;" disabled>저장</button><button type="button"
+						class="form-btn" value="취소" onclick="window.close()" style="display: inline-block;  margin-left: 5px;  margin-right: 5px;">취소</button>
 				</div>
 			</form>
 		</div>
@@ -137,7 +146,7 @@
             },
             error: function (error) {
                 console.error("AJAX 요청 실패:", error);
-                alert("저장에 실패하였습니다.");
+                alert("빈칸을 모두 입력해주세요.");
             }
         });
 

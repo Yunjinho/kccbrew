@@ -25,6 +25,7 @@
 <link
 	href="https://fonts.googleapis.com/css2?family=Noto+Sans&family=Noto+Sans+KR&display=swap"
 	rel="stylesheet">
+<link rel="stylesheet" href="/resources/css/store/store.css" />
 <meta charset="UTF-8">
 
 <title>점포리스트</title>
@@ -102,6 +103,13 @@
 																	${param.endMn == month ? 'selected' : ''}>${month}월</option>
 															</c:forEach>
 													</select></td>
+													<th>사용여부</th>
+													<td><select name="useYn" class="tx2" id="yn"
+														onchange="javascript:chg();">
+														<option value="">선택</option>
+															<option value="Y" ${param.useYn == 'Y' ? 'selected' : ''}>Y</option>
+															<option value="N" ${param.useYn == 'N' ? 'selected' : ''}>N</option>
+													</select></td>
 												</tr>
 
 
@@ -109,7 +117,7 @@
 												<tr>
 
 													<th>지역</th>
-													<td colspan="2"><select class="tx2" name="locationCd"
+													<td colspan="3"><select class="tx2" name="locationCd"
 														onchange="chg()">
 															<option value="">지역 대분류</option>
 															<option value="02">서울</option>
@@ -118,7 +126,7 @@
 																	${param.locationCd == list.locationCd ? 'selected' : ''}>${list.locationNm}</option>
 															</c:forEach>
 													</select></td>
-													<td colspan="3"><select class="tx2"
+													<td colspan="4"><select class="tx2"
 														name="locationCdSeoul" disabled>
 															<option value="">지역 소분류</option>
 															<c:forEach var="list" items="${seoulList}">
@@ -133,25 +141,19 @@
 												<tr>
 													<th>점포명</th>
 													<!-- Input field for URI -->
-													<td colspan="2"><input type="search" name="keyword"
-														placeholder="점포명 입력하세요" value="${param.keyword}"></td>
+													<td colspan="3"><input type="search" name="keyword"
+														placeholder="점포명 입력하세요" value="${param.keyword}" size="30"></td>
 													<th>등록자ID</th>
-													<td colspan="2"><input type="search" name="regUser"
-														placeholder="등록자를 입력하세요" value="${param.regUser}"></td>
-													<th>사용여부</th>
-													<td><select name="useYn" class="tx2" id="yn"
-														onchange="javascript:chg();">
-														<option value="">선택</option>
-															<option value="Y" ${param.useYn == 'Y' ? 'selected' : ''}>Y</option>
-															<option value="N" ${param.useYn == 'N' ? 'selected' : ''}>N</option>
-													</select></td>
+													<td colspan="3"><input type="search" name="regUser"
+														placeholder="등록자를 입력하세요" value="${param.regUser}" size="30"></td>
+													
 
 												</tr>
 
 
 												<!-- 4행 -->
 												<tr>
-													<td colspan="6"
+													<td colspan="8"
 														style="text-align: center; border-bottom: 0px;">
 														<div class="find-btn" style="text-align: center;">
 															<button type="submit" class="form-btn" id="find-btn1">검색</button>
@@ -275,7 +277,7 @@
         function popup(storeSeq) {
             var url = "store/view/" + storeSeq;
             var name = "popup test";
-            var option = "width=900, height=750, top=100, left=400, scrollbars=yes, directories=no, location=no";
+            var option = "width=900, height=800, top=60, left=400, scrollbars=yes, directories=no, location=no";
             window.open(url, name, option);
             window.close();
         }

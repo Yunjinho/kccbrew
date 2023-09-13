@@ -63,13 +63,12 @@ public class StrMngController {
 		List<StrMngVo> list = storeService.strFilter(searchContent, currentPage); // 점포목록
 		List<StrMngVo> List = storeService.locationNm(); // 지역코드리스트
 		List<StrMngVo> seoulList = storeService.locationNmSeoul();// 상세지역코드리스트
-		System.out.println("searchContent: " + searchContent);
-		System.out.println("dfsssssssssssssssssssssssssssssssssssssssssssssss ");
 		int totalPage = 0;
 		int totalLogCount = storeService.getStrFilterCount(searchContent);
+		double totalLogCountDouble = (double) totalLogCount;
 		int sharePage = 0;
 		if (list != null && !list.isEmpty()) {
-			totalPage = (int) Math.ceil(totalLogCount/10);
+			totalPage = (int) Math.ceil(totalLogCountDouble/10.0);
 		} else {
 		}
 
@@ -105,7 +104,7 @@ public class StrMngController {
 	@RequestMapping(value = "/store/insert", method = RequestMethod.GET)
 	public String insert(Model model, HttpSession session) {
 		String userId = (String) session.getAttribute("userId"); //세션에서 아이디
-		String userTypeCd = (String) session.getAttribute("userTypeCd"); //로그인 구현 완료 이후에 주석 해제
+		String userTypeCd = (String) session.getAttribute("userTypeCd"); 
 		System.out.println(userId);
 		//로그인
 		if (userId != null && !userId.equals("")) { 
@@ -116,8 +115,8 @@ public class StrMngController {
 			model.addAttribute("store", new StrMngVo());
 			model.addAttribute("seoullist", seoullist);
 			return "strMng/strMngIns";
-			//로그아웃 로그인페이지로 이동
-		} else {			
+			
+		} else {	//로그아웃 로그인페이지로 이동		
 			model.addAttribute("message", "로그인 하지 않은 사용자입니다.");
 			return "loginpage";
 
@@ -153,7 +152,7 @@ public class StrMngController {
 		} else {
 			//로그아웃  로그인 페이지로 이동
 			model.addAttribute("message", "로그인 하지 않은 사용자입니다.");
-			return "home";
+			return "loginpage";
 		}
 	}
 
