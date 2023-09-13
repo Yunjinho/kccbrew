@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class Example04Controller {
 
-	@GetMapping("/login")
+	@GetMapping("/login2")
 	public String requestMethod(Model model) {		   	  
 	   	return "security/loginform";
 	}

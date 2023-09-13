@@ -100,6 +100,7 @@ public class RegisterService implements IRegisterService{
 		if(!user.getImgFile().isEmpty()) {
 			insertUserImg(user);
 		}
+		System.out.println(user);
 		//회원가입
 		registerRepasotory.registerUser(user);
 		
@@ -129,11 +130,12 @@ public class RegisterService implements IRegisterService{
 		//파일 상세 정보 등록
 		registerRepasotory.insertFileDtlInfo(vo);
 		//이미지 파일 저장
-		Path path = Paths.get(vo.getStorageLocation()).toAbsolutePath().normalize();
-        Path targetPath = path.resolve(vo.getFileServerNm()).normalize();
+        String targetPath=user.getServerSavePath()+"\\"+vo.getFileServerNm();
+        String localPath=user.getLocalSavePath()+"\\"+vo.getFileServerNm();
 		try {
 			//imgFile.transferTo(targetPath);
-			FileCopyUtils.copy(imgFile.getInputStream(), new FileOutputStream(targetPath.toFile()));
+			FileCopyUtils.copy(imgFile.getInputStream(), new FileOutputStream(targetPath));
+			FileCopyUtils.copy(imgFile.getInputStream(), new FileOutputStream(localPath));
 		}catch (Exception e) {
 			System.out.println(e.getMessage());
 		}

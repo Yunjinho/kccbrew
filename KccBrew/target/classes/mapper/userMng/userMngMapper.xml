@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.kccbrew.userMng.dao.IUserMngRepository">
+
+<resultMap id="userResult"
+type="kr.co.kccbrew.userMng.model.UserMngVo">
+<result property="userId" column="user_id" />
+<result property="userPwd" column="user_pwd" />
+<result property="userSalt" column="user_salt" />
+<result property="userNm" column="user_nm" />
+<result property="userTelNo" column="user_telno" />
+<result property="userEmail" column="user_email" />
+<result property="userAddr" column="user_addr" />
+<result property="eqpmnCd" column="eqpmn_cd" />
+<result property="fileSeq" column="file_seq" />
+<result property="locationCd" column="location_cd" />
+<result property="userTypeCd" column="user_type_cd" />
+<result property="regDttm" column="reg_dttm" />
+<result property="modDttm" column="mod_dttm" />
+<result property="useYn" column="use_yn" />
+<result property="approveYn" column="approve_yn" />
+<result property="approveAdmin" column="approve_admin" />
+<result property="userType" column="grp_cd_dtl_nm" />
+<result property="rowNum" column="row_num" />
+
+</resultMap>
+<select id="userList" parameterType="java.util.Map"
+	resultMap="userResult">
+		SELECT
+		a.user_id, a.user_nm, a.user_telNo, a.user_Email, a.user_Addr, a.user_Type_Cd, a.use_Yn, a.approve_Yn,
+		a.grp_cd_dtl_nm, a.reg_dttm, ROW_NUM
+	FROM(
+		SELECT
+			ROW_NUMBER() OVER(ORDER BY a.reg_Dttm desc) AS ROW_NUM,
+			a.user_Id,
+			a.user_Nm,
+			a.user_TelNo,
+			a.user_Email,
+			a.user_Addr,
+			a.user_Type_Cd,
+			a.use_Yn,
+			a.approve_Yn,
+			b.grp_cd_dtl_nm,
+			a.reg_dttm
+		FROM users a, group_code_detail b
+		WHERE
+			b.grp_cd_dtl_id	= a.user_type_cd
+		AND b.grp_cd_id='U'
+		<if test="UserMngVo.startYr != null and UserMngVo.startYr != '' and UserMngVo.startMn != null and UserMngVo.startMn != ''">
+                 <![CDATA[
+                  AND (
+                    EXTRACT(YEAR FROM a.REG_DTTM) > #{UserMngVo.startYr}
+                    OR (EXTRACT(YEAR FROM a.REG_DTTM) = #{UserMngVo.startYr} AND EXTRACT(MONTH FROM a.REG_DTTM) >= #{UserMngVo.startMn})
+                )
+                  ]]>
+            </if>
+            <if test="UserMngVo.endYr != null and UserMngVo.endYr != '' and UserMngVo.endMn != null and UserMngVo.endMn != ''">
+                  <![CDATA[
+                AND (
+                    EXTRACT(YEAR FROM a.REG_DTTM) < #{UserMngVo.endYr}
+                    OR (EXTRACT(YEAR FROM a.REG_DTTM) = #{UserMngVo.endYr} AND EXTRACT(MONTH FROM a.REG_DTTM) <= #{UserMngVo.endMn})
+                )
+                  ]]>
+            </if>
+           
+            <if test="UserMngVo.userId != null and UserMngVo.userId != ''">
+               AND
+			a.user_id LIKE '%'||#{UserMngVo.userId}||'%'
+            </if>
+			<if test="UserMngVo.userTypeCd != null and UserMngVo.userTypeCd != ''">
+			AND a.user_type_cd = #{UserMngVo.userTypeCd}
+			</if>
+		<if test="UserMngVo.useYn != null and UserMngVo.useYn != ''">
+			and a.use_yn = #{UserMngVo.useYn}
+		</if>
+		 <if test="UserMngVo.userNm != null and UserMngVo.userNm != ''">
+               AND
+			a.user_nm LIKE '%'||#{UserMngVo.userNm}||'%'
+            </if>
+	)a
+WHERE ROW_NUM BETWEEN #{firstRowNum} AND #{lastRowNum}
+
+</select>
+
+<select id="getUserCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+	select count(*) FROM (
+	SELECT
+			ROW_NUMBER() OVER(ORDER BY a.reg_Dttm desc) AS ROW_NUM,
+			a.user_Id,
+			a.user_Nm,
+			a.user_TelNo,
+			a.user_Email,
+			a.user_Addr,
+			a.user_Type_Cd,
+			a.use_Yn,
+			a.approve_Yn,
+			a.reg_dttm,
+			b.grp_cd_dtl_nm
+		FROM users a, group_code_detail b
+		WHERE
+			b.grp_cd_dtl_id	= a.user_type_cd
+		AND b.grp_cd_id='U'
+		<if test="UserMngVo.startYr != null and UserMngVo.startYr != '' and UserMngVo.startMn != null and UserMngVo.startMn != ''">
+                 <![CDATA[
+                  AND (
+                    EXTRACT(YEAR FROM a.REG_DTTM) > #{UserMngVo.startYr}
+                    OR (EXTRACT(YEAR FROM a.REG_DTTM) = #{UserMngVo.startYr} AND EXTRACT(MONTH FROM a.REG_DTTM) >= #{UserMngVo.startMn})
+                )
+                  ]]>
+            </if>
+            <if test="UserMngVo.endYr != null and UserMngVo.endYr != '' and UserMngVo.endMn != null and UserMngVo.endMn != ''">
+                  <![CDATA[
+                AND (
+                    EXTRACT(YEAR FROM a.REG_DTTM) < #{UserMngVo.endYr}
+                    OR (EXTRACT(YEAR FROM a.REG_DTTM) = #{UserMngVo.endYr} AND EXTRACT(MONTH FROM a.REG_DTTM) <= #{UserMngVo.endMn})
+                )
+                  ]]>
+            </if>
+           
+            <if test="UserMngVo.userId != null and UserMngVo.userId != ''">
+               AND
+			a.user_id LIKE '%'||#{UserMngVo.userId}||'%'
+            </if>
+			<if test="UserMngVo.userTypeCd != null and UserMngVo.userTypeCd != ''">
+			AND a.user_type_cd = #{UserMngVo.userTypeCd}
+			</if>
+		<if test="UserMngVo.useYn != null and UserMngVo.useYn != ''">
+			and a.use_yn = #{UserMngVo.useYn}
+		</if>
+		 <if test="UserMngVo.userNm != null and UserMngVo.userNm != ''">
+               AND
+			a.user_nm LIKE '%'||#{UserMngVo.userNm}||'%'
+            </if>
+	)
+
+	</select>
+
+	<select id="newList" resultMap="userResult">
+	<![CDATA[
+	SELECT
+		a.user_id, a.user_nm, a.user_telNo, a.user_Email, a.user_Addr, a.user_Type_Cd, a.use_Yn, a.approve_Yn,
+		a.grp_cd_dtl_nm, a.reg_dttm
+	FROM(
+		SELECT
+			ROW_NUMBER() OVER(ORDER BY a.reg_Dttm desc) AS ROW_NUM,
+			a.user_Id,
+			a.user_Nm,
+			a.user_TelNo,
+			a.user_Email,
+			a.user_Addr,
+			a.user_Type_Cd,
+			a.use_Yn,
+			a.approve_Yn,
+			b.grp_cd_dtl_nm,
+			a.reg_dttm
+		FROM users a, group_code_detail b
+		WHERE
+			b.grp_cd_dtl_id	= a.user_type_cd
+		AND b.grp_cd_id='U'
+		AND a.approve_yn is null)a
+		
+		]]>
+	</select>
+	
+	<select id="getNewCount" resultType="Integer">
+	select count(*) FROM (
+		SELECT
+			*
+		FROM users
+		WHERE approve_yn is null)
+	
+	</select>
+	
+	<select id="findByUserId" resultMap="userResult" parameterType="String">
+	select *
+	from users 
+	where user_id = #{userId}
+	</select>
+	
+	<update id="save" parameterType="kr.co.kccbrew.userMng.model.UserMngVo">
+		update users
+		set approve_yn = #{approveYn}
+		where user_id = #{userId}
+	
+	</update>
+	
+	
+	<select id="findByUserInfo" resultType="kr.co.kccbrew.userMng.model.UserMngVo" parameterType="String">
+	select 
+		a.user_nm 			AS "userNm",
+		b.grp_cd_dtl_nm 	AS "eqpmnNm", 
+		c.grp_cd_dtl_nm		AS "locationNm",
+		a.user_type_cd		AS "userTypeCd",
+		d.store_nm			AS "storeNm",
+		d.store_telno		AS "storeTelNo"
+	from 
+		users a, (
+			select 
+				grp_cd_dtl_id, grp_cd_dtl_nm
+			from 
+        	 	group_code_detail
+			where 
+				grp_cd_id = 'M') b,
+				(
+			select 
+				grp_cd_dtl_id, grp_cd_dtl_nm
+			from 
+        		group_code_detail
+			where 
+				grp_cd_id = 'L'
+    		or 
+    			grp_cd_id='LL')  c,
+    			(
+    		select
+             	b.user_id, a.store_nm, a.store_telno
+       		from 
+				store a, store_user_map b 
+        	where 
+    			b.store_seq = a.store_seq(+)
+    			) d
+	where 
+		a.user_id = #{userId}
+	and a.eqpmn_cd = b.grp_cd_dtl_id(+)
+	and a.location_cd = c.grp_cd_dtl_id(+)
+	and a.user_id = d.user_id(+)
+	</select>
+</mapper>

@@ -1,5 +1,5 @@
 package kr.co.kccbrew.comm.security.controller;
 
-public class LoginController {
+public class LoginController2 {
 
 }

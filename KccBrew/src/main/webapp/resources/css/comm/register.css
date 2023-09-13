@@ -237,12 +237,13 @@
     background-color: rgb(108 136 213);
     width: 86px;
     margin: 3%;
+    height:80px;
 }
 
 
 .register .servicezone div{
 	display:flex;
-	width:80%;
+	width:100%;
 }
 
 .register .servicezone h4{
@@ -279,6 +280,7 @@
 	padding-left:15px;
 	font-size:25px;  
 	font-weight:600; 
+	align-self:center;
 }
 .user-type>div>p,img:hover{
 	cursor: pointer;

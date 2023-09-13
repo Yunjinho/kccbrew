@@ -1,33 +1,37 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+
 <!DOCTYPE html>
 <html lang="en">
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-<link rel="stylesheet" href="/resources/css/code/insert.css" />
+
+<link rel="stylesheet" href="/resources/css/code/cdMndMod.css" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link
+	href="https://fonts.googleapis.com/css2?family=Noto+Sans&family=Noto+Sans+KR&display=swap"
+	rel="stylesheet">
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 </head>
 <body>
-	<section id="notice" class="notice">
-		<section class="category">
-			<span>코드관리 > 그룹코드정보 > 그룹코드수정</span>
-		</section>
-			<div class="div">상세코드 수정</div>
+		<section id="notice" class="notice">
+		<div>
+			<div class="category">그룹코드 수정</div>
 			<hr style="border: solid 1.2px; width: 97%;">
 			<form action="/code/grpupdate" method="post" id="update" onsubmit="return submitForm()">
 				<div class="container2">
-					<table class="table text-center">
+					<table id="search-box">
 						<tr>
 							<th>그룹코드ID</th>
 							<td>${codeMng.cdId}
 							<input type="hidden" value="${codeMng.cdId}" name="cdId"></td>
 						</tr>
 						<tr>
-							<th>상세코드이름</th>
+							<th>그룹코드이름</th>
 							<td><input type="text" name="cdNm" id="cdNm"
 								value="${codeMng.cdNm}" required></td>
 						</tr>
@@ -60,15 +64,16 @@
 							</tr>
 						
 					</table>
+</div>
 
-
-					<div class="savecancle">
-					<input type="button" name="save" class="button"
-						onClick="submitForm()" value="저장">
-					<input type="button" class="update" value="취소" onclick="history.back()">
-				</div>
+					<div class="savecancle" style="text-align: center;">
+					<button type="button" name="save" class="form-btn"
+						onClick="submitForm()" value="저장" id="find-btn1">저장</button>
+					<button type="button" class="form-btn" value="취소"
+						onclick="history.back()" id="find-btn1">취소</button>
 				</div>
 			</form>
+			</div>
 		</section>
 		<script>function submitForm() {
 		var form = document.getElementById("update");
