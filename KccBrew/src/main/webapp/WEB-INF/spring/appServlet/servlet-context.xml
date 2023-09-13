@@ -88,7 +88,7 @@
    		-->
  	 
 
-		<interceptor>
+	<!-- 	<interceptor>
 			<mapping path="/**" />
 			<exclude-mapping path="/" />
 			<exclude-mapping path="/login" />
@@ -103,34 +103,34 @@
 			<exclude-mapping path="/resources/**/" />
 			<beans:bean
 				class="kr.co.kccbrew.comm.interceptor.component.SessionInterceptor" />
-		</interceptor>
+		</interceptor> -->
 
 		<!-- 회원유형별 접근가능 페이지 설정 -->
-		<interceptor>
+		<!-- <interceptor>
 			<mapping path="/관리자만 가능한  API" />
-			<!-- <mapping path="/log" /> -->
+			<mapping path="/log" />
 			<exclude-mapping path="/" />
 			<exclude-mapping path="/resources/**/" />
 			<beans:bean
 				class="kr.co.kccbrew.comm.interceptor.component.MngAuthInterceptor" />
-		</interceptor>
+		</interceptor> -->
 
-		<interceptor>
+		<!-- <interceptor>
 			<mapping path="/점포만 가능한  API" />
 			<mapping path="/as-receipt" />
 			<exclude-mapping path="/" />
 			<exclude-mapping path="/resources/**/" />
 			<beans:bean
 				class="kr.co.kccbrew.comm.interceptor.component.StrAuthInterceptor" />
-		</interceptor>
+		</interceptor> -->
 		<!-- -->
-		<interceptor>
+	<!-- 	<interceptor>
 			<mapping path="/수리 기사만 가능한  API" />
 			<exclude-mapping path="/" />
 			<exclude-mapping path="/resources/**/" />
 			<beans:bean
 				class="kr.co.kccbrew.comm.interceptor.component.MechaAuthInterceptor" />
-		</interceptor>
+		</interceptor> -->
 
 		<!-- 로그수집 및 저장 -->
 		<interceptor>

@@ -8,7 +8,7 @@
 <body>
 <script>
 window.onload=function(){
-	location.href="/loginpage"
+	location.href="/login"
 }
 </script>
 </body>

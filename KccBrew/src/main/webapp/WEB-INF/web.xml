@@ -2,14 +2,14 @@
 	xmlns="http://java.sun.com/xml/ns/javaee"
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 	version="2.5">
-	
+
 	<!-- 설정파일 경로 등록 -->
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
 		<param-value>
+			/WEB-INF/spring/security-context.xml
 			/WEB-INF/spring/root-context.xml
 			/WEB-INF/spring/database.xml
-			/WEB-INF/spring/security-context.xml
 		</param-value>
 	</context-param>
 
