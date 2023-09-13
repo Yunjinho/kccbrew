@@ -1,63 +1,63 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.co.kccbrew.asMng.dao.IAsMngRepository">
-
+<!-- 조건별 AS 조회 -->
 <select id="selectASList" parameterType="java.util.Map" resultType="kr.co.kccbrew.asMng.model.AsMngVo">
-SELECT as_info_seq AS "asInfoSeq",
-        	store_nm AS "storeNm",
-        	store_addr AS "storeAddr",
-    		reg_dttm AS "regDttm",
-            as_status_nm AS "asStatusNm",
-            as_status_cd AS "asStatusCd",
-            machine_cd_nm AS "machineCdNm",
-            machine_cd AS "machineCd"
-FROM (SELECT as_info_seq ,s.store_nm, s.store_addr, a.reg_dttm , status.as_status_nm,status.as_status_cd,machine.machine_cd_nm,machine.machine_cd
-		 FROM as_information a 
-		INNER JOIN store_user_map su ON a.store_mng_id=su.user_id
-		INNER JOIN users u ON su.user_id=u.user_id 
-		INNER JOIN store s ON s.store_seq=su.store_seq
-		INNER JOIN (select grp_cd_dtl_nm AS as_status_nm ,grp_cd_dtl_id AS as_status_cd from group_code_detail where grp_cd_id LIKE 'S') status ON status.as_status_cd=a.as_status
-		INNER JOIN (select grp_cd_dtl_nm AS machine_cd_nm ,grp_cd_dtl_id as machine_cd from group_code_detail where grp_cd_id like 'M') machine on machine.machine_cd=a.machine_cd
-		WHERE s.store_nm LIKE '%'||#{asVo.storeNm}||'%' AND
-			status.as_status_cd LIKE '%'||#{asVo.asStatusCd}||'%' AND
-	 		machine.machine_cd LIKE '%'||#{asVo.machineCd}||'%' AND 
-	 		s.store_addr LIKE '%'||#{asVo.storeAddr}||'%' 
- 		<if test="asVo.asInfoSeq != ''">AND a.as_info_seq = #{asVo.asInfoSeq} </if>
-		<choose>
-			<when test="asVo.startYr != ''">
+	SELECT as_info_seq AS "asInfoSeq",
+	        	store_nm AS "storeNm",
+	        	store_addr AS "storeAddr",
+	    		reg_dttm AS "regDttm",
+	            as_status_nm AS "asStatusNm",
+	            as_status_cd AS "asStatusCd",
+	            machine_cd_nm AS "machineCdNm",
+	            machine_cd AS "machineCd"
+	FROM (SELECT as_info_seq ,s.store_nm, s.store_addr, a.reg_dttm , status.as_status_nm,status.as_status_cd,machine.machine_cd_nm,machine.machine_cd
+			 FROM as_information a 
+			INNER JOIN store_user_map su ON a.store_mng_id=su.user_id
+			INNER JOIN users u ON su.user_id=u.user_id 
+			INNER JOIN store s ON s.store_seq=su.store_seq
+			INNER JOIN (select grp_cd_dtl_nm AS as_status_nm ,grp_cd_dtl_id AS as_status_cd from group_code_detail where grp_cd_id LIKE 'S') status ON status.as_status_cd=a.as_status
+			INNER JOIN (select grp_cd_dtl_nm AS machine_cd_nm ,grp_cd_dtl_id as machine_cd from group_code_detail where grp_cd_id like 'M') machine on machine.machine_cd=a.machine_cd
+			WHERE s.store_nm LIKE '%'||#{asVo.storeNm}||'%' AND
+				status.as_status_cd LIKE '%'||#{asVo.asStatusCd}||'%' AND
+		 		machine.machine_cd LIKE '%'||#{asVo.machineCd}||'%' AND 
+		 		s.store_addr LIKE '%'||#{asVo.storeAddr}||'%' 
+	 		<if test="asVo.asInfoSeq != ''">AND a.as_info_seq = #{asVo.asInfoSeq} </if>
+			<choose>
+				<when test="asVo.startYr != ''">
+					<![CDATA[
+						AND EXTRACT(YEAR FROM a.mod_dttm) >= #{asVo.startYr}
+					]]>
+				</when>
+				<otherwise>
+					<![CDATA[
+						AND EXTRACT(YEAR FROM a.mod_dttm) >= TO_CHAR(SYSDATE-(INTERVAL '10' YEAR),'YYYY')
+					]]>
+				</otherwise>
+			</choose>
+			<if test="asVo.startMn != ''">
 				<![CDATA[
-					AND EXTRACT(YEAR FROM a.mod_dttm) >= #{asVo.startYr}
+					AND EXTRACT(MONTH FROM a.mod_dttm) >= #{asVo.startMn}
 				]]>
-			</when>
-			<otherwise>
+			</if>
+			<if test="asVo.endYr != ''">
 				<![CDATA[
-					AND EXTRACT(YEAR FROM a.mod_dttm) >= TO_CHAR(SYSDATE-(INTERVAL '10' YEAR),'YYYY')
+					AND EXTRACT(YEAR FROM a.mod_dttm) <= #{asVo.endYr}
 				]]>
-			</otherwise>
-		</choose>
-		<if test="asVo.startMn != ''">
-			<![CDATA[
-				AND EXTRACT(MONTH FROM a.mod_dttm) >= #{asVo.startMn}
-			]]>
-		</if>
-		<if test="asVo.endYr != ''">
-			<![CDATA[
-				AND EXTRACT(YEAR FROM a.mod_dttm) <= #{asVo.endYr}
-			]]>
-		</if>
-		<if test="asVo.endMn != ''">
-			<![CDATA[
-				AND EXTRACT(MONTH FROM a.mod_dttm) <= #{asVo.endMn}
-			]]>
-		</if>
-		<if test="userTypeCd=='02'">
-			AND a.store_mng_id=#{userId}
-		</if>
-		ORDER BY a.as_info_seq DESC
-		)
-WHERE ROWNUM BETWEEN #{start} AND #{end}
+			</if>
+			<if test="asVo.endMn != ''">
+				<![CDATA[
+					AND EXTRACT(MONTH FROM a.mod_dttm) <= #{asVo.endMn}
+				]]>
+			</if>
+			<if test="userTypeCd=='02'">
+				AND a.store_mng_id=#{userId}
+			</if>
+			ORDER BY a.reg_dttm DESC
+			)
+	WHERE ROWNUM BETWEEN #{start} AND #{end}
 </select>
-
+<!-- 조건별 AS 총 등록 수 조회 -->
 <select id="countASList" parameterType="kr.co.kccbrew.asMng.model.AsMngVo" resultType="Integer">
 	SELECT COUNT(*)
 	FROM as_information a 
@@ -106,14 +106,14 @@ WHERE ROWNUM BETWEEN #{start} AND #{end}
 			</when>
 		</choose>
 </select>
-
+<!-- 장비 코드 조회 -->
 <select id="selectMachineCd" resultType="kr.co.kccbrew.asMng.model.AsMngVo">
 <![CDATA[
 	SELECT grp_cd_dtl_id AS "grpCdDtlId", grp_cd_id AS "grpCdId", grp_cd_dtl_nm AS "grpCdDtlNm" 
 	FROM group_code_detail WHERE grp_cd_id LIKE 'M'
 ]]>
 </select>
-
+<!-- AS 상태 코드 조회 -->
 <select id="selectAsStatusCd" resultType="kr.co.kccbrew.asMng.model.AsMngVo">
 <![CDATA[
 	SELECT grp_cd_dtl_id AS "grpCdDtlId", grp_cd_id AS "grpCdId", grp_cd_dtl_nm AS "grpCdDtlNm" 
@@ -121,13 +121,7 @@ WHERE ROWNUM BETWEEN #{start} AND #{end}
 ]]>
 </select>
 
-<select id="selectLocationCd" resultType="kr.co.kccbrew.asMng.model.AsMngVo">
-<![CDATA[
-	SELECT grp_cd_dtl_id AS "grpCdDtlId", grp_cd_id AS "grpCdId", grp_cd_dtl_nm AS "grpCdDtlNm" 
-	FROM group_code_detail WHERE grp_cd_id LIKE 'LL'
-]]>
-</select>
-
+<!-- 점포 정보 조회 -->
 <select id="selectStrInfo" parameterType="hashmap" resultType="kr.co.kccbrew.asMng.model.AsMngVo">
 <![CDATA[
 	SELECT s.store_nm "storeNm",
@@ -141,14 +135,14 @@ WHERE ROWNUM BETWEEN #{start} AND #{end}
 	WHERE su.user_id=#{userId}
 ]]>
 </select>
-
+<!-- AS 접수 파일 정보 등록 -->
 <insert id="insertFile" parameterType="kr.co.kccbrew.asMng.model.AsMngVo">
 	INSERT INTO file_info VALUES(file_seq.NEXTVAL,'02',SYSDATE,#{userId},SYSDATE,#{userId})
-	<selectKey resultType="int" keyProperty="fileSeq" order="AFTER">
+	<selectKey resultType="string" keyProperty="fileSeq" order="AFTER">
 			SELECT NVL(MAX(file_seq), 0) AS "fileSeq" FROM file_info
 	</selectKey>
 </insert>
-
+<!-- AS 접수 파일 상세정보 등록 -->
 <insert id="insertFileDtl" parameterType="kr.co.kccbrew.asMng.model.AsMngVo">
 <![CDATA[
 	INSERT INTO file_detail_info VALUES(
@@ -164,8 +158,9 @@ WHERE ROWNUM BETWEEN #{start} AND #{end}
 			#{userId})
 ]]>
 </insert>
-
+<!-- AS접수 -->
 <insert id="insertAs" parameterType="kr.co.kccbrew.asMng.model.AsMngVo">
+<![CDATA[
 	INSERT INTO as_information VALUES(
 		as_info_seq.NEXTVAL,
 		#{wishingStartDate},
@@ -178,5 +173,121 @@ WHERE ROWNUM BETWEEN #{start} AND #{end}
 		#{userId},
 		SYSDATE,
 		SYSDATE)
+]]>
 </insert>
+<!-- AS 상세 조회 -->
+<select id="selectAsInfoDetail" parameterType="string" resultType="kr.co.kccbrew.asMng.model.AsMngVo">
+<![CDATA[
+	SELECT a.as_info_seq AS "asInfoSeq",
+			status.as_status_nm AS "asStatusNm",
+			status.as_status_cd AS"asStatusCd",
+			machine.machine_cd_nm AS "machineCdNm",
+			TO_CHAR(a.wishing_start_date,'YYYY/MM/dd') AS "wishingStartDate",
+			TO_CHAR(a.wishing_end_date,'YYYY/MM/dd') AS "wishingEndDate",
+			a.as_content AS "asContent",
+			a.file_seq AS "fileSeq",
+			a.store_mng_id AS "storeMngId",
+			a.reg_dttm AS "regDttm",
+            s.longitude AS "longitude",
+            s.latitude AS "latitude",
+            s.store_telno AS "storeTelNo",
+            s.store_nm AS "storeNm",
+            s.store_addr AS "storeAddr", 
+            s.store_addr_dtl AS "storeAddrDtl",
+            ass.user_nm AS "mechanicNm",
+            ass.mechanic_id AS "mechanicId",
+            ass.reject_content_str AS "rejectContentStr",
+            ass.reject_content_mcha AS "rejectContentMcha",
+            TO_CHAR(ass.visit_dttm,'YYYY/MM/dd') AS "visitDttm",
+            ass.reassign AS "reassign",
+            ar.result_dtl AS "resultDtl",
+            TO_CHAR(ar.result_dttm,'YYYY/MM/dd') AS "resultDttm",
+            ar.store_mng_fb AS "storeMngFb",
+            ar.file_seq as "resultFileSeq",
+            ar.as_price AS "asPrice",
+            ar.reapply AS "resultReapply"
+	FROM as_information a
+	LEFT OUTER JOIN (select grp_cd_dtl_nm AS as_status_nm ,grp_cd_dtl_id AS as_status_cd from group_code_detail where grp_cd_id LIKE 'S') status ON a.as_status=status.as_status_cd
+	LEFT OUTER JOIN (select grp_cd_dtl_nm AS machine_cd_nm ,grp_cd_dtl_id as machine_cd from group_code_detail where grp_cd_id like 'M') machine on a.machine_cd=machine.machine_cd
+    LEFT OUTER JOIN store_user_map su ON a.store_mng_id=su.user_id
+    LEFT OUTER JOIN store s ON s.store_seq=su.store_seq
+    LEFT OUTER JOIN (SELECT * FROM as_assign ss JOIN users u ON ss.mechanic_id=u.user_id) ass ON a.as_info_seq=ass.as_info_seq
+    LEFT OUTER JOIN as_result ar ON ar.as_assign_seq=ass.as_assign_seq
+    WHERE a.as_info_seq=#{asInfoSeq}
+]]>
+</select>
+<!-- 상세 조회 이미지 -->
+<select id="selectAsInfoImg" parameterType="string" resultType="kr.co.kccbrew.asMng.model.AsMngVo">
+<![CDATA[
+	SELECT file_dtl_seq AS "fileSeq",
+		file_original_nm AS "fileOriginalNm",
+		storage_location AS "storageLocation",
+		reg_dttm AS "regDttm",
+		reg_user AS "regUser",
+		mod_dttm AS "modDttm",
+		mod_user AS "modUser",
+		file_server_nm AS "fileServerNm"
+	FROM file_detail_info
+	WHERE file_seq=#{asInfoSeq}
+]]>
+</select>
+
+<!-- 지역 코드 조회 -->
+<select id="selectLocationCd" resultType="kr.co.kccbrew.asMng.model.AsMngVo">
+<![CDATA[
+	SELECT grp_cd_dtl_id AS "grpCdDtlId",
+			grp_cd_id AS "grpCdId",
+			grp_cd_dtl_nm AS "grpCdDtlNm"
+	FROM group_code_detail
+	WHERE grp_cd_id='L'
+]]>
+</select>
+
+<!-- 지역 상세 코드 조회 -->
+<select id="selectLocationDtlCd" parameterType="string" resultType="kr.co.kccbrew.asMng.model.AsMngVo">
+<![CDATA[
+	SELECT grp_cd_dtl_id AS "grpCdDtlId",
+			grp_cd_id AS "grpCdId",
+			grp_cd_dtl_nm AS "grpCdDtlNm"
+	FROM group_code_detail
+	WHERE grp_cd_id='LL' AND grp_cd_dtl_id LIKE #{locationCd}||'%'
+]]>
+</select>
+<!-- 점포 일정 체크 -->
+<select id="checkStrSchedule" parameterType="hashmap" resultType="integer">
+<![CDATA[
+    SELECT COUNT(*) FROM holiday 
+    WHERE user_id IN 
+    			(SELECT s.user_id FROM store_user_map s 
+   				INNER JOIN users u ON s.user_id=u.user_id    
+    			WHERE s.store_seq=(SELECT su.store_seq FROM store s 
+    								INNER JOIN store_user_map su ON s.store_seq=su.store_seq 
+    								WHERE su.user_id=#{userId}))
+		  AND actl_use='Y' AND (TO_CHAR(holiday.hldy_star,'YYYY-MM-dd')<=#{date} AND  TO_CHAR(holiday.hldy_end,'YYYY-MM-dd')>=#{date})
+]]>
+</select>
+<select id="selectMechList" parameterType="hashmap" resultType="kr.co.kccbrew.asMng.model.AsMngVo">
+    SELECT u.user_id AS "userId",u.user_nm AS "userNm" FROM users u
+    INNER JOIN (SELECT grp_cd_dtl_nm AS location_cd_nm ,grp_cd_dtl_id AS location_cd 
+    			FROM group_code_detail WHERE grp_cd_dtl_id LIKE <if test="locationCd!=''">#{locationCd}||</if>'%'AND grp_cd_id='LL') location ON u.location_cd=location.location_cd
+    INNER JOIN (SELECT grp_cd_dtl_nm AS machine_cd_nm ,grp_cd_dtl_id AS machine_cd 
+    			FROM group_code_detail WHERE grp_cd_dtl_id = '01' AND  grp_cd_id='M') machine ON u.eqpmn_cd=machine.machine_cd
+    WHERE u.user_type_cd='03'  
+    <if test="date!=''">
+        AND u.user_id NOT IN(SELECT mechanic_id FROM as_assign WHERE TO_CHAR(visit_dttm,'YYYY-MM-dd')=#{date})	
+    </if>
+</select>
+
+<insert id="insertAsAssign" parameterType="kr.co.kccbrew.asMng.model.AsMngVo">
+<![CDATA[
+	INSERT INTO as_assign 
+	VALUES(as_assign_seq.NEXTVAL,#{asInfoSeq},#{visitDttm},SYSDATE,#{mechanicId},SYSDATE,#{userId},SYSDATE,#{userId},'N',null,null)
+]]>
+</insert>
+
+<update id="updateAsInfoStatus" parameterType="kr.co.kccbrew.asMng.model.AsMngVo">
+<![CDATA[
+	UPDATE as_information SET as_status=#{asStatusCd} WHERE as_info_seq=#{asInfoSeq}
+]]>
+</update>
 </mapper>

@@ -2,7 +2,6 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-
 <%@ page import="java.time.LocalDateTime"%>
 <%@ page import="java.time.format.DateTimeFormatter"%>
 
@@ -25,7 +24,7 @@
 <script src="<c:url value="resources/js/asMng/asList.js"/>"></script>
 <script src="http://code.jquery.com/jquery-latest.js"></script> 
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>AS 내역 조회</title>
 </head>
 <body>
 	<div id="page-mask">
@@ -35,7 +34,7 @@
 					<!-- ********** 페이지 네비게이션 시작 ********** -->
 					<div class="page-content-navigation">
 						<ol class="breadcrumb">
-							<li class="breadcrumb-home"><a href="">AS 관리</a></li>
+							<li class="breadcrumb-home"><a href="#">AS 관리</a></li>
 							<li>
 								<div class="header-icon-background">
 									<img
@@ -169,7 +168,7 @@
 																		</option>
 																	</c:when>
 																	<c:otherwise>
-																		<option value="${asCd.grpCdDtlId}" selected>
+																		<option value="${asCd.grpCdDtlId}">
 																			${asCd.grpCdDtlNm}
 																		</option>
 																	</c:otherwise>
@@ -463,6 +462,7 @@
 													<th>AS 상태</th>
 													<th>점포 명</th>
 													<th>점포 주소</th>
+													<th>상세 조회</th>
 												</tr>
 											</thead>
 											<tbody>
@@ -473,6 +473,7 @@
 														<td><c:out value="${list.asStatusNm}" /></td>
 														<td><c:out value="${list.storeNm}" /></td>
 														<td><c:out value="${list.storeAddr}" /></td>
+														<td><a href="#" onclick="selectAsDetail(${list.asInfoSeq})"class="form-btn">조회</a></td>
 													</tr>
 												</c:forEach>
 											</tbody>

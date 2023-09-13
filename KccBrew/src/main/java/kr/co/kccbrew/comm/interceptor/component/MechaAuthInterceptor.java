@@ -24,7 +24,11 @@ public class MechaAuthInterceptor extends Interceptor {
 		HttpSession session = request.getSession();
 		Object userId=session.getAttribute("userTypeCd");
 		if(userId != "03") {
-			response.sendRedirect(request.getContextPath()+"/main");
+			if(userId.equals("01")) {
+				response.sendRedirect(request.getContextPath()+"adminMain");
+			}else if(userId.equals("02")) {
+				response.sendRedirect(request.getContextPath()+"managerMain");
+			}
 			return false;
 		}
 		return true;

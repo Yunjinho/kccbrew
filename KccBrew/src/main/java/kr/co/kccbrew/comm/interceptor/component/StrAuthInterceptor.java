@@ -23,8 +23,16 @@ public class StrAuthInterceptor extends Interceptor {
 			throws Exception {
 		HttpSession session = request.getSession();
 		Object userId=session.getAttribute("userTypeCd");
-		if(userId != "02") {
-			response.sendRedirect(request.getContextPath()+"/main");
+		if(!userId.equals("02")) {
+			System.out.println(request.getContextPath());
+			System.out.println(userId);
+			if(userId.equals("03")) {
+				response.sendRedirect(request.getContextPath()+"mechanicMain");
+			}else if(userId.equals("01")) {
+				System.out.println(request.getContextPath());
+				System.out.println(userId);
+				response.sendRedirect(request.getContextPath()+"adminMain");
+			}
 			return false;
 		}
 		return true;

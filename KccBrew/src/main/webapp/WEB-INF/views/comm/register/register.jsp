@@ -90,7 +90,7 @@
 								<br>
 								
 								<div id="storemng-register-form">
-									<input type="hidden" name="storeId">
+									<input type="hidden" name="storeId" value="0">
 									<div class="register-info">
 										<img src="<c:url value="resources/img/register/register_addr.png"/>" class="register-icons">
 										<input type="text" name="storeAddr" id="store-addr" placeholder="주소" readonly>
@@ -108,7 +108,7 @@
 								<div id="engmng-register-form">
 									<div class="register-info">
 										<img src="<c:url value="resources/img/register/register_mechine.png"/>" class="register-icons">
-										<select name="eqpmnCd" form="register-form">
+										<select name="eqpmnCd" >
 											<option value="">장비 선택</option>
 											<c:forEach var="mechineList" items="${mechineList}">
 								    			<option value="${mechineList.grpCdDtlId}" >
@@ -119,7 +119,7 @@
 									</div>
 									<div class="register-info">
 										<img src="<c:url value="resources/img/register/register_location.png"/>" class="register-icons">
-										<select name="location" form="register-form" onchange="changeLocationCd()">
+										<select name="location" onchange="changeLocationCd()">
 											<option value="">지역 선택</option>
 											<c:forEach var="locationList" items="${locationList}">
 								    			<option value="${locationList.grpCdDtlId}">
@@ -130,7 +130,7 @@
 									</div>
 									<div class="register-info">
 										<img src="<c:url value="resources/img/register/register_location.png"/>" class="register-icons">
-										<select name="locationCd" form="register-form">
+										<select name="locationCd">
 											<option value="">지역 상세 선택</option>
 										</select>
 									</div>

@@ -63,15 +63,6 @@ public class AsMngService implements IAsMngService{
 		// TODO Auto-generated method stub
 		return asRepository.selectAsStatusCd();
 	}
-
-	/**
-	 * 지역 코드 리스트 조회
-	 * @return : 지역 코드 리스트
-	 */
-	@Override
-	public List<AsMngVo> selectLocationCd() {
-		return asRepository.selectLocationCd();
-	}
 	/**
 	 * 로그인한 사용자와 매핑 되어있는 점포 정보
 	 */
@@ -111,10 +102,11 @@ public class AsMngService implements IAsMngService{
 				vo.setFileServerNm(asMngVo.getUserId()+"_"+pk+"_"+imgFile.getOriginalFilename());
 				vo.setFileFmt(imgFile.getContentType());
 				vo.setStorageLocation(asMngVo.getStorageLocation());
-		        String targetPath=asMngVo.getStorageLocation()+"\\"+vo.getFileServerNm();
+		        String targetPath=asMngVo.getServerSavePath()+"\\"+vo.getFileServerNm();
 				try {
 					//imgFile.transferTo(targetPath);
 					FileCopyUtils.copy(imgFile.getInputStream(), new FileOutputStream(targetPath));
+					FileCopyUtils.copy(imgFile.getInputStream(), new FileOutputStream(asMngVo.getLocalSavePath()+"\\"+vo.getFileServerNm()));
 				}catch (Exception e) {
 					System.out.println(e.getMessage());
 				}
@@ -122,6 +114,43 @@ public class AsMngService implements IAsMngService{
 			}
 		}
 		return asMngVo;
+	}
+
+	@Override
+	public AsMngVo selectAsInfoDetail(String asInfoSeq) {
+		return asRepository.selectAsInfoDetail(asInfoSeq);
+	}
+
+	@Override
+	public List<AsMngVo> selectAsInfoImg(String fileDtlId) {
+		return asRepository.selectAsInfoImg(fileDtlId);
+	}
+
+	@Override
+	public List<AsMngVo> selectLocationCd() {
+		return asRepository.selectLocationCd();
+	}
+
+	@Override
+	public List<AsMngVo> selectLocationDtlCd(String locationCd) {
+		return asRepository.selectLocationDtlCd(locationCd);
+	}
+
+	@Override
+	public int checkStrSchedule(String date, String userId) {
+		return asRepository.checkStrSchedule(date, userId);
+	}
+
+	@Override
+	public List<AsMngVo> selectMechList(String date, String locationCd) {
+		return asRepository.selectMechList(date, locationCd);
+	}
+	
+	@Transactional
+	@Override
+	public void insertAsAssign(AsMngVo asMngVo) {
+		asRepository.insertAsAssign(asMngVo);
+		asRepository.updateAsInfoStatus(asMngVo);
 	}
 
 }
