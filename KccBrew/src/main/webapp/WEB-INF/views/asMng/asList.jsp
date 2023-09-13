@@ -425,7 +425,7 @@
 													<tr>
 														<td><c:out value="${list.asInfoSeq}" /></td>
 														<td><c:out value="${list.regDttm}" /></td>
-														<td><c:out value="${list.asStatusCd}" /></td>
+														<td><c:out value="${list.asStatusNm}" /></td>
 														<td><c:out value="${list.storeNm}" /></td>
 														<td><c:out value="${list.storeAddr}" /></td>
 														<td><a href="#" onclick="selectAsDetail(${list.asInfoSeq})"class="form-btn">조회</a></td>
