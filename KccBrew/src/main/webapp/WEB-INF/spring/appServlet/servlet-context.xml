@@ -66,6 +66,7 @@
 	<context:component-scan base-package="kr.co.kccbrew.sysMng.cdMng.controller" />
 	<context:component-scan base-package="kr.co.kccbrew.sysMng.logMng.controller" />
 	<context:component-scan base-package="kr.co.kccbrew.asMng.contorller" />
+	<context:component-scan base-package="kr.co.kccbrew.userMng.contorller" />
 	<context:component-scan base-package="kr.co.kccbrew.schdlMng.contorller" />
 	<context:component-scan base-package="kr.co.kccbrew.sysMng.fileMng.contorller" />
 	<!-- Controller -->
