@@ -74,9 +74,15 @@ function selectDate(){
 }
 
 function rejectAs(userTypeCd){
-	$("body").css("overflow ","hidden");
-	console.log($("body"))
+	$("body").css("overflow","hidden");
 	$(".modal").css("display","block");
 }
-window.onload=function(){
+
+function cancelModal(){
+	$("body").css("overflow","auto");
+	$(".modal").css("display","none");
+}
+
+function reject(){
+	
 }
