@@ -53,7 +53,7 @@ public class AsMngController {
 	public String as(Model model,HttpSession session) {
 		AsMngVo asMngVo=new AsMngVo();
 		asMngVo.setUserId((String)session.getAttribute("userId"));
-		asMngVo.setUserTypeCd((String)session.getAttribute("userTypeCd"));
+		
 		
 		List<AsMngVo> list=asMngService.selectMachineCd();
 		model.addAttribute("machineCd", list);
@@ -61,6 +61,7 @@ public class AsMngController {
 		list=asMngService.selectAsStatusCd();
 		model.addAttribute("asStatusCd", list);
 		
+		asMngVo.setUserTypeCd((String)session.getAttribute("userTypeCd"));
 		list=asMngService.selectASList(asMngVo,1);
 		int totalPage = 0;
 		int totalCount = asMngService.countASList(asMngVo);
