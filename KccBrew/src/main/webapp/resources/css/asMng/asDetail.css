@@ -40,48 +40,12 @@ select[name=machineCd]{
     width: 100%;
     max-width: initial;
 }
-#receipt-form>div{
-	display:flex;
-	margin-bottom:10px
-}
-#receipt-form>div>div{
-	flex:1;
-}
 #content{
 	background-color: #FFFFFF;
     padding: 3px 100px;
 }
 #content>div{
 	margin:9px 0px;
-}
-.tag-image{
-	width:25px;
-}
-.flex-label-div{
-	justify-content: space-between;
-}
-.flex-label-div>div{
-	flex:0.5
-}
-.flex-label-div>div>h6{
-	margin:0;
-}
-.in-decrease{
-	float:right;
-	margin:0px 10px
-}
-.in-decrease>span{
-	color:#ccc;
-	cursor:pointer
-}
-.in-decrease>span:hover{
-	color:black;
-}
-.file-upload-div{
-	display:block !important;
-}
-.file-upload-div>div{
-	margin-bottom: 10px;
 }
 .form-btn {
 	display: flex;

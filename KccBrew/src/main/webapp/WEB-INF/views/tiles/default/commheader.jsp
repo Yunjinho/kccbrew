@@ -6,6 +6,7 @@
 <html>
 <head>
 <link rel="stylesheet" href="${path}/css/comm/header.css">
+<link rel="stylesheet" href="${path}/css/comm/common.css">
 </head>
 <c:choose>
 	<c:when test="${sessionScope.userTypeCd eq '01'}">
@@ -33,7 +34,7 @@
 						<li class="nav-item">
 							<a class="nav-link" href="#" >A/S 관리</a>
 							<ul class="comm-nav-dropdown">
-								<c:url var="toAsList" value="/adminaslistpage" />	<!-- 여기에  매핑 url 선언 -->
+								<c:url var="toAsList" value="/as-list" />	<!-- 여기에  매핑 url 선언 -->
 								<li><a href="${toAsList}">A/S 내역 조회</a></li>	<!-- 매핑 url 변수 링크로 걸기 -->
 							</ul>	
 						</li>
@@ -101,9 +102,9 @@
 						<li class="nav-item">
 							<a class="nav-link" href="#" >A/S 관리</a>
 							<ul class="comm-nav-dropdown">
-								<c:url var="toASReceipt" value="/asreceiptpage" />
+								<c:url var="toASReceipt" value="/as-receipt" />
 								<li><a href="${toASReceipt}">A/S 신청</a></li>
-								<c:url var="toAsList" value="/aslistpage" />
+								<c:url var="toAsList" value="/as-list" />
 								<li><a href="${toAsList}">A/S 내역 조회</a></li>
 							</ul>	
 						</li>
@@ -153,7 +154,7 @@
 						<li class="nav-item">
 							<a class="nav-link" href="#" >A/S 관리</a>
 							<ul class="comm-nav-dropdown">
-								<c:url var="toAsList" value="/mechanicaslistpage" />
+								<c:url var="toAsList" value="/as-list" />
 								<li><a href="${toAsList}">A/S 내역 조회</a></li>
 							</ul>	
 						</li>

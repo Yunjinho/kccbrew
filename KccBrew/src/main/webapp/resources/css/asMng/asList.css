@@ -4,7 +4,9 @@
 body {
 	font-family: 'Noto Sans', 'Noto Sans KR', sans-serif !important;
 }
-
+p{
+	text-align: initial !important;
+}
 /* 헤더 */
 .brand-logo {
 	width: 100%;
