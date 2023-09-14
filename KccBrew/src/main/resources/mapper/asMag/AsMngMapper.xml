@@ -201,15 +201,17 @@
 			a.file_seq AS "fileSeq",
 			a.store_mng_id AS "storeMngId",
 			a.reg_dttm AS "regDttm",
+            a.resubmission AS "resubmission",
+            a.reject_content_str AS "rejectContentStr",
             s.longitude AS "longitude",
             s.latitude AS "latitude",
             s.store_telno AS "storeTelNo",
             s.store_nm AS "storeNm",
             s.store_addr AS "storeAddr", 
             s.store_addr_dtl AS "storeAddrDtl",
+            ass.as_assign_seq AS "asAssignSeq",
             ass.user_nm AS "mechanicNm",
             ass.mechanic_id AS "mechanicId",
-            ass.reject_content_str AS "rejectContentStr",
             ass.reject_content_mcha AS "rejectContentMcha",
             TO_CHAR(ass.visit_dttm,'YYYY/MM/dd') AS "visitDttm",
             ass.reassign AS "reassign",
@@ -303,4 +305,15 @@
 	UPDATE as_information SET as_status=#{asStatusCd} WHERE as_info_seq=#{asInfoSeq}
 ]]>
 </update>
+<update id="updateInfoReject" parameterType="hashmap">
+<![CDATA[
+	UPDATE as_information SET reject_content_str=#{content},rewrite='Y' WHERE as_info_seq=#{seq}
+]]>
+</update>
+<update id="updateAssignReject" parameterType="hashmap">
+<![CDATA[
+	UPDATE as_assign SET reject_content_mcha=#{content},reassign='Y' WHERE as_assign_seq=#{seq}
+]]>
+</update>
+
 </mapper>

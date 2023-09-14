@@ -15,8 +15,9 @@ import lombok.Data;
 @AllArgsConstructor
 @Data
 public class AsMngVo {
-	//AS 번호
+	//seq
 	private String asInfoSeq;
+	private String asAssignSeq;
 	//조회 날짜 구간 (시작, 끝 - 년도,월)
 	private String startYr;
 	private String startMn;
@@ -46,12 +47,14 @@ public class AsMngVo {
 	private String wishingStartDate;
 	private String wishingEndDate;
 
-	//AS 신청 이미지 정보, 파일 원본이름, 파일 서버 저장이름 ,파일 형식, 저장 위치
+	//AS 신청 이미지 정보, 파일 원본이름, 파일 서버 저장이름 ,파일 형식, 저장 위치,접수 반려 여부, 접수 반려 이유
 	private List<MultipartFile> imgFile;
 	private String fileOriginalNm;
 	private String fileServerNm;
 	private String fileFmt;
 	private String storageLocation;
+	private String resubmission;
+	private String rejectContentStr;
 	
 	//점주 아이디, 점포 이름, 점포 주소, 점포 상세 주소,위도, 경도, 점포 전화번호
 	private String storeMngId;
@@ -73,12 +76,10 @@ public class AsMngVo {
 	//멤버 로컬 저장 위치
 	private String localSavePath;
 	private String serverSavePath;
-	
-	
-	// 기사 이름, 기사 아이디, 접수 반려 내용, 배정 반려내용 , 방문 예정일
+
+	// 기사 이름, 기사 아이디, 배정 반려내용 , 방문 예정일
     private String mechanicNm;
     private String mechanicId;
-    private String rejectContentStr;
     private String rejectContentMcha;
     private String visitDttm;
     
@@ -140,6 +141,4 @@ public class AsMngVo {
 	    this.resultReapply="";
 	    this.storeMngId="";
 	}
-
-	
 }
