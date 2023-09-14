@@ -9,6 +9,7 @@ import lombok.Data;
 @Data
 @Component
 public class HolidayVo {
+	private int rowNum;
 	private Integer holidaySeq;
 	private String groupCodeDetailId; // 사용자 유형: 점주 또는 기사
 	private String userId;

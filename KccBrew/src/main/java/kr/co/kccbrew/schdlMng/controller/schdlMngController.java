@@ -25,7 +25,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.co.kccbrew.comm.register.model.RegisterVo;
 import kr.co.kccbrew.schdlMng.model.HolidayVo;
-import kr.co.kccbrew.schdlMng.model.SchdlMngVo2;
+import kr.co.kccbrew.schdlMng.model.SchdlMngVo;
 import kr.co.kccbrew.schdlMng.service.SchdlMngService;
 import kr.co.kccbrew.strMng.model.StrMngVo;
 import lombok.extern.slf4j.Slf4j;
@@ -50,11 +50,13 @@ public class schdlMngController {
 	@Autowired
 	private SchdlMngService schdlMngService;
 
-	/* 관리자 스케줄조회 */
-	@GetMapping("/schedule2")
-	public String getLogs2(
+	/*일정조회*/
+
+
+	@GetMapping("/holiday")
+	public String getHolidays(
 			@RequestParam(defaultValue = "1") int currentPage,
-			@ModelAttribute("searchContent") SchdlMngVo2 searchContent,
+			@ModelAttribute("searchContent") SchdlMngVo searchContent,
 			Model model,
 			HttpSession session 
 			) {
@@ -62,8 +64,10 @@ public class schdlMngController {
 		/*파라미터 확인*/
 		System.out.println("searchContent: " + searchContent);
 
+		/*권한확인*/
+
 		/* 스케줄리스트 데이터 */
-		List<SchdlMngVo2> schedules = schdlMngService.getSchedules2(currentPage, searchContent);
+		List<SchdlMngVo> schedules = schdlMngService.getSchedules2(currentPage, searchContent);
 		int scheduleCount = schdlMngService.getSchedule2Count(searchContent);
 
 		/*DB 데이터 확인*/
@@ -95,26 +99,25 @@ public class schdlMngController {
 		model.addAttribute("schedules", schedules);
 
 
-		return "schdl/schdlMngList2";
+		return "schdl/hldyList";
 	}
 
-	/* 회원 스케줄조회 */
-	/*@GetMapping("/schedule2/{userId}")
-	public String getUserLogs(
+	@PostMapping("/holiday")
+	public String getSearchedHolidays(
 			@RequestParam(defaultValue = "1") int currentPage,
-			@ModelAttribute("searchContent") SchdlMngVo2 searchContent,
+			@ModelAttribute("searchContent") SchdlMngVo searchContent,
 			Model model,
 			HttpSession session 
 			) {
 
-		파라미터 확인
+		/*파라미터 확인*/
 		System.out.println("searchContent: " + searchContent);
 
-		 스케줄리스트 데이터 
-		List<SchdlMngVo2> schedules = schdlMngService.getSchedules2(currentPage, searchContent);
+		/* 스케줄리스트 데이터 */
+		List<SchdlMngVo> schedules = schdlMngService.getSchedules2(currentPage, searchContent);
 		int scheduleCount = schdlMngService.getSchedule2Count(searchContent);
 
-		DB 데이터 확인
+		/*DB 데이터 확인*/
 		System.out.println("schedules: " + schedules);
 		System.out.println("scheduleCount: " + scheduleCount);
 
@@ -143,26 +146,26 @@ public class schdlMngController {
 		model.addAttribute("schedules", schedules);
 
 
-		return "schdl/schdlMngList2";
-	}*/
-
-	/*관리자 캘린더 조회*/
-	@GetMapping("/calendar")
-	public String getCalendar() {
-		return "schdl/schdlMngClndr";
+		return "redirect: schdl/hldyList";
 	}
 
-	/*회원 캘린더 조회*/
-	@GetMapping("/calendar/{userId}")
-	public String getUserCalendar(@PathVariable String userId) {
-		System.out.println("userId: " + userId);
+
+	/*관리자 캘린더 조회*/
+	@GetMapping("/schedule")
+	public String getAttendanceStatus() {
+		return "schdl/schdlMngClndr";
+	}
+	
+	@GetMapping("/schedule/calendar")
+	public String getCalendar() {
+		
 		return "schdl/schdlMngClndr";
 	}
 
 	/*회원 캘린더 월별 조회*/
-	@PostMapping("/calendar")
+	@PostMapping("/schedule/calendar")
 	@ResponseBody
-	public List<SchdlMngVo2> getUserCalendar(HttpServletRequest request, 
+	public List<SchdlMngVo> getUserCalendar(HttpServletRequest request, 
 			@RequestParam("year") Integer year, @RequestParam("month") Integer month,  
 			Model model) {
 		/*매개변수 확인*/
@@ -171,7 +174,7 @@ public class schdlMngController {
 
 		/*세션에서 회원정보 추출해서 dto에 저장*/
 		HttpSession session = request.getSession();
-		SchdlMngVo2 schdlMngVo = new SchdlMngVo2();
+		SchdlMngVo schdlMngVo = new SchdlMngVo();
 		schdlMngVo.setUserId("bsy01");
 
 
@@ -186,40 +189,15 @@ public class schdlMngController {
 		    e.printStackTrace();
 		}*/
 
-		List<SchdlMngVo2> schedules = schdlMngService.getCalendarSchedule(schdlMngVo);
+		List<SchdlMngVo> schedules = schdlMngService.getCalendarSchedule(schdlMngVo);
 
 		return schedules;
 	}
 
-	/*캘린더 테스트*/
-	@GetMapping("/cal-test")
-	public String calendarTest() {
-		return "schdl/calendartest";
-	}
 
 
-	/*휴가 권한구분*/
-	@GetMapping("/holiday")
-	public String holidayPage(Model model, HttpSession session) {
-
-		/*세션에서 사용자 정보 반환*/
-		RegisterVo user = new RegisterVo();
-
-
-		/*세션에 사용자정보가 저장되어 있는 경우*/
-		String userType = "manager";
-		String dynamicURL = "/" + userType + "/holiday";
-
-		return "redirect:" + dynamicURL;
-
-		/*세션에 사용자 정보가 저장되어 있지 않은 경우 -> 로그인페이지*/
-
-	}
-
-
-
-	/*점주 휴일 등록 페이지*/
-	@GetMapping("/manager/holiday")
+	/*휴일 등록 페이지*/
+	@GetMapping("/holiday/registration")
 	public String holidayPage(Model model) {
 
 		/*세션에서 점주 및 점포 정보 확인*/
@@ -246,10 +224,10 @@ public class schdlMngController {
 	}
 
 	/*휴가신청*/
-	@PostMapping(value = "/holiday/add", produces = "text/plain; charset=utf-8")
+	@PostMapping(value = "/holiday/registration", produces = "text/plain; charset=utf-8")
 	@ResponseBody
 	public String addHoliday(@ModelAttribute HolidayVo holiday, HttpSession session, HttpServletResponse response ) {
-	    
+
 		String message = null;
 
 		Calendar calendar = Calendar.getInstance();

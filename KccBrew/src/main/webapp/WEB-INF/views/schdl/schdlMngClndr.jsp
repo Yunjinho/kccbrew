@@ -181,79 +181,7 @@
 		<!-- ********** header영역 끝********** -->
 
 		<!-- ********** 왼쪽 메뉴 시작 ********** -->
-		<div id="page-lnb">
-			<ul class="left-menus">
-
-				<!-- 관리자 메뉴 -->
-
-				<!-- 메뉴1 -->
-				<li class="" data-original-title="" title=""><a href=""
-					class="left-menu-link left-menu-link-mypage" title="My Page"
-					data-toggle="tooltip" data-placement="right">
-						<h5 class="">A/S관리</h5>
-				</a>
-					<ul>
-						<li class=""><a href="https://cyber.inu.ac.kr/" title="">Dashboard</a></li>
-						<li class=""><a href="https://cyber.inu.ac.kr/user/files.jsp"
-							title="">파일 관리</a></li>
-						<li class=""><a
-							href="https://cyber.inu.ac.kr/mod/ubboard/my.jsp" title="">진행강좌
-								공지</a></li>
-						<li class=""><a
-							href="https://cyber.inu.ac.kr/user/edit.jsp?id=86992" title="">개인정보
-								수정</a></li>
-					</ul></li>
-
-				<!-- 메뉴2 -->
-				<li class="active active-fix" data-original-title="" title=""><a
-					href="" class="left-menu-link left-menu-link-mycourses"
-					title="교과 과정" data-toggle="tooltip" data-placement="right">
-						<h5 class="">시스템관리</h5>
-				</a>
-					<ul>
-						<li class="active"><a href="" title="active">로그조회</a></li>
-						<li class=""><a href="" title="">파일조회</a></li>
-					</ul></li>
-
-				<!-- 메뉴3 -->
-				<li class="" data-original-title="" title=""><a href=""
-					class="left-menu-link left-menu-link-irrcourse" title="비교과 과정"
-					data-toggle="tooltip" data-placement="right">
-						<h5 class="nosubmenu">코드관리</h5>
-				</a></li>
-
-				<!-- 메뉴4 -->
-				<li class="" data-original-title="" title=""><a href=""
-					class="left-menu-link left-menu-link-eclass" title="자율강좌"
-					data-toggle="tooltip" data-placement="right">
-						<h5 class="nosubmenu">수리기사관리</h5>
-				</a></li>
-
-				<!-- 메뉴5 -->
-				<li class="" data-original-title="" title=""><a href=""
-					class="left-menu-link left-menu-link-onlinep" title="교수지원"
-					data-toggle="tooltip" data-placement="right">
-						<h5 class="">점포관리</h5>
-				</a>
-					<ul>
-						<li class=""><a href="" title="">수강 신청</a></li>
-						<li class=""><a href="" title="">수강 현황</a></li>
-						<li class=""><a href="" title="">수료 확인</a></li>
-					</ul></li>
-
-				<!-- 메뉴6 -->
-				<li t class="" data-original-title="" title=""><a href=""
-					class="left-menu-link left-menu-link-online" title="학습지원"
-					data-toggle="tooltip" data-placement="right">
-						<h5 class="">회원관리</h5>
-				</a>
-					<ul>
-						<li class=""><a href="" title="">수강 신청</a></li>
-						<li class=""><a href="" title="">수강 현황</a></li>
-						<li class=""><a href="" title="">수료 확인</a></li>
-					</ul></li>
-			</ul>
-		</div>
+		<div id="page-lnb"></div>
 		<!-- ********** 왼쪽 메뉴 끝 ********** -->
 
 		<div id="page-mask">
@@ -525,60 +453,6 @@
 									</script>
 
 
-
-									<!-- 이전, 다음 버튼 클릭 시 날짜 정보 받아오기 -->
-									<!-- 		<script>
-										$(document)
-												.ready(
-														function() {
-															var calendarEl = document
-																	.getElementById('calendar');
-															var calendar = new FullCalendar.Calendar(
-																	calendarEl,
-																	{
-																	// 캘린더 설정 옵션들
-																	});
-
-															// 이전 달 버튼 찾아 id 속성 추가
-															$(
-																	"button[title='Previous month']")
-																	.attr('id',
-																			'prevButton');
-															// 다음 달 버튼 찾아 id 속성 추가
-															$(
-																	"button[title='Next month']")
-																	.attr('id',
-																			'nextButton');
-
-															// 이전 달 버튼 클릭 이벤트 핸들러
-															$('#prevButton')
-																	.click(
-																			function() {
-																				calendar
-																						.prev(); // 이전 달로 이동
-																				var info = calendar
-																						.getCalendar()
-																						.getView(); // 현재 보이는 뷰 정보 가져오기
-																				console
-																						.log(info);
-																			});
-
-															// 다음 달 버튼 클릭 이벤트 핸들러
-															$('#nextButton')
-																	.click(
-																			function() {
-																				calendar
-																						.next(); // 다음 달로 이동
-																				var info = calendar
-																						.getCalendar()
-																						.getView(); // 현재 보이는 뷰 정보 가져오기
-																				console
-																						.log(info);
-																			});
-
-															calendar.render();
-														});
-									</script> -->
 
 
 									<!-- ********** 세은 컨텐츠 끝 ********** -->

@@ -270,20 +270,27 @@
 							<div role="main">
 								<div class="user-past">
 
-									<div class="tabNav">
-										<ul>
-											<li class="active"><a href=""><span>휴가사용현황</span></a></li>
-											<li class="last"><a href=""><span>AS배정현황</span></a></li>
-											<li class="last"><a href=""><span>과거 정보목록</span></a></li>
-										</ul>
-									</div>
-
 									<!-- ********** 세은 로그 관련 내용 시작 ********** -->
 									<div id="content">
+
 										<h2 class="heading">휴가사용현황</h2>
+
+										<div class="tabNav">
+											<ul class="tab-ul">
+												<li class="active"><a href=""><span>휴가사용현황</span></a></li>
+												<li class="last"><a href="/schedule/calendar"><span>근태현황</span></a></li>
+											</ul>
+										</div>
+
 										<!-- 로그 검색 -->
 
-										<form action="/schedule2" method="get">
+										<form action="/schedule" method="POST">
+
+											<div>
+												<span> 사용자검색
+												</span>
+											</div>
+
 											<div class="search-info">
 												<fieldset>
 													<legend class="blind">사용자검색</legend>
