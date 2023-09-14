@@ -105,7 +105,7 @@
 			#{userEmail}, 
 			#{userAddr}, 
 			<choose>
-				<when test="eqpmnCd != null">
+				<when test="eqpmnCd != ''">
 					#{eqpmnCd},
 				</when>
 				<otherwise>
@@ -121,7 +121,7 @@
 				</otherwise>
 			</choose>
 			<choose>
-				<when test="locationCd != null">
+				<when test="locationCd != ''">
 					#{locationCd},
 				</when>
 				<otherwise>
@@ -132,8 +132,9 @@
 			SYSDATE,
 			SYSDATE,
 			'Y',
+			#{userSalt}, 
 			'N',
-			#{userSalt} 
+			null
 		) 
 </insert>
 

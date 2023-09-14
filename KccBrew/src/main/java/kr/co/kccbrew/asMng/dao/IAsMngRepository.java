@@ -5,6 +5,8 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
 
+import com.fasterxml.jackson.annotation.JsonTypeInfo.As;
+
 import kr.co.kccbrew.asMng.model.AsMngVo;
 
 public interface IAsMngRepository {
@@ -27,11 +29,6 @@ public interface IAsMngRepository {
 	 * @return : AS상태 코드 리스트
 	 */
 	public List<AsMngVo> selectAsStatusCd();
-	/**
-	 * 지역 코드 리스트 조회
-	 * @return : 지역 코드 리스트
-	 */
-	public List<AsMngVo> selectLocationCd();
 	
 	/**
 	 * 점포 정보 조회
@@ -50,7 +47,65 @@ public interface IAsMngRepository {
 	 * @param asMngVo 파일 정보 들어가있음
 	 */
 	public void insertFileDtl(AsMngVo asMngVo);
-	
+	/**
+	 * AS 등록
+	 * @param asMngVo
+	 */
 	public void insertAs(AsMngVo asMngVo);
 	
+	/**
+	 * AS detail 조회
+	 * @param asInfoSeq : seq 번호
+	 * @return
+	 */
+	public AsMngVo selectAsInfoDetail(@Param("asInfoSeq")String asInfoSeq);
+	
+	/**
+	 * AS건에 등록한 파일 정보 조회
+	 * @param fileDtlId
+	 * @return
+	 */
+	public List<AsMngVo> selectAsInfoImg(@Param("asInfoSeq")String fileDtlId);
+	
+	/**
+	 * 지역코드 조회
+	 * @param locationCd
+	 * @return
+	 */
+	public List<AsMngVo> selectLocationCd();
+	
+	/**
+	 * 지역 상세코드 조회
+	 * @param locationCd
+	 * @return
+	 */
+	public List<AsMngVo> selectLocationDtlCd(@Param("locationCd")String locationCd);
+	
+	/**
+	 * 선택한 날짜에 점포 휴일 체크
+	 * @param date 선택 날짜
+	 * @param userId AS 신청인
+	 * @return
+	 */
+	public int checkStrSchedule(@Param("date")String date,@Param("userId")String userId);
+	
+	/**
+	 * 
+	 * @param date 방문 선택 날짜
+	 * @param locationCd 지역 코드
+	 * @return
+	 */
+	public List<AsMngVo> selectMechList(@Param("date")String date,@Param("locationCd")String locationCd);
+	
+	/**
+	 * 기사 배정
+	 * @param asMngVo
+	 */
+	public void insertAsAssign(AsMngVo asMngVo);
+	
+	/**
+	 * AS status 상태 변경
+	 * @param asMngVo
+	 */
+	public void updateAsInfoStatus(AsMngVo asMngVo);
 }

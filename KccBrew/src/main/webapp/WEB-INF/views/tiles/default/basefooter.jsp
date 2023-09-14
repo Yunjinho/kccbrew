@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
+<link rel="stylesheet" href="${path}/resources/css/comm/footer.css"/>
 <footer>
     <div id="footer">
         <div class="f-top">

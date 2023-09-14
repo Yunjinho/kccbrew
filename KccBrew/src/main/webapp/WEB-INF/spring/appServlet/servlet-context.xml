@@ -92,8 +92,14 @@
 			<mapping path="/**" />
 			<exclude-mapping path="/" />
 			<exclude-mapping path="/login" />
+			<exclude-mapping path="/loginpage" />
+			<exclude-mapping path="/register-form" />
 			<exclude-mapping path="/register" />
 			<exclude-mapping path="/search-store-list" />
+			<exclude-mapping path="/check_user_id" />
+			<exclude-mapping path="/check_user_id" />
+			<exclude-mapping path="/search-location-code" />
+			<exclude-mapping path="/search-location-cd" />
 			<exclude-mapping path="/resources/**/" />
 			<beans:bean
 				class="kr.co.kccbrew.comm.interceptor.component.SessionInterceptor" />
@@ -111,9 +117,9 @@
 
 		<interceptor>
 			<mapping path="/점포만 가능한  API" />
+			<mapping path="/as-receipt" />
 			<exclude-mapping path="/" />
 			<exclude-mapping path="/resources/**/" />
-			<exclude-mapping path="/as-receipt" />
 			<beans:bean
 				class="kr.co.kccbrew.comm.interceptor.component.StrAuthInterceptor" />
 		</interceptor>
