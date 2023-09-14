@@ -22,11 +22,6 @@ public class MainController {
 	@Autowired
 	MainService mainServiceImple;
 	
-	/**************** 회원가입 페이지 *****************************/
-	@RequestMapping(value="/registerpage", method=RequestMethod.GET)
-	public String goRegisterPage(Model model) {
-		return "registerPage";
-	}
 	/***** 테스트 ******/
 	@RequestMapping(value="/testpage", method=RequestMethod.GET)
 	public String goTestPage(Model model) {
@@ -34,11 +29,6 @@ public class MainController {
 	}
 	
 	/****************** 관리자 페이지 **************************/
-	//A/S 내역 조회 페이지
-	@RequestMapping(value="/adminaslistpage", method=RequestMethod.GET)
-	public String adminAsListPage(Model model) {
-		return "adminPageA1";
-	}
 	
 	//점포 등록 페이지
 	@RequestMapping(value="/adminstoreregpage", method=RequestMethod.GET)
@@ -84,17 +74,6 @@ public class MainController {
 	
 	
 	/************************ 점주 페이지 ******************************/
-	// A/S 신청 페이지
-	@RequestMapping(value="/asreceiptpage", method=RequestMethod.GET)
-	public String goAsReceiptPage(Model model) {
-		return "managerPageA1";
-	}
-	
-	//A/S 내역 조회 페이지
-	@RequestMapping(value="/aslistpage", method=RequestMethod.GET)
-	public String goAsListPage(Model model) {
-		return "managerPageA2";
-	}
 	
 	//점포 조회 페이지
 	@RequestMapping(value="/storesearchpage", method=RequestMethod.GET)
@@ -112,11 +91,6 @@ public class MainController {
 	
 	
 	/*************************** 수리 기사 페이지 **************************/
-	//A/S 목록 조회
-	@RequestMapping(value="/mechanicaslistpage", method=RequestMethod.GET)
-	public String goMechanicAsListPage(Model model) {
-		return "mechanicPageA1";
-	}
 	
 	//일정 조회
 	
