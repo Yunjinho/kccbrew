@@ -20,7 +20,7 @@
 					<th rowspan="4" colspan="2" style="width: 140px; height: 188px;">
 						<div style="text-align: center;">
 							<img src="${userDtl.imgUrl}${userDtl.imgNm}" border="0"
-								style="margin: auto;">
+								style="margin: auto; width: 120px; height: 168px; ">
 						</div>
 						</th>
 					<th>ID</th>
