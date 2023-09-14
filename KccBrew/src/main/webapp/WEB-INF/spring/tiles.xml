@@ -77,12 +77,21 @@
 		<put-attribute name="contents" value="/WEB-INF/views/strMng/strMngSearch.jsp" />
 	</definition>
 	
+	<!-- 회원 관리 페이지 -->
+	<definition name="adminPageM1" extends="adminPage">
+		<put-attribute name="contents" value="/WEB-INF/views/userMng/userMngList.jsp" />
+	</definition>
+	
 	<!-- 로그 관리 페이지 -->
 	<definition name="adminPageL1" extends="adminPage">
 		<put-attribute name="contents" value="/WEB-INF/views/log/logMngList.jsp" />
 	</definition>
 	
-	
+	<!-- 파일 관리 페이지 -->
+	<definition name="adminPageF1" extends="adminPage">
+		<put-attribute name="contents" value="/WEB-INF/views/sysMng/fileMng/fileMngList.jsp" />
+	</definition>
+		
 
 	<!-- 점주 페이지 추가 확장, 타이틀과 헤더 유지, contents만 변경 -->
 	

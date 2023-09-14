@@ -49,10 +49,10 @@
 							</ul>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" href="#">기사 관리</a>
+							<a class="nav-link" href="#">회원 관리</a>
 							<ul class="comm-nav-dropdown">
-								<li><a href="#">기사 조회</a></li>
-								<li><a href="#">기사 관리</a></li>
+								<c:url var="toMemberMngPage" value="/membermngpage" />
+								<li><a href="${toMemberMngPage}">회원 조회</a></li>
 							</ul>
 						</li>
 						<li class="nav-item">
@@ -60,7 +60,8 @@
 							<ul class="comm-nav-dropdown">
 								<c:url var="toAdminLogPage" value="/adminlogpage" />
 								<li><a href="${toAdminLogPage}">로그 조회</a></li>
-								<li><a href="#">파일 조회</a></li>
+								<c:url var="toAdminFilePage" value="/adminfilepage" />
+								<li><a href="${toAdminFilePage}">파일 조회</a></li>
 							</ul>
 						</li>
 						<li class="nav-item">

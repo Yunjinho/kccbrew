@@ -58,8 +58,11 @@ public class MainController {
 		return "adminPageS3";
 	}
 	
-	//기사 관리 페이지
-	
+	//회원 관리 페이지
+	@RequestMapping(value="/membermngpage", method=RequestMethod.GET)
+	public String memberMngPage(Model model) {
+		return "adminPageM1";
+	}
 	
 	//로그 조회 페이지
 	@RequestMapping(value="/adminlogpage", method=RequestMethod.GET)
@@ -68,7 +71,10 @@ public class MainController {
 	}
 	
 	//파일 조회 페이지
-	
+	@RequestMapping(value="/adminfilepage", method=RequestMethod.GET)
+	public String adminFilePage(Model model) {
+		return "adminPageF1";
+	}
 	
 	//마이 페이지
 	
