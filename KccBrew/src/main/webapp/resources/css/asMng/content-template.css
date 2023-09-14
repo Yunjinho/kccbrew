@@ -50416,9 +50416,9 @@ body {
 		sans-serif, AppleGothic;;
 	position: relative;
 	margin: 0px;
-	background-color: #f7f9fa
+	background-color: #f7f9fa;
 }
-
+	
 a {
 	color: #44a3bd
 }
@@ -51298,7 +51298,7 @@ a {
 }
 
 #page-header .usermenu .lang_select a, a:hover, a:focus, a:visited {
-	text-decoration: none
+	text-decoration: none;
 }
 
 #page-header .usermenu .lang_select .dropdown-toggle {

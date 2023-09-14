@@ -72,5 +72,11 @@ function selectDate(){
 	changeMach()
 	
 }
+
+function rejectAs(userTypeCd){
+	$("body").css("overflow ","hidden");
+	console.log($("body"))
+	$(".modal").css("display","block");
+}
 window.onload=function(){
 }

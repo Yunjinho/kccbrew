@@ -9,6 +9,7 @@
 <link rel="stylesheet" href="/resources/css/code/cdMngDtl.css" />
 <meta charset="UTF-8">
 <title>회원정보</title>
+<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 </head>
 <body>
 	<section id="notice" class="notice">
@@ -20,7 +21,7 @@
 					<th rowspan="4" colspan="2" style="width: 140px; height: 188px;">
 						<div style="text-align: center;">
 							<img src="${userDtl.imgUrl}${userDtl.imgNm}" border="0"
-								style="margin: auto; width: 120px; height: 168px; ">
+								style="margin: auto;">
 						</div>
 						</th>
 					<th>ID</th>
@@ -50,9 +51,19 @@
 				</tr>
 				<tr>
 					<th>사용여부</th>
-					<td>${user.useYn}</td>
+					<td>
+						<select id="useYn">
+							<option value="">선택</option>
+							<option value="Y">활성화</option>
+							<option value="N">비활성화</option>
+					</select></td>
 					<th>승인여부</th>
-					<td>${user.approveYn}</td>
+					<td>
+						<select id="approveYn">
+							<option value="">미정</option>
+							<option value="Y">수락</option>
+							<option value="N">거절</option>
+					</select></td>
 					<th>승인자</th>
 					<td>${user.approveAdmin}</td>
 				</tr>
@@ -86,21 +97,52 @@
 					</tr>
 				</table>
 			</c:if>
-			<div class="modal-footer" style="width: 100%; margin:auto; display: flex;">
-				<button type="button" class="update">수정</button>
-				<button type="button" class="cancel1">닫기</button>
-			</div>
 		</div>
+		<div class="modal-footer" style="width: 100%; margin:auto; display: flex;">
+				<button type="submit" class="submitMod">저장</button>
+				<button type="button" class="cancelMod">취소</button>
+			</div>
 	</section>
-	<script>
-	$(".cancel1").click(function() {
+<script>
+	$(".cancelMod").click(function() {
 		$(".Modal1").css("display", "none");
+		$(".ModalMod").css("display", "none");
 		selectedUserId = null;
 	});
-	$(".update").click(function() {
-		$(".Modal1").css("display", "none");
-		$(".ModalMod").css("display", "block");
-	});
-	</script>
+	 $(".submitMod").click(function() {
+         if (selectedUserId) {
+             // <select> 요소의 값을 가져오기
+             const use = $("#useYn").val();
+             const approve = $("#approveYn").val();
+             console.log("useYn:" + use);
+             console.log("approveYn:" + approve);
+             // AJAX 요청을 통해 서버로 사용자 ID와 <select> 요소의 값을 전달하고 업데이트 수행
+             $.ajax({
+                 url: '/user/mod', // 사용자 수정 업데이트를 수행하는 서버 엔드포인트
+                 type: 'POST',
+                 dataType: 'text',
+                 data: {
+                     userId: selectedUserId,
+                     useYn: use, // <select> 요소의 값을 사용
+                     approveYn: approve
+                 },
+                 success: function(response) {
+                     if (response.trim() === "ok") {
+                         alert('사용자를 수정하였습니다.');
+                     } else {
+                         alert('사용자 수정에 실패하였습니다.');
+                     }
+                     // 모달 창 닫기 및 페이지 새로고침
+                     $(".ModalMod").css("display", "none");
+                     location.reload();
+                 },
+                 error: function() {
+                     alert('서버 오류로 수정에 실패하였습니다.');
+                     $(".ModalMod").css("display", "none");
+                 }
+             });
+         }
+     });
+ </script>
 </body>
 </html>
