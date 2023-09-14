@@ -25,6 +25,11 @@
 <title>회원리스트</title>
 <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 <style>
+div.ModalMod {
+	position: relative;
+	z-index: 1;
+	display: none;
+}
 div.Modal2 {
 	position: relative;
 	z-index: 1;
@@ -62,9 +67,9 @@ div.modalBackground {
 
 .modal-dialog1 {
 	position: fixed;
-	top: calc(50% -400px);
+	top: calc(50% - 350px);
 	left: calc(50% - 500px);
-	height: 800px;
+	height: 700px;
 	padding: 20px 10px;
 	background: #fff;
 	border: #333 solid 1px;
@@ -95,6 +100,13 @@ div.modalBackground {
 }
 
 .modal-footer button {
+	background-color: navy;
+	color: white;
+	border: none;
+	padding: 5px 10px;
+	border-radius: 4px;
+}
+.cancel1, .update, .cancleMod{
 	background-color: navy;
 	color: white;
 	border: none;
@@ -241,7 +253,11 @@ div.modalBackground {
 												<tbody>
 													<c:forEach items="${newList}" var="newL" varStatus="loop">
 														<tr>
-															<td>${newL.userId}</td>
+															<td><form id="dtl" method="get" style="all:unset;">
+																	<input type="hidden" value="${param.userId}"> <a
+																		href="javascript:void(0);"
+																		onclick="openModal1('${newL.userId}');">${newL.userId}</a>
+																</form></td>
 															<td>${newL.userNm}</td>
 															<td>${newL.userType}</td>
 															<td>${newL.userTelNo}</td>
@@ -410,9 +426,15 @@ div.modalBackground {
 			<div class="modal-body1">
 				<%@ include file="userMngDtl.jsp"%>
 			</div>
-			<div class="modal-footer1" style="width: 80%; margin:auto;">
-				<button type="button" class="cancel1">닫기</button>
+		</div>
+		<div class="modalBackground"></div>
+	</div>
+	<div class="ModalMod" id="modal-one1">
+		<div class="modal-dialog1">
+			<div class="modal-bodyMod">
+				<%@ include file="userMngMod.jsp"%>
 			</div>
+			
 		</div>
 		<div class="modalBackground"></div>
 	</div>
@@ -424,13 +446,38 @@ div.modalBackground {
 		function openModal1(userId) {
 			selectedUserId = userId;
 			loadUserDetails(userId); // 모달 내용을 동적으로 불러옴
+			loadUserMod(userId); // 모달 내용을 동적으로 불러옴
 			$(".Modal1").css("display", "block");
-			$(".cancel1").css("display", "block");
 		}
-		$(".cancel1").click(function() {
-			$(".Modal1").css("display", "none");
-			selectedUserId = null;
-		});
+		
+		function loadUserDetails(userId) {
+			$.ajax({
+				url : '/user/info/' + userId,
+				type : 'GET',
+				success : function(data) {
+					// 받아온 데이터를 모달 내부에 삽입
+					$(".modal-body1").html(data);
+				},
+				error : function() {
+					alert('사용자 정보를 불러오는데 실패하였습니다.');
+				}
+			});
+		}
+		
+		function loadUserMod(userId) {
+			$.ajax({
+				url : '/user/mod/' + userId,
+				type : 'GET',
+				success : function(data) {
+					// 받아온 데이터를 모달 내부에 삽입
+					$(".modal-bodyMod").html(data);
+				},
+				error : function() {
+					alert('사용자 정보를 불러오는데 실패하였습니다.');
+				}
+			});
+		}
+		
 
 		function openModal(userId) {
 			selectedUserId = userId;
@@ -500,19 +547,7 @@ div.modalBackground {
 				});
 			}
 		});
-		function loadUserDetails(userId) {
-			$.ajax({
-				url : '/user/info/' + userId,
-				type : 'GET',
-				success : function(data) {
-					// 받아온 데이터를 모달 내부에 삽입
-					$(".modal-body1").html(data);
-				},
-				error : function() {
-					alert('사용자 정보를 불러오는데 실패하였습니다.');
-				}
-			});
-		}
+		
 	</script>
 </body>
 </html>
