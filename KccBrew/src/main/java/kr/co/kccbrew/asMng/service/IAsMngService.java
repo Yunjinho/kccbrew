@@ -81,11 +81,17 @@ public interface IAsMngService {
 	 * @param locationCd 지역 코드
 	 * @return
 	 */
-	public List<AsMngVo> selectMechList(@Param("date")String date,@Param("locationCd")String locationCd);
+	public List<AsMngVo> selectMechList(String date,String locationCd);
 	
 	/**
 	 * 기사 배정
 	 * @param asMngVo
 	 */
 	public void insertAsAssign(AsMngVo asMngVo);
+	
+	/**
+	 * 반려 등록
+	 */
+	public void updateInfoReject(String seq,String content);
+	public void updateAssignReject(String seq,String content);
 }

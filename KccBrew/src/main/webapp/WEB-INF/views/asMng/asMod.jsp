@@ -28,7 +28,6 @@
 <!-- 카카오 api -->
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=8ebfc94bdd15e21c9b4d64159a004634"></script>
 <script>
-
 window.onload=function(){
 	var lat=(${asDetailInfo.latitude})
 	var log=(${asDetailInfo.longitude})
@@ -272,19 +271,6 @@ window.onload=function(){
 	</div>
 	<div class="modal">
 		<div class="modal-content">
-			<form class="reject-form" method="post" action="/reject">
-				<h2 class="heading">반려 내용 작성</h2>
-				<hr>
-				<input type="hidden" name="asInfoSeq" value="${asDetailInfo.asInfoSeq}">
-				<textarea name="rejectRs"></textarea>
-				<c:if test="${sessionScope.userTypeCd =='03'}">
-					<input type="hidden" name="asAssignSeq" value="${asDetailInfo.asAssignSeq}">
-				</c:if>
-				<div>
-					<button type="submit" class="form-btn">반려</button>
-					<div class="form-btn" onclick="cancelModal()">취소</div>
-				</div>
-			</form>
 		</div>
 	</div>	
 </body>

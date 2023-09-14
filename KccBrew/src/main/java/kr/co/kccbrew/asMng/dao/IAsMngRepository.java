@@ -108,4 +108,10 @@ public interface IAsMngRepository {
 	 * @param asMngVo
 	 */
 	public void updateAsInfoStatus(AsMngVo asMngVo);
+	
+	/**
+	 * 반려 등록
+	 */
+	public void updateInfoReject(@Param("seq")String seq,@Param("content")String content);
+	public void updateAssignReject(@Param("seq")String seq,@Param("content")String content);
 }

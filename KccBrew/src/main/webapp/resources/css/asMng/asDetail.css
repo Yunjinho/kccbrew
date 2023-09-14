@@ -97,6 +97,7 @@ select[name=machineCd]{
 }
 .form-btn:hover{
 	background-color: #E6E6E6;
+	cursor: pointer;
 }
 .form-btn:visited{
 	color:white !important;		
@@ -144,4 +145,12 @@ select[name=machineCd]{
 	border-radius: 20px;
 	display: flex;
 	flex-direction: column;
+}
+.modal-content>form>div{
+	margin:30px;
+	display: flex;
+}
+.modal-content>form>textarea {
+	resize: none;
+	height:300px;
 }

@@ -10,19 +10,6 @@
 <head>
 <link rel="stylesheet" href="/resources/css/store/store.css" />
 
-<!-- font -->
-<!-- notoSans -->
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link
-	href="https://fonts.googleapis.com/css2?family=Noto+Sans&display=swap"
-	rel="stylesheet">
-<!-- notoSans Kr -->
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link
-	href="https://fonts.googleapis.com/css2?family=Noto+Sans&family=Noto+Sans+KR&display=swap"
-	rel="stylesheet">
 <meta charset="UTF-8">
 
 <title>파일리스트</title>

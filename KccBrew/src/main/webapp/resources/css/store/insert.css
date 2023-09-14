@@ -1,11 +1,7 @@
 @charset "UTF-8";
 
-#body {
-	background-color: #EBF2FC;
-}
-
 body {
-	background-color: #EBF2FC;
+	background-color: #eef4ff;
 }
 
 .notice {
@@ -13,7 +9,7 @@ body {
 	width: 700px;
 	margin: auto;
 	margin-top: 30px;
-	background-color: white;
+	background-color: #ffffff;
 }
 
 .category {
@@ -36,23 +32,24 @@ body {
 	width: 97%;
 	margin : 0 auto;
 	margin-top: 20px;
+	margin-bottom: 30px;
 }
 
-th {
-	background-color
-	 :  #E0E0E0;
-	 width: 230px;
+.text-center th {
+	background-color: #E0E0E0;
+	width: 230px;
 }
 .savecancle{
 	text-align: center;
+	padding:0 10px;
 }
-.button{
+.save-btn {
+	margin-bottom: 10px;
+}
+.save-btn .cancel-btn{
 	display :inline-block;
-	margin-right :8px;
-	margin-left :8px;
-	margin-top: 10px;
 }
-td, th {
+.text-center td, .text-center th {
     padding: 0.75rem;
     vertical-align: center;
     border: 1px solid #dee2e6;

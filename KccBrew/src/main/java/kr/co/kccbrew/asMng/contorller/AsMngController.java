@@ -199,6 +199,26 @@ public class AsMngController {
 		return "redirect:/as-detail?asInfoSeq="+asMngVo.getAsInfoSeq();
 	}
 	
+	/**
+	 * 반려 신청
+	 */
+	@RequestMapping(value="/reject",method=RequestMethod.POST)
+	public String reject(String asInfoSeq,@RequestParam(defaultValue = "0")String asAssignSeq,String rejectRs,HttpServletRequest request) {
+		HttpSession session=request.getSession();
+		String userTypeCd=(String)session.getAttribute("userTypeCd");
+		System.out.println(asInfoSeq);
+		System.out.println(asAssignSeq);
+		System.out.println(rejectRs);
+		if(userTypeCd.equals("01")) {
+			asMngService.updateInfoReject(asInfoSeq, rejectRs);
+		}else if(userTypeCd.equals("03")){
+			asMngService.updateAssignReject(asAssignSeq, rejectRs);
+		}
+		
+		
+		return "redirect:/as-detail?asInfoSeq="+asInfoSeq;
+	}
+	
 	
 	
 	/** 점포 검색 */
@@ -232,5 +252,7 @@ public class AsMngController {
 		JSONObject result=new JSONObject(mechaList);
 		return result;
 	}
+
+
 }
 

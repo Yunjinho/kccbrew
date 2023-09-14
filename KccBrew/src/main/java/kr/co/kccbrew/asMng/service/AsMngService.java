@@ -152,4 +152,16 @@ public class AsMngService implements IAsMngService{
 		asRepository.updateAsInfoStatus(asMngVo);
 	}
 
+	@Override
+	public void updateInfoReject(String seq, String content) {
+		asRepository.updateInfoReject(seq, content);
+	}
+
+	@Override
+	public void updateAssignReject(String seq, String content) {
+		asRepository.updateAssignReject(seq, content);
+		
+	}
+
+
 }
