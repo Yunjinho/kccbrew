@@ -268,8 +268,15 @@
 
 						<div id="region-main">
 							<div role="main">
-								<span id="maincontent"></span>
 								<div class="user-past">
+
+									<div class="tabNav">
+										<ul>
+											<li class="active"><a href=""><span>휴가사용현황</span></a></li>
+											<li class="last"><a href=""><span>AS배정현황</span></a></li>
+											<li class="last"><a href=""><span>과거 정보목록</span></a></li>
+										</ul>
+									</div>
 
 									<!-- ********** 세은 로그 관련 내용 시작 ********** -->
 									<div id="content">
