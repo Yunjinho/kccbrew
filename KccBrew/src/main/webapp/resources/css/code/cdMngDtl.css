@@ -1,3 +1,4 @@
+cdmng
 @charset "UTF-8";
 
 /* 바디 */
@@ -13028,7 +13029,7 @@ span.editinstructions {
 
 .format-ubdays.editing .choosercontainer #chooseform
 .add_activity {
-	margin: 0 25px 10px 25px;
+	margin: 0 25px ;
 	list-style: none
 }
 
@@ -23348,9 +23349,6 @@ h6, .h6 {
 	font-size: 12px
 }
 
-p {
-	margin: 0 0 10px
-}
 
 .lead {
 	margin-bottom: 20px;
@@ -38281,10 +38279,7 @@ img#persona_signin {
 	float: right
 }
 
-ul, ol {
-	padding: 0;
-	margin: 0 0 10px 25px
-}
+
 
 .container .moodleSkin
 img.mceIcon {
@@ -40374,32 +40369,7 @@ input {
 	width: 100%
 }
 
-button, input.form-submit, input[type="button"], input[type="submit"],
-	input[type="reset"] {
-	display: inline-block;
-	padding: 6px 12px;
-	margin: 0 0 3px 5px;
-	margin-bottom: 0;
-	font-size: 14px;
-	font-weight: normal;
-	line-height: 1.42857143;
-	color: #333;
-	text-align: center;
-	white-space: nowrap;
-	vertical-align: middle;
-	-ms-touch-action: manipulation;
-	touch-action: manipulation;
-	cursor: pointer;
-	-webkit-user-select: none;
-	-moz-user-select: none;
-	-ms-user-select: none;
-	user-select: none;
-	background-color: #fff;
-	background-image: none;
-	border: 1px solid transparent;
-	border-color: #ccc;
-	border-radius: 4px
-}
+
 
 button:focus, input.form-submit:focus, input[type="button"]:focus, input[type="submit"]:focus,
 	input[type="reset"]:focus, button:active:focus, input.form-submit:active:focus,
@@ -43983,9 +43953,6 @@ h6, .h6 {
 	font-size: 12px
 }
 
-p {
-	margin: 0 0 10px
-}
 
 .lead {
 	margin-bottom: 20px;
@@ -50238,12 +50205,12 @@ input {
 }
 
 h1, h2, h3, h4, h5, h6, p, ul, ol, dl, input, textarea, pre {
-	font-family: 'NanumGothic', "나눔고딕", NanumGothic, '돋움', dotum, Helvetica,
+	font-family: 'Noto Sans' ,'NanumGothic', "나눔고딕", NanumGothic, '돋움', dotum, Helvetica,
 		sans-serif, AppleGothic
 }
 
 select, input, button, textarea {
-	font-family: 'NanumGothic', "나눔고딕", NanumGothic, '돋움', dotum, Helvetica,
+	font-family: 'Noto Sans', 'NanumGothic', "나눔고딕", NanumGothic, '돋움', dotum, Helvetica,
 		sans-serif, AppleGothic;
 }
 
@@ -59381,3 +59348,6 @@ h2.eventtitle {
 .updatecancle{
 	margin-top : 20px;
 }
+
+
+

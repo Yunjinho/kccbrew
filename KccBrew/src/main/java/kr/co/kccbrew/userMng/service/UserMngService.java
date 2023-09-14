@@ -38,20 +38,17 @@ public class UserMngService implements IUserMngService {
 	}
 	
 	  @Override
-	    public void updateUserApproval(String userId, String approveYn) {
-	        // userId를 사용하여 사용자 정보를 데이터베이스에서 가져온다고 가정
-	        UserMngVo user = userMngRepository.findByUserId(userId);
-
-	        if (user != null) {
-	            // 사용자 정보가 존재하면 승인 상태를 업데이트한다.
-	            user.setApproveYn(approveYn); // 예: "Y" 또는 "N"을 설정
+	    public void updateUserApproval(UserMngVo user) {
+		  System.out.println(user);
 	            userMngRepository.save(user); // 변경사항을 데이터베이스에 저장
-	        } else {
-	            // 사용자 정보가 존재하지 않을 경우 예외 처리 (적절한 처리 방법을 선택하세요)
-	            throw null;
-	        }
+	      
 	    }
-	  
+	  @Override
+	    public void userMod(UserMngVo user) {
+		System.out.println(user);
+	    userMngRepository.userMod(user); // 변경사항을 데이터베이스에 저장
+	      
+	    }
 	  @Override
 	  public int getNewCount() {
 		  return userMngRepository.getNewCount();

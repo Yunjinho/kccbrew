@@ -16,7 +16,7 @@
         }
     </style>
 </head>
-<body>
+<body style="overflow:scroll;">
     <section id="notice" class="notice">
         <div class="container">
             <section class="category">
