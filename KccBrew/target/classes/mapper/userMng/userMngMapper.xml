@@ -178,8 +178,24 @@ WHERE ROW_NUM BETWEEN #{firstRowNum} AND #{lastRowNum}
 	</select>
 	
 	<update id="save" parameterType="kr.co.kccbrew.userMng.model.UserMngVo">
-		update users
-		set approve_yn = #{approveYn}
+		update 
+			users
+		set 
+			approve_yn = #{approveYn},
+			approve_admin = #{approveAdmin},
+			mod_dttm = SYSDATE
+		where user_id = #{userId}
+	
+	</update>
+	
+	<update id="userMod" parameterType="kr.co.kccbrew.userMng.model.UserMngVo">
+		update 
+			users
+		set 
+			use_yn = #{useYn},
+			approve_yn = #{approveYn},
+			approve_admin = #{approveAdmin},
+			mod_dttm = SYSDATE
 		where user_id = #{userId}
 	
 	</update>
@@ -192,7 +208,9 @@ WHERE ROW_NUM BETWEEN #{firstRowNum} AND #{lastRowNum}
 		c.grp_cd_dtl_nm		AS "locationNm",
 		a.user_type_cd		AS "userTypeCd",
 		d.store_nm			AS "storeNm",
-		d.store_telno		AS "storeTelNo"
+		d.store_telno		AS "storeTelNo",
+		e.file_server_nm	AS  "imgNm",
+		e.storage_location	AS	"imgUrl"
 	from 
 		users a, (
 			select 
@@ -217,11 +235,25 @@ WHERE ROW_NUM BETWEEN #{firstRowNum} AND #{lastRowNum}
 				store a, store_user_map b 
         	where 
     			b.store_seq = a.store_seq(+)
-    			) d
+    			) d,
+    			(
+    		select 
+    		    b.file_server_nm, c.user_id, b.storage_location
+    		from 
+    			file_info a, file_detail_info b, users c
+    		where 
+    			c.file_seq = a.file_seq
+    		and 
+    			b.file_seq=c.file_seq
+    		and 
+    			a.grp_cd_dtl_id='01'
+    			  ) e
+    
 	where 
 		a.user_id = #{userId}
 	and a.eqpmn_cd = b.grp_cd_dtl_id(+)
 	and a.location_cd = c.grp_cd_dtl_id(+)
 	and a.user_id = d.user_id(+)
+	and a.user_id = e.user_id(+)
 	</select>
 </mapper>

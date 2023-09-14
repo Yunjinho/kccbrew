@@ -14,6 +14,7 @@ public interface IUserMngRepository {
 	 UserMngVo findByUserId(String userId);
 	 UserMngVo findByUserInfo(@Param("userId")String userId, @Param("userTypeCd") UserMngVo userTypeCd);
 	 void save(UserMngVo user);
+	 void userMod(UserMngVo user);
 	 int getNewCount();
 
 }

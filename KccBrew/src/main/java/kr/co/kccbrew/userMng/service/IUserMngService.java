@@ -8,7 +8,8 @@ public interface IUserMngService {
 	List<UserMngVo> userList(UserMngVo user, int currentPage);
 	int getUserCount(UserMngVo user);
 	List<UserMngVo> newList();
-	void updateUserApproval(String userId, String approveYn);
+	void updateUserApproval(UserMngVo user);
+	void userMod(UserMngVo user);
 	 int getNewCount();
 	 UserMngVo findByUserId(String userId);
 	 UserMngVo findByUserInfo(String userId);

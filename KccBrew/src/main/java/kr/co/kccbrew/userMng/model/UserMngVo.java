@@ -31,6 +31,8 @@ public class UserMngVo {
 	String userType;
 	String storeNm;
 	String storeTelNo;
+	String imgNm;
+	String imgUrl;
 	
 	private Integer rowNum;
 	private Integer startYr;
