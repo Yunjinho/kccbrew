@@ -194,7 +194,6 @@ public class AsMngController {
 		HttpSession session = request.getSession();
 		asMngVo.setUserId((String) session.getAttribute("userId"));
 		asMngVo.setAsStatusCd("03");
-		System.out.println(asMngVo);
 		asMngService.insertAsAssign(asMngVo);
 		return "redirect:/as-detail?asInfoSeq="+asMngVo.getAsInfoSeq();
 	}
@@ -206,19 +205,29 @@ public class AsMngController {
 	public String reject(String asInfoSeq,@RequestParam(defaultValue = "0")String asAssignSeq,String rejectRs,HttpServletRequest request) {
 		HttpSession session=request.getSession();
 		String userTypeCd=(String)session.getAttribute("userTypeCd");
-		System.out.println(asInfoSeq);
-		System.out.println(asAssignSeq);
-		System.out.println(rejectRs);
 		if(userTypeCd.equals("01")) {
 			asMngService.updateInfoReject(asInfoSeq, rejectRs);
 		}else if(userTypeCd.equals("03")){
 			asMngService.updateAssignReject(asAssignSeq, rejectRs);
 		}
-		
-		
 		return "redirect:/as-detail?asInfoSeq="+asInfoSeq;
 	}
 	
+	/**
+	 * 기사가 신청한 반려건 처리
+	 */
+	@ResponseBody
+	@RequestMapping(value="/reject-confirm",method=RequestMethod.POST)
+	public String rejectConfirm(String mechanicId,String visitDttm,String asAssignSeq,String asInfoSeq,String flag,HttpServletRequest request) {
+		AsMngVo asMngVo=new AsMngVo();
+		HttpSession session=request.getSession();
+		asMngVo.setUserId((String)session.getAttribute("userId"));
+		asMngVo.setMechanicId(mechanicId);
+		asMngVo.setVisitDttm(visitDttm);
+		asMngVo.setAsAssignSeq(asAssignSeq);
+		asMngService.updateRejectConfirm(asMngVo,flag);
+		return "";
+	}
 	
 	
 	/** 점포 검색 */

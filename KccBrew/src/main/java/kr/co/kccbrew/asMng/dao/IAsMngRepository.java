@@ -114,4 +114,9 @@ public interface IAsMngRepository {
 	 */
 	public void updateInfoReject(@Param("seq")String seq,@Param("content")String content);
 	public void updateAssignReject(@Param("seq")String seq,@Param("content")String content);
+	
+	/**
+	 * 기사의 배정 반려건에 대한 처리
+	 */
+	public void updateRejectConfirm(Map<String, Object> map);
 }

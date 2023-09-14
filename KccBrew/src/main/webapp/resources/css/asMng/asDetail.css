@@ -3,6 +3,7 @@
 /* 바디 */
 body {
 	font-family: 'Noto Sans', 'Noto Sans KR', sans-serif !important;
+	font-size: 1.3em !important;
 }
 
 /* 헤더 */
@@ -40,12 +41,31 @@ select[name=machineCd]{
     width: 100%;
     max-width: initial;
 }
+#receipt-form>div{
+	display:flex;
+	margin-bottom:10px
+}
+#receipt-form>div>div{
+	flex:1;
+}
 #content{
 	background-color: #FFFFFF;
     padding: 3px 100px;
 }
 #content>div{
-	margin:9px 0px;
+	margin:40px 0px;
+}
+.tag-image{
+	width:25px;
+}
+.flex-label-div{
+	justify-content: space-between;
+}
+.flex-label-div>div{
+	flex:0.5
+}
+.flex-label-div>div>h6{
+	margin:0;
 }
 .form-btn {
 	display: flex;
@@ -82,6 +102,10 @@ select[name=machineCd]{
 	border: 0px;
 	border-bottom: 1px solid #ccc;
 	text-align: center;
+	vertical-align: middle;
+}
+#search-box th{
+	font-weight: bold;
 }
 .selectMcha{
 	width:100%;
@@ -117,4 +141,10 @@ select[name=machineCd]{
 .modal-content>form>textarea {
 	resize: none;
 	height:300px;
+}
+a{
+	text-decoration: none !important;
+}
+.content-textarea{
+	height:100px;
 }

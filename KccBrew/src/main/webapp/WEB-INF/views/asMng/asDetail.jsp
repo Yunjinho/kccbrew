@@ -28,7 +28,7 @@
 
 window.onload=function(){
 	var lat=(${asDetailInfo.latitude}) 
-	var log=(${asDetailInfo.longitude})
+	var log=(${asDetailInfo.longitude}) 
 	var mapContainer = document.getElementById("map"), // 지도를 표시할 div 
     mapOption = { 
         center: new kakao.maps.LatLng(lat, log), // 지도의 중심좌표
@@ -74,7 +74,6 @@ window.onload=function(){
 								<div id="content">
 									<div>
 										<h2 class="heading">AS 접수 번호 : ${asDetailInfo.asInfoSeq} </h2>
-											<hr>
 										<table id="search-box">
 											<tr>
 											<th> 접수 사진</th>
@@ -164,13 +163,13 @@ window.onload=function(){
 											<tr>
 												<th>접수 내용</th>
 												<td colspan="7">
-													<textarea readonly>${asDetailInfo.asContent}</textarea>
+													<textarea class="content-textarea"  readonly>${asDetailInfo.asContent}</textarea>
 												</td>
 											</tr>
 											<tr>
 												<th>처리 내용</th>
 												<td colspan="7">
-													<textarea readonly>${asDetailInfo.resultDtl}</textarea>
+													<textarea class="content-textarea"  readonly>${asDetailInfo.resultDtl}</textarea>
 												</td>
 											</tr>
 											<tr>
@@ -211,20 +210,49 @@ window.onload=function(){
 											</c:if>
 										</table>
 								  	</div>
-								  	<c:if test="${asDetailInfo.asStatusCd eq '01' and sessionScope.userTypeCd eq '01'}">
+								  	<c:if test="${(asDetailInfo.asStatusCd eq '01' and sessionScope.userTypeCd eq '01' and asDetailInfo.asAssignSeq == null) or asDetailInfo.reassign eq'Y'}">
 									  	<div>
 									  		<h2 class="heading">기사 배정</h2>
-											<hr>
 											<form action="/as-assign" method="post">
 												<table id="search-box">
-													<tr>
-														<td colspan="9"></td>
-														<td > 
-															<div>
-																<button type="submit" class="form-btn" >기사 배정</button>
-															</div>
-														</td>
-													</tr>
+													<c:choose>
+														<c:when test="${asDetailInfo.reassign eq'N'}">
+															<tr>
+																<td colspan="9"></td>
+																<td > 
+																	<div>
+																		<button type="submit" class="form-btn" >기사 배정</button>
+																	</div>
+																</td>
+															</tr>
+														</c:when>
+														<c:otherwise>
+															<tr>
+																<td colspan="8"></td>
+																<td > 
+																	<div>
+																		<a type="submit" class="form-btn" onclick="rejectConfirm('Y')">승인</a>
+																	</div>
+																</td>
+																<td > 
+																	<div>
+																		<a type="submit" class="form-btn" onclick="rejectConfirm('N')">거절</a>
+																	</div>
+																</td>
+															</tr>
+															<tr>
+																<th>반려 사유</th>
+																<td colspan="9"> 
+																	<div>
+																		<textarea class="content-textarea" readonly>${asDetailInfo.rejectContentMcha}</textarea>
+																		<input type="hidden" name="asAssignSeq" value="${asDetailInfo.asAssignSeq}">
+																		<input type="hidden" name="asInfoSeq" value="${asDetailInfo.asInfoSeq}">
+																	</div>
+																</td>
+															</tr>
+														
+														</c:otherwise>
+													</c:choose>
 													<tr>
 														<th>지역(대분류)</th>
 														<td>	

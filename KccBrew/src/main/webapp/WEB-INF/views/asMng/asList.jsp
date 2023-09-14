@@ -455,6 +455,7 @@
 													<th>AS 상태</th>
 													<th>점포 명</th>
 													<th>점포 주소</th>
+													<c:if test="${sessionScope.userTypeCd != '02'}"><th>기사 재배정 신청</th></c:if>
 													<th>상세 조회</th>
 												</tr>
 											</thead>
@@ -466,6 +467,7 @@
 														<td><c:out value="${list.asStatusNm}" /></td>
 														<td><c:out value="${list.storeNm}" /></td>
 														<td><c:out value="${list.storeAddr}" /></td>
+														<c:if test="${sessionScope.userTypeCd != '02'}"><td><c:out value="${list.reassign}"></c:out></td></c:if>
 														<td><a href="#" onclick="selectAsDetail(${list.asInfoSeq})"class="form-btn">조회</a></td>
 													</tr>
 												</c:forEach>

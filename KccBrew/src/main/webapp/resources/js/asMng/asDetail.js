@@ -83,6 +83,25 @@ function cancelModal(){
 	$(".modal").css("display","none");
 }
 
-function reject(){
+function rejectConfirm(flag){
+	var visitDttm=$("input[name=visitDttm]").val();
+	var mechanicId=$("select[name=mechanicId] option:selected").val();
+	var asAssignSeq=$("input[name=asAssignSeq]").val();
+	var asInfoSeq=$("input[name=asInfoSeq]").val();
 	
+	$.ajax({
+		type : "POST",           // 타입 (get, post, put 등등)
+	    url : "/reject-confirm",           // 요청할 서버url
+	    dataType : "text",       // 데이터 타입 (html, xml, json, text 등등)
+	    data : {
+	    	'mechanicId': mechanicId,
+			'visitDttm' : visitDttm,
+			'asAssignSeq' : asAssignSeq,
+			'asInfoSeq'	: asInfoSeq,
+			'flag'		: flag
+		},
+	    success : function(data) { // 결과 성공 콜백함수
+	    	location.href="/as-detail?asInfoSeq="+asInfoSeq;
+	    }
+	})
 }

@@ -6,6 +6,7 @@ import java.nio.file.Paths;
 import java.sql.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -161,6 +162,15 @@ public class AsMngService implements IAsMngService{
 	public void updateAssignReject(String seq, String content) {
 		asRepository.updateAssignReject(seq, content);
 		
+	}
+
+	@Override
+	public void updateRejectConfirm(AsMngVo asMngVo,String flag) {
+		Map<String, Object> map=new HashMap<String, Object>();
+		map.put("asMngVo", asMngVo);
+		map.put("flag", (String)flag);
+		
+		asRepository.updateRejectConfirm(map);
 	}
 
 

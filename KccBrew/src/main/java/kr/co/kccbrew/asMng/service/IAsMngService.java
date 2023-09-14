@@ -94,4 +94,9 @@ public interface IAsMngService {
 	 */
 	public void updateInfoReject(String seq,String content);
 	public void updateAssignReject(String seq,String content);
+	
+	/**
+	 * 기사의 배정 반려건에 대한 처리
+	 */
+	public void updateRejectConfirm(AsMngVo asMngVo,String flag);
 }

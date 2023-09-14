@@ -11,8 +11,9 @@
 	            as_status_cd AS "asStatusCd",
 	            machine_cd_nm AS "machineCdNm",
 	            machine_cd AS "machineCd",
-	            mechanic_id AS "mechanicId"
-	FROM (SELECT a.as_info_seq ,s.store_nm, s.store_addr, a.reg_dttm , status.as_status_nm,status.as_status_cd,machine.machine_cd_nm,machine.machine_cd,ass.mechanic_id
+	            mechanic_id AS "mechanicId",
+	            reassign AS "reassign"
+	FROM (SELECT a.as_info_seq ,s.store_nm, s.store_addr, a.reg_dttm , status.as_status_nm,status.as_status_cd,machine.machine_cd_nm,machine.machine_cd,ass.mechanic_id,ass.reassign
 		 FROM as_information a 
  		 INNER JOIN store_user_map su ON a.store_mng_id=su.user_id
 		 INNER JOIN users u ON su.user_id=u.user_id 
@@ -302,18 +303,27 @@
 
 <update id="updateAsInfoStatus" parameterType="kr.co.kccbrew.asMng.model.AsMngVo">
 <![CDATA[
-	UPDATE as_information SET as_status=#{asStatusCd} WHERE as_info_seq=#{asInfoSeq}
+	UPDATE as_information SET as_status=#{asStatusCd},mod_user=#{userId},mod_dttm=SYSDATE WHERE as_info_seq=#{asInfoSeq}
 ]]>
 </update>
 <update id="updateInfoReject" parameterType="hashmap">
 <![CDATA[
-	UPDATE as_information SET reject_content_str=#{content},rewrite='Y' WHERE as_info_seq=#{seq}
+	UPDATE as_information SET reject_content_str=#{content},rewrite='Y',mod_user=#{userId},mod_dttm=SYSDATE WHERE as_info_seq=#{seq}
 ]]>
 </update>
 <update id="updateAssignReject" parameterType="hashmap">
 <![CDATA[
-	UPDATE as_assign SET reject_content_mcha=#{content},reassign='Y' WHERE as_assign_seq=#{seq}
+	UPDATE as_assign SET reject_content_mcha=#{content},reassign='Y',mod_user=#{userId},mod_dttm=SYSDATE WHERE as_assign_seq=#{seq}
 ]]>
 </update>
-
+<update id="updateRejectConfirm" parameterType="java.util.Map">
+	UPDATE as_assign 
+	<if test='flag == "Y"'>
+		SET visit_dttm=#{asMngVo.visitDttm}, mechanic_id=#{asMngVo.mechanicId},reassign='N',mod_user=#{asMngVo.userId},mod_dttm=SYSDATE
+	</if>
+	<if test='flag == "N"'>
+		SET reassign='N',mod_user=#{asMngVo.userId},mod_dttm=SYSDATE
+	</if>
+	WHERE as_assign_seq=#{asMngVo.asAssignSeq}
+</update>
 </mapper>
