@@ -21,6 +21,7 @@
 	<mybatis-spring:scan base-package="kr.co.kccbrew.sysMng.logMng.dao"/>
 	<mybatis-spring:scan base-package="kr.co.kccbrew.schdlMng.dao"/>
 	<mybatis-spring:scan base-package="kr.co.kccbrew.asMng.dao"/>
+	<mybatis-spring:scan base-package="kr.co.kccbrew.asMng.asMod"/>
 	<mybatis-spring:scan base-package="kr.co.kccbrew.userMng.dao"/>
 
 	<!-- DAO -->
@@ -35,6 +36,7 @@
 	<context:component-scan base-package="kr.co.kccbrew.sysMng.logMng.service"/>
 	<context:component-scan base-package="kr.co.kccbrew.schdlMng.service"/>
 	<context:component-scan base-package="kr.co.kccbrew.asMng.service"/>
+	<context:component-scan base-package="kr.co.kccbrew.asMng.asMod"/>
 	<context:component-scan base-package="kr.co.kccbrew.userMng.service"/>
 
 	<!--Service -->
