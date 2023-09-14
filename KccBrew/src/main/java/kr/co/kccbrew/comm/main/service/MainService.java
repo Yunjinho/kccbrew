@@ -76,4 +76,26 @@ public class MainService implements IMainService{
 		return asResultListById;
 	}
 
+	@Override
+	public List<MainPageVo> showAsAssignListbyMechaId(String userId) {
+		List<MainPageVo> asAssignListbyMechaId = mainRepository.showAsAssignListbyMechaId(userId);
+		return asAssignListbyMechaId;
+	}
+
+	@Override
+	public List<MainPageVo> showAsResultListbyMechaId(String userId) {
+		List<MainPageVo> asResultListbyMechaId = mainRepository.showAsResultListbyMechaId(userId);
+		return asResultListbyMechaId;
+	}
+
+	@Override
+	public List<MainPageVo> getMechaDataInRangeById(String userId, LocalDate startOfWeek, LocalDate endOfWeek) {
+		return mainRepository.getMechaDataInRangeById(userId, startOfWeek, endOfWeek);
+	}
+
+	@Override
+	public List<MainPageVo> getDataInRangeById(String userId, LocalDate startOfWeek, LocalDate endOfWeek) {
+		return mainRepository.getDataInRangeById(userId, startOfWeek, endOfWeek);
+	}
+
 }

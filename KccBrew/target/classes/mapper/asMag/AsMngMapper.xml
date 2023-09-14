@@ -10,16 +10,18 @@
 	            as_status_nm AS "asStatusNm",
 	            as_status_cd AS "asStatusCd",
 	            machine_cd_nm AS "machineCdNm",
-	            machine_cd AS "machineCd"
-	FROM (SELECT as_info_seq ,s.store_nm, s.store_addr, a.reg_dttm , status.as_status_nm,status.as_status_cd,machine.machine_cd_nm,machine.machine_cd
-			 FROM as_information a 
-			INNER JOIN store_user_map su ON a.store_mng_id=su.user_id
-			INNER JOIN users u ON su.user_id=u.user_id 
-			INNER JOIN store s ON s.store_seq=su.store_seq
-			INNER JOIN (select grp_cd_dtl_nm AS as_status_nm ,grp_cd_dtl_id AS as_status_cd from group_code_detail where grp_cd_id LIKE 'S') status ON status.as_status_cd=a.as_status
-			INNER JOIN (select grp_cd_dtl_nm AS machine_cd_nm ,grp_cd_dtl_id as machine_cd from group_code_detail where grp_cd_id like 'M') machine on machine.machine_cd=a.machine_cd
-			WHERE s.store_nm LIKE '%'||#{asVo.storeNm}||'%' AND
-				status.as_status_cd LIKE '%'||#{asVo.asStatusCd}||'%' AND
+	            machine_cd AS "machineCd",
+	            mechanic_id AS "mechanicId"
+	FROM (SELECT a.as_info_seq ,s.store_nm, s.store_addr, a.reg_dttm , status.as_status_nm,status.as_status_cd,machine.machine_cd_nm,machine.machine_cd,ass.mechanic_id
+		 FROM as_information a 
+ 		 INNER JOIN store_user_map su ON a.store_mng_id=su.user_id
+		 INNER JOIN users u ON su.user_id=u.user_id 
+		 INNER JOIN store s ON s.store_seq=su.store_seq
+		 INNER JOIN (SELECT grp_cd_dtl_nm AS as_status_nm ,grp_cd_dtl_id AS as_status_cd from group_code_detail WHERE grp_cd_id LIKE 'S') status ON status.as_status_cd=a.as_status
+		 INNER JOIN (SELECT grp_cd_dtl_nm AS machine_cd_nm ,grp_cd_dtl_id as machine_cd from group_code_detail WHERE grp_cd_id like 'M') machine on machine.machine_cd=a.machine_cd
+         LEFT OUTER JOIN as_assign ass ON a.as_info_seq=ass.as_info_seq
+	 	 WHERE s.store_nm LIKE '%'||#{asVo.storeNm}||'%' AND
+	 			status.as_status_cd LIKE '%'||#{asVo.asStatusCd}||'%' AND
 		 		machine.machine_cd LIKE '%'||#{asVo.machineCd}||'%' AND 
 		 		s.store_addr LIKE '%'||#{asVo.storeAddr}||'%' 
 	 		<if test="asVo.asInfoSeq != ''">AND a.as_info_seq = #{asVo.asInfoSeq} </if>
@@ -50,9 +52,14 @@
 					AND EXTRACT(MONTH FROM a.mod_dttm) <= #{asVo.endMn}
 				]]>
 			</if>
-			<if test="userTypeCd=='02'">
-				AND a.store_mng_id=#{userId}
-			</if>
+	 		<choose>
+				<when test="asVo.userTypeCd == '02'">
+					AND s.store_seq=(SELECT s.store_seq FROM store s INNER JOIN store_user_map su ON s.store_seq=su.store_seq WHERE su.user_id=#{asVo.userId})
+				</when>
+				<when test="asVo.userTypeCd == '03'">
+					AND ass.mechanic_id=#{asVo.userId}
+				</when>
+			</choose>
 			ORDER BY a.reg_dttm DESC
 			)
 	WHERE ROWNUM BETWEEN #{start} AND #{end}
@@ -66,12 +73,12 @@
 	INNER JOIN store s ON s.store_seq=su.store_seq
 	INNER JOIN (select grp_cd_dtl_nm AS as_status ,grp_cd_dtl_id from group_code_detail where grp_cd_id LIKE 'S') status ON status.grp_cd_dtl_id=a.as_status
 	INNER JOIN (select grp_cd_dtl_nm AS machine_cd ,grp_cd_dtl_id from group_code_detail where grp_cd_id like 'M') machine on machine.grp_cd_dtl_id=a.machine_cd
+	LEFT OUTER JOIN as_assign ass ON a.as_info_seq=ass.as_info_seq
 	WHERE s.store_nm LIKE '%'||#{storeNm}||'%' AND
 	 	status.as_status LIKE '%'||#{asStatusCd}||'%' AND
 	 	machine.machine_cd LIKE '%'||#{machineCd}||'%' AND 
 	 	s.store_addr LIKE '%'||#{storeAddr}||'%'
 		<choose><when test="asInfoSeq != ''">AND a.as_info_seq = #{asInfoSeq} </when></choose>
-		<choose><when test="userId != ''">AND (u.user_id =#{userId} AND u.user_type_cd='03')</when></choose>
 		<choose>
 			<when test="startYr != ''">
 				<![CDATA[
@@ -86,7 +93,6 @@
 		</choose>
 		<choose>
 			<when test="startMn != ''">
-				
 				<![CDATA[
 					AND EXTRACT(MONTH FROM a.mod_dttm) >= #{startMn}
 				]]>
@@ -106,6 +112,12 @@
 				]]>
 			</when>
 		</choose>
+		<if test="userTypeCd == '02'">
+			AND s.store_seq=(SELECT s.store_seq FROM store s INNER JOIN store_user_map su ON s.store_seq=su.store_seq WHERE su.user_id=#{userId})
+		</if>
+		<if test='userTypeCd == "03"'>
+			AND ass.mechanic_id=#{userId}
+		</if>
 </select>
 <!-- 장비 코드 조회 -->
 <select id="selectMachineCd" resultType="kr.co.kccbrew.asMng.model.AsMngVo">

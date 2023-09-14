@@ -14,19 +14,6 @@
 <link rel="stylesheet" href="/resources/css/log/content-template.css" />
 <link rel="stylesheet" href="/resources/css/schdl/mycalendar.css" />
 
-<!-- font -->
-<!-- notoSans -->
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link
-	href="https://fonts.googleapis.com/css2?family=Noto+Sans&display=swap"
-	rel="stylesheet">
-<!-- notoSans Kr -->
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link
-	href="https://fonts.googleapis.com/css2?family=Noto+Sans&family=Noto+Sans+KR&display=swap"
-	rel="stylesheet">
 
 <!-- 캘린더 -->
 <meta charset='utf-8' />

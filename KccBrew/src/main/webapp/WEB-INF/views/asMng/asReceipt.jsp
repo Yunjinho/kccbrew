@@ -13,17 +13,9 @@
 <!-- css -->
 <link rel="stylesheet" href="/resources/css/asMng/asReceipt.css" />
 <link rel="stylesheet" href="/resources/css/asMng/content-template.css" />
-<!-- font -->
-<!-- notoSans -->
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans&display=swap" rel="stylesheet">
-<!-- notoSans Kr -->
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans&family=Noto+Sans+KR&display=swap" rel="stylesheet">
+
+<!-- js -->
 <script src="<c:url value="resources/js/asMng/asReceipt.js"/>"></script>
-<script src="http://code.jquery.com/jquery-latest.js"></script> 
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>

@@ -17,9 +17,13 @@ public interface IMainRepository {
 	List<MainPageVo> showWaitingMemberList(); // 회원 승인 대기 리스트
 	List<MainPageVo> showAsResultList();      // a/s 결과 리스트
 	
-	List<MainPageVo> showAsAssiginListbyId(String userId);
-	List<MainPageVo> showAsInfoListbyId(String userId);
-	List<MainPageVo> showAsResultListbyId(String userId);
-	List<MainPageVo> getDataInRange(@Param("startOfWeek") LocalDate startOfWeek, @Param("endOfWeek") LocalDate endOfWeek);
+	List<MainPageVo> showAsAssiginListbyId(String userId);   //특정 아이디의 배정 리스트
+	List<MainPageVo> showAsInfoListbyId(String userId);		//특정 아이디의 접수 리스트
+	List<MainPageVo> showAsResultListbyId(String userId);	//특정 아이디의 결과 리스트
+	List<MainPageVo> showAsAssignListbyMechaId(String userId); //수리기사의 배정 리스트
+	List<MainPageVo> showAsResultListbyMechaId(String userId); //수리기사의 결과 리스트
+	List<MainPageVo> getDataInRange(@Param("startOfWeek") LocalDate startOfWeek, @Param("endOfWeek") LocalDate endOfWeek); //전체 a/s 일정 날짜 별로 구분해서 보기
+	List<MainPageVo> getMechaDataInRangeById(@Param("userId") String userId, @Param("startOfWeek") LocalDate startOfWeek, @Param("endOfWeek") LocalDate endOfWeek); //특정 수리기사의 a/s 일정 날짜 별로 보기
+	List<MainPageVo> getDataInRangeById(@Param("userId") String userId, @Param("startOfWeek") LocalDate startOfWeek, @Param("endOfWeek") LocalDate endOfWeek); //특정 사용자의 a/s 일정 날짜 별로 보기
     String getUserName(String userId);
 }

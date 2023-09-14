@@ -181,22 +181,32 @@ window.onload=function(){
 													<div id="map" style="width:100%;height:350px;"></div>
 												</td>
 											</tr>
-											<c:if test="${sessionScope.userTypeCd eq '01'}">
+											<c:if test="${sessionScope.userTypeCd eq '01' and asDetailInfo.asStatusCd eq '01'}">
 												<tr>
 													<td colspan="7" style=" border-bottom:none;"></td>
 													<td style=" border-bottom:none;">
 														<div>
-															<a href="#" class="form-btn">접수 반려</a>
+															<a href="#" class="form-btn" style=" margin: 0; float: right;">접수 반려</a>
 														</div>
 													</td>
 												</tr>
 											</c:if>
-											<c:if test="${sessionScope.userTypeCd eq '02'}">
+											<c:if test="${sessionScope.userTypeCd eq '02' and asDetailInfo.asStatusCd eq '01'}">
 												<tr>
 													<td colspan="8" style=" border-bottom:none;"></td>
 													<td style=" border-bottom:none;">
 														<div>
-															<a href="#" class="form-btn">수정</a>
+															<a href="#" class="form-btn" style=" margin: 0; float: right;">수정</a>
+														</div>
+													</td>
+												</tr>
+											</c:if>
+											<c:if test="${sessionScope.userTypeCd eq '03'and asDetailInfo.asStatusCd eq '03' }">
+												<tr>
+													<td colspan="7" style=" border-bottom:none;"></td>
+													<td style=" border-bottom:none;">
+														<div>
+															<button onclick="rejectAs(${sessionScope.userTypeCd})" class="form-btn" style=" margin: 0; float: right;">배정 반려</button>
 														</div>
 													</td>
 												</tr>
@@ -257,6 +267,10 @@ window.onload=function(){
 					</div>
 				</div>
 			</div>
+		</div>
+	</div>
+	<div class="modal">
+		<div class="modal-content">
 		</div>
 	</div>	
 </body>
