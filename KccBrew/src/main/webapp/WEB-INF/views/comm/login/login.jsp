@@ -8,6 +8,7 @@
 <title>Insert title here</title>
 <script src="<c:url value="resources/js/comm/login.js"/>" charset="UTF-8"></script>
 <link href="<c:url value="resources/css/comm/login.css"/>" rel="stylesheet" type="text/css">
+<link href="<c:url value="resources/css/comm/common.css"/>" rel="stylesheet" type="text/css">
 
 </head>
 <body class="login" onpageshow="if(event.persisted) noBack();" onunload="" marginwidth="0" marginheight="0">

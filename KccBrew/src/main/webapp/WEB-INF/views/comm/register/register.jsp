@@ -7,6 +7,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <link rel="stylesheet" href="resources/css/comm/register.css">
+<link rel="stylesheet" href="resources/css/comm/common.css">
 <script src="<c:url value="resources/js/comm/register.js"/>"></script>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 </head>
