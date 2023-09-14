@@ -22,14 +22,14 @@
 				</a>
 			</div>
 			<nav class="nav-bar">
-				<div class="navbar-brand">
+				<div class="nav-bar-brand">
 					<c:url var="toMain" value="/adminMain" />
 					<a href="${toMain}">
 						<img alt="logo"  src="${path}/resources/img/logo.png">
 					</a>
 				</div>
 				<div class="nav-box">
-					<ul class="nav-pills">
+					<ul class="nav-list">
 						<li class="nav-item">
 							<a class="nav-link" href="#" >A/S 관리</a>
 							<ul class="comm-nav-dropdown">
@@ -89,14 +89,14 @@
 				</a>
 			</div>
 			<nav class="nav-bar">
-				<div class="navbar-brand">
+				<div class="nav-bar-brand">
 					<c:url var="toMain" value="/managerMain" />
 					<a href="${toMain}">
 						<img alt="logo"  src="${path}/resources/img/logo.png">
 					</a>
 				</div>
 				<div class="nav-box">
-					<ul class="nav-pills">
+					<ul class="nav-list">
 						<li class="nav-item">
 							<a class="nav-link" href="#" >A/S 관리</a>
 							<ul class="comm-nav-dropdown">
@@ -141,14 +141,14 @@
 				</a>
 			</div>
 			<nav class="nav-bar">
-				<div class="navbar-brand">
+				<div class="nav-bar-brand">
 					<c:url var="toMain" value="/mechanicMain" />
 					<a href="${toMain}">
 						<img alt="logo"  src="${path}/resources/img/logo.png">
 					</a>
 				</div>
 				<div class="nav-box">
-					<ul class="nav-pills">
+					<ul class="nav-list">
 						<li class="nav-item">
 							<a class="nav-link" href="#" >A/S 관리</a>
 							<ul class="comm-nav-dropdown">

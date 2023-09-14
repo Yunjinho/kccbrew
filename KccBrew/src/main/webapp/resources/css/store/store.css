@@ -23381,9 +23381,6 @@ h6, .h6 {
 	font-size: 12px
 }
 
-p {
-	margin: 0 0 10px
-}
 
 .lead {
 	margin-bottom: 20px;
@@ -29789,12 +29786,12 @@ input {
 }
 
 h1, h2, h3, h4, h5, h6, p, ul, ol, dl, input, textarea, pre {
-	font-family: 'NanumGothic', "나눔고딕", NanumGothic, '돋움', dotum, Helvetica,
+	font-family: 'Noto Sans', 'NanumGothic', "나눔고딕", NanumGothic, '돋움', dotum, Helvetica,
 		sans-serif, AppleGothic
 }
 
 select, input, button, textarea {
-	font-family: 'NanumGothic', "나눔고딕", NanumGothic, '돋움', dotum, Helvetica,
+	font-family: 'Noto Sans', 'NanumGothic', "나눔고딕", NanumGothic, '돋움', dotum, Helvetica,
 		sans-serif, AppleGothic;
 }
 
