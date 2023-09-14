@@ -1,7 +1,13 @@
 @charset "UTF-8";
-#container {
+#mainContainer {
 	background-color: #eef4ff;
+ 	display: flex;
+ 	flex-direction: column;
 }
-#contents {
+#mainHeader {
+}
+#mainContents {
 	margin-bottom: 50px;
+}
+#mainFooter {
 }

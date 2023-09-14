@@ -1,5 +1,6 @@
 package kr.co.kccbrew.comm.main.model;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 import lombok.Data;
@@ -22,4 +23,6 @@ public class MainPageVo {
 	String locationCode; 	//점포 지역 코드
 	String machineCode; 	//장비 코드
 	String userType; 		//사용자 구분 코드
+	LocalDate startOfWeek;	//A/S 날짜 구분
+	LocalDate endOfWeek;	//A/S 날짜 구분
 }

@@ -1,15 +1,15 @@
 @charset "UTF-8";
 @font-face {
-	font-family: 'notosans';
+	font-family: 'Noto Sans';
 	font-style: normal;
 	src: url("../../fonts/NotoSansKR-Regular.ttf")
 }
 
 .comm-nav{
-	font-family: 'notosans';
+	font-family: 'Noto Sans';
 	z-index:999;
 	font-size:1.2em;
-	height:90px;
+	height:100px;
 	line-height: 100px;
 	z-index:99999;
 	position: relative;
@@ -25,19 +25,31 @@
 	height: 30px;
 	line-height: 30px;
 	text-align: right;
-	background-color: #4336da;
+	background-color: #0D406E;
+	margin-top:0;
+}
+.top-bar p {
+	height:30px;
 }
 /****** 로그아웃 버튼 *******/
 .logout-btn {
+	height:30px;
+	top:0;
+	line-height:20px;
+	border-radius:0;
+	margin-top:0;
 	margin-left:10px;
 	padding: 5px 15px;
-	border: 1px solid #0000a0;
-	background-color: #0000a0;
+	border: 1px solid #00006f;
+	background-color: #00006f;
 	color:#ffffff;
 	cursor: pointer;
 }
 .logout-btn:hover {
 	text-decoration: underline;
+	background-color: #00006f;
+	border: 1px solid #00006f;
+	color:#ffffff;
 }
 /********* nav 바 *************/
 .nav-bar{
@@ -45,23 +57,25 @@
 	z-index:9990;
 	padding: 0 200px;
 	height: 70px;
-	background-color: rgb(247,249,250);
+	background-color: #ffffff;
 	display: flex;
 	justify-content: space-around;
 }
 
 /********** 로고 *****/
-.nav-brand {
-	flex:0.2;
-}
 
 .navbar-brand {
+	position:relative;
+	width:260px;
+	flex:0.2;
 	height:60px;
 	line-height: 60px;
-	padding-top: 0px !important;
 }
 /** 로고 이미지 **/
 .navbar-brand img{
+	position:absolute;
+	top:0;
+	left:0;
 	width:200px;
 	height:70px;
 	cursor: pointer;
@@ -69,10 +83,11 @@
 
 /** nav 메뉴 **/
 .nav-box {
-	width:100%;
 	flex:0.8;
+	width:100%;
 	align-items: center;
 	width:100%;
+	background-color: #ffffff;
 }
 
 .nav-pills{
@@ -81,9 +96,11 @@
 	padding:0;
 	list-style:none;
 	display: flex;
+	background-color: #ffffff;
 }
 
 .nav-item {
+	text-align:center;
 	flex:1;
 	position: relative;
 }
@@ -110,7 +127,7 @@
     margin:3px auto;
     width: 0;
     height: 4px; 
-    background-color: #4336da; 
+    background-color: #0D406E; 
     opacity: 0; 
     transition: opacity 0.5s ease, width 0.5s ease; 
 }
@@ -133,7 +150,7 @@
 	z-index:99999;
 	display: none;
 	min-height: 200px;
-	border-bottom: 2px solid #4336da;
+	border-bottom: 2px solid #0D406E;
 	background-color: #ffffff;
 }
 
