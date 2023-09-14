@@ -12,6 +12,8 @@
 <!-- css -->
 <link rel="stylesheet" href="/resources/css/log/mylogtest.css" />
 <link rel="stylesheet" href="/resources/css/log/content-template.css" />
+<link rel="stylesheet" href="/resources/css/schdl/common.css" />
+<link rel="stylesheet" href="/resources/css/schdl/myschedulelist.css" />
 
 <!-- font -->
 <!-- notoSans -->
@@ -275,101 +277,66 @@
 										<!-- 로그 검색 -->
 
 										<form action="/schedule2" method="get">
-											<table id="search-box">
-												<!-- 1행 -->
-												<c:set var="today" value="<%=new java.util.Date()%>" />
-												<fmt:formatDate value="${today}" pattern="yyyy"
-													var="nowYear" />
-												<tr>
+											<div class="search-info">
+												<fieldset>
+													<legend class="blind">사용자검색</legend>
+													<table id="search-box">
+														<tr>
+															<th>위치</th>
+															<td><select class="tx2" name="storeLocation"
+																onchange="chg()">
+																	<option>지역 대분류</option>
+																	<option value="2"
+																		${param.storeLocation == '2' ? 'selected' : ''}>서울</option>
+																	<option value="31"
+																		${param.storeLocation == '31' ? 'selected' : ''}>경기도</option>
+																	<option value="32"
+																		${param.storeLocation == '32' ? 'selected' : ''}>인천</option>
+															</select></td>
 
-													<th>기간</th>
-													<!-- 시작 연도 선택 필드 -->
-													<td><select class="tx2" name="startYr" id="startYr">
-															<option value="">연도</option>
-															<c:forEach var="i" begin="0" end="9">
-																<c:set var="year" value="${nowYear - i}" />
-																<option value="${year}"
-																	${param.startYr == year ? 'selected' : ''}>${year}년</option>
-															</c:forEach>
-													</select></td>
-													<!-- 시작 월 선택 필드 -->
-													<td><select class="tx2" name="startMn" id="startMn">
-															<option value="">월</option>
-															<c:forEach var="month" begin="1" end="12">
-																<option value="${month}"
-																	${param.startMn == month ? 'selected' : ''}>${month}월</option>
-															</c:forEach>
-													</select></td>
-													<td>~</td>
-													<!-- 종료 연도 선택 필드 -->
-													<td><select class="tx2" name="endYr" id="endYr">
-															<option value="">연도</option>
-															<c:forEach var="i" begin="0" end="9">
-																<c:set var="year" value="${nowYear - i}" />
-																<option value="${year}"
-																	${param.endYr == year ? 'selected' : ''}>${year}년</option>
-															</c:forEach>
-													</select></td>
-													<!-- 종료 월 선택 필드 -->
-													<td><select class="tx2" name="endMn" id="endMn">
-															<option value="">월</option>
-															<c:forEach var="month" begin="1" end="12">
-																<option value="${month}"
-																	${param.endMn == month ? 'selected' : ''}>${month}월</option>
-															</c:forEach>
-													</select></td>
-												</tr>
+															<td><select class="tx2" name="storeSubLocation"
+																disabled>
+																	<option>지역 소분류</option>
+															</select></td>
 
-												<tr>
-													<th>위치</th>
-													<td><select class="tx2" name="storeLocation"
-														onchange="chg()">
-															<option>지역 대분류</option>
-															<option value="2"
-																${param.storeLocation == '2' ? 'selected' : ''}>서울</option>
-															<option value="31"
-																${param.storeLocation == '31' ? 'selected' : ''}>경기도</option>
-															<option value="32"
-																${param.storeLocation == '32' ? 'selected' : ''}>인천</option>
-													</select></td>
+															<th>유형</th>
+															<td><select class="tx2" name="userType"
+																onchange="updateUserType()">
+																	<option value="">사용자 유형</option>
+																	<option value="기사"
+																		${param.userType == '기사' ? 'selected' : ''}>기사</option>
+																	<option value="점주"
+																		${param.userType == '점주' ? 'selected' : ''}>점주</option>
+															</select></td>
 
-													<td><select class="tx2" name="storeSubLocation"
-														disabled>
-															<option>지역 소분류</option>
-													</select></td>
+															<th>검색어</th>
+															<td><select class="tx2" name="searchKeword"
+																onchange="chgName(this)">
+																	<option value="">검색어</option>
+																	<option value="userId"
+																		${param.searchKeword == '회원ID' ? 'selected' : ''}>회원ID</option>
+																	<option value="userName"
+																		${param.searchKeword == '회원이름' ? 'selected' : ''}>회원이름</option>
+																	<option value="storeId"
+																		${param.searchKeword == '지점ID' ? 'selected' : ''}>지점ID</option>
+																	<option value="storeName"
+																		${param.searchKeword == '지점명' ? 'selected' : ''}>지점명</option>
+															</select></td>
+															<td><input type="text" id="search-word"
+																name="searchKeword" placeholder="키워드 선택 후 입력해주세요"
+																required disabled></td>
 
-													<th>유형</th>
-													<td><select class="tx2" name="userType"
-														onchange="updateUserType()">
-															<option value="">사용자 유형</option>
-															<option value="기사"
-																${param.userType == '기사' ? 'selected' : ''}>기사</option>
-															<option value="점주"
-																${param.userType == '점주' ? 'selected' : ''}>점주</option>
-													</select></td>
+														</tr>
 
-													<th>검색어</th>
-													<td><select class="tx2" name="searchKeword"
-														onchange="chgName(this)">
-															<option value="">검색어</option>
-															<option value="userId"
-																${param.searchKeword == '회원ID' ? 'selected' : ''}>회원ID</option>
-															<option value="userName"
-																${param.searchKeword == '회원이름' ? 'selected' : ''}>회원이름</option>
-															<option value="storeId"
-																${param.searchKeword == '지점ID' ? 'selected' : ''}>지점ID</option>
-															<option value="storeName"
-																${param.searchKeword == '지점명' ? 'selected' : ''}>지점명</option>
-													</select></td>
-													<td><input type="text" id="search-word"
-														name="searchKeword" placeholder="키워드 선택 후 입력해주세요" required
-														disabled></td>
-
-												</tr>
-
-											</table>
-											<button type="submit" class="form-btn">검색</button>
-											<button type="reset" class="form-btn">초기화</button>
+													</table>
+													<div class="form-btn-box">
+														<fieldset>
+															<button type="submit" class="form-btn">검색</button>
+															<button type="reset" class="form-btn">초기화</button>
+														</fieldset>
+													</div>
+												</fieldset>
+											</div>
 										</form>
 
 
@@ -484,14 +451,24 @@ function chg() {
 
 										<!-- 로그 리스트 -->
 										<div id="logTable">
-											<div>
-												<p class="data-info">
-													전체<b><span><c:out value="${totalDataNumber}" /></span></b>건<span
+											<form name="form" method="get" class="Search">
+												<div class="board-info">
+													<span class="data-info"> 전체<b><span><c:out
+																	value="${totalDataNumber}" /></span></b>건<span
 														id="text-separator"> | </span><b><span><c:out
-																value="${currentPage}" /></span></b>/<b><span><c:out
-																value="${totalPage}" /></span></b>쪽
-												</p>
-											</div>
+																	value="${currentPage}" /></span></b>/<b><span><c:out
+																	value="${totalPage}" /></span></b>쪽
+													</span>
+
+													<fieldset>
+														<legend class="blind">날짜 검색</legend>
+														<label>휴가일</label> <input type="date" id="startDate"
+															name="startDate" required> <input type="date"
+															id="endDate" name="endDate" required> <input
+															type="submit" value="검색">
+													</fieldset>
+												</div>
+											</form>
 											<table>
 												<thead>
 													<tr>
