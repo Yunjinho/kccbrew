@@ -187,7 +187,7 @@
 						</a>
 					</div>
 				</div>
-				<div class="as-guide">
+				<div class="shortcut-service">
 					<div class="inner-box">
 						<p>바로 가기 서비스</p> <br><br>
 						<ul class="shortcut-list">

@@ -6,10 +6,13 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<script src="<c:url value="resources/js/comm/login.js"/>" charset="UTF-8"></script>
+<link href="<c:url value="resources/css/comm/login.css"/>" rel="stylesheet" type="text/css">
+
 </head>
 <body class="login" onpageshow="if(event.persisted) noBack();" onunload="" marginwidth="0" marginheight="0">
-	<a href="/"><img src="<c:url value="resources/img/logo.png"/>" class="logo"></a>
 	<div class="wrap">
+	<a href="/"><img src="<c:url value="resources/img/logo.png"/>" class="logo"></a>
 		<!-- 로그인 영역 -->
 		<div class="loginbox">
 			<!-- 로그인 입력 -->
@@ -28,7 +31,7 @@
 							<div>
 								<label for="id"></label>
 								<img src="<c:url value="resources/img/login/login_id.png"/>" alt="로그인 텍스트 이미지">
-								<input type="text" id="id" name="userId" title="아이디" placeholder="아이디">
+								<input type="text" id="id" name="userId" value="" title="아이디" placeholder="아이디">
 							</div>
 							<div>
 								<img src="<c:url value="resources/img/login/login_pwd.png"/>" alt="로그인 텍스트 이미지">
@@ -57,13 +60,10 @@
 				<div>
 					<img src="<c:url value="resources/img/login/login_signup.png"/>" >
 				</div>
-				<a href="/register" class="icon_02">
+				<a href="/register-form" class="icon_02">
 					<dl>
-						<c:url var="toRegister" value="/registerpage" />
-						<a href="${toRegister}">
-							<dd>회원 가입</dd>
-							<dt>어서오세요!</dt>
-						</a>
+						<dd>회원 가입</dd>
+						<dt>어서오세요!</dt>
 					</dl>
 				</a>
 			</div>

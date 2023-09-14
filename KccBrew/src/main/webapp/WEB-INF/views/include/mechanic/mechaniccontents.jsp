@@ -115,9 +115,15 @@
 						</a>
 					</div>
 				</div>
-				<div class="as-guide">
+				<div class="shortcut-service">
 					<div class="inner-box">
-						as 접수 안내
+						<p>바로 가기 서비스</p> <br><br>
+						<ul class="shortcut-list">
+							<li class="shortcuts"><span class="round-btn">01</span>&nbsp;&nbsp;<a href="#">A/S 접수</a></li>
+							<li class="shortcuts"><span class="round-btn">02</span>&nbsp;&nbsp;<a href="#">A/S 접수</a></li>
+							<li class="shortcuts"><span class="round-btn">03</span>&nbsp;&nbsp;<a href="#">A/S 접수</a></li>
+							<li class="shortcuts"><span class="round-btn">04</span>&nbsp;&nbsp;<a href="#">A/S 접수</a></li>
+						</ul>
 					</div>
 				</div>
 				<div class="toKccBrew">

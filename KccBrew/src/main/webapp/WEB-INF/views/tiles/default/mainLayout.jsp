@@ -14,6 +14,16 @@
 <head>
 <meta charset="UTF-8">
 <title><tiles:insertAttribute name="title"/></title>
+<style>
+	@font-face {
+		font-family: 'Noto Sans';
+		font-style: normal;
+		src: url("../../fonts/NotoSansKR-Regular.ttf")
+	}
+	html {
+		font-family: 'Noto Sans', 'Noto Sans KR', sans-serif !important;
+	}
+</style>
 <!-- ------------------ FONTS --------------------------->
 <!--------------------- NOTOSANS ------------------------>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -33,51 +43,9 @@
 <link rel="stylesheet" href="${path}/resources/css/comm/footer.css"/>
 
 
-<!--------------------- BootStrap CSS -------------------------->
-<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"> -->
-
 <!--------------------- Full Calendar CSS --------------------------->
-<link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/fullcalendar@5.8.0/main.min.css'/>
+<!-- <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/fullcalendar@5.8.0/main.min.css'/> -->
 <link href='https://cdn.jsdelivr.net/npm/fullcalendar@5.10.0/main.min.css' rel='stylesheet' />
-
-
-<!--------------------- A/S 접수 페이지 CSS -------------------->
-<link rel="stylesheet" href="/resources/css/asMng/asList.css" />
-<link rel="stylesheet" href="/resources/css/asMng/asReceipt.css" />
-
-<!--------------------- 로그인 및 회원가입 CSS -------------------->
-<link href="<c:url value="resources/css/comm/login.css"/>" rel="stylesheet" type="text/css">
-<link rel="stylesheet" href="resources/css/comm/register.css">
-
-<!--------------------- 로그 관리 CSS ------------------------------->
-<link rel="stylesheet" href="/resources/css/log/mylogtest.css" />
-
-<!--- calendar css 겹침---- 일정 관리 CSS -------------------------------->
-<link rel="stylesheet" href="/resources/css/schdl/mycalendar.css" />
-
-<!---------------------- 점포 상세 CSS ------------------------------------>
-<link rel="stylesheet" href="${path}/resources/css/store/view.css" type="text/css">
-
-<!---------------------- 점포 등록 CSS------------------------------------->
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/store/insert.css" />
-
-<!--------헤더 겹치고 테이블 캡션 사라짐-- 점포 리스트 CSS ------------------------------------->
-<!-- <link rel="stylesheet" href="/resources/css/store/store.css" /> -->
-
-<!---------------------- 점포 수정 CSS -------------------------------------->
-<link rel="stylesheet" href="${path}/resources/css/store/update.css" type="text/css">
-
-<!---------헤더 겹치고 테이블 캡션 사라짐-- 코드 상세  CSS-------------------------------------->
-<!-- <link rel="stylesheet" href="/resources/css/code/cdMngDtl.css" /> -->
-
-<!---------------------- 코드 등록 CSS ------------------------------------>
-<link rel="stylesheet" href="/resources/css/code/insert.css" />
-
-<!----------헤더 겹치고 테이블 캡션 사라짐-- 상세 코드 수정 CSS --------------------------------->
-<!-- <link rel="stylesheet" href="/resources/css/code/cdMndMod.css" /> -->
-
-<!---------헤더 겹치고 테이블 캡션 사라짐--- 그룹 코드 상세 CSS------------------------------->
-<!-- <link rel="stylesheet" href="/resources/css/code/codedetail.css" /> -->
 
 
 <!--------------------- JS ------------------------------>
@@ -89,19 +57,10 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.min.js" integrity="sha384-Rx+T1VzGupg4BHQYs2gCW9It+akI2MM/mndMCy36UVfodzcJcF0GGLxZIzObiEfa" crossorigin="anonymous"></script>
 
 <!--------------------- Full Calendar JS ------------------------->
-<script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.8.0/main.min.js'></script>
-<script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.8.0/locales-all.min.js'></script>
-<script src="${path}/resources/js/comm/calendar.js"></script>
+<%-- <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.8.0/main.min.js'></script>
+<script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.8.0/locales-all.min.js'></script>--%>
+<script src="${path}/resources/js/comm/calendar.js"></script> 
 <script	src='https://cdn.jsdelivr.net/npm/fullcalendar@5.10.0/main.min.js'></script>
-
-<!-------------------- A/S 접수 JS --------------------------->
-<script src="<c:url value="resources/js/asMng/asList.js"/>"></script>
-<script src="<c:url value="resources/js/asMng/asReceipt.js"/>"></script>
-
-<!-------------------- 로그인 및 회원 가입 JS ----------------------->
-<script src="<c:url value="resources/js/comm/login.js"/>"></script>
-<script src="<c:url value="resources/js/comm/register.js"/>"></script>
-<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 
 </head>
 

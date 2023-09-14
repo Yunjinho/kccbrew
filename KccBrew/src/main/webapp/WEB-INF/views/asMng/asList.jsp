@@ -2,7 +2,6 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-
 <%@ page import="java.time.LocalDateTime"%>
 <%@ page import="java.time.format.DateTimeFormatter"%>
 
@@ -11,9 +10,14 @@
 <html>
 <head>
 <!-- css -->
+
+<link rel="stylesheet" href="/resources/css/asMng/asList.css" />
 <link rel="stylesheet" href="/resources/css/asMng/content-template.css" />
+
+<!-- js -->
+<script src="<c:url value="resources/js/asMng/asList.js"/>"></script>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>AS 내역 조회</title>
 </head>
 <body>
 	<div id="page-mask">
@@ -23,7 +27,7 @@
 					<!-- ********** 페이지 네비게이션 시작 ********** -->
 					<div class="page-content-navigation">
 						<ol class="breadcrumb">
-							<li class="breadcrumb-home"><a href="">AS 관리</a></li>
+							<li class="breadcrumb-home"><a href="#">AS 관리</a></li>
 							<li>
 								<div class="header-icon-background">
 									<img
@@ -138,12 +142,21 @@
 												</td>
 												<th>AS 상태</th>
 												<td colspan="2">
-													<select class="tx2" name="statusCd" value="${searchContent.statusCd}" onchange="javascript:chg();">
+													<select class="tx2" name="asStatusCd" value="${searchContent.asStatusCd}" onchange="javascript:chg();">
 															<option value="">AS 상태</option>
 															<c:forEach var="asCd" items="${asStatusCd}">
-																<option value="${asCd.grpCdDtlId}">
-																	${asCd.grpCdDtlNm}
-																</option>
+																<c:choose>
+																	<c:when test="${searchContent.asStatusCd == asCd.grpCdDtlId}">
+																		<option value="${asCd.grpCdDtlId}" selected>
+																			${asCd.grpCdDtlNm}
+																		</option>
+																	</c:when>
+																	<c:otherwise>
+																		<option value="${asCd.grpCdDtlId}">
+																			${asCd.grpCdDtlNm}
+																		</option>
+																	</c:otherwise>
+																</c:choose>
 															</c:forEach>
 													</select>
 												</td>
@@ -239,7 +252,7 @@
 												</td>
 												<th>AS 상태</th>
 												<td colspan="2">
-													<select class="tx2" name="statusCd" id="" onchange="javascript:chg();">
+													<select class="tx2" name="asStatusCd" id="" onchange="javascript:chg();">
 															<option value="">AS 상태</option>
 															<c:forEach var="asCd" items="${asStatusCd}">
 																<option value="${asCd.grpCdDtlId}">
@@ -356,7 +369,7 @@
 												</td>
 												<th>AS 상태</th>
 												<td colspan="3">
-													<select class="tx2" name="statusCd" id="" onchange="javascript:chg();">
+													<select class="tx2" name="asStatusCd" id="" onchange="javascript:chg();">
 															<option value="">AS 상태</option>
 															<c:forEach var="asCd" items="${asStatusCd}">
 																<option value="${asCd.grpCdDtlId}">
@@ -397,6 +410,7 @@
 													<th>AS 상태</th>
 													<th>점포 명</th>
 													<th>점포 주소</th>
+													<th>상세 조회</th>
 												</tr>
 											</thead>
 											<tbody>
@@ -404,9 +418,10 @@
 													<tr>
 														<td><c:out value="${list.asInfoSeq}" /></td>
 														<td><c:out value="${list.regDttm}" /></td>
-														<td><c:out value="${list.statusCd}" /></td>
+														<td><c:out value="${list.asStatusNm}" /></td>
 														<td><c:out value="${list.storeNm}" /></td>
 														<td><c:out value="${list.storeAddr}" /></td>
+														<td><a href="#" onclick="selectAsDetail(${list.asInfoSeq})"class="form-btn">조회</a></td>
 													</tr>
 												</c:forEach>
 											</tbody>

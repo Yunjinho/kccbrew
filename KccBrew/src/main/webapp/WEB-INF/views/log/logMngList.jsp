@@ -10,6 +10,7 @@
 <html>
 <head>
 <!-- css -->
+<link rel="stylesheet" href="/resources/css/log/mylogtest.css" />
 <link rel="stylesheet" href="/resources/css/log/content-template.css" />
 
 <meta charset="UTF-8">

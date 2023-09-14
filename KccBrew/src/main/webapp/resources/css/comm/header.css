@@ -1,12 +1,12 @@
 @charset "UTF-8";
 @font-face {
-	font-family: 'notosans';
+	font-family: 'Noto Sans';
 	font-style: normal;
 	src: url("../../fonts/NotoSansKR-Regular.ttf")
 }
 
 .comm-nav{
-	font-family: 'notosans';
+	font-family: 'Noto Sans';
 	z-index:999;
 	font-size:1.2em;
 	height:100px;
@@ -26,9 +26,18 @@
 	line-height: 30px;
 	text-align: right;
 	background-color: #0D406E;
+	margin-top:0;
+}
+.top-bar p {
+	height:30px;
 }
 /****** 로그아웃 버튼 *******/
 .logout-btn {
+	height:30px;
+	top:0;
+	line-height:20px;
+	border-radius:0;
+	margin-top:0;
 	margin-left:10px;
 	padding: 5px 15px;
 	border: 1px solid #00006f;
@@ -38,6 +47,9 @@
 }
 .logout-btn:hover {
 	text-decoration: underline;
+	background-color: #00006f;
+	border: 1px solid #00006f;
+	color:#ffffff;
 }
 /********* nav 바 *************/
 .nav-bar{
@@ -51,16 +63,19 @@
 }
 
 /********** 로고 *****/
-.nav-brand {
-	flex:0.2;
-}
 
 .navbar-brand {
+	position:relative;
+	width:260px;
+	flex:0.2;
 	height:60px;
 	line-height: 60px;
 }
 /** 로고 이미지 **/
 .navbar-brand img{
+	position:absolute;
+	top:0;
+	left:0;
 	width:200px;
 	height:70px;
 	cursor: pointer;
@@ -68,10 +83,11 @@
 
 /** nav 메뉴 **/
 .nav-box {
-	width:100%;
 	flex:0.8;
+	width:100%;
 	align-items: center;
 	width:100%;
+	background-color: #ffffff;
 }
 
 .nav-pills{
@@ -80,6 +96,7 @@
 	padding:0;
 	list-style:none;
 	display: flex;
+	background-color: #ffffff;
 }
 
 .nav-item {
@@ -89,6 +106,7 @@
 
 .nav-link{
 	height:70px;
+	width:206px;
 	line-height:70px;
 	font-size:0.9em;
 	color:#111111;

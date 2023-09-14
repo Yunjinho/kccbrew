@@ -7,11 +7,7 @@
 <html lang="en">
 
 <link rel="stylesheet" href="/resources/css/code/cdMngDtl.css" />
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link
-	href="https://fonts.googleapis.com/css2?family=Noto+Sans&family=Noto+Sans+KR&display=swap"
-	rel="stylesheet">
+
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>

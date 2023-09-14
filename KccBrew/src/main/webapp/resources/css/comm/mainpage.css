@@ -2,7 +2,7 @@
 
 /**************** body 스타일 *******************8**/
 	@font-face {
-	font-family: 'notosans';
+	font-family: 'Noto Sans';
 	font-style: normal;
 	src: url("../../fonts/NotoSansKR-Regular.ttf")
 	}
@@ -10,8 +10,8 @@
 	* {
 		box-sizing: border-box;
 	}
-	html, body {
-	  font-family: 'notosans';
+	body {
+	  font-family: 'Noto Sans';
 	  font-size: 14px;
 	}
 	
@@ -91,6 +91,7 @@
 	}
 	
 	.tablecap {
+		width:100%;
 		text-align: left;
 		font-size:1.2em;
 		font-weight: bold;
@@ -101,15 +102,16 @@
 	}
 	
     .task-list {
+    	position:relative;
     	width:100%;
     	max-height: 100vh;
         border-collapse: collapse;
         border-spacing: 0;
-        display: block;
+        box-sizing:border-box;
+        display: table;
     }
-    
     .task-list thead{
-    	width:100%;
+    	width: 100%;
     }
     .task-list tbody {
     	width:100%; 
@@ -118,11 +120,12 @@
         padding: 10px;
         text-align: center;
         font-size: 0.5em;
+        width:auto;
     }
 
     .task-list th {
         background-color: #ffffff;
-        font-weight: bold;        
+        font-weight: bold;
     }
     .task-list td {
        border: none;
@@ -194,20 +197,17 @@
 	.chpwd:hover, .logout:hover {
 		text-decoration: underline;
 	}
-	.as-guide {
+	.shortcut-service {
 		height:226px;
 		flex:1;
 		margin-bottom:5px;
 		color: #111111;
 		background-color: #ffffff;
 	}
-	.as-guide p{
+	.shortcut-service p{
 		text-align: left;
 		font-size:1.2em;
 		font-weight: bold;
-	}
-	.shortcut-list {
-		
 	}
 	.shortcuts {
 		margin-bottom: 10px;
@@ -219,7 +219,7 @@
 		font-size:0.9em;
 		width:30px;
 		height:20px;
-		line-height:18px;
+		line-height:17px;
 		color: #1A55A1;
 		border:1.5px solid #1A55A1;
 		font-weight: bold;
@@ -228,6 +228,7 @@
 	.shortcuts a {
 		font-weight: normal;
 		color: #717171;
+		text-decoration: none;
 	}
 	.shortcuts a:hover {
 		text-decoration: underline;
@@ -406,5 +407,5 @@
 	  padding-top: 1em;
 	  padding-left: 1em;
 	  padding-right: 1em;
-	  font-size:0.1em;
+	  font-size:0.5em;
 	}
