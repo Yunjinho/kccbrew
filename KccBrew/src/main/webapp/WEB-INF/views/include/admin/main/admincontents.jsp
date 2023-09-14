@@ -10,18 +10,6 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link rel="stylesheet" href="${path}/resources/css/comm/reset.css" >
-<link rel="stylesheet" href="${path}/resources/css/comm/header.css" >
-<link rel="stylesheet" href="${path}/resources/css/comm/mainpage.css"/>
-<link rel="stylesheet" href="${path}/resources/css/comm/footer.css"/>
-<link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/fullcalendar@5.8.0/main.min.css'/>
-<script src="http://code.jquery.com/jquery-latest.js"></script> 
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.min.js" integrity="sha384-Rx+T1VzGupg4BHQYs2gCW9It+akI2MM/mndMCy36UVfodzcJcF0GGLxZIzObiEfa" crossorigin="anonymous"></script>
-<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
-<script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.8.0/main.min.js'></script>
-<script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.8.0/locales-all.min.js'></script>
-<script src="${path}/resources/js/comm/calendar.js"></script>
 </head>
 <body>
 	<div class="body-wrapper">
@@ -36,7 +24,7 @@
 							<th>접수번호</th>
 							<th>접수 상태</th>
 							<th>접수 장비</th>
-							<th>점주 이름</th>
+							<th>점주</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -78,7 +66,7 @@
 							<th>방문 예정일</th>
 							<th>접수 장비</th>
 							<th>지점</th>
-							<th>수리 기사 이름</th>
+							<th>수리 기사</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -150,7 +138,7 @@
 							<th>아이디</th>
 							<th>이름</th>
 							<th>전화번호</th>
-							<th>사용자 구분</th>
+							<th>사용자구분</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -183,8 +171,10 @@
 			<div class="profileAndguide">
 				<div class="user-profile">
 					<div class="inner-box">
-						<span class="name">###</span>님 <br><br>
-						<span class="job">관리자</span> <br><br><br><br><br><br>
+						<span class="name">${sessionScope.userName}</span>님 <br><br>
+						<span class="job">관리자</span> <br><br><br>
+						<span class="last-ip">최종 접속 IP &nbsp;&nbsp; </span><span class="ip">111.111.111</span><br><br>
+						<span class="last-login">최종 로그인 &nbsp;&nbsp;&nbsp; </span><span class="time">2023-09-12 10:00</span>
 					</div>
 					<div class="buttons">
 						<button class="chpwd">비밀번호 변경</button> 
@@ -197,9 +187,15 @@
 						</a>
 					</div>
 				</div>
-				<div class="as-guide">
+				<div class="shortcut-service">
 					<div class="inner-box">
-						as 접수 안내
+						<p>바로 가기 서비스</p> <br><br>
+						<ul class="shortcut-list">
+							<li class="shortcuts"><span class="round-btn">01</span>&nbsp;&nbsp;<a href="#">A/S 접수</a></li>
+							<li class="shortcuts"><span class="round-btn">02</span>&nbsp;&nbsp;<a href="#">A/S 접수</a></li>
+							<li class="shortcuts"><span class="round-btn">03</span>&nbsp;&nbsp;<a href="#">A/S 접수</a></li>
+							<li class="shortcuts"><span class="round-btn">04</span>&nbsp;&nbsp;<a href="#">A/S 접수</a></li>
+						</ul>
 					</div>
 				</div>
 				<div class="toKccBrew">
@@ -232,7 +228,7 @@
 										<th>방문 예정일</th>
 										<th>접수 장비</th>
 										<th>지점</th>
-										<th>수리 기사 이름</th>
+										<th>수리 기사</th>
 									</tr>
 								</thead>
 								 <tbody>
@@ -264,7 +260,7 @@
 			                            <th>방문 예정일</th>
 			                            <th>접수 장비</th>
 			                            <th>지점</th>
-			                            <th>수리 기사 이름</th>
+			                            <th>수리 기사</th>
 			                        </tr>
 			                    </thead>
 			                    <tbody>
@@ -296,7 +292,7 @@
 			                            <th>방문 예정일</th>
 			                            <th>접수 장비</th>
 			                            <th>지점</th>
-			                            <th>수리 기사 이름</th>
+			                            <th>수리 기사</th>
 			                        </tr>
 			                    </thead>
 			                    <tbody>

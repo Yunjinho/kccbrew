@@ -1,6 +1,8 @@
 function login(){
 	var id=$("input[name=userId]").val();
 	var pwd=$("input[name=userPwd]").val();
+//	var userName = $("#userName").text();
+//	$("#userName").text("userName");
 
 	$.ajax({
 	    type : "get",           // 타입 (get, post, put 등등)
@@ -12,14 +14,37 @@ function login(){
 		},
 	    success : function(data) { // 결과 성공 콜백함수
 			if(data=="t"){
-				location.href="/main";
-			}else if(data=='n'){
-				$("#login-msg").html("인증 진행중인 계정입니다.");
-				$("#login-msg").css("display","block");
-			}else{
-				$("#login-msg").html("아이디 또는 비밀번호를 잘못 입력했습니다.<br> 입력하신 내용을 다시 확인해주세요.");
-				$("#login-msg").css("display","block");
+				//로그인 성공 시 userTypeCd 값을 받아와서 사용자 유형 확인
+				$.ajax({
+                    type: "GET",
+                    url: "/getUserTypeCd", // 사용자의 userTypeCd 값을 가져오는 컨트롤러 경로
+                    dataType: "text",
+                    success: function(userTypeCd) {
+                        // userTypeCd 값에 따라 다른 페이지로 리다이렉트
+                        if (userTypeCd === "01") {
+                            location.href = "/adminMain";
+                        } else if (userTypeCd === "02") {
+                            location.href = "/managerMain";
+                        } else if (userTypeCd === "03") {
+                            location.href = "/mechanicMain";
+                        } else {
+                            // 다른 경우에 대한 처리
+                            alert("알 수 없는 사용자 유형 코드: " + userTypeCd);
+                        }
+                    }
+                });
 				
+				$.ajax({
+					type:"GET",
+					url: "/getUserName",
+					dataType:"text",
+					success:function(userName){
+						$("#userName").text(userName);
+					}
+				});
+			}else{
+				$("#login-msg").html(data);
+				$("#login-msg").css("display","block");
 			}
 	    }
 	});
