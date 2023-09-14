@@ -50,13 +50,8 @@ public class LogInController {
 		vo.setUserId(id);
 		vo.setUserPwd(pwd);
 		LogInVo user=loginService.logIn(vo);
-<<<<<<< HEAD
-		System.out.println(user.getUserNm());
-		if(user.getUserId()!=null) {
-=======
 		System.out.println(user);
 		if(user!=null && user.getUserId()!=null) {
->>>>>>> branch 'master' of https://github.com/Yunjinho/kccbrew.git
 			if(user.getApproveYn().equals("Y")) {
 				// 세션을 생성하기 전에 기존의 세션 파기
 		        httpServletRequest.getSession().invalidate();
@@ -94,8 +89,7 @@ public class LogInController {
 	@RequestMapping(value="getUserName", method = RequestMethod.GET)
 	public String getName(HttpServletRequest httpServletRequest) {
 		HttpSession session = httpServletRequest.getSession(false);
-		Object getName = session.getAttribute("userName");
-		String userName = (String)getName;
+		String userName = (String)session.getAttribute("userName");
 		return userName;
 	}
 	

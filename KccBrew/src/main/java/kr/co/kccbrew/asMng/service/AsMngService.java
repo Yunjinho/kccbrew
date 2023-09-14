@@ -101,14 +101,7 @@ public class AsMngService implements IAsMngService{
 				vo.setFileServerNm(asMngVo.getUserId()+"_"+new Date(System.currentTimeMillis())+"_"+imgFile.getOriginalFilename());
 				vo.setFileFmt(imgFile.getContentType());
 				vo.setStorageLocation(asMngVo.getStorageLocation());
-<<<<<<< HEAD
-				
-				Path path = Paths.get(vo.getStorageLocation()).toAbsolutePath().normalize();
-		        Path targetPath = path.resolve(vo.getFileServerNm()).normalize();
-		        
-=======
 		        String targetPath=asMngVo.getServerSavePath()+"\\"+vo.getFileServerNm();
->>>>>>> branch 'master' of https://github.com/Yunjinho/kccbrew.git
 				try {
 					//imgFile.transferTo(targetPath);
 					FileCopyUtils.copy(imgFile.getInputStream(), new FileOutputStream(targetPath));

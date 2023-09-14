@@ -53,7 +53,7 @@ public class AsMngController {
 	public String as(Model model,HttpSession session) {
 		AsMngVo asMngVo=new AsMngVo();
 		asMngVo.setUserId((String)session.getAttribute("userId"));
-		asMngVo.setUserTypeCd((String)session.getAttribute("userTypeCd"));
+		
 		
 		List<AsMngVo> list=asMngService.selectMachineCd();
 		model.addAttribute("machineCd", list);
@@ -61,6 +61,7 @@ public class AsMngController {
 		list=asMngService.selectAsStatusCd();
 		model.addAttribute("asStatusCd", list);
 		
+		asMngVo.setUserTypeCd((String)session.getAttribute("userTypeCd"));
 		list=asMngService.selectASList(asMngVo,1);
 		int totalPage = 0;
 		int totalCount = asMngService.countASList(asMngVo);
@@ -147,10 +148,6 @@ public class AsMngController {
 	 * AS 접수
 	 */
 	@RequestMapping(value="/receipt",method=RequestMethod.POST)
-<<<<<<< HEAD
-	public String asReceipt(@Value("#{serverImgPath['asReceiptPath']}")String path,AsMngVo asMngVo,HttpSession session, HttpServletRequest request) {
-		String realPath = request.getServletContext().getRealPath("/");
-=======
 	public String asReceipt(@Value("#{serverImgPath['localPath']}")String localPath,@Value("#{serverImgPath['asReceiptPath']}")String path,AsMngVo asMngVo,HttpServletRequest request) {
 
 		String folderPath=request.getServletContext().getRealPath("")+path;
@@ -160,7 +157,6 @@ public class AsMngController {
             boolean success = folder.mkdirs(); // 폴더 생성 메소드
         }
 		HttpSession session=request.getSession();
->>>>>>> branch 'master' of https://github.com/Yunjinho/kccbrew.git
 		asMngVo.setUserId((String)session.getAttribute("userId"));
 		asMngVo.setStorageLocation(path);
 		asMngVo.setServerSavePath(folderPath);
@@ -237,4 +233,3 @@ public class AsMngController {
 		return result;
 	}
 }
-
