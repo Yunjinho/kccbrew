@@ -14,7 +14,6 @@ function login(){
 		},
 	    success : function(data) { // 결과 성공 콜백함수
 			if(data=="t"){
-<<<<<<< HEAD
 				//로그인 성공 시 userTypeCd 값을 받아와서 사용자 유형 확인
 				$.ajax({
                     type: "GET",
@@ -45,16 +44,7 @@ function login(){
 				});
 			}else{
 				$("#login-msg").html(data);
-=======
-				location.href="/main";
-			}else if(data=='n'){
-				$("#login-msg").html("인증 진행중인 계정입니다.");
->>>>>>> branch 'master' of https://github.com/Yunjinho/kccbrew.git
 				$("#login-msg").css("display","block");
-			}else{
-				$("#login-msg").html("아이디 또는 비밀번호를 잘못 입력했습니다.<br> 입력하신 내용을 다시 확인해주세요.");
-				$("#login-msg").css("display","block");
-				
 			}
 	    }
 	});
