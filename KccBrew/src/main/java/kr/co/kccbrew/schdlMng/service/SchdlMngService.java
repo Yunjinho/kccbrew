@@ -1,6 +1,6 @@
 package kr.co.kccbrew.schdlMng.service;
 
-import java.sql.Date;
+import java.sql.Date; 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 import kr.co.kccbrew.schdlMng.dao.ISchdlMngRepository;
 import kr.co.kccbrew.schdlMng.model.HolidayVo;
 import kr.co.kccbrew.schdlMng.model.SchdlMngVo;
-import kr.co.kccbrew.schdlMng.model.SchdlMngVo2;
 
 @Service
 public class SchdlMngService implements ISchdlMngService {
@@ -19,25 +18,10 @@ public class SchdlMngService implements ISchdlMngService {
 	@Autowired
 	private ISchdlMngRepository schdlMngRepository;
 
-	@Override
-	public List<SchdlMngVo> getMechaSchedules(int currentPage, SchdlMngVo searchContent) {
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("searchContent", searchContent);
-		map.put("firstRowNum", currentPage*10-9);
-		map.put("lastRowNum", currentPage*10);
-
-		return schdlMngRepository.selectMechaSchedules(map);
-	}
-
-	/*	@Override
-	public int getMechaScheduleCount(SchdlMngVo serchContent) {
-		return 0;
-	}*/
-
 
 	/*검색에 따른 휴가리스트 조회*/
 	@Override
-	public List<SchdlMngVo2> getSchedules2(int currentPage, SchdlMngVo2 searchContent) {
+	public List<SchdlMngVo> getSchedules2(int currentPage, SchdlMngVo searchContent) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("searchContent", searchContent);
 		map.put("firstRowNum", currentPage*10-9);
@@ -48,7 +32,7 @@ public class SchdlMngService implements ISchdlMngService {
 
 	/*스케줄 리스트 갯수 반환*/
 	@Override
-	public int getSchedule2Count(SchdlMngVo2 searchContent) {
+	public int getSchedule2Count(SchdlMngVo searchContent) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("searchContent", searchContent);
 
@@ -59,7 +43,7 @@ public class SchdlMngService implements ISchdlMngService {
 
 	/*회원 캘린더 조회*/
 	@Override
-	public List<SchdlMngVo2> getCalendarSchedule(SchdlMngVo2 schdlMngVo) {
+	public List<SchdlMngVo> getCalendarSchedule(SchdlMngVo schdlMngVo) {
 		return schdlMngRepository.selectCalendarSchedule(schdlMngVo);
 	}
 

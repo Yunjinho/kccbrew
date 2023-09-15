@@ -11,6 +11,7 @@
 <head>
 <meta charset="UTF-8">
 <!-- css -->
+<link rel="stylesheet" href="/resources/css/schdl/common.css" />
 <link rel="stylesheet" href="/resources/css/schdl/myinsertform.css" />
 <link rel="stylesheet" href="/resources/css/log/mylogtest.css" />
 <link rel="stylesheet" href="/resources/css/log/content-template.css" />
@@ -288,7 +289,75 @@
 									<!-- ********** 세은 로그 관련 내용 시작 ********** -->
 									<div id="content">
 										<h2 class="heading">휴가등록</h2>
-										<!-- 로그 검색 -->
+									
+
+										<form action="/schedule" method="POST">
+
+											<div>
+												<span> 사용자검색 </span>
+											</div>
+
+											<div class="search-info">
+												<fieldset>
+													<legend class="blind">사용자검색</legend>
+													<table id="search-box">
+														<tr>
+															<th>위치</th>
+															<td><select class="tx2" name="storeLocation"
+																onchange="chg()">
+																	<option>지역 대분류</option>
+																	<option value="2"
+																		${param.storeLocation == '2' ? 'selected' : ''}>서울</option>
+																	<option value="31"
+																		${param.storeLocation == '31' ? 'selected' : ''}>경기도</option>
+																	<option value="32"
+																		${param.storeLocation == '32' ? 'selected' : ''}>인천</option>
+															</select></td>
+
+															<td><select class="tx2" name="storeSubLocation"
+																disabled>
+																	<option>지역 소분류</option>
+															</select></td>
+
+															<th>유형</th>
+															<td><select class="tx2" name="userType"
+																onchange="updateUserType()">
+																	<option value="">사용자 유형</option>
+																	<option value="기사"
+																		${param.userType == '기사' ? 'selected' : ''}>기사</option>
+																	<option value="점주"
+																		${param.userType == '점주' ? 'selected' : ''}>점주</option>
+															</select></td>
+
+															<th>검색어</th>
+															<td><select class="tx2" name="searchKeword"
+																onchange="chgName(this)">
+																	<option value="">검색어</option>
+																	<option value="userId"
+																		${param.searchKeword == '회원ID' ? 'selected' : ''}>회원ID</option>
+																	<option value="userName"
+																		${param.searchKeword == '회원이름' ? 'selected' : ''}>회원이름</option>
+																	<option value="storeId"
+																		${param.searchKeword == '지점ID' ? 'selected' : ''}>지점ID</option>
+																	<option value="storeName"
+																		${param.searchKeword == '지점명' ? 'selected' : ''}>지점명</option>
+															</select></td>
+															<td><input type="text" id="search-word"
+																name="searchKeword" placeholder="키워드 선택 후 입력해주세요"
+																required disabled></td>
+
+														</tr>
+
+													</table>
+													<div class="form-btn-box">
+														<fieldset>
+															<button type="submit" class="form-btn">검색</button>
+															<button type="reset" class="form-btn">초기화</button>
+														</fieldset>
+													</div>
+												</fieldset>
+											</div>
+										</form>
 
 										<div class="subtitle">수리기사</div>
 										<table id="search-box">
@@ -388,60 +457,60 @@
 											</div>
 											<!-- 휴가신청 조회 및 삭제 -->
 											<form id="deleteForm" action="/holiday/delete" method="post">
-											<div class="scroll-container">
-												<table>
-													<thead>
-														<tr>
-															<th>순번</th>
-															<th>휴가아이디</th>
-															<th>휴가신청일</th>
-															<th>휴가시작일</th>
-															<th>휴가종료일</th>
-															<th>일수</th>
-															<th>실제사용</th>
-															<th>선택</th>
-														</tr>
-													</thead>
-													<tbody>
-														<c:forEach var="holiday" items="${holidays}"
-															varStatus="loop">
-
+												<div class="scroll-container">
+													<table>
+														<thead>
 															<tr>
-																<td><c:out value="${loop.index + 1}" /></td>
-																<td><c:out value="${holiday.holidaySeq}" /></td>
-																<td><c:out value="${holiday.appDate}" /></td>
-																<td><c:out value="${holiday.startDate}" /></td>
-																<td><c:out value="${holiday.endDate}" /></td>
-																<td><c:set var="startDate"
-																		value="${holiday.startDate.time}" /> <c:set
-																		var="endDate" value="${holiday.endDate.time}" /> <c:set
-																		var="dateDifference"
-																		value="${(endDate - startDate) / (1000 * 3600 * 24) + 1}" />
-																	<fmt:formatNumber var="formattedDateDifference"
-																		value="${dateDifference}" /> <c:out
-																		value="${formattedDateDifference}" /></td>
-																<td><c:out value="${holiday.actualUse}" /></td>
-
-
-
-																<td><c:choose>
-																		<c:when
-																			test="${holiday.actualUse == 'N' || holiday.startDate <= now}">
-																			<input type="radio" name="selectedHolidaySeq"
-																				value="" disabled />
-																		</c:when>
-																		<c:otherwise>
-																			<input type="radio" name="holidaySeq"
-																				value="${holiday.holidaySeq}" />
-																		</c:otherwise>
-																	</c:choose></td>
-
+																<th>순번</th>
+																<th>휴가아이디</th>
+																<th>휴가신청일</th>
+																<th>휴가시작일</th>
+																<th>휴가종료일</th>
+																<th>일수</th>
+																<th>실제사용</th>
+																<th>선택</th>
 															</tr>
+														</thead>
+														<tbody>
+															<c:forEach var="holiday" items="${holidays}"
+																varStatus="loop">
+
+																<tr>
+																	<td><c:out value="${loop.index + 1}" /></td>
+																	<td><c:out value="${holiday.holidaySeq}" /></td>
+																	<td><c:out value="${holiday.appDate}" /></td>
+																	<td><c:out value="${holiday.startDate}" /></td>
+																	<td><c:out value="${holiday.endDate}" /></td>
+																	<td><c:set var="startDate"
+																			value="${holiday.startDate.time}" /> <c:set
+																			var="endDate" value="${holiday.endDate.time}" /> <c:set
+																			var="dateDifference"
+																			value="${(endDate - startDate) / (1000 * 3600 * 24) + 1}" />
+																		<fmt:formatNumber var="formattedDateDifference"
+																			value="${dateDifference}" /> <c:out
+																			value="${formattedDateDifference}" /></td>
+																	<td><c:out value="${holiday.actualUse}" /></td>
 
 
-														</c:forEach>
-													</tbody>
-												</table>
+
+																	<td><c:choose>
+																			<c:when
+																				test="${holiday.actualUse == 'N' || holiday.startDate <= now}">
+																				<input type="radio" name="selectedHolidaySeq"
+																					value="" disabled />
+																			</c:when>
+																			<c:otherwise>
+																				<input type="radio" name="holidaySeq"
+																					value="${holiday.holidaySeq}" />
+																			</c:otherwise>
+																		</c:choose></td>
+
+																</tr>
+
+
+															</c:forEach>
+														</tbody>
+													</table>
 												</div>
 												<button type="button" id="cancelButton">휴가 취소</button>
 											</form>
@@ -537,8 +606,12 @@
 
 										<script>
 											// 모델에서 잔여일수 데이터 가져와서 표시
-											var remainingDays = ${remainingDays};
-											document.getElementById("remainingDays").textContent = remainingDays;
+											var remainingDays = $
+											{
+												remainingDays
+											};
+											document
+													.getElementById("remainingDays").textContent = remainingDays;
 
 											function calculateDays() {
 												var startDate = new Date(
