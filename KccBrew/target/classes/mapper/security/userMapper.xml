@@ -7,8 +7,141 @@
 		type="kr.co.kccbrew.comm.security.model.UserVo">
 		<result property="userId" column="USER_ID" />
 		<result property="userPwd" column="USER_PWD" />
+		<result property="userNm" column="USER_NM" />
+		<result property="userTelNo" column="USER_TELNO" />
+		<result property="userEmail" column="USER_EMAIL" />
+		<result property="userAddr" column="USER_ADDR" />
+		<result property="eqpmnCd" column="EQPMN_CD" />
+		<result property="fileSeq" column="FILE_SEQ" />
+		<result property="locationCd" column="LOCATION_CD" />
 		<result property="userTypeCd" column="USER_TYPE_CD" />
+		<result property="regDate" column="REG_DTTM" />
+		<result property="modDate" column="MOD_DTTM" />
+		<result property="useYn" column="USE_YN" />
+		<result property="approveAdmin" column="APPROVE_ADMIN" />
+		<result property="approveYn" column="APPROVE_YN" />
 	</resultMap>
+
+	<resultMap id="storeResult"
+		type="kr.co.kccbrew.strMng.model.StrMngVo">
+		<result property="storeSeq" column="STORE_SEQ" />
+		<result property="storeNm" column="STORE_NM" />
+		<result property="storeAddr" column="STORE_ADDR" />
+		<result property="latitude" column="LATITUDE" />
+		<result property="longitude" column="LONGITUDE" />
+		<result property="storeTelNo" column="STORE_TELNO" />
+		<result property="locationCd" column="LOCATION_CD" />
+		<result property="regDttm" column="REG_DTTM" />
+		<result property="regUser" column="REG_USER" />
+		<result property="modDttm" column="MOD_DTTM" />
+		<result property="modUser" column="MOD_USER" />
+		<result property="useYn" column="USE_YN" />
+		<result property="storeAddrDtl" column="STORE_ADDR_DTL" />
+	</resultMap>
+
+	<!-- 점포 목록 조회 -->
+	<select id="selectStoreList" parameterType="hashmap"
+		resultType="kr.co.kccbrew.comm.security.model.UserVo">
+<![CDATA[
+	SELECT store_seq AS "storeSeq",
+			store_nm AS "storeNm",
+			store_addr AS "storeAddr",
+			store_telno AS "storeTelNo"
+    FROM (SELECT rownum AS rnum,
+            store_seq,
+			store_nm,
+			store_addr,
+			store_telno
+        FROM store
+        WHERE use_yn='Y' AND (store_nm LIKE '%'||#{keyword}||'%' or store_addr LIKE '%'||#{keyword}||'%')
+        )
+    WHERE rnum BETWEEN #{start} AND #{end} 
+]]>
+	</select>
+
+	<!-- 조회한 점포 총 갯수 -->
+	<select id="countStoreList" parameterType="string"
+		resultType="integer">
+<![CDATA[
+	SELECT COUNT(*) FROM store 
+	WHERE use_yn='Y' AND (store_nm LIKE '%'||#{keyword}||'%' or store_addr LIKE '%'||#{keyword}||'%')
+]]>
+	</select>
+
+	<!-- 운영중인 장비 코드 조회 -->
+	<select id="selectMechineCode"
+		resultType="kr.co.kccbrew.comm.security.model.UserVo">
+<![CDATA[
+	SELECT 	grp_cd_dtl_id AS "grpCdDtlId",
+			grp_cd_id AS "grpCdId",
+			grp_cd_dtl_nm AS "grpCdDtlNm"
+	FROM group_code_detail
+	WHERE use_yn='Y' AND grp_cd_id='M'
+	ORDER BY group_code_idx
+]]>
+	</select>
+
+	<!-- 사용자 아이디 중복 체크 -->
+	<select id="checkUserId" parameterType="string"
+		resultType="integer">
+<![CDATA[
+	SELECT COUNT(*) FROM users WHERE user_id=#{userId}
+]]>
+	</select>
+
+	<!-- 지역 코드 조회 -->
+	<select id="selectLocationCd"
+		resultType="kr.co.kccbrew.comm.security.model.UserVo">
+<![CDATA[
+	SELECT grp_cd_dtl_id AS "grpCdDtlId",
+			grp_cd_id AS "grpCdId",
+			grp_cd_dtl_nm AS "grpCdDtlNm"
+	FROM group_code_detail
+	WHERE grp_cd_id='L'
+]]>
+	</select>
+
+	<!-- 지역 상세 코드 조회 -->
+	<select id="selectLocationDtlCd" parameterType="string"
+		resultType="kr.co.kccbrew.comm.security.model.UserVo">
+<![CDATA[
+	SELECT grp_cd_dtl_id AS "grpCdDtlId",
+			grp_cd_id AS "grpCdId",
+			grp_cd_dtl_nm AS "grpCdDtlNm"
+	FROM group_code_detail
+	WHERE grp_cd_id='LL' AND grp_cd_dtl_id LIKE #{locationCd}||'%'
+]]>
+	</select>
+
+	<!-- 사용자 사진 기본 정보 등록 -->
+	<insert id="insertFileInfo"
+		parameterType="kr.co.kccbrew.comm.security.model.UserVo">
+		INSERT INTO file_info
+		VALUES(file_seq.NEXTVAL,'01',SYSDATE,#{userId},SYSDATE,#{userId})
+		<selectKey resultType="int" keyProperty="fileSeq"
+			order="AFTER">
+			SELECT NVL(MAX(file_seq), 0) AS "fileSeq" FROM file_info
+		</selectKey>
+	</insert>
+	
+	<!-- 사용자 사진 상세 정보 등록 -->
+	<insert id="insertFileDtlInfo"
+		parameterType="kr.co.kccbrew.comm.security.model.UserVo">
+<![CDATA[
+	INSERT INTO file_detail_info VALUES(
+			file_dtl_seq.NEXTVAL,
+			#{fileSeq},
+			#{fileOriginalNm},
+			#{storageLocation},
+			SYSDATE,
+			#{userId},
+			SYSDATE,
+			#{fileServerNm},
+			#{fileFmt},
+			#{userId})
+]]>
+	</insert>
+
 
 	<!-- 회원가입 -->
 	<insert id="registerUser"
@@ -49,18 +182,35 @@
 		SYSDATE,
 		SYSDATE,
 		'Y',
-		#{userSalt},
+		null,
 		'N',
 		null
 		)
 	</insert>
 
+	<!-- 점주인 경우 STORE_USER_MAP테이블에 등록 -->
+	<insert id="insertStoreUserMap" parameterType="hashmap">
+<![CDATA[
+	INSERT INTO store_user_map VALUES(#{storeId},#{userId})
+]]>
+	</insert>
+
 	<!-- ID로 회원정보 가져오기 -->
 	<select id="getUserById" parameterType="String"
-		resultType="kr.co.kccbrew.comm.security.model.UserVo">
-		SELECT users.USER_ID AS userId, users.USER_PWD AS userPwd,
-		users.USER_TYPE_CD AS userTypeCd
+		resultMap="userResult">
+		SELECT *
 		FROM users WHERE
+		USER_ID = #{userId}
+	</select>
+
+	<!-- 점주ID로 지점 가져오기 -->
+	<select id="getStoreById" parameterType="String"
+		resultMap="storeResult">
+		SELECT S.*
+		FROM STORE_USER_MAP SUM
+		INNER JOIN STORE S ON
+		SUM.STORE_SEQ = S.STORE_SEQ
+		WHERE
 		USER_ID = #{userId}
 	</select>
 

@@ -56,7 +56,6 @@
 									onkeyup="enterkey();" type="password" id="pw" name="password"
 									title="비밀번호" placeholder="비밀번호">
 							</div>
-							<p>
 								<button type="submit">로그인</button>
 								<input type="hidden" name="${_csrf.parameterName}"
 									value="${_csrf.token}" />
@@ -82,7 +81,7 @@
 				<div>
 					<img src="<c:url value="resources/img/login/login_signup.png"/>">
 				</div>
-				<a href="/register-form" class="icon_02">
+				<a href="/signup" class="icon_02">
 					<dl>
 						<dd>회원 가입</dd>
 						<dt>어서오세요!</dt>

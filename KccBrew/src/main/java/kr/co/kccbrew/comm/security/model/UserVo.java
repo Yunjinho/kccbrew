@@ -1,10 +1,13 @@
 package kr.co.kccbrew.comm.security.model;
 
+import java.sql.Date;
+
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * 사용자 회원가입을 위한 Vo
@@ -12,6 +15,7 @@ import lombok.Data;
  *
  */
 @AllArgsConstructor
+@NoArgsConstructor
 @Data
 @Component
 public class UserVo {
@@ -29,6 +33,10 @@ public class UserVo {
 	private MultipartFile imgFile;
 	private int fileSeq;
 	private String approveYn;
+	private String useYn;
+	private Date regDate;
+	private Date modDate;
+	private String approveAdmin;
 	//가맹 점주 데이터
 	private int storeId;
 	//수리 기사 데이터
@@ -67,35 +75,6 @@ public class UserVo {
 	//멤버 로컬 저장 위치
 	private String localSavePath;
 	private String serverSavePath;
-	
-	public UserVo() {
-		this.userTypeCd = "";
-		this.userId = "";
-		this.userPwd = "";
-		this.userNm = "";
-		this.userTelNo = "";
-		this.userEmail = "";
-		this.userAddr = "";
-		this.userAddressDetail = "";
-		this.userSalt = "";
-		this.approveYn = "";
-		this.eqpmnCd = "";
-		this.locationCd = "";
-		this.grpCdDtlId = "";
-		this.grpCdId = "";
-		this.grpCdNm = "";
-		this.grpCdDtlNm = "";
-		this.storeSeq = "";
-		this.storeNm = "";
-		this.storeAddr = "";
-		this.storeTelNo = "";
-		this.fileOriginalNm = "";
-		this.fileServerNm = "";
-		this.fileFmt = "";
-		this.storageLocation = "";
-		this.localSavePath = "";
-		this.serverSavePath = "";
-	}
 	
 	
 }

@@ -1,5 +1,7 @@
 package kr.co.kccbrew.comm.security.controller;
 
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,7 +15,8 @@ public class Example01Controller {
     }
     
     @GetMapping("/admin/main")
-    public String requestMethod2(Model model) {
+    public String requestMethod2(Model model, @AuthenticationPrincipal User currentUser) {
+        System.out.println("currentUser: " + currentUser);
         model.addAttribute("data", "/webpage01/adminPage.jsp");
         return "security/webpage01/adminPage";
     }

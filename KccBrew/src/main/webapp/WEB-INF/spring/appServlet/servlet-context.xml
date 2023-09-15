@@ -59,9 +59,9 @@
 
 	<!-- Controller -->
 	<context:component-scan base-package="kr.co.kccbrew" />
-	<context:component-scan base-package="kr.co.kccbrew.comm.login.controller" />
+	<!-- <context:component-scan base-package="kr.co.kccbrew.comm.login.controller" /> -->
 	<context:component-scan base-package="kr.co.kccbrew.comm.main.controller" />
-	<context:component-scan base-package="kr.co.kccbrew.comm.register.controller" />
+	<!-- <context:component-scan base-package="kr.co.kccbrew.comm.register.controller" /> -->
 	<context:component-scan base-package="kr.co.kccbrew.strMng.controller" />
 	<context:component-scan base-package="kr.co.kccbrew.sysMng.cdMng.controller" />
 	<context:component-scan base-package="kr.co.kccbrew.sysMng.logMng.controller" />

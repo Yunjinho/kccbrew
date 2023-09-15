@@ -11,7 +11,7 @@
 
 	<!-- 회원정보 -->
 	<beans:bean id="customUserDetailsService"
-		class="kr.co.kccbrew.comm.security.controller.CustomUserDetailsService" />
+		class="kr.co.kccbrew.comm.security.service.CustomUserDetailsService" />
 
 	<!-- 비밀번호 암호화 -->
 	<beans:bean id="passwordEncoder"
@@ -20,10 +20,20 @@
 			value="12" />
 	</beans:bean>
 
+	<!-- 로그인 성공시 수행 -->
+	<beans:bean id="customAuthenticationSuccessHandler"
+		class="kr.co.kccbrew.comm.security.controller.CustomAuthenticationSuccessHandler" />
+
 
 	<http auto-config="true" use-expressions="true">
+		<intercept-url pattern="/resources/**"
+			access="permitAll" />
+
 		<!-- 비회원만 접근가능 -->
 		<intercept-url pattern="/login" access="isAnonymous()" />
+		<intercept-url pattern="/signup" access="isAnonymous()" />
+		<intercept-url pattern="/register"
+			access="isAnonymous()" />
 
 		<!-- 관리자 접근가능 -->
 		<intercept-url pattern="/admin/**"
@@ -39,20 +49,20 @@
 		<!-- 수리기사 접근가능 -->
 		<intercept-url pattern="/mecha/**"
 			access="hasRole('ROLE_MECHA')" />
-		<intercept-url pattern="/**" access="permitAll" />
+
+		<intercept-url pattern="/**" access="isAuthenticated()" />
 
 		<!-- 로그인 설정 -->
 		<form-login login-page="/login"
-									login-processing-url="/login"
-									default-target-url="/admin" 
-									username-parameter="username" 
-									password-parameter="password"
-									authentication-failure-url="/user/loginform?error=true" />
+			login-processing-url="/login" default-target-url="/security-test"
+			username-parameter="username" password-parameter="password"
+			authentication-failure-url="/user/loginform?error=true"
+			authentication-success-handler-ref="customAuthenticationSuccessHandler" />
 
 		<csrf disabled="true" />
 
 		<!-- 로그아웃 설정 -->
-		<logout logout-url="/logout" logout-success-url="/logout" />
+		<logout logout-url="/logout" logout-success-url="/login" />
 	</http>
 
 

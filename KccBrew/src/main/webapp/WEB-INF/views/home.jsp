@@ -7,9 +7,6 @@
 </head>
 <body>
 <script>
-window.onload=function(){
-	location.href="/login"
-}
 </script>
 </body>
 </html>

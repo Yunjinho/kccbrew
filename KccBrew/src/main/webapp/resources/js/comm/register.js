@@ -11,33 +11,33 @@ function clearAddInfo(){
 	//기사, 관리자 이미지 정보
 	$("input[name=imgFile]").val("");
 	$(".photo>img").css("display","none");
-	
+
 	// 경고문 삭제
 	$("#storeAddMsg").css("display","none");
-	
+
 }
 function changeType(typeNum){
 	if(typeNum=='01'){
 		$("#storemng-register-form").css("display","none");
 		$("#engmng-register-form").css("display","none");
-		
+
 		$("#mechanic").css("text-decoration","none");
 		$("#store_manager").css("text-decoration","none");
 		$("#manger").css("text-decoration","underline");
-		
+
 		$("#insert-img-box").css("display","flex");
 		$("input[name=userTypeCd]").val("01");
 		clearAddInfo();
 	}else if(typeNum=='02'){
 		$("#storemng-register-form").css("display","block");
 		$("#engmng-register-form").css("display","none");
-		
+
 		$("#mechanic").css("text-decoration","none");
 		$("#store_manager").css("text-decoration","underline");
 		$("#manger").css("text-decoration","none");
-		
+
 		$("#insert-img-box").css("display","none");
-		
+
 		$("input[name=userTypeCd]").val("02");
 		clearAddInfo();
 	}else{
@@ -52,37 +52,38 @@ function changeType(typeNum){
 		$("input[name=userTypeCd]").val("03");
 		clearAddInfo();
 	}
-	
+
 }
 //점포 목록 테이블 데이터 변경
 function insertTableContent(data){
 	var content = "<thead><tr><td scope='col'>선택</td><td scope='col'>점포명</td><td scope='col'>주소</td></tr></thead><tbody class='table-group-divider'>";
 	for (var i = 0; i < data[0].length; i++) {
 		content += '<tr><td scope="row"><input type="radio" name="select-store">'
-				+ '<input type="hidden" value="'+data[0][i].storeSeq+'"></td>\n'
-				+ '<td scope="row">'+data[0][i].storeNm+'</td>\n' 
-				+ '<td scope="row">'+data[0][i].storeAddr+'</td>\n</tr>'; 
+			+ '<input type="hidden" value="'+data[0][i].storeSeq+'"></td>\n'
+			+ '<td scope="row">'+data[0][i].storeNm+'</td>\n' 
+			+ '<td scope="row">'+data[0][i].storeAddr+'</td>\n</tr>'; 
 	}
 	content+='</tbody>'
-	$("#store-list").html(content);
+		$("#store-list").html(content);
 	$(".hidden-keyword").val(data[2].keyword);
 }
 
 //점포 목록 조회에서 페이지 이동
 function movePage(page){
+	console.log("movePage함수 실행!");
 	var keyword=$(".hidden-keyword").val();
 	$.ajax({
-	    type : "GET",           // 타입 (get, post, put 등등)
-	    url : "/search-store-list",           // 요청할 서버url
-	    dataType : "json",       // 데이터 타입 (html, xml, json, text 등등)
-	    data : {
+		type : "GET",           // 타입 (get, post, put 등등)
+		url : "/search-store-list",           // 요청할 서버url
+		dataType : "json",       // 데이터 타입 (html, xml, json, text 등등)
+		data : {
 			'keyword' : keyword,
 			'page':page
 		},
-	    success : function(data) { // 결과 성공 콜백함수
+		success : function(data) { // 결과 성공 콜백함수
 			insertTableContent(data);
 			insertPageContent(data);					
-	    }
+		}
 	});
 }
 
@@ -90,28 +91,28 @@ function movePage(page){
 function insertPageContent(data){
 	var inputPagingString="";
 
-	
+
 	if (data[1].nowPageBlock > 1) {//첫 페이지 블럭
 		inputPagingString += '<li class="page-number">' + '<p onclick=movePage"'
-							+ (data[1].startPage - 1) + ')">◀</p>\n' + '</li>\n';
+		+ (data[1].startPage - 1) + ')">◀</p>\n' + '</li>\n';
 	}
 	for (var i = data[1].startPage; i <= data[1].endPage; i++) {
 		if (i == data[1].nowPage) {
 			inputPagingString += '<li class="page-number">'
-								+ '<p onclick="movePage(' + i	+ ')"><b>' + i
-								+ '</b></p>\n' + '</li>\n'
+				+ '<p onclick="movePage(' + i	+ ')"><b>' + i
+				+ '</b></p>\n' + '</li>\n'
 		} else {
 			inputPagingString += '<li class="page-number">' 
-								+ '<p onclick="movePage('+ i + ')">' + i
-								+ '</p>\n</li>\n'
+				+ '<p onclick="movePage('+ i + ')">' + i
+				+ '</p>\n</li>\n'
 		}
 	}
 	if (data[1].nowPageBlock < data[1].totalPageBlock) { //마지막 페이지 블럭
 		inputPagingString += '<li class="page-number">' 
-							+ '<p onclick="movePage('+ (data[1].endPage + 1) + ')">▶</p>\n' + '</li>\n'
+			+ '<p onclick="movePage('+ (data[1].endPage + 1) + ')">▶</p>\n' + '</li>\n'
 	}
 	$(".paging").html(inputPagingString)
-	
+
 }
 //사용자 아이디 조건 확인
 function checkUserId(){
@@ -164,12 +165,12 @@ function checkUserPwd(){
 	}else{
 		//비밀번호 정규식 체크
 		var regex=/^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@#$%^&+=!_])[A-Za-z\d@#$%^&+=!_]{8,16}$/
-		if(!(regex).test(userPwd.val())){
-			$("#userPwdMsg").html("비밀번호: 8~16자의 최소 1개 이상의 영문 대/소문자, 숫자, 특수문자(@#$%^&+=!_)를 포함해야 합니다.")
-			$("#userPwdMsg").css("display","block");
-			userPwd.parent().css("border","1px solid red");
-			return false;
-		}
+			if(!(regex).test(userPwd.val())){
+				$("#userPwdMsg").html("비밀번호: 8~16자의 최소 1개 이상의 영문 대/소문자, 숫자, 특수문자(@#$%^&+=!_)를 포함해야 합니다.")
+				$("#userPwdMsg").css("display","block");
+				userPwd.parent().css("border","1px solid red");
+				return false;
+			}
 		userPwd.parent().css("border","none");
 		$("#userPwdMsg").css("display","none");
 		return true;
@@ -199,12 +200,12 @@ function checkUserTelNo(){
 	}else{
 		//전화번호 정규식 체크
 		var regex=/^\d{10,11}$/
-		if(!(regex).test(userTelNo.val())){
-			$("#userTelNoMsg").html("휴대전화번호: 휴대전화번호가 정확한지 확인해주세요.")
-			$("#userTelNoMsg").css("display","block");
-			userTelNo.parent().css("border","1px solid red");
-			return false;
-		}
+			if(!(regex).test(userTelNo.val())){
+				$("#userTelNoMsg").html("휴대전화번호: 휴대전화번호가 정확한지 확인해주세요.")
+				$("#userTelNoMsg").css("display","block");
+				userTelNo.parent().css("border","1px solid red");
+				return false;
+			}
 		userTelNo.parent().css("border","none");
 		$("#userTelNoMsg").css("display","none");
 		return true;
@@ -235,12 +236,12 @@ function checkUserEmail(){
 	}else{
 		//이메일 정규식 체크
 		var regex=/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
-		if(!(regex).test(userEmail.val())){
-			$("#userEmailMsg").html("이메일: 이메일이 정확한지 확인해주세요.")
-			$("#userEmailMsg").css("display","block");
-			userEmail.parent().css("border","1px solid red");
-			return false;
-		}
+			if(!(regex).test(userEmail.val())){
+				$("#userEmailMsg").html("이메일: 이메일이 정확한지 확인해주세요.")
+				$("#userEmailMsg").css("display","block");
+				userEmail.parent().css("border","1px solid red");
+				return false;
+			}
 		userEmail.parent().css("border","none");
 		$("#userEmailMsg").css("display","none");
 		return true;
@@ -289,7 +290,7 @@ function checkEqpmnCd(){
 		$("#mechaAddMsg").css("display","none");
 		return true;
 	}
-	
+
 }
 
 //사진 등록했는지 확인
@@ -309,7 +310,7 @@ function checkUploadImg(){
 function changeLosctionDtlCd(data){
 	var locOption=$("select[name=locationCd]");
 	var content='<option>지역 상세 선택</option>';
-	
+
 	for(var i=0;i<data.length;i++){
 		content +='<option value="'+data[i].grpCdDtlId+'" >'+data[i].grpCdDtlNm+'</option>'
 	}
@@ -320,15 +321,15 @@ function changeLosctionDtlCd(data){
 function changeLocationCd(){
 	var locCd = $("select[name=location] option:selected").val();
 	$.ajax({
-	    type : "GET",           // 타입 (get, post, put 등등)
-	    url : "/search-location-code",           // 요청할 서버url
-	    dataType : "json",       // 데이터 타입 (html, xml, json, text 등등)
-	    data : {
+		type : "GET",           // 타입 (get, post, put 등등)
+		url : "/search-location-code",           // 요청할 서버url
+		dataType : "json",       // 데이터 타입 (html, xml, json, text 등등)
+		data : {
 			'locCd' : locCd,
 		},
-	    success : function(data) { // 결과 성공 콜백함수
+		success : function(data) { // 결과 성공 콜백함수
 			changeLosctionDtlCd(data);
-	    }
+		}
 	});
 }
 
@@ -336,23 +337,23 @@ function changeLocationCd(){
 function imgTypeCheck(fileName){
 	var imgFile=fileName.files[0];
 	//파일 확장자 추출	
-    var fileLen = imgFile.name.length;
-    var lastDot = imgFile.name.lastIndexOf('.');
-    var fileType = imgFile.name.substring(lastDot, fileLen).toLowerCase();
-	
+	var fileLen = imgFile.name.length;
+	var lastDot = imgFile.name.lastIndexOf('.');
+	var fileType = imgFile.name.substring(lastDot, fileLen).toLowerCase();
+
 	//확장자 비교
 	if(fileType == ".jpeg" || fileType == ".jpg" || fileType == ".png"){
 		$("#imgFileMsg").css("display","none")
-	    var reader = new FileReader();
-	    reader.onload = (e) => {
+		var reader = new FileReader();
+		reader.onload = (e) => {
 			var image = new Image();
 			image.src=e.target.result;
 			$(".photo>img").attr("src",e.target.result);
 			$(".photo>img").css("display","block");
 			$(".photo>p").css("display","none");
-	    };
+		};
 		$(".insert-img").css("border","none");
-	    reader.readAsDataURL(imgFile);
+		reader.readAsDataURL(imgFile);
 	}else{
 		$("#imgFileMsg").html("사용자 사진 : jpeg, jpg, png 확장자를 가진 파일만 사용하실 수 있습니다.")
 		$(".insert-img").css("border","1px solid red");
@@ -365,18 +366,18 @@ function imgTypeCheck(fileName){
 
 
 window.onload = function(){
-	 $(".paging>li").eq(0).children().css("font-weight","bold");
+	$(".paging>li").eq(0).children().css("font-weight","bold");
 
 	//카카오 주소 API
 	$("#address_kakao").click(function(){
-        new daum.Postcode({
-            oncomplete: function(data) { //선택시 입력값 세팅
-                document.getElementById("address_kakao").value = data.address; // 주소 넣기
-                document.querySelector("input[name=userAddressDetail]").focus(); //상세입력 포커싱
-            }
-        }).open();
+		new daum.Postcode({
+			oncomplete: function(data) { //선택시 입력값 세팅
+				document.getElementById("address_kakao").value = data.address; // 주소 넣기
+				document.querySelector("input[name=userAddressDetail]").focus(); //상세입력 포커싱
+			}
+		}).open();
 	})
-	
+
 	//아이디 입력창 포커스 아웃됐을 때 아이디 조건이나 중복 아이디인 경우 알림 
 	$("input[name=userId]").focusout(function(){
 		checkUserId();
@@ -407,21 +408,21 @@ window.onload = function(){
 	$("#store-addr").click(function(){
 		$(".search-store").css("display","block");
 	})
-	
+
 	// 모달창 밖에 영역 클릭시 삭제
 	window.addEventListener("click", function(e) {
 		if ($(e.target).hasClass('search-store')) {
 			$(".search-store").css("display","none");
 		}
 	});
-	
+
 	//점주의 점포등록위해 주소 클릭
 	$("#select-store").click(function(){
 		var checked=$("input[name=select-store]:checked");
 		var storeId;
 		var storeAddr;
 		var storeNm;
-		
+
 		// 체크된 체크박스 값을 가져온다
 		checked.each(function(i) {
 			// checkbox.parent() : checkbox의 부모는 <td>이다.
@@ -438,27 +439,27 @@ window.onload = function(){
 		$("input[name=storeNm]").val(storeNm);
 		$(".search-store").css("display","none");
 	})
-	
+
 	//점포 검색한에서 엔터키 입력
 	$(".search-input").keyup(function(){
 		if(window.event.keyCode==13){
 			var keyword=$(".search-input").val();
 			$.ajax({
-			    type : "GET",           // 타입 (get, post, put 등등)
-			    url : "/search-store-list",           // 요청할 서버url
-			    dataType : "json",       // 데이터 타입 (html, xml, json, text 등등)
-			    data : {
+				type : "GET",           // 타입 (get, post, put 등등)
+				url : "/search-store-list",           // 요청할 서버url
+				dataType : "json",       // 데이터 타입 (html, xml, json, text 등등)
+				data : {
 					'keyword' : keyword,
 					'page':1
 				},
-			    success : function(data) { // 결과 성공 콜백함수
+				success : function(data) { // 결과 성공 콜백함수
 					insertTableContent(data);
 					insertPageContent(data);					
-			    }
+				}
 			});
 		}
 	})
-	
+
 	//회원가입 클릭시 유효성 검사
 	$("#signup").click(function(){
 		var userTypeCd=$("input[name=userTypeCd]").val();
@@ -477,7 +478,7 @@ window.onload = function(){
 		}else{
 			if(!checkUploadImg())return;
 		}
-		
+
 		if(userTypeCd=="03"){
 			if(!checkEqpmnCd())return;
 		}
