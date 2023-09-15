@@ -28,8 +28,8 @@
 		border: none;
 	}
 	.body-wrapper{
-		padding: 30px 200px;
-		height:100vh;
+		padding:20px 20px;
+		padding-bottom: 0;
 		flex-direction: column;
 	    background-color: #eef4ff;
 	}
@@ -50,7 +50,7 @@
         height:217px;
         max-height:100%;
 		flex: 1;
-		margin: 0 3px;
+		margin-right: 5px;
 		background-color: #ffffff;
 		border-top: 1.5px solid #1A55A1;
 		border-bottom: 1.5px solid #1A55A1;
@@ -139,133 +139,23 @@
 	
 /*********  하단 메뉴   **********/
 	.bottom-menu {
+		width:100%;
 		flex:0.6;
 		display: flex;
 		justify-content: space-between;
 		min-height: 700px;
-		padding:4px;
+		margin-top: 5px;
 	}
 
-/************* 회원 정보 및 as 안내 ******************/
-	.profileAndguide{
-		flex:0.2;
-		display:flex;
-		flex-direction:column;
-		justify-content:space-between;
-		min-height:700px;
-		background-color: #eef4ff;
-		color:#ffffff;
-		box-sizing: border-box;
-	}
 
-	.user-profile {
-		height:226px;
-		margin-bottom:5px;
-		box-sizing:border-box;
-		flex:1;
-		display:flex;
-		flex-direction:column;
-		justify-content:space-between;
-		background-color: #1A55A1;
-	}
-	.inner-box {
-		padding:30px 20px;
-	}
-	.name {
-		font-size: 1.5em;
-	}
-	.job {
-		font-size: 1em;
-	}
-	
-	.last-ip, .last-login {
-		font-size: 0.8em;
-		font-weight: 600;
-	}
-	.ip, .time {
-		font-size:0.8em;
-	}
-	.buttons {
-		text-align: center;
-	}
-	.chpwd, .logout {
-		color:#ffffff;
-		cursor: pointer;
-		font-weight: normal;
-		font-size:1em;
-		margin-bottom: 10px;
-	}
-	.chpwd:hover, .logout:hover {
-		text-decoration: underline;
-	}
-	.shortcut-service {
-		height:226px;
-		flex:1;
-		margin-bottom:5px;
-		color: #111111;
-		background-color: #ffffff;
-	}
-	.shortcut-service p{
-		text-align: left;
-		font-size:1.2em;
-		font-weight: bold;
-	}
-	.shortcuts {
-		margin-bottom: 10px;
-		color: #717171;
-	}
-	.round-btn {
-		display:inline-block;
-		text-align:center;
-		font-size:0.9em;
-		width:30px;
-		height:20px;
-		line-height:17px;
-		color: #1A55A1;
-		border:1.5px solid #1A55A1;
-		font-weight: bold;
-		border-radius:75px/ 75px;
-	}
-	.shortcuts a {
-		font-weight: normal;
-		color: #717171;
-		text-decoration: none;
-	}
-	.shortcuts a:hover {
-		text-decoration: underline;
-	}
-	.toKccBrew {
-		position:relative;
-		height:226px;
-		text-align:center;
-		flex:1;
-		color:navy;
-		background-color: #ffffff;
-	}
-	.toKccBrew .inner-box {
-		position:absolute;
-		transform: translate(-50%, -50%);
-		top:50%;
-		left:50%;
-	}
-	.inner-box img{
-		width:200px;
-		height:80px;
-	}
-	.kcclink {
-		cursor:pointer;
-		border:3px solid #1A55A1;
-		color:#111111;
-		border-radius: 10px;
-	}
 	
 	
 /************ A/S 일정 **************/
 	.todoAndetc {
-		flex:0.5;	
+		flex:0.498;	
 		display: flex;
 		flex-direction: column;
-		margin-left: 5px;
+		margin-right:5px;
 	}
 
 	.to-do-list {
@@ -386,9 +276,8 @@
 /************* 달력 ******************/	
 
 	.calAndetc {
-		flex:0.3;
+		flex:0.502;
 		background-color:#ffffff;
-		margin-left:5px;
 		width:500px;
 		min-height:700px;
 	}

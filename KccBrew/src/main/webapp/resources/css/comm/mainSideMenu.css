@@ -1,0 +1,136 @@
+@charset "UTF-8";
+/************* 회원 정보 및 페이지 링크 ******************/
+	.profileAndguide{
+		font-family: 'Noto-Sans';
+		flex:0.2;
+		display:flex;
+		height:100%;
+		flex-direction:column;
+		justify-content:space-between;
+		min-height:700px;
+		background-color: #eef4ff;
+		color:#ffffff;
+		box-sizing: border-box;
+	}
+
+	.user-profile {
+		height:226px;
+		margin-bottom:5px;
+		box-sizing:border-box;
+		flex:1;
+		display:flex;
+		flex-direction:column;
+		justify-content:space-between;
+		background-color: #1A55A1;
+	}
+	.inner-box {
+		padding:25px 20px;
+	}
+	.nameAndPhoto {
+		position:relative;
+		display: flex;
+		height:50px;
+	}
+	.name-wrapper {
+		flex:0.4;
+	}
+	.photo-wrapper {
+		flex:0.6;
+		top:0;
+	}
+	.photo-wrapper img{
+		width:90px;
+		height:110px;
+		position: absolute;
+		top:-20px;
+		right:10px;
+	}
+	.name {
+		font-size: 1.5em;
+	}
+	.job {
+		font-size: 1em;
+	}
+	
+	.last-ip, .last-login {
+		font-size: 0.8em;
+		font-weight: 600;
+	}
+	.ip, .time {
+		font-size:0.8em;
+	}
+	.buttons {
+		text-align: center;
+		height:30px;
+	}
+	.toMyPage, .logout {
+		color:#ffffff;
+		cursor: pointer;
+		font-weight: normal;
+		font-size:1em;
+		margin-bottom: 10px;
+		text-decoration: none;
+	}
+	.toMyPage:hover, .logout:hover {
+		text-decoration: underline;
+	}
+	.shortcut-service {
+		height:226px;
+		flex:1;
+		margin-bottom:5px;
+		color: #111111;
+		background-color: #ffffff;
+	}
+	.shortcut-service p{
+		text-align: left;
+		font-size:1.2em;
+		font-weight: bold;
+	}
+	.shortcuts {
+		margin-bottom: 10px;
+		color: #717171;
+	}
+	.round-btn {
+		display:inline-block;
+		text-align:center;
+		font-size:0.9em;
+		width:30px;
+		height:20px;
+		line-height:17px;
+		color: #1A55A1;
+		border:1.5px solid #1A55A1;
+		font-weight: bold;
+		border-radius:75px/ 75px;
+	}
+	.shortcuts a {
+		font-weight: normal;
+		color: #717171;
+		text-decoration: none;
+	}
+	.shortcuts a:hover {
+		text-decoration: underline;
+	}
+	.toKccBrew {
+		position:relative;
+		height:226px;
+		text-align:center;
+		flex:1;
+		color:navy;
+		background-color: #ffffff;
+	}
+	.toKccBrew .inner-box {
+		position:absolute;
+		transform: translate(-50%, -50%);
+		top:50%;
+		left:50%;
+	}
+	.tomainimg{
+		width:200px;
+		height:80px;
+	}
+	.kcclink {
+		cursor:pointer;
+		border:3px solid #1A55A1;
+		color:#111111;
+		border-radius: 10px;
+	}

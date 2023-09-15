@@ -248,7 +248,7 @@ WHERE ROW_NUM BETWEEN #{firstRowNum} AND #{lastRowNum}
     		and 
     			a.grp_cd_dtl_id='01'
     			  ) e
-    
+
 	where 
 		a.user_id = #{userId}
 	and a.eqpmn_cd = b.grp_cd_dtl_id(+)

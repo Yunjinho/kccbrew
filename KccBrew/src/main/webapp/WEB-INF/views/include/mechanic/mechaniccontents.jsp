@@ -98,47 +98,7 @@
 		
 		
 		<div class="bottom-menu">
-			<div class="profileAndguide">
-				<div class="user-profile">
-					<div class="inner-box">
-						<span class="name">${sessionScope.userName}</span>님 <br><br>
-						<span class="job">수리기사</span> <br><br><br><br><br><br>
-					</div>
-					<div class="buttons">
-						<button class="chpwd">비밀번호 변경</button> 
-						<span> | </span> 
-						<c:url var="toLogin" value="/loginpage" />
-						<a href="${toLogin}">
-							<button class="logout">
-								로그아웃
-							</button>
-						</a>
-					</div>
-				</div>
-				<div class="shortcut-service">
-					<div class="inner-box">
-						<p>바로 가기 서비스</p> <br><br>
-						<ul class="shortcut-list">
-							<li class="shortcuts"><span class="round-btn">01</span>&nbsp;&nbsp;<a href="#">A/S 접수</a></li>
-							<li class="shortcuts"><span class="round-btn">02</span>&nbsp;&nbsp;<a href="#">A/S 접수</a></li>
-							<li class="shortcuts"><span class="round-btn">03</span>&nbsp;&nbsp;<a href="#">A/S 접수</a></li>
-							<li class="shortcuts"><span class="round-btn">04</span>&nbsp;&nbsp;<a href="#">A/S 접수</a></li>
-						</ul>
-					</div>
-				</div>
-				<div class="toKccBrew">
-					<div class="inner-box">
-						<a href="#">
-							<img alt="logo"  src="${path}/resources/img/logo.png">
-						</a>
-						<a href="#">
-							<button class="kcclink">
-								KccBrew 홈페이지로 이동 ▶
-							</button>
-						</a>
-					</div>
-				</div>
-			</div>
+			
 			<div class="todoAndetc">
 				<div class="to-do-list">
 					<p> A/S 방문 일정  </p>

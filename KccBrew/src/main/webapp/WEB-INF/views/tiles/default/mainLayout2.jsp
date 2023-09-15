@@ -37,9 +37,10 @@
 
 <!--------------------- CSS ----------------------------->
 <!--------------------- 메인 페이지 및 공통 CSS ------------------>
-<link rel="stylesheet" href="${path}/resources/css/comm/mainLayout.css"><link rel="stylesheet" href="${path}/resources/css/comm/reset.css" >
+<link rel="stylesheet" href="${path}/resources/css/comm/mainLayout2.css"><link rel="stylesheet" href="${path}/resources/css/comm/reset.css" >
 <link rel="stylesheet" href="${path}/resources/css/comm/reset.css" >
 <link rel="stylesheet" href="${path}/resources/css/comm/maincontents.css"/>
+<link rel="stylesheet" href="${path}/resources/css/comm/mainSideMenu.css"/>
 <link rel="stylesheet" href="${path}/resources/css/comm/footer.css"/>
 
 
@@ -70,10 +71,14 @@
 		<div id="mainHeader">
 			<tiles:insertAttribute name="header"/>
 		</div>
-		<div id="mainContents">
-			<tiles:insertAttribute name="contents"/>
+		<div id="main-content">
+			<div id="mainSideMenu">
+				<tiles:insertAttribute name="sidemenu"/>
+			</div>
+			<div id="mainContents">
+				<tiles:insertAttribute name="contents"/>
+			</div>
 		</div>
-		
 		<div id="mainFooter">
 			<tiles:insertAttribute name="footer"/>
 		</div>
