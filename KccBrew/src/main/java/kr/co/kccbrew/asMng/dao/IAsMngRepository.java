@@ -58,14 +58,14 @@ public interface IAsMngRepository {
 	 * @param asInfoSeq : seq 번호
 	 * @return
 	 */
-	public AsMngVo selectAsInfoDetail(@Param("asInfoSeq")String asInfoSeq);
+	public AsMngVo selectAsInfoDetail(@Param("asInfoSeq")String asInfoSeq,@Param("asAssignSeq")String asAssignSeq);
 	
 	/**
 	 * AS건에 등록한 파일 정보 조회
 	 * @param fileDtlId
 	 * @return
 	 */
-	public List<AsMngVo> selectAsInfoImg(@Param("asInfoSeq")String fileDtlId);
+	public List<AsMngVo> selectAsImg(@Param("asImgSeq")String fileDtlId);
 	
 	/**
 	 * 지역코드 조회
@@ -95,13 +95,13 @@ public interface IAsMngRepository {
 	 * @param locationCd 지역 코드
 	 * @return
 	 */
-	public List<AsMngVo> selectMechList(@Param("date")String date,@Param("locationCd")String locationCd);
+	public List<AsMngVo> selectMechList(@Param("date")String date,@Param("locationCd")String locationCd,@Param("machineCd")String machineCd);
 	
 	/**
 	 * 기사 배정
 	 * @param asMngVo
 	 */
-	public void insertAsAssign(AsMngVo asMngVo);
+	public AsMngVo insertAsAssign(AsMngVo asMngVo);
 	
 	/**
 	 * AS status 상태 변경
@@ -112,11 +112,16 @@ public interface IAsMngRepository {
 	/**
 	 * 반려 등록
 	 */
-	public void updateInfoReject(@Param("seq")String seq,@Param("content")String content);
-	public void updateAssignReject(@Param("seq")String seq,@Param("content")String content);
+	public void updateInfoReject(@Param("seq")String seq,@Param("content")String content,@Param("userId")String userId);
+	public void updateAssignReject(@Param("seq")String seq,@Param("content")String content,@Param("userId")String userId);
 	
 	/**
 	 * 기사의 배정 반려건에 대한 처리
 	 */
 	public void updateRejectConfirm(Map<String, Object> map);
+	
+	/**
+	 * AS 결과 입력 처리 
+	 */
+	public void insertResult(AsMngVo asMngVo);
 }

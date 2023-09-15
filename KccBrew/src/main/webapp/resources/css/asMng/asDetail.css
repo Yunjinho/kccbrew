@@ -112,7 +112,7 @@ select[name=machineCd]{
 	line-hieght:2;
 }	
 
-.modal{
+.modal-reject{
 	display: none; /* 모달 초기에는 숨김 상태로 설정 */
 	position: fixed; /* 화면에 고정 */
 	z-index: 1; /* 다른 요소보다 위에 표시되도록 설정 */
@@ -123,22 +123,21 @@ select[name=machineCd]{
 	background-color: rgba(0, 0, 0, 0.5); /* 반투명한 배경 색상 */
 	text-align: center;
 }
-.modal-content{
+.reject-content{
 	background-color: #fefefe;
 	margin: 10% auto; /* 모달을 수직, 수평 가운데로 위치시킴 */
 	padding: 20px;
 	border: 1px solid #888;
 	width: 30%;
-	height: 55%;
 	border-radius: 20px;
 	display: flex;
 	flex-direction: column;
 }
-.modal-content>form>div{
+.reject-content>form>div{
 	margin:30px;
 	display: flex;
 }
-.modal-content>form>textarea {
+.reject-content>form>textarea {
 	resize: none;
 	height:300px;
 }
@@ -147,4 +146,19 @@ a{
 }
 .content-textarea{
 	height:100px;
+	resize: none;
+}
+.in-decrease{
+	float:right;
+	margin:0px 10px
+}
+.in-decrease>span{
+	color:#ccc;
+	cursor:pointer
+}
+.in-decrease>span:hover{
+	color:black;
+}
+input[type=file]{
+	margin-bottom:10px;
 }

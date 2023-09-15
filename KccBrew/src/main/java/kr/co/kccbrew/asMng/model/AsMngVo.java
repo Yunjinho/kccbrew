@@ -92,7 +92,9 @@ public class AsMngVo {
     private String asPrice;
     private String resultReapply;
 	
-	
+	//현재페이지
+    private int currentPage;
+    
 	//인자 없는 생성자
 	public AsMngVo() {
 		this.asInfoSeq = "";

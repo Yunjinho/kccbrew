@@ -1,9 +1,14 @@
 function movePage(pageNumber){
-	var url='/searchAsList?page='+pageNumber;
-	$("#search-form").attr("action",url).submit();
+		
+	$("input[name=currentPage]").val(pageNumber);
+	
+	$("#search-form").submit();
 }
-function selectAsDetail(asInfoSeq){
-	location.href="/as-detail?asInfoSeq="+asInfoSeq;
+function selectAsDetail(asInfoSeq,asAssignSeq){
+	if(asAssignSeq==null){
+		asAssignSeq=""
+	}
+	location.href="/as-detail?asInfoSeq="+asInfoSeq+"&asAssignSeq="+asAssignSeq;
 }
 window.onload=function(){
 	history.replaceState({}, null, location.pathname);

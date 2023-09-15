@@ -12,9 +12,12 @@
 	            machine_cd_nm AS "machineCdNm",
 	            machine_cd AS "machineCd",
 	            mechanic_id AS "mechanicId",
-	            reassign AS "reassign"
-	FROM (SELECT a.as_info_seq ,s.store_nm, s.store_addr, a.reg_dttm , status.as_status_nm,status.as_status_cd,machine.machine_cd_nm,machine.machine_cd,ass.mechanic_id,ass.reassign
-		 FROM as_information a 
+	            reassign AS "reassign",
+	            as_assign_seq AS "asAssignSeq",
+	            rowNumber
+	FROM (SELECT as_info_seq ,store_nm, store_addr, reg_dttm ,as_status_nm,as_status_cd,machine_cd_nm,machine_cd,mechanic_id,reassign,as_assign_seq,rownum AS rowNumber
+		 FROM (select a.as_info_seq ,s.store_nm, s.store_addr, a.reg_dttm , status.as_status_nm,status.as_status_cd,machine.machine_cd_nm,machine.machine_cd,ass.mechanic_id,ass.reassign,ass.as_assign_seq 
+         FROM as_information a 
  		 INNER JOIN store_user_map su ON a.store_mng_id=su.user_id
 		 INNER JOIN users u ON su.user_id=u.user_id 
 		 INNER JOIN store s ON s.store_seq=su.store_seq
@@ -62,8 +65,8 @@
 				</when>
 			</choose>
 			ORDER BY a.reg_dttm DESC
-			)
-	WHERE ROWNUM BETWEEN #{start} AND #{end}
+			))
+	WHERE rowNumber BETWEEN #{start} AND #{end}
 </select>
 <!-- 조건별 AS 총 등록 수 조회 -->
 <select id="countASList" parameterType="kr.co.kccbrew.asMng.model.AsMngVo" resultType="Integer">
@@ -151,7 +154,7 @@
 </select>
 <!-- AS 접수 파일 정보 등록 -->
 <insert id="insertFile" parameterType="kr.co.kccbrew.asMng.model.AsMngVo">
-	INSERT INTO file_info VALUES(file_seq.NEXTVAL,'02',SYSDATE,#{userId},SYSDATE,#{userId})
+	INSERT INTO file_info VALUES(file_seq.NEXTVAL,#{grpCdDtlId},SYSDATE,#{userId},SYSDATE,#{userId})
 	<selectKey resultType="string" keyProperty="fileSeq" order="AFTER">
 			SELECT NVL(MAX(file_seq), 0) AS "fileSeq" FROM file_info
 	</selectKey>
@@ -196,6 +199,7 @@
 			status.as_status_nm AS "asStatusNm",
 			status.as_status_cd AS"asStatusCd",
 			machine.machine_cd_nm AS "machineCdNm",
+			machine.machine_cd AS "machineCd",
 			TO_CHAR(a.wishing_start_date,'YYYY/MM/dd') AS "wishingStartDate",
 			TO_CHAR(a.wishing_end_date,'YYYY/MM/dd') AS "wishingEndDate",
 			a.as_content AS "asContent",
@@ -229,11 +233,14 @@
     LEFT OUTER JOIN store s ON s.store_seq=su.store_seq
     LEFT OUTER JOIN (SELECT * FROM as_assign ss JOIN users u ON ss.mechanic_id=u.user_id) ass ON a.as_info_seq=ass.as_info_seq
     LEFT OUTER JOIN as_result ar ON ar.as_assign_seq=ass.as_assign_seq
-    WHERE a.as_info_seq=#{asInfoSeq}
-]]>
+    WHERE a.as_info_seq=#{asInfoSeq} 
+]]> 
+	<if test="asAssignSeq != ''">
+	    AND ass.as_assign_seq=#{asAssignSeq}
+	</if>
 </select>
 <!-- 상세 조회 이미지 -->
-<select id="selectAsInfoImg" parameterType="string" resultType="kr.co.kccbrew.asMng.model.AsMngVo">
+<select id="selectAsImg" parameterType="string" resultType="kr.co.kccbrew.asMng.model.AsMngVo">
 <![CDATA[
 	SELECT file_dtl_seq AS "fileSeq",
 		file_original_nm AS "fileOriginalNm",
@@ -244,7 +251,7 @@
 		mod_user AS "modUser",
 		file_server_nm AS "fileServerNm"
 	FROM file_detail_info
-	WHERE file_seq=#{asInfoSeq}
+	WHERE file_seq=#{asImgSeq}
 ]]>
 </select>
 
@@ -287,7 +294,7 @@
     INNER JOIN (SELECT grp_cd_dtl_nm AS location_cd_nm ,grp_cd_dtl_id AS location_cd 
     			FROM group_code_detail WHERE grp_cd_dtl_id LIKE <if test="locationCd!=''">#{locationCd}||</if>'%'AND grp_cd_id='LL') location ON u.location_cd=location.location_cd
     INNER JOIN (SELECT grp_cd_dtl_nm AS machine_cd_nm ,grp_cd_dtl_id AS machine_cd 
-    			FROM group_code_detail WHERE grp_cd_dtl_id = '01' AND  grp_cd_id='M') machine ON u.eqpmn_cd=machine.machine_cd
+    			FROM group_code_detail WHERE grp_cd_dtl_id = #{machineCd} AND  grp_cd_id='M') machine ON u.eqpmn_cd=machine.machine_cd
     WHERE u.user_type_cd='03'  
     <if test="date!=''">
         AND u.user_id NOT IN(SELECT mechanic_id FROM as_assign WHERE TO_CHAR(visit_dttm,'YYYY-MM-dd')=#{date})	
@@ -295,10 +302,11 @@
 </select>
 
 <insert id="insertAsAssign" parameterType="kr.co.kccbrew.asMng.model.AsMngVo">
-<![CDATA[
 	INSERT INTO as_assign 
-	VALUES(as_assign_seq.NEXTVAL,#{asInfoSeq},#{visitDttm},SYSDATE,#{mechanicId},SYSDATE,#{userId},SYSDATE,#{userId},'N',null,null)
-]]>
+	VALUES(as_assign_seq.NEXTVAL,#{asInfoSeq},#{visitDttm},SYSDATE,#{mechanicId},SYSDATE,#{userId},SYSDATE,#{userId},'N',null )
+	<selectKey resultType="string" keyProperty="asAssignSeq" order="AFTER">
+			SELECT NVL(MAX(as_assign_seq), 0) AS "asAssignSeq" FROM as_assign
+	</selectKey>
 </insert>
 
 <update id="updateAsInfoStatus" parameterType="kr.co.kccbrew.asMng.model.AsMngVo">
@@ -308,7 +316,7 @@
 </update>
 <update id="updateInfoReject" parameterType="hashmap">
 <![CDATA[
-	UPDATE as_information SET reject_content_str=#{content},rewrite='Y',mod_user=#{userId},mod_dttm=SYSDATE WHERE as_info_seq=#{seq}
+	UPDATE as_information SET reject_content_str=#{content},resubmission='Y',mod_user=#{userId},mod_dttm=SYSDATE, as_status='02' WHERE as_info_seq=#{seq}
 ]]>
 </update>
 <update id="updateAssignReject" parameterType="hashmap">
@@ -326,4 +334,9 @@
 	</if>
 	WHERE as_assign_seq=#{asMngVo.asAssignSeq}
 </update>
+<insert id="insertResult" parameterType="kr.co.kccbrew.asMng.model.AsMngVo">
+<![CDATA[
+	INSERT INTO as_result VALUES(as_result_seq.NEXTVAL,#{asAssignSeq},#{resultDtl},null,#{resultDttm},#{fileSeq},#{asPrice},#{userId},SYSDATE,'N')
+]]>
+</insert>
 </mapper>

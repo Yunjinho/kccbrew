@@ -52,7 +52,7 @@ public class LogInController {
 		LogInVo user=loginService.logIn(vo);
 		System.out.println(user);
 		if(user!=null && user.getUserId()!=null) {
-			if(user.getApproveYn().equals("Y")) {
+			if(user.getApproveYn()!=null && user.getApproveYn().equals("Y")) {
 				// 세션을 생성하기 전에 기존의 세션 파기
 		        httpServletRequest.getSession().invalidate();
 		        HttpSession session = httpServletRequest.getSession(true);  // Session이 없으면 생성
