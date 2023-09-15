@@ -1,5 +1,7 @@
 package kr.co.kccbrew.asMng.asMod;
 
-public interface IAsModRepository {
+import kr.co.kccbrew.asMng.model.AsMngVo;
 
+public interface IAsModRepository {
+	void asMod(AsMngVo asMngVo);
 }
