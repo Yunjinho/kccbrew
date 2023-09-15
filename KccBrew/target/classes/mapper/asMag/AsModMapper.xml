@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.kccbrew.asMng.asMod.IAsModRepository">
+
+
+
+
+
+<update id="asMod" parameterType="kr.co.kccbrew.asMng.model.AsMngVo">
+
+UPDATE as_information 
+set
+	wishing_start_date 	=	#{wishingStartDate},
+	wishing_end_date	= 	#{wishingEndDate},
+	as_content			=	#{asContent},
+	machine_cd			=	#{machineCd},
+	mod_user			=	#{userId},
+	mod_dttm			=	SYSDATE,
+	resubmission		=	'N',
+	reject_content_str	=	''
+WHERE	
+		 as_info_seq=#{asInfoSeq}
+AND
+		store_mng_id=#{userId}
+AND
+		as_status	='01'
+		
+
+
+</update>
+
+
+</mapper>
