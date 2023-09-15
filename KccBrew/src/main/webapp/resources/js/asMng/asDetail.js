@@ -27,13 +27,15 @@ function changeLocationCd(){
 function changeMach(){
 	var locationCd=$("select[name=locationCd] option:selected").val();
 	var visitDttm=$("input[name=visitDttm]").val();
+	var machineCd=$("input[name=machineCd]").val();
 	$.ajax({
 		type : "GET",           // 타입 (get, post, put 등등)
 	    url : "/search-mecha",           // 요청할 서버url
 	    dataType : "json",       // 데이터 타입 (html, xml, json, text 등등)
 	    data : {
 			'locationCd' : locationCd,
-			'visitDttm' : visitDttm
+			'visitDttm' : visitDttm,
+			'machineCd' : machineCd
 		},
 	    success : function(data) { // 결과 성공 콜백함수
 	    	insertMechaList(data)
@@ -74,15 +76,58 @@ function selectDate(){
 }
 
 function rejectAs(userTypeCd){
-	$("body").css("overflow","hidden");
-	$(".modal").css("display","block");
+	$("html").css("overflow","hidden");
+	$(".modal-reject").css("display","block");
 }
 
 function cancelModal(){
-	$("body").css("overflow","auto");
-	$(".modal").css("display","none");
+	$("html").css("overflow","auto");
+	$(".modal-reject").css("display","none");
 }
 
-function reject(){
+function rejectConfirm(flag){
+	var visitDttm=$("input[name=visitDttm]").val();
+	var mechanicId=$("select[name=mechanicId] option:selected").val();
+	var asAssignSeq=$("input[name=asAssignSeq]").val();
+	var asInfoSeq=$("input[name=asInfoSeq]").val();
 	
+	$.ajax({
+		type : "POST",           // 타입 (get, post, put 등등)
+	    url : "/reject-confirm",           // 요청할 서버url
+	    dataType : "text",       // 데이터 타입 (html, xml, json, text 등등)
+	    data : {
+	    	'mechanicId': mechanicId,
+			'visitDttm' : visitDttm,
+			'asAssignSeq' : asAssignSeq,
+			'asInfoSeq'	: asInfoSeq,
+			'flag'		: flag
+		},
+	    success : function(data) { // 결과 성공 콜백함수
+	    	location.replace("/as-list");
+	    }
+	})
 }
+function addFile(){
+	var	str="<div>\n<input type='file' name='imgFile' value='' onchange='imgTypeCheck(this)'>\n</div>";
+	$(".file-upload-div").append(str);
+}
+function removeFile(){
+	var str=$(".file-upload-div>div:last-child").remove();
+}
+function imgTypeCheck(fileName){
+	var imgFile=fileName.files[0];
+	//파일 확장자 추출	
+    var fileLen = imgFile.name.length;
+    var lastDot = imgFile.name.lastIndexOf('.');
+    var fileType = imgFile.name.substring(lastDot, fileLen).toLowerCase();
+	//확장자 비교
+	if(fileType == ".jpeg" || fileType == ".jpg" || fileType == ".png"){
+	}else{
+		alert("사진 : jpeg, jpg, png 확장자를 가진 파일만 사용하실 수 있습니다.");
+		$("input[name=imgFile]").val("")
+	}
+}
+
+$(document).ready(function(){
+	$("input[name=resultDttm]").val(new Date().toISOString().substring(0, 10))
+})

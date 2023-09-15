@@ -3,6 +3,7 @@
 /* 바디 */
 body {
 	font-family: 'Noto Sans', 'Noto Sans KR', sans-serif !important;
+	font-size: 1.3em !important;
 }
 
 /* 헤더 */
@@ -52,7 +53,7 @@ select[name=machineCd]{
     padding: 3px 100px;
 }
 #content>div{
-	margin:9px 0px;
+	margin:40px 0px;
 }
 .tag-image{
 	width:25px;
@@ -65,23 +66,6 @@ select[name=machineCd]{
 }
 .flex-label-div>div>h6{
 	margin:0;
-}
-.in-decrease{
-	float:right;
-	margin:0px 10px
-}
-.in-decrease>span{
-	color:#ccc;
-	cursor:pointer
-}
-.in-decrease>span:hover{
-	color:black;
-}
-.file-upload-div{
-	display:block !important;
-}
-.file-upload-div>div{
-	margin-bottom: 10px;
 }
 .form-btn {
 	display: flex;
@@ -118,13 +102,17 @@ select[name=machineCd]{
 	border: 0px;
 	border-bottom: 1px solid #ccc;
 	text-align: center;
+	vertical-align: middle;
+}
+#search-box th{
+	font-weight: bold;
 }
 .selectMcha{
 	width:100%;
 	line-hieght:2;
 }	
 
-.modal{
+.modal-reject{
 	display: none; /* 모달 초기에는 숨김 상태로 설정 */
 	position: fixed; /* 화면에 고정 */
 	z-index: 1; /* 다른 요소보다 위에 표시되도록 설정 */
@@ -135,22 +123,42 @@ select[name=machineCd]{
 	background-color: rgba(0, 0, 0, 0.5); /* 반투명한 배경 색상 */
 	text-align: center;
 }
-.modal-content{
+.reject-content{
 	background-color: #fefefe;
 	margin: 10% auto; /* 모달을 수직, 수평 가운데로 위치시킴 */
 	padding: 20px;
 	border: 1px solid #888;
 	width: 30%;
-	height: 55%;
 	border-radius: 20px;
 	display: flex;
 	flex-direction: column;
 }
-.modal-content>form>div{
+.reject-content>form>div{
 	margin:30px;
 	display: flex;
 }
-.modal-content>form>textarea {
+.reject-content>form>textarea {
 	resize: none;
 	height:300px;
+}
+a{
+	text-decoration: none !important;
+}
+.content-textarea{
+	height:100px;
+	resize: none;
+}
+.in-decrease{
+	float:right;
+	margin:0px 10px
+}
+.in-decrease>span{
+	color:#ccc;
+	cursor:pointer
+}
+.in-decrease>span:hover{
+	color:black;
+}
+input[type=file]{
+	margin-bottom:10px;
 }

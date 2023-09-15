@@ -6,6 +6,7 @@ import java.nio.file.Paths;
 import java.sql.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -32,9 +33,11 @@ public class AsMngService implements IAsMngService{
 	@Override
 	public List<AsMngVo> selectASList(AsMngVo asMngVo,int page) {
 		HashMap<String, Object> map=new HashMap<String, Object>();
+		
+		
 		map.put("asVo", asMngVo);
-		map.put("start", page);
-		map.put("end", page+9);
+		map.put("start", ((page-1)*10)+1);
+		map.put("end", page*10);
 		return asRepository.selectASList(map);
 	}
 	
@@ -77,7 +80,8 @@ public class AsMngService implements IAsMngService{
 	 */
 	@Transactional
 	public void insertAs(AsMngVo asMngVo) {
-		asMngVo=insertUserImg(asMngVo);
+		asMngVo.setGrpCdDtlId("02");
+		asMngVo=insertImg(asMngVo);
 		asRepository.insertAs(asMngVo);
 	}
 
@@ -87,8 +91,9 @@ public class AsMngService implements IAsMngService{
 	 * @return : 회원가입 사용자 정보 담긴 Vo
 	 */
 	@Transactional
-	private AsMngVo insertUserImg(AsMngVo asMngVo) {
+	private AsMngVo insertImg(AsMngVo asMngVo) {
 		AsMngVo vo=new AsMngVo();
+		vo.setGrpCdDtlId("02");
 		vo.setUserId(asMngVo.getUserId());
 		//기본 파일정보 등록
 		asRepository.insertFile(vo);
@@ -116,13 +121,13 @@ public class AsMngService implements IAsMngService{
 	}
 
 	@Override
-	public AsMngVo selectAsInfoDetail(String asInfoSeq) {
-		return asRepository.selectAsInfoDetail(asInfoSeq);
+	public AsMngVo selectAsInfoDetail(String asInfoSeq,String asAssignSeq) {
+		return asRepository.selectAsInfoDetail(asInfoSeq,asAssignSeq);
 	}
 
 	@Override
-	public List<AsMngVo> selectAsInfoImg(String fileDtlId) {
-		return asRepository.selectAsInfoImg(fileDtlId);
+	public List<AsMngVo> selectAsImg(String fileDtlId) {
+		return asRepository.selectAsImg(fileDtlId);
 	}
 
 	@Override
@@ -141,26 +146,45 @@ public class AsMngService implements IAsMngService{
 	}
 
 	@Override
-	public List<AsMngVo> selectMechList(String date, String locationCd) {
-		return asRepository.selectMechList(date, locationCd);
+	public List<AsMngVo> selectMechList(String date, String locationCd,String machineCd) {
+		return asRepository.selectMechList(date, locationCd,machineCd);
 	}
 	
 	@Transactional
 	@Override
-	public void insertAsAssign(AsMngVo asMngVo) {
-		asRepository.insertAsAssign(asMngVo);
+	public AsMngVo insertAsAssign(AsMngVo asMngVo) {
+		asMngVo=asRepository.insertAsAssign(asMngVo);
 		asRepository.updateAsInfoStatus(asMngVo);
+		return asMngVo;
 	}
 
 	@Override
-	public void updateInfoReject(String seq, String content) {
-		asRepository.updateInfoReject(seq, content);
+	public void updateInfoReject(String seq, String content,String userId) {
+		asRepository.updateInfoReject(seq, content,userId);
 	}
 
 	@Override
-	public void updateAssignReject(String seq, String content) {
-		asRepository.updateAssignReject(seq, content);
+	public void updateAssignReject(String seq, String content,String userId) {
+		asRepository.updateAssignReject(seq, content,userId);
 		
+	}
+
+	@Override
+	public void updateRejectConfirm(AsMngVo asMngVo,String flag) {
+		Map<String, Object> map=new HashMap<String, Object>();
+		map.put("asMngVo", asMngVo);
+		map.put("flag", (String)flag);
+		
+		asRepository.updateRejectConfirm(map);
+	}
+
+	@Override
+	public void insertAsResult(AsMngVo asMngVo) {
+		asMngVo.setGrpCdDtlId("03");
+		asMngVo=insertImg(asMngVo);
+		asRepository.insertResult(asMngVo);
+		asMngVo.setAsStatusCd("04");
+		asRepository.updateAsInfoStatus(asMngVo);
 	}
 
 

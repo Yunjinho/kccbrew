@@ -15,6 +15,7 @@ import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -96,7 +97,7 @@ public class AsMngController {
 	 * @return
 	 */
 	@RequestMapping(value="/searchAsList",method=RequestMethod.GET)
-	public String ssearchAsList(@RequestParam(defaultValue = "1") int currentPage,AsMngVo asMngVo,Model model,HttpSession session) {
+	public String ssearchAsList(AsMngVo asMngVo,Model model,HttpSession session) {
 		List<AsMngVo> list=asMngService.selectMachineCd();
 		model.addAttribute("machineCd", list);
 		
@@ -108,7 +109,7 @@ public class AsMngController {
 		
 		asMngVo.setUserId((String)session.getAttribute("userId"));
 		asMngVo.setUserTypeCd((String)session.getAttribute("userTypeCd"));
-		List<AsMngVo> asList=asMngService.selectASList(asMngVo,currentPage);
+		List<AsMngVo> asList=asMngService.selectASList(asMngVo,asMngVo.getCurrentPage());
 
 		int totalPage = 0;
 		int totalCount = asMngService.countASList(asMngVo);
@@ -118,11 +119,11 @@ public class AsMngController {
 			totalPage = (int) Math.ceil(totalCount/10.0);
 		} 
 
-		int startPage=((int)Math.ceil(currentPage/10) * 10) + 1;
-		int endPage=((int)Math.ceil(currentPage/10) + 1) * 10;
+		int startPage=((int)Math.ceil(asMngVo.getCurrentPage()/10) * 10) + 1;
+		int endPage=((int)Math.ceil(asMngVo.getCurrentPage()/10) + 1) * 10;
 		
 		model.addAttribute("totalPage", totalPage);
-		model.addAttribute("currentPage", currentPage);
+		model.addAttribute("currentPage", asMngVo.getCurrentPage());
 		model.addAttribute("startPage", startPage);
 		model.addAttribute("endPage", endPage);
 
@@ -130,6 +131,7 @@ public class AsMngController {
 		
 		model.addAttribute("searchContent",asMngVo);
 		model.addAttribute("ASList",asList);
+		
 		
 		return "asList";
 	}
@@ -174,11 +176,17 @@ public class AsMngController {
 	
 	/** as 상세 조회*/
 	@RequestMapping(value="/as-detail",method=RequestMethod.GET)
-	public String asDetail(@RequestParam String asInfoSeq, Model model,HttpServletRequest request) {
-		AsMngVo vo = asMngService.selectAsInfoDetail(asInfoSeq);
+	public String asDetail(@RequestParam String asInfoSeq,@RequestParam String asAssignSeq, Model model,HttpServletRequest request) {
+		AsMngVo vo = asMngService.selectAsInfoDetail(asInfoSeq,asAssignSeq);
+		//접수사진
 		if(vo.getFileSeq()!=null) {
-			List<AsMngVo> list=asMngService.selectAsInfoImg(vo.getFileSeq());
+			List<AsMngVo> list=asMngService.selectAsImg(vo.getFileSeq());
 			model.addAttribute("asInfoImgList", list);
+		}
+		//결과사진
+		if(vo.getResultFileSeq()!=null) {
+			List<AsMngVo> list=asMngService.selectAsImg(vo.getResultFileSeq());
+			model.addAttribute("asResultImgList", list);
 		}
 		model.addAttribute("asDetailInfo", vo);
 		List<AsMngVo> list=asMngService.selectLocationCd();
@@ -194,8 +202,7 @@ public class AsMngController {
 		HttpSession session = request.getSession();
 		asMngVo.setUserId((String) session.getAttribute("userId"));
 		asMngVo.setAsStatusCd("03");
-		System.out.println(asMngVo);
-		asMngService.insertAsAssign(asMngVo);
+		asMngVo=asMngService.insertAsAssign(asMngVo);
 		return "redirect:/as-detail?asInfoSeq="+asMngVo.getAsInfoSeq();
 	}
 	
@@ -206,19 +213,57 @@ public class AsMngController {
 	public String reject(String asInfoSeq,@RequestParam(defaultValue = "0")String asAssignSeq,String rejectRs,HttpServletRequest request) {
 		HttpSession session=request.getSession();
 		String userTypeCd=(String)session.getAttribute("userTypeCd");
-		System.out.println(asInfoSeq);
-		System.out.println(asAssignSeq);
-		System.out.println(rejectRs);
+		String userId=(String)session.getAttribute("userId");
 		if(userTypeCd.equals("01")) {
-			asMngService.updateInfoReject(asInfoSeq, rejectRs);
+			asMngService.updateInfoReject(asInfoSeq, rejectRs,userId);
 		}else if(userTypeCd.equals("03")){
-			asMngService.updateAssignReject(asAssignSeq, rejectRs);
+			asMngService.updateAssignReject(asAssignSeq, rejectRs,userId);
 		}
-		
-		
-		return "redirect:/as-detail?asInfoSeq="+asInfoSeq;
+		return "redirect:/as-detail?asInfoSeq="+asInfoSeq+"&asAssignSeq="+asAssignSeq;
 	}
 	
+	/**
+	 * AS 결과 입력
+	 * @return
+	 */
+	@RequestMapping(value="/insertResult",method=RequestMethod.POST)
+	public String insertResult(@Value("#{serverImgPath['localPath']}")String localPath,@Value("#{serverImgPath['asResultPath']}")String path,AsMngVo asMngVo,HttpServletRequest request) {
+		String folderPath=request.getServletContext().getRealPath("")+path;
+		File folder = new File(folderPath);
+        // 폴더가 존재하지 않으면 폴더를 생성합니다.
+        if (!folder.exists()) {
+            boolean success = folder.mkdirs(); // 폴더 생성 메소드
+        }
+		HttpSession session=request.getSession();
+		asMngVo.setUserId((String)session.getAttribute("userId"));
+		asMngVo.setStorageLocation(path);
+		asMngVo.setServerSavePath(folderPath);
+		//local 저장 위치 배포할땐 삭제
+		File folder2 = new File(localPath+path);
+		// 폴더가 존재하지 않으면 폴더를 생성합니다.
+		if (!folder2.exists()) {
+			boolean success = folder2.mkdirs(); // 폴더 생성 메소드
+		}
+		asMngVo.setLocalSavePath(localPath+path);
+		
+		asMngService.insertAsResult(asMngVo);
+		return "redirect:/as-detail?asInfoSeq="+asMngVo.getAsInfoSeq()+"&asAssignSeq="+asMngVo.getAsAssignSeq();
+	}
+	/**
+	 * 기사가 신청한 반려건 처리
+	 */
+	@ResponseBody
+	@RequestMapping(value="/reject-confirm",method=RequestMethod.POST)
+	public String rejectConfirm(String mechanicId,String visitDttm,String asAssignSeq,String asInfoSeq,String flag,HttpServletRequest request) {
+		AsMngVo asMngVo=new AsMngVo();
+		HttpSession session=request.getSession();
+		asMngVo.setUserId((String)session.getAttribute("userId"));
+		asMngVo.setMechanicId(mechanicId);
+		asMngVo.setVisitDttm(visitDttm);
+		asMngVo.setAsAssignSeq(asAssignSeq);
+		asMngService.updateRejectConfirm(asMngVo,flag);
+		return "";
+	}
 	
 	
 	/** 점포 검색 */
@@ -245,9 +290,9 @@ public class AsMngController {
 	/** 수리기사 조회 */
 	@ResponseBody
 	@RequestMapping(value="/search-mecha" , method=RequestMethod.GET)
-	public JSONObject searchMecha(String locationCd,String visitDttm) {
+	public JSONObject searchMecha(String locationCd,String visitDttm,String machineCd) {
 		HashMap<String, Object> mechaList= new HashMap<>();
-		List<AsMngVo> list = asMngService.selectMechList(visitDttm, locationCd);
+		List<AsMngVo> list = asMngService.selectMechList(visitDttm, locationCd,machineCd);
 		mechaList.put("mechaList", list);
 		JSONObject result=new JSONObject(mechaList);
 		return result;

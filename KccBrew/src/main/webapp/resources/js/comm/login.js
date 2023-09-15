@@ -43,7 +43,9 @@ function login(){
 					}
 				});
 			}else{
-				$("#login-msg").html(data);
+				var text;
+				if(data=="f"){text='아이디 혹은 비밀번호를 잘못 입력하셨습니다.'}else{ text='미승인된 계정입니다.'}
+				$("#login-msg").html(text);
 				$("#login-msg").css("display","block");
 			}
 	    }

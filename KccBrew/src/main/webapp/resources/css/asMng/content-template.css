@@ -50440,13 +50440,13 @@ a {
 }
 
 #page-mask {
-	background-color: #f7f9fa
+	background-color: #eef4ff;
 }
 
 #page-container {
 	width: 100%;
 	background: url('/theme/coursemosv2/pix/layout/side_menu_bg.png')
-		repeat-y 218px #f7f9fa
+		repeat-y 218px #eef4ff
 }
 
 #page-submenu {
@@ -50455,12 +50455,12 @@ a {
 }
 
 #page-content {
-	margin: 0px 218px;
-	position: relative
+	position: relative;
+	padding: 20px 20px;
 }
 
 #page-content-wrap {
-	float: left;
+	background-color: #ffffff;
 	width: 100%
 }
 

@@ -50,6 +50,7 @@
 									<!-- 관리자  AS 조건-->
 									<c:if test="${sessionScope.userTypeCd eq '01'}">
 									<form action="/searchAsList" method="get" id="search-form">
+										<input type='hidden' name='currentPage' value="1">
 										<table id="search-box">
 											<!-- 1행 -->
 											<c:set var="today" value="<%=new java.util.Date()%>" />
@@ -455,6 +456,7 @@
 													<th>AS 상태</th>
 													<th>점포 명</th>
 													<th>점포 주소</th>
+													<c:if test="${sessionScope.userTypeCd != '02'}"><th>기사 재배정 신청</th></c:if>
 													<th>상세 조회</th>
 												</tr>
 											</thead>
@@ -466,7 +468,15 @@
 														<td><c:out value="${list.asStatusNm}" /></td>
 														<td><c:out value="${list.storeNm}" /></td>
 														<td><c:out value="${list.storeAddr}" /></td>
-														<td><a href="#" onclick="selectAsDetail(${list.asInfoSeq})"class="form-btn">조회</a></td>
+														<c:if test="${sessionScope.userTypeCd != '02'}">
+															<td>
+																<c:choose>
+																	<c:when test="${list.reassign =='Y'}"><c:out value="${list.reassign}"></c:out></c:when>
+																	<c:otherwise>-</c:otherwise>
+																</c:choose>
+															</td>
+														</c:if>
+														<td><a href="#" onclick="selectAsDetail(${list.asInfoSeq},${list.asAssignSeq})"class="form-btn">조회</a></td>
 													</tr>
 												</c:forEach>
 											</tbody>
@@ -497,10 +507,9 @@
 										<!-- 리스트 목록 나열 -->
 										<div id="number-list">
 											<div class="page-btn">
-												<c:forEach var="page" begin="${startPage}"
-													end="${endPage}" step="1">
+												<c:forEach var="page" begin="${startPage}" end="${endPage}" step="1">
 													<c:if test="${page <= totalPage}">
-														<a href="#" onclick="movePage(${page})"
+														<a href="javascript:void(0)" onclick="movePage(${page})"
 															class="pagination page-btn ${currentPage == page ? 'selected' : ''}">
 															${page} </a>
 													</c:if>

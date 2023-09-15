@@ -98,4 +98,16 @@ public class MainService implements IMainService{
 		return mainRepository.getDataInRangeById(userId, startOfWeek, endOfWeek);
 	}
 
+	@Override
+	public List<MainPageVo> showUserInfoListById(String userId) {
+		List<MainPageVo> userInfoListById = mainRepository.showUserInfoListById(userId);
+		return userInfoListById;
+	}
+
+	@Override
+	public List<MainPageVo> showStoreInfoListById(String userId) {
+		List<MainPageVo> storeInfoListById = mainRepository.showStoreInfoListById(userId);
+		return storeInfoListById;
+	}
+
 }
