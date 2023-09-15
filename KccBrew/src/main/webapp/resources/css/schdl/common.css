@@ -12,3 +12,25 @@
     white-space: nowrap;
     border: 0;
 }
+
+/* 검색창 */
+.board-info {
+	display: flex;
+	align-content: stretch;
+	justify-content: space-between;
+	align-items: center;
+}
+
+#logTable>form {
+	margin: 10px 0;
+}
+
+.form-btn {
+	display: inline !important;
+}
+
+.form-btn-box {
+	margin: 10px;
+	display: flex;
+	justify-content: center;
+}

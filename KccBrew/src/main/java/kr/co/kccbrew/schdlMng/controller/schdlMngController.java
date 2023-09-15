@@ -159,7 +159,7 @@ public class schdlMngController {
 	@GetMapping("/schedule/calendar")
 	public String getCalendar() {
 		
-		return "schdl/schdlMngClndr";
+		return "schdl/schdlMngTable";
 	}
 
 	/*회원 캘린더 월별 조회*/
@@ -220,7 +220,7 @@ public class schdlMngController {
 		model.addAttribute("totalDataNumber", totalDataNumber);
 		model.addAttribute("remainingDays", remainingDays);
 
-		return "schdl/schdlMngIns";
+		return "schdl/hldyIns";
 	}
 
 	/*휴가신청*/
