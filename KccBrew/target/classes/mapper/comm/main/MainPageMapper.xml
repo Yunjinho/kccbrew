@@ -187,7 +187,7 @@
 		]]>
 	</select>
 	
-	<!-- 특정 점주 a/s 결과 리스트 -->
+	<!-- 특정 수리기사 a/s 결과 리스트 -->
 	<select id="showAsResultListbyMechaId" parameterType="kr.co.kccbrew.comm.main.model.MainPageVo" resultType="kr.co.kccbrew.comm.main.model.MainPageVo">
 		<![CDATA[
 			SELECT
@@ -197,6 +197,41 @@
 				u.user_id						AS "mechanicId"
 			FROM as_result r, as_assign a, as_information i, users u
 			WHERE r.as_assign_seq = a.as_assign_seq AND a.as_info_seq = i.as_info_seq AND a.mechanic_id = u.user_id AND user_id=#{userId}
+		]]>
+	</select>
+	
+	<!-- 사용자의 정보 리스트 불러오기 -->
+	<select id="showUserInfoListById" parameterType="kr.co.kccbrew.comm.main.model.MainPageVo" resultType="kr.co.kccbrew.comm.main.model.MainPageVo">
+		<![CDATA[
+			SELECT 
+				u.user_id			AS "userId",
+				u.user_nm			AS "userName",
+				u.user_email		AS "userEmail",
+				u.user_telno		AS "userTelNo",
+				u.user_addr			AS "userAddress",
+				u.user_type_cd		AS "userType",
+				u.reg_dttm			AS "userRegDate",
+				u.mod_dttm			AS "userModDate",
+				u.use_yn			AS "userInUse",
+				u.approve_yn		AS "approveStatus",
+				u.approve_admin		AS "admWhoAcp",
+				u.eqpmn_cd			AS "machineCode",
+				u.location_cd		AS "mechaLocationCd"
+			FROM users u
+			WHERE u.user_id = #{userId}
+		]]>
+	</select>
+	
+	<!-- 점주의 점포 정보 리스트 불러오기 -->
+	<select id="showStoreInfoListById" parameterType="kr.co.kccbrew.comm.main.model.MainPageVo" resultType="kr.co.kccbrew.comm.main.model.MainPageVo">
+		<![CDATA[
+			SELECT 
+				u.user_id			AS "userId",
+				s.store_seq			AS "storeSeq",
+				s.store_nm			AS "storeName",
+				s.store_telno		AS "storeTelNo"
+			FROM users u, store s, store_user_map m
+			WHERE u.user_id = m.user_id AND s.store_seq = m.store_seq AND u.user_id = #{userId}
 		]]>
 	</select>
 </mapper>

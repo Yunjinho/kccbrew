@@ -10,12 +10,15 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import kr.co.kccbrew.comm.main.model.MainPageVo;
 import kr.co.kccbrew.comm.main.service.MainService;
+import kr.co.kccbrew.userMng.model.UserMngVo;
+import kr.co.kccbrew.userMng.service.UserMngService;
 
 @Controller
 public class MainController {
@@ -66,7 +69,10 @@ public class MainController {
 		return "adminPageF1";
 	}
 	
-	//마이 페이지
+	//코드 관리 페이지
+	
+	
+	
 	
 	
 	
@@ -220,5 +226,18 @@ public class MainController {
 	@RequestMapping(value="/privacy", method=RequestMethod.GET)
 	public String openPrivacy() {
 		return "comm/main/privacy";
+	}
+	
+	/****************** 사용자 정보 가져오기 *********************/
+	@RequestMapping(value = "/userinfo", method = RequestMethod.GET)
+	public String showUserInfo(HttpSession session, Model model) {
+		String userId = (String)session.getAttribute("userId");
+		List<MainPageVo> userInfoList = mainServiceImple.showUserInfoListById(userId);
+		List<MainPageVo> storeInfoList = mainServiceImple.showStoreInfoListById(userId);
+		
+		model.addAttribute("userInfoList", userInfoList);
+		model.addAttribute("storeInfoList",storeInfoList);
+		return "adminPageP1";
+
 	}
 }

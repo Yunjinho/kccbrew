@@ -32,14 +32,14 @@
 				<div class="nav-box">
 					<ul class="nav-list">
 						<li class="nav-item">
-							<a class="nav-link" href="#" >A/S 관리</a>
+							<a class="nav-links" href="#" >A/S 관리</a>
 							<ul class="comm-nav-dropdown">
 								<c:url var="toAsList" value="/as-list" />	<!-- 여기에  매핑 url 선언 -->
 								<li><a href="${toAsList}">A/S 내역 조회</a></li>	<!-- 매핑 url 변수 링크로 걸기 -->
 							</ul>	
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" href="#">점포 관리</a>
+							<a class="nav-links" href="#">점포 관리</a>
 							<ul class="comm-nav-dropdown">
 								<c:url var="toStoreRegPage" value="/adminstoreregpage" />
 								<li><a href="${toStoreRegPage}">점포 등록</a></li>
@@ -50,14 +50,14 @@
 							</ul>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" href="#">회원 관리</a>
+							<a class="nav-links" href="#">회원 관리</a>
 							<ul class="comm-nav-dropdown">
 								<c:url var="toMemberMngPage" value="/membermngpage" />
 								<li><a href="${toMemberMngPage}">회원 조회</a></li>
 							</ul>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" href="#">시스템 관리</a>
+							<a class="nav-links" href="#">시스템 관리</a>
 							<ul class="comm-nav-dropdown">
 								<c:url var="toAdminLogPage" value="/adminlogpage" />
 								<li><a href="${toAdminLogPage}">로그 조회</a></li>
@@ -66,9 +66,10 @@
 							</ul>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" href="#">마이페이지</a>
+							<a class="nav-links" href="#">마이페이지</a>
 							<ul class="comm-nav-dropdown">
-								<li><a href="#">마이페이지</a></li>
+								<c:url var="toMyPage" value="/userinfo" />
+								<li><a href="${toMyPage}">마이페이지</a></li>
 							</ul>
 						</li>
 					</ul>
@@ -100,7 +101,7 @@
 				<div class="nav-box">
 					<ul class="nav-list">
 						<li class="nav-item">
-							<a class="nav-link" href="#" >A/S 관리</a>
+							<a class="nav-links" href="#" >A/S 관리</a>
 							<ul class="comm-nav-dropdown">
 								<c:url var="toASReceipt" value="/as-receipt" />
 								<li><a href="${toASReceipt}">A/S 신청</a></li>
@@ -109,7 +110,7 @@
 							</ul>	
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" href="#">점포 관리</a>
+							<a class="nav-links" href="#">점포 관리</a>
 							<ul class="comm-nav-dropdown">
 								<c:url var="toStoreList" value="/storesearchpage" />
 								<li><a href="${toStoreList}">점포 조회</a></li>
@@ -118,9 +119,10 @@
 							</ul>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" href="#">마이페이지</a>
+							<a class="nav-links" href="#">마이페이지</a>
 							<ul class="comm-nav-dropdown">
-								<li><a href="#">마이페이지</a></li>
+								<c:url var="toMyPage" value="/userinfo" />
+								<li><a href="${toMyPage}">마이페이지</a></li>
 							</ul>
 						</li>
 					</ul>
@@ -152,23 +154,24 @@
 				<div class="nav-box">
 					<ul class="nav-list">
 						<li class="nav-item">
-							<a class="nav-link" href="#" >A/S 관리</a>
+							<a class="nav-links" href="#" >A/S 관리</a>
 							<ul class="comm-nav-dropdown">
 								<c:url var="toAsList" value="/as-list" />
 								<li><a href="${toAsList}">A/S 내역 조회</a></li>
 							</ul>	
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" href="#">일정 관리</a>
+							<a class="nav-links" href="#">일정 관리</a>
 							<ul class="comm-nav-dropdown">
 								<li><a href="#">일정 조회</a></li>
 								<li><a href="#">일정 등록</a></li>
 							</ul>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" href="#">마이페이지</a>
+							<a class="nav-links" href="#">마이페이지</a>
 							<ul class="comm-nav-dropdown">
-								<li><a href="#">마이페이지</a></li>
+								<c:url var="toMyPage" value="/userinfo" />
+								<li><a href="${toMyPage}">마이페이지</a></li>
 							</ul>
 						</li>
 					</ul>
