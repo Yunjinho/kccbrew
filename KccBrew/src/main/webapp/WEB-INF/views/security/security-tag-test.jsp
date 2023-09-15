@@ -45,24 +45,6 @@
 
 
 
-	<!-- 수락된 회원 접근 가능 -->
-	<sec:authorize
-		access="hasAnyRole('ROLE_MANAGER', 'ROLE_ADMIN','ROLE_MECHA')">
-		<h2>가입승낙된 회원</h2>
-		<c:if test="${isAdmin}">
-		관리자님 안녕하세요
-</c:if>
-		<c:if test="${isManager}">
-		매니저님 안녕하세요
-</c:if>
-		<c:if test="${isMecha}">
-		수리기사님 안녕하세요
-</c:if>
-
-	</sec:authorize>
-
-
-
 	<!-- 로그인한 회원 접근 가능 -->
 	<sec:authorize access="isAuthenticated()">
 		<h2>로그인한 회원</h2>

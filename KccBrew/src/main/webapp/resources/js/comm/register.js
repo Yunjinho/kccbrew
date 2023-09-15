@@ -18,6 +18,7 @@ function clearAddInfo(){
 }
 function changeType(typeNum){
 	if(typeNum=='01'){
+		console.log("changeType: admin");
 		$("#storemng-register-form").css("display","none");
 		$("#engmng-register-form").css("display","none");
 
@@ -26,7 +27,6 @@ function changeType(typeNum){
 		$("#manger").css("text-decoration","underline");
 
 		$("#insert-img-box").css("display","flex");
-		$("input[name=userTypeCd]").val("01");
 		clearAddInfo();
 	}else if(typeNum=='02'){
 		$("#storemng-register-form").css("display","block");
@@ -117,7 +117,7 @@ function insertPageContent(data){
 //사용자 아이디 조건 확인
 function checkUserId(){
 	var userId=$("input[name=userId]");
-	
+
 	if(userId.val()==""){
 		$("#userIdMsg").css("display","block");
 		userId.parent().css("border","1px solid red");
@@ -126,29 +126,31 @@ function checkUserId(){
 		var id=userId.val();
 		//아이디 정규식 체크
 		var regex=/^[A-Za-z\d]{5,20}$/
-		if(!(regex).test(id)){
-			$("#userIdMsg").html("아이디: 5~20자의 영문 소문자, 숫자사용 가능합니다.")
-			$("#userIdMsg").css("display","block");
-			userId.parent().css("border","1px solid red");
-			return false;
-		}
+			if(!(regex).test(id)){
+				$("#userIdMsg").html("아이디: 5~20자의 영문 소문자, 숫자사용 가능합니다.")
+				$("#userIdMsg").css("display","block");
+				userId.parent().css("border","1px solid red");
+				return false;
+			}
 		//아이디 중복 체크 함수
 		$.ajax({
-		    type : "GET",           // 타입 (get, post, put 등등)
-		    url : "/check_user_id",           // 요청할 서버url
-		    dataType : "text",       // 데이터 타입 (html, xml, json, text 등등)
-		    data : {
+			type : "GET",           // 타입 (get, post, put 등등)
+			url : "/check_user_id",           // 요청할 서버url
+			dataType : "text",       // 데이터 타입 (html, xml, json, text 등등)
+			data : {
 				'userId' : id
 			},
-		    success : function(result) { // 결과 성공 콜백함수
+			success : function(result) { // 결과 성공 콜백함수
 				if(result!=0){
+					console.log("result: " + result);
 					$("#userIdMsg").html("아이디: 사용할 수 없는 아이디입니다.");
 					userId.parent().css("border","1px solid red");
 					$("#userIdMsg").css("display","block");
 					return false;
 				}
-		    }
+			}
 		});
+
 		userId.parent().css("border","none");
 		$("#userIdMsg").css("display","none");
 		return true;

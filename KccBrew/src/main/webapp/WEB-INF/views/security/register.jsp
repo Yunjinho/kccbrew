@@ -52,7 +52,8 @@
 										src="<c:url value="resources/img/register/register_id.png"/>">
 									<input type="text" id="id" name="userId" title="아이디"
 										placeholder="아이디"> <input type="hidden"
-										name="userTypeCd">
+										name="userTypeCd" value="01">
+									<!-- 기본값으로 관리자권한 -->
 								</div>
 								<div class="register-info">
 									<img
