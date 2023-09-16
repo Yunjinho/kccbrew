@@ -1,6 +1,6 @@
 package kr.co.kccbrew.asMng.contorller;
 
-import java.io.File;
+import java.io.File; 
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -23,7 +23,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.co.kccbrew.asMng.model.AsMngVo;
 import kr.co.kccbrew.asMng.service.IAsMngService;
-import kr.co.kccbrew.comm.register.model.RegisterVo;
 import lombok.RequiredArgsConstructor;
 /**
  * @ClassNmae : AsMngController

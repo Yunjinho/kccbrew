@@ -1,18 +1,14 @@
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ page session="false"%>
 <html>
 <head>
-	<title>Home</title>
-<script type="text/javascript">
-	location.href="/loginpage";
-</script>
+<title>Home</title>
 </head>
 <body>
-<script>
-window.onload=function(){
-	location.href="/loginpage"
-}
-</script>
+	<h1>Hello world!</h1>
+	HOME인데 메인으로 바꿀 예정
+	<P>The time on the server is ${serverTime}.</P>
 </body>
 </html>

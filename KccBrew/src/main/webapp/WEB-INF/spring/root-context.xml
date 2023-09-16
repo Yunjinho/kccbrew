@@ -13,8 +13,8 @@
 
 	<!-- DAO -->
 	<mybatis-spring:scan base-package="kr.co.kccbrew.comm.main.dao"/>
-	<mybatis-spring:scan base-package="kr.co.kccbrew.comm.login.dao"/>
-	<mybatis-spring:scan base-package="kr.co.kccbrew.comm.register.dao"/>
+	<!-- <mybatis-spring:scan base-package="kr.co.kccbrew.comm.login.dao"/> -->
+	<!-- <mybatis-spring:scan base-package="kr.co.kccbrew.comm.register.dao"/> -->
 	<mybatis-spring:scan base-package="kr.co.kccbrew.strMng.dao"/>
 	<mybatis-spring:scan base-package="kr.co.kccbrew.sysMng.cdMng.dao"/>
 	<mybatis-spring:scan base-package="kr.co.kccbrew.sysMng.fileMng.dao"/>
@@ -23,13 +23,14 @@
 	<mybatis-spring:scan base-package="kr.co.kccbrew.asMng.dao"/>
 	<mybatis-spring:scan base-package="kr.co.kccbrew.asMng.asMod"/>
 	<mybatis-spring:scan base-package="kr.co.kccbrew.userMng.dao"/>
+	<mybatis-spring:scan base-package="kr.co.kccbrew.comm.security.dao" />
 
 	<!-- DAO -->
 	
 	<!--Service -->
-	<context:component-scan base-package="kr.co.kccbrew.comm.login.service"/>
+	<!-- <context:component-scan base-package="kr.co.kccbrew.comm.login.service"/> -->
 	<context:component-scan base-package="kr.co.kccbrew.comm.main.service"/>
-	<context:component-scan base-package="kr.co.kccbrew.comm.register.service"/>
+	<!-- <context:component-scan base-package="kr.co.kccbrew.comm.register.service"/> -->
 	<context:component-scan base-package="kr.co.kccbrew.strMng.service"/>
 	<context:component-scan base-package="kr.co.kccbrew.sysMng.cdMng.service"/>
 	<context:component-scan base-package="kr.co.kccbrew.sysMng.fileMng.service"/>
@@ -38,6 +39,7 @@
 	<context:component-scan base-package="kr.co.kccbrew.asMng.service"/>
 	<context:component-scan base-package="kr.co.kccbrew.asMng.asMod"/>
 	<context:component-scan base-package="kr.co.kccbrew.userMng.service"/>
+	<context:component-scan base-package="kr.co.kccbrew.comm.security.service" />
 
 	<!--Service -->
 	<!-- @Transactional 사용하기 위한 태그 -->

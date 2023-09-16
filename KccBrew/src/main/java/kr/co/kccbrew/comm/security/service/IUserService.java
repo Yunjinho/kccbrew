@@ -1,17 +1,24 @@
-package kr.co.kccbrew.comm.register.service;
+package kr.co.kccbrew.comm.security.service;
 
-import java.util.List;
+import java.util.List; 
 
 import org.apache.ibatis.annotations.Param;
+import kr.co.kccbrew.comm.security.model.UserVo;
+import kr.co.kccbrew.strMng.model.StrMngVo;
 
-import kr.co.kccbrew.comm.register.model.RegisterVo;
-
-public interface IRegisterService {
+public interface IUserService {
+	public void registerUser(UserVo userVo);
+	public UserVo insertUserImg(UserVo user);
+	
+	public UserVo getUserById(String userId);
+    public StrMngVo getStoreById(String userId);
+    
+    
 	/**
 	 * 검색한 키워드를 통해 운영하고 있는 점포 리스트를 조회한다.
 	 * @return 운영중인 점포 리스트
 	 */
-	public List<RegisterVo> selectStoreList(String keyword,int page);
+	public List<UserVo> selectStoreList(String keyword,int page);
 
 	/**
 	 * @param keyword : 검색 키워드
@@ -23,7 +30,7 @@ public interface IRegisterService {
 	 * 운영하고 있는 장비군 리스트를 조회한다.
 	 * @return 운영중인 장비군 리스트
 	 */
-	public List<RegisterVo> selectMechineCode();
+	public List<UserVo> selectMechineCode();
 	
 	/**
 	 * 아이디 중복 체크
@@ -33,21 +40,15 @@ public interface IRegisterService {
 	public int checkUserId(String userId);
 	
 	/**
-	 * 사용자 회원가입
-	 * @param user
-	 */
-	public void registerUser(RegisterVo user);
-	
-	/**
 	 * 수리기사 회원가입 시 지역 코드 조회
 	 * @return 지역코드 목록
 	 */
-	public List<RegisterVo> selectLocationCd();
+	public List<UserVo> selectLocationCd();
 	
 	/**
 	 * 선택한 지역코드의 상세 지역코드 조회
 	 * @param locCd : 선택된 코드
 	 * @return 선택된 코드의 지역 코드 목록
 	 */
-	public List<RegisterVo> selectLocationDtlCd(String locCd);
+	public List<UserVo> selectLocationDtlCd(String locCd);
 }

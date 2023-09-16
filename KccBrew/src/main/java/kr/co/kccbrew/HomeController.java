@@ -35,8 +35,6 @@ public class HomeController {
 		String formattedDate = dateFormat.format(date);
 		
 		model.addAttribute("serverTime", formattedDate );
-		httpServletRequest.getSession().invalidate();
-        // 세션에 userId를 넣어줌
 		return "home";
 	}
 	

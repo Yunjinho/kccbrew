@@ -1,7 +1,7 @@
 package kr.co.kccbrew.schdlMng.controller;
 
 
-import java.sql.Date;
+import java.sql.Date; 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -22,8 +22,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-
-import kr.co.kccbrew.comm.register.model.RegisterVo;
+import kr.co.kccbrew.comm.security.model.UserVo;
 import kr.co.kccbrew.schdlMng.model.HolidayVo;
 import kr.co.kccbrew.schdlMng.model.SchdlMngVo;
 import kr.co.kccbrew.schdlMng.service.SchdlMngService;
@@ -39,7 +38,8 @@ import lombok.extern.slf4j.Slf4j;
  * 2023-09-01			           이세은			             최초생성
  * 2023-09-11                       이세은               휴일등록 메서드 작성
  * 2023-09-12                       이세은               휴일기간 중복방지 유효성검사 메서드작성
- * @author YUNJINHO
+ * 
+ * @author LEESEEUN
  * @version 1.0
  */
 
@@ -49,6 +49,8 @@ public class schdlMngController {
 
 	@Autowired
 	private SchdlMngService schdlMngService;
+	@Autowired
+	private UserVo userVo;
 
 	/*일정조회*/
 
@@ -175,19 +177,6 @@ public class schdlMngController {
 		/*세션에서 회원정보 추출해서 dto에 저장*/
 		HttpSession session = request.getSession();
 		SchdlMngVo schdlMngVo = new SchdlMngVo();
-		schdlMngVo.setUserId("bsy01");
-
-
-		/*파라미터에서 날짜정보 추출해서 dto에 저장*/
-		/*		try {
-		    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
-		    java.util.Date jsDate = dateFormat.parse(dateInfo);
-		    Date sqlDate = new Date(jsDate.getTime());
-			schdlMngVo.setScheduleDate(sqlDate);
-
-		} catch (ParseException e) {
-		    e.printStackTrace();
-		}*/
 
 		List<SchdlMngVo> schedules = schdlMngService.getCalendarSchedule(schdlMngVo);
 
@@ -201,7 +190,7 @@ public class schdlMngController {
 	public String holidayPage(Model model) {
 
 		/*세션에서 점주 및 점포 정보 확인*/
-		RegisterVo  user = new RegisterVo();
+		UserVo  user = new UserVo();
 		user.setUserId("ngw01");
 		String userId = user.getUserId();
 
@@ -351,8 +340,4 @@ public class schdlMngController {
 
 		return "redirect:/holiday";
 	}
-
-
-
-
 }
