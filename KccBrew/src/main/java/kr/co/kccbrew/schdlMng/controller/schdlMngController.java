@@ -6,6 +6,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -23,6 +24,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import kr.co.kccbrew.comm.security.model.UserVo;
+import kr.co.kccbrew.comm.security.service.UserService;
 import kr.co.kccbrew.schdlMng.model.HolidayVo;
 import kr.co.kccbrew.schdlMng.model.SchdlMngVo;
 import kr.co.kccbrew.schdlMng.service.SchdlMngService;
@@ -38,6 +40,7 @@ import lombok.extern.slf4j.Slf4j;
  * 2023-09-01			           이세은			             최초생성
  * 2023-09-11                       이세은               휴일등록 메서드 작성
  * 2023-09-12                       이세은               휴일기간 중복방지 유효성검사 메서드작성
+ * 2023-09-17                       이세은               검색 기능 수정
  * 
  * @author LEESEEUN
  * @version 1.0
@@ -51,6 +54,8 @@ public class schdlMngController {
 	private SchdlMngService schdlMngService;
 	@Autowired
 	private UserVo userVo;
+	@Autowired
+	private UserService userService;
 
 	/*일정조회*/
 
@@ -64,7 +69,7 @@ public class schdlMngController {
 			) {
 
 		/*파라미터 확인*/
-		System.out.println("searchContent: " + searchContent);
+		/*System.out.println("searchContent: " + searchContent);*/
 
 		/*권한확인*/
 
@@ -72,9 +77,10 @@ public class schdlMngController {
 		List<SchdlMngVo> schedules = schdlMngService.getSchedules2(currentPage, searchContent);
 		int scheduleCount = schdlMngService.getSchedule2Count(searchContent);
 
-		/*DB 데이터 확인*/
-		System.out.println("schedules: " + schedules);
-		System.out.println("scheduleCount: " + scheduleCount);
+		/*지역리스트 데이터*/
+		List<UserVo> locations = schdlMngService.getLocations();
+		List<String > subLocations;
+		locations.get(0).getGrpCdDtlNm();
 
 		int totalPage = 0;
 		int sharePage = 0;
@@ -82,7 +88,7 @@ public class schdlMngController {
 		//   totalPage 구하기
 		if (schedules != null && !schedules.isEmpty()) {
 			totalPage = (int) Math.ceil((double) scheduleCount / 10);
-			System.out.println("totalPage: " + totalPage);
+			/*System.out.println("totalPage: " + totalPage);*/
 		} else {
 		}
 
@@ -98,7 +104,10 @@ public class schdlMngController {
 		model.addAttribute("sharePage", sharePage);
 
 		model.addAttribute("totalDataNumber", scheduleCount);
+
 		model.addAttribute("schedules", schedules);
+		model.addAttribute("locations", locations);
+
 
 
 		return "schdl/hldyList";
@@ -106,22 +115,25 @@ public class schdlMngController {
 
 	@PostMapping("/holiday")
 	public String getSearchedHolidays(
-			@RequestParam(defaultValue = "1") int currentPage,
+			@RequestParam("currentPage") int currentPage,
+			@RequestParam("startDate") String startDate,
+			@RequestParam("endDate") String endDate,
 			@ModelAttribute("searchContent") SchdlMngVo searchContent,
 			Model model,
 			HttpSession session 
 			) {
 
+
 		/*파라미터 확인*/
-		System.out.println("searchContent: " + searchContent);
+		/*System.out.println("searchContent: " + searchContent);*/
 
 		/* 스케줄리스트 데이터 */
 		List<SchdlMngVo> schedules = schdlMngService.getSchedules2(currentPage, searchContent);
 		int scheduleCount = schdlMngService.getSchedule2Count(searchContent);
 
 		/*DB 데이터 확인*/
-		System.out.println("schedules: " + schedules);
-		System.out.println("scheduleCount: " + scheduleCount);
+		/*	System.out.println("schedules: " + schedules);
+		System.out.println("scheduleCount: " + scheduleCount);*/
 
 		int totalPage = 0;
 		int sharePage = 0;
@@ -147,20 +159,19 @@ public class schdlMngController {
 		model.addAttribute("totalDataNumber", scheduleCount);
 		model.addAttribute("schedules", schedules);
 
-
-		return "redirect: schdl/hldyList";
+		return "schdl/hldyList";
 	}
 
 
 	/*관리자 캘린더 조회*/
 	@GetMapping("/schedule")
 	public String getAttendanceStatus() {
-		return "schdl/schdlMngClndr";
+		return "schdl/schdlMngTable";
 	}
-	
+
 	@GetMapping("/schedule/calendar")
 	public String getCalendar() {
-		
+
 		return "schdl/schdlMngTable";
 	}
 

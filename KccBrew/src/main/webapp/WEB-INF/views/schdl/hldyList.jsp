@@ -15,6 +15,10 @@
 <link rel="stylesheet" href="/resources/css/schdl/common.css" />
 <link rel="stylesheet" href="/resources/css/schdl/myschedulelist.css" />
 
+<!-- javascript -->
+<script src="<c:url value="/resources/js/schdl/board.js"/>"></script>
+<script src="<c:url value="/resources/js/schdl/search.js"/>"></script>
+
 <meta charset="UTF-8">
 <title>Insert title here</title>
 
@@ -271,11 +275,14 @@
 
 										<!-- 로그 검색 -->
 
-										<form action="/schedule" method="POST">
+										<form name="srhForm" action="/holiday" method="post">
+
+											<input type="hidden" name="currentPage" value="1"> <input
+												type="hidden" name="startDate" value=""> <input
+												type="hidden" name="endDate" value="">
 
 											<div>
-												<span> 사용자검색
-												</span>
+												<span> 사용자검색 </span>
 											</div>
 
 											<div class="search-info">
@@ -284,20 +291,20 @@
 													<table id="search-box">
 														<tr>
 															<th>위치</th>
-															<td><select class="tx2" name="storeLocation"
-																onchange="chg()">
-																	<option>지역 대분류</option>
-																	<option value="2"
-																		${param.storeLocation == '2' ? 'selected' : ''}>서울</option>
-																	<option value="31"
-																		${param.storeLocation == '31' ? 'selected' : ''}>경기도</option>
-																	<option value="32"
-																		${param.storeLocation == '32' ? 'selected' : ''}>인천</option>
+															<td><select class="tx2" name="superGrpCdDtlId"
+																onchange="updateSecondSelect()">
+																	<option value="">지역 대분류</option>
+																	<c:forEach var="location" items="${locations}">
+																		<c:if test="${location.grpCdId eq 'L'}">
+																			<option value="${location.grpCdDtlId}"
+																				${param.superGrpCdDtlId == location.grpCdDtlId ? 'selected' : ''}>
+																				${location.grpCdDtlNm}</option>
+																		</c:if>
+																	</c:forEach>
 															</select></td>
 
-															<td><select class="tx2" name="storeSubLocation"
-																disabled>
-																	<option>지역 소분류</option>
+															<td><select class="tx2" name="grpCdDtlId">
+																	<option value="">지역 소분류</option>
 															</select></td>
 
 															<th>유형</th>
@@ -326,7 +333,6 @@
 															<td><input type="text" id="search-word"
 																name="searchKeword" placeholder="키워드 선택 후 입력해주세요"
 																required disabled></td>
-
 														</tr>
 
 													</table>
@@ -413,63 +419,25 @@
 											}
 										</script>
 
-
-										<!-- 로케이션을 서울로 지정 시, 서브로케이션 활성화 -->
-										<script>
-function chg() {
-  const storeLocationSelect = document.getElementsByName('storeLocation')[0];
-  const storeSubLocationSelect = document.getElementsByName('storeSubLocation')[0];
-
-  // 대분류 선택값 가져오기
-  const selectedStoreLocation = storeLocationSelect.value;
-
-  // 소분류 옵션 초기화
-  storeSubLocationSelect.innerHTML = '<option>지역 소분류</option>';
-
-  // 대분류에 따라 소분류 옵션 추가
-  if (selectedStoreLocation === '2') {
-    storeSubLocationSelect.innerHTML += `
-      <option value="02-200" ${param.storeSubLocation == '02-200' ? 'selected' : ''}>양천</option>
-      <option value="02-300" ${param.storeSubLocation == '02-300' ? 'selected' : ''}>은평,마포,서대문</option>
-  	<option value="02-400"
-		${param.storeSubLocation == '02-400' ? 'selected' : ''}>송파,강동,중량,광진,선동</option>
-	<option value="02-500"
-		${param.storeSubLocation == '02-500' ? 'selected' : ''}>서초,강남,과천시</option>
-	<option value="02-700"
-		${param.storeSubLocation == '02-700' ? 'selected' : ''}>마포,용산,종로</option>
-	<option value="031-200"
-		${param.storeSubLocation == '031-200' ? 'selected' : ''}>수원시</option>
-    `;
-    storeSubLocationSelect.disabled = false;
-  } else {
-	    storeSubLocationSelect.disabled = true;
-	  }
-}
-</script>
-
-
-
-
-										<!-- 로그 리스트 -->
 										<div id="logTable">
-											<form name="form" method="get" class="Search">
-												<div class="board-info">
-													<span class="data-info"> 전체<b><span><c:out
-																	value="${totalDataNumber}" /></span></b>건<span
-														id="text-separator"> | </span><b><span><c:out
-																	value="${currentPage}" /></span></b>/<b><span><c:out
-																	value="${totalPage}" /></span></b>쪽
-													</span>
 
-													<fieldset>
-														<legend class="blind">날짜 검색</legend>
-														<label>휴가일</label> <input type="date" id="startDate"
-															name="startDate" required> <input type="date"
-															id="endDate" name="endDate" required> <input
-															type="submit" value="검색">
-													</fieldset>
-												</div>
-											</form>
+											<div class="board-info">
+												<span class="data-info"> 전체<b><span><c:out
+																value="${totalDataNumber}" /></span></b>건<span id="text-separator">
+														| </span><b><span><c:out value="${currentPage}" /></span></b>/<b><span><c:out
+																value="${totalPage}" /></span></b>쪽
+												</span>
+
+												<fieldset>
+													<legend class="blind">날짜 검색</legend>
+													<label>휴가일</label> <input type="date" id="startDate"
+														name="startDate" required> <input type="date"
+														id="endDate" name="endDate" required> <input
+														type="button" value="검색"
+														onclick="goPage(); return false;">
+												</fieldset>
+											</div>
+
 											<table>
 												<thead>
 													<tr>
@@ -513,41 +481,25 @@ function chg() {
 										<!-- 페이징 -->
 										<div class="paging pagination">
 
-											<!-- 맨 앞으로 가는 버튼 -->
-											<a
-												href="/schedule2?currentPage=1
-															&startYr=${searchContent.startYr}&startMn=${searchContent.startMn}
-															&endYr=${searchContent.endYr}&endMn=${searchContent.endMn}
-															&storeLocation=${searchContent.storeLocation}
-															&storeSubLocation=${searchContentstoreSubLocation}
-															&userType=${searchContent.userType}
-															&userId=${searchContent.userId}
-															&userName=${searchContent.userName}
-															&storeId=${searchContent.storeId}
-															&storeName=${searchContent.storeName}"><img
+											<!-- 맨 앞 버튼 -->
+											<a href="" onclick="goPage(1); return false;"
+												class="pageFirst"> <img
 												src="/resources/img/log/free-icon-left-chevron-6015759.png"
-												alt=" 처음" /></a>
+												alt="처음" />
+											</a>
 
+											<!-- 이전 버튼 -->
 											<c:choose>
 												<c:when test="${currentPage > 1}">
-													<a
-														href="/schedule2?currentPage=${currentPage - 1}
-															&startYr=${searchContent.startYr}&startMn=${searchContent.startMn}
-															&endYr=${searchContent.endYr}&endMn=${searchContent.endMn}
-															&storeLocation=${searchContent.storeLocation}
-															&storeSubLocation=${searchContentstoreSubLocation}
-															&userType=${searchContent.userType}
-															&userId=${searchContent.userId}
-															&userName=${searchContent.userName}
-															&storeId=${searchContent.storeId}
-															&storeName=${searchContent.storeName}">
-														<img
+													<a href=""
+														onclick="goPage(${currentPage - 1}); return false;"
+														class="pagePrev"> <img
 														src="/resources/img/log/free-icon-left-arrow-271220.png"
 														alt="이전" />
 													</a>
 												</c:when>
 												<c:otherwise>
-													<a href="#" class="disabled-link"> <img
+													<a href="" class="disabled-link pagePrev"> <img
 														src="/resources/img/log/free-icon-left-arrow-271220.png"
 														alt="이전" />
 													</a>
@@ -560,62 +512,40 @@ function chg() {
 													<c:forEach var="page" begin="${sharePage * 10 + 1}"
 														end="${(sharePage + 1) * 10}" step="1">
 														<c:if test="${page <= totalPage}">
-															<a
-																href="/schedule2?currentPage=${page}
-																			&startYr=${searchContent.startYr}&startMn=${searchContent.startMn}
-																			&endYr=${searchContent.endYr}&endMn=${searchContent.endMn}
-																			&storeLocation=${searchContent.storeLocation}
-																			&storeSubLocation=${searchContentstoreSubLocation}
-																			&userType=${searchContent.userType}
-																			&userId=${searchContent.userId}
-																			&userName=${searchContent.userName}
-																			&storeId=${searchContent.storeId}
-																			&storeName=${searchContent.storeName}"
-																class="pagination page-btn ${currentPage == page ? 'selected' : ''}">
+															<a href="" onclick="goPage(${page}); return false;"
+																class="pageNow pagination page-btn ${currentPage == page ? 'selected' : ''}">
 																${page} </a>
+
+
+
+
 														</c:if>
 													</c:forEach>
 												</div>
 											</div>
 
-											<!-- 뒤로 가는 버튼 -->
+											<!-- 뒤로 버튼 -->
 											<c:if test="${currentPage < totalPage}">
-												<a
-													href="/schedule2?currentPage=${currentPage + 1}
-															&startYr=${searchContent.startYr}&startMn=${searchContent.startMn}
-															&endYr=${searchContent.endYr}&endMn=${searchContent.endMn}
-															&storeLocation=${searchContent.storeLocation}
-															&storeSubLocation=${searchContentstoreSubLocation}
-															&userType=${searchContent.userType}
-															&userId=${searchContent.userId}
-															&userName=${searchContent.userName}
-															&storeId=${searchContent.storeId}
-															&storeName=${searchContent.storeName}">
-													<img
+												<a href=""
+													onclick="goPage(${currentPage + 1}); return false;"
+													class="pageNext"> <img
 													src="/resources/img/log/free-icon-right-arrow-271228.png"
 													alt="다음" />
 												</a>
 											</c:if>
 											<c:if test="${currentPage == totalPage}">
-												<a href="" class="disabled-link"> <img
+												<a href="" class="disabled-link pageNext"> <img
 													src="/resources/img/log/free-icon-right-arrow-271228.png"
 													alt="다음" />
 												</a>
 											</c:if>
 
-											<a
-												href="/schedule2?currentPage=${totalPage}
-															&startYr=${searchContent.startYr}&startMn=${searchContent.startMn}
-															&endYr=${searchContent.endYr}&endMn=${searchContent.endMn}
-															&storeLocation=${searchContent.storeLocation}
-															&storeSubLocation=${searchContentstoreSubLocation}
-															&userType=${searchContent.userType}
-															&userId=${searchContent.userId}
-															&userName=${searchContent.userName}
-															&storeId=${searchContent.storeId}
-															&storeName=${searchContent.storeName}"><img
+											<!-- 맨 뒤로 버튼 -->
+											<a href="" onclick="goPage(${totalPage}); return false;"
+												class="pageLast"> <img
 												src="/resources/img/log/free-icon-fast-forward-double-right-arrows-symbol-54366.png"
-												alt="마지막" /></a>
+												alt="마지막" />
+											</a>
 										</div>
 									</div>
 									<!-- ********** 세은 로그 관련 내용 끝 ********** -->

@@ -8,6 +8,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import kr.co.kccbrew.comm.security.model.UserVo;
 import kr.co.kccbrew.schdlMng.dao.ISchdlMngRepository;
 import kr.co.kccbrew.schdlMng.model.HolidayVo;
 import kr.co.kccbrew.schdlMng.model.SchdlMngVo;
@@ -79,6 +80,14 @@ public class SchdlMngService implements ISchdlMngService {
 	public List<Date> getAssignDates(String userId) {
 		return schdlMngRepository.selectAssignDates(userId);
 	}
+
+	/*지역코드 조회*/
+	@Override
+	public List<UserVo> getLocations() {
+		return schdlMngRepository.selectLocations();
+	}
+	
+	
 	
 	
 

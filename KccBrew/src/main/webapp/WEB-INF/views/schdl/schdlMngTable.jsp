@@ -6,45 +6,48 @@
 <%@ page import="java.time.LocalDateTime"%>
 <%@ page import="java.time.format.DateTimeFormatter"%>
 
+<%@ page import="java.util.Calendar"%>
+
+
 <!DOCTYPE html>
 <html>
 <head>
+<meta charset='utf-8' />
+
+
 <!-- css -->
 <link rel="stylesheet" href="/resources/css/log/mylogtest.css" />
 <link rel="stylesheet" href="/resources/css/log/content-template.css" />
 <link rel="stylesheet" href="/resources/css/schdl/mycalendar.css" />
+<link rel="stylesheet" href="/resources/css/schdl/common.css" />
+<link rel="stylesheet" href="/resources/css/schdl/myschedulelist.css" />
+
+<!-- javascript -->
+<script src="<c:url value="/resources/js/schdl/board.js"/>"></script>
+<script src="<c:url value="/resources/js/schdl/search.js"/>"></script>
 
 <!-- font -->
-<!-- notoSans -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link
 	href="https://fonts.googleapis.com/css2?family=Noto+Sans&display=swap"
 	rel="stylesheet">
-<!-- notoSans Kr -->
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link
 	href="https://fonts.googleapis.com/css2?family=Noto+Sans&family=Noto+Sans+KR&display=swap"
 	rel="stylesheet">
 
-<!-- 캘린더 -->
-<meta charset='utf-8' />
-<link
-	href='https://cdn.jsdelivr.net/npm/fullcalendar@5.10.0/main.min.css'
-	rel='stylesheet' />
-<script
-	src='https://cdn.jsdelivr.net/npm/fullcalendar@5.10.0/main.min.js'></script>
 
-<!-- jqeury -->
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-<meta charset="UTF-8">
 <title>Insert title here</title>
 
 </head>
 
 <body>
+
+
 	<div id="page" class="page-nosubmenu">
 		<!-- ********** header영역 시작********** -->
 		<div id="page-header">
@@ -200,7 +203,7 @@
 											alt="Check List" class="header-icon" />
 									</div>
 								</li>
-								<li><a href="<c:url value='/calendar' />">나의 캘린더</a></li>
+								<li><a href="<c:url value='/calendar' />">월근태현황</a></li>
 							</ol>
 						</div>
 						<!-- ********** 페이지 네비게이션 끝 ********** -->
@@ -211,246 +214,71 @@
 								<div class="user-past">
 
 									<!-- ********** 세은 컨텐츠 ********** -->
-									<div id="calendar"></div>
-									<script
-										src="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.0/main.min.js"></script>
-									<script>
-										/* 전역변수 */
-										var calendar;
-										var year;
-										var month;
-										var dateInfo;
-
-										/* ajax로 날짜 정보 보내는 함수 */
-										function sendAjaxRequest(year, month) {
-											$
-													.ajax({
-														url : '/calendar',
-														method : 'POST',
-														data : {
-															"year" : year,
-															"month" : month,
-															"dateInfo" : dateInfo
-														},
-														success : function(
-																response) {
-															var schedules = JSON
-																	.stringify(response);
-
-															var events = [];
 
 
-															for (var i = 0; i < response.length; i++) {
-																var schedule = response[i];
-																var scheduleType = schedule.scheduleType;
-																var scheduleDate = schedule.scheduleDate;
 
 
-																events
-																		.push({
-																			title : scheduleType,
-																			date : scheduleDate
-																		});
-															}
 
-															calendar.setOption(
-																	'events',
-																	events);
 
-														},
+									<div id="content">
 
-														error : function(error) {
-															console
-																	.error("Ajax 요청 실패: "
-																			+ error);
-														}
-													});
-										}
+										<h2 class="heading">월근태현황</h2>
 
-										$(document)
-												.ready(
-														function() {
-															var calendarEl = document
-																	.getElementById('calendar');
+										<!-- 탭메뉴 -->
+										<div class="tabNav">
+											<ul class="tab-ul">
+												<li class="last"><a href=""><span>휴가사용현황</span></a></li>
+												<li class="active"><a href="/schedule/calendar"><span>월근태현황</span></a></li>
+											</ul>
+										</div>
 
-															calendar = new FullCalendar.Calendar(
-																	calendarEl,
+										<!-- 회원 검색 -->
 
-																	{
-																		initialView : 'dayGridMonth',
-																		/* events : [
-																				{
-																					title : '예제 이벤트',
-																					date : '2023-09-07'
-																				}, ], */
+										<div id="content-table">
 
-																		headerToolbar : {
-																			left : 'prev,next',
-																			center : 'title',
-																			right : 'today',
-																		},
+											<div class="board-info">
+												<span class="data-info"> 전체<b><span><c:out
+																value="${totalDataNumber}" /></span></b>건
+												</span>
+												<fieldset>
+													<label>근무년월</label> <select id="yearSelect"
+														name="selectedYear" required>
+														<c:forEach var="year" begin="2020" end="2030">
+															<option value="${year}">${year}</option>
+														</c:forEach>
+													</select> <select id="monthSelect" name="selectedMonth" required>
+														<c:forEach var="month" begin="1" end="12">
+															<option value="${month}">${month}월</option>
+														</c:forEach>
+													</select> <input type="button" value="이동"
+														onclick="getLastDayAndPopulateTable();">
+												</fieldset>
+											</div>
 
-																		dateClick : function(
-																				info) {
-																			var selectedDate = prompt(
-																					'날짜를 선택하세요 (YYYY-MM-DD)',
-																					info.dateStr);
 
-																			if (selectedDate) {
-																				var dateObj = new Date(
-																						selectedDate);
-																				calendar
-																						.gotoDate(selectedDate);
 
-																				/* 이벤트 확인 */
-																				console
-																						.log("datepicker 날짜 선택")
+											<table Id="cal-table">
+												<thead>
+													<tr>
+														<td rowspan="2">ID</td>
+														<td rowspan="2">이름</td>
+														<td rowspan="2">지역</td>
+														<td rowspan="2">장비</td>
 
-																				/* 날짜 정보 추출 */
-																				dateInfo = new Date(
-																						calendar.view.title);
-																				year = dateInfo
-																						.getFullYear();
-																				month = dateInfo
-																						.getMonth() + 1;
+														<td rowspan="2">비고</td>
+													</tr>
+													<tr>
 
-																				console
-																						.log("year: "
-																								+ year);
-																				console
-																						.log("month: "
-																								+ month);
+													</tr>
+												</thead>
+											</table>
 
-																				/* ajax함수로 데이터 서버로 전송 */
-																				sendAjaxRequest(
-																						year,
-																						month,
-																						dateInfo);
-																			}
-																		},
+										</div>
 
-																	});
 
-															var view = calendar.view;
-															console
-																	.log(
-																			"현재 뷰(View)의 정보:",
-																			view);
 
-															calendar.render();
-														});
 
-										$(document)
-												.ready(
-														function() {
-
-															$(
-																	"button[title='Previous month']")
-																	.attr('id',
-																			'prevButton');
-															$(
-																	"button[title='Next month']")
-																	.attr('id',
-																			'nextButton');
-															$(
-																	"button[title='This month']")
-																	.attr('id',
-																			'thisButton');
-
-															// 이전 달 버튼 클릭 이벤트 핸들러
-															$('#prevButton')
-																	.click(
-																			function() {
-																				/* 로그 확인 */
-																				console
-																						.log("prevButton 버튼 클릭")
-
-																				/* 날짜 정보 추출 */
-																				dateInfo = new Date(
-																						calendar.view.title);
-																				year = dateInfo
-																						.getFullYear();
-																				month = dateInfo
-																						.getMonth() + 1;
-
-																				console
-																						.log("year: "
-																								+ year);
-																				console
-																						.log("month: "
-																								+ month);
-
-																				/* ajax함수로 데이터 서버로 전송 */
-																				sendAjaxRequest(
-																						year,
-																						month,
-																						dateInfo);
-
-																			});
-
-															// 다음 달 버튼 클릭 이벤트 핸들러
-															$('#nextButton')
-																	.click(
-																			function() {
-																				/* 로그 확인 */
-																				console
-																						.log("nextButton 버튼 클릭")
-
-																				/* 날짜 정보 추출 */
-																				dateInfo = new Date(
-																						calendar.view.title);
-																				year = dateInfo
-																						.getFullYear();
-																				month = dateInfo
-																						.getMonth() + 1;
-
-																				console
-																						.log("year: "
-																								+ year);
-																				console
-																						.log("month: "
-																								+ month);
-
-																				/* ajax함수로 데이터 서버로 전송 */
-																				sendAjaxRequest(
-																						year,
-																						month,
-																						dateInfo);
-
-																			});
-
-															// 이번 달 버튼 클릭 이벤트 핸들러
-															$('#thisButton')
-																	.click(
-																			function() {
-																				/* 로그 확인 */
-																				console
-																						.log("thisButton 버튼 클릭")
-
-																				/* 날짜 정보 추출 */
-																				dateInfo = new Date(
-																						calendar.view.title);
-																				year = dateInfo
-																						.getFullYear();
-																				month = dateInfo
-																						.getMonth() + 1;
-
-																				console
-																						.log("year: "
-																								+ year);
-																				console
-																						.log("month: "
-																								+ month);
-
-																				/* ajax함수로 데이터 서버로 전송 */
-																				sendAjaxRequest(
-																						year,
-																						month,
-																						dateInfo);
-
-																			});
-														});
-									</script>
+									</div>
 
 
 

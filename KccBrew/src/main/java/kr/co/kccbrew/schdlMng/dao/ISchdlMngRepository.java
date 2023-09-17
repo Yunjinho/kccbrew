@@ -7,6 +7,7 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Mapper; 
 import org.springframework.stereotype.Repository;
 
+import kr.co.kccbrew.comm.security.model.UserVo;
 import kr.co.kccbrew.schdlMng.model.HolidayVo;
 import kr.co.kccbrew.schdlMng.model.SchdlMngVo;
 
@@ -35,5 +36,8 @@ public interface ISchdlMngRepository {
 
 	/*AS배정날짜 목록*/
 	public List<Date> selectAssignDates(String userId);
+	
+	/*지역코드 목록*/
+	public List<UserVo> selectLocations();
 	
 }

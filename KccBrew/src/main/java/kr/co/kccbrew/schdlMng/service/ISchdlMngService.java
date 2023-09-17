@@ -2,7 +2,9 @@ package kr.co.kccbrew.schdlMng.service;
 
 import java.sql.Date; 
 import java.util.List;
+import java.util.Map;
 
+import kr.co.kccbrew.comm.security.model.UserVo;
 import kr.co.kccbrew.schdlMng.model.HolidayVo;
 import kr.co.kccbrew.schdlMng.model.SchdlMngVo;
 
@@ -29,5 +31,8 @@ public interface ISchdlMngService {
 	
 	/*AS배정일 조회*/
 	public List<Date> getAssignDates(String userId);
+	
+	/*지역목록 조회*/
+	public List<UserVo> getLocations();
 	
 }

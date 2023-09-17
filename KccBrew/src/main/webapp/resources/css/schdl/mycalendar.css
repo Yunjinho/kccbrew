@@ -15,17 +15,16 @@
 	align-content: center;
 }
 
-
 .fc .fc-button {
 	display: flex !important;
 	align-items: center !important;
 }
 
-.fc-scrollgrid-sync-inner > a {
+.fc-scrollgrid-sync-inner>a {
 	color: black !important;
 }
 
-.fc-daygrid-day-top > a {
+.fc-daygrid-day-top>a {
 	color: black !important;
 }
 
@@ -35,4 +34,19 @@
 
 .fc-event-title.fc-sticky {
 	color: black !important;
+}
+
+/* 월근태현황 테이블 */
+#cal-table {
+	border: 1px solid !important;
+	width: 70%;
+	margin: 0px auto;
+}
+
+#cal-table > th, td {
+	border: 1px solid;
+}
+
+#cal-table > thead {
+	border-top: 5px solid darkgray;
 }
