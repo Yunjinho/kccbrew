@@ -12,6 +12,7 @@
 </head>
 
 <c:set var="user" value="${sessionScope.user}" />
+<c:set var="store" value="${sessionScope.store}" />
 
 <sec:authorize access="hasRole('ROLE_ADMIN')">
 	<header class="comm-nav">
