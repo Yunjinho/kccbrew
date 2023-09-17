@@ -38,7 +38,7 @@ function goDate(startDate, endDate){
 	var fm = document.srhForm;
 	fm.startDate.value = startDate;
 	fm.endDate.value = endDate;
-	fm.submit();
+	performSearch();
 	return true;
 }
 
@@ -79,7 +79,7 @@ function getCurrentDate() {
 
 
 //이동 버튼 클릭 시 이벤트 처리
-function goDate() {
+function getPeriod() {
 	var selectedYear = document.getElementById('yearSelect').value;
 	var selectedMonth = document.getElementById('monthSelect').value;
 	// 선택한 년도와 월을 사용하여 시작일과 종료일을 계산

@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import kr.co.kccbrew.comm.security.model.UserVo;
@@ -29,6 +30,7 @@ import kr.co.kccbrew.schdlMng.model.HolidayVo;
 import kr.co.kccbrew.schdlMng.model.SchdlMngVo;
 import kr.co.kccbrew.schdlMng.service.SchdlMngService;
 import kr.co.kccbrew.strMng.model.StrMngVo;
+import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -169,6 +171,47 @@ public class schdlMngController {
 		return "schdl/schdlMngTable";
 	}
 
+	/*	@GetMapping("/schedule")
+	public String getsearchedAttendanceStatus(@ModelAttribute("userVo") UserVo userVo, 
+																								@RequestParam("startDate") Date startDate,
+																								@RequestParam("endDate") Date endDate,
+																								Model model) {
+		System.out.println("userVo:" + userVo);
+		System.out.println("startDate: " + startDate + ", endDate: " + endDate);
+
+		model.addAttribute("startDate", startDate);
+		model.addAttribute("endDate", endDate);
+
+
+		return "schdl/schdlMngTable";
+	}*/
+
+
+	@PostMapping(value="/schedule", produces = "text/plain; charset=utf-8")
+	@ResponseBody
+	public String processSearchRequest(@RequestParam("startDate") String startDate,
+            																	@RequestParam("endDate") String endDate, 
+            																	@ModelAttribute UserVo userVo) {
+		// 여기서 검색 요청을 처리하고 필요한 응답 데이터를 생성합니다.
+		System.out.println("startDate: " + startDate + ", endDate: " + endDate);
+		System.out.println("userVo: " + userVo);
+
+		// 검색 결과를 생성하는 로직을 추가하세요.
+		String searchResult = "성공";
+
+		// 검색 결과를 클라이언트로 응답합니다.
+		return searchResult;
+	}
+
+	@Data
+	public class SearchRequest {
+		private String superGrpCdDtlId;
+		private String grpCdDtlId;
+		private String searchKeword;
+		private Date startDate;
+		private Date endDate;
+	}
+
 	@GetMapping("/schedule/calendar")
 	public String getCalendar() {
 
@@ -176,7 +219,7 @@ public class schdlMngController {
 	}
 
 	/*회원 캘린더 월별 조회*/
-	@PostMapping("/schedule/calendar")
+	@PostMapping(value="/schedule/calendar", produces = "text/plain; charset=utf-8")
 	@ResponseBody
 	public List<SchdlMngVo> getUserCalendar(HttpServletRequest request, 
 			@RequestParam("year") Integer year, @RequestParam("month") Integer month,  

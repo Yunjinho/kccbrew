@@ -25,6 +25,9 @@
 <!-- javascript -->
 <script src="<c:url value="/resources/js/schdl/board.js"/>"></script>
 <script src="<c:url value="/resources/js/schdl/search.js"/>"></script>
+<script src="<c:url value="/resources/js/schdl/scheduleTable.js"/>"></script>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <!-- font -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -203,7 +206,7 @@
 											alt="Check List" class="header-icon" />
 									</div>
 								</li>
-								<li><a href="<c:url value='/calendar' />">월근태현황</a></li>
+								<li><a href="<c:url value='/schedule' />">월근태현황</a></li>
 							</ol>
 						</div>
 						<!-- ********** 페이지 네비게이션 끝 ********** -->
@@ -215,11 +218,6 @@
 
 									<!-- ********** 세은 컨텐츠 ********** -->
 
-
-
-
-
-
 									<div id="content">
 
 										<h2 class="heading">월근태현황</h2>
@@ -228,11 +226,90 @@
 										<div class="tabNav">
 											<ul class="tab-ul">
 												<li class="last"><a href=""><span>휴가사용현황</span></a></li>
-												<li class="active"><a href="/schedule/calendar"><span>월근태현황</span></a></li>
+												<li class="active"><a href="/schedule"><span>월근태현황</span></a></li>
 											</ul>
 										</div>
 
 										<!-- 회원 검색 -->
+										<form name="srhForm" action="/schedule" method="post">
+
+											<input type="hidden" name="startDate" value=""> 
+											<input type="hidden" name="endDate" value="">
+											<input type="hidden" name="userTypeCd" value="03">
+
+											<div>
+												<span> 사용자검색 </span>
+											</div>
+
+											<div class="search-info">
+												<fieldset>
+													<legend class="blind">사용자검색</legend>
+													<table id="search-box">
+														<tr>
+															<th>위치</th>
+															<td><select class="tx2" name="superGrpCdDtlId"
+																onchange="updateSecondSelect()">
+																	<option value="">지역 대분류</option>
+																	<c:forEach var="location" items="${locations}">
+																		<c:if test="${location.grpCdId eq 'L'}">
+																			<option value="${location.grpCdDtlId}"
+																				${param.superGrpCdDtlId == location.grpCdDtlId ? 'selected' : ''}>
+																				${location.grpCdDtlNm}</option>
+																		</c:if>
+																	</c:forEach>
+															</select></td>
+
+															<td><select class="tx2" name="grpCdDtlId">
+																	<option value="">지역 소분류</option>
+															</select></td>
+
+															<th>유형</th>
+															<td>수리기사</td>
+
+															<th>검색어</th>
+															<td><select class="tx2" name="searchKeword"
+																onchange="chgName(this)">
+																	<option value="">검색어</option>
+																	<option value="userId"
+																		${param.searchKeword == 'userId' ? 'selected' : ''}>ID</option>
+																	<option value="userNm"
+																		${param.searchKeword == 'userNm' ? 'selected' : ''}>이름</option>
+																	<option value="eqpmnCd"
+																		${param.searchKeword == 'eqpmnCd' ? 'selected' : ''}>장비</option>
+															</select></td>
+															<td><input type="text" id="search-word"
+																name="searchKeword" placeholder="키워드 선택 후 입력해주세요"
+																required disabled></td>
+														</tr>
+
+													</table>
+													<div class="form-btn-box">
+														<fieldset>
+															<button type="button" class="form-btn" id="searchButton" onclick="performSearch()">검색</button>
+															<button type="reset" class="form-btn">초기화</button>
+														</fieldset>
+													</div>
+												</fieldset>
+											</div>
+										</form>
+
+										<!-- 검색어 선택한 것이 input요소의 name으로 설정 -->
+										<script>
+											function chgName(selectElement) {
+												const selectedValue = selectElement.value; // 선택한 값
+												const inputElement = document
+														.getElementById('search-word'); // 검색어 입력 필드
+
+												if (selectedValue === '') {
+													// 선택한 값이 빈 문자열인 경우, input 요소를 비활성화
+													inputElement.disabled = true;
+												} else {
+													// 선택한 값이 빈 문자열이 아닌 경우, input 요소를 활성화
+													inputElement.disabled = false;
+													inputElement.name = selectedValue;
+												}
+											}
+										</script>
 
 										<div id="content-table">
 
@@ -251,7 +328,7 @@
 															<option value="${month}">${month}월</option>
 														</c:forEach>
 													</select> <input type="button" value="이동"
-														onclick="getLastDayAndPopulateTable();">
+														onclick="getLastDayAndPopulateTable(); getPeriod();">
 												</fieldset>
 											</div>
 
