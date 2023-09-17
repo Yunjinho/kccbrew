@@ -79,7 +79,7 @@ function getCurrentDate() {
 
 
 //이동 버튼 클릭 시 이벤트 처리
-function goDate() {
+function getPeriod() {
 	var selectedYear = document.getElementById('yearSelect').value;
 	var selectedMonth = document.getElementById('monthSelect').value;
 	// 선택한 년도와 월을 사용하여 시작일과 종료일을 계산
@@ -107,15 +107,6 @@ function getLastDayAndPopulateTable() {
 
 	// thead의 두 번째 행을 가져옵니다.
 	var secondRow = table.querySelector('thead tr:nth-child(2)');
-
-	// 모든 td 요소를 삭제합니다.
-/*		while (firstRow.firstChild) {
-		firstRow.removeChild(firstRow.firstChild);
-	}
-
-	while (secondRow.firstChild) {
-		secondRow.removeChild(secondRow.firstChild);
-	}*/
 
 	// 1행 5열부터 20열까지의 자식 요소를 삭제
 	while (firstRow.children[5]) {
