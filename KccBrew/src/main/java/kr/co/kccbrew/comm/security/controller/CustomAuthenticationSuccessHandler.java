@@ -38,7 +38,7 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
 			session.setAttribute("store", store);
 			System.out.println("store: " + store);
 		}
-		response.sendRedirect("/security-test");
+		response.sendRedirect("/");
 	}
 
 }

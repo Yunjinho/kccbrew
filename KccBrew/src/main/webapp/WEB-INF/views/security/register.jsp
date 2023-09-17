@@ -172,7 +172,7 @@
 									<img
 										src="<c:url value="resources/img/register/register_location.png"/>"
 										class="register-icons"> <select name="locationCd">
-										<option value="">지역 상세 선택</option>
+										<option>지역 상세 선택</option>
 									</select>
 								</div>
 							</div>

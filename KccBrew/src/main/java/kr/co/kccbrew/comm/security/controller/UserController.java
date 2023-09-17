@@ -36,7 +36,7 @@ import kr.co.kccbrew.comm.security.service.UserService;
  * 2023-08-25		       	 윤진호			             	회원가입 메서드 생성
  * 2023-08-28			    윤진호		            		회원가입 로직 구현
  * 2023-09-14              이세은                     스프링 시큐리티로 변경
- * @author YUNJINHO
+ * @author LEESEEUN
  * @version 1.0
  */
 

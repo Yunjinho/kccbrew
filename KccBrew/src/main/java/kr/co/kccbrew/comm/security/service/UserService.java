@@ -18,8 +18,8 @@ public class UserService implements IUserService{
 	@Autowired
 	private IUserRepository userRepository;
 	@Autowired
-    private PasswordEncoder passwordEncoder;
-	
+	private PasswordEncoder passwordEncoder;
+
 	/**
 	 * 검색한 키워드를 통해 운영하고 있는 점포 리스트를 조회한다.
 	 * @return 운영중인 점포 리스트
@@ -30,7 +30,7 @@ public class UserService implements IUserService{
 		List<UserVo> list = userRepository.selectStoreList(keyword,start,start+4);
 		return list;
 	}
-	
+
 	/**
 	 * 키워드 조건에 조회된 점포 목록의 수
 	 * @return 점포의 수
@@ -40,7 +40,7 @@ public class UserService implements IUserService{
 		int count = userRepository.countStoreList(keyword);
 		return count;
 	}
-	
+
 	/**
 	 * 운영중인 장비군 목록을 조회한다
 	 * @return 장비군 목록 리스트
@@ -50,7 +50,7 @@ public class UserService implements IUserService{
 		List<UserVo> list = userRepository.selectMechineCode();
 		return list;
 	}
-	
+
 	/**
 	 * 아이디 중복체크
 	 * @return 아이디 조회했을 때 나오는 갯수
@@ -60,7 +60,7 @@ public class UserService implements IUserService{
 		int count=userRepository.checkUserId(userId);
 		return count;
 	}
-	
+
 	/**
 	 * 지역 코드 조회
 	 * @return 지역 코드 목록
@@ -70,7 +70,7 @@ public class UserService implements IUserService{
 		List<UserVo> list=userRepository.selectLocationCd();
 		return list;
 	}
-	
+
 	/**
 	 * 상세 지역 목록 조회
 	 * @return 조회한 상세 지역 목록
@@ -80,29 +80,39 @@ public class UserService implements IUserService{
 		List<UserVo> list=userRepository.selectLocationDtlCd(locCd);
 		return list;
 	}
-	
-	
-	
-	
+
+
+
+
 	@Override
 	public void registerUser(UserVo userVo) {
 		userVo.setUserPwd(passwordEncoder.encode(userVo.getUserPwd()));
-		
+
 		//주소+상세주소
 		userVo.setUserAddr(userVo.getUserAddr()+","+userVo.getUserAddressDetail());
 		//사용자사진등록
 		if(!userVo.getImgFile().isEmpty()) {
 			insertUserImg(userVo);
 		}
+
+		if(userVo.getLocationCd().equals("지역 상세 선택")) {
+			userVo.setLocationCd(userVo.getLocation());
+		}
+
+		userRepository.registerUser(userVo);
 		
-		//mapper 테이블에 점포, 점주 연결
-		if(userVo.getUserTypeCd().equals("02")){
+		/*점주일 경우  STORE_USER_MAP테이블에 점주-가게 연결*/
+		if(userVo.getUserTypeCd().equals("02")) {
 			userRepository.insertStoreUserMap(userVo.getUserId(), userVo.getStoreId());
 		}
-		
-		userRepository.registerUser(userVo);
 	}
-	
+
+
+/*	@Override
+	public void insertStoreUserMap(String userId, int storeId) {
+		userRepository.insertStoreUserMap(userId, storeId);
+	}*/
+
 	@Override
 	public UserVo insertUserImg(UserVo user) {
 		UserVo vo=new UserVo();
@@ -118,8 +128,8 @@ public class UserService implements IUserService{
 		//파일 상세 정보 등록
 		userRepository.insertFileDtlInfo(vo);
 		//이미지 파일 저장
-        String targetPath=user.getServerSavePath()+"\\"+vo.getFileServerNm();
-        String localPath=user.getLocalSavePath()+"\\"+vo.getFileServerNm();
+		String targetPath=user.getServerSavePath()+"\\"+vo.getFileServerNm();
+		String localPath=user.getLocalSavePath()+"\\"+vo.getFileServerNm();
 		try {
 			//imgFile.transferTo(targetPath);
 			FileCopyUtils.copy(imgFile.getInputStream(), new FileOutputStream(targetPath));
@@ -129,8 +139,8 @@ public class UserService implements IUserService{
 		}
 		return user;
 	}
-	
-	
+
+
 	@Override
 	public UserVo getUserById(String userId) {
 		return userRepository.getUserById(userId) ;
@@ -141,6 +151,6 @@ public class UserService implements IUserService{
 	public StrMngVo getStoreById(String userId) {
 		return userRepository.getStoreById(userId);
 	}
-	
- 
+
+
 }

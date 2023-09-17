@@ -60,8 +60,6 @@ public class CustomUserDetailsService implements UserDetailsService{
 			
 			List<GrantedAuthority> authorities = new ArrayList<>();
 			authorities.add(new SimpleGrantedAuthority(roleName));
-			
-			System.out.println("CustomUserDetailsService.loadUserByUsername - spring security의 authorities: " + authorities);
 
 			return new User(username, password, authorities);
 		}

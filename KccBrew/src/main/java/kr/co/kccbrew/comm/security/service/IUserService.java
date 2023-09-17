@@ -8,6 +8,7 @@ import kr.co.kccbrew.strMng.model.StrMngVo;
 
 public interface IUserService {
 	public void registerUser(UserVo userVo);
+	/*public void insertStoreUserMap(String userId, int storeId);*/
 	public UserVo insertUserImg(UserVo user);
 	
 	public UserVo getUserById(String userId);
