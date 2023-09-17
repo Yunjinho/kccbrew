@@ -4,7 +4,6 @@ package kr.co.kccbrew.schdlMng.controller;
 import java.sql.Date; 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
@@ -167,22 +166,12 @@ public class schdlMngController {
 	/*관리자 캘린더 조회*/
 	@GetMapping("/schedule")
 	public String getAttendanceStatus() {
-	    
-		return "schdl/schdlMngTable";
-	}
-
-	@PostMapping("/schedule")
-	public String getSearchedAttendanceStatus(@ModelAttribute UserVo userVo, 
-																								 @RequestParam("startDate") Date startDate, 
-																								 @RequestParam("endDate") Date endDate) {
-		System.out.println("userVo: " + userVo);
-		System.out.println("startDate: " + startDate + ", endDate: " + endDate);
-		
 		return "schdl/schdlMngTable";
 	}
 
 	@GetMapping("/schedule/calendar")
 	public String getCalendar() {
+
 		return "schdl/schdlMngTable";
 	}
 
