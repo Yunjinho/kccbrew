@@ -99,6 +99,11 @@
 	<definition name="adminPageP1" extends="adminPage">
 		<put-attribute name="contents" value="/WEB-INF/views/myPage/myPage.jsp" />
 	</definition>
+	
+	<!-- 마이페이지 수정 -->
+	<definition name="adminPageP2" extends="adminPage">
+		<put-attribute name="contents" value="/WEB-INF/views/myPage/myModPage.jsp"/>
+	</definition>
 
 
 	<!-- 점주 페이지 추가 확장, 타이틀과 헤더 유지, contents만 변경 -->

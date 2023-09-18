@@ -234,4 +234,16 @@
 			WHERE u.user_id = m.user_id AND s.store_seq = m.store_seq AND u.user_id = #{userId}
 		]]>
 	</select>
+	
+	<!-- 마이페이지 정보 수정하기 -->
+	<update id="updateMyProfile" parameterType="kr.co.kccbrew.comm.main.model.MainPageVo">
+		<![CDATA[
+			UPDATE users
+			SET user_nm		= #{userName},
+				user_email  = #{userEmail},
+				user_telno  = #{userTelNo},
+				user_addr	= #{userAddress}
+			WHERE user_id = #{userId}
+		]]>
+	</update>
 </mapper>

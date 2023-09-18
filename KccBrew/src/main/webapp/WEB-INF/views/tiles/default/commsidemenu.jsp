@@ -18,28 +18,34 @@
 
 				<div class="nameAndPhoto">
 					<div class="name-wrapper">
-						<span class="name">${sessionScope.userName}</span>님
+						<span class="name"><c:out value="${pageContext.request.userPrincipal.name}" /></span>님
 					</div>
 					<div class="photo-wrapper">
 						<img src="${path}/img/kcc.png">
 					</div>
 				</div>
 				<span class="job">관리자</span> <br>
+				
+				<br><span class="last-ip">최종 접속 IP &nbsp;&nbsp; </span>
+					<span class="ip">111.111.111</span>
 				<br>
-				<br>
-				<br> <br>
-				<br>
-				<br>
-				<br> <span class="last-ip">최종 접속 IP &nbsp;&nbsp; </span><span
-					class="ip">111.111.111</span><br>
-				<br> <span class="last-login">최종 로그인 &nbsp;&nbsp;&nbsp;
-				</span><span class="time">2023-09-12 10:00</span>
+				<br><span class="last-login">최종 로그인 &nbsp;&nbsp;&nbsp;</span>
+					<span class="time">2023-09-12 10:00</span>
 			</div>
 			<div class="buttons">
 				<c:url var="toMyPage" value="/adminprofilepage" />
-				<a href="${toMyPage}" class="toMyPage"> 마이페이지 </a> <span>&nbsp;|&nbsp;</span>
-				<c:url var="toLogin" value="/loginpage" />
-				<a href="${toLogin}" class="logout"> 로그아웃 </a>
+				<a href="${toMyPage}" class="toMyPage">마이페이지</a> 
+				
+				<span>&nbsp;&nbsp;|&nbsp;</span>
+				
+				<%-- <c:url var="toLogin" value="/loginpage" />
+				<a href="${toLogin}" class="logout"> 로그아웃 </a> --%>
+				
+				<form action="/logout" method="POST">
+					<button type="submit" class="logout">로그아웃</button>
+					<input name="${_csrf.parameterName}" type="hidden"
+						value="${_csrf.token}" />
+				</form>
 			</div>
 		</div>
 		<div class="shortcut-service">

@@ -16,6 +16,8 @@ public interface IMainService {
 	List<MainPageVo> showUserInfoListById(String userId);	//특정 사용자의 정보 리스트
 	List<MainPageVo> showStoreInfoListById(String userId);  //점포 정보 리스트
 	
+	void updateMyProfile(String userId); //마이페이지 정보 업데이트 
+	
 	List<MainPageVo> showAsAssiginListbyId(String userId);
 	List<MainPageVo> showAsInfoListbyId(String userId);
 	List<MainPageVo> showAsResultListbyId(String userId);

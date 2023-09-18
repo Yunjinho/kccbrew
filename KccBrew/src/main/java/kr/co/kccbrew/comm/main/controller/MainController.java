@@ -1,13 +1,19 @@
 package kr.co.kccbrew.comm.main.controller;
 
 
+import java.security.Principal;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
+import javax.swing.JWindow;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import freemarker.ext.jython.JythonWrapper;
 import kr.co.kccbrew.comm.main.model.MainPageVo;
 import kr.co.kccbrew.comm.main.service.MainService;
 import kr.co.kccbrew.comm.security.model.UserVo;
@@ -226,15 +233,71 @@ public class MainController {
 	}
 
 	/****************** 사용자 정보 가져오기 *********************/
+//	@RequestMapping(value = "/userinfo", method = RequestMethod.GET)
+//	public String showUserInfo(HttpSession session, Model model) {
+//		String userId = (String)session.getAttribute("userId");
+//		List<MainPageVo> userInfoList = mainServiceImple.showUserInfoListById(userId);
+//		List<MainPageVo> storeInfoList = mainServiceImple.showStoreInfoListById(userId);
+//
+//		model.addAttribute("userInfoList", userInfoList);
+//		model.addAttribute("storeInfoList",storeInfoList);
+//		return "adminPageP1";
+//
+//	}
+	
+	/****************** 사용자 정보 가져오기 *********************/
 	@RequestMapping(value = "/userinfo", method = RequestMethod.GET)
-	public String showUserInfo(HttpSession session, Model model) {
-		String userId = (String)session.getAttribute("userId");
-		List<MainPageVo> userInfoList = mainServiceImple.showUserInfoListById(userId);
-		List<MainPageVo> storeInfoList = mainServiceImple.showStoreInfoListById(userId);
+	public String showUserInfo(Model model) {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		
+		if(authentication != null) {
+			Object principal = authentication.getPrincipal();
+			if(principal instanceof UserDetails) {
+				UserDetails userDetails = (UserDetails) principal;
+				String userId = userDetails.getUsername();
+				List<MainPageVo> userInfoList = mainServiceImple.showUserInfoListById(userId);
+				List<MainPageVo> storeInfoList = mainServiceImple.showStoreInfoListById(userId);
 
-		model.addAttribute("userInfoList", userInfoList);
-		model.addAttribute("storeInfoList",storeInfoList);
+				model.addAttribute("userInfoList", userInfoList);
+				model.addAttribute("storeInfoList",storeInfoList);
+			}
+		}
 		return "adminPageP1";
 
+	}
+	
+	/****************** 사용자 정보 수정 페이지 *********************/
+	@RequestMapping(value = "/moduserinfo", method = RequestMethod.GET)
+	public String modUserInfo(Model model) {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		
+		if(authentication != null) {
+			Object principal = authentication.getPrincipal();
+			if(principal instanceof UserDetails) {
+				UserDetails userDetails = (UserDetails) principal;
+				String userId = userDetails.getUsername();
+				List<MainPageVo> userInfoList = mainServiceImple.showUserInfoListById(userId);
+				List<MainPageVo> storeInfoList = mainServiceImple.showStoreInfoListById(userId);
+
+				model.addAttribute("userInfoList", userInfoList);
+				model.addAttribute("storeInfoList",storeInfoList);
+			}
+		}
+		return "adminPageP2";
+	}
+	
+	@RequestMapping(value= "/confirmmod", method = RequestMethod.POST)
+	public String confirmModProfile(Model model) {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		
+		if(authentication != null) {
+			Object principal = authentication.getPrincipal();
+			if(principal instanceof UserDetails) {
+				UserDetails userDetails = (UserDetails) principal;
+				String userId = userDetails.getUsername();
+				mainServiceImple.updateMyProfile(userId);
+			}
+		}
+		return "redirect:/userinfo";
 	}
 }

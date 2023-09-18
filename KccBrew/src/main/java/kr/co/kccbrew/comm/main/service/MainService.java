@@ -110,4 +110,9 @@ public class MainService implements IMainService{
 		return storeInfoListById;
 	}
 
+	@Override
+	public void updateMyProfile(String userId) {
+		mainRepository.updateMyProfile(userId);
+	}
+
 }

@@ -18,7 +18,7 @@
 	<header class="comm-nav">
 		<div class="top-bar">
 			<p>
-				<c:out value="${user.userId}" />
+				<c:out value="${pageContext.request.userPrincipal.name}" />
 				(관리자)님 환영합니다
 			</p>
 
@@ -31,7 +31,7 @@
 		</div>
 		<nav class="nav-bar">
 			<div class="nav-bar-brand">
-				<c:url var="toMain" value="/adminMain" />
+				<c:url var="toMain" value="/admin/main" />
 				<a href="${toMain}"> <img alt="logo"
 					src="${path}/resources/img/logo.png">
 				</a>
@@ -94,7 +94,7 @@
 		</div>
 		<nav class="nav-bar">
 			<div class="nav-bar-brand">
-				<c:url var="toMain" value="/managerMain" />
+				<c:url var="toMain" value="/manager/main" />
 				<a href="${toMain}"> <img alt="logo"
 					src="${path}/resources/img/logo.png">
 				</a>
@@ -143,7 +143,7 @@
 		</div>
 		<nav class="nav-bar">
 			<div class="nav-bar-brand">
-				<c:url var="toMain" value="/mechanicMain" />
+				<c:url var="toMain" value="/mechanic/main" />
 				<a href="${toMain}"> <img alt="logo"
 					src="${path}/resources/img/logo.png">
 				</a>
