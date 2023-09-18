@@ -48,7 +48,7 @@
 								<div id="content">
 									<h2 class="heading">AS 조회</h2>
 									<!-- 관리자  AS 조건-->
-									<c:if test="${sessionScope.userTypeCd eq '01'}">
+									<c:if test="${sessionScope.user.userTypeCd eq '01'}">
 									<form action="/searchAsList" method="get" id="search-form">
 										<input type='hidden' name='currentPage' value="1">
 										<table id="search-box">
@@ -183,7 +183,7 @@
 									</form>
 									</c:if>
 									<!-- 가맹 점주 AS 조건 -->
-									<c:if test="${sessionScope.userTypeCd eq '02'}">
+									<c:if test="${sessionScope.user.userTypeCd eq '02'}">
 									<form action="/searchAsList" method="get" id="search-form">
 										<table id="search-box">
 											<!-- 1행 -->
@@ -307,7 +307,7 @@
 									</form>
 									</c:if>
 									<!-- 수리 기사 AS 조건 -->
-									<c:if test="${sessionScope.userTypeCd eq '03'}">
+									<c:if test="${sessionScope.user.userTypeCd eq '03'}">
 									<form action="/searchAsList" method="get" id="search-form">
 										<table id="search-box">
 											<!-- 1행 -->
@@ -456,7 +456,7 @@
 													<th>AS 상태</th>
 													<th>점포 명</th>
 													<th>점포 주소</th>
-													<c:if test="${sessionScope.userTypeCd != '02'}"><th>기사 재배정 신청</th></c:if>
+													<c:if test="${sessionScope.user.userTypeCd != '02'}"><th>기사 재배정 신청</th></c:if>
 													<th>상세 조회</th>
 												</tr>
 											</thead>
@@ -468,7 +468,7 @@
 														<td><c:out value="${list.asStatusNm}" /></td>
 														<td><c:out value="${list.storeNm}" /></td>
 														<td><c:out value="${list.storeAddr}" /></td>
-														<c:if test="${sessionScope.userTypeCd != '02'}">
+														<c:if test="${sessionScope.user.userTypeCd != '02'}">
 															<td>
 																<c:choose>
 																	<c:when test="${list.reassign =='Y'}"><c:out value="${list.reassign}"></c:out></c:when>

@@ -172,17 +172,17 @@ window.onload=function(){
 													<div id="map" style="width:100%;height:350px;"></div>
 												</td>
 											</tr>
-											<c:if test="${sessionScope.userTypeCd eq '01' and asDetailInfo.asStatusCd eq '01'}">
+											<c:if test="${sessionScope.user.userTypeCd eq '01' and asDetailInfo.asStatusCd eq '01'}">
 												<tr>
 													<td colspan="7" style=" border-bottom:none;"></td>
 													<td style=" border-bottom:none;">
 														<div>
-															<a href="#" onclick="rejectAs(${sessionScope.userTypeCd})" class="form-btn" style=" margin: 0; float: right;">접수 반려</a>
+															<a href="#" onclick="rejectAs(${sessionScope.user.userTypeCd})" class="form-btn" style=" margin: 0; float: right;">접수 반려</a>
 														</div>
 													</td>
 												</tr>
 											</c:if>
-											<c:if test="${sessionScope.userTypeCd eq '02' and asDetailInfo.asStatusCd eq '01'}">
+											<c:if test="${sessionScope.user.userTypeCd eq '02' and asDetailInfo.asStatusCd eq '01'}">
 												<tr>
 													<td colspan="8" style=" border-bottom:none;"></td>
 													<td style=" border-bottom:none;">
@@ -192,12 +192,12 @@ window.onload=function(){
 													</td>
 												</tr>
 											</c:if>
-											<c:if test="${sessionScope.userTypeCd eq '03'and asDetailInfo.asStatusCd eq '03' and asDetailInfo.reassign eq'N'}">
+											<c:if test="${sessionScope.user.userTypeCd eq '03'and asDetailInfo.asStatusCd eq '03' and asDetailInfo.reassign eq'N'}">
 												<tr>
 													<td colspan="7" style=" border-bottom:none;"></td>
 													<td style=" border-bottom:none;">
 														<div>
-															<button onclick="rejectAs(${sessionScope.userTypeCd})" class="form-btn" style=" margin: 0; float: right;">배정 반려</button>
+															<button onclick="rejectAs(${sessionScope.user.userTypeCd})" class="form-btn" style=" margin: 0; float: right;">배정 반려</button>
 														</div>
 													</td>
 												</tr>
@@ -207,7 +207,7 @@ window.onload=function(){
 								  	
 								  	<!-- 기사 배정 및 반려 -->
 								  	
-								  	<c:if test="${(asDetailInfo.asStatusCd eq '01' and sessionScope.userTypeCd eq '01' and asDetailInfo.asAssignSeq == null) or (sessionScope.userTypeCd eq '01' and asDetailInfo.reassign eq'Y')}">
+								  	<c:if test="${(asDetailInfo.asStatusCd eq '01' and sessionScope.user.userTypeCd eq '01' and asDetailInfo.asAssignSeq == null) or (sessionScope.user.userTypeCd eq '01' and asDetailInfo.reassign eq'Y')}">
 									  	<div>
 									  		<h1 class="heading">기사 배정</h1>
 											<form action="/as-assign" method="post">
@@ -285,7 +285,7 @@ window.onload=function(){
 								  	</c:if>
 							  		
 							  		<!-- 결과 처리 입력 form-->
-									<c:if test="${asDetailInfo.asStatusCd eq '03' and sessionScope.userTypeCd eq '03'}">
+									<c:if test="${asDetailInfo.asStatusCd eq '03' and sessionScope.user.userTypeCd eq '03'}">
 								  		<div>
 								  			<h1 class="heading">AS 결과</h1>
 								  			<form action="/insertResult" method="post" enctype="multipart/form-data">
@@ -392,7 +392,7 @@ window.onload=function(){
 				<hr>
 				<input type="hidden" name="asInfoSeq" value="${asDetailInfo.asInfoSeq}">
 				<textarea class="content-textarea" name="rejectRs"></textarea>
-				<c:if test="${sessionScope.userTypeCd =='03'}">
+				<c:if test="${sessionScope.user.userTypeCd =='03'}">
 					<input type="hidden" name="asAssignSeq" value="${asDetailInfo.asAssignSeq}">
 				</c:if>
 				<div>
