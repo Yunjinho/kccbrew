@@ -32,7 +32,7 @@ public class MainController {
 	public String goTestPage(Model model) {
 		return "testPage";
 	}
-
+	
 	/****************** 관리자 페이지 **************************/
 
 	//점포 등록 페이지
