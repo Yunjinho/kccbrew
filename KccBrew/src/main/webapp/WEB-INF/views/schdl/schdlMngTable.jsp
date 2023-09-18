@@ -355,8 +355,8 @@
 													<tr>
 														<td rowspan="2">ID</td>
 														<td rowspan="2">이름</td>
-														<td rowspan="2">지역</td>
-														<td rowspan="2">장비</td>
+														<td rowspan="2">지역코드</td>
+														<td rowspan="2">장비코드</td>
 
 														<td rowspan="2">비고</td>
 													</tr>

@@ -27,21 +27,32 @@ function performSearch() {
 			for (var i = 0; i < response.length; i++) {
 				var schedule = response[i];
 				var userId = schedule.userId; // userId 키에 해당하는 값
-				console.log("userId: " + userId);
+
+				/*휴무일 리스트*/
+				var holidayDates = schedule.holidayDates;
+				var holidayCount = holidayDates.length;
+				/*배정일 리스트*/
+				var assignDates = schedule.assignDates;
+				var assignCount = assignDates.length;
+				/*근무일 리스트*/
+				var resultDates = schedule.resultDates;
+				var resultCount = resultDates.length;
 
 				// <tr> 요소 생성 및 클래스 속성 추가
 				var row = $("<tr>").addClass("row-" + (i+1));
 				var row2 = $("<tr>").addClass("row-" + (i+1) + " second-row");
 
+
+
 				// 첫 번째 행에 rowspan이 2인 셀 5개 추가
 				for (var j = 0; j < 5; j++) {
 					if (j === 0) {
 						$("<td>", { rowspan: 2 }).text(userId).appendTo(row);
-						$("<td>", { rowspan: 2 }).text("이름").appendTo(row);
-						$("<td>", { rowspan: 2 }).text("지역").appendTo(row);
-						$("<td>", { rowspan: 2 }).text("장비").appendTo(row);
-						$("<td>", { rowspan: 2 }).text("비고").appendTo(row);
-					} 
+						$("<td>", { rowspan: 2 }).text(schedule.userNm).appendTo(row);
+						$("<td>", { rowspan: 2 }).text(schedule.locationCd).appendTo(row);
+						$("<td>", { rowspan: 2 }).text(schedule.eqpmnCd).appendTo(row);
+						$("<td>", { rowspan: 2 }).text("휴무일: " + holidayCount + ", 배정일: " + assignCount + ", 근무일: " + resultCount).appendTo(row);
+					}
 				}
 
 
@@ -76,7 +87,6 @@ function performSearch() {
 
 
 				/*휴무일 리스트*/
-				var holidayDates = schedule.holidayDates;
 				for (var j=0; j < holidayDates.length; j++) {
 					var holiday = holidayDates[j];
 					var startDay = new Date(holiday.HLDY_STAR); // 시작 날짜
@@ -103,7 +113,6 @@ function performSearch() {
 				}
 
 				/*배정일 리스트*/
-				var assignDates = schedule.assignDates;
 				for (var k=0; k < assignDates.length; k++) {
 					var assignDate = assignDates[j];
 					var currentDate = new Date(assignDate)
@@ -114,19 +123,18 @@ function performSearch() {
 					var cellClassName = "day-" + day; // 클래스 이름 생성
 
 					$("." + rowClassName + " ." + cellClassName)
-				    .empty() // 기존 내용을 비우기
-				    .html("<div class='yellow-background'></div>") // <div> 요소 추가
-				    .find("div") // 추가한 <div> 요소 선택
-				    .css({
-				        "background-color": "#f7d474", // 배경색 설정
-				        "width": "1.2em", // 가로 크기 설정
-				        "height": "1.2em", // 세로 크기 설정
-				        "margin": "0 auto" // 가운데 정렬 설정
-				    });
+					.empty() // 기존 내용을 비우기
+					.html("<div class='yellow-background'></div>") // <div> 요소 추가
+					.find("div") // 추가한 <div> 요소 선택
+					.css({
+						"background-color": "#f7d474", // 배경색 설정
+						"width": "1.2em", // 가로 크기 설정
+						"height": "1.2em", // 세로 크기 설정
+						"margin": "0 auto" // 가운데 정렬 설정
+					});
 				}
 
 				/*근무일 리스트*/
-				var resultDates = schedule.resultDates;
 				for(var l=0;  l < resultDates.length; l++) {
 					var resultDate = resultDates[j];
 					var currentDate = new Date(resultDate)
@@ -137,15 +145,15 @@ function performSearch() {
 					var cellClassName = "day-" + day; // 클래스 이름 생성
 
 					$("." + rowClassName + " ." + cellClassName)
-				    .empty() // 기존 내용을 비우기
-				    .html("<div class='green-background'></div>") // <div> 요소 추가
-				    .find("div") // 추가한 <div> 요소 선택
-				    .css({
-				        "background-color": "#5b8554", // 배경색 설정
-				        "width": "1.2em", // 가로 크기 설정
-				        "height": "1.2em", // 세로 크기 설정
-				        "margin": "0 auto" // 가운데 정렬 설정
-				    });
+					.empty() // 기존 내용을 비우기
+					.html("<div class='green-background'></div>") // <div> 요소 추가
+					.find("div") // 추가한 <div> 요소 선택
+					.css({
+						"background-color": "#5b8554", // 배경색 설정
+						"width": "1.2em", // 가로 크기 설정
+						"height": "1.2em", // 세로 크기 설정
+						"margin": "0 auto" // 가운데 정렬 설정
+					});
 				}
 
 			}
@@ -155,5 +163,24 @@ function performSearch() {
 			// 에러 처리
 			console.error("AJAX 요청 실패:", error);
 		}
+	});
+}
+
+
+
+
+function getUserInfo(userId) {
+	return new Promise(function(resolve, reject) {
+		$.ajax({
+			type: "GET",
+			url: "/user-info", 
+			data: { userId: userId },
+			success: function (userVo) {
+				resolve(userVo); // 성공 시 데이터를 resolve
+			},
+			error: function (error) {
+				reject(error); // 실패 시 에러를 reject
+			}
+		});
 	});
 }

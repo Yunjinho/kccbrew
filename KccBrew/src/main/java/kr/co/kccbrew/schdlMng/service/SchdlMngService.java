@@ -9,6 +9,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import kr.co.kccbrew.comm.security.dao.IUserRepository;
 import kr.co.kccbrew.comm.security.model.UserVo;
 import kr.co.kccbrew.schdlMng.dao.ISchdlMngRepository;
 import kr.co.kccbrew.schdlMng.model.HolidayVo;
@@ -19,6 +20,8 @@ public class SchdlMngService implements ISchdlMngService {
 
 	@Autowired
 	private ISchdlMngRepository schdlMngRepository;
+	@Autowired
+	private IUserRepository userRepository;
 
 
 	/*검색에 따른 휴가리스트 조회*/
@@ -109,11 +112,16 @@ public class SchdlMngService implements ISchdlMngService {
 		for (String id : IdList) {
 			Map<String, Object> scheduleMap = new HashMap<>();
 			
+			UserVo userVo = userRepository.getUserById(id);
 			List<Map<String, Object>> holidayDates = schdlMngRepository.selectHolidayDates(id);
 			List<Date> assignDates = schdlMngRepository.selectAssignDates(id);
 			List<Date> resultDates = schdlMngRepository.selectResultDates(id);
 			
 			scheduleMap.put("userId", id);
+			scheduleMap.put("userNm", userVo.getUserNm());
+			scheduleMap.put("locationCd", userVo.getLocationCd());
+			scheduleMap.put("eqpmnCd", userVo.getEqpmnCd());
+			
 			scheduleMap.put("holidayDates", holidayDates);
 			scheduleMap.put("assignDates", assignDates);
 			scheduleMap.put("resultDates", resultDates);

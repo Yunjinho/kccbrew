@@ -192,6 +192,14 @@ public class schdlMngController {
 
 		return allSchedules;
 	}
+	
+	
+	@GetMapping("/user-info")
+	@ResponseBody
+	public UserVo getUserInfo(String userId) {
+		UserVo userVo = userService.getUserById(userId);
+		return userVo;
+	}
 
 
 
