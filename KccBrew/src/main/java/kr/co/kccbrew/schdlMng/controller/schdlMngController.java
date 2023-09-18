@@ -203,15 +203,6 @@ public class schdlMngController {
 		return searchResult;
 	}
 
-	@Data
-	public class SearchRequest {
-		private String superGrpCdDtlId;
-		private String grpCdDtlId;
-		private String searchKeword;
-		private Date startDate;
-		private Date endDate;
-	}
-
 	@GetMapping("/schedule/calendar")
 	public String getCalendar() {
 

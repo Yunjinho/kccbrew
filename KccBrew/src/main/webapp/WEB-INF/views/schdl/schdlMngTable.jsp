@@ -225,7 +225,7 @@
 										<!-- 탭메뉴 -->
 										<div class="tabNav">
 											<ul class="tab-ul">
-												<li class="last"><a href=""><span>휴가사용현황</span></a></li>
+												<li class="last"><a href="/holiday"><span>휴가사용현황</span></a></li>
 												<li class="active"><a href="/schedule"><span>월근태현황</span></a></li>
 											</ul>
 										</div>

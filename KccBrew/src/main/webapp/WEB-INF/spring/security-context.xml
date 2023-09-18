@@ -28,7 +28,6 @@
 	<http auto-config="true" use-expressions="true">
 		<intercept-url pattern="/resources/**"
 			access="permitAll" />
-		<intercept-url pattern="/schedule" access="permitAll" />
 		<intercept-url pattern="/search-store-list"
 			access="permitAll" />
 		<intercept-url pattern="/search-location-code"
