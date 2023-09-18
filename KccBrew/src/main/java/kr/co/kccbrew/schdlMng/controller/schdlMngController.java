@@ -165,48 +165,40 @@ public class schdlMngController {
 	}
 
 
-	/*관리자 캘린더 조회*/
+	/*관리자 월근태현황 조회*/
 	@GetMapping("/schedule")
-	public String getAttendanceStatus() {
+	public String getAttendanceStatus(Model model) {
+		List<UserVo> locationList=userService.selectLocationCd();
+		model.addAttribute("locationList", locationList);
 		return "schdl/schdlMngTable";
 	}
 
-	/*	@GetMapping("/schedule")
-	public String getsearchedAttendanceStatus(@ModelAttribute("userVo") UserVo userVo, 
-																								@RequestParam("startDate") Date startDate,
-																								@RequestParam("endDate") Date endDate,
-																								Model model) {
-		System.out.println("userVo:" + userVo);
-		System.out.println("startDate: " + startDate + ", endDate: " + endDate);
-
-		model.addAttribute("startDate", startDate);
-		model.addAttribute("endDate", endDate);
-
-
-		return "schdl/schdlMngTable";
-	}*/
-
-
-	@PostMapping(value="/schedule", produces = "text/plain; charset=utf-8")
+	@PostMapping(value="/schedule", produces = "application/json; charset=utf-8")
 	@ResponseBody
-	public String processSearchRequest(@RequestParam("startDate") String startDate,
-            																	@RequestParam("endDate") String endDate, 
-            																	@ModelAttribute UserVo userVo) {
-		// 여기서 검색 요청을 처리하고 필요한 응답 데이터를 생성합니다.
+	public List<Map<String, Object>>processSearchRequest(@RequestParam("startDate") String startDate,
+																															@RequestParam("endDate") String endDate, 
+																															@ModelAttribute UserVo userVo) {
+
 		System.out.println("startDate: " + startDate + ", endDate: " + endDate);
 		System.out.println("userVo: " + userVo);
 
-		// 검색 결과를 생성하는 로직을 추가하세요.
-		String searchResult = "성공";
+		if(userVo.getLocationCd() == null || userVo.getLocationCd().equals("")) {
+			userVo.setLocationCd(userVo.getLocation());
+		}
 
-		// 검색 결과를 클라이언트로 응답합니다.
-		return searchResult;
+		List<String> idList = schdlMngService.getIdList(userVo);
+		List<Map<String, Object>> allSchedules = schdlMngService.getAllSchedules(idList);
+
+
+		return allSchedules;
 	}
+
+
 
 	@GetMapping("/schedule/calendar")
 	public String getCalendar() {
 
-		return "schdl/schdlMngTable";
+		return "schdl/schdlMngClndr";
 	}
 
 	/*회원 캘린더 월별 조회*/

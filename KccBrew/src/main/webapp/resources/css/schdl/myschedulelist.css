@@ -1,10 +1,25 @@
 @charset "UTF-8";
 
+.board-info.index {
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-end;
+}
+
+.board-info.index>div {
+	margin-left: 15px;
+}
+
+.second-row {
+	border-bottom: 2.3px solid black;
+}
+
 .board-info {
 	display: flex;
 	align-content: stretch;
 	justify-content: space-between;
 	align-items: center;
+	padding: 5px 0px;
 }
 
 #logTable>form {
@@ -221,12 +236,9 @@
 	list-style-type: none;
 	padding: 0px;
 	margin: 0px;
-	
 	display: flex;
 }
 
-.tab-ul > li {
-	    width: calc(100% * 1/2);
+.tab-ul>li {
+	width: calc(100% * 1/ 2);
 }
-
-

@@ -2,7 +2,8 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-
+<%@ taglib prefix="sec"
+	uri="http://www.springframework.org/security/tags"%>
 <%@ page import="java.time.LocalDateTime"%>
 <%@ page import="java.time.format.DateTimeFormatter"%>
 
@@ -269,7 +270,13 @@
 										<div class="tabNav">
 											<ul class="tab-ul">
 												<li class="active"><a href=""><span>휴가사용현황</span></a></li>
-												<li class="last"><a href="/schedule/calendar"><span>근태현황</span></a></li>
+												<sec:authorize
+													access="hasAnyRole('ROLE_MANAGER', 'ROLE_MECHA')">
+													<li class="last"><a href="/schedule/calendar"><span>나의캘린더</span></a></li>
+												</sec:authorize>
+												<sec:authorize access="hasRole('ROLE_ADMIN')">
+													<li class="last"><a href="/schedule"><span>근태현황</span></a></li>
+												</sec:authorize>
 											</ul>
 										</div>
 
@@ -433,8 +440,7 @@
 													<label>휴가일</label> <input type="date" id="startDate"
 														name="startDate" required> <input type="date"
 														id="endDate" name="endDate" required> <input
-														type="button" value="검색"
-														onclick="goPage(); return false;">
+														type="button" value="검색" onclick="goPage(); return false;">
 												</fieldset>
 											</div>
 

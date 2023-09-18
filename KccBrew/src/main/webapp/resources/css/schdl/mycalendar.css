@@ -43,10 +43,15 @@
 	margin: 0px auto;
 }
 
-#cal-table > th, td {
+#cal-table>th, td {
 	border: 1px solid;
 }
 
-#cal-table > thead {
+#cal-table>thead {
 	border-top: 5px solid darkgray;
+	border: 2.5px solid #043763;
+	border-top: 5px solid darkgray;
+	background: #043763;
+	color: white;
+}
 }

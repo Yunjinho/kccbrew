@@ -35,4 +35,13 @@ public interface ISchdlMngService {
 	/*지역목록 조회*/
 	public List<UserVo> getLocations();
 	
+	/*월근태현황 조회*/
+	public List<SchdlMngVo> getMechaSchedules(UserVo userVo);
+	
+	/*조건에 따른 회원아이디 목록 조회*/
+	public List<String> getIdList(UserVo userVo);
+	
+	/*회원아이디에 따른 스케줄맵 조회*/
+	public List<Map<String, Object>> getAllSchedules(List<String> IdList);
+	
 }

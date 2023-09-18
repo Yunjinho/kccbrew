@@ -1,6 +1,7 @@
 package kr.co.kccbrew.schdlMng.service;
 
-import java.sql.Date; 
+import java.sql.Date;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -61,7 +62,7 @@ public class SchdlMngService implements ISchdlMngService {
 		schdlMngRepository.cancelHoliday(holidaySeq);		
 	}
 
-	
+
 	/*휴가일수*/
 	@Override
 	public int getUsedHoliday(String userId) {
@@ -74,7 +75,7 @@ public class SchdlMngService implements ISchdlMngService {
 		schdlMngRepository.insertHoliday(holiday);
 	}
 
-	
+
 	/*AS배정일 조회*/
 	@Override
 	public List<Date> getAssignDates(String userId) {
@@ -86,11 +87,50 @@ public class SchdlMngService implements ISchdlMngService {
 	public List<UserVo> getLocations() {
 		return schdlMngRepository.selectLocations();
 	}
-	
-	
-	
-	
 
-	
+	/*월근태현황 조회*/
+	@Override
+	public List<SchdlMngVo> getMechaSchedules(UserVo userVo) {
+		return schdlMngRepository.selectMechaSchedules(userVo);
+	}
+
+	/*조건에 따른 아이디리스트 조회*/
+	@Override
+	public List<String> getIdList(UserVo userVo) {
+		return schdlMngRepository.selectIdList(userVo);
+	}
+
+	/*회원아이디에 따른 스케줄맵 조회*/
+	@Override
+	public List<Map<String, Object>> getAllSchedules(List<String> IdList) {
+		List<Map<String, Object>>  allSchedules = new ArrayList<>();
+		
+		if (IdList.size() != 0) {
+		for (String id : IdList) {
+			Map<String, Object> scheduleMap = new HashMap<>();
+			
+			List<Map<String, Object>> holidayDates = schdlMngRepository.selectHolidayDates(id);
+			List<Date> assignDates = schdlMngRepository.selectAssignDates(id);
+			List<Date> resultDates = schdlMngRepository.selectResultDates(id);
+			
+			scheduleMap.put("userId", id);
+			scheduleMap.put("holidayDates", holidayDates);
+			scheduleMap.put("assignDates", assignDates);
+			scheduleMap.put("resultDates", resultDates);
+			
+			allSchedules.add(scheduleMap);
+		}
+		return allSchedules;
+		} else {
+			return null;
+		}
+	}
+
+
+
+
+
+
+
 
 }

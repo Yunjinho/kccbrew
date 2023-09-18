@@ -233,9 +233,9 @@
 										<!-- 회원 검색 -->
 										<form name="srhForm" action="/schedule" method="post">
 
-											<input type="hidden" name="startDate" value=""> 
-											<input type="hidden" name="endDate" value="">
-											<input type="hidden" name="userTypeCd" value="03">
+											<input type="hidden" name="startDate" value=""> <input
+												type="hidden" name="endDate" value=""> <input
+												type="hidden" name="userTypeCd" value="03">
 
 											<div>
 												<span> 사용자검색 </span>
@@ -246,11 +246,11 @@
 													<legend class="blind">사용자검색</legend>
 													<table id="search-box">
 														<tr>
-															<th>위치</th>
-															<td><select class="tx2" name="superGrpCdDtlId"
-																onchange="updateSecondSelect()">
+															<th>위치<span style="color: red;">(필수)</span></th>
+															<td><select class="tx2" name="location"
+																onchange="changeLocationCd()">
 																	<option value="">지역 대분류</option>
-																	<c:forEach var="location" items="${locations}">
+																	<c:forEach var="location" items="${locationList}">
 																		<c:if test="${location.grpCdId eq 'L'}">
 																			<option value="${location.grpCdDtlId}"
 																				${param.superGrpCdDtlId == location.grpCdDtlId ? 'selected' : ''}>
@@ -259,7 +259,7 @@
 																	</c:forEach>
 															</select></td>
 
-															<td><select class="tx2" name="grpCdDtlId">
+															<td><select class="tx2" name="locationCd">
 																	<option value="">지역 소분류</option>
 															</select></td>
 
@@ -285,7 +285,8 @@
 													</table>
 													<div class="form-btn-box">
 														<fieldset>
-															<button type="button" class="form-btn" id="searchButton" onclick="performSearch()">검색</button>
+															<button type="button" class="form-btn" id="searchButton"
+																onclick="performSearch()">검색</button>
 															<button type="reset" class="form-btn">초기화</button>
 														</fieldset>
 													</div>
@@ -314,8 +315,8 @@
 										<div id="content-table">
 
 											<div class="board-info">
-												<span class="data-info"> 전체<b><span><c:out
-																value="${totalDataNumber}" /></span></b>건
+												<span class="data-info"> 전체<b><span
+														id="dataCount"></span></b>건
 												</span>
 												<fieldset>
 													<label>근무년월</label> <select id="yearSelect"
@@ -332,6 +333,21 @@
 												</fieldset>
 											</div>
 
+											<div class="board-info index" style="background-color: #f2f0e4; ">
+												<div style="background-color: black; width: 1em; height: 1em;"></div>
+													에 마우스오버나 클릭 시 상세내용이 보입니다.
+
+												<div id="holiday-index"
+													style="background-color: pink; width: 1em; height: 1em;"></div>
+												: 휴무
+												<div id="assign-index"
+													style="background-color: #f7d474; width: 1em; height: 1em;"></div>
+												: 배정
+												<div id="result-index"
+													style="background-color: #5b8554; width: 1em; height: 1em;"></div>
+												: 근무
+											</div>
+
 
 
 											<table Id="cal-table">
@@ -345,9 +361,11 @@
 														<td rowspan="2">비고</td>
 													</tr>
 													<tr>
-
 													</tr>
 												</thead>
+												<tbody>
+
+												</tbody>
 											</table>
 
 										</div>

@@ -33,11 +33,22 @@ public interface ISchdlMngRepository {
 
 	/*휴가등록*/
 	public void insertHoliday(HolidayVo holiday);
-
-	/*AS배정날짜 목록*/
-	public List<Date> selectAssignDates(String userId);
 	
 	/*지역코드 목록*/
 	public List<UserVo> selectLocations();
 	
+	/*월근태현황 목록*/
+	public List<SchdlMngVo> selectMechaSchedules(UserVo userVo);
+	
+	/*조건에 따른 회원아이디 목록 조회*/
+	public List<String> selectIdList(UserVo userVo);
+	
+	/*아이디에 따른 휴무날짜 조회*/
+	public List<Map<String, Object>> selectHolidayDates(String userId);
+	
+	/*아이디에 따른 배정날짜 조회*/
+	public List<Date> selectAssignDates(String userId);
+	
+	/*아이디에 따른 근무날짜 조회*/
+	public List<Date> selectResultDates(String userId);
 }

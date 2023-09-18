@@ -17,6 +17,7 @@ public class SchdlMngVo {
 	private String userId;
 	private String userName;
 	private String userPhoneNumber;
+	private String equipmentCd;
 	
 	private Integer storeId;
 	private String storeName;
@@ -28,6 +29,9 @@ public class SchdlMngVo {
 	private Date startDate;
 	private Date endDate;
 	private String actualUse;
+	
+	private Date visitDate;
+	private Date resultDate;
 	
 	private String locationCd;
 	

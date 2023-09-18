@@ -20,7 +20,16 @@ function onPageLoad() {
 
 	getLastDayAndPopulateTable();
 
+    // 이번 달의 1일과 마지막 날짜를 계산합니다.
+    var firstDayOfMonth = new Date(selectedYear, selectedMonth - 1, 1);
+    var lastDayOfMonth = new Date(selectedYear, selectedMonth, 0);
+
+    // 입력 필드에 값을 설정합니다.
+    $("input[name='startDate']").val(firstDayOfMonth.getFullYear() + "-" + (firstDayOfMonth.getMonth() + 1) + "-01");
+    $("input[name='endDate']").val(lastDayOfMonth.getFullYear() + "-" + (lastDayOfMonth.getMonth() + 1) + "-" + lastDayOfMonth.getDate());
 }
+
+
 
 /*페이징*/
 //페이지 이동
@@ -109,7 +118,7 @@ function getLastDayAndPopulateTable() {
 	var secondRow = table.querySelector('thead tr:nth-child(2)');
 
 	// 모든 td 요소를 삭제합니다.
-/*		while (firstRow.firstChild) {
+	/*		while (firstRow.firstChild) {
 		firstRow.removeChild(firstRow.firstChild);
 	}
 
@@ -119,12 +128,12 @@ function getLastDayAndPopulateTable() {
 
 	// 1행 5열부터 20열까지의 자식 요소를 삭제
 	while (firstRow.children[5]) {
-	    firstRow.removeChild(firstRow.children[5]);
+		firstRow.removeChild(firstRow.children[5]);
 	}
 
 	// 2행 5열부터 20열까지의 자식 요소를 삭제
 	while (secondRow.children[0]) {
-	    secondRow.removeChild(secondRow.children[0]);
+		secondRow.removeChild(secondRow.children[0]);
 	}
 
 	// 1행 5열부터 20열까지는 1부터 16까지 표시
