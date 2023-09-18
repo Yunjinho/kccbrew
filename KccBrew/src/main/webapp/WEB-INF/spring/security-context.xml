@@ -73,10 +73,6 @@
 
 
 	<authentication-manager>
-		<authentication-provider>
-			<user-service properties="WEB-INF/user/users.properties" />
-			<jdbc-user-service data-source-ref="dataSource" />
-		</authentication-provider>
 
 		<authentication-provider
 			user-service-ref="customUserDetailsService">
