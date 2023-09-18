@@ -72,7 +72,13 @@
 	</http>
 
 
-	
+	<authentication-manager>
+
+		<authentication-provider
+			user-service-ref="customUserDetailsService">
+			<password-encoder ref="passwordEncoder" />
+		</authentication-provider>
+	</authentication-manager>
 
 
 </beans:beans>
