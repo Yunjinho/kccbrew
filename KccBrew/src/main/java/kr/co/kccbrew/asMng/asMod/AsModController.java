@@ -24,7 +24,7 @@ public class AsModController {
 	private final IAsModService asModService;
 	private final IAsMngService asMngService;
 	
-	@RequestMapping(value="/as-mod/{asInfoSeq}",method=RequestMethod.GET)
+/*	@RequestMapping(value="/as-mod/{asInfoSeq}",method=RequestMethod.GET)
 	public String asMod(@PathVariable(value="asInfoSeq", required=false) String asInfoSeq, Model model,HttpSession session) {
 		//AsMngVo vo = asMngService.selectAsInfoDetail(asInfoSeq);
 		session.setAttribute("asInfoSeq", asInfoSeq);
@@ -36,7 +36,7 @@ public class AsModController {
 		List<AsMngVo> list=asMngService.selectMachineCd();
 		model.addAttribute("machineCd", list);
 		return "asMng/asMod";
-	}
+	}*/
 	
 	@RequestMapping(value="/as-mod",method=RequestMethod.POST)
 	public String asMod(@Value("#{serverImgPath['localPath']}")String localPath,@Value("#{serverImgPath['asReceiptPath']}")String path,AsMngVo asMngVo,HttpServletRequest request) {

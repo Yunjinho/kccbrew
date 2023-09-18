@@ -5,6 +5,7 @@
 
 <mapper
 	namespace="kr.co.kccbrew.sysMng.logMng.dao.ILogMngRepository">
+	
 	<resultMap id="logResult"
 		type="kr.co.kccbrew.sysMng.logMng.model.LogMngVo">
 		<result property="logSeq" column="LOG_SEQ" />

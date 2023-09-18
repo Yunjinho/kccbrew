@@ -21,7 +21,7 @@
 	</resultMap>
 
 	<resultMap id="scheduleResult"
-		type="kr.co.kccbrew.schdlMng.model.SchdlMngVo2">
+		type="kr.co.kccbrew.schdlMng.model.SchdlMngVo">
 		<result property="rowNumber" column="ROW_NUMBER" />
 		<result property="userType" column="USER_TYPE" />
 		<result property="userId" column="USER_ID" />
@@ -251,8 +251,8 @@
 
 	<!-- 회원 캘린더에 표시할 스케줄 리스트 반환 -->
 	<select id="selectCalendarSchedule"
-		resultType="kr.co.kccbrew.schdlMng.model.SchdlMngVo2"
-		parameterType="kr.co.kccbrew.schdlMng.model.SchdlMngVo2">
+		resultType="kr.co.kccbrew.schdlMng.model.SchdlMngVo"
+		parameterType="kr.co.kccbrew.schdlMng.model.SchdlMngVo">
 
 		SELECT
 		USER_TYPE AS "userType",

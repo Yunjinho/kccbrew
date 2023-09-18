@@ -9,9 +9,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
 <!-- css -->
-<link rel="stylesheet" href="/resources/css/schdl/myinsertform.css" />
 <link rel="stylesheet" href="/resources/css/log/mylogtest.css" />
 <link rel="stylesheet" href="/resources/css/log/content-template.css" />
 
@@ -31,23 +29,9 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
 </head>
 
 <body>
-	<%-- Import the necessary Java classes --%>
-	<%@ page import="java.util.Date"%>
-
-	<%-- Get the current date and time --%>
-	<%
-		Date now = new Date();
-	%>
-
-	<%-- Set the "now" variable using JSTL --%>
-	<c:set var="now" value="<%=now%>" />
-
-
 	<div id="page" class="page-nosubmenu">
 		<!-- ********** header영역 시작********** -->
 		<div id="page-header">
@@ -275,7 +259,7 @@
 											alt="Check List" class="header-icon" />
 									</div>
 								</li>
-								<li><a href="<c:url value='/schedule2' />">휴가등록</a></li>
+								<li><a href="<c:url value='/schedule2' />">휴일등록</a></li>
 							</ol>
 						</div>
 						<!-- ********** 페이지 네비게이션 끝 ********** -->
@@ -287,39 +271,41 @@
 
 									<!-- ********** 세은 로그 관련 내용 시작 ********** -->
 									<div id="content">
-										<h2 class="heading">휴가등록</h2>
+										<h2 class="heading">휴일등록</h2>
 										<!-- 로그 검색 -->
 
 										<div class="subtitle">수리기사</div>
 										<table id="search-box">
+
+											<!-- 1행 -->
 											<tr>
 												<th>유형</th>
-												<td><c:out value="" /></td>
+												<td><c:out value="${datatest}" /></td>
 
 												<th>ID</th>
-												<td><c:out value="" /></td>
+												<td><c:out value="${datatest}" /></td>
 
 												<th>이름</th>
-												<td><c:out value="" /></td>
-
+												<td><c:out value="${datatest}" /></td>
+												
 												<th>연락처</th>
-												<td><c:out value="" /></td>
+												<td><c:out value="${datatest}" /></td>
 
 											</tr>
 
 											<tr>
 												<th>사용장비코드</th>
-												<td><c:out value="" /></td>
-
+												<td><c:out value="${datatest}" /></td>
+												
 												<th>장비명</th>
-												<td><c:out value="" /></td>
+												<td><c:out value="${datatest}" /></td>
 
 												<th>지역코드</th>
-												<td><c:out value="" /></td>
-
+												<td><c:out value="${datatest}" /></td>
+												
 												<th>지역명</th>
-												<td><c:out value="" /></td>
-
+												<td><c:out value="${datatest}" /></td>
+												
 											</tr>
 										</table>
 
@@ -327,35 +313,30 @@
 										<!-- 점포일 경우 -->
 										<div class="subtitle">점포</div>
 										<table id="search-box">
-											<!-- 점주정보 -->
 											<tr>
 												<th>유형</th>
-												<td><c:out value="점주" /></td>
+												<td><c:out value="${datatest}" /></td>
 
-												<th>점주ID</th>
-												<td><c:out value="${user.userId}" /></td>
+												<th>ID</th>
+												<td><c:out value="${datatest}" /></td>
 
-												<th>점주이름</th>
-												<td><c:out value="" /></td>
+												<th>이름</th>
+												<td><c:out value="${datatest}" /></td>
 
-												<th>점주연락처</th>
-												<td><c:out value="" /></td>
+												<th>연락처</th>
+												<td><c:out value="${datatest}" /></td>
 
 											</tr>
 
-											<!-- 점포정보 -->
 											<tr>
-												<th>점포ID</th>
-												<td><c:out value="${store.storeSeq}" /></td>
-
 												<th>점포명</th>
-												<td><c:out value="${store.storeNm}" /></td>
+												<td><c:out value="${datatest}" /></td>
 
-												<th>점포주소</th>
-												<td><c:out value="" /></td>
+												<th>주소</th>
+												<td><c:out value="${datatest}" /></td>
 
 												<th>점포연락처</th>
-												<td><c:out value="" /></td>
+												<td><c:out value="${datatest}" /></td>
 
 											</tr>
 										</table>
@@ -382,327 +363,153 @@
 
 										<!-- 로그 리스트 -->
 										<div id="logTable">
-											<div class="subtitle">
-												휴가신청내역(전체<b><span><c:out
-															value="${totalDataNumber}" /></span></b>건)
+										<div class="subtitle">휴가신청내역</div>
+											<div>
+												<p class="data-info">
+													전체<b><span><c:out value="${totalDataNumber}" /></span></b>건<span
+														id="text-separator"> | </span><b><span><c:out
+																value="${currentPage}" /></span></b>/<b><span><c:out
+																value="${totalPage}" /></span></b>쪽
+												</p>
 											</div>
-											<!-- 휴가신청 조회 및 삭제 -->
-											<form id="deleteForm" action="/holiday/delete" method="post">
-											<div class="scroll-container">
-												<table>
-													<thead>
+											<table>
+												<thead>
+													<tr>
+														<th>순번</th>
+														<th>사용자구분</th>
+														<th>사용자ID</th>
+														<th>사용자명</th>
+														<th>사용자연락처</th>
+														<th>지점ID</th>
+														<th>지점명</th>
+														<th>지점연락처</th>
+														<th>지점위치코드</th>
+														<th>날짜</th>
+														<th>스케줄구분</th>
+													</tr>
+												</thead>
+												<tbody>
+													<c:forEach var="schedule2" items="${schedules}">
 														<tr>
-															<th>순번</th>
-															<th>휴가아이디</th>
-															<th>휴가신청일</th>
-															<th>휴가시작일</th>
-															<th>휴가종료일</th>
-															<th>일수</th>
-															<th>실제사용</th>
-															<th>선택</th>
+															<td><c:out value="${schedule2.rowNum}" /></td>
+															<td><c:out value="${schedule2.userType}" /></td>
+															<td><c:out value="${schedule2.userId}" /></td>
+															<td><c:out value="${schedule2.userName}" /></td>
+															<td><c:out value="${schedule2.userPhoneNumber}" /></td>
+															<td><c:choose>
+																	<c:when test="${schedule2.storeId != 0}">
+																		<c:out value="${schedule2.storeId}" />
+																	</c:when>
+																	<c:otherwise>
+																		<!-- 0인 경우 아무것도 표시하지 않음 -->
+																	</c:otherwise>
+																</c:choose></td>
+															<td><c:out value="${schedule2.storeName}" /></td>
+															<td><c:out value="${schedule2.storePhoneNumber}" /></td>
+															<td><c:out value="${schedule2.storeLocation}" /></td>
+															<td><c:out value="${schedule2.scheduleDate}" /></td>
+															<td><c:out value="${schedule2.scheduleType}" /></td>
 														</tr>
-													</thead>
-													<tbody>
-														<c:forEach var="holiday" items="${holidays}"
-															varStatus="loop">
-
-															<tr>
-																<td><c:out value="${loop.index + 1}" /></td>
-																<td><c:out value="${holiday.holidaySeq}" /></td>
-																<td><c:out value="${holiday.appDate}" /></td>
-																<td><c:out value="${holiday.startDate}" /></td>
-																<td><c:out value="${holiday.endDate}" /></td>
-																<td><c:set var="startDate"
-																		value="${holiday.startDate.time}" /> <c:set
-																		var="endDate" value="${holiday.endDate.time}" /> <c:set
-																		var="dateDifference"
-																		value="${(endDate - startDate) / (1000 * 3600 * 24) + 1}" />
-																	<fmt:formatNumber var="formattedDateDifference"
-																		value="${dateDifference}" /> <c:out
-																		value="${formattedDateDifference}" /></td>
-																<td><c:out value="${holiday.actualUse}" /></td>
-
-
-
-																<td><c:choose>
-																		<c:when
-																			test="${holiday.actualUse == 'N' || holiday.startDate <= now}">
-																			<input type="radio" name="selectedHolidaySeq"
-																				value="" disabled />
-																		</c:when>
-																		<c:otherwise>
-																			<input type="radio" name="holidaySeq"
-																				value="${holiday.holidaySeq}" />
-																		</c:otherwise>
-																	</c:choose></td>
-
-															</tr>
-
-
-														</c:forEach>
-													</tbody>
-												</table>
-												</div>
-												<button type="button" id="cancelButton">휴가 취소</button>
-											</form>
-
-											<!-- 휴가등록 모달창 -->
-											<div id="myModal" class="modal">
-												<div class="modal-content">
-													<h2>휴가 취소 확인</h2>
-													<p>휴가를 취소하시겠습니까?</p>
-													<button id="confirmYes">예</button>
-													<button id="confirmNo">아니오</button>
-												</div>
-											</div>
-
-
-											<script>
-												// 휴가 취소 버튼 클릭 시 모달 창 열기
-												document
-														.getElementById(
-																"cancelButton")
-														.addEventListener(
-																"click",
-																function() {
-
-																	var modal = document
-																			.getElementById("myModal");
-																	modal.classList
-																			.add("active");
-																});
-
-												// 예 버튼 클릭 시
-												document
-														.getElementById(
-																"confirmYes")
-														.addEventListener(
-																"click",
-																function() {
-																	// 여기에서 취소 로직을 수행하거나, 폼을 서버로 제출할 수 있습니다.
-																	// 폼을 서버로 제출하려면 JavaScript를 사용하여 폼을 선택하고 submit() 메서드를 호출하면 됩니다.
-																	var form = document
-																			.getElementById("deleteForm");
-																	form
-																			.submit();
-
-																	// 모달 창 닫기
-																	var modal = document
-																			.getElementById("myModal");
-																	modal.classList
-																			.remove("active");
-																});
-
-												// 아니오 버튼 클릭 시 모달 창 닫기
-												document
-														.getElementById(
-																"confirmNo")
-														.addEventListener(
-																"click",
-																function() {
-																	var modal = document
-																			.getElementById("myModal");
-																	modal.classList
-																			.remove("active");
-																});
-											</script>
-
-
-
-
-										</div>
-
-										<!-- 휴가신청 -->
-										<div class="subtitle">휴가신청</div>
-
-										<form id="addForm" action="/holiday/add" method="post">
-											<table id="search-box">
-												<tr>
-													<th>휴가신청일</th>
-													<td><c:out
-															value="<%=new java.text.SimpleDateFormat(\"yyyy-MM-dd\").format(new java.util.Date())%>" /></td>
-
-													<th>휴가일</th>
-													<td><input type="date" name="startDate" id="startDate" />
-														~ <input type="date" name="endDate" id="endDate" />
-														(사용일수: <span id="usedDays"></span> / 잔여일수: <span
-														id="remainingDays"></span>)</td>
-												</tr>
+													</c:forEach>
 											</table>
-
-											<button type="submit" id="applyButton">휴가신청</button>
-											<button type="reset" id="resetButton">초기화</button>
-										</form>
-
-
-										<script>
-											// 모델에서 잔여일수 데이터 가져와서 표시
-											var remainingDays = ${remainingDays};
-											document.getElementById("remainingDays").textContent = remainingDays;
-
-											function calculateDays() {
-												var startDate = new Date(
-														document
-																.getElementById("startDate").value);
-												var endDate = new Date(
-														document
-																.getElementById("endDate").value);
-
-												if (!isNaN(startDate)
-														&& !isNaN(endDate)) {
-													var timeDiff = endDate
-															- startDate + 1;
-													var daysDiff = Math
-															.ceil(timeDiff
-																	/ (1000 * 3600 * 24));
-													document
-															.getElementById("usedDays").textContent = daysDiff;
-													document
-															.getElementById("remainingDays").textContent = remainingDays
-															- daysDiff;
-												} else {
-													document
-															.getElementById("usedDays").textContent = "";
-												}
-											}
-
-											// input 필드 값이 변경될 때마다 calculateDays 함수 호출
-											document
-													.getElementById("startDate")
-													.addEventListener("change",
-															calculateDays);
-											document.getElementById("endDate")
-													.addEventListener("change",
-															calculateDays);
-
-											// 초기화 버튼을 눌렀을 때
-											document
-													.getElementById(
-															"resetButton")
-													.addEventListener(
-															"click",
-															function() {
-																// 입력 필드를 초기화
-																document
-																		.getElementById("startDate").value = "";
-																document
-																		.getElementById("endDate").value = "";
-
-																// 일수 및 잔여일수를 초기 상태로 되돌림
-																document
-																		.getElementById("usedDays").textContent = "";
-																document
-																		.getElementById("remainingDays").textContent = remainingDays;
-															});
-										</script>
-
-										<!-- 확인 모달 창 -->
-										<div id="confirmModal" class="modal">
-											<div class="modal-content">
-												<span class="close">&times;</span>
-												<p>정말로 휴가를 신청하시겠습니까?</p>
-												<button id="applyYes">예</button>
-												<button id="applyNo">아니오</button>
-											</div>
 										</div>
 
-										<!-- 결과 모달 창 -->
-										<div id="resultModal" class="modal">
-											<div class="modal-content">
-												<span class="close">&times;</span>
-												<p id="modalMessage"></p>
+										<!-- 페이징 -->
+										<div class="paging pagination">
+
+											<!-- 맨 앞으로 가는 버튼 -->
+											<a
+												href="/schedule2?currentPage=1
+&startYr=${searchContent.startYr}&startMn=${searchContent.startMn}&endYr=${searchContent.endYr}&endMn=${searchContent.endMn}
+&userType=${searchContent.userType}
+&userId=${searchContent.userId}
+&userName=${searchContent.userName}
+&storeId=${searchContent.storeId}
+&storeName=${searchContent.storeName}
+&storeLocation=${searchContent.storeLocation}
+&scheduleType=${searchContent.scheduleType}"><img
+												src="/resources/img/log/free-icon-left-chevron-6015759.png"
+												alt=" 처음" /></a>
+
+											<c:choose>
+												<c:when test="${currentPage > 1}">
+													<a
+														href="/schedule2?currentPage=${currentPage - 1}&startYr=${searchContent.startYr}&startMn=${searchContent.startMn}&endYr=${searchContent.endYr}&endMn=${searchContent.endMn}&userType=${searchContent.userType}&userId=${searchContent.userId}&userName=${searchContent.userName}&storeId=${searchContent.storeId}&storeName=${searchContent.storeName}&storeLocation=${searchContent.storeLocation}&scheduleType=${searchContent.scheduleType}">
+														<img
+														src="/resources/img/log/free-icon-left-arrow-271220.png"
+														alt="이전" />
+													</a>
+												</c:when>
+												<c:otherwise>
+													<a href="#" class="disabled-link"> <img
+														src="/resources/img/log/free-icon-left-arrow-271220.png"
+														alt="이전" />
+													</a>
+												</c:otherwise>
+											</c:choose>
+
+											<!-- 리스트 목록 나열 -->
+											<div id="number-list">
+												<div class="page-btn">
+													<c:forEach var="page" begin="${sharePage * 10 + 1}"
+														end="${(sharePage + 1) * 10}" step="1">
+														<c:if test="${page <= totalPage}">
+															<a
+																href="/schedule2?currentPage=${page}
+&startYr=${searchContent.startYr}&startMn=${searchContent.startMn}&endYr=${searchContent.endYr}&endMn=${searchContent.endMn}
+&userType=${searchContent.userType}
+&userId=${searchContent.userId}
+&userName=${searchContent.userName}
+&storeId=${searchContent.storeId}
+&storeName=${searchContent.storeName}
+&storeLocation=${searchContent.storeLocation}
+&scheduleType=${searchContent.scheduleType}"
+																class="pagination page-btn ${currentPage == page ? 'selected' : ''}">
+																${page} </a>
+														</c:if>
+													</c:forEach>
+												</div>
 											</div>
+
+											<!-- 뒤로 가는 버튼 -->
+											<c:if test="${currentPage < totalPage}">
+												<a
+													href="/schedule2?currentPage=${currentPage + 1}
+&startYr=${searchContent.startYr}&startMn=${searchContent.startMn}&endYr=${searchContent.endYr}&endMn=${searchContent.endMn}
+&userType=${searchContent.userType}
+&userId=${searchContent.userId}
+&userName=${searchContent.userName}
+&storeId=${searchContent.storeId}
+&storeName=${searchContent.storeName}
+&storeLocation=${searchContent.storeLocation}
+&scheduleType=${searchContent.scheduleType}">
+													<img
+													src="/resources/img/log/free-icon-right-arrow-271228.png"
+													alt="다음" />
+												</a>
+											</c:if>
+											<c:if test="${currentPage == totalPage}">
+												<a href="" class="disabled-link"> <img
+													src="/resources/img/log/free-icon-right-arrow-271228.png"
+													alt="다음" />
+												</a>
+											</c:if>
+
+											<a
+												href="/schedule2?currentPage=${totalPage}
+&startYr=${searchContent.startYr}&startMn=${searchContent.startMn}&endYr=${searchContent.endYr}&endMn=${searchContent.endMn}
+&userType=${searchContent.userType}
+&userId=${searchContent.userId}
+&userName=${searchContent.userName}
+&storeId=${searchContent.storeId}
+&storeName=${searchContent.storeName}
+&storeLocation=${searchContent.storeLocation}
+&scheduleType=${searchContent.scheduleType}"><img
+												src="/resources/img/log/free-icon-fast-forward-double-right-arrows-symbol-54366.png"
+												alt="마지막" /></a>
 										</div>
-
-										<script>
-											// 폼 제출 이벤트 리스너
-											$("#addForm")
-													.submit(
-															function(event) {
-																event
-																		.preventDefault();
-
-																// 확인 모달 창 열기
-																var confirmModal = document
-																		.getElementById("confirmModal");
-																confirmModal.style.display = "block";
-															});
-
-											// 확인 모달 창에서 "예" 버튼 클릭 시
-											document
-													.getElementById("applyYes")
-													.addEventListener(
-															"click",
-															function() {
-																// 확인 모달 창 닫기
-																var confirmModal = document
-																		.getElementById("confirmModal");
-																confirmModal.style.display = "none";
-
-																// 폼 데이터를 직렬화
-																var formData = $(
-																		"#addForm")
-																		.serialize();
-
-																// AJAX 요청으로 휴가 등록을 수행하고 결과 메시지를 받아옴
-																$
-																		.ajax({
-																			url : "/holiday/add",
-																			type : "POST",
-																			data : formData,
-																			success : function(
-																					message) {
-																				// 결과 모달 창 열고 메시지 표시
-																				var resultModal = document
-																						.getElementById("resultModal");
-																				var modalMessage = document
-																						.getElementById("modalMessage");
-																				modalMessage.innerText = message;
-																				resultModal.style.display = "block";
-																			},
-																			error : function() {
-																				// 오류 메시지를 결과 모달 창에 표시
-																				var resultModal = document
-																						.getElementById("resultModal");
-																				var modalMessage = document
-																						.getElementById("modalMessage");
-																				modalMessage.innerText = "오류 발생";
-																				resultModal.style.display = "block";
-																			}
-																		});
-															});
-
-											// 모달 창 닫기
-											var closeBtns = document
-													.querySelectorAll(".close");
-											closeBtns
-													.forEach(function(btn) {
-														btn
-																.addEventListener(
-																		"click",
-																		function() {
-																			var modal = btn.parentElement.parentElement;
-																			modal.style.display = "none";
-																		});
-													});
-
-											// 모달 창 닫기 함수
-											function closeModal() {
-												var modal = document
-														.getElementById("confirmModal");
-												modal.style.display = "none";
-											}
-
-											// 아니오 버튼 클릭 이벤트 처리
-											document.getElementById("applyNo")
-													.addEventListener("click",
-															closeModal);
-										</script>
-
-
 
 									</div>
-
 									<!-- ********** 세은 로그 관련 내용 끝 ********** -->
 								</div>
 							</div>
@@ -712,5 +519,7 @@
 			</div>
 		</div>
 	</div>
+	<script src="<c:url value='/js/bootstrap.min.js' />"></script>
+	<script src="<c:url value='/js/jquery.min.js' />"></script>
 </body>
 </html>

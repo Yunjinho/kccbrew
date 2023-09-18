@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans
+	xmlns="http://www.springframework.org/schema/security"
+	xmlns:beans="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+ http://www.springframework.org/schema/beans/spring-beans.xsd
+ http://www.springframework.org/schema/security
+ http://www.springframework.org/schema/security/spring-security.xsd">
+	<!-- Root Context: defines shared resources visible to all other web components -->
+
+	<!-- 회원정보 -->
+	<beans:bean id="customUserDetailsService"
+		class="kr.co.kccbrew.comm.security.service.CustomUserDetailsService" />
+
+	<!-- 비밀번호 암호화 -->
+	<beans:bean id="passwordEncoder"
+		class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder">
+		<beans:constructor-arg name="strength"
+			value="12" />
+	</beans:bean>
+
+	<!-- 로그인 성공시 수행 -->
+	<beans:bean id="customAuthenticationSuccessHandler"
+		class="kr.co.kccbrew.comm.security.controller.CustomAuthenticationSuccessHandler" />
+
+
+	<http auto-config="true" use-expressions="true">
+		<intercept-url pattern="/resources/**"
+			access="permitAll" />
+		<intercept-url pattern="/search-store-list"
+			access="permitAll" />
+		<intercept-url pattern="/search-location-code"
+			access="permitAll" />
+		<intercept-url pattern="/check_user_id"
+			access="permitAll" />
+
+		<!-- 비회원만 접근가능 -->
+		<intercept-url pattern="/login" access="isAnonymous()" />
+		<intercept-url pattern="/signup" access="isAnonymous()" />
+		<intercept-url pattern="/register"
+			access="isAnonymous()" />
+
+		<!-- 관리자 접근가능 -->
+		<intercept-url pattern="/admin/**"
+			access="hasAuthority('ROLE_ADMIN')" />
+
+		<intercept-url pattern="/log/**"
+			access="hasAuthority('ROLE_ADMIN')" />
+
+		<!-- 점주 접근가능 -->
+		<intercept-url pattern="/manager/**"
+			access="hasRole('ROLE_MANAGER')" />
+
+		<!-- 수리기사 접근가능 -->
+		<intercept-url pattern="/mecha/**"
+			access="hasRole('ROLE_MECHA')" />
+
+		<intercept-url pattern="/**" access="isAuthenticated()" />
+
+		<!-- 로그인 설정 -->
+		<form-login login-page="/login"
+			login-processing-url="/login" default-target-url="/security-test"
+			username-parameter="username" password-parameter="password"
+			authentication-failure-url="/user/loginform?error=true"
+			authentication-success-handler-ref="customAuthenticationSuccessHandler" />
+
+		<csrf disabled="true" />
+
+		<!-- 로그아웃 설정 -->
+		<logout logout-url="/logout" logout-success-url="/login" />
+	</http>
+
+
+	<authentication-manager>
+
+		<authentication-provider
+			user-service-ref="customUserDetailsService">
+			<password-encoder ref="passwordEncoder" />
+		</authentication-provider>
+	</authentication-manager>
+
+
+</beans:beans>
