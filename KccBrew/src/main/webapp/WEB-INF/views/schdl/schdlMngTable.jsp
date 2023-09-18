@@ -333,9 +333,11 @@
 												</fieldset>
 											</div>
 
-											<div class="board-info index" style="background-color: #f2f0e4; ">
-												<div style="background-color: black; width: 1em; height: 1em;"></div>
-													에 마우스오버나 클릭 시 상세내용이 보입니다.
+											<div class="board-info index"
+												style="background-color: #f2f0e4;">
+												<div
+													style="background-color: black; width: 1em; height: 1em;"></div>
+												에 마우스오버나 클릭 시 상세내용이 보입니다.
 
 												<div id="holiday-index"
 													style="background-color: pink; width: 1em; height: 1em;"></div>
@@ -357,7 +359,6 @@
 														<td rowspan="2">이름</td>
 														<td rowspan="2">지역코드</td>
 														<td rowspan="2">장비코드</td>
-
 														<td rowspan="2">비고</td>
 													</tr>
 													<tr>
@@ -367,6 +368,16 @@
 
 												</tbody>
 											</table>
+
+											<!-- 모달 -->
+											<div id="schedule-index-modal" class="modal">
+												<div class="modal-content">
+													<span class="close" onclick="closeModal()">&times;</span>
+													<!-- 닫기 버튼 -->
+													<div id="modalContent"></div>
+													<!-- 데이터를 표시할 영역 -->
+												</div>
+											</div>
 
 										</div>
 

@@ -242,3 +242,32 @@
 .tab-ul>li {
 	width: calc(100% * 1/ 2);
 }
+
+/* 모달 스타일 */
+.modal {
+	display: none; /* 모달 초기에는 숨김 상태 */
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0, 0, 0, 0); /* 배경 어두운 색상 */
+}
+
+/* 모달 내용 스타일 */
+.modal-content {
+	background-color: #fff;
+	margin: 10% auto; /* 화면 중앙에 위치 */
+	padding: 20px;
+	border: 1px solid #333;
+	width: 50%;
+}
+
+/* 닫기 버튼 스타일 */
+.close {
+	color: #333;
+	float: right;
+	font-size: 20px;
+	font-weight: bold;
+	cursor: pointer;
+}

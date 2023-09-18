@@ -87,7 +87,7 @@ function performSearch() {
 
 
 				/*휴무일 리스트*/
-				for (var j=0; j < holidayDates.length; j++) {
+				for (var j = 0; j < holidayDates.length; j++) {
 					var holiday = holidayDates[j];
 					var startDay = new Date(holiday.HLDY_STAR); // 시작 날짜
 					var endDay = new Date(holiday.HLDY_END); // 종료 날짜
@@ -99,62 +99,99 @@ function performSearch() {
 						var rowClassName = "row-" + (i + 1);
 						var cellClassName = "day-" + day; // 클래스 이름 생성
 
-						// 해당 클래스 이름을 가진 <td> 요소를 찾아서 <div> 요소를 추가하고 스타일 설정
-						$("." + rowClassName + " ." + cellClassName)
-						.html("<div class='pink-background'></div>") // <div> 요소 추가
-						.find("div") // 추가한 <div> 요소 선택
-						.css({
+						var $divElement = $("<div class='schedule-index'></div>")
+						.attr("data-user-id", userId)
+						.attr("data-schedule-type", "holiday")
+						.attr("data-schedule-date", startDay);
+
+						$divElement.css({
 							"background-color": "pink", // 배경색 설정
 							"width": "1.2em", // 가로 크기 설정
 							"height": "1.2em", // 세로 크기 설정
 							"margin": "0 auto"
 						});
+
+						// 마우스 오버 이벤트 핸들러 추가
+						$divElement.on("mouseover", function() {
+							var $this = $(this);
+							var userId = $this.attr("data-user-id");
+							console.log("userId: " + userId);
+							var scheduleType = $this.attr("data-schedule-type");
+							console.log("scheduleType: " + scheduleType);
+							var scheduleDate = $this.attr("data-schedule-date");
+							console.log("scheduleDate: " + scheduleDate);
+
+							// 데이터를 컨트롤러로 보내는 함수 호출
+							scheduleIndexData(userId, scheduleType, scheduleDate);
+						});
+
+						// 해당 클래스 이름을 가진 <td> 요소에 <div> 추가
+						$("." + rowClassName + " ." + cellClassName).html($divElement);
 					}
 				}
 
+
 				/*배정일 리스트*/
-				for (var k=0; k < assignDates.length; k++) {
-					var assignDate = assignDates[j];
-					var currentDate = new Date(assignDate)
+				for (var k = 0; k < assignDates.length; k++) {
+					var assignDate = assignDates[k];
+					var currentDate = new Date(assignDate);
 					var day = currentDate.getDate(); // 현재 날짜의 일(day) 추출
-					console.log("assignDate: " + day);
+
 					// 선택한 행과 열의 <td> 요소를 찾아서 값 대입
 					var rowClassName = "row-" + (i + 1);
 					var cellClassName = "day-" + day; // 클래스 이름 생성
 
-					$("." + rowClassName + " ." + cellClassName)
-					.empty() // 기존 내용을 비우기
-					.html("<div class='yellow-background'></div>") // <div> 요소 추가
-					.find("div") // 추가한 <div> 요소 선택
-					.css({
+					var $divElement = $("<div class='schedule-index'></div>");
+
+					// 데이터를 HTML 속성으로 저장
+					$divElement.attr("data-user-id", userId);
+					$divElement.attr("data-schedule-type", "assign");
+					$divElement.attr("data-schedule-date", currentDate);
+
+					$divElement.css({
 						"background-color": "#f7d474", // 배경색 설정
 						"width": "1.2em", // 가로 크기 설정
 						"height": "1.2em", // 세로 크기 설정
 						"margin": "0 auto" // 가운데 정렬 설정
 					});
+
+					// 해당 클래스 이름을 가진 <td> 요소에 <div> 추가
+					$("." + rowClassName + " ." + cellClassName)
+					.empty() // 기존 내용을 비우기
+					.html($divElement);
 				}
 
+
 				/*근무일 리스트*/
-				for(var l=0;  l < resultDates.length; l++) {
-					var resultDate = resultDates[j];
-					var currentDate = new Date(resultDate)
+				for (var l = 0; l < resultDates.length; l++) {
+					var resultDate = resultDates[l];
+					var currentDate = new Date(resultDate);
 					var day = currentDate.getDate(); // 현재 날짜의 일(day) 추출
-					console.log("resultDate: " + day);
+
 					// 선택한 행과 열의 <td> 요소를 찾아서 값 대입
 					var rowClassName = "row-" + (i + 1);
 					var cellClassName = "day-" + day; // 클래스 이름 생성
 
-					$("." + rowClassName + " ." + cellClassName)
-					.empty() // 기존 내용을 비우기
-					.html("<div class='green-background'></div>") // <div> 요소 추가
-					.find("div") // 추가한 <div> 요소 선택
-					.css({
+					var $divElement = $("<div class='schedule-index'></div>");
+
+					// 데이터를 HTML 속성으로 저장
+					$divElement.attr("data-user-id", userId);
+					$divElement.attr("data-schedule-type", "result");
+					$divElement.attr("data-schedule-date", currentDate);
+
+					$divElement.css({
 						"background-color": "#5b8554", // 배경색 설정
 						"width": "1.2em", // 가로 크기 설정
 						"height": "1.2em", // 세로 크기 설정
 						"margin": "0 auto" // 가운데 정렬 설정
 					});
+
+					// 해당 클래스 이름을 가진 <td> 요소에 <div> 추가
+					$("." + rowClassName + " ." + cellClassName)
+					.empty() // 기존 내용을 비우기
+					.html($divElement);
 				}
+
 
 			}
 
@@ -167,20 +204,86 @@ function performSearch() {
 }
 
 
+function scheduleIndexData(userId, scheduleType, scheduleDate) {
 
+	var date = new Date(scheduleDate);
+	// 날짜를 yyyy-mm-dd 형식으로 포맷팅
+    var year = date.getFullYear();
+    var month = String(date.getMonth() + 1).padStart(2, '0'); // 월은 0부터 시작하므로 1을 더하고 두 자리로 포맷팅
+    var day = String(date.getDate()).padStart(2, '0'); // 일도 두 자리로 포맷팅
+    var formattedDate = year + '-' + month + '-' + day;
 
-function getUserInfo(userId) {
-	return new Promise(function(resolve, reject) {
-		$.ajax({
-			type: "GET",
-			url: "/user-info", 
-			data: { userId: userId },
-			success: function (userVo) {
-				resolve(userVo); // 성공 시 데이터를 resolve
-			},
-			error: function (error) {
-				reject(error); // 실패 시 에러를 reject
-			}
-		});
+	$.ajax({
+		type: "POST",
+		url: "/schedule-Info", // 컨트롤러의 URL을 여기에 입력하세요.
+		data: {
+			userId: userId,
+			scheduleType: scheduleType,
+			scheduleDate: formattedDate
+		},
+		success: function(response) {
+			console.log("Response from server:", response);
+			
+			 // scheduleType 값에 따라 다른 함수 호출
+	        if (scheduleType === "holiday") {
+	            displayHolidayData(response);
+	        } else if (scheduleType === "assign") {
+	            displayAssignData(response);
+	        } else if (scheduleType === "result") {
+	            displayResultData(response);
+	        } 
+		},
+		error: function(error) {
+			console.error("Error:", error);
+		}
 	});
 }
+
+
+function displayHolidayData(data) {
+	
+	console.log("data: " + data);
+    // 모달 요소를 가져옴 (모달의 ID를 사용하여 조정)
+    var modal = document.getElementById("schedule-index-modal");
+
+    var modalContent = document.getElementById("modalContent");
+    // 필드명을 사용하여 필드값을 구함
+    var holidaySeq = data.holidaySeq;
+
+    // 필드값을 모달 내용에 추가
+    modalContent.innerHTML = "휴일 번호: " + holidaySeq;
+    openModal(); // 모달 열기
+}
+
+
+function displayAssignData(data) {
+    // 모달 요소를 가져옴 (모달의 ID를 사용하여 조정)
+    var modal = document.getElementById("schedule-index-modal");
+
+    var modalContent = document.getElementById("modalContent");
+    modalContent.innerHTML = "받은 데이터: " + data;
+    openModal(); // 모달 열기
+}
+
+function displayResultData(data) {
+    // 모달 요소를 가져옴 (모달의 ID를 사용하여 조정)
+    var modal = document.getElementById("schedule-index-modal");
+
+    var modalContent = document.getElementById("modalContent");
+    modalContent.innerHTML = "받은 데이터: " + data;
+    openModal(); // 모달 열기
+}
+
+
+// 모달 열기
+function openModal() {
+    var modal = document.getElementById("schedule-index-modal");
+    modal.style.display = "block";
+}
+
+// 모달 닫기
+function closeModal() {
+    var modal = document.getElementById("schedule-index-modal");
+    modal.style.display = "none";
+}
+

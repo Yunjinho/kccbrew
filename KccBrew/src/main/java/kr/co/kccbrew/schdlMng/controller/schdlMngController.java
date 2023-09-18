@@ -26,6 +26,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import kr.co.kccbrew.comm.security.model.UserVo;
 import kr.co.kccbrew.comm.security.service.UserService;
+import kr.co.kccbrew.schdlMng.model.AsAssignVo;
+import kr.co.kccbrew.schdlMng.model.AsResultVo;
 import kr.co.kccbrew.schdlMng.model.HolidayVo;
 import kr.co.kccbrew.schdlMng.model.SchdlMngVo;
 import kr.co.kccbrew.schdlMng.service.SchdlMngService;
@@ -176,11 +178,8 @@ public class schdlMngController {
 	@PostMapping(value="/schedule", produces = "application/json; charset=utf-8")
 	@ResponseBody
 	public List<Map<String, Object>>processSearchRequest(@RequestParam("startDate") String startDate,
-																															@RequestParam("endDate") String endDate, 
-																															@ModelAttribute UserVo userVo) {
-
-		System.out.println("startDate: " + startDate + ", endDate: " + endDate);
-		System.out.println("userVo: " + userVo);
+			@RequestParam("endDate") String endDate, 
+			@ModelAttribute UserVo userVo) {
 
 		if(userVo.getLocationCd() == null || userVo.getLocationCd().equals("")) {
 			userVo.setLocationCd(userVo.getLocation());
@@ -192,13 +191,45 @@ public class schdlMngController {
 
 		return allSchedules;
 	}
-	
-	
-	@GetMapping("/user-info")
+
+	@PostMapping("/schedule-Info")
 	@ResponseBody
-	public UserVo getUserInfo(String userId) {
-		UserVo userVo = userService.getUserById(userId);
-		return userVo;
+	public Object getScheduleInfo(@RequestParam("userId") String userId,
+			@RequestParam("scheduleType") String scheduleType,
+			@RequestParam("scheduleDate") String scheduleDate) {
+
+		// 날짜 문자열을 Date 객체로 파싱
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		java.util.Date date = null;
+		try {
+			date = sdf.parse(scheduleDate);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+
+		String stringDate = sdf.format(date);
+		Date sqlDate = Date.valueOf(stringDate);
+
+
+		/*데이터 확인*/
+		System.out.println("userId: " + userId);
+		System.out.println("scheduleType: " + scheduleType);
+		System.out.println("sqlDate: " + sqlDate);
+
+		switch(scheduleType) {
+		case "holiday":
+			HolidayVo holiday = schdlMngService.getHoliday(userId, sqlDate);
+			return holiday;
+		case "assign":
+			AsAssignVo assign = schdlMngService.getAssign(userId, sqlDate);
+			return assign;
+		case "result":
+			AsResultVo result = schdlMngService.getResult(userId, sqlDate);
+			return result;
+		}
+		
+		return null;
+
 	}
 
 

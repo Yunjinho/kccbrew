@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Map;
 
 import kr.co.kccbrew.comm.security.model.UserVo;
+import kr.co.kccbrew.schdlMng.model.AsAssignVo;
+import kr.co.kccbrew.schdlMng.model.AsResultVo;
 import kr.co.kccbrew.schdlMng.model.HolidayVo;
 import kr.co.kccbrew.schdlMng.model.SchdlMngVo;
 
@@ -43,5 +45,14 @@ public interface ISchdlMngService {
 	
 	/*회원아이디에 따른 스케줄맵 조회*/
 	public List<Map<String, Object>> getAllSchedules(List<String> IdList);
+	
+	/*휴가 정보 조회*/
+	public HolidayVo getHoliday(String userId, Date date);
+	
+	/*배정 정보 조회*/
+	public AsAssignVo getAssign(String userId, Date date);
+	
+	/*휴가 정보 조회*/
+	public AsResultVo getResult(String userId, Date date);
 	
 }

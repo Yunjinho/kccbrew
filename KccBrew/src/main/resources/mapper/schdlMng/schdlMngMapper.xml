@@ -3,12 +3,6 @@
 <mapper
 	namespace="kr.co.kccbrew.schdlMng.dao.ISchdlMngRepository">
 
-	<!-- <resultMap id="assignResult" type="java.util.Map"> <result property="asAssignSeq" 
-		column="AS_ASSIGN_SEQ" /> <result property="asInfoSeq" column="AS_INFO_SEQ" 
-		/> <result property="visitDate" column="VISIT_DTTM" /> <result property="mechanicId" 
-		column="MECHANIC_ID" /> <result property="managerId" column="STORE_MNG_ID" 
-		/> </resultMap> -->
-
 	<resultMap id="holidayResult"
 		type="kr.co.kccbrew.schdlMng.model.HolidayVo">
 		<result property="holidaySeq" column="HOLIDAY_SEQ" />
@@ -18,6 +12,36 @@
 		<result property="startDate" column="HLDY_STAR" />
 		<result property="endDate" column="HLDY_END" />
 		<result property="actualUse" column="ACTL_USE" />
+	</resultMap>
+
+	<resultMap id="asAssignResult"
+		type="kr.co.kccbrew.schdlMng.model.AsAssignVo">
+		<result property="AsAssignSeq" column="AS_ASSIGN_SEQ" />
+		<result property="AsInfoSeq" column="AS_INFO_SEQ" />
+		<result property="visitDate" column="VISIT_DTTM" />
+		<result property="confirmDate" column="CONFIRM_DTTM" />
+		<result property="userId" column="MECHANIC_ID" />
+		<result property="modDate" column="MOD_DTTM" />
+		<result property="modUser" column="MOD_USER" />
+		<result property="regDate" column="REG_DTTM" />
+		<result property="regUser" column="REG_USER" />
+		<result property="reAssign" column="REASSIGN" />
+		<result property="rejectContentMecha"
+			column="REJECT_CONTENT_MCHA" />
+	</resultMap>
+
+	<resultMap id="asResultResult"
+		type="kr.co.kccbrew.schdlMng.model.AsResultVo">
+		<result property="asResultSeq" column="AS_RESULT_SEQ" />
+		<result property="asAssignSeq" column="AS_ASSIGN_SEQ" />
+		<result property="resultDetail" column="RESULT_DTL" jdbcType="CLOB" javaType="java.lang.String" />
+		<result property="storeManagerFeedBack" column="STORE_MNG_FB" />
+		<result property="resultDate" column="RESULT_DTTM" />
+		<result property="fileSeq" column="FILE_SEQ" />
+		<result property="asPrice" column="AS_PRICE" />
+		<result property="modUser" column="MOD_USER" />
+		<result property="modDate" column="MOD_DTTM" />
+		<result property="reApply" column="REAPPLY" />
 	</resultMap>
 
 	<resultMap id="scheduleResult"
@@ -578,6 +602,38 @@ EXTRACT(YEAR FROM SCHEDULE_DATE) = 2023 AND EXTRACT(MONTH FROM SCHEDULE_DATE) = 
 		AS_RESULT ON AS_ASSIGN.AS_ASSIGN_SEQ = AS_RESULT.AS_ASSIGN_SEQ
 		WHERE
 		AS_ASSIGN.REJECT_CONTENT_MCHA IS NULL and MECHANIC_ID = #{userId}
+	</select>
+
+
+	<!-- 휴가 조회 -->
+	<select id="selecHoliday2" parameterType="map"
+		resultMap="holidayResult">
+		SELECT *
+		FROM holiday
+		WHERE user_id = #{userId}
+		AND HLDY_STAR =
+		#{date}
+	</select>
+
+	<!-- 배정 조회 -->
+	<select id="selectAssign" parameterType="map"
+		resultMap="asAssignResult">
+		SELECT *
+		FROM AS_ASSIGN
+		WHERE MECHANIC_ID = #{userId}
+		AND
+		VISIT_DTTM = #{date}
+	</select>
+
+	<!-- 결과 조회 -->
+	<select id="selectResult" parameterType="map"
+		resultMap="asResultResult">
+		SELECT ar.*
+		FROM AS_ASSIGN aa
+		INNER JOIN
+		AS_RESULT ar ON aa.AS_ASSIGN_SEQ = ar.AS_ASSIGN_SEQ
+		WHERE MECHANIC_ID =
+		#{userId} AND RESULT_DTTM = #{date}
 	</select>
 
 

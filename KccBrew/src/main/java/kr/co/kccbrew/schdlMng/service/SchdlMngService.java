@@ -12,6 +12,8 @@ import org.springframework.stereotype.Service;
 import kr.co.kccbrew.comm.security.dao.IUserRepository;
 import kr.co.kccbrew.comm.security.model.UserVo;
 import kr.co.kccbrew.schdlMng.dao.ISchdlMngRepository;
+import kr.co.kccbrew.schdlMng.model.AsAssignVo;
+import kr.co.kccbrew.schdlMng.model.AsResultVo;
 import kr.co.kccbrew.schdlMng.model.HolidayVo;
 import kr.co.kccbrew.schdlMng.model.SchdlMngVo;
 
@@ -132,6 +134,32 @@ public class SchdlMngService implements ISchdlMngService {
 		} else {
 			return null;
 		}
+	}
+
+	@Override
+	public HolidayVo getHoliday(String userId, Date date) {
+		  // 파라미터를 맵에 설정
+        Map<String, Object> parameterMap = new HashMap<>();
+        parameterMap.put("userId", userId);
+        parameterMap.put("date", date);
+
+		return schdlMngRepository.selecHoliday2(parameterMap);
+	}
+
+	@Override
+	public AsAssignVo getAssign(String userId, Date date) {
+        Map<String, Object> parameterMap = new HashMap<>();
+        parameterMap.put("userId", userId);
+        parameterMap.put("date", date);
+		return schdlMngRepository.selectAssign(parameterMap);
+	}
+
+	@Override
+	public AsResultVo getResult(String userId, Date date) {
+        Map<String, Object> parameterMap = new HashMap<>();
+        parameterMap.put("userId", userId);
+        parameterMap.put("date", date);
+		return schdlMngRepository.selectResult(parameterMap);
 	}
 
 
