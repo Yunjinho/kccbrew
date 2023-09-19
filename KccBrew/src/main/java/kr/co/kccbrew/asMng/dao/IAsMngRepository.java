@@ -129,4 +129,9 @@ public interface IAsMngRepository {
 	 * 점포점주 AS 결과입력
 	 */
 	public void updateResultMng(AsMngVo asMngVo);
+	/**
+	 * 재배정 여부
+	 * @param asMngVo
+	 */
+	public void updateAsResultConfirm(AsMngVo asMngVo);
 }

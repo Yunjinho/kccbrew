@@ -374,4 +374,10 @@
 	UPDATE as_result SET store_mng_fb=#{storeMngFb},reapply=#{resultReapply},mod_user=#{userId},mod_dttm=SYSDATE WHERE as_result_seq=#{asResultSeq} 
 ]]>
 </update>
+<!-- 재접수 AS건에 기사 재배정 여부 -->
+<update id="updateAsResultConfirm" parameterType="kr.co.kccbrew.asMng.model.AsMngVo">
+<![CDATA[
+	UPDATE as_result SET reapply_confirm=#{reapplyConfirm} WHERE as_result_seq=#{asResultSeq}
+]]>
+</update>
 </mapper>

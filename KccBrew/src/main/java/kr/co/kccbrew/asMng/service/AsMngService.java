@@ -155,6 +155,10 @@ public class AsMngService implements IAsMngService{
 	public AsMngVo insertAsAssign(AsMngVo asMngVo) {
 		asRepository.insertAsAssign(asMngVo);
 		asRepository.updateAsInfoStatus(asMngVo);
+		if(asMngVo.getAsResultSeq()!="") {
+			asMngVo.setReapplyConfirm("Y");
+			asRepository.updateAsResultConfirm(asMngVo);
+		}
 		return asMngVo;
 	}
 

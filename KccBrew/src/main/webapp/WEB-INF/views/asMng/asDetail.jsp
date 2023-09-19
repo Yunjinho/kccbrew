@@ -405,7 +405,7 @@ window.onload=function(){
 										  	</tr>
 										  	<c:if test="${sessionScope.user.userTypeCd eq '02' and asDetailInfo.resultReapply eq 'N' and asDetailInfo.reapplyConfirm eq 'N'}">
 											  	<tr>
-											  		<td colspan="6" style='border-bottom:none' ></td>
+											  		<td colspan="5" style='border-bottom:none' ></td>
 											  		<td style='border-bottom:none;float:right'>
 											  			<button onclick="resultAs('Y')" class="form-btn">재신청</button>
 											  		</td>
@@ -460,6 +460,7 @@ window.onload=function(){
 													</table>
 													<input type="hidden" name="asInfoSeq" value="${asDetailInfo.asInfoSeq}">
 													<input type="hidden" name="machineCd" value="${asDetailInfo.machineCd}">
+													<input type="hidden" name="asResultSeq" value="${asDetailInfo.asResultSeq}">
 												</form>
 									  		</div>
 									  	</c:if>
