@@ -79,12 +79,20 @@ function rejectAs(userTypeCd){
 	$("html").css("overflow","hidden");
 	$(".modal-reject").css("display","block");
 }
+function resultAs(reapply){
+	$("html").css("overflow","hidden");
+	$("input[name=resultReapply]").val(reapply);
+	$(".modal-result").css("display","block");
+}
 
 function cancelModal(){
 	$("html").css("overflow","auto");
 	$(".modal-reject").css("display","none");
+	$(".modal-result").css("display","none");
 }
-
+function resultConfirm(){
+	
+}
 function rejectConfirm(flag){
 	var visitDttm=$("input[name=visitDttm]").val();
 	var mechanicId=$("select[name=mechanicId] option:selected").val();
