@@ -20,35 +20,38 @@
 			<div class="category">회원정보</div>
 			<hr style="border: solid 1.2px; width: 97%;">
 			
-				<form action="/confirmmod" method="post">
+				<form action='<c:url value= '/confirmmod'/>' method="post">
 				<table id="search-box">
 					<c:forEach var="user" items="${userInfoList}">
 						<tr>
 							<th rowspan="4" colspan="2" style="width: 140px; height: 188px;">
 								<div style="text-align: center;">
 									<img src="${userDtl.imgUrl}${userDtl.imgNm}" border="0"
-										style="margin: auto; width: 120px; height: 168px;">
+										style="margin: auto; width: 120px; heig
+										ht: 168px;">
 								</div>
 							</th>
-							<th>ID</th>
-							<td><c:out value="${user.userId}" /></td>
+							<th><label for="userId">ID</label></th>
+							<td>
+								<c:out value="${user.userId}" />
+							</td>
 							<th><label for="userName">이름</label></th>
 							<td>
-								<input type="text" name="userName" id="userName" required>
+								<input type="text" name="userName" id="userName" value="${user.userName}" required>
 							</td>
 							<th><label for="userEmail">이메일</label></th>
 							<td>
-								<input type="text" name="userEmail" id="userEmail" required>
+								<input type="text" name="userEmail" id="userEmail" value="${user.userEmail}" required>
 							</td>
 						</tr>
 						<tr>
 							<th><label for="userTelNo">전화번호</label></th>
 							<td>
-								<input type="text" name="userTelNo" id="userTelNo" required>
+								<input type="text" name="userTelNo" id="userTelNo" value="${user.userTelNo}" required>
 							</td>
 							<th><label for="userAddress">주소</label></th>
 							<td colspan="3">
-								<input type="text" name="userAddress" id="userAddress" required>
+								<input type="text" name="userAddress" id="userAddress" value="${user.userAddress}" required>
 							</td>
 						</tr>
 						<tr>
@@ -84,12 +87,16 @@
 					<table id="search-box">
 						<c:forEach var="store" items="${storeInfoList}">
 							<tr>
-								<th>점포명</th>
-								<th>점포전화번호</th>
+								<th><label for="storeName">점포명</label></th>
+								<th><label for="storeTelNo">점포 번호</label></th>
 							</tr>
 							<tr>
-								<td>${store.storeName}</td>
-								<td>${store.storeTelNo}</td>
+								<td>
+									<input type="text" name="storeName" id="storeName" value="${store.storeName}" required>
+								</td>
+								<td>
+									<input type="text" name="storeTelNo" id="storeTelNo" value="${store.storeTelNo}" required>
+								</td>
 							</tr>
 						</c:forEach>
 					</table>
@@ -105,24 +112,26 @@
 							</tr>
 							<tr>
 								<td>
-									<c:choose>
-										<c:when test="${mecha.machineCode == '01'}">커피머신</c:when>
-										<c:when test="${mecha.machineCode == '02'}">냉장고</c:when>
-										<c:when test="${mecha.machineCode == '03'}">제빙기</c:when>
-										<c:when test="${mecha.machineCode == '04'}">에어컨</c:when>
-										<c:when test="${mecha.machineCode == '05'}">온수기</c:when>
-									</c:choose>
+									<select id="chooseMachineCode">
+										<option value="" disabled>== 선택 ==</option>
+										<option value="01">커피머신</option>
+										<option value="02">냉장고</option>
+										<option value="03">제빙기</option>
+										<option value="04">에어컨</option>
+										<option value="05">온수기</option>
+									</select>	
 								</td>
 								<td>
-									<c:choose>
-										<c:when test="${mecha.mechaLocationCd == '02-200'}">양천</c:when>
-										<c:when test="${mecha.mechaLocationCd == '02-300'}">은평,마포,서대문,강서</c:when>
-										<c:when test="${mecha.mechaLocationCd == '02-400'}">송파,강동,중랑,광진,성동</c:when>
-										<c:when test="${mecha.mechaLocationCd == '02-500'}">서초, 광명시, 과천시</c:when>
-										<c:when test="${mecha.mechaLocationCd == '02-700'}">마포,용산,종로</c:when>
-										<c:when test="${mecha.mechaLocationCd == '02-800'}">영등포,동작,구로,금천,양서,관악,광명시</c:when>
-										<c:when test="${mecha.mechaLocationCd == '02-900'}">노원,동대문,도봉,강북,성북</c:when>
-									</c:choose>
+									<select id="chooseLocationCode">
+										<option value="" disabled>== 선택 ==</option>
+										<option value="02-200">양천</option>
+										<option value="02-300">은평,마포,서대문,강서</option>
+										<option value="02-400">송파,강동,중랑,광진,성동</option>
+										<option value="02-500">서초, 광명시, 과천시</option>
+										<option value="02-700">마포,용산,종로</option>
+										<option value="02-800">영등포,동작,구로,금천,양서,관악,광명시</option>
+										<option value="02-900">노원,동대문,도봉,강북,성북</option>
+									</select>
 								</td>
 							</tr>
 						</c:forEach>
@@ -130,11 +139,34 @@
 				</sec:authorize>
 				<div class="modal-footer"
 					style="width: 100%; margin: auto; display: flex;">
-					<button type="submit" class="update">확인</button>
-					<button type="button" class="cancel1">닫기</button>
+					<button type="submit" id="confirmMod">확인</button>
+					<c:url var="cancel" value="/userinfo"></c:url>
+					<a href="${cancel}">
+						<button type="button" class="cancel">취소</button>
+					</a>
 				</div>
+				<input type="hidden" id="machineCodeHidden" name="machineCode" value="">
+				<input type="hidden" id="locationCodeHidden" name="mechaLocationCode" value="">
 			</form>
 		</div>
 	</section>
+	<script>
+	$(document).ready(function(){
+	    $("#confirmMod").click(function(){
+	        var selectedMachineCode = $("#chooseMachineCode").val();
+	        var selectedLocationCode = $("#chooseLocationCode").val();
+	        
+	        console.log(selectedMachineCode + "machine");
+	        console.log(selectedLocationCode + "location");
+	        
+	        // 선택한 값을 hidden input 요소에 설정하여 서버로 전송
+	        $("#machineCodeHidden").val(selectedMachineCode);
+	        $("#locationCodeHidden").val(selectedLocationCode);
+	        
+	        // 폼을 서버로 제출
+	        $("form").submit();
+	    });
+	});
+	</script>
 </body>
 </html>

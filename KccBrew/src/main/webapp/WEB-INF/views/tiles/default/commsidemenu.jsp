@@ -9,7 +9,8 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
-
+<c:set var="user" value="${sessionScope.user}" />
+<c:set var="store" value="${sessionScope.store}" />
 
 <sec:authorize access="hasRole('ROLE_ADMIN')">
 	<div class="profileAndguide">
@@ -18,7 +19,7 @@
 
 				<div class="nameAndPhoto">
 					<div class="name-wrapper">
-						<span class="name"><c:out value="${pageContext.request.userPrincipal.name}" /></span>님
+						<span class="name"><c:out value="${user.userNm}"/></span>님
 					</div>
 					<div class="photo-wrapper">
 						<img src="${path}/img/kcc.png">
@@ -37,9 +38,6 @@
 				<a href="${toMyPage}" class="toMyPage">마이페이지</a> 
 				
 				<span>&nbsp;&nbsp;|&nbsp;</span>
-				
-				<%-- <c:url var="toLogin" value="/loginpage" />
-				<a href="${toLogin}" class="logout"> 로그아웃 </a> --%>
 				
 				<form action="/logout" method="POST">
 					<button type="submit" class="logout">로그아웃</button>
@@ -83,7 +81,7 @@
 			<div class="inner-box">
 				<div class="nameAndPhoto">
 					<div class="name-wrapper">
-						<span class="name">${sessionScope.userName}</span>님
+						<span class="name"><c:out value="${user.userNm}"/></span>님
 					</div>
 					<div class="photo-wrapper">
 						<img src="${path}/img/kcc.png">
@@ -142,7 +140,8 @@
 			<div class="inner-box">
 				<div class="nameAndPhoto">
 					<div class="name-wrapper">
-						<span class="name">${sessionScope.userName}</span>님
+					<c:out value="${sessionScope.userName}" />
+						<span class="name"><c:out value="${user.userNm}"/></span>님
 					</div>
 					<div class="photo-wrapper">
 						<img src="${path}/img/kcc.png">

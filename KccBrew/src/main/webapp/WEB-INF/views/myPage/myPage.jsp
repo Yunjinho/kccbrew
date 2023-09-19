@@ -105,13 +105,13 @@
 							</td>
 							<td>
 								<c:choose>
-									<c:when test="${mecha.mechaLocationCd == '02-200'}">양천</c:when>
-									<c:when test="${mecha.mechaLocationCd == '02-300'}">은평,마포,서대문,강서</c:when>
-									<c:when test="${mecha.mechaLocationCd == '02-400'}">송파,강동,중랑,광진,성동</c:when>
-									<c:when test="${mecha.mechaLocationCd == '02-500'}">서초, 광명시, 과천시</c:when>
-									<c:when test="${mecha.mechaLocationCd == '02-700'}">마포,용산,종로</c:when>
-									<c:when test="${mecha.mechaLocationCd == '02-800'}">영등포,동작,구로,금천,양서,관악,광명시</c:when>
-									<c:when test="${mecha.mechaLocationCd == '02-900'}">노원,동대문,도봉,강북,성북</c:when>
+									<c:when test="${mecha.mechaLocationCode == '02-200'}">양천</c:when>
+									<c:when test="${mecha.mechaLocationCode == '02-300'}">은평,마포,서대문,강서</c:when>
+									<c:when test="${mecha.mechaLocationCode == '02-400'}">송파,강동,중랑,광진,성동</c:when>
+									<c:when test="${mecha.mechaLocationCode == '02-500'}">서초, 광명시, 과천시</c:when>
+									<c:when test="${mecha.mechaLocationCode == '02-700'}">마포,용산,종로</c:when>
+									<c:when test="${mecha.mechaLocationCode == '02-800'}">영등포,동작,구로,금천,양서,관악,광명시</c:when>
+									<c:when test="${mecha.mechaLocationCode == '02-900'}">노원,동대문,도봉,강북,성북</c:when>
 								</c:choose>
 							</td>
 						</tr>
@@ -122,11 +122,13 @@
 				style="width: 100%; margin: auto; display: flex;">
 				<c:url var="toModPage" value="/moduserinfo"/>
 				<a href="${toModPage}">
-					<button type="button" class="update">수정</button>
+					<button type="button" class="update">수정하기</button>
 				</a>
-				<button type="button" class="cancel1">닫기</button>
 			</div>
 		</div>
 	</section>
+	<script>
+	 console.log("mechaLocationCode: <c:out value="${mecha.mechaLocationCode}" />");
+	</script>
 </body>
 </html>

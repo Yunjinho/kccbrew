@@ -18,7 +18,7 @@
 	<header class="comm-nav">
 		<div class="top-bar">
 			<p>
-				<c:out value="${pageContext.request.userPrincipal.name}" />
+				<c:out value="${user.userNm}"/>
 				(관리자)님 환영합니다
 			</p>
 
@@ -81,7 +81,7 @@
 	<header class="comm-nav">
 		<div class="top-bar">
 			<p>
-				<c:out value="${user.userId}" />
+				<c:out value="${user.userNm}"/>
 				(점주)님 환영합니다
 			</p>
 			
@@ -130,7 +130,7 @@
 	<header class="comm-nav">
 		<div class="top-bar">
 			<p>
-				<c:out value="${user.userId}" />
+				<c:out value="${user.userNm}"/>
 				(수리기사)님 환영합니다
 			</p>
 

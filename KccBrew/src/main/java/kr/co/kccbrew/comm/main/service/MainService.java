@@ -111,8 +111,13 @@ public class MainService implements IMainService{
 	}
 
 	@Override
-	public void updateMyProfile(String userId) {
-		mainRepository.updateMyProfile(userId);
+	public void updateMyProfile(MainPageVo mainPageVo) {
+		mainRepository.updateMyProfile(mainPageVo);
+	}
+
+	@Override
+	public void updateMyStore(MainPageVo mainPageVo) {
+		mainRepository.updateMyStore(mainPageVo);
 	}
 
 }

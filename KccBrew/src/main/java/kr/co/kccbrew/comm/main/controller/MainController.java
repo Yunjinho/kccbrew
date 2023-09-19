@@ -5,20 +5,25 @@ import java.security.Principal;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 import javax.swing.JWindow;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import freemarker.ext.jython.JythonWrapper;
@@ -192,7 +197,7 @@ public class MainController {
 
 	/************************** 수리 기사 메인 ***************************/
 	@RequestMapping(value="/mechanic/main", method=RequestMethod.GET)
-	public String mecMain(Model model, HttpSession session, RedirectAttributes redirectAttributes) {
+	public String mechaMain(Model model, HttpSession session, RedirectAttributes redirectAttributes) {
 		UserVo userVo = (UserVo) session.getAttribute("user");
 		String userId = userVo.getUserId();
 
@@ -232,18 +237,6 @@ public class MainController {
 		return "comm/main/privacy";
 	}
 
-	/****************** 사용자 정보 가져오기 *********************/
-//	@RequestMapping(value = "/userinfo", method = RequestMethod.GET)
-//	public String showUserInfo(HttpSession session, Model model) {
-//		String userId = (String)session.getAttribute("userId");
-//		List<MainPageVo> userInfoList = mainServiceImple.showUserInfoListById(userId);
-//		List<MainPageVo> storeInfoList = mainServiceImple.showStoreInfoListById(userId);
-//
-//		model.addAttribute("userInfoList", userInfoList);
-//		model.addAttribute("storeInfoList",storeInfoList);
-//		return "adminPageP1";
-//
-//	}
 	
 	/****************** 사용자 정보 가져오기 *********************/
 	@RequestMapping(value = "/userinfo", method = RequestMethod.GET)
@@ -262,11 +255,11 @@ public class MainController {
 				model.addAttribute("storeInfoList",storeInfoList);
 			}
 		}
-		return "adminPageP1";
+		return "MyPageP1";
 
 	}
 	
-	/****************** 사용자 정보 수정 페이지 *********************/
+	/****************** 마이페이지 *********************/
 	@RequestMapping(value = "/moduserinfo", method = RequestMethod.GET)
 	public String modUserInfo(Model model) {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -283,11 +276,13 @@ public class MainController {
 				model.addAttribute("storeInfoList",storeInfoList);
 			}
 		}
-		return "adminPageP2";
+		return "MyPageP2";
 	}
 	
 	@RequestMapping(value= "/confirmmod", method = RequestMethod.POST)
-	public String confirmModProfile(Model model) {
+	public String confirmModProfile(Model model, @ModelAttribute MainPageVo mainPageVo,
+						            @RequestParam("machineCode") String machineCode,
+						            @RequestParam("mechaLocationCode") String mechaLocationCode) {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		
 		if(authentication != null) {
@@ -295,7 +290,11 @@ public class MainController {
 			if(principal instanceof UserDetails) {
 				UserDetails userDetails = (UserDetails) principal;
 				String userId = userDetails.getUsername();
-				mainServiceImple.updateMyProfile(userId);
+				mainPageVo.setUserId(userId);
+				mainPageVo.setMachineCode(machineCode);
+	            mainPageVo.setMechaLocationCode(mechaLocationCode);
+				mainServiceImple.updateMyProfile(mainPageVo);
+				mainServiceImple.updateMyStore(mainPageVo);
 			}
 		}
 		return "redirect:/userinfo";
