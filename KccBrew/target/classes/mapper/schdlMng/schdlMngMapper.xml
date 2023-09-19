@@ -595,15 +595,15 @@ EXTRACT(YEAR FROM SCHEDULE_DATE) = 2023 AND EXTRACT(MONTH FROM SCHEDULE_DATE) = 
 		ACTL_USE='Y' AND user_id
 		=
 		#{Id}
-		<if
-			test="year != null and year != '' and month != null and month != ''">
+		<if test="yr != null and yr != '' and mn != null and mn != ''">
 			and (
-			(YEAR(HLDY_STAR) = #{yr} and MONTH(HLDY_STAR) = #{mn})
+			(EXTRACT(YEAR FROM HLDY_STAR) = #{yr} and
+			EXTRACT(MONTH FROM HLDY_STAR) = #{mn})
 			OR
-			(YEAR(HLDY_END) = #{yr} and MONTH(HLDY_END) = #{mn})
+			(EXTRACT(YEAR FROM HLDY_END)
+			= #{yr} and EXTRACT(MONTH FROM HLDY_END) = #{mn})
 			)
 		</if>
-
 	</select>
 
 	<!-- 아이디에 따른 배정일 조회 -->
@@ -613,10 +613,9 @@ EXTRACT(YEAR FROM SCHEDULE_DATE) = 2023 AND EXTRACT(MONTH FROM SCHEDULE_DATE) = 
 		FROM AS_ASSIGN
 		WHERE MECHANIC_ID =
 		#{Id}
-				<if
-			test="year != null and year != '' and month != null and month != ''">
-			and 
-			(YEAR(VISIT_DTTM) = #{yr} and MONTH(VISIT_DTTM) = #{mn})
+		<if test="yr != null and yr != '' and mn != null and mn != ''">
+			and
+			(EXTRACT(YEAR FROM VISIT_DTTM) = #{yr} and EXTRACT(MONTH FROM VISIT_DTTM) = #{mn})
 		</if>
 	</select>
 
@@ -626,13 +625,14 @@ EXTRACT(YEAR FROM SCHEDULE_DATE) = 2023 AND EXTRACT(MONTH FROM SCHEDULE_DATE) = 
 		SELECT AS_RESULT.RESULT_DTTM
 		FROM AS_ASSIGN
 		INNER JOIN
-		AS_RESULT ON AS_ASSIGN.AS_ASSIGN_SEQ = AS_RESULT.AS_ASSIGN_SEQ
+		AS_RESULT ON
+		AS_ASSIGN.AS_ASSIGN_SEQ = AS_RESULT.AS_ASSIGN_SEQ
 		WHERE
 		AS_ASSIGN.REJECT_CONTENT_MCHA IS NULL and MECHANIC_ID = #{Id}
-						<if
-			test="year != null and year != '' and month != null and month != ''">
-			and 
-			(YEAR(RESULT_DTTM) = #{yr} and MONTH(RESULT_DTTM) = #{mn})
+		<if test="yr != null and yr != '' and mn != null and mn != ''">
+			and
+			(EXTRACT(YEAR FROM RESULT_DTTM) = #{yr} and EXTRACT(MONTH FROM RESULT_DTTM) =
+			#{mn})
 		</if>
 	</select>
 
