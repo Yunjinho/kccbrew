@@ -82,10 +82,10 @@ public class SchdlMngService implements ISchdlMngService {
 
 
 	/*AS배정일 조회*/
-	@Override
+/*	@Override
 	public List<Date> getAssignDates(String userId) {
 		return schdlMngRepository.selectAssignDates(userId);
-	}
+	}*/
 
 	/*지역코드 조회*/
 	@Override
@@ -107,18 +107,22 @@ public class SchdlMngService implements ISchdlMngService {
 
 	/*회원아이디에 따른 스케줄맵 조회*/
 	@Override
-	public List<Map<String, Object>> getAllSchedules(List<String> IdList) {
+	public List<Map<String, Object>> getAllSchedules(List<String> IdList, String year, String month) {
 		List<Map<String, Object>>  allSchedules = new ArrayList<>();
 		
 		if (IdList.size() != 0) {
 		for (String id : IdList) {
-			Map<String, Object> scheduleMap = new HashMap<>();
+			Map<String, String> parameterMap = new HashMap<>();
+			parameterMap.put("Id", id);
+			parameterMap.put("yr", year);
+			parameterMap.put("mn", month);
 			
 			UserVo userVo = userRepository.getUserById(id);
-			List<Map<String, Object>> holidayDates = schdlMngRepository.selectHolidayDates(id);
-			List<Date> assignDates = schdlMngRepository.selectAssignDates(id);
-			List<Date> resultDates = schdlMngRepository.selectResultDates(id);
+			List<Map<String, Object>> holidayDates = schdlMngRepository.selectHolidayDates(parameterMap);
+			List<Date> assignDates = schdlMngRepository.selectAssignDates(parameterMap);
+			List<Date> resultDates = schdlMngRepository.selectResultDates(parameterMap);
 			
+			Map<String, Object> scheduleMap = new HashMap<>();
 			scheduleMap.put("userId", id);
 			scheduleMap.put("userNm", userVo.getUserNm());
 			scheduleMap.put("locationCd", userVo.getLocationCd());

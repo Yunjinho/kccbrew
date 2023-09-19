@@ -45,14 +45,14 @@ public interface ISchdlMngRepository {
 	/*조건에 따른 회원아이디 목록 조회*/
 	public List<String> selectIdList(UserVo userVo);
 
-	/*아이디에 따른 휴무날짜 조회*/
-	public List<Map<String, Object>> selectHolidayDates(String userId);
+	/*아이디와 날짜에 따른 휴무날짜리스트 조회*/
+	public List<Map<String, Object>> selectHolidayDates(Map map);
 
-	/*아이디에 따른 배정날짜 조회*/
-	public List<Date> selectAssignDates(String userId);
+	/*아이디와 날짜에 따른 배정날짜리스트 조회*/
+	public List<Date> selectAssignDates(Map map);
 
-	/*아이디에 따른 근무날짜 조회*/
-	public List<Date> selectResultDates(String userId);
+	/*아이디와 날짜에 따른 근무날짜리스트 조회*/
+	public List<Date> selectResultDates(Map map);
 
 	/*휴가 정보 조회*/
 	public HolidayVo selecHoliday2(Map map);

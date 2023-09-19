@@ -347,7 +347,7 @@
 												: 배정
 												<div id="result-index"
 													style="background-color: #5b8554; width: 1em; height: 1em;"></div>
-												: 근무
+												: 처리
 											</div>
 
 
@@ -372,12 +372,27 @@
 											<!-- 모달 -->
 											<div id="schedule-index-modal" class="modal">
 												<div class="modal-content">
-													<span class="close" onclick="closeModal()">&times;</span>
-													<!-- 닫기 버튼 -->
-													<div id="modalContent"></div>
-													<!-- 데이터를 표시할 영역 -->
+													<div id="modalHeader">
+														<span id="contentTitle"></span> <span class="close"
+															onclick="closeModal()">&times;</span>
+													</div>
+													<div id="modalContent">
+														<ul id="listContainer">
+														</ul>
+													</div>
 												</div>
 											</div>
+											<!-- 모달 -->
+
+											<!-- <div class="div-content">
+												<div id="divlHeader">
+													<span id="divTitle"><h2>난 div!!!</h2></span>
+												</div>
+												<div id="divContent">
+													<ul id="divContainer">
+													</ul>
+												</div>
+											</div> -->
 
 										</div>
 

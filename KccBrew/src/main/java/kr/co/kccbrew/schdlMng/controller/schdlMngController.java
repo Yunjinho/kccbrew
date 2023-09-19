@@ -175,30 +175,50 @@ public class schdlMngController {
 		return "schdl/schdlMngTable";
 	}
 
+	/*관리자 월근태현황 검색*/
 	@PostMapping(value="/schedule", produces = "application/json; charset=utf-8")
 	@ResponseBody
 	public List<Map<String, Object>>processSearchRequest(@RequestParam("startDate") String startDate,
 			@RequestParam("endDate") String endDate, 
 			@ModelAttribute UserVo userVo) {
 
+		/*데이터확인*/
+		System.out.println("startDate: " + startDate + ", endDate: " + endDate);
+
+		String year = null;
+		String month = null;
+
+		String dateString = startDate; // 주어진 문자열
+		String[] parts = dateString.split("-"); // '-'를 구분자로 문자열 분할
+
+		if (parts.length >= 2) {
+			year = parts[0]; // 년도 추출
+			month = parts[1]; // 월 추출
+
+			// 추출한 년도와 월 출력
+			System.out.println("Year: " + year);
+			System.out.println("Month: " + month);
+		}
+
 		if(userVo.getLocationCd() == null || userVo.getLocationCd().equals("")) {
 			userVo.setLocationCd(userVo.getLocation());
 		}
+		System.out.println("userVo: " + userVo);
 
 		List<String> idList = schdlMngService.getIdList(userVo);
-		List<Map<String, Object>> allSchedules = schdlMngService.getAllSchedules(idList);
+		List<Map<String, Object>> allSchedules = schdlMngService.getAllSchedules(idList, year, month);
 
 
 		return allSchedules;
 	}
 
+	/*특정 스케줄 상세조회*/
 	@PostMapping("/schedule-Info")
 	@ResponseBody
 	public Object getScheduleInfo(@RequestParam("userId") String userId,
 			@RequestParam("scheduleType") String scheduleType,
 			@RequestParam("scheduleDate") String scheduleDate) {
 
-		// 날짜 문자열을 Date 객체로 파싱
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		java.util.Date date = null;
 		try {
@@ -207,8 +227,8 @@ public class schdlMngController {
 			e.printStackTrace();
 		}
 
-		String stringDate = sdf.format(date);
-		Date sqlDate = Date.valueOf(stringDate);
+		// 시간 정보를 아예 제거하여 새로운 Date 객체 생성
+		Date sqlDate = new Date(date.getTime());
 
 
 		/*데이터 확인*/
@@ -227,7 +247,7 @@ public class schdlMngController {
 			AsResultVo result = schdlMngService.getResult(userId, sqlDate);
 			return result;
 		}
-		
+
 		return null;
 
 	}
@@ -386,17 +406,17 @@ public class schdlMngController {
 		String userId = "ngw01";
 
 		/*수리배정일 리스트*/
-		List<Date> asAssignDates = schdlMngService.getAssignDates(userId);
+		/*List<Date> asAssignDates = schdlMngService.getAssignDates(userId);*/
 
 		boolean isOverlap = false;
 
 		/* 휴가일 중복 검사*/
-		for (Date date : asAssignDates) {
+		/*for (Date date : asAssignDates) {
 			if (date.compareTo(startDate) >= 0 && date.compareTo(endDate) <= 0) {
 				isOverlap = true;
 				break;
 			}
-		}
+		}*/
 		return isOverlap;
 	}
 

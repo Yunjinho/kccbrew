@@ -18,26 +18,36 @@
 	</logger>
 
 	<!-- 3rdparty Loggers -->
-<!-- 	<logger name="org.springframework.core">
-		<level value="info" />
-	</logger>
-
-	<logger name="
-			org.springframework.beans ">
-		<level value="info" />
-	</logger>
-
-	<logger name="org.springframework.context">
-		<level value="info" />
-	</logger>
-
-	<logger name="org.springframework.web">
-		<level value="info" />
-	</logger> -->
+	<!-- <logger name="org.springframework.core"> <level value="info" /> </logger> 
+		<logger name=" org.springframework.beans "> <level value="info" /> </logger> 
+		<logger name="org.springframework.context"> <level value="info" /> </logger> 
+		<logger name="org.springframework.web"> <level value="info" /> </logger> -->
 
 	<!-- sql 로깅할때 level info로 변경 -->
-	<Logger name="org.springframework.jdbc.core.JdbcTemplate"
-		level="info" />
+	<logger name="jdbc.sqlonly" additivity="false">
+		<level value="off" />
+		<appender-ref ref="console" />
+	</logger>
+
+	<logger name="jdbc.sqltiming" additivity="false">
+		<level value="info" />
+		<appender-ref ref="console" />
+	</logger>
+
+	<logger name="jdbc.audit" additivity="false">
+		<level value="off" />
+		<appender-ref ref="console" />
+	</logger>
+
+	<logger name="jdbc.resultset" additivity="false">
+		<level value="off" />
+		<appender-ref ref="console" />
+	</logger>
+
+	<logger name="jdbc.resultsettable" additivity="false">
+		<level value="info" />
+		<appender-ref ref="console" />
+	</logger>
 
 	<!-- Root Logger -->
 	<root>

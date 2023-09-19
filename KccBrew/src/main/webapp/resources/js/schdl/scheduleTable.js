@@ -112,7 +112,7 @@ function performSearch() {
 						});
 
 						// 마우스 오버 이벤트 핸들러 추가
-						$divElement.on("mouseover", function() {
+						$divElement.on("click", function() {
 							var $this = $(this);
 							var userId = $this.attr("data-user-id");
 							console.log("userId: " + userId);
@@ -123,7 +123,34 @@ function performSearch() {
 
 							// 데이터를 컨트롤러로 보내는 함수 호출
 							scheduleIndexData(userId, scheduleType, scheduleDate);
+							openModal();
 						});
+
+
+						/*$divElement.hover(
+								function() {
+									console.log("mouse hover!");
+									// 마우스 커서가 요소 위에 있을 때
+									var $this = $(this);
+									$this.addClass('scale-element');
+									$this.parents().addClass('scale-element');
+									var userId = $this.attr("data-user-id");
+									console.log("userId: " + userId);
+									var scheduleType = $this.attr("data-schedule-type");
+									console.log("scheduleType: " + scheduleType);
+									var scheduleDate = $this.attr("data-schedule-date");
+									console.log("scheduleDate: " + scheduleDate);
+
+									
+									var $divContent = $(".div-content");
+									$divContent.appendTo($this);
+
+								},
+								function() {
+									console.log("마우스 벗어남!");
+									$this.find('.div-content').remove();
+								}
+						);*/
 
 						// 해당 클래스 이름을 가진 <td> 요소에 <div> 추가
 						$("." + rowClassName + " ." + cellClassName).html($divElement);
@@ -153,6 +180,21 @@ function performSearch() {
 						"width": "1.2em", // 가로 크기 설정
 						"height": "1.2em", // 세로 크기 설정
 						"margin": "0 auto" // 가운데 정렬 설정
+					});
+
+					// 마우스 오버 이벤트 핸들러 추가
+					$divElement.on("click", function() {
+						var $this = $(this);
+						var userId = $this.attr("data-user-id");
+						console.log("userId: " + userId);
+						var scheduleType = $this.attr("data-schedule-type");
+						console.log("scheduleType: " + scheduleType);
+						var scheduleDate = $this.attr("data-schedule-date");
+						console.log("scheduleDate: " + scheduleDate);
+
+						// 데이터를 컨트롤러로 보내는 함수 호출
+						scheduleIndexData(userId, scheduleType, scheduleDate);
+						openModal();
 					});
 
 					// 해당 클래스 이름을 가진 <td> 요소에 <div> 추가
@@ -186,6 +228,21 @@ function performSearch() {
 						"margin": "0 auto" // 가운데 정렬 설정
 					});
 
+					/*클릭 이벤트핸들러*/
+					$divElement.on("click", function() {
+						var $this = $(this);
+						var userId = $this.attr("data-user-id");
+						console.log("userId: " + userId);
+						var scheduleType = $this.attr("data-schedule-type");
+						console.log("scheduleType: " + scheduleType);
+						var scheduleDate = $this.attr("data-schedule-date");
+						console.log("scheduleDate: " + scheduleDate);
+
+						// 데이터를 컨트롤러로 보내는 함수 호출
+						scheduleIndexData(userId, scheduleType, scheduleDate);
+						openModal();
+					});
+
 					// 해당 클래스 이름을 가진 <td> 요소에 <div> 추가
 					$("." + rowClassName + " ." + cellClassName)
 					.empty() // 기존 내용을 비우기
@@ -208,10 +265,10 @@ function scheduleIndexData(userId, scheduleType, scheduleDate) {
 
 	var date = new Date(scheduleDate);
 	// 날짜를 yyyy-mm-dd 형식으로 포맷팅
-    var year = date.getFullYear();
-    var month = String(date.getMonth() + 1).padStart(2, '0'); // 월은 0부터 시작하므로 1을 더하고 두 자리로 포맷팅
-    var day = String(date.getDate()).padStart(2, '0'); // 일도 두 자리로 포맷팅
-    var formattedDate = year + '-' + month + '-' + day;
+	var year = date.getFullYear();
+	var month = String(date.getMonth() + 1).padStart(2, '0'); // 월은 0부터 시작하므로 1을 더하고 두 자리로 포맷팅
+	var day = String(date.getDate()).padStart(2, '0'); // 일도 두 자리로 포맷팅
+	var formattedDate = year + '-' + month + '-' + day;
 
 	$.ajax({
 		type: "POST",
@@ -223,15 +280,15 @@ function scheduleIndexData(userId, scheduleType, scheduleDate) {
 		},
 		success: function(response) {
 			console.log("Response from server:", response);
-			
-			 // scheduleType 값에 따라 다른 함수 호출
-	        if (scheduleType === "holiday") {
-	            displayHolidayData(response);
-	        } else if (scheduleType === "assign") {
-	            displayAssignData(response);
-	        } else if (scheduleType === "result") {
-	            displayResultData(response);
-	        } 
+
+			// scheduleType 값에 따라 다른 함수 호출
+			if (scheduleType === "holiday") {
+				displayHolidayData(response);
+			} else if (scheduleType === "assign") {
+				displayAssignData(response);
+			} else if (scheduleType === "result") {
+				displayResultData(response);
+			} 
 		},
 		error: function(error) {
 			console.error("Error:", error);
@@ -241,49 +298,183 @@ function scheduleIndexData(userId, scheduleType, scheduleDate) {
 
 
 function displayHolidayData(data) {
-	
 	console.log("data: " + data);
-    // 모달 요소를 가져옴 (모달의 ID를 사용하여 조정)
-    var modal = document.getElementById("schedule-index-modal");
 
-    var modalContent = document.getElementById("modalContent");
-    // 필드명을 사용하여 필드값을 구함
-    var holidaySeq = data.holidaySeq;
+	// contentTitle 엘리먼트 가져오기
+	var contentTitle = document.getElementById("contentTitle");
 
-    // 필드값을 모달 내용에 추가
-    modalContent.innerHTML = "휴일 번호: " + holidaySeq;
-    openModal(); // 모달 열기
+	// contentTitle 엘리먼트의 내용 변경
+	contentTitle.textContent = "휴가상세";
+
+	// 목록 컨테이너 엘리먼트 가져오기
+	var listContainer = document.getElementById("listContainer");
+
+	// 필드명을 사용하여 필드값을 구함
+	var holidaySeq = data.holidaySeq;
+	var  startDate = formatDate(new Date(data.startDate));
+	var  endDate = formatDate(new Date(data.endDate));
+	var  appDate = formatDate(new Date(data.appDate));
+
+	// 기존 목록 항목 모두 제거
+	while (listContainer.firstChild) {
+		listContainer.removeChild(listContainer.firstChild);
+	}
+
+	// 목록 항목 생성 및 내용 설정
+	var listItem1 = document.createElement("li");
+	listItem1.textContent = "휴일 아이디: " + holidaySeq;
+	var listItem4 = document.createElement("li");
+	listItem4.textContent = "신청일: " + appDate;
+	var listItem2 = document.createElement("li");
+	listItem2.textContent = "시작일: " + startDate;
+	var listItem3 = document.createElement("li");
+	listItem3.textContent = "종료일: " + endDate;
+
+
+	// 목록 컨테이너에 항목 추가
+	listContainer.appendChild(listItem1);
+	listContainer.appendChild(listItem2);
+	listContainer.appendChild(listItem3);
+	listContainer.appendChild(listItem4);
 }
 
 
 function displayAssignData(data) {
-    // 모달 요소를 가져옴 (모달의 ID를 사용하여 조정)
-    var modal = document.getElementById("schedule-index-modal");
+	console.log("data: " + data);
 
-    var modalContent = document.getElementById("modalContent");
-    modalContent.innerHTML = "받은 데이터: " + data;
-    openModal(); // 모달 열기
+	// contentTitle 엘리먼트 가져오기
+	var contentTitle = document.getElementById("contentTitle");
+
+	// contentTitle 엘리먼트의 내용 변경
+	contentTitle.textContent = "AS배정상세";
+
+	// 목록 컨테이너 엘리먼트 가져오기
+	var listContainer = document.getElementById("listContainer");
+
+	// 필드명을 사용하여 필드값을 구함
+	var  AsAssignSeq = data.AsAssignSeq;
+	var  visitDate = formatDate(new Date(data.visitDate));
+	var  confirmDate = formatDate(new Date(data.confirmDate));
+	var  regDate = formatDate(new Date(data.regDate));
+	var  regUser = data.regUser;
+	var  modDate = formatDate(new Date(data.modDate));
+	var  modUser = data.modUser;
+	var  reAssign = data.reAssign;
+
+	// 기존 목록 항목 모두 제거
+	while (listContainer.firstChild) {
+		listContainer.removeChild(listContainer.firstChild);
+	}
+
+	// 목록 항목 생성 및 내용 설정
+	var listItem1 = document.createElement("li");
+	listItem1.textContent = "접수배정번호: " + AsAssignSeq;
+	var listItem2 = document.createElement("li");
+	listItem2.textContent = "수리예정일: " + visitDate;
+	var listItem3 = document.createElement("li");
+	listItem3.textContent = "배정확인일: " + confirmDate;
+	var listItem4 = document.createElement("li");
+	listItem4.textContent = "등록일: " + regDate;
+	var listItem5 = document.createElement("li");
+	listItem5.textContent = "등록자: " + regUser;
+	var listItem6 = document.createElement("li");
+	listItem6.textContent = "수정일: " + modDate;
+	var listItem7 = document.createElement("li");
+	listItem7.textContent = "수정자: " + modUser;
+	var listItem8 = document.createElement("li");
+	listItem8.textContent = "재배정: " + reAssign;
+
+
+	// 목록 컨테이너에 항목 추가
+	listContainer.appendChild(listItem1);
+	listContainer.appendChild(listItem2);
+	listContainer.appendChild(listItem3);
+	listContainer.appendChild(listItem4);
+	listContainer.appendChild(listItem5);
+	listContainer.appendChild(listItem6);
+	listContainer.appendChild(listItem7);
+	listContainer.appendChild(listItem8);
+
 }
 
 function displayResultData(data) {
-    // 모달 요소를 가져옴 (모달의 ID를 사용하여 조정)
-    var modal = document.getElementById("schedule-index-modal");
+	console.log("data: " + data);
 
-    var modalContent = document.getElementById("modalContent");
-    modalContent.innerHTML = "받은 데이터: " + data;
-    openModal(); // 모달 열기
+	// contentTitle 엘리먼트 가져오기
+	var contentTitle = document.getElementById("contentTitle");
+
+	// contentTitle 엘리먼트의 내용 변경
+	contentTitle.textContent = "AS결과상세";
+
+	// 목록 컨테이너 엘리먼트 가져오기
+	var listContainer = document.getElementById("listContainer");
+
+	// 필드명을 사용하여 필드값을 구함
+	var  asResultSeq = data.asResultSeq;
+	var  resultDetail = data.resultDetail;
+	var  storeManagerFeedBack = data.storeManagerFeedBack;
+	var  resultDate = formatDate(new Date(data.resultDate));
+	var  fileSeq = data.fileSeq;
+	var  asPrice = data.asPrice;
+	var  modUser = data.modUser;
+	var  modDate = formatDate(new Date(data.modDate));
+	var  reApply = data.reApply;
+
+	// 기존 목록 항목 모두 제거
+	while (listContainer.firstChild) {
+		listContainer.removeChild(listContainer.firstChild);
+	}
+
+	// 목록 항목 생성 및 내용 설정
+	var listItem1 = document.createElement("li");
+	listItem1.textContent = "접수결과번호: " + asResultSeq;
+	var listItem2 = document.createElement("li");
+	listItem2.textContent = "처리일: " + resultDate;
+	var listItem3 = document.createElement("li");
+	listItem3.textContent = "처리내용: "  + resultDetail;
+	var listItem4 = document.createElement("li");
+	listItem4.textContent = "점주평가: " + storeManagerFeedBack;
+	var listItem5 = document.createElement("li");
+	listItem5.textContent = "청구비용: " + asPrice;
+	var listItem6 = document.createElement("li");
+	listItem6.textContent = "파일ID: " + fileSeq;
+	var listItem7 = document.createElement("li");
+	listItem7.textContent = "재접수여부: " + reApply;
+	var listItem8 = document.createElement("li");
+	listItem8.textContent = "수정일: " + modDate;
+	var listItem9 = document.createElement("li");
+	listItem9.textContent = "수정자: " + modUser;
+
+
+	// 목록 컨테이너에 항목 추가
+	listContainer.appendChild(listItem1);
+	listContainer.appendChild(listItem2);
+	listContainer.appendChild(listItem3);
+	listContainer.appendChild(listItem4);
+	listContainer.appendChild(listItem5);
+	listContainer.appendChild(listItem6);
+	listContainer.appendChild(listItem7);
+	listContainer.appendChild(listItem8);
+	listContainer.appendChild(listItem9);
 }
 
 
-// 모달 열기
+//모달 열기
 function openModal() {
-    var modal = document.getElementById("schedule-index-modal");
-    modal.style.display = "block";
+	var modal = document.getElementById("schedule-index-modal");
+	modal.style.display = "block";
 }
 
-// 모달 닫기
+//모달 닫기
 function closeModal() {
-    var modal = document.getElementById("schedule-index-modal");
-    modal.style.display = "none";
+	var modal = document.getElementById("schedule-index-modal");
+	modal.style.display = "none";
 }
 
+/*날짜 형식 포맷*/
+function formatDate(date) {
+	const year = date.getFullYear();
+	const month = String(date.getMonth() + 1).padStart(2, '0'); // 월을 두 자리로 맞추고 0으로 채웁니다.
+	const day = String(date.getDate()).padStart(2, '0'); // 일을 두 자리로 맞추고 0으로 채웁니다.
+	return `${year}-${month}-${day}`;
+}

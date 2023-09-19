@@ -31,8 +31,8 @@ public interface ISchdlMngService {
 	/*휴가등록*/
 	public void addHoliday(HolidayVo holiday);
 	
-	/*AS배정일 조회*/
-	public List<Date> getAssignDates(String userId);
+/*	AS배정일 조회
+	public List<Date> getAssignDates(String userId);*/
 	
 	/*지역목록 조회*/
 	public List<UserVo> getLocations();
@@ -44,7 +44,7 @@ public interface ISchdlMngService {
 	public List<String> getIdList(UserVo userVo);
 	
 	/*회원아이디에 따른 스케줄맵 조회*/
-	public List<Map<String, Object>> getAllSchedules(List<String> IdList);
+	public List<Map<String, Object>> getAllSchedules(List<String> IdList, String year, String month);
 	
 	/*휴가 정보 조회*/
 	public HolidayVo getHoliday(String userId, Date date);
