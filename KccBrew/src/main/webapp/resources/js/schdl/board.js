@@ -1,32 +1,15 @@
 
-
 //페이지 로드 이벤트 핸들러 등록
 window.onload = onPageLoad;
 
 //페이지가 로드되면 실행될 함수
 function onPageLoad() {
+
+	/*폼에 날짜 기본값 설정*/
 	setInputElementValue('startDate', getFirstDayOfYear());
 	setInputElementValue('endDate', getCurrentDate());
 
-//	페이지 로드 시 오늘 년도와 월을 기본값으로 설정
-	var currentDate = getCurrentDate();
-	document.getElementById('yearSelect').value = currentDate.year;
-	document.getElementById('monthSelect').value = currentDate.month;
 
-	var selectedYear = document.getElementById('yearSelect').value;
-	var selectedMonth = document.getElementById('monthSelect').value;
-
-	var lastDay = new Date(selectedYear, selectedMonth, 0).getDate();
-
-	getLastDayAndPopulateTable();
-
-    // 이번 달의 1일과 마지막 날짜를 계산합니다.
-    var firstDayOfMonth = new Date(selectedYear, selectedMonth - 1, 1);
-    var lastDayOfMonth = new Date(selectedYear, selectedMonth, 0);
-
-    // 입력 필드에 값을 설정합니다.
-    $("input[name='startDate']").val(firstDayOfMonth.getFullYear() + "-" + (firstDayOfMonth.getMonth() + 1) + "-01");
-    $("input[name='endDate']").val(lastDayOfMonth.getFullYear() + "-" + (lastDayOfMonth.getMonth() + 1) + "-" + lastDayOfMonth.getDate());
 }
 
 
@@ -37,7 +20,9 @@ function goPage(arg){
 	console.log("goPage()함수 실행!");
 	var fm = document.srhForm;
 	fm.currentPage.value = arg;
-	fm.submit();
+	performSearch();
+	return true;
+
 }
 
 
@@ -51,14 +36,25 @@ function goDate(startDate, endDate){
 	return true;
 }
 
+/*구간으로 입력 시 바로 날짜 이동*/
+function goDate(){
+	var selectedStartDate = document.getElementById('selectedStartDate').value;
+	var selectedEndDate = document.getElementById('selectedEndDate').value;
+	var fm = document.srhForm;
+	fm.startDate.value = selectedStartDate;
+	fm.endDate.value = selectedEndDate;
+	performSearch();
+	return true;
+}
+
 
 /*캘린더 테이블*/
 //현재 날짜를 가져오는 함수
 function getCurrentDate() {
-	const today = new Date();
-	const year = today.getFullYear();
-	const month = String(today.getMonth() + 1).padStart(2, '0'); // 월은 0부터 시작하므로 +1을 해주고 2자리로 포맷팅
-	const day = String(today.getDate()).padStart(2, '0'); // 일도 2자리로 포맷팅
+	var today = new Date();
+	var year = today.getFullYear();
+	var month = String(today.getMonth() + 1).padStart(2, '0'); // 월은 0부터 시작하므로 +1을 해주고 2자리로 포맷팅
+	var day = String(today.getDate()).padStart(2, '0'); // 일도 2자리로 포맷팅
 	return year + '-' + month + '-' + day;
 }
 
@@ -77,12 +73,11 @@ function setInputElementValue(inputName, value) {
 	}
 }
 
-//오늘 날짜를 가져오는 함수
-function getCurrentDate() {
+/*현재 년월을 가져오는 함수*/
+function getCurrentYearAndMonth() {
 	var today = new Date();
 	var year = today.getFullYear();
 	var month = today.getMonth() + 1; // 월은 0부터 시작하므로 1을 더해줍니다.
-
 	return { year: year, month: month };
 }
 
@@ -91,17 +86,13 @@ function getCurrentDate() {
 function getPeriod() {
 	var selectedYear = document.getElementById('yearSelect').value;
 	var selectedMonth = document.getElementById('monthSelect').value;
-	// 선택한 년도와 월을 사용하여 시작일과 종료일을 계산
 	var startDate = selectedYear + '-' + selectedMonth + '-01';
 	var endDate = selectedYear + '-' + selectedMonth + '-' + new Date(selectedYear, selectedMonth, 0).getDate();
-	// goDate 함수 호출
 	goDate(startDate, endDate);
 }
 
 
 function getLastDayAndPopulateTable() {
-
-
 	var selectedYear = document.getElementById('yearSelect').value;
 	var selectedMonth = document.getElementById('monthSelect').value;
 
@@ -116,15 +107,6 @@ function getLastDayAndPopulateTable() {
 
 	// thead의 두 번째 행을 가져옵니다.
 	var secondRow = table.querySelector('thead tr:nth-child(2)');
-
-	// 모든 td 요소를 삭제합니다.
-	/*		while (firstRow.firstChild) {
-		firstRow.removeChild(firstRow.firstChild);
-	}
-
-	while (secondRow.firstChild) {
-		secondRow.removeChild(secondRow.firstChild);
-	}*/
 
 	// 1행 5열부터 20열까지의 자식 요소를 삭제
 	while (firstRow.children[5]) {

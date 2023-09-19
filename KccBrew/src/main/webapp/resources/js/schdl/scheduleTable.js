@@ -1,3 +1,28 @@
+document.addEventListener("DOMContentLoaded", function() {
+	console.log("해당 페이지 전용 자바스크립트");
+
+	/*년월 선택 시 날짜 기본값 설정*/
+	var currentYearAndMonth = getCurrentYearAndMonth();
+	document.getElementById('yearSelect').value = currentYearAndMonth.year;
+	document.getElementById('monthSelect').value = currentYearAndMonth.month;
+
+	var selectedYear = document.getElementById('yearSelect').value;
+	var selectedMonth = document.getElementById('monthSelect').value;
+
+	var lastDay = new Date(selectedYear, selectedMonth, 0).getDate();
+
+	getLastDayAndPopulateTable();
+
+	// 이번 달의 1일과 마지막 날짜를 계산합니다.
+	var firstDayOfMonth = new Date(selectedYear, selectedMonth - 1, 1);
+	var lastDayOfMonth = new Date(selectedYear, selectedMonth, 0);
+
+	// 입력 필드에 값을 설정합니다.
+	$("input[name='startDate']").val(firstDayOfMonth.getFullYear() + "-" + (firstDayOfMonth.getMonth() + 1) + "-01");
+	$("input[name='endDate']").val(lastDayOfMonth.getFullYear() + "-" + (lastDayOfMonth.getMonth() + 1) + "-" + lastDayOfMonth.getDate());
+});
+
+
 //AJAX 요청을 보내는 함수
 function performSearch() {
 	console.log("performSearch()함수 실행!");
@@ -51,7 +76,7 @@ function performSearch() {
 						$("<td>", { rowspan: 2 }).text(schedule.userNm).appendTo(row);
 						$("<td>", { rowspan: 2 }).text(schedule.locationCd).appendTo(row);
 						$("<td>", { rowspan: 2 }).text(schedule.eqpmnCd).appendTo(row);
-						$("<td>", { rowspan: 2 }).text("휴무일: " + holidayCount + ", 배정일: " + assignCount + ", 근무일: " + resultCount).appendTo(row);
+						$("<td>", { rowspan: 2 }).text("휴무일: " + holidayCount + ", 배정일: " + assignCount + ", 처리일: " + resultCount).appendTo(row);
 					}
 				}
 
@@ -141,7 +166,7 @@ function performSearch() {
 									var scheduleDate = $this.attr("data-schedule-date");
 									console.log("scheduleDate: " + scheduleDate);
 
-									
+
 									var $divContent = $(".div-content");
 									$divContent.appendTo($this);
 

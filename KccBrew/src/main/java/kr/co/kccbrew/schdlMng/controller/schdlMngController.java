@@ -63,6 +63,7 @@ public class schdlMngController {
 
 	/*일정조회*/
 
+	/**********************************************************휴가사용현황**********************************************************/
 
 	@GetMapping("/holiday")
 	public String getHolidays(
@@ -117,23 +118,23 @@ public class schdlMngController {
 		return "schdl/hldyList";
 	}
 
-	@PostMapping("/holiday")
-	public String getSearchedHolidays(
+	@PostMapping("/user/holiday/search")
+	@ResponseBody
+	public List<HolidayVo> getSearchedHolidays(
 			@RequestParam("currentPage") int currentPage,
 			@RequestParam("startDate") String startDate,
 			@RequestParam("endDate") String endDate,
-			@ModelAttribute("searchContent") SchdlMngVo searchContent,
 			Model model,
 			HttpSession session 
 			) {
 
 
 		/*파라미터 확인*/
-		/*System.out.println("searchContent: " + searchContent);*/
+		System.out.println("currentPage: " + currentPage + ", startDate: " + startDate + ", endDate: " + endDate);
 
 		/* 스케줄리스트 데이터 */
-		List<SchdlMngVo> schedules = schdlMngService.getSchedules2(currentPage, searchContent);
-		int scheduleCount = schdlMngService.getSchedule2Count(searchContent);
+		/*List<SchdlMngVo> schedules = schdlMngService.getSchedules2(currentPage, searchContent);
+		int scheduleCount = schdlMngService.getSchedule2Count(searchContent);*/
 
 		/*DB 데이터 확인*/
 		/*	System.out.println("schedules: " + schedules);
@@ -143,11 +144,11 @@ public class schdlMngController {
 		int sharePage = 0;
 
 		//   totalPage 구하기
-		if (schedules != null && !schedules.isEmpty()) {
+	/*	if (schedules != null && !schedules.isEmpty()) {
 			totalPage = (int) Math.ceil((double) scheduleCount / 10);
 			System.out.println("totalPage: " + totalPage);
 		} else {
-		}
+		}*/
 
 		// sharePage 구하기
 		if (currentPage == 1) {
@@ -160,12 +161,12 @@ public class schdlMngController {
 		model.addAttribute("currentPage", currentPage);
 		model.addAttribute("sharePage", sharePage);
 
-		model.addAttribute("totalDataNumber", scheduleCount);
-		model.addAttribute("schedules", schedules);
+		/*model.addAttribute("totalDataNumber", scheduleCount);
+		model.addAttribute("schedules", schedules);*/
 
-		return "schdl/hldyList";
+		return null;
 	}
-
+	/**********************************************************근태현황**********************************************************/
 
 	/*관리자 월근태현황 조회*/
 	@GetMapping("/schedule")
@@ -179,8 +180,8 @@ public class schdlMngController {
 	@PostMapping(value="/schedule", produces = "application/json; charset=utf-8")
 	@ResponseBody
 	public List<Map<String, Object>>processSearchRequest(@RequestParam("startDate") String startDate,
-			@RequestParam("endDate") String endDate, 
-			@ModelAttribute UserVo userVo) {
+																															@RequestParam("endDate") String endDate, 
+																															@ModelAttribute UserVo userVo) {
 
 		/*데이터확인*/
 		System.out.println("startDate: " + startDate + ", endDate: " + endDate);
@@ -278,7 +279,6 @@ public class schdlMngController {
 
 		return schedules;
 	}
-
 
 
 	/*휴일 등록 페이지*/

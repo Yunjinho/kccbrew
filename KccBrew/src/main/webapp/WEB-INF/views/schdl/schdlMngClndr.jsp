@@ -2,7 +2,8 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-
+<%@ taglib prefix="sec"
+	uri="http://www.springframework.org/security/tags"%>
 <%@ page import="java.time.LocalDateTime"%>
 <%@ page import="java.time.format.DateTimeFormatter"%>
 
@@ -10,9 +11,11 @@
 <html>
 <head>
 <!-- css -->
+<link rel="stylesheet" href="/resources/css/schdl/schdl-common.css" />
 <link rel="stylesheet" href="/resources/css/log/mylogtest.css" />
 <link rel="stylesheet" href="/resources/css/log/content-template.css" />
 <link rel="stylesheet" href="/resources/css/schdl/mycalendar.css" />
+<link rel="stylesheet" href="/resources/css/schdl/myschedulelist.css" />
 
 
 <!-- 캘린더 -->
@@ -200,6 +203,20 @@
 									<!-- ********** 세은 컨텐츠 ********** -->
 									<div id="content">
 										<h2 class="heading">캘린더</h2>
+
+										<div class="tabNav">
+											<ul class="tab-ul">
+												<li class="last"><a href="/holiday"><span>휴가사용현황</span></a></li>
+												<sec:authorize
+													access="hasAnyRole('ROLE_MANAGER', 'ROLE_MECHA')">
+													<li class="active"><a href="/schedule/calendar"><span>나의캘린더</span></a></li>
+												</sec:authorize>
+												<sec:authorize access="hasRole('ROLE_ADMIN')">
+													<li class="last"><a href="/schedule"><span>근태현황</span></a></li>
+												</sec:authorize>
+											</ul>
+										</div>
+
 										<div id="calendar"></div>
 										<script
 											src="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.0/main.min.js"></script>
@@ -446,7 +463,8 @@
 															});
 										</script>
 
-									<!-- ********** 세은 컨텐츠 끝 ********** -->
+										<!-- ********** 세은 컨텐츠 끝 ********** -->
+									</div>
 								</div>
 							</div>
 						</div>
@@ -454,7 +472,5 @@
 				</div>
 			</div>
 		</div>
-	</div>
-
 </body>
 </html>

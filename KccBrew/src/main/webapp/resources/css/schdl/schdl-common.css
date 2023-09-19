@@ -42,3 +42,7 @@
 	flex-wrap: wrap;
 	align-content: space-around;
 }
+
+.info-box {
+	margin-bottom: 5em;
+}

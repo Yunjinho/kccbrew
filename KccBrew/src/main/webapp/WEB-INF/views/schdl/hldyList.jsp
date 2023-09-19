@@ -7,18 +7,28 @@
 <%@ page import="java.time.LocalDateTime"%>
 <%@ page import="java.time.format.DateTimeFormatter"%>
 
+<%@ page import="kr.co.kccbrew.comm.util.ObjectUtilController"%>
+<%@ page import="kr.co.kccbrew.comm.security.model.UserVo"%>
+<%@ page import="javax.servlet.http.HttpSession"%>
+
+
 <!DOCTYPE html>
 <html>
 <head>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 <!-- css -->
+<link rel="stylesheet" href="/resources/css/schdl/schdl-common.css" />
 <link rel="stylesheet" href="/resources/css/log/mylogtest.css" />
 <link rel="stylesheet" href="/resources/css/log/content-template.css" />
-<link rel="stylesheet" href="/resources/css/schdl/common.css" />
 <link rel="stylesheet" href="/resources/css/schdl/myschedulelist.css" />
 
+
 <!-- javascript -->
+<script src="<c:url value="/resources/js/schdl/schdl-common.js"/>"></script>
 <script src="<c:url value="/resources/js/schdl/board.js"/>"></script>
 <script src="<c:url value="/resources/js/schdl/search.js"/>"></script>
+<script src="<c:url value="/resources/js/schdl/holidayList.js"/>"></script>
 
 <meta charset="UTF-8">
 <title>Insert title here</title>
@@ -26,6 +36,17 @@
 </head>
 
 <body>
+	<c:set var="user" value="${sessionScope.user}" />
+
+	<!-- 자바스크립트에서 session사용 -->
+	<script>
+    var equipmentCodeValue = "<c:out value='${user.eqpmnCd}' />";
+</script>
+
+	<script>
+    var locationCodeValue = "<c:out value='${user.locationCd}' />";
+</script>
+
 	<div id="page" class="page-nosubmenu">
 		<!-- ********** header영역 시작********** -->
 		<div id="page-header">
@@ -253,7 +274,7 @@
 											alt="Check List" class="header-icon" />
 									</div>
 								</li>
-								<li><a href="<c:url value='/schedule2' />">휴가사용현황</a></li>
+								<li><a href="<c:url value='/holiday' />">휴가사용현황</a></li>
 							</ol>
 						</div>
 						<!-- ********** 페이지 네비게이션 끝 ********** -->
@@ -281,77 +302,78 @@
 										</div>
 
 										<!-- 로그 검색 -->
+										<sec:authorize access="hasRole('ROLE_ADMIN')">
+											<form name="srhForm" action="/holiday" method="post">
 
-										<form name="srhForm" action="/holiday" method="post">
+												<input type="hidden" name="currentPage" value="1"> <input
+													type="hidden" name="startDate" value=""> <input
+													type="hidden" name="endDate" value="">
 
-											<input type="hidden" name="currentPage" value="1"> <input
-												type="hidden" name="startDate" value=""> <input
-												type="hidden" name="endDate" value="">
+												<div>
+													<span> 사용자검색 </span>
+												</div>
 
-											<div>
-												<span> 사용자검색 </span>
-											</div>
+												<div class="search-info">
+													<fieldset>
+														<legend class="blind">사용자검색</legend>
+														<table id="search-box">
+															<tr>
+																<th>위치</th>
+																<td><select class="tx2" name="superGrpCdDtlId"
+																	onchange="updateSecondSelect()">
+																		<option value="">지역 대분류</option>
+																		<c:forEach var="location" items="${locations}">
+																			<c:if test="${location.grpCdId eq 'L'}">
+																				<option value="${location.grpCdDtlId}"
+																					${param.superGrpCdDtlId == location.grpCdDtlId ? 'selected' : ''}>
+																					${location.grpCdDtlNm}</option>
+																			</c:if>
+																		</c:forEach>
+																</select></td>
 
-											<div class="search-info">
-												<fieldset>
-													<legend class="blind">사용자검색</legend>
-													<table id="search-box">
-														<tr>
-															<th>위치</th>
-															<td><select class="tx2" name="superGrpCdDtlId"
-																onchange="updateSecondSelect()">
-																	<option value="">지역 대분류</option>
-																	<c:forEach var="location" items="${locations}">
-																		<c:if test="${location.grpCdId eq 'L'}">
-																			<option value="${location.grpCdDtlId}"
-																				${param.superGrpCdDtlId == location.grpCdDtlId ? 'selected' : ''}>
-																				${location.grpCdDtlNm}</option>
-																		</c:if>
-																	</c:forEach>
-															</select></td>
+																<td><select class="tx2" name="grpCdDtlId">
+																		<option value="">지역 소분류</option>
+																</select></td>
 
-															<td><select class="tx2" name="grpCdDtlId">
-																	<option value="">지역 소분류</option>
-															</select></td>
+																<th>유형</th>
+																<td><select class="tx2" name="userType"
+																	onchange="updateUserType()">
+																		<option value="">사용자 유형</option>
+																		<option value="기사"
+																			${param.userType == '기사' ? 'selected' : ''}>기사</option>
+																		<option value="점주"
+																			${param.userType == '점주' ? 'selected' : ''}>점주</option>
+																</select></td>
 
-															<th>유형</th>
-															<td><select class="tx2" name="userType"
-																onchange="updateUserType()">
-																	<option value="">사용자 유형</option>
-																	<option value="기사"
-																		${param.userType == '기사' ? 'selected' : ''}>기사</option>
-																	<option value="점주"
-																		${param.userType == '점주' ? 'selected' : ''}>점주</option>
-															</select></td>
+																<th>검색어</th>
+																<td><select class="tx2" name="searchKeword"
+																	onchange="chgName(this)">
+																		<option value="">검색어</option>
+																		<option value="userId"
+																			${param.searchKeword == '회원ID' ? 'selected' : ''}>회원ID</option>
+																		<option value="userName"
+																			${param.searchKeword == '회원이름' ? 'selected' : ''}>회원이름</option>
+																		<option value="storeId"
+																			${param.searchKeword == '지점ID' ? 'selected' : ''}>지점ID</option>
+																		<option value="storeName"
+																			${param.searchKeword == '지점명' ? 'selected' : ''}>지점명</option>
+																</select></td>
+																<td><input type="text" id="search-word"
+																	name="searchKeword" placeholder="키워드 선택 후 입력해주세요"
+																	required disabled></td>
+															</tr>
 
-															<th>검색어</th>
-															<td><select class="tx2" name="searchKeword"
-																onchange="chgName(this)">
-																	<option value="">검색어</option>
-																	<option value="userId"
-																		${param.searchKeword == '회원ID' ? 'selected' : ''}>회원ID</option>
-																	<option value="userName"
-																		${param.searchKeword == '회원이름' ? 'selected' : ''}>회원이름</option>
-																	<option value="storeId"
-																		${param.searchKeword == '지점ID' ? 'selected' : ''}>지점ID</option>
-																	<option value="storeName"
-																		${param.searchKeword == '지점명' ? 'selected' : ''}>지점명</option>
-															</select></td>
-															<td><input type="text" id="search-word"
-																name="searchKeword" placeholder="키워드 선택 후 입력해주세요"
-																required disabled></td>
-														</tr>
-
-													</table>
-													<div class="form-btn-box">
-														<fieldset>
-															<button type="submit" class="form-btn">검색</button>
-															<button type="reset" class="form-btn">초기화</button>
-														</fieldset>
-													</div>
-												</fieldset>
-											</div>
-										</form>
+														</table>
+														<div class="form-btn-box">
+															<fieldset>
+																<button type="submit" class="form-btn">검색</button>
+																<button type="reset" class="form-btn">초기화</button>
+															</fieldset>
+														</div>
+													</fieldset>
+												</div>
+											</form>
+										</sec:authorize>
 
 
 
@@ -426,6 +448,99 @@
 											}
 										</script>
 
+										<div class="info-box">
+
+											<sec:authorize access="hasRole('ROLE_MANAGER')">
+
+												<form name="srhForm" action="/user/holiday/search"
+													method="post" style="display: none;">
+													<input type="hidden" name="startDate" value=""> <input
+														type="hidden" name="endDate" value=""> <input
+														type="hidden" name="currentPage" value="1">
+												</form>
+
+												<!-- 점포일 경우 -->
+												<div class="subtitle">점포</div>
+												<table id="search-box">
+													<!-- 점주정보 -->
+													<tr>
+														<th>유형</th>
+														<td><c:out value="점주" /></td>
+
+														<th>점주ID</th>
+														<td><c:out value="${user.userId}" /></td>
+
+														<th>점주이름</th>
+														<td><c:out value="" /></td>
+
+														<th>점주연락처</th>
+														<td><c:out value="" /></td>
+
+													</tr>
+
+													<!-- 점포정보 -->
+													<tr>
+														<th>점포ID</th>
+														<td><c:out value="${store.storeSeq}" /></td>
+
+														<th>점포명</th>
+														<td><c:out value="${store.storeNm}" /></td>
+
+														<th>점포주소</th>
+														<td><c:out value="" /></td>
+
+														<th>점포연락처</th>
+														<td><c:out value="" /></td>
+
+													</tr>
+												</table>
+											</sec:authorize>
+
+											<sec:authorize access="hasRole('ROLE_MECHA')">
+
+												<form name="srhForm" action="/user/holiday/search"
+													method="post" style="display: none;">
+													<input type="hidden" name="startDate" value=""> <input
+														type="hidden" name="endDate" value=""> <input
+														type="hidden" name="currentPage" value="1">
+												</form>
+
+												<div class="subtitle">나의정보</div>
+												<table id="search-box">
+													<tr>
+														<th>유형</th>
+														<td>수리기사</td>
+
+														<th>ID</th>
+														<td><c:out value="${user.userId}" /></td>
+
+														<th>이름</th>
+														<td><c:out value="${user.userNm}" /></td>
+
+														<th>연락처</th>
+														<td><c:out value="${user.userTelNo}" /></td>
+
+													</tr>
+
+													<tr>
+														<th>사용장비코드</th>
+														<td id="equipmentCode"><c:out value="${user.eqpmnCd}" /></td>
+
+														<th>장비명</th>
+														<td id="equipmentName"></td>
+
+														<th>지역코드</th>
+														<td id="locationCode"><c:out
+																value="${user.locationCd}" /></td>
+
+														<th>지역명</th>
+														<td id="locationName"></td>
+
+													</tr>
+												</table>
+											</sec:authorize>
+										</div>
+
 										<div id="logTable">
 
 											<div class="board-info">
@@ -437,10 +552,10 @@
 
 												<fieldset>
 													<legend class="blind">날짜 검색</legend>
-													<label>휴가일</label> <input type="date" id="startDate"
-														name="startDate" required> <input type="date"
-														id="endDate" name="endDate" required> <input
-														type="button" value="검색" onclick="goPage(); return false;">
+													<label>휴가일</label> 
+													<input type="date" id="selectedStartDate" name="selectedStartDate" value="" required> 
+														<input type="date" id="selectedEndDate" name="selectedEndDate" value="" required> 
+														<input type="button" value="검색" onclick="goDate(); return false;">
 												</fieldset>
 											</div>
 
@@ -563,7 +678,5 @@
 			</div>
 		</div>
 	</div>
-	<script src="<c:url value='/js/bootstrap.min.js' />"></script>
-	<script src="<c:url value='/js/jquery.min.js' />"></script>
 </body>
 </html>
