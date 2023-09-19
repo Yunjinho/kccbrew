@@ -26,13 +26,13 @@ public class AsModController {
 	
 /*	@RequestMapping(value="/as-mod/{asInfoSeq}",method=RequestMethod.GET)
 	public String asMod(@PathVariable(value="asInfoSeq", required=false) String asInfoSeq, Model model,HttpSession session) {
-		AsMngVo vo = asMngService.selectAsInfoDetail(asInfoSeq);
+		//AsMngVo vo = asMngService.selectAsInfoDetail(asInfoSeq);
 		session.setAttribute("asInfoSeq", asInfoSeq);
-		if(vo.getFileSeq()!=null) {
-			List<AsMngVo> list=asMngService.selectAsInfoImg(vo.getFileSeq());
-			model.addAttribute("asInfoImgList", list);
-		}
-		model.addAttribute("asDetailInfo", vo);
+		//if(vo.getFileSeq()!=null) {
+			//List<AsMngVo> list=asMngService.selectAsInfoImg(vo.getFileSeq());
+			//model.addAttribute("asInfoImgList", list);
+		//}
+		//model.addAttribute("asDetailInfo", vo);
 		List<AsMngVo> list=asMngService.selectMachineCd();
 		model.addAttribute("machineCd", list);
 		return "asMng/asMod";

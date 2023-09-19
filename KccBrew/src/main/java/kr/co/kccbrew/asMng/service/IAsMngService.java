@@ -103,4 +103,9 @@ public interface IAsMngService {
 	 * AS 결과 입력
 	 */
 	public void insertAsResult(AsMngVo asMngVo);
+	
+	/**
+	 * 점포점주 AS 결과입력
+	 */
+	public void updateResultMng(AsMngVo asMngVo);
 }

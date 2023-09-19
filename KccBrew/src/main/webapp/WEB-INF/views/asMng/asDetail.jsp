@@ -121,9 +121,9 @@ window.onload=function(){
 												<td>
 													<input type="text" value="${asDetailInfo.visitDttm}" readonly>
 												</td>
-												<th>AS 처리일</th>
+												<th>재신청</th>
 												<td>
-													<input type="text" value="${asDetailInfo.resultDttm}" readonly>
+													<input type="text" value="${asDetailInfo.resultReapply}" readonly>
 												</td>
 											</tr>
 		
@@ -153,7 +153,14 @@ window.onload=function(){
 												</td>
 												<th>진행 상태</th>
 												<td>
-													<input type="text" value="${asDetailInfo.asStatusNm}" readonly>
+													<c:choose>
+														<c:when test="${asDetailInfo.resultReapply eq 'Y'}">
+															<input type="text" value="재접수" readonly>
+														</c:when>
+														<c:otherwise>
+															<input type="text" value="${asDetailInfo.asStatusNm}" readonly>
+														</c:otherwise>														
+													</c:choose>
 												</td>
 												<th>배정 기사</th>
 												<td>
@@ -172,17 +179,17 @@ window.onload=function(){
 													<div id="map" style="width:100%;height:350px;"></div>
 												</td>
 											</tr>
-											<c:if test="${sessionScope.userTypeCd eq '01' and asDetailInfo.asStatusCd eq '01'}">
+											<c:if test="${sessionScope.user.userTypeCd eq '01' and asDetailInfo.asStatusCd eq '01'}">
 												<tr>
-													<td colspan="7" style=" border-bottom:none;"></td>
-													<td style=" border-bottom:none;">
+													<td colspan="7" style='border-bottom:none'></td>
+													<td style="border-bottom:none">
 														<div>
-															<a href="#" onclick="rejectAs(${sessionScope.userTypeCd})" class="form-btn" style=" margin: 0; float: right;">접수 반려</a>
+															<a href="#" onclick="rejectAs(${sessionScope.user.userTypeCd})" class="form-btn" style=" margin: 0; float: right;">접수 반려</a>
 														</div>
 													</td>
 												</tr>
 											</c:if>
-											<c:if test="${sessionScope.userTypeCd eq '02' and asDetailInfo.asStatusCd eq '01'}">
+											<c:if test="${sessionScope.user.userTypeCd eq '02' and asDetailInfo.asStatusCd eq '01'}">
 												<tr>
 													<td colspan="8" style=" border-bottom:none;"></td>
 													<td style=" border-bottom:none;">
@@ -192,12 +199,12 @@ window.onload=function(){
 													</td>
 												</tr>
 											</c:if>
-											<c:if test="${sessionScope.userTypeCd eq '03'and asDetailInfo.asStatusCd eq '03' and asDetailInfo.reassign eq'N'}">
+											<c:if test="${sessionScope.user.userTypeCd eq '03'and asDetailInfo.asStatusCd eq '03' and (asDetailInfo.resultReapply eq 'N' or empty asDetailInfo.resultReapply)}">
 												<tr>
-													<td colspan="7" style=" border-bottom:none;"></td>
-													<td style=" border-bottom:none;">
+													<td colspan="7" style='border-bottom:none'></td>
+													<td style=" border-bottom:none">
 														<div>
-															<button onclick="rejectAs(${sessionScope.userTypeCd})" class="form-btn" style=" margin: 0; float: right;">배정 반려</button>
+															<button onclick="rejectAs(${sessionScope.user.userTypeCd})" class="form-btn" style=" margin: 0; float: right;">배정 반려</button>
 														</div>
 													</td>
 												</tr>
@@ -207,7 +214,7 @@ window.onload=function(){
 								  	
 								  	<!-- 기사 배정 및 반려 -->
 								  	
-								  	<c:if test="${(asDetailInfo.asStatusCd eq '01' and sessionScope.userTypeCd eq '01' and asDetailInfo.asAssignSeq == null) or (sessionScope.userTypeCd eq '01' and asDetailInfo.reassign eq'Y')}">
+								  	<c:if test="${(asDetailInfo.asStatusCd eq '01' and sessionScope.user.userTypeCd eq '01' and asDetailInfo.asAssignSeq == null) or (sessionScope.user.userTypeCd eq '01' and asDetailInfo.reassign eq'Y')}">
 									  	<div>
 									  		<h1 class="heading">기사 배정</h1>
 											<form action="/as-assign" method="post">
@@ -285,7 +292,7 @@ window.onload=function(){
 								  	</c:if>
 							  		
 							  		<!-- 결과 처리 입력 form-->
-									<c:if test="${asDetailInfo.asStatusCd eq '03' and sessionScope.userTypeCd eq '03'}">
+									<c:if test="${asDetailInfo.asStatusCd eq '03' and sessionScope.user.userTypeCd eq '03' and (asDetailInfo.resultReapply eq 'N' or empty asDetailInfo.resultReapply)}">
 								  		<div>
 								  			<h1 class="heading">AS 결과</h1>
 								  			<form action="/insertResult" method="post" enctype="multipart/form-data">
@@ -334,7 +341,7 @@ window.onload=function(){
 							  			</div>
 									</c:if>		
 									<!-- 처리 완료된 AS -->
-									<c:if test="${asDetailInfo.asStatusCd eq '04'}">
+									<c:if test="${asDetailInfo.asStatusCd eq '04' or asDetailInfo.resultReapply eq 'Y'}">
 									<h1 class="heading">AS 결과</h1>
 										<table id="search-box">
 											<tr >
@@ -371,11 +378,92 @@ window.onload=function(){
 										  	</tr>
 										  	<tr>
 										  		<th>AS 처리 내용</th>
-										  		<td>
+										  		<td colspan="7">
 										  			<textarea class="content-textarea" readonly>${asDetailInfo.resultDtl}</textarea>
 										  		</td>
 										  	</tr>
+										  	<tr>
+										  		<th>AS 처리일</th>
+												<td>
+													<input type="text" value="${asDetailInfo.resultDttm}" readonly>
+												</td>
+												<th>AS 비용</th>
+												<td>
+													<input type="text" value="${asDetailInfo.asPrice}" readonly>
+												</td>
+												<th>만족도</th>
+												<td>
+													<c:choose>
+														<c:when test='${asDetailInfo.storeMngFb != ""}'>
+															<input type="text" value="${asDetailInfo.storeMngFb}" readonly>
+														</c:when>
+														<c:otherwise>
+															<input type="text" value="-" readonly>
+														</c:otherwise>
+													</c:choose>
+												</td>
+										  	</tr>
+										  	<c:if test="${sessionScope.user.userTypeCd eq '02' and asDetailInfo.resultReapply eq 'N' and asDetailInfo.reapplyConfirm eq 'N'}">
+											  	<tr>
+											  		<td colspan="5" style='border-bottom:none' ></td>
+											  		<td style='border-bottom:none;float:right'>
+											  			<button onclick="resultAs('Y')" class="form-btn">재신청</button>
+											  		</td>
+											  		<td style='border-bottom:none;float:right'>
+											  			<button onclick="resultAs('N')" class="form-btn">AS 확인</button>
+											  		</td>
+											  	</tr>
+										  	</c:if>
+										  	
 										</table>
+									  	<!-- AS 재접수 처리 -->
+								  		<c:if test="${sessionScope.user.userTypeCd eq '01' and asDetailInfo.resultReapply eq 'Y' and asDetailInfo.reapplyConfirm eq 'N'}">
+										  	<div>
+										  		<h1 class="heading">기사 재배정</h1>
+												<form action="/as-assign" method="post">
+													<table id="search-box">
+														<tr>
+															<td colspan="9"></td>
+															<td > 
+																<div>
+																	<button type="submit" class="form-btn" >기사 배정</button>
+																</div>
+															</td>
+														</tr>
+														<tr>
+															<th>지역(대분류)</th>
+															<td>	
+																<select name=location class="selectMcha" onchange="changeLocationCd()">
+																	<option value="">지역 선택</option>
+																	<c:forEach var="locationCd" items="${locationCd}">
+																		<option value="${locationCd.grpCdDtlId}">${locationCd.grpCdDtlNm}</option>
+																	</c:forEach>
+																</select>
+															</td>
+															<th>지역(소분류)</th>
+															<td colspan="3">
+																<select class="selectMcha" name=locationCd onchange="selectLocation()">
+																	<option value="">지역 선택</option>
+																</select>
+															</td>
+															<th>날짜 선택</th>
+															<td>
+																<input type="date" name="visitDttm" onchange="selectDate()" required>
+															</td>
+															<th>수리 기사 목록</th>
+															<td>
+																<select name="mechanicId" class="selectMcha" required>
+																	<option value="">수리 기사 선택</option>
+																</select>
+															</td>
+														</tr>
+													</table>
+													<input type="hidden" name="asInfoSeq" value="${asDetailInfo.asInfoSeq}">
+													<input type="hidden" name="machineCd" value="${asDetailInfo.machineCd}">
+													<input type="hidden" name="asResultSeq" value="${asDetailInfo.asResultSeq}">
+												</form>
+									  		</div>
+									  	</c:if>
 									</c:if>
 								</div>
 							</div>
@@ -385,6 +473,7 @@ window.onload=function(){
 			</div>
 		</div>
 	</div>
+	<!-- 반려 모달 -->
 	<div class="modal-reject">
 		<div class="reject-content">
 			<form class="reject-form" method="post" action="/reject">
@@ -392,12 +481,40 @@ window.onload=function(){
 				<hr>
 				<input type="hidden" name="asInfoSeq" value="${asDetailInfo.asInfoSeq}">
 				<textarea class="content-textarea" name="rejectRs"></textarea>
-				<c:if test="${sessionScope.userTypeCd =='03'}">
+				<c:if test="${sessionScope.user.userTypeCd =='03'}">
 					<input type="hidden" name="asAssignSeq" value="${asDetailInfo.asAssignSeq}">
 				</c:if>
 				<div>
 					<button type="submit" class="form-btn">반려</button>
 					<div class="form-btn" onclick="cancelModal()">취소</div>
+				</div>
+			</form>
+		</div>
+	</div>	
+
+	<!-- 결과 모달 -->
+	<div class="modal-result">
+		<div class="result-content">
+			<form class="result-form" method="post" action="/as-result-mng">
+				<input type="hidden" name="resultReapply">
+				<input type="hidden" name="asResultSeq" value="${asDetailInfo.asResultSeq}" >
+				<input type="hidden" name="asInfoSeq" value="${asDetailInfo.asInfoSeq}" >
+				<fieldset>
+					<h1 class="heading">!서비스 만족도를 입력해주세요</h1>
+					<input type="radio" name="storeMngFb" value="5" id="rate1"><label
+						for="rate1">★</label>
+					<input type="radio" name="storeMngFb" value="4" id="rate2"><label
+						for="rate2">★</label>
+					<input type="radio" name="storeMngFb" value="3" id="rate3"><label
+						for="rate3">★</label>
+					<input type="radio" name="storeMngFb" value="2" id="rate4"><label
+						for="rate4">★</label>
+					<input type="radio" name="storeMngFb" value="1" id="rate5"><label
+						for="rate5">★</label>
+				</fieldset>
+				<div>
+					<button type="submit" class="form-btn">확인</button>
+					<div onclick="cancelModal()"class="form-btn">취소</div>
 				</div>
 			</form>
 		</div>

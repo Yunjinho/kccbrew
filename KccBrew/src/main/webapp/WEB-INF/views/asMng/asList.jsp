@@ -48,7 +48,7 @@
 								<div id="content">
 									<h2 class="heading">AS 조회</h2>
 									<!-- 관리자  AS 조건-->
-									<c:if test="${sessionScope.userTypeCd eq '01'}">
+									<c:if test="${sessionScope.user.userTypeCd eq '01'}">
 									<form action="/searchAsList" method="get" id="search-form">
 										<input type='hidden' name='currentPage' value="1">
 										<table id="search-box">
@@ -152,8 +152,16 @@
 												</td>
 												<th>AS 상태</th>
 												<td colspan="2">
-													<select class="tx2" name="asStatusCd" value="${searchContent.asStatusCd}" onchange="javascript:chg();">
+													<select class="tx2" name="asStatusCd" onchange="javascript:chg();">
 															<option value="">AS 상태</option>
+															<c:choose>
+																<c:when test='${searchContent.asStatusCd eq "Y"}'>
+																	<option value="Y" selected>재접수</option>
+																</c:when>
+																<c:otherwise>
+																	<option value="Y">재접수</option>
+																</c:otherwise>
+															</c:choose>
 															<c:forEach var="asCd" items="${asStatusCd}">
 																<c:choose>
 																	<c:when test="${searchContent.asStatusCd == asCd.grpCdDtlId}">
@@ -183,8 +191,9 @@
 									</form>
 									</c:if>
 									<!-- 가맹 점주 AS 조건 -->
-									<c:if test="${sessionScope.userTypeCd eq '02'}">
+									<c:if test="${sessionScope.user.userTypeCd eq '02'}">
 									<form action="/searchAsList" method="get" id="search-form">
+										<input type='hidden' name='currentPage' value="1">
 										<table id="search-box">
 											<!-- 1행 -->
 											<c:set var="today" value="<%=new java.util.Date()%>" />
@@ -271,8 +280,16 @@
 												</td>
 												<th>AS 상태</th>
 												<td colspan="2">
-													<select class="tx2" name="asStatusCd" id="" onchange="javascript:chg();">
+													<select class="tx2" name="asStatusCd" onchange="javascript:chg();">
 															<option value="">AS 상태</option>
+															<c:choose>
+																<c:when test='${searchContent.asStatusCd eq "Y"}'>
+																	<option value="Y" selected>재접수</option>
+																</c:when>
+																<c:otherwise>
+																	<option value="Y">재접수</option>
+																</c:otherwise>
+															</c:choose>
 															<c:forEach var="asCd" items="${asStatusCd}">
 																<c:choose>
 																	<c:when test="${searchContent.asStatusCd == asCd.grpCdDtlId}">
@@ -307,8 +324,9 @@
 									</form>
 									</c:if>
 									<!-- 수리 기사 AS 조건 -->
-									<c:if test="${sessionScope.userTypeCd eq '03'}">
+									<c:if test="${sessionScope.user.userTypeCd eq '03'}">
 									<form action="/searchAsList" method="get" id="search-form">
+										<input type='hidden' name='currentPage' value="1">
 										<table id="search-box">
 											<!-- 1행 -->
 											<c:set var="today" value="<%=new java.util.Date()%>" />
@@ -406,8 +424,16 @@
 												</td>
 												<th>AS 상태</th>
 												<td colspan="3">
-													<select class="tx2" name="asStatusCd" id="" onchange="javascript:chg();">
+													<select class="tx2" name="asStatusCd" onchange="javascript:chg();">
 															<option value="">AS 상태</option>
+															<c:choose>
+																<c:when test='${searchContent.asStatusCd eq "Y"}'>
+																	<option value="Y" selected>재접수</option>
+																</c:when>
+																<c:otherwise>
+																	<option value="Y">재접수</option>
+																</c:otherwise>
+															</c:choose>
 															<c:forEach var="asCd" items="${asStatusCd}">
 																<c:choose>
 																	<c:when test="${searchContent.asStatusCd == asCd.grpCdDtlId}">
@@ -456,7 +482,8 @@
 													<th>AS 상태</th>
 													<th>점포 명</th>
 													<th>점포 주소</th>
-													<c:if test="${sessionScope.userTypeCd != '02'}"><th>기사 재배정 신청</th></c:if>
+													<c:if test="${sessionScope.user.userTypeCd != '02'}"><th>기사 재배정 신청</th></c:if>
+													<c:if test="${sessionScope.user.userTypeCd eq '01' }"><th>재접수 여부</th></c:if>
 													<th>상세 조회</th>
 												</tr>
 											</thead>
@@ -465,16 +492,31 @@
 													<tr>
 														<td><c:out value="${list.asInfoSeq}" /></td>
 														<td><c:out value="${list.regDttm}" /></td>
-														<td><c:out value="${list.asStatusNm}" /></td>
+														<td>
+															<c:choose>
+																<c:when test='${list.resultReapply eq "Y"}'>재접수</c:when>
+																<c:otherwise>
+																	<c:out value="${list.asStatusNm}" />
+																</c:otherwise>														
+															</c:choose>
+														</td>
 														<td><c:out value="${list.storeNm}" /></td>
 														<td><c:out value="${list.storeAddr}" /></td>
-														<c:if test="${sessionScope.userTypeCd != '02'}">
+														<c:if test="${sessionScope.user.userTypeCd != '02'}">
 															<td>
 																<c:choose>
-																	<c:when test="${list.reassign =='Y'}"><c:out value="${list.reassign}"></c:out></c:when>
+																	<c:when test='${list.reassign =="Y"}'><c:out value="${list.reassign}"></c:out></c:when>
 																	<c:otherwise>-</c:otherwise>
 																</c:choose>
 															</td>
+														</c:if>
+														<c:if test="${sessionScope.user.userTypeCd eq '01'}">
+														<td>
+															<c:choose>
+																<c:when test='${list.resultReapply =="Y"}'><c:out value="${list.resultReapply}"></c:out></c:when>
+																<c:otherwise>-</c:otherwise>
+															</c:choose>
+														</td>
 														</c:if>
 														<td><a href="#" onclick="selectAsDetail(${list.asInfoSeq},${list.asAssignSeq})"class="form-btn">조회</a></td>
 													</tr>
