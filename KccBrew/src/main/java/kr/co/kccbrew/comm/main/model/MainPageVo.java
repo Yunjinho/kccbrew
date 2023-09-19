@@ -28,8 +28,8 @@ public class MainPageVo {
 	
 	String mechanicId; 		//수리기사 아이디
 	String mechanicName; 	//수리기사 이름
-	String eqpmnCd;			//장비 코드
-	String mechaLocationCd;	//활동 지역
+	String machineCode; 	//장비 코드
+	String mechaLocationCode;	//활동 지역
 	
 	String managerId;  		//점주 아이디
 	String managerName; 	//점주 이름
@@ -38,7 +38,6 @@ public class MainPageVo {
 	String storeSeq;		//점포 아이디
 	
 	String locationCode; 	//점포 지역 코드
-	String machineCode; 	//장비 코드
 	String userType; 		//사용자 구분 코드
 	String groupCodeName;	//그룹 코드 이름
 	
