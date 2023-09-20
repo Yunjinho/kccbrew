@@ -19,7 +19,7 @@ var fileIndex = 1; // 파일 인덱스를 추적하기 위한 변수
         // 생성한 요소들을 컨테이너에 추가
         container1.appendChild(previewImage);
         container2.appendChild(inputField);
-
+ 
         fileIndex++; // 다음 파일을 위한 인덱스 증가
 
         // 개행 요소 추가 (예: <br>)

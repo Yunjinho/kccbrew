@@ -17,7 +17,7 @@
 <!-- js -->
 <script src="<c:url value="resources/js/asMng/asReceipt.js"/>"></script>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>Insert title here</title> 
 </head>
 <body>
 	<div id="page-mask">

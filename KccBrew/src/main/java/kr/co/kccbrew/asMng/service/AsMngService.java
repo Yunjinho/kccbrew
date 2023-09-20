@@ -27,7 +27,7 @@ public class AsMngService implements IAsMngService{
 	private final IAsMngRepository asRepository;
 	
 	
-	/**
+	/** 
 	 *  조회한 검색 결과
 	 */
 	@Override

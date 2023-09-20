@@ -17,7 +17,7 @@ function downExcel(flag){
 	var startMn=$("#search-form>input[name=startMn]").val();
 	var endYr=$("#search-form>input[name=endYr]").val();
 	var endMn=$("#search-form>input[name=endMn]").val();
-	var asInfoSeq=$("#search-form>input[name=asInfoSeq]").val();
+	var asInfoSeq=$("#search-form>input[name=asInfoSeq]").val(); 
 	var storeNm=$("#search-form>input[name=storeNm]").val();
 	var storeAddr=$("#search-form>input[name=storeAddr]").val();
 	var searchId=$("#search-form>input[name=searchId]").val();

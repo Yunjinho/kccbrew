@@ -478,7 +478,7 @@
 										</div>
 										<table>
 											<thead>
-												<tr>
+												<tr> 
 													<th>AS 번호</th>
 													<th>신청일</th>
 													<th>AS 상태</th> 
