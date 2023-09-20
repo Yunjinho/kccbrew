@@ -25,8 +25,8 @@
 						<img src="${path}/img/kcc.png">
 					</div>
 				</div>
-				<span class="job">관리자</span> <br>
-				
+				<span class="job">관리자</span> 
+				<br><br><br><br>
 				<br><span class="last-ip">최종 접속 IP &nbsp;&nbsp; </span>
 					<span class="ip">111.111.111</span>
 				<br>
@@ -35,7 +35,7 @@
 			</div>
 			<div class="buttons">
 				<c:url var="toMyPage" value="/adminprofilepage" />
-				<a href="${toMyPage}" class="toMyPage">마이페이지</a> 
+				<a href="${toMyPage}" id="toMyPage">마이페이지</a> 
 				
 				<span>&nbsp;&nbsp;|&nbsp;</span>
 				
@@ -100,7 +100,7 @@
 			</div>
 			<div class="buttons">
 				<c:url var="toMyPage" value="/adminprofilepage" />
-				<a href="${toMyPage}" class="toMyPage"> 마이페이지 </a> <span>&nbsp;|&nbsp;</span>
+				<a href="${toMyPage}" id="toMyPage"> 마이페이지 </a> <span>&nbsp;|&nbsp;</span>
 				<c:url var="toLogin" value="/loginpage" />
 				<a href="${toLogin}" class="logout"> 로그아웃 </a>
 			</div>
@@ -160,7 +160,7 @@
 			</div>
 			<div class="buttons">
 				<c:url var="toMyPage" value="/adminprofilepage" />
-				<a href="${toMyPage}" class="toMyPage"> 마이페이지 </a> <span>&nbsp;|&nbsp;</span>
+				<a href="${toMyPage}" id="toMyPage"> 마이페이지 </a> <span>&nbsp;|&nbsp;</span>
 				<c:url var="toLogin" value="/loginpage" />
 				<a href="${toLogin}" class="logout"> 로그아웃 </a>
 			</div>

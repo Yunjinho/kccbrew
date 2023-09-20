@@ -9,25 +9,21 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-<link rel="stylesheet" href="/resources/css/code/cdMngDtl.css" />
+<link rel="stylesheet" href="${path}/resources/css/comm/myPage.css"/>
 </head>
 <body>
 	<section id="notice" class="notice">
 		<div class="container2">
-			<div class="category">회원정보</div>
-			<hr style="border: solid 1.2px; width: 97%;">
+			<div class="category">마이페이지</div>
+			<hr class="line">
 			<table id="search-box">
 				<c:forEach var="user" items="${userInfoList}">
 					<tr>
-						<th rowspan="4" colspan="2" style="width: 140px; height: 188px;">
-							<div style="text-align: center;">
-								<img src="${userDtl.imgUrl}${userDtl.imgNm}" border="0"
-									style="margin: auto; width: 120px; height: 168px;">
+						<td rowspan="4">
+							<div>
+								<img src="${path}/img/sample.jpg" id="profileImg">
 							</div>
-						</th>
+						</td>
 						<th>ID</th>
 						<td><c:out value="${user.userId}" /></td>
 						<th>이름</th>
@@ -118,17 +114,17 @@
 					</c:forEach>
 				</table>
 			</sec:authorize>
-			<div class="modal-footer"
-				style="width: 100%; margin: auto; display: flex;">
-				<c:url var="toModPage" value="/moduserinfo"/>
-				<a href="${toModPage}">
-					<button type="button" class="update">수정하기</button>
+			<div class="modButtons">
+				<c:url var="toChgPwdPage" value="/mypage/chgpwd"/>
+				<a href="${toChgPwdPage}" class="updateBtn">
+					비밀번호 변경
+				</a>
+				<c:url var="toModPage" value="/mypage/mod"/>
+				<a href="${toModPage}" class="updateBtn">
+					정보 수정
 				</a>
 			</div>
 		</div>
 	</section>
-	<script>
-	 console.log("mechaLocationCode: <c:out value="${mecha.mechaLocationCode}" />");
-	</script>
 </body>
 </html>

@@ -9,28 +9,22 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-<link rel="stylesheet" href="/resources/css/code/cdMngDtl.css" />
+<link rel="stylesheet" href="${path}/resources/css/comm/myPage.css"/>
 </head>
 <body>
 	<section id="notice" class="notice">
 		<div class="container2">
-			<div class="category">회원정보</div>
-			<hr style="border: solid 1.2px; width: 97%;">
-			
+			<div class="category">마이페이지</div>
+			<hr class="line">
 				<form action='<c:url value= '/confirmmod'/>' method="post">
 				<table id="search-box">
-					<c:forEach var="user" items="${userInfoList}">
+					<c:forEach var="user" items="${userInfoList}" >
 						<tr>
-							<th rowspan="4" colspan="2" style="width: 140px; height: 188px;">
-								<div style="text-align: center;">
-									<img src="${userDtl.imgUrl}${userDtl.imgNm}" border="0"
-										style="margin: auto; width: 120px; heig
-										ht: 168px;">
-								</div>
-							</th>
+							<td rowspan="4">
+								<img src="${path}/img/sample.jpg" id="profileImg" >
+								<input type="file" id="file" name="file" onchange="uploadFile(this)" style="display:none"/>
+								<button type="button" id="changeImageBtn">이미지 변경</button>
+							</td>
 							<th><label for="userId">ID</label></th>
 							<td>
 								<c:out value="${user.userId}" />
@@ -137,21 +131,21 @@
 						</c:forEach>
 					</table>
 				</sec:authorize>
-				<div class="modal-footer"
-					style="width: 100%; margin: auto; display: flex;">
+				<div class="modButtons">
 					<button type="submit" id="confirmMod">확인</button>
-					<c:url var="cancel" value="/userinfo"></c:url>
+					<c:url var="cancel" value="/mypage"></c:url>
 					<a href="${cancel}">
 						<button type="button" class="cancel">취소</button>
 					</a>
 				</div>
-				<input type="hidden" id="machineCodeHidden" name="machineCode" value="">
-				<input type="hidden" id="locationCodeHidden" name="mechaLocationCode" value="">
+				<input type="hidden" id="machineCodeHidden" name="machineCode" value="" required>
+				<input type="hidden" id="locationCodeHidden" name="mechaLocationCode" value="" required>
 			</form>
 		</div>
 	</section>
 	<script>
 	$(document).ready(function(){
+		//수정 확인 버튼
 	    $("#confirmMod").click(function(){
 	        var selectedMachineCode = $("#chooseMachineCode").val();
 	        var selectedLocationCode = $("#chooseLocationCode").val();
@@ -159,13 +153,17 @@
 	        console.log(selectedMachineCode + "machine");
 	        console.log(selectedLocationCode + "location");
 	        
-	        // 선택한 값을 hidden input 요소에 설정하여 서버로 전송
 	        $("#machineCodeHidden").val(selectedMachineCode);
 	        $("#locationCodeHidden").val(selectedLocationCode);
 	        
-	        // 폼을 서버로 제출
 	        $("form").submit();
 	    });
+	    
+		$('#changeImageBtn').click(function (e){
+			e.preventDefault();
+			$('#file').click();
+		});
+	
 	});
 	</script>
 </body>
