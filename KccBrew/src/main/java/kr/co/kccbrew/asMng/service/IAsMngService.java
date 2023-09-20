@@ -17,7 +17,7 @@ public interface IAsMngService {
 	 *  조건에 맞는 AS 전체 조회
 	 */
 	public List<AsMngVo>selectAllASList(AsMngVo asMngVo);
-	/**
+	/** 
 	 * @return AS 리스트의 총 수
 	 */
 	public int countASList(AsMngVo asMngVo);

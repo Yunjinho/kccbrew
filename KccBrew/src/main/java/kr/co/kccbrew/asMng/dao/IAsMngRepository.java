@@ -21,7 +21,7 @@ public interface IAsMngRepository {
 	/**
 	 *  AS 전체 조회
 	 */
-	public List<AsMngVo>selectAllASList(AsMngVo asMngVo);
+	public List<AsMngVo>selectAllASList(AsMngVo asMngVo); 
 	
 	/**
 	 * 장비 코드 리스트 조회

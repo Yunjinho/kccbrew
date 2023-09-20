@@ -193,7 +193,7 @@ window.onload=function(){
 													</c:if></td>
 
 											</tr>
-											<tr>
+											<tr> 
 												<th>접수 내용</th>
 												<td colspan="7"><textarea class="content-textarea"
 														readonly>${asDetailInfo.asContent}</textarea></td>

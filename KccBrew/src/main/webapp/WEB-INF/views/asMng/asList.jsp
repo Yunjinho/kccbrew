@@ -452,10 +452,10 @@
 										</div>
 										<table>
 											<thead>
-												<tr>
+												<tr> 
 													<th>AS 번호</th>
 													<th>신청일</th>
-													<th>AS 상태</th>
+													<th>AS 상태</th> 
 													<th>점포 명</th>
 													<th>점포 주소</th>
 													<c:if test="${sessionScope.userTypeCd != '02'}"><th>기사 재배정 신청</th></c:if>

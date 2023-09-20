@@ -20,7 +20,7 @@ public class AsMngVo {
 	private String asAssignSeq;
 	//조회 날짜 구간 (시작, 끝 - 년도,월)
 	private String startYr;
-	private String startMn;
+	private String startMn; 
 	private String endYr;
 	private String endMn;
 	//기본 정보들

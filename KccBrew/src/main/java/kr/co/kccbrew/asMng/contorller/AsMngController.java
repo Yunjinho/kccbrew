@@ -49,7 +49,7 @@ import lombok.RequiredArgsConstructor;
  */
 @Controller
 @RequiredArgsConstructor
-public class AsMngController {
+public class AsMngController { 
 	/**
 	 * asMngService 변수 선언
 	 */

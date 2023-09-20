@@ -14,7 +14,7 @@
 	            reassign AS "reassign",
 	            as_assign_seq AS "asAssignSeq",
 	            rowNumber,
-	            reapply AS "resultReapply",
+	            reapply AS "resultReapply", 
 	            reapply_confirm AS "reapplyConfirm"
 	FROM (SELECT as_info_seq ,store_nm, store_addr, reg_dttm ,as_status_nm,as_status_cd,machine_cd_nm,machine_cd,mechanic_id,reassign,as_assign_seq,rownum AS rowNumber,reapply,reapply_confirm
 		 FROM (select a.as_info_seq ,s.store_nm, s.store_addr, a.reg_dttm , status.as_status_nm,status.as_status_cd,machine.machine_cd_nm,machine.machine_cd,ass.mechanic_id,ass.reassign,ass.as_assign_seq,ar.reapply,ar.reapply_confirm 

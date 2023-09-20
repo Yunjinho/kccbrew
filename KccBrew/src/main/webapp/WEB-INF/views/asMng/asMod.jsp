@@ -17,6 +17,11 @@
 
 <!-- js -->
 
+<script src="https://code.jquery.com/jquery-3.6.0.slim.js"
+	integrity="sha256-HwWONEZrpuoh951cQD1ov2HUK5zA5DwJ1DNUXaM6FsY="
+	crossorigin="anonymous"></script>
+<script src="<c:url value="/resources/js/asMng/asMod.js"/>"></script>  
+
 <meta charset="UTF-8">
 <title>Insert title here</title>
 
