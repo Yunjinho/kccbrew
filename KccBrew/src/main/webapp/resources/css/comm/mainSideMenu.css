@@ -35,10 +35,10 @@
 		height:50px;
 	}
 	.name-wrapper {
-		flex:0.6;
+		flex:0.4;
 	}
 	.photo-wrapper {
-		flex:0.4;
+		flex:0.6;
 		top:0;
 	}
 	.photo-wrapper img{
@@ -46,7 +46,7 @@
 		height:110px;
 		position: absolute;
 		top:-20px;
-		right:1px;
+		right:10px;
 	}
 	.name {
 		font-size: 1.5em;
@@ -66,10 +66,14 @@
 		text-align: center;
 		height:30px;
 	}
+<<<<<<< HEAD
 	.buttons form {
 		display: inline-block;
 	}
 	#toMyPage, .logout {
+=======
+	.toMyPage, .logout {
+>>>>>>> branch 'master' of https://github.com/Yunjinho/kccbrew.git
 		color:#ffffff;
 		cursor: pointer;
 		font-weight: normal;

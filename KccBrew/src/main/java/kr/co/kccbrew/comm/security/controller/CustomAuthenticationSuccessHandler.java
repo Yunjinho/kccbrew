@@ -31,14 +31,11 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
 
 		HttpSession session = request.getSession();
 		session.setAttribute("user", user);
-		System.out.println("user: " + user);
 
 		if(user.getUserTypeCd().equals("02")) {
 			StrMngVo store = userService.getStoreById(userId);
 			session.setAttribute("store", store);
-			System.out.println("store: " + store);
 		}
 		response.sendRedirect("/");
 	}
-
 }

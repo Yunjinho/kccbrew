@@ -182,3 +182,19 @@ a {
 h1 {
 	color: red;
 }
+.list-info-div{
+	display: flex;
+	justify-content: space-between;
+}
+.download-excel{
+	color:#ccc;
+	cursor:pointer;
+	padding:0px 10px
+}
+.list-info-div>div{
+	display:flex;
+}
+.download-excel:hover{
+	color:black;
+}
+

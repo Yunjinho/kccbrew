@@ -4,7 +4,7 @@ html {
 	overflow: overlay;
 }
 #mainContainer {
-	background-color: #d5e3ff;
+	background-color: #eef4ff;
  	display: flex;
  	flex-direction: column;
 	overflow-y: auto;

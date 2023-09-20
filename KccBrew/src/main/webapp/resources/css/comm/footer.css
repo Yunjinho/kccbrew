@@ -14,9 +14,15 @@ footer {
 	display:flex;
 	justify-content:space-between;
     width:100%;
+<<<<<<< HEAD
     height:45px;
     line-height: 45px;
     padding: 0 20px;
+=======
+    height:40px;
+    line-height: 40px;
+    padding: 0 205px;
+>>>>>>> branch 'master' of https://github.com/Yunjinho/kccbrew.git
 }
 .f-btn {
 	font-style: normal;
@@ -36,7 +42,7 @@ footer {
     height:65px;
     line-height:35px;
     font-size: 0.8em;
-    padding: 0 20px;
+    padding: 0 205px;
 }
 
 .f-info, .f-info2 {	

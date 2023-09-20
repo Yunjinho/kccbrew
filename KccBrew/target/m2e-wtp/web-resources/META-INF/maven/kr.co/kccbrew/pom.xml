@@ -255,6 +255,12 @@
 			<version>4.2.3.RELEASE</version>
 		</dependency>
 		
+		<!-- poi -->
+		<dependency>
+		    <groupId>org.apache.poi</groupId>
+		    <artifactId>poi-ooxml</artifactId>
+		    <version>3.9</version>
+		</dependency>
 	</dependencies>
 
 	<build>
