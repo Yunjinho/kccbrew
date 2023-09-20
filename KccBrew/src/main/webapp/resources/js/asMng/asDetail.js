@@ -77,10 +77,12 @@ function selectDate(){
 
 function rejectAs(userTypeCd){
 	$("html").css("overflow","hidden");
+	$("input[name=resultReapply]").val(reapply);
+	$(".modal-result").css("display","block");
 	$(".modal-reject").css("display","block");
 }
 
-function resubmission(){
+function resubmission(reapply){
 	$("html").css("overflow","hidden");
 	$(".modal-rejectContent").css("display","block");
 }
@@ -88,6 +90,7 @@ function resubmission(){
 function cancelModal(){
 	$("html").css("overflow","auto");
 	$(".modal-reject").css("display","none");
+	$(".modal-result").css("display","none");
 	$(".modal-rejectContent").css("display","none");
 }
 

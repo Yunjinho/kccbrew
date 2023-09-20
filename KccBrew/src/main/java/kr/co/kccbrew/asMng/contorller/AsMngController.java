@@ -62,7 +62,9 @@ public class AsMngController {
 	@RequestMapping(value="/as-list",method=RequestMethod.GET)
 	public String as(Model model,HttpSession session) {
 		AsMngVo asMngVo=new AsMngVo();
-		asMngVo.setUserId((String)session.getAttribute("userId"));
+		UserVo userVo=(UserVo)session.getAttribute("user");
+		asMngVo.setUserId(userVo.getUserId());
+		System.out.println(asMngVo);
 		
 		
 		List<AsMngVo> list=asMngService.selectMachineCd();
@@ -70,8 +72,8 @@ public class AsMngController {
 		
 		list=asMngService.selectAsStatusCd();
 		model.addAttribute("asStatusCd", list);
-		
-		asMngVo.setUserTypeCd((String)session.getAttribute("userTypeCd"));
+
+		asMngVo.setUserTypeCd(userVo.getUserTypeCd());
 		list=asMngService.selectASList(asMngVo,1);
 		int totalPage = 0;
 		int totalCount = asMngService.countASList(asMngVo);
@@ -116,8 +118,10 @@ public class AsMngController {
 		list=asMngService.selectLocationCd();
 		model.addAttribute("locationCd", list);
 		
-		asMngVo.setUserId((String)session.getAttribute("userId"));
-		asMngVo.setUserTypeCd((String)session.getAttribute("userTypeCd"));
+		UserVo userVo=(UserVo)session.getAttribute("user");
+		asMngVo.setUserId(userVo.getUserId());
+
+		asMngVo.setUserTypeCd(userVo.getUserTypeCd());
 		List<AsMngVo> asList=asMngService.selectASList(asMngVo,asMngVo.getCurrentPage());
 
 		int totalPage = 0;
@@ -151,7 +155,10 @@ public class AsMngController {
 	public String asReceipt(Model model,HttpSession session) {
 		List<AsMngVo> list=asMngService.selectMachineCd();
 		model.addAttribute("machineCd", list);
-		AsMngVo vo=asMngService.selectStrInfo((String)session.getAttribute("userId"));
+
+		UserVo userVo=(UserVo)session.getAttribute("user");
+
+		AsMngVo vo=asMngService.selectStrInfo(userVo.getUserId());
 		model.addAttribute("strInfo", vo);
 		return "asReceipt";
 	}
@@ -168,7 +175,10 @@ public class AsMngController {
             folder.mkdirs(); // 폴더 생성 메소드
         }
 		HttpSession session=request.getSession();
-		asMngVo.setUserId((String)session.getAttribute("userId"));
+
+		UserVo userVo=(UserVo)session.getAttribute("user");
+		asMngVo.setUserId(userVo.getUserId());
+
 		asMngVo.setStorageLocation(path);
 		asMngVo.setServerSavePath(folderPath);
 		//local 저장 위치 배포할땐 삭제
@@ -209,10 +219,12 @@ public class AsMngController {
 	@RequestMapping(value="/as-assign",method=RequestMethod.POST)
 	public String asDetail(AsMngVo asMngVo, Model model,HttpServletRequest request) {
 		HttpSession session = request.getSession();
-		asMngVo.setUserId((String) session.getAttribute("userId"));
+		UserVo userVo=(UserVo)session.getAttribute("user");
+		asMngVo.setUserId(userVo.getUserId());
+
 		asMngVo.setAsStatusCd("03");
 		asMngVo=asMngService.insertAsAssign(asMngVo);
-		return "redirect:/as-detail?asInfoSeq="+asMngVo.getAsInfoSeq();
+		return "redirect:/as-detail?asInfoSeq="+asMngVo.getAsInfoSeq()+"&asAssignSeq="+asMngVo.getAsAssignSeq();
 	}
 	
 	/**
@@ -221,8 +233,12 @@ public class AsMngController {
 	@RequestMapping(value="/reject",method=RequestMethod.POST)
 	public String reject(String asInfoSeq,@RequestParam(defaultValue = "0")String asAssignSeq,String rejectRs,HttpServletRequest request) {
 		HttpSession session=request.getSession();
-		String userTypeCd=(String)session.getAttribute("userTypeCd");
-		String userId=(String)session.getAttribute("userId");
+
+		UserVo userVo=(UserVo)session.getAttribute("user");
+		String userTypeCd=userVo.getUserTypeCd();
+		String userId=userVo.getUserId();
+
+
 		if(userTypeCd.equals("01")) {
 			asMngService.updateInfoReject(asInfoSeq, rejectRs,userId);
 		}else if(userTypeCd.equals("03")){
@@ -244,7 +260,9 @@ public class AsMngController {
             boolean success = folder.mkdirs(); // 폴더 생성 메소드
         }
 		HttpSession session=request.getSession();
-		asMngVo.setUserId((String)session.getAttribute("userId"));
+		UserVo userVo=(UserVo)session.getAttribute("user");
+		asMngVo.setUserId(userVo.getUserId());
+
 		asMngVo.setStorageLocation(path);
 		asMngVo.setServerSavePath(folderPath);
 		//local 저장 위치 배포할땐 삭제
@@ -259,6 +277,17 @@ public class AsMngController {
 		return "redirect:/as-detail?asInfoSeq="+asMngVo.getAsInfoSeq()+"&asAssignSeq="+asMngVo.getAsAssignSeq();
 	}
 	/**
+	 * AS 만족도 재신청 여부 입력
+	 */
+	@RequestMapping(value="/as-result-mng",method=RequestMethod.POST)
+	public String asResultMng(AsMngVo asMngVo,HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		UserVo sessionVo=(UserVo)session.getAttribute("user");
+		asMngVo.setUserId(sessionVo.getUserId());
+		asMngService.updateResultMng(asMngVo);
+		return "redirect:/as-list";
+	}
+	/**
 	 * 기사가 신청한 반려건 처리
 	 */
 	@ResponseBody
@@ -266,7 +295,9 @@ public class AsMngController {
 	public String rejectConfirm(String mechanicId,String visitDttm,String asAssignSeq,String asInfoSeq,String flag,HttpServletRequest request) {
 		AsMngVo asMngVo=new AsMngVo();
 		HttpSession session=request.getSession();
-		asMngVo.setUserId((String)session.getAttribute("userId"));
+		UserVo userVo=(UserVo)session.getAttribute("user");
+		asMngVo.setUserId(userVo.getUserId());
+
 		asMngVo.setMechanicId(mechanicId);
 		asMngVo.setVisitDttm(visitDttm);
 		asMngVo.setAsAssignSeq(asAssignSeq);

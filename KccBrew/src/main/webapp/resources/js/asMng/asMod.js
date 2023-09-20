@@ -26,7 +26,7 @@ var fileIndex = 1; // 파일 인덱스를 추적하기 위한 변수
         // 개행 요소 추가 (예: <br>)
         /*var lineBreak = document.createElement("br");
         container2.appendChild(lineBreak);*/
-
+    }
 window.onload = function () {
     // 이미지 정보를 서버에서 가져오는 요청
     fetch('/as-mod/images?asInfoSeq=' + asInfoSeq + '&asAssignSeq=' + asAssignSeq)

@@ -105,7 +105,7 @@ public interface IAsMngRepository {
 	 * 기사 배정
 	 * @param asMngVo
 	 */
-	public AsMngVo insertAsAssign(AsMngVo asMngVo);
+	public void insertAsAssign(AsMngVo asMngVo);
 	
 	/**
 	 * AS status 상태 변경
@@ -125,7 +125,17 @@ public interface IAsMngRepository {
 	public void updateRejectConfirm(Map<String, Object> map);
 	
 	/**
-	 * AS 결과 입력 처리 
+	 * 수리기사 AS 결과 입력 
 	 */
 	public void insertResult(AsMngVo asMngVo);
+
+	/**
+	 * 점포점주 AS 결과입력
+	 */
+	public void updateResultMng(AsMngVo asMngVo);
+	/**
+	 * 재배정 여부
+	 * @param asMngVo
+	 */
+	public void updateAsResultConfirm(AsMngVo asMngVo);
 }
