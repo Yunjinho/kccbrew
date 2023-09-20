@@ -2,7 +2,8 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-
+<%@ taglib prefix="sec"
+	uri="http://www.springframework.org/security/tags"%>
 <%@ page import="java.time.LocalDateTime"%>
 <%@ page import="java.time.format.DateTimeFormatter"%>
 
@@ -15,23 +16,51 @@
 <link rel="stylesheet" href="/resources/css/asMng/content-template.css" />
 
 <!-- js -->
+
 <script src="https://code.jquery.com/jquery-3.6.0.slim.js"
 	integrity="sha256-HwWONEZrpuoh951cQD1ov2HUK5zA5DwJ1DNUXaM6FsY="
 	crossorigin="anonymous"></script>
 <script src="<c:url value="/resources/js/asMng/asMod.js"/>"></script>  
+
 <meta charset="UTF-8">
 <title>Insert title here</title>
 
 <style>
+.slider-container {
+  position: relative;
+  width: 300px; /* 슬라이더 컨테이너의 너비를 조절하세요. */
+  overflow: hidden;
+}
+
 .preview-container {
-	max-width: 100%; /* 원하는 최대 너비 설정 */
-	max-height: 150px; /* 원하는 최대 높이 설정 */
-	overflow: hidden; /* 넘친 부분 숨김 */
+	transition: transform 0.3s ease;
+	display: flex;
+	
 }
 
 .preview {
-	max-width: 100%; /* 부모 요소에 맞게 이미지 크기 조정 */
-	height: auto; /* 가로세로 비율 유지 */
+
+  width: 300px; /* 각 이미지의 너비를 조절하세요. */
+  height: auto;
+}
+
+#prev,
+#next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: #ccc;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+#prev {
+  left: 0;
+}
+
+#next {
+  right: 0;
 }
 </style>
 </head>
@@ -60,6 +89,7 @@
 								<div id="content">
 									<h2 class="heading">AS 접수</h2>
 									<hr>
+									
 									<!-- AS 접수-->
 									<form action="/as-mod" method="post" id="receipt-form"
 										enctype="multipart/form-data">
@@ -151,22 +181,19 @@
 											</div>
 										</div>
 										<div class="file-upload-div">
-												<div class="image-slider">
-													<div class="preview-container">
-														<img id="preview0" src="#" class="preview"
-													alt="선택된 이미지가 없습니다">
-														<!-- 추가 이미지 추가 -->
-													</div>
-													<button id="prevButton" class="slider-button">이전</button>
-													<button id="nextButton" class="slider-button">다음</button>
+											<div class="slider-container">
+												<div class="preview-container">
+													
 												</div>
-											
-											<div class="input-container">
-												<input type="file" id="imgFile0" name="imgFile" value=""
-													onchange="imgTypeCheck(this, 0)">
+												<button id="prev">이전</button>
+												<button id="next">다음</button>
 											</div>
-									</div>
+											<div class="input-container">
+												
+											</div>
+										</div>
 										<div>
+										<input type="hidden" value='<sec:authentication property="principal.username" />' name="userId"> 
 											<div>
 												<button type="submit" class="form-btn">접수</button>
 											</div>
@@ -183,5 +210,14 @@
 			</div>
 		</div>
 	</div>
+	<script>
+    var asInfoSeq = "${asInfoSeq}";
+    // 여기서 asInfoSeq 변수를 사용하여 JavaScript 코드를 작성합니다.
+    var asAssignSeq = "${asAssignSeq}";
+</script>
+	<script src="https://code.jquery.com/jquery-3.6.0.slim.js"
+	integrity="sha256-HwWONEZrpuoh951cQD1ov2HUK5zA5DwJ1DNUXaM6FsY="
+	crossorigin="anonymous"></script>
+	<script src="<c:url value="/resources/js/asMng/asMod.js"/>"></script>
 </body>
 </html>
