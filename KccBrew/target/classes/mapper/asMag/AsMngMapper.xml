@@ -93,11 +93,9 @@
 	            mechanic_id AS "mechanicId",
 	            reassign AS "reassign",
 	            as_assign_seq AS "asAssignSeq",
-	            rowNumber,
-	            reapply AS "resultReapply",
-	            reapply_confirm AS "reapplyConfirm"
-	FROM (SELECT as_info_seq ,store_nm, store_addr, reg_dttm ,as_status_nm,as_status_cd,machine_cd_nm,machine_cd,mechanic_id,reassign,as_assign_seq,rownum AS rowNumber,reapply,reapply_confirm
-		 FROM (select a.as_info_seq ,s.store_nm, s.store_addr, a.reg_dttm , status.as_status_nm,status.as_status_cd,machine.machine_cd_nm,machine.machine_cd,ass.mechanic_id,ass.reassign,ass.as_assign_seq,ar.reapply,ar.reapply_confirm 
+	            rowNumber
+	FROM (SELECT as_info_seq ,store_nm, store_addr, reg_dttm ,as_status_nm,as_status_cd,machine_cd_nm,machine_cd,mechanic_id,reassign,as_assign_seq,rownum AS rowNumber
+		 FROM (select a.as_info_seq ,s.store_nm, s.store_addr, a.reg_dttm , status.as_status_nm,status.as_status_cd,machine.machine_cd_nm,machine.machine_cd,ass.mechanic_id,ass.reassign,ass.as_assign_seq 
          FROM as_information a 
  		 INNER JOIN store_user_map su ON a.store_mng_id=su.user_id
 		 INNER JOIN users u ON su.user_id=u.user_id 
@@ -105,23 +103,11 @@
 		 INNER JOIN (SELECT grp_cd_dtl_nm AS as_status_nm ,grp_cd_dtl_id AS as_status_cd from group_code_detail WHERE grp_cd_id LIKE 'S') status ON status.as_status_cd=a.as_status
 		 INNER JOIN (SELECT grp_cd_dtl_nm AS machine_cd_nm ,grp_cd_dtl_id as machine_cd from group_code_detail WHERE grp_cd_id like 'M') machine on machine.machine_cd=a.machine_cd
          LEFT OUTER JOIN as_assign ass ON a.as_info_seq=ass.as_info_seq
-         LEFT OUTER JOIN as_result ar ON ass.as_assign_seq=ar.as_assign_seq
 	 	 WHERE s.store_nm LIKE '%'||#{asVo.storeNm}||'%' AND
+	 			status.as_status_cd LIKE '%'||#{asVo.asStatusCd}||'%' AND
 		 		machine.machine_cd LIKE '%'||#{asVo.machineCd}||'%' AND 
 		 		s.store_addr LIKE '%'||#{asVo.storeAddr}||'%' 
 	 		<if test="asVo.asInfoSeq != ''">AND a.as_info_seq = #{asVo.asInfoSeq} </if>
-			<choose>
-				<when test='asVo.asStatusCd == "Y"'>
-					<![CDATA[
-						AND ar.reapply='Y'
-					]]>
-				</when>
-				<otherwise>
-					<![CDATA[
-						AND status.as_status_cd LIKE '%'||#{asVo.asStatusCd}||'%'
-					]]>
-				</otherwise>
-			</choose>
 			<choose>
 				<when test="asVo.startYr != ''">
 					<![CDATA[
@@ -171,7 +157,6 @@
 	INNER JOIN (select grp_cd_dtl_nm AS as_status ,grp_cd_dtl_id from group_code_detail where grp_cd_id LIKE 'S') status ON status.grp_cd_dtl_id=a.as_status
 	INNER JOIN (select grp_cd_dtl_nm AS machine_cd ,grp_cd_dtl_id from group_code_detail where grp_cd_id like 'M') machine on machine.grp_cd_dtl_id=a.machine_cd
 	LEFT OUTER JOIN as_assign ass ON a.as_info_seq=ass.as_info_seq
-	LEFT OUTER JOIN as_result ar ON ass.as_assign_seq=ar.as_assign_seq
 	WHERE s.store_nm LIKE '%'||#{storeNm}||'%' AND
 	 	status.as_status LIKE '%'||#{asStatusCd}||'%' AND
 	 	machine.machine_cd LIKE '%'||#{machineCd}||'%' AND 
@@ -250,10 +235,9 @@
 <insert id="insertFile" parameterType="kr.co.kccbrew.asMng.model.AsMngVo">
 	INSERT INTO file_info VALUES(file_seq.NEXTVAL,#{grpCdDtlId},SYSDATE,#{userId},SYSDATE,#{userId})
 	<selectKey resultType="string" keyProperty="fileSeq" order="AFTER">
-			SELECT file_seq.CURRVAL AS "fileSeq" FROM dual
+			SELECT NVL(MAX(file_seq), 0) AS "fileSeq" FROM file_info
 	</selectKey>
 </insert>
-
 <!-- AS 접수 파일 상세정보 등록 -->
 <insert id="insertFileDtl" parameterType="kr.co.kccbrew.asMng.model.AsMngVo">
 <![CDATA[
@@ -270,7 +254,6 @@
 			#{userId})
 ]]>
 </insert>
-
 <!-- AS접수 -->
 <insert id="insertAs" parameterType="kr.co.kccbrew.asMng.model.AsMngVo">
 <![CDATA[
@@ -285,12 +268,9 @@
 		#{userId},
 		#{userId},
 		SYSDATE,
-		SYSDATE,
-		'N',
-		null)
+		SYSDATE)
 ]]>
 </insert>
-
 <!-- AS 상세 조회 -->
 <select id="selectAsInfoDetail" parameterType="string" resultType="kr.co.kccbrew.asMng.model.AsMngVo">
 <![CDATA[
@@ -324,9 +304,7 @@
             ar.store_mng_fb AS "storeMngFb",
             ar.file_seq as "resultFileSeq",
             ar.as_price AS "asPrice",
-            ar.reapply AS "resultReapply",
-            ar.as_result_seq AS "asResultSeq",
-            ar.reapply_confirm AS "reapplyConfirm"
+            ar.reapply AS "resultReapply"
 	FROM as_information a
 	LEFT OUTER JOIN (select grp_cd_dtl_nm AS as_status_nm ,grp_cd_dtl_id AS as_status_cd from group_code_detail where grp_cd_id LIKE 'S') status ON a.as_status=status.as_status_cd
 	LEFT OUTER JOIN (select grp_cd_dtl_nm AS machine_cd_nm ,grp_cd_dtl_id as machine_cd from group_code_detail where grp_cd_id like 'M') machine on a.machine_cd=machine.machine_cd
@@ -340,7 +318,6 @@
 	    AND ass.as_assign_seq=#{asAssignSeq}
 	</if>
 </select>
-
 <!-- 상세 조회 이미지 -->
 <select id="selectAsImg" parameterType="string" resultType="kr.co.kccbrew.asMng.model.AsMngVo">
 <![CDATA[
@@ -378,7 +355,6 @@
 	WHERE grp_cd_id='LL' AND grp_cd_dtl_id LIKE #{locationCd}||'%'
 ]]>
 </select>
-
 <!-- 점포 일정 체크 -->
 <select id="checkStrSchedule" parameterType="hashmap" resultType="integer">
 <![CDATA[
@@ -392,7 +368,6 @@
 		  AND actl_use='Y' AND (TO_CHAR(holiday.hldy_star,'YYYY-MM-dd')<=#{date} AND  TO_CHAR(holiday.hldy_end,'YYYY-MM-dd')>=#{date})
 ]]>
 </select>
-
 <select id="selectMechList" parameterType="hashmap" resultType="kr.co.kccbrew.asMng.model.AsMngVo">
     SELECT u.user_id AS "userId",u.user_nm AS "userNm" FROM users u
     INNER JOIN (SELECT grp_cd_dtl_nm AS location_cd_nm ,grp_cd_dtl_id AS location_cd 
@@ -409,28 +384,25 @@
 	INSERT INTO as_assign 
 	VALUES(as_assign_seq.NEXTVAL,#{asInfoSeq},#{visitDttm},SYSDATE,#{mechanicId},SYSDATE,#{userId},SYSDATE,#{userId},'N',null )
 	<selectKey resultType="string" keyProperty="asAssignSeq" order="AFTER">
-			SELECT as_assign_seq.CURRVAL AS asAssignSeq FROM dual
+			SELECT NVL(MAX(as_assign_seq), 0) AS "asAssignSeq" FROM as_assign
 	</selectKey>
 </insert>
-<!-- AS 상태 업데이트 -->
+
 <update id="updateAsInfoStatus" parameterType="kr.co.kccbrew.asMng.model.AsMngVo">
 <![CDATA[
 	UPDATE as_information SET as_status=#{asStatusCd},mod_user=#{userId},mod_dttm=SYSDATE WHERE as_info_seq=#{asInfoSeq}
 ]]>
 </update>
-<!-- 점포점주 접수 반려 -->
 <update id="updateInfoReject" parameterType="hashmap">
 <![CDATA[
 	UPDATE as_information SET reject_content_str=#{content},resubmission='Y',mod_user=#{userId},mod_dttm=SYSDATE, as_status='02' WHERE as_info_seq=#{seq}
 ]]>
 </update>
-<!-- 수리기사 배정 반려 -->
 <update id="updateAssignReject" parameterType="hashmap">
 <![CDATA[
 	UPDATE as_assign SET reject_content_mcha=#{content},reassign='Y',mod_user=#{userId},mod_dttm=SYSDATE WHERE as_assign_seq=#{seq}
 ]]>
 </update>
-<!-- 배정 반려건 처리 -->
 <update id="updateRejectConfirm" parameterType="java.util.Map">
 	UPDATE as_assign 
 	<if test='flag == "Y"'>
@@ -441,10 +413,9 @@
 	</if>
 	WHERE as_assign_seq=#{asMngVo.asAssignSeq}
 </update>
-
 <insert id="insertResult" parameterType="kr.co.kccbrew.asMng.model.AsMngVo">
 <![CDATA[
-	INSERT INTO as_result VALUES(as_result_seq.NEXTVAL,#{asAssignSeq},#{resultDtl},null,#{resultDttm},#{fileSeq},#{asPrice},#{userId},SYSDATE,'N','N')
+	INSERT INTO as_result VALUES(as_result_seq.NEXTVAL,#{asAssignSeq},#{resultDtl},null,#{resultDttm},#{fileSeq},#{asPrice},#{userId},SYSDATE,'N')
 ]]>
 </insert>
 <!-- 점포 점주 결과입력 -->

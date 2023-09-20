@@ -10,6 +10,7 @@
 <html>
 <head>
 <!-- css -->
+<link rel="stylesheet" href="/resources/css/schdl/schdl-common.css" />
 <link rel="stylesheet" href="/resources/css/log/mylogtest.css" />
 <link rel="stylesheet" href="/resources/css/log/content-template.css" />
 
