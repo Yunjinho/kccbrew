@@ -82,8 +82,8 @@ public class RegisterController {
 
 		pageInfo.put("productCount", storeListCount);
 		pageInfo.put("totalPageCount", totalPage);
-		pageInfo.put("nowPage", page);
-		pageInfo.put("totalPageBlock", totalPageBlock);
+		pageInfo.put("currentPage", page);
+		pageInfo.put("totalPage", totalPage);
 		pageInfo.put("nowPageBlock", nowPageBlock);
 		pageInfo.put("startPage", startPage);
 		pageInfo.put("endPage", endPage);

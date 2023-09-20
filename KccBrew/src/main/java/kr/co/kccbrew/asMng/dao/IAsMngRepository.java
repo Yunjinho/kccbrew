@@ -18,6 +18,10 @@ public interface IAsMngRepository {
 	 * @return AS 리스트의 총 수
 	 */
 	public int countASList(AsMngVo asMngVo);
+	/**
+	 *  AS 전체 조회
+	 */
+	public List<AsMngVo>selectAllASList(AsMngVo asMngVo); 
 	
 	/**
 	 * 장비 코드 리스트 조회

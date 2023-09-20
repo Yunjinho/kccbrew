@@ -169,6 +169,16 @@ window.onload=function(){
 												<td><input type="text"
 													value="${asDetailInfo.machineCdNm}" readonly></td>
 												<th>진행 상태</th>
+												<td>
+													<c:choose>
+														<c:when test="${asDetailInfo.resultReapply eq 'Y'}">
+															<input type="text" value="재접수"  readonly>
+														</c:when>
+														<c:otherwise>
+															<input type="text" value="${asDetailInfo.asStatusNm}" readonly>
+														</c:otherwise>														
+													</c:choose>
+												</td>
 												<td><input type="text"
 													value="${asDetailInfo.asStatusNm}" readonly></td>
 												<th>배정 기사</th>
@@ -183,7 +193,7 @@ window.onload=function(){
 													</c:if></td>
 
 											</tr>
-											<tr>
+											<tr> 
 												<th>접수 내용</th>
 												<td colspan="7"><textarea class="content-textarea"
 														readonly>${asDetailInfo.asContent}</textarea></td>
