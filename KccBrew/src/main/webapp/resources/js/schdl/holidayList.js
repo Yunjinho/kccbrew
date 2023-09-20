@@ -26,3 +26,15 @@ function performSearch() {
 		}
 	});
 }
+
+
+/*구간으로 입력 시 바로 날짜 이동*/
+function goDate(){
+	var selectedStartDate = document.getElementById('selectedStartDate').value;
+	var selectedEndDate = document.getElementById('selectedEndDate').value;
+	var fm = document.srhForm;
+	fm.startDate.value = selectedStartDate;
+	fm.endDate.value = selectedEndDate;
+	performSearch();
+	return true;
+}

@@ -36,17 +36,6 @@ function goDate(startDate, endDate){
 	return true;
 }
 
-/*구간으로 입력 시 바로 날짜 이동*/
-function goDate(){
-	var selectedStartDate = document.getElementById('selectedStartDate').value;
-	var selectedEndDate = document.getElementById('selectedEndDate').value;
-	var fm = document.srhForm;
-	fm.startDate.value = selectedStartDate;
-	fm.endDate.value = selectedEndDate;
-	performSearch();
-	return true;
-}
-
 
 /*캘린더 테이블*/
 //현재 날짜를 가져오는 함수

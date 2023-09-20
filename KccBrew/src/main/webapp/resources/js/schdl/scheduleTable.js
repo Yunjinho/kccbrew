@@ -55,6 +55,7 @@ function performSearch() {
 
 				/*휴무일 리스트*/
 				var holidayDates = schedule.holidayDates;
+				console.log("holidayDates: " + holidayDates);
 				var holidayCount = holidayDates.length;
 				/*배정일 리스트*/
 				var assignDates = schedule.assignDates;

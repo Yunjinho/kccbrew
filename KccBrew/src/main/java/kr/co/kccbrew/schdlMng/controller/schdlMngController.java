@@ -189,7 +189,7 @@ public class schdlMngController {
 		String year = null;
 		String month = null;
 
-		String dateString = startDate; // 주어진 문자열
+		String dateString = endDate; // 주어진 문자열
 		String[] parts = dateString.split("-"); // '-'를 구분자로 문자열 분할
 
 		if (parts.length >= 2) {

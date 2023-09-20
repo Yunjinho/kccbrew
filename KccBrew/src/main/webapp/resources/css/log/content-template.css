@@ -1,4 +1,4 @@
-@charset "UTF-8";
+
 
 #fitem_id_availabilityconditionsjson .availability_grade input[type=text]
 	{
@@ -50727,13 +50727,7 @@ body.coursemos-layout-course.coursemos-layout-coursehome #page-header
 	background-color: #0a4a9b
 }
 
-#page-header .navbar .container-fluid .navbar-brand
-a.logo {
-	background: url('/theme/coursemosv2/pix/layout/logo.png') no-repeat;
-	width: 190px;
-	height: 68px;
-	display: block
-}
+
 
 #page-header
 .usermenu {
@@ -53414,13 +53408,7 @@ body.coursemos-layout-course.coursemos-layout-coursehome .course-header.course-h
 	font-size: 12px
 }
 
-#page-content-wrap .page-content-navigation .breadcrumb
-li {
-	background: url('/theme/coursemosv2/pix/layout/breadcrumb.png')
-		no-repeat 5px center;
-	padding: 6px 3px 3px 25px;
-	line-height: 35px
-}
+
 
 #page-content-wrap .page-content-navigation .breadcrumb li:first-child {
 	background: none;

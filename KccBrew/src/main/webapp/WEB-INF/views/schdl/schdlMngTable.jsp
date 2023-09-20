@@ -79,7 +79,6 @@
 							</a>
 								<div class="user-info-box popover-box">
 									<div class="user-info-picture">
-										<img src="./게시판_files/f1.png" alt="이세은 사진" class="userpicture">
 										<h4>이세은</h4>
 										<p class="department">화학과</p>
 									</div>
@@ -96,25 +95,7 @@
 									</ul>
 								</div></li>
 
-							<!-- 사용자 할일 -->
-							<li class="user-courses"><a
-								class="user-courses-popover icon-a" tabindex="0" role="button"
-								data-toggle="popover" data-placement="bottom"
-								data-original-title="" title="">
-									<div class="header-icon-background">
-										<img src="/resources/img/log/free-icon-checklist-3478402.png"
-											alt="Check List" class="header-icon" />
-									</div>
-							</a>
-								<div class="user-courses-box popover-box">
-									<div class="popover-header">진행중인 강좌 (0)</div>
-									<ul class="my-course-lists">
-										<li class="nocourses">Loading...</li>
-									</ul>
-									<div class="popover-footer">
-										<a href="https://cyber.inu.ac.kr/">MY COURSES</a>
-									</div>
-								</div></li>
+
 
 							<!-- 알림 -->
 							<li class="user-notification"><a
@@ -129,8 +110,7 @@
 							</a>
 								<div class="user-noti-box popover-box">
 									<div class="popover-header">
-										<span>전체 알림</span> <img
-											src="/resources/img/log/popover-icon.png" alt="" class="gear" />
+										<span>전체 알림</span> 
 									</div>
 									<div class="user-noti-lists">
 										<div class="nomessage">Loading...</div>
@@ -152,8 +132,7 @@
 								<div class="hide menu-product">
 									<div class="menu-product-itl">
 										<h5>
-											교육혁신원 홈페이지 <a href="http://ctl.inu.ac.kr/" target="_blank"><img
-												src="./게시판_files/itl_home.png" alt=""></a>
+											교육혁신원 홈페이지 <a href="http://ctl.inu.ac.kr/" target="_blank"></a>
 										</h5>
 										<ul>
 											<li><a href="http://www.inu.ac.kr/" target="_blank">인천대학교
