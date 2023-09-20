@@ -37,6 +37,20 @@
 		<put-attribute name="contents" value="/WEB-INF/views/comm/register/register.jsp" />
 	</definition>
 	
+		<!-- 마이페이지 -->
+	<definition name="MyPageP1" extends="mainLayout2">
+		<put-attribute name="contents" value="/WEB-INF/views/myPage/myPage.jsp" />
+	</definition>
+
+	<!-- 마이페이지 수정 -->
+	<definition name="MyPageP2" extends="mainLayout2">
+		<put-attribute name="contents" value="/WEB-INF/views/myPage/myModPage.jsp"/>
+	</definition>
+
+	<!-- 비밀번호 변경 -->
+	<definition name="MyPageP3" extends="mainLayout2">
+		<put-attribute name="contents" value="/WEB-INF/views/myPage/chgPwd.jsp"/>
+	</definition>
 	
  	<!-- 사용자 별 메인페이지 -->
  	<!-- 관리자 페이지 -->
@@ -96,8 +110,8 @@
 	
 	
 	<!-- 마이페이지 -->
-	<definition name="adminPageP1" extends="adminPage">
-		<put-attribute name="contents" value="/WEB-INF/views/myPage/myPage.jsp" />
+	<definition name="adminPageC1" extends="adminPage">
+		<put-attribute name="contents" value="/WEB-INF/views/sysMng/cdMng/cdMngList.jsp" />
 	</definition>
 
 
