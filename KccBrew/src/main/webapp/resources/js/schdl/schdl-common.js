@@ -34,3 +34,18 @@ function getLocationName(locationCodeValue) {
 		}
 	});
 }
+
+/*input 요소 비활성화 또는 활성화*/
+function inputDisableSetting(selectElementId, targetedElementId) {
+	console.log("inputDisableSetting함수실행!");
+	const selectedValue = document.getElementById(selectElementId).value; // 선택한 값
+	const inputElement = document.getElementById(targetedElementId); // 검색어 입력 필드
+
+	if (selectedValue === '') {
+		// 선택한 값이 빈 문자열인 경우, input 요소를 비활성화
+		inputElement.disabled = true;
+	} else {
+		// 선택한 값이 빈 문자열이 아닌 경우, input 요소를 활성화
+		inputElement.disabled = false;
+	}
+}
