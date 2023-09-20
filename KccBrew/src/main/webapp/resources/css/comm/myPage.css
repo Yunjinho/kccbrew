@@ -1,1 +1,144 @@
 @charset "UTF-8";
+
+.container2{
+	margin-top:20px;
+}
+
+.category{
+	font-weight: 500;
+    line-height: 1.1;
+    color: inherit;
+    font-size: 20px;
+    margin-top: 50px
+}
+
+.line {
+	border: solid 1.2px; 
+	width: 97%;
+}
+
+#search-box {
+	width: 100%;
+	border-collapse: collapse;
+	border-top: 1px solid #ccc;
+	margin-bottom: 30px;
+}
+
+#search-box td:first-child{
+	width: 100px; 
+	height: 130px; 
+	text-align: center;
+}
+
+#profileImg {
+	position:relative;
+	top:40px;
+	line-height:30px;
+	border: none;
+	width: 120px; 
+	height: 150px;
+}
+
+#changeImageBtn {
+	position:relative;
+	top:10px;
+	border: 1px solid #93bbff;
+	background-color: #ffffff;
+	padding:5px;
+}
+
+#changeImageBtn:hover {
+	border: 1px solid #cccccc;
+	background-color: #cccccc;
+	color: #ffffff;
+}
+
+#search-box tr {
+	height:57px;
+}
+#search-box th {
+	line-height:57px;
+	width:132px;
+	padding: 0 10px;
+	border: 0px;
+	border-bottom: 1px solid #ccc;
+	text-align: center;
+	vertical-align: top;
+}
+#search-box td {
+	line-height:57px;
+	padding: 0 10px;
+	border: 0px;
+	border-bottom: 1px solid #ccc;
+	text-align: left;
+	vertical-align: top;
+}
+
+#search-box th {
+	background-color: #f2f2f2;
+}
+
+
+input[type="text"] {
+    width: 100%;
+    padding: 10px; 
+    border: 1px solid #ccc;
+    border-radius: 5px; 
+}
+
+.modButtons {
+	width: 100%; 
+	margin: auto; 
+	text-align: center;
+	padding: 0 30px;
+	text-decoration: none;
+	
+}
+.updateBtn, #confirmMod, .cancel {
+	margin-right:10px;
+	background-color: #ffffff;
+	color:#111111;
+	border:1px solid #93bbff;
+	padding:5px;
+	text-decoration: none;
+}
+.updateBtn:hover, #confirmMod:hover, .cancel:hover {
+	border: 1px solid #cccccc;
+	background-color: #c0c0c0;
+	color: #ffffff;
+}
+
+/*  비밀번호 수정 페이지 */
+.form-wrapper {
+	padding:20px 20px;
+}
+.formAndBtns {
+	background-color: #ffffff;
+	padding:20px 300px;
+}
+.changePasswordForm {
+	margin-bottom: 30px;
+}
+.changePasswordForm h2 {
+	font-size:1.4em;
+	margin-bottom: 30px;
+}
+input[type="password"] {
+    width: 100%;
+    padding: 10px; 
+    border: 1px solid #ccc;
+}
+.pwdInput1 {
+	margin-bottom: 10px;
+}
+.pwdInput2 {
+	margin-bottom: 1px;
+}
+.register-msg{
+	margin:0px;
+}
+.register-msg>li{
+	font-size:0.8em;
+	color:red;
+	display:none;
+}

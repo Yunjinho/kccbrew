@@ -1,4 +1,7 @@
 @charset "UTF-8";
+
+
+
 /************* 회원 정보 및 페이지 링크 ******************/
 	.profileAndguide{
 		font-family: 'Noto-Sans';
@@ -63,7 +66,14 @@
 		text-align: center;
 		height:30px;
 	}
+<<<<<<< HEAD
+	.buttons form {
+		display: inline-block;
+	}
+	#toMyPage, .logout {
+=======
 	.toMyPage, .logout {
+>>>>>>> branch 'master' of https://github.com/Yunjinho/kccbrew.git
 		color:#ffffff;
 		cursor: pointer;
 		font-weight: normal;
@@ -71,7 +81,7 @@
 		margin-bottom: 10px;
 		text-decoration: none;
 	}
-	.toMyPage:hover, .logout:hover {
+	#toMyPage:hover, .logout:hover {
 		text-decoration: underline;
 	}
 	.shortcut-service {

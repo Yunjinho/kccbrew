@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.kccbrew.comm.util.IObjectUtilRepository">
+
+
+	<!-- 장비코드로 장비이름 조회 -->
+	<select id="selectEquipmentName" parameterType="string"
+		resultType="string">
+		SELECT GRP_CD_DTL_NM FROM GROUP_CODE_DETAIL WHERE GRP_CD_ID
+		= 'M' AND GRP_CD_DTL_ID = #{codeId}
+	</select>
+
+	<!-- 지역코드로 지역이름 조회 -->
+	<select id="selectLocationName" parameterType="string"
+		resultType="string">
+		SELECT GRP_CD_DTL_NM FROM GROUP_CODE_DETAIL WHERE (GRP_CD_ID = 'L' OR
+		GRP_CD_ID = 'LL') AND GRP_CD_DTL_ID = #{codeId}
+	</select>
+
+
+
+
+</mapper>

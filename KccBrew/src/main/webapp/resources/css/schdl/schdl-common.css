@@ -1,0 +1,66 @@
+@charset "UTF-8";
+
+/* CSS 코드 */
+.blind {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	margin: -1px;
+	padding: 0;
+	overflow: hidden;
+	clip: rect(0, 0, 0, 0);
+	white-space: nowrap;
+	border: 0;
+}
+
+/* 검색창 */
+.board-info {
+	display: flex;
+	align-content: stretch;
+	justify-content: space-between;
+	align-items: center;
+}
+
+#logTable>form {
+	margin: 10px 0;
+}
+
+.form-btn {
+	display: inline !important;
+}
+
+.form-btn-box {
+	margin: 10px;
+	display: flex;
+	justify-content: center;
+}
+
+/* 주요내용 테이블 */
+#content-table {
+	display: flex;
+	flex-direction: column;
+	flex-wrap: wrap;
+	align-content: space-around;
+}
+
+.info-box {
+	margin-bottom: 5em;
+}
+
+/* 버튼 영역 */
+.center-button {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	margin: 3em;
+}
+
+.right-buttons {
+	display: flex;
+    justify-content: flex-end;
+}
+
+/* 공지 및 알림사항 */
+.notice {
+	margin-top: 1em;
+}
