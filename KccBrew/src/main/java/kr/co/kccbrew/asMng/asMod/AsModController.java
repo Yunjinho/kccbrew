@@ -28,9 +28,11 @@ public class AsModController {
 	private final IAsMngService asMngService;
 
 	@RequestMapping(value = "/as-mod", method = RequestMethod.GET)
-	public String asMod(@RequestParam String asInfoSeq, @RequestParam String asAssignSeq, Model model,
+	public String asMod(@Value("#{serverImgPath['localPath']}") String localPath,
+			@Value("#{serverImgPath['asReceiptPath']}") String path, @RequestParam String asInfoSeq, @RequestParam String asAssignSeq, Model model,
 			HttpSession session) {
 		AsMngVo vo = asMngService.selectAsInfoDetail(asInfoSeq, asAssignSeq);
+		vo.setLocalSavePath(localPath + path);
 		session.setAttribute("asInfoSeq", asInfoSeq);
 		session.setAttribute("fileSeq", vo.getFileSeq());
 		model.addAttribute("asInfoSeq", asInfoSeq);
@@ -68,6 +70,9 @@ public class AsModController {
 		asMngVo.setUserId(userId);
 		asMngVo.setStorageLocation(path);
 		asMngVo.setServerSavePath(folderPath);
+		System.out.println("=============================================================");
+		System.out.println(folderPath);
+		System.out.println(path);
 //local 저장 위치 배포할땐 삭제
 		File folder2 = new File(localPath + path);
 // 폴더가 존재하지 않으면 폴더를 생성합니다.

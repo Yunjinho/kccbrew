@@ -164,6 +164,7 @@
 <script type="text/javascript">
 $(document).ready(function() {
     var asInfoSeq = "${asInfoSeq}"; // 수정 필요한 부분
+    var localUrl = "${asDetailInfo.localSavePath}"
     $.ajax({
         url: "/getAsInfoImages?asInfoSeq=" + asInfoSeq + "&asAssignSeq=",
         method: "GET",
