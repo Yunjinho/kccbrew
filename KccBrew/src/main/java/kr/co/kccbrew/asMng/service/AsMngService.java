@@ -159,12 +159,8 @@ public class AsMngService implements IAsMngService{
 	@Transactional
 	@Override
 	public AsMngVo insertAsAssign(AsMngVo asMngVo) {
-		asRepository.insertAsAssign(asMngVo);
+		asMngVo=asRepository.insertAsAssign(asMngVo);
 		asRepository.updateAsInfoStatus(asMngVo);
-		if(asMngVo.getAsResultSeq()!="") {
-			asMngVo.setReapplyConfirm("Y");
-			asRepository.updateAsResultConfirm(asMngVo);
-		}
 		return asMngVo;
 	}
 
@@ -197,9 +193,12 @@ public class AsMngService implements IAsMngService{
 		asRepository.updateAsInfoStatus(asMngVo);
 	}
 
+<<<<<<< HEAD
 	@Override
 	public void updateResultMng(AsMngVo asMngVo) {
 		asRepository.updateResultMng(asMngVo);
 	}
+=======
+>>>>>>> 494d40612e0250434b727ce0acb9627151af7330
 
 }
