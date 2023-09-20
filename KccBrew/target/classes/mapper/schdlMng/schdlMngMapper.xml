@@ -77,7 +77,8 @@
 
 
 	<!-- 휴가사용현황 조회 -->
-	<select id="selectSchedules2" resultMap="scheduleResult">
+	<select id="selectHolidays" parameterType="map"
+		resultMap="scheduleResult">
 		SELECT *
 		FROM
 		(SELECT ROWNUM AS
@@ -135,49 +136,24 @@
 		and
 		ACTL_USE='Y'
 		<!-- 날짜검색 -->
-		<if
-			test="searchContent.startYr != null and searchContent.startYr != '' and searchContent.startMn != null and searchContent.startMn != '' and
-          searchContent.endYr != null and searchContent.endYr != '' and searchContent.endMn != null and searchContent.endMn != ''">
-			AND (
-			(YEAR(START_DATE) * 10000 + MONTH(START_DATE) * 100 +
-			DAY(START_DATE))
-			BETWEEN
-			(#{searchContent.startYr} * 10000 +
-			#{searchContent.startMn} * 100 + 01)
-			AND
-			(#{searchContent.endYr} *
-			10000 + #{searchContent.endMn} * 100 + 31)
-			)
-		</if>
+    <![CDATA[AND (TRUNC(START_DATE) <= #{endDate} AND TRUNC(END_DATE) >= #{startDate})]]>
 
 		<!-- 사용자 검색 -->
-		<if
-			test="searchContent.userId != null and searchContent.userId != ''">
-			AND USER_ID = #{searchContent.userId}
+		<if test="userVo.userId != null and userVo.userId != ''">
+			AND USER_ID = #{userVo.userId}
 		</if>
-		<if
-			test="searchContent.userType!= null and searchContent.userType != ''">
-			AND USER_TYPE = #{searchContent.userType}
-		</if>
-		<if
-			test="searchContent.userName != null and searchContent.userName != ''">
-			AND USER_NM = #{searchContent.userName}
+		<!-- <if test="userVo.userId != null and userVo.userId != ''"> AND USER_TYPE 
+			= #{searchContent.userType} </if> -->
+		<if test="userVo.userNm != null and userVo.userNm != ''">
+			AND USER_NM = #{userVo.userNm}
 		</if>
 
 		<!-- 지점 검색 -->
-		<if
-			test="searchContent.storeId != null and searchContent.storeId!= ''">
-			AND STORE_SEQ = #{searchContent.storeId}
+		<if test="userVo.storeSeq != null and userVo.storeSeq != ''">
+			AND STORE_SEQ = #{userVo.storeSeq}
 		</if>
-		<if
-			test="searchContent.storeName != null and searchContent.storeName != ''">
-			AND STORE_NM = #{searchContent.storeName}
-		</if>
-
-		<!-- 스케줄 검색 -->
-		<if
-			test="searchContent.scheduleType != null and searchContent.scheduleType != ''">
-			AND SCHEDULE_TYPE = #{searchContent.scheduleType}
+		<if test="userVo.storeNm != null and userVo.storeNm != ''">
+			AND STORE_NM = #{userVo.storeNm}
 		</if>)
 		
 		<![CDATA[ WHERE ROW_NUMBER BETWEEN #{firstRowNum} AND #{lastRowNum} ]]>
@@ -190,7 +166,7 @@
 
 
 	<!-- 휴가사용현황 개수 조회 -->
-	<select id="selectSchedule2Count" resultType="Integer"
+	<select id="selectHolidayCount" resultType="Integer"
 		parameterType="java.util.Map">
 
 		SELECT COUNT(*)
@@ -239,49 +215,25 @@
 		and ACTL_USE='Y'
 
 		<!-- 날짜검색 -->
-		<if
-			test="searchContent.startYr != null and searchContent.startYr != '' and searchContent.startMn != null and searchContent.startMn != '' and
-          searchContent.endYr != null and searchContent.endYr != '' and searchContent.endMn != null and searchContent.endMn != ''">
-			AND (
-			(YEAR(START_DATE) * 10000 + MONTH(START_DATE) * 100 +
-			DAY(START_DATE))
-			BETWEEN
-			(#{searchContent.startYr} * 10000 +
-			#{searchContent.startMn} * 100 + 01)
-			AND
-			(#{searchContent.endYr} *
-			10000 + #{searchContent.endMn} * 100 + 31)
-			)
-		</if>
+    <![CDATA[AND (TRUNC(START_DATE) <= #{endDate} AND TRUNC(END_DATE) >= #{startDate})]]>
+
 
 		<!-- 사용자 검색 -->
-		<if
-			test="searchContent.userId != null and searchContent.userId != ''">
-			AND USER_ID = #{searchContent.userId}
+		<if test="userVo.userId != null and userVo.userId != ''">
+			AND USER_ID = #{userVo.userId}
 		</if>
-		<if
-			test="searchContent.userType!= null and searchContent.userType != ''">
-			AND USER_TYPE = #{searchContent.userType}
-		</if>
-		<if
-			test="searchContent.userName != null and searchContent.userName != ''">
-			AND USER_NM = #{searchContent.userName}
+		<!-- <if test="userVo.userId != null and userVo.userId != ''"> AND USER_TYPE 
+			= #{searchContent.userType} </if> -->
+		<if test="userVo.userNm != null and userVo.userNm != ''">
+			AND USER_NM = #{userVo.userNm}
 		</if>
 
 		<!-- 지점 검색 -->
-		<if
-			test="searchContent.storeId != null and searchContent.storeId!= ''">
-			AND STORE_SEQ = #{searchContent.storeId}
+		<if test="userVo.storeSeq != null and userVo.storeSeq != ''">
+			AND STORE_SEQ = #{userVo.storeSeq}
 		</if>
-		<if
-			test="searchContent.storeName != null and searchContent.storeName != ''">
-			AND STORE_NM = #{searchContent.storeName}
-		</if>
-
-		<!-- 스케줄 검색 -->
-		<if
-			test="searchContent.scheduleType != null and searchContent.scheduleType != ''">
-			AND SCHEDULE_TYPE = #{searchContent.scheduleType}
+		<if test="userVo.storeNm != null and userVo.storeNm != ''">
+			AND STORE_NM = #{userVo.storeNm}
 		</if>
 		)
 
@@ -615,7 +567,8 @@ EXTRACT(YEAR FROM SCHEDULE_DATE) = 2023 AND EXTRACT(MONTH FROM SCHEDULE_DATE) = 
 		#{Id}
 		<if test="yr != null and yr != '' and mn != null and mn != ''">
 			and
-			(EXTRACT(YEAR FROM VISIT_DTTM) = #{yr} and EXTRACT(MONTH FROM VISIT_DTTM) = #{mn})
+			(EXTRACT(YEAR FROM VISIT_DTTM) = #{yr} and
+			EXTRACT(MONTH FROM VISIT_DTTM) = #{mn})
 		</if>
 	</select>
 
@@ -631,7 +584,8 @@ EXTRACT(YEAR FROM SCHEDULE_DATE) = 2023 AND EXTRACT(MONTH FROM SCHEDULE_DATE) = 
 		AS_ASSIGN.REJECT_CONTENT_MCHA IS NULL and MECHANIC_ID = #{Id}
 		<if test="yr != null and yr != '' and mn != null and mn != ''">
 			and
-			(EXTRACT(YEAR FROM RESULT_DTTM) = #{yr} and EXTRACT(MONTH FROM RESULT_DTTM) =
+			(EXTRACT(YEAR FROM RESULT_DTTM) = #{yr} and
+			EXTRACT(MONTH FROM RESULT_DTTM) =
 			#{mn})
 		</if>
 	</select>

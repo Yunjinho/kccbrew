@@ -22,6 +22,7 @@
 <link rel="stylesheet" href="/resources/css/log/mylogtest.css" />
 <link rel="stylesheet" href="/resources/css/log/content-template.css" />
 <link rel="stylesheet" href="/resources/css/schdl/myschedulelist.css" />
+<link rel="stylesheet" href="/resources/css/schdl/myHldyList.css" />
 
 
 <!-- javascript -->
@@ -75,7 +76,6 @@
 							</a>
 								<div class="user-info-box popover-box">
 									<div class="user-info-picture">
-										<img src="./게시판_files/f1.png" alt="이세은 사진" class="userpicture">
 										<h4>이세은</h4>
 										<p class="department">화학과</p>
 									</div>
@@ -96,12 +96,7 @@
 							<li class="user-courses"><a
 								class="user-courses-popover icon-a" tabindex="0" role="button"
 								data-toggle="popover" data-placement="bottom"
-								data-original-title="" title="">
-									<div class="header-icon-background">
-										<img src="/resources/img/log/free-icon-checklist-3478402.png"
-											alt="Check List" class="header-icon" />
-									</div>
-							</a>
+								data-original-title="" title=""> </a>
 								<div class="user-courses-box popover-box">
 									<div class="popover-header">진행중인 강좌 (0)</div>
 									<ul class="my-course-lists">
@@ -116,17 +111,10 @@
 							<li class="user-notification"><a
 								class="icon-a user-noti-popover" tabindex="0" role="button"
 								data-toggle="popover" data-placement="bottom"
-								data-original-title="" title="">
-									<div class="header-icon-background">
-										<img
-											src="/resources/img/log/free-icon-notification-bell-3913239.png"
-											alt="Check List" class="header-icon" />
-									</div>
-							</a>
+								data-original-title="" title=""> </a>
 								<div class="user-noti-box popover-box">
 									<div class="popover-header">
-										<span>전체 알림</span> <img
-											src="/resources/img/log/popover-icon.png" alt="" class="gear" />
+										<span>전체 알림</span>
 									</div>
 									<div class="user-noti-lists">
 										<div class="nomessage">Loading...</div>
@@ -140,16 +128,12 @@
 							<!-- 마이 메뉴 -->
 							<li class="user-product"><a class="user-menu-product icon-a"
 								tabindex="0" role="button" data-toggle="popover"
-								data-original-title="" title=""><div
-										class="header-icon-background">
-										<img src="/resources/img/log/free-icon-menu-7421181.png"
-											alt="Check List" class="header-icon" />
-									</div></a>
+								data-original-title="" title=""></a>
 								<div class="hide menu-product">
 									<div class="menu-product-itl">
 										<h5>
-											교육혁신원 홈페이지 <a href="http://ctl.inu.ac.kr/" target="_blank"><img
-												src="./게시판_files/itl_home.png" alt=""></a>
+											교육혁신원 홈페이지 <a href="http://ctl.inu.ac.kr/" target="_blank">
+											</a>
 										</h5>
 										<ul>
 											<li><a href="http://www.inu.ac.kr/" target="_blank">인천대학교
@@ -191,9 +175,7 @@
 				<!-- 메뉴1 -->
 				<li class="" data-original-title="" title=""><a href=""
 					class="left-menu-link left-menu-link-mypage" title="My Page"
-					data-toggle="tooltip" data-placement="right">
-						<h5 class="">A/S관리</h5>
-				</a>
+					data-toggle="tooltip" data-placement="right"> </a>
 					<ul>
 						<li class=""><a href="https://cyber.inu.ac.kr/" title="">Dashboard</a></li>
 						<li class=""><a href="https://cyber.inu.ac.kr/user/files.jsp"
@@ -209,9 +191,7 @@
 				<!-- 메뉴2 -->
 				<li class="active active-fix" data-original-title="" title=""><a
 					href="" class="left-menu-link left-menu-link-mycourses"
-					title="교과 과정" data-toggle="tooltip" data-placement="right">
-						<h5 class="">시스템관리</h5>
-				</a>
+					title="교과 과정" data-toggle="tooltip" data-placement="right"> </a>
 					<ul>
 						<li class="active"><a href="" title="active">로그조회</a></li>
 						<li class=""><a href="" title="">파일조회</a></li>
@@ -220,40 +200,24 @@
 				<!-- 메뉴3 -->
 				<li class="" data-original-title="" title=""><a href=""
 					class="left-menu-link left-menu-link-irrcourse" title="비교과 과정"
-					data-toggle="tooltip" data-placement="right">
-						<h5 class="nosubmenu">코드관리</h5>
-				</a></li>
+					data-toggle="tooltip" data-placement="right"> </a></li>
 
 				<!-- 메뉴4 -->
 				<li class="" data-original-title="" title=""><a href=""
 					class="left-menu-link left-menu-link-eclass" title="자율강좌"
-					data-toggle="tooltip" data-placement="right">
-						<h5 class="nosubmenu">수리기사관리</h5>
-				</a></li>
+					data-toggle="tooltip" data-placement="right"> </a></li>
 
 				<!-- 메뉴5 -->
 				<li class="" data-original-title="" title=""><a href=""
 					class="left-menu-link left-menu-link-onlinep" title="교수지원"
-					data-toggle="tooltip" data-placement="right">
-						<h5 class="">점포관리</h5>
-				</a>
+					data-toggle="tooltip" data-placement="right"> </a>
 					<ul>
 						<li class=""><a href="" title="">수강 신청</a></li>
 						<li class=""><a href="" title="">수강 현황</a></li>
 						<li class=""><a href="" title="">수료 확인</a></li>
 					</ul></li>
 
-				<!-- 메뉴6 -->
-				<li t class="" data-original-title="" title=""><a href=""
-					class="left-menu-link left-menu-link-online" title="학습지원"
-					data-toggle="tooltip" data-placement="right">
-						<h5 class="">회원관리</h5>
-				</a>
-					<ul>
-						<li class=""><a href="" title="">수강 신청</a></li>
-						<li class=""><a href="" title="">수강 현황</a></li>
-						<li class=""><a href="" title="">수료 확인</a></li>
-					</ul></li>
+
 			</ul>
 		</div>
 		<!-- ********** 왼쪽 메뉴 끝 ********** -->
@@ -467,14 +431,17 @@
 														<th>유형</th>
 														<td><c:out value="점주" /></td>
 
-														<th>점주ID</th>
+														<th>ID</th>
 														<td><c:out value="${user.userId}" /></td>
 
-														<th>점주이름</th>
-														<td><c:out value="" /></td>
+														<th>이름</th>
+														<td><c:out value="${user.userNm}" /></td>
 
-														<th>점주연락처</th>
-														<td><c:out value="" /></td>
+														<th>이메일</th>
+														<td><c:out value="${user.userEmail}" /></td>
+
+														<th>연락처</th>
+														<td><c:out value="${user.userTelNo}" /></td>
 
 													</tr>
 
@@ -487,10 +454,11 @@
 														<td><c:out value="${store.storeNm}" /></td>
 
 														<th>점포주소</th>
-														<td><c:out value="" /></td>
+														<td colspan="3"><c:out
+																value="${store.storeAddr} ${store.storeAddrDtl}" /></td>
 
 														<th>점포연락처</th>
-														<td><c:out value="" /></td>
+														<td><c:out value="${store.storeTelNo}" /></td>
 
 													</tr>
 												</table>
@@ -505,7 +473,7 @@
 														type="hidden" name="currentPage" value="1">
 												</form>
 
-												<div class="subtitle">나의정보</div>
+												<div class="subtitle">회원정보</div>
 												<table id="search-box">
 													<tr>
 														<th>유형</th>
@@ -552,10 +520,11 @@
 
 												<fieldset>
 													<legend class="blind">날짜 검색</legend>
-													<label>휴가일</label> 
-													<input type="date" id="selectedStartDate" name="selectedStartDate" value="" required> 
-														<input type="date" id="selectedEndDate" name="selectedEndDate" value="" required> 
-														<input type="button" value="검색" onclick="goDate(); return false;">
+													<label>휴가일</label> <input type="date"
+														id="selectedStartDate" name="selectedStartDate" value=""
+														required> <input type="date" id="selectedEndDate"
+														name="selectedEndDate" value="" required> <input
+														type="button" value="검색" onclick="goDate(); return false;">
 												</fieldset>
 											</div>
 
@@ -563,39 +532,34 @@
 												<thead>
 													<tr>
 														<th>순번</th>
-														<th>회원구분</th>
-														<th>회원ID</th>
-														<th>회원이름</th>
-														<th>지점ID</th>
-														<th>지점명</th>
-														<th>위치코드</th>
+														<th>휴가번호</th>
 														<th>신청일</th>
 														<th>시작일</th>
 														<th>종료일</th>
+														<th>휴가취소</th>
 													</tr>
 												</thead>
 												<tbody>
-													<c:forEach var="schedule2" items="${schedules}">
-														<tr>
-															<td><c:out value="${schedule2.rowNumber}" /></td>
-															<td><c:out value="${schedule2.userType}" /></td>
-															<td><c:out value="${schedule2.userId}" /></td>
-															<td><c:out value="${schedule2.userName}" /></td>
-															<td><c:choose>
-																	<c:when test="${schedule2.storeId != 0}">
-																		<c:out value="${schedule2.storeId}" />
-																	</c:when>
-																	<c:otherwise>
-																		<!-- 0인 경우 아무것도 표시하지 않음 -->
-																	</c:otherwise>
-																</c:choose></td>
-															<td><c:out value="${schedule2.storeName}" /></td>
-															<td><c:out value="${schedule2.locationCd}" /></td>
-															<td><c:out value="${schedule2.appDate}" /></td>
-															<td><c:out value="${schedule2.startDate}" /></td>
-															<td><c:out value="${schedule2.endDate}" /></td>
-														</tr>
-													</c:forEach>
+													<c:choose>
+														<c:when test="${empty schedules}">
+															<tr>
+																<td colspan="10">데이터가 없습니다.</td>
+															</tr>
+														</c:when>
+														<c:otherwise>
+															<c:forEach var="schedule2" items="${schedules}">
+																<tr>
+																	<td><c:out value="${schedule2.rowNumber}" /></td>
+																	<td><c:out value="${schedule2.rowNumber}" /></td>
+																	<td><c:out value="${schedule2.appDate}" /></td>
+																	<td><c:out value="${schedule2.startDate}" /></td>
+																	<td><c:out value="${schedule2.endDate}" /></td>
+																	<button>취소</button>
+																</tr>
+															</c:forEach>
+														</c:otherwise>
+													</c:choose>
+												</tbody>
 											</table>
 										</div>
 
@@ -667,6 +631,10 @@
 												src="/resources/img/log/free-icon-fast-forward-double-right-arrows-symbol-54366.png"
 												alt="마지막" />
 											</a>
+										</div>
+										<div class="right-buttons">
+											<button type="button" id="" onclick="postPopup();">휴가신청</button>
+											<button type="button" id="" onclick="postPopup();">휴가신청내역</button>
 										</div>
 									</div>
 									<!-- ********** 세은 로그 관련 내용 끝 ********** -->

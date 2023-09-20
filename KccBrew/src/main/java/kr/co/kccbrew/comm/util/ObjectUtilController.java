@@ -25,8 +25,18 @@ public class ObjectUtilController {
 	@RequestMapping(value="/getLocationName", produces = "text/plain; charset=utf-8")
 	@ResponseBody
 	public String getLocationName(@RequestParam("locationCode") String locationCode) {
-		System.out.println("locationCode: " + locationCode);
-		return objectUtilService.getLocationName(locationCode);
+		String LocationName = objectUtilService.getLocationName(locationCode);
+
+		if (locationCode.contains("-")) {
+		    String extractedCode = locationCode.split("-")[0];
+		    switch(extractedCode) {
+		    case "02":
+		    	LocationName = "서울 > " + LocationName;
+		    	break;
+		    }
+		} else {
+		}
+		return LocationName;
 	}
 
 }

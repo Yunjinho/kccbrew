@@ -28,22 +28,26 @@ public class SchdlMngService implements ISchdlMngService {
 
 	/*검색에 따른 휴가리스트 조회*/
 	@Override
-	public List<SchdlMngVo> getSchedules2(int currentPage, SchdlMngVo searchContent) {
+	public List<SchdlMngVo> getHolidays(int currentPage, Date startDate, Date endDate, UserVo userVo) {
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("searchContent", searchContent);
 		map.put("firstRowNum", currentPage*10-9);
 		map.put("lastRowNum", currentPage*10);
+		map.put("startDate", startDate);
+		map.put("endDate", endDate);
+		map.put("userVo", userVo);
 
-		return schdlMngRepository.selectSchedules2(map);
+		return schdlMngRepository.selectHolidays(map);
 	}
 
 	/*스케줄 리스트 갯수 반환*/
 	@Override
-	public int getSchedule2Count(SchdlMngVo searchContent) {
+	public int getHolidayCount(Date startDate, Date endDate, UserVo userVo) {
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("searchContent", searchContent);
+		map.put("startDate", startDate);
+		map.put("endDate", endDate);
+		map.put("userVo", userVo);
 
-		Integer dataCount = schdlMngRepository.selectSchedule2Count(map);
+		Integer dataCount = schdlMngRepository.selectHolidayCount(map);
 		int intDataCount = dataCount != null ? dataCount.intValue() : 0;
 		return intDataCount;
 	}

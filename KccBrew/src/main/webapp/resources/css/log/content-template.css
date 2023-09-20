@@ -50439,7 +50439,6 @@ a {
 }
 
 #page {
-	min-width: 980px;
 	background-color: #2f3033
 }
 
@@ -50485,7 +50484,6 @@ a {
 	#region-main {
 	padding: 32px 40px;
 	position: relative;
-	min-height: 600px
 }
 
 .coursemos-course-menu-expand {
@@ -51383,15 +51381,7 @@ a {
 	position: relative
 }
 
-#page-lnb .left-menus>li>.left-menu-link {
-	color: #999;
-	background: url('/theme/coursemosv2/pix/layout/left_menu.png') no-repeat
-		4px 0;
-	display: block;
-	text-decoration: none;
-	height: 60px;
-	outline: 0
-}
+
 
 #page-lnb .left-menus>li>.left-menu-link.left-menu-link-mypage {
 	background-position: 4px 0
@@ -51442,19 +51432,9 @@ h5 {
 	background: url('/theme/coursemosv2/pix/layout/copykiller.jpg')
 }
 
-#page-lnb .left-menus>li>.left-menu-link:hover {
-	background-image:
-		url('/theme/coursemosv2/pix/layout/left_menu_active.png');
-	color: white;
-	background-color: #484b52
-}
 
-#page-lnb .left-menus>li.active>.left-menu-link {
-	background-image:
-		url('/theme/coursemosv2/pix/layout/left_menu_active.png');
-	color: white;
-	background-color: #3d3e42
-}
+
+
 
 #page-lnb .left-menus>li>.left-menu-link
 h5 {

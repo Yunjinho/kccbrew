@@ -12,9 +12,10 @@ import kr.co.kccbrew.schdlMng.model.SchdlMngVo;
 
 public interface ISchdlMngService {
 	
-	/*스케줄 리스트 조회*/
-	public List<SchdlMngVo> getSchedules2(int currentPage, SchdlMngVo searchContent);
-	public int getSchedule2Count(SchdlMngVo searchContent);
+	/* 휴무리스트 조회*/
+	
+	public List<SchdlMngVo> getHolidays(int currentPage, Date startDate, Date endDate, UserVo userVo);
+	public int getHolidayCount(Date startDate, Date endDate, UserVo userVo);
 	
 	/*회원 캘린더 조회*/
 	public List<SchdlMngVo> getCalendarSchedule(SchdlMngVo schdlMngVo);

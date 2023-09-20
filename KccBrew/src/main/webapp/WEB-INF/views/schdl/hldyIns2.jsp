@@ -8,11 +8,6 @@
 
 <!DOCTYPE html>
 <html>
-
-<script>
-  var usedHolidays = ${15 - usedHolidays};
-</script>
-
 <head>
 <meta charset="UTF-8">
 
@@ -21,9 +16,6 @@
 <link rel="stylesheet" href="/resources/css/schdl/myinsertform.css" />
 <link rel="stylesheet" href="/resources/css/log/mylogtest.css" />
 <link rel="stylesheet" href="/resources/css/log/content-template.css" />
-
-<!-- javascript -->
-<script src="<c:url value="/resources/js/schdl/myHldyIns.js"/>"></script>
 
 <!-- font -->
 <!-- notoSans -->
@@ -74,13 +66,13 @@
 
 							<!-- ********** 세은 로그 관련 내용 시작 ********** -->
 							<div id="content">
-								<h2 class="heading">휴가신청</h2>
+								<h2 class="heading">휴가등록</h2>
 
-								<form id="addForm" action="" method="post">
+								<form>
 									<table id="search-box">
 										<tr>
 											<th>휴가신청일</th>
-											<td colspan="4"><c:out
+											<td colspan="3"><c:out
 													value="<%=new java.text.SimpleDateFormat(\"yyyy-MM-dd\").format(new java.util.Date())%>" /></td>
 										</tr>
 
@@ -90,32 +82,81 @@
 												name="selectedStartDate" value="" required></td>
 											<th>휴가종료일</th>
 											<td><input type="date" id="selectedEndDate"
-												name="selectedEndDate" value="" required
-												onchange="calculateDays(new Date(document.getElementById('selectedStartDate').value), new Date(this.value))"></td>
-											<td><span id="usedDays" contenteditable="true"
-												oninput="calculateNumbers(this.textContent, document.getElementById('remainingDays').textContent)"></span>
-											</td>
+												name="selectedEndDate" value="" required></td>
 										</tr>
 
 										<tr>
-											<th>잔여일수/총 휴가일수</th>
-											<td colspan="4"><span id="remainingDays"
-												style="color: red;"><b><c:out
-															value="${ 15 - usedHolidays}" /></b></span> / 15</td>
+											<th>사용일수/잔여일수</th>
+											<td colspan="3"><span id="usedDays">/<span
+													id="remainingDays"></span></td>
 										</tr>
 
 									</table>
-									<div class="notice">
-										<ul>
-											<li>휴가일수는 연 15일 입니다.</li>
-											<li>AS근무가 배정된 날짜에는 휴가신청을 할 수 없습니다.</li>
-											<li>현재날짜를 기준으로 이전일은 휴가신청을 할 수 없습니다.</li>
-										</ul>
-									</div>
 									<div class="center-button">
 										<button type="submit" id="applyButton">휴가신청</button>
 									</div>
 								</form>
+
+
+
+								<script>
+									// 모델에서 잔여일수 데이터 가져와서 표시
+									var remainingDays = $
+									{
+										remainingDays
+									};
+									document.getElementById("remainingDays").textContent = remainingDays;
+
+									function calculateDays() {
+										var startDate = new Date(
+												document
+														.getElementById("startDate").value);
+										var endDate = new Date(
+												document
+														.getElementById("endDate").value);
+
+										if (!isNaN(startDate)
+												&& !isNaN(endDate)) {
+											var timeDiff = endDate - startDate
+													+ 1;
+											var daysDiff = Math.ceil(timeDiff
+													/ (1000 * 3600 * 24));
+											document.getElementById("usedDays").textContent = daysDiff;
+											document
+													.getElementById("remainingDays").textContent = remainingDays
+													- daysDiff;
+										} else {
+											document.getElementById("usedDays").textContent = "";
+										}
+									}
+
+									// input 필드 값이 변경될 때마다 calculateDays 함수 호출
+									document.getElementById("startDate")
+											.addEventListener("change",
+													calculateDays);
+									document.getElementById("endDate")
+											.addEventListener("change",
+													calculateDays);
+
+									// 초기화 버튼을 눌렀을 때
+									document
+											.getElementById("resetButton")
+											.addEventListener(
+													"click",
+													function() {
+														// 입력 필드를 초기화
+														document
+																.getElementById("startDate").value = "";
+														document
+																.getElementById("endDate").value = "";
+
+														// 일수 및 잔여일수를 초기 상태로 되돌림
+														document
+																.getElementById("usedDays").textContent = "";
+														document
+																.getElementById("remainingDays").textContent = remainingDays;
+													});
+								</script>
 
 								<!-- 확인 모달 창 -->
 								<div id="confirmModal" class="modal">

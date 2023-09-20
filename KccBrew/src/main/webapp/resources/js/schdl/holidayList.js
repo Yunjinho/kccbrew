@@ -38,3 +38,13 @@ function goDate(){
 	performSearch();
 	return true;
 }
+
+
+function postPopup() {
+    var url = "/holiday/registration";
+    var name = "팝업 테스트";
+    var width = 800; // 원하는 너비로 설정
+    var height = 500; // 원하는 높이로 설정
+    var option = "width=" + width + ",height=" + height + ",top=200,left=450,directories=no,location=no";
+    window.open(url, name, option);
+}

@@ -46,3 +46,21 @@
 .info-box {
 	margin-bottom: 5em;
 }
+
+/* 버튼 영역 */
+.center-button {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	margin: 3em;
+}
+
+.right-buttons {
+	display: flex;
+    justify-content: flex-end;
+}
+
+/* 공지 및 알림사항 */
+.notice {
+	margin-top: 1em;
+}
