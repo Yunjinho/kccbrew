@@ -73,7 +73,6 @@
 
 
 	<authentication-manager>
-		
 
 		<authentication-provider
 			user-service-ref="customUserDetailsService">
