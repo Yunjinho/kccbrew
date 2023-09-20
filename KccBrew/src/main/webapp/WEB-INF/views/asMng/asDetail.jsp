@@ -155,7 +155,7 @@ window.onload=function(){
 												<td>
 													<c:choose>
 														<c:when test="${asDetailInfo.resultReapply eq 'Y'}">
-															<input type="text" value="재접수" readonly>
+															<input type="text" value="재접수"  readonly>
 														</c:when>
 														<c:otherwise>
 															<input type="text" value="${asDetailInfo.asStatusNm}" readonly>
