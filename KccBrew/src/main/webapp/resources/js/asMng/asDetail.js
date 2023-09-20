@@ -80,9 +80,15 @@ function rejectAs(userTypeCd){
 	$(".modal-reject").css("display","block");
 }
 
+function resubmission(){
+	$("html").css("overflow","hidden");
+	$(".modal-rejectContent").css("display","block");
+}
+
 function cancelModal(){
 	$("html").css("overflow","auto");
 	$(".modal-reject").css("display","none");
+	$(".modal-rejectContent").css("display","none");
 }
 
 function rejectConfirm(flag){

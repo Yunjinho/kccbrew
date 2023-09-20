@@ -75,8 +75,9 @@ public class AsModController {
 			boolean success = folder2.mkdirs(); // 폴더 생성 메소드
 		}
 		asMngVo.setLocalSavePath(localPath + path);
-		asModService.asMod(asMngVo);
 		asModService.deleteFile(asMngVo, imgSeq);
+		asModService.asMod(asMngVo);
+		
 		
 		
 		return "redirect:/as-detail?asInfoSeq=" + asInfoSeq + "&asAssignSeq=";
