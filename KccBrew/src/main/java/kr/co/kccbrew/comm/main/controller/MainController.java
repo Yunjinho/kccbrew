@@ -1,32 +1,20 @@
 package kr.co.kccbrew.comm.main.controller;
 
 
-import java.security.Principal;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpSession;
-import javax.swing.JWindow;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import freemarker.ext.jython.JythonWrapper;
 import kr.co.kccbrew.comm.main.model.MainPageVo;
 import kr.co.kccbrew.comm.main.service.MainService;
 import kr.co.kccbrew.comm.security.model.UserVo;
@@ -39,160 +27,70 @@ public class MainController {
 	@Autowired
 	MainService mainServiceImple;
 
-	/****************** 마이페이지 *********************/
-	@RequestMapping(value = "/mypage", method = RequestMethod.GET)
-	public String showUserInfo(Model model) {
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		
-		if(authentication != null) {
-			Object principal = authentication.getPrincipal();
-			if(principal instanceof UserDetails) {
-				UserDetails userDetails = (UserDetails) principal;
-				String userId = userDetails.getUsername();
-				List<MainPageVo> userInfoList = mainServiceImple.showUserInfoListById(userId);
-				List<MainPageVo> storeInfoList = mainServiceImple.showStoreInfoListById(userId);
+	/***** 테스트 ******/
+	@RequestMapping(value="/testpage", method=RequestMethod.GET)
+	public String goTestPage(Model model) {
+		return "testPage";
+	}
 
-				model.addAttribute("userInfoList", userInfoList);
-				model.addAttribute("storeInfoList",storeInfoList);
-			}
-		}
-		return "MyPageP1";
-
-	}
-	
-	/****************** 마이페이지 수정 *********************/
-	@RequestMapping(value = "/mypage/mod", method = RequestMethod.GET)
-	public String modUserInfo(Model model) {
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		
-		if(authentication != null) {
-			Object principal = authentication.getPrincipal();
-			if(principal instanceof UserDetails) {
-				UserDetails userDetails = (UserDetails) principal;
-				String userId = userDetails.getUsername();
-				List<MainPageVo> userInfoList = mainServiceImple.showUserInfoListById(userId);
-				List<MainPageVo> storeInfoList = mainServiceImple.showStoreInfoListById(userId);
-
-				model.addAttribute("userInfoList", userInfoList);
-				model.addAttribute("storeInfoList",storeInfoList);
-			}
-		}
-		return "MyPageP2";
-	}
-	
-	@RequestMapping(value= "/confirmmod", method = RequestMethod.POST)
-	public String confirmModProfile(Model model, @ModelAttribute MainPageVo mainPageVo,
-						            @RequestParam("machineCode") String machineCode,
-						            @RequestParam("mechaLocationCode") String mechaLocationCode) {
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		
-		if(authentication != null) {
-			Object principal = authentication.getPrincipal();
-			if(principal instanceof UserDetails) {
-				UserDetails userDetails = (UserDetails) principal;
-				String userId = userDetails.getUsername();
-				mainPageVo.setUserId(userId);
-				mainPageVo.setMachineCode(machineCode);
-	            mainPageVo.setMechaLocationCode(mechaLocationCode);
-				mainServiceImple.updateMyProfile(mainPageVo);
-				mainServiceImple.updateMyStore(mainPageVo);
-			}
-		}
-		return "redirect:/mypage";
-	}
-	
-	/******************* 비밀번호 변경 *********************/
-	
-	@RequestMapping(value = "/mypage/chgpwd", method = RequestMethod.GET)
-	public String chgPassword(Model model) {
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		
-		if(authentication != null) {
-			Object principal = authentication.getPrincipal();
-			if(principal instanceof UserDetails) {
-				UserDetails userDetails = (UserDetails) principal;
-				String userId = userDetails.getUsername();
-				List<MainPageVo> userInfoList = mainServiceImple.showUserInfoListById(userId);
-
-				model.addAttribute("userInfoList", userInfoList);
-			}
-		}
-		return "MyPageP3";
-	}
-	
-	@RequestMapping(value= "/confirmchg", method = RequestMethod.POST)
-	public String confirmChange(Model model, @ModelAttribute MainPageVo mainPageVo) {
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		
-		if(authentication != null) {
-			Object principal = authentication.getPrincipal();
-			if(principal instanceof UserDetails) {
-				UserDetails userDetails = (UserDetails) principal;
-				String userId = userDetails.getUsername();
-				mainPageVo.setUserId(userId);
-				mainServiceImple.updateMyProfile(mainPageVo);
-			}
-		}
-		return "redirect:/mypage";
-	}
-	
 	/****************** 관리자 페이지 **************************/
 
 	//점포 등록 페이지
-	@RequestMapping(value="/admin/store/register", method=RequestMethod.GET)
+	@RequestMapping(value="/adminstoreregpage", method=RequestMethod.GET)
 	public String adminStoreRegPage(Model model) {
 		return "adminPageS1";
 	}
 
 	//점포 조회 페이지
-	@RequestMapping(value="/admin/store/check", method=RequestMethod.GET)
+	@RequestMapping(value="/adminstorelistpage", method=RequestMethod.GET)
 	public String adminStoreListPage(Model model) {
 		return "adminPageS2";
 	}
 
 	//점포 검색 페이지
-	@RequestMapping(value="/admin/store/search", method=RequestMethod.GET)
+	@RequestMapping(value="/adminstoresearchpage", method=RequestMethod.GET)
 	public String adminStoreSearchPage(Model model) {
 		return "adminPageS3";
 	}
 
 	//회원 관리 페이지
-	@RequestMapping(value="/admin/member/manage", method=RequestMethod.GET)
+	@RequestMapping(value="/membermngpage", method=RequestMethod.GET)
 	public String memberMngPage(Model model) {
 		return "adminPageM1";
 	}
 
 	//로그 조회 페이지
-	@RequestMapping(value="/admin/log/check", method=RequestMethod.GET)
+	@RequestMapping(value="/adminlogpage", method=RequestMethod.GET)
 	public String adminLogPage(Model model) {
 		return "adminPageL1";
 	}
 
 	//파일 조회 페이지
-	@RequestMapping(value="/admin/file/check", method=RequestMethod.GET)
+	@RequestMapping(value="/adminfilepage", method=RequestMethod.GET)
 	public String adminFilePage(Model model) {
 		return "adminPageF1";
 	}
 
 	//코드 관리 페이지
-	@RequestMapping(value="/admin/code/check", method=RequestMethod.GET)
-	public String adminCodePage(Model model) {
-		return "adminPageC1";
-	}
-	
 
 
-	
+
+
+
+
+
+
+
 	/************************ 점주 페이지 ******************************/
 
 	//점포 조회 페이지
-	@RequestMapping(value="/manager/store/check", method=RequestMethod.GET)
+	@RequestMapping(value="/storesearchpage", method=RequestMethod.GET)
 	public String goStoreSearchPage(Model model) {
 		return "managerPageS1";
 	}
 
 	//점포 수정 페이지
-	@RequestMapping(value="/manager/store/mod", method=RequestMethod.GET)
+	@RequestMapping(value="/storemodpage", method=RequestMethod.GET)
 	public String goStoreModPage(Model model) {
 		return "managerPageS2";
 	}
@@ -287,7 +185,7 @@ public class MainController {
 
 	/************************** 수리 기사 메인 ***************************/
 	@RequestMapping(value="/mechanic/main", method=RequestMethod.GET)
-	public String mechaMain(Model model, HttpSession session, RedirectAttributes redirectAttributes) {
+	public String mecMain(Model model, HttpSession session, RedirectAttributes redirectAttributes) {
 		UserVo userVo = (UserVo) session.getAttribute("user");
 		String userId = userVo.getUserId();
 
@@ -327,4 +225,16 @@ public class MainController {
 		return "comm/main/privacy";
 	}
 
+	/****************** 사용자 정보 가져오기 *********************/
+	@RequestMapping(value = "/userinfo", method = RequestMethod.GET)
+	public String showUserInfo(HttpSession session, Model model) {
+		String userId = (String)session.getAttribute("userId");
+		List<MainPageVo> userInfoList = mainServiceImple.showUserInfoListById(userId);
+		List<MainPageVo> storeInfoList = mainServiceImple.showStoreInfoListById(userId);
+
+		model.addAttribute("userInfoList", userInfoList);
+		model.addAttribute("storeInfoList",storeInfoList);
+		return "adminPageP1";
+
+	}
 }
