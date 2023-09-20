@@ -32,6 +32,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.co.kccbrew.asMng.model.AsMngVo;
 import kr.co.kccbrew.asMng.service.IAsMngService;
+import kr.co.kccbrew.comm.security.model.UserVo;
 import lombok.RequiredArgsConstructor;
 /**
  * @ClassNmae : AsMngController
@@ -305,7 +306,6 @@ public class AsMngController {
 		JSONObject result=new JSONObject(mechaList);
 		return result;
 	}
-<<<<<<< HEAD
 	
 	/** 조회한 list 다운로드 */
 	@ResponseBody
@@ -394,9 +394,6 @@ public class AsMngController {
         }
 	}
 }
-=======
 
 
-}
 
->>>>>>> 494d40612e0250434b727ce0acb9627151af7330

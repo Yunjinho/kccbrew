@@ -418,7 +418,6 @@
 	INSERT INTO as_result VALUES(as_result_seq.NEXTVAL,#{asAssignSeq},#{resultDtl},null,#{resultDttm},#{fileSeq},#{asPrice},#{userId},SYSDATE,'N')
 ]]>
 </insert>
-<<<<<<< HEAD
 <!-- 점포 점주 결과입력 -->
 <update id="updateResultMng" parameterType="kr.co.kccbrew.asMng.model.AsMngVo">
 <![CDATA[
@@ -432,6 +431,4 @@
 ]]>
 </update>
 
-=======
->>>>>>> 494d40612e0250434b727ce0acb9627151af7330
 </mapper>

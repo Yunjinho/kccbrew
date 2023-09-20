@@ -193,12 +193,5 @@ public class AsMngService implements IAsMngService{
 		asRepository.updateAsInfoStatus(asMngVo);
 	}
 
-<<<<<<< HEAD
-	@Override
-	public void updateResultMng(AsMngVo asMngVo) {
-		asRepository.updateResultMng(asMngVo);
-	}
-=======
->>>>>>> 494d40612e0250434b727ce0acb9627151af7330
 
 }
