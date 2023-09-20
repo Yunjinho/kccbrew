@@ -7,7 +7,7 @@ function onPageLoad() {
 
 	/*폼에 날짜 기본값 설정*/
 	setInputElementValue('startDate', getFirstDayOfYear());
-	setInputElementValue('endDate', getCurrentDate());
+	setInputElementValue('endDate', getLastDayOfCurrentYear());
 
 
 }

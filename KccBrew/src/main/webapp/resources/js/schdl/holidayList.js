@@ -3,7 +3,8 @@ document.addEventListener("DOMContentLoaded", function() {
 
 	/*날짜 구간 선택 시 날짜 기본값 설정*/
 	setInputElementValue('selectedStartDate', getFirstDayOfYear());
-	setInputElementValue('selectedEndDate', getCurrentDate());
+	setInputElementValue('selectedEndDate', getLastDayOfCurrentYear());
+
 });
 
 
@@ -19,11 +20,160 @@ function performSearch() {
 		data: $(form).serialize(), 
 		success: function(data) {
 			console.log('Ajax 요청 성공:', data);
+
+			/*휴가리스트 테이블에 표시*/
+			var schedules = data.schedules;
+			displaySchedules(schedules);
+
+			/*전체 데이터 수 표시*/
+			var totalDataNumber = data.totalDataNumber;
+			document.getElementById("totalDataNumber").textContent = totalDataNumber;
+
+			/*페이징처리*/
+			var currentPage = data.currentPage;
+			var totalPage = data.totalPage;
+			var sharePage = data.sharePage;
+			updatePageButtons(currentPage, totalPage, sharePage);
+
+
 		},
 		error: function(error) {
-			// Ajax 요청이 실패했을 때 실행할 코드
 			console.log('Ajax 요청 실패:', error);
 		}
+	});
+}
+
+/*페이징처리*/
+function updatePageButtons(currentPage, totalPage, sharePage) {
+	/*페이지 표시*/
+	document.getElementById("currentPage").textContent = currentPage;
+	document.getElementById("totalPage").textContent = totalPage;
+
+	var numberList = document.getElementById("number-list");
+	var pageButtonsHTML = '';
+
+	// 페이지 버튼들을 생성
+	for (var page = sharePage * 10 + 1; page <= (sharePage + 1) * 10 && page <= totalPage; page++) {
+		pageButtonsHTML += '<a href="" onclick="goPage(' + page + '); return false;" class="pageNow pagination page-btn ' + (currentPage == page ? 'selected' : '') + '">' + page + '</a>';
+	}
+
+	// 페이지 버튼들을 업데이트
+	numberList.innerHTML = pageButtonsHTML;
+
+	document.querySelector('.pageFirst').href = "javascript:void(0);";
+	document.querySelector('.pageFirst img').alt = "처음";
+	document.querySelector('.pageFirst').onclick = function() {
+		goPage(1);
+		return false;
+	};
+
+	document.querySelector('.pagePrev').href = "javascript:void(0);";
+	document.querySelector('.pagePrev img').alt = "이전";
+	document.querySelector('.pagePrev').onclick = function() {
+		if (currentPage === 1) {
+		} else {
+			goPage(currentPage - 1);
+		}
+	};
+	
+	document.querySelector('.pageNext').href = "javascript:void(0);";
+	document.querySelector('.pageNext img').alt = "다음";
+	document.querySelector('.pageNext').onclick = function() {
+		if (currentPage === totalPage) {
+		} else {
+			goPage(currentPage + 1);
+		}
+	};
+
+	document.querySelector('.pageLast').href = "javascript:void(0);";
+	document.querySelector('.pageLast img').alt = "마지막";
+	document.querySelector('.pageLast').onclick = function() {
+		goPage(totalPage);
+		return false;
+	};
+
+	var pageButtons = document.querySelectorAll('.page-btn a');
+	pageButtons.forEach(function(pageButton, index) {
+		var page = currentPage + index;
+		pageButton.href = "javascript:void(0);";
+		pageButton.textContent = page;
+		pageButton.className = "pageNow pagination page-btn" + (currentPage == page ? ' selected' : '');
+		pageButton.onclick = function() {
+			goPage(page);
+			return false;
+		};
+	});
+}
+
+/*ajax로 받은 휴가리스트 테이블에 추가*/
+function displaySchedules(schedules) {
+	console.log("displaySchedules함수실행!");
+	var tableBody = document.getElementById("holiday-list-tbody");
+
+	tableBody.innerHTML = "";
+
+	schedules.forEach(function(schedule) {
+		var row = tableBody.insertRow(-1); 
+
+		if (userTypeCd === "01") {
+			var cell1 = row.insertCell(0);
+			var cell2 = row.insertCell(1);
+			var cell3 = row.insertCell(2);
+			var cell4 = row.insertCell(3);
+			var cell5 = row.insertCell(4);
+			var cell6 = row.insertCell(5);
+			var cell7 = row.insertCell(6);
+			var cell8 = row.insertCell(7);
+			var cell9 = row.insertCell(8);
+
+			cell1.innerHTML = schedule.rowNumber;
+			cell2.innerHTML = schedule.userType;
+			cell3.innerHTML = schedule.userId;
+			cell4.innerHTML = schedule.scheduleId;
+			cell5.innerHTML = formatDate(new Date(schedule.appDate));
+			cell6.innerHTML = formatDate(new Date(schedule.startDate));
+			cell7.innerHTML = formatDate(new Date(schedule.endDate));
+
+			if (new Date(schedule.startDate) > new Date() && schedule.actualUse === "Y") {
+				var cancelButton = document.createElement("button");
+				cancelButton.textContent = "취소";
+				cancelButton.onclick = function () {
+					alert("휴가 취소 요청: 휴가 ID " + schedule.scheduleId);
+				};
+				cell8.appendChild(cancelButton);
+			} else {
+				cell8.innerHTML = "취소불가";
+			}
+			cell9.innerHTML = schedule.actualUse;
+		} else {
+			var cell1 = row.insertCell(0);
+			var cell2 = row.insertCell(1);
+			var cell3 = row.insertCell(2);
+			var cell4 = row.insertCell(3);
+			var cell5 = row.insertCell(4);
+			var cell6 = row.insertCell(5);
+			var cell7 = row.insertCell(6);
+
+			cell1.innerHTML = schedule.rowNumber;
+			cell2.innerHTML = schedule.scheduleId;
+			cell3.innerHTML = formatDate(new Date(schedule.appDate));
+			cell4.innerHTML = formatDate(new Date(schedule.startDate));
+			cell5.innerHTML = formatDate(new Date(schedule.endDate));
+
+			if (new Date(schedule.startDate) > new Date() && schedule.actualUse === "Y") {
+				var cancelButton = document.createElement("button");
+				cancelButton.textContent = "취소";
+				cancelButton.onclick = function () {
+					alert("휴가 취소 요청: 휴가 ID " + schedule.scheduleId);
+				};
+				cell6.appendChild(cancelButton);
+			} else {
+				cell6.innerHTML = "취소불가";
+			}
+			cell7.innerHTML = schedule.actualUse;
+		}
+
+
 	});
 }
 
@@ -39,12 +189,33 @@ function goDate(){
 	return true;
 }
 
-
+/*팝업창*/ 
 function postPopup() {
-    var url = "/holiday/registration";
-    var name = "팝업 테스트";
-    var width = 800; // 원하는 너비로 설정
-    var height = 500; // 원하는 높이로 설정
-    var option = "width=" + width + ",height=" + height + ",top=200,left=450,directories=no,location=no";
-    window.open(url, name, option);
+	var url = "/holiday/add";
+	var name = "팝업 테스트";
+	var width = 800; // 원하는 너비로 설정
+	var height = 500; // 원하는 높이로 설정
+	var option = "width=" + width + ",height=" + height + ",top=200,left=450,directories=no,location=no";
+	window.open(url, name, option);
+}
+
+/*해당년도의 마지막 날 조회*/
+function getLastDayOfCurrentYear() {
+	var today = new Date();
+	var currentYear = today.getFullYear(); 
+
+	var nextYear = currentYear + 1;
+	var firstDayOfNextYear = new Date(nextYear, 0, 1);
+
+	var lastDayOfCurrentYear = new Date(firstDayOfNextYear - 1);
+
+	return formatDate(lastDayOfCurrentYear);
+}
+
+/*날짜 형식 포맷*/
+function formatDate(date) {
+	var year = date.getFullYear();
+	var month = (date.getMonth() + 1).toString().padStart(2, '0'); // 월을 2자리 숫자로 변환
+	var day = date.getDate().toString().padStart(2, '0'); // 일을 2자리 숫자로 변환
+	return `${year}-${month}-${day}`;
 }

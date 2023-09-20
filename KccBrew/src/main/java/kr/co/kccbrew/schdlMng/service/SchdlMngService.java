@@ -86,10 +86,13 @@ public class SchdlMngService implements ISchdlMngService {
 
 
 	/*AS배정일 조회*/
-/*	@Override
+	@Override
 	public List<Date> getAssignDates(String userId) {
-		return schdlMngRepository.selectAssignDates(userId);
-	}*/
+		Map<String, String> map = new HashMap<>();
+		map.put("Id", userId);
+		
+		return schdlMngRepository.selectAssignDates(map);
+	}
 
 	/*지역코드 조회*/
 	@Override
@@ -146,7 +149,6 @@ public class SchdlMngService implements ISchdlMngService {
 
 	@Override
 	public HolidayVo getHoliday(String userId, Date date) {
-		  // 파라미터를 맵에 설정
         Map<String, Object> parameterMap = new HashMap<>();
         parameterMap.put("userId", userId);
         parameterMap.put("date", date);

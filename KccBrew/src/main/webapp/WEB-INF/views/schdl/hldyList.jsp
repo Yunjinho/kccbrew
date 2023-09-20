@@ -48,6 +48,12 @@
     var locationCodeValue = "<c:out value='${user.locationCd}' />";
 </script>
 
+	<script>
+    var userTypeCd = "<c:out value='${user.userTypeCd}' />";
+</script>
+
+
+
 	<div id="page" class="page-nosubmenu">
 		<!-- ********** header영역 시작********** -->
 		<div id="page-header">
@@ -151,75 +157,17 @@
 									</div>
 								</div></li>
 
-							<!-- 로그아웃 -->
-							<li class="active user-login user-logout hidden-xs"><a
-								href="" class="btn btn-person">로그아웃</a></li>
+
 						</ul>
 					</div>
 					<!-- ********** header메뉴 끝********** -->
 
-					<div class="coursename">
-						<h1>&nbsp;</h1>
-					</div>
+
 				</div>
 			</nav>
 		</div>
 		<!-- ********** header영역 끝********** -->
 
-		<!-- ********** 왼쪽 메뉴 시작 ********** -->
-		<div id="page-lnb">
-			<ul class="left-menus">
-
-				<!-- 관리자 메뉴 -->
-
-				<!-- 메뉴1 -->
-				<li class="" data-original-title="" title=""><a href=""
-					class="left-menu-link left-menu-link-mypage" title="My Page"
-					data-toggle="tooltip" data-placement="right"> </a>
-					<ul>
-						<li class=""><a href="https://cyber.inu.ac.kr/" title="">Dashboard</a></li>
-						<li class=""><a href="https://cyber.inu.ac.kr/user/files.jsp"
-							title="">파일 관리</a></li>
-						<li class=""><a
-							href="https://cyber.inu.ac.kr/mod/ubboard/my.jsp" title="">진행강좌
-								공지</a></li>
-						<li class=""><a
-							href="https://cyber.inu.ac.kr/user/edit.jsp?id=86992" title="">개인정보
-								수정</a></li>
-					</ul></li>
-
-				<!-- 메뉴2 -->
-				<li class="active active-fix" data-original-title="" title=""><a
-					href="" class="left-menu-link left-menu-link-mycourses"
-					title="교과 과정" data-toggle="tooltip" data-placement="right"> </a>
-					<ul>
-						<li class="active"><a href="" title="active">로그조회</a></li>
-						<li class=""><a href="" title="">파일조회</a></li>
-					</ul></li>
-
-				<!-- 메뉴3 -->
-				<li class="" data-original-title="" title=""><a href=""
-					class="left-menu-link left-menu-link-irrcourse" title="비교과 과정"
-					data-toggle="tooltip" data-placement="right"> </a></li>
-
-				<!-- 메뉴4 -->
-				<li class="" data-original-title="" title=""><a href=""
-					class="left-menu-link left-menu-link-eclass" title="자율강좌"
-					data-toggle="tooltip" data-placement="right"> </a></li>
-
-				<!-- 메뉴5 -->
-				<li class="" data-original-title="" title=""><a href=""
-					class="left-menu-link left-menu-link-onlinep" title="교수지원"
-					data-toggle="tooltip" data-placement="right"> </a>
-					<ul>
-						<li class=""><a href="" title="">수강 신청</a></li>
-						<li class=""><a href="" title="">수강 현황</a></li>
-						<li class=""><a href="" title="">수료 확인</a></li>
-					</ul></li>
-
-
-			</ul>
-		</div>
 		<!-- ********** 왼쪽 메뉴 끝 ********** -->
 
 		<div id="page-mask">
@@ -267,7 +215,8 @@
 
 										<!-- 로그 검색 -->
 										<sec:authorize access="hasRole('ROLE_ADMIN')">
-											<form name="srhForm" action="/holiday" method="post">
+											<form name="srhForm" action="/admin/holiday/search"
+												method="post">
 
 												<input type="hidden" name="currentPage" value="1"> <input
 													type="hidden" name="startDate" value=""> <input
@@ -282,11 +231,11 @@
 														<legend class="blind">사용자검색</legend>
 														<table id="search-box">
 															<tr>
-																<th>위치</th>
-																<td><select class="tx2" name="superGrpCdDtlId"
-																	onchange="updateSecondSelect()">
+																<th>위치<span style="color: red;">(필수)</span></th>
+																<td><select class="tx2" name="location"
+																	onchange="changeLocationCd()">
 																		<option value="">지역 대분류</option>
-																		<c:forEach var="location" items="${locations}">
+																		<c:forEach var="location" items="${locationList}">
 																			<c:if test="${location.grpCdId eq 'L'}">
 																				<option value="${location.grpCdDtlId}"
 																					${param.superGrpCdDtlId == location.grpCdDtlId ? 'selected' : ''}>
@@ -295,13 +244,14 @@
 																		</c:forEach>
 																</select></td>
 
-																<td><select class="tx2" name="grpCdDtlId">
+																<td><select class="tx2" name="locationCd">
 																		<option value="">지역 소분류</option>
 																</select></td>
 
 																<th>유형</th>
 																<td><select class="tx2" name="userType"
-																	onchange="updateUserType()">
+																	id="selectUserType"
+																	onchange="updateUserType(); inputDisableSetting('selectUserType', 'selectKeyword');">
 																		<option value="">사용자 유형</option>
 																		<option value="기사"
 																			${param.userType == '기사' ? 'selected' : ''}>기사</option>
@@ -311,7 +261,7 @@
 
 																<th>검색어</th>
 																<td><select class="tx2" name="searchKeword"
-																	onchange="chgName(this)">
+																	id="selectKeyword" onchange="chgName(this)" disabled>
 																		<option value="">검색어</option>
 																		<option value="userId"
 																			${param.searchKeword == '회원ID' ? 'selected' : ''}>회원ID</option>
@@ -330,7 +280,8 @@
 														</table>
 														<div class="form-btn-box">
 															<fieldset>
-																<button type="submit" class="form-btn">검색</button>
+																<button type="button" class="form-btn"
+																	onClick="performSearch();">검색</button>
 																<button type="reset" class="form-btn">초기화</button>
 															</fieldset>
 														</div>
@@ -512,9 +463,11 @@
 										<div id="logTable">
 
 											<div class="board-info">
-												<span class="data-info"> 전체<b><span><c:out
+												<span class="data-info"> 전체<b><span
+														id="totalDataNumber"><c:out
 																value="${totalDataNumber}" /></span></b>건<span id="text-separator">
-														| </span><b><span><c:out value="${currentPage}" /></span></b>/<b><span><c:out
+														| </span> <b><span id="currentPage"><c:out
+																value="${currentPage}" /></span></b>/<b><span id="totalPage"><c:out
 																value="${totalPage}" /></span></b>쪽
 												</span>
 
@@ -528,18 +481,23 @@
 												</fieldset>
 											</div>
 
-											<table>
+											<table id="holiday-info-table">
 												<thead>
 													<tr>
 														<th>순번</th>
+														<sec:authorize access="hasRole('ROLE_ADMIN')">
+															<th>사용자분류</th>
+															<th>ID</th>
+														</sec:authorize>
 														<th>휴가번호</th>
 														<th>신청일</th>
 														<th>시작일</th>
 														<th>종료일</th>
 														<th>휴가취소</th>
+														<th>사용여부</th>
 													</tr>
 												</thead>
-												<tbody>
+												<tbody id="holiday-list-tbody">
 													<c:choose>
 														<c:when test="${empty schedules}">
 															<tr>
@@ -550,11 +508,16 @@
 															<c:forEach var="schedule2" items="${schedules}">
 																<tr>
 																	<td><c:out value="${schedule2.rowNumber}" /></td>
-																	<td><c:out value="${schedule2.rowNumber}" /></td>
+																	<sec:authorize access="hasRole('ROLE_ADMIN')">
+																		<td><c:out value="${schedule2.userType}" /></td>
+																		<td><c:out value="${schedule2.userId}" /></td>
+																	</sec:authorize>
+																	<td><c:out value="${schedule2.scheduleId}" /></td>
 																	<td><c:out value="${schedule2.appDate}" /></td>
 																	<td><c:out value="${schedule2.startDate}" /></td>
 																	<td><c:out value="${schedule2.endDate}" /></td>
-																	<button>취소</button>
+																	<td><button>취소</button></td>
+																	<td><c:out value="${schedule2.actualUse}" /></td>
 																</tr>
 															</c:forEach>
 														</c:otherwise>
@@ -632,10 +595,13 @@
 												alt="마지막" />
 											</a>
 										</div>
-										<div class="right-buttons">
-											<button type="button" id="" onclick="postPopup();">휴가신청</button>
-											<button type="button" id="" onclick="postPopup();">휴가신청내역</button>
-										</div>
+
+										<sec:authorize
+											access="hasAnyRole('ROLE_MANAGER', 'ROLE_MECHA')">
+											<div class="right-buttons">
+												<button type="button" id="" onclick="postPopup();">휴가신청</button>
+											</div>
+										</sec:authorize>
 									</div>
 									<!-- ********** 세은 로그 관련 내용 끝 ********** -->
 								</div>
