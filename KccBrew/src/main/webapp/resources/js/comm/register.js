@@ -56,15 +56,14 @@ function changeType(typeNum){
 }
 //점포 목록 테이블 데이터 변경
 function insertTableContent(data){
-	var content = "<thead><tr><td scope='col'>선택</td><td scope='col'>점포명</td><td scope='col'>주소</td></tr></thead><tbody class='table-group-divider'>";
+	var content = "";
 	for (var i = 0; i < data[0].length; i++) {
-		content += '<tr><td scope="row"><input type="radio" name="select-store">'
+		content += '<tr><td><input type="radio" name="select-store">'
 			+ '<input type="hidden" value="'+data[0][i].storeSeq+'"></td>\n'
-			+ '<td scope="row">'+data[0][i].storeNm+'</td>\n' 
-			+ '<td scope="row">'+data[0][i].storeAddr+'</td>\n</tr>'; 
+			+ '<td>'+data[0][i].storeNm+'</td>\n' 
+			+ '<td>'+data[0][i].storeAddr+'</td>\n</tr>'; 
 	}
-	content+='</tbody>'
-		$("#store-list").html(content);
+	$(".table>tbody").html(content);
 	$(".hidden-keyword").val(data[2].keyword);
 }
 
@@ -81,6 +80,7 @@ function movePage(page){
 			'page':page
 		},
 		success : function(data) { // 결과 성공 콜백함수
+			console.log(data)
 			insertTableContent(data);
 			insertPageContent(data);					
 		}
@@ -89,30 +89,49 @@ function movePage(page){
 
 //점포 목록 조회 페이지에서 페이지 번호 데이터 입력
 function insertPageContent(data){
-	var inputPagingString="";
-
-
-	if (data[1].nowPageBlock > 1) {//첫 페이지 블럭
-		inputPagingString += '<li class="page-number">' + '<p onclick=movePage"'
-		+ (data[1].startPage - 1) + ')">◀</p>\n' + '</li>\n';
-	}
-	for (var i = data[1].startPage; i <= data[1].endPage; i++) {
-		if (i == data[1].nowPage) {
-			inputPagingString += '<li class="page-number">'
-				+ '<p onclick="movePage(' + i	+ ')"><b>' + i
-				+ '</b></p>\n' + '</li>\n'
-		} else {
-			inputPagingString += '<li class="page-number">' 
-				+ '<p onclick="movePage('+ i + ')">' + i
-				+ '</p>\n</li>\n'
+	inputPagingString="";
+	for(var i=data[1].startPage;i<=data[1].endPage;i++){
+		var selected=data[1].currentPage == i ? 'selected' : '';
+		if(i<=data[1].totalPage){
+			inputPagingString+="<a href='javascript:void(0)' onclick='movePage("+i+")' class='pagination page-btn "+selected+"'>"+i+"</a>\n"
 		}
 	}
-	if (data[1].nowPageBlock < data[1].totalPageBlock) { //마지막 페이지 블럭
-		inputPagingString += '<li class="page-number">' 
-			+ '<p onclick="movePage('+ (data[1].endPage + 1) + ')">▶</p>\n' + '</li>\n'
+	$(".page-btn").html(inputPagingString)
+	
+	if(data[1].currentPage>1){
+		$(".left-btn").removeAttr("onclick");
+		$(".left-btn").attr("onclick","movePage("+(data[1].currentPage-1)+")");
+	}else{
+		$(".left-btn").removeAttr("onclick");
 	}
-	$(".paging").html(inputPagingString)
 
+	if(data[1].currentPage<data[1].totalPage){
+		$(".right-btn").removeAttr("onclick");
+		$(".right-btn").attr("onclick","movePage("+(data[1].currentPage+1)+")");
+	}else{
+		$(".right-btn").removeAttr("onclick");
+	}
+	
+	$(".end-btn").removeAttr("onclick");
+	$(".end-btn").attr("onclick","movePage("+(data[1].totalPage)+")");
+	
+	
+	
+	applyPagingCss();
+}
+//페이징 CSS 적용
+function applyPagingCss(){
+	$(".page-btn").css('font-weight','normal');
+	$(".page-btn").css('display','flex');
+	$(".page-btn").css('width','auto');
+	$(".page-btn").css('background-color','white');
+	$(".page-btn").css('color','black');
+	$(".pagination .selected").css("font-weight","bold");
+	$(".pagination .selected").css("border-radius","50%");
+	$(".pagination .selected").css("display","inline-block");
+	$(".pagination .selected").css("width","35px");
+	$(".pagination .selected").css("color","white");
+	$(".pagination .selected").css("background-color","navy");
 }
 //사용자 아이디 조건 확인
 function checkUserId(){

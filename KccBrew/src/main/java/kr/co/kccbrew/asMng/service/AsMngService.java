@@ -40,7 +40,13 @@ public class AsMngService implements IAsMngService{
 		map.put("end", page*10);
 		return asRepository.selectASList(map);
 	}
-	
+	/**
+	 * 조회한 검색 결과 (페이징 안한거
+	 */
+	@Override
+	public List<AsMngVo> selectAllASList(AsMngVo asMngVo) {
+		return asRepository.selectAllASList(asMngVo);
+	}
 	/**
 	 * 조회할 AS 리스트의 수
 	 */
@@ -195,4 +201,5 @@ public class AsMngService implements IAsMngService{
 	public void updateResultMng(AsMngVo asMngVo) {
 		asRepository.updateResultMng(asMngVo);
 	}
+
 }

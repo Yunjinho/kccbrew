@@ -10,7 +10,7 @@
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/resources/config"/>
         		
         <property name="java-output-path" value="target/classes"/>
-        <property name="context-root" value="/"/>
+        <property name="context-root" value="kccbrew"/>
         	
     </wb-module>
     

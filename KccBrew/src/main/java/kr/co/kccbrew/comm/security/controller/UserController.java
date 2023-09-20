@@ -88,8 +88,8 @@ public class UserController {
 		model.addAttribute("mechineList", mechineList);
 		model.addAttribute("locationList", locationList);
 
-		model.addAttribute("totalPageCount", totalPage);
-		model.addAttribute("nowPage", 1);
+		model.addAttribute("totalPage", totalPage);
+		model.addAttribute("currentPage", 1);
 		model.addAttribute("totalPageBlock", totalPageBlock);
 		model.addAttribute("nowPageBlock", nowPageBlock);
 		model.addAttribute("startPage", startPage);

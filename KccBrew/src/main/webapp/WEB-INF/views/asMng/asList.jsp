@@ -463,16 +463,18 @@
 									</form>
 									</c:if>
 
-
-									<!-- 로그 리스트 -->
 									<div id="logTable">
-										<div>
+										<div class="list-info-div">
 											<p class="data-info">
 												전체<b><span><c:out value="${totalCount}" /></span></b>건<span
 													id="text-separator"> | </span><b><span><c:out
 															value="${currentPage}" /></span></b>/<b><span><c:out
 															value="${totalPage}" /></span></b>쪽
 											</p>
+											<div>
+												<p class="download-excel" onclick="downExcel(1)">현재 페이지 다운로드</p>
+												<p class="download-excel" onclick="downExcel(2)">전체 페이지 다운로드</p>
+											</div>
 										</div>
 										<table>
 											<thead>

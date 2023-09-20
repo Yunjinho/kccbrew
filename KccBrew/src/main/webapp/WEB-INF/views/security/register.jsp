@@ -235,44 +235,86 @@
 	<!-- modal -->
 	<div class="search-store">
 		<div class="search-store-content">
-			<input type="text" class="search-input"
-				placeholder="점포명 또는 주소를 입력해주세요."> <input type="hidden"
-				class="hidden-keyword">
-			<table id="store-list" class="table">
-				<thead>
-					<tr>
-						<td scope="col">선택</td>
-						<td scope="col">점포명</td>
-						<td scope="col">주소</td>
-					</tr>
-				</thead>
-				<tbody class="table-group-divider">
-					<c:forEach var="list" items="${storeList}">
-						<tr>
-							<td scope="row"><input type="radio" name="select-store">
-								<input type="hidden" value="${list.storeSeq}"></td>
-							<td>${list.storeNm}</td>
-							<td>${list.storeAddr}</td>
-						</tr>
-					</c:forEach>
-				</tbody>
+			<table id="search-box">
+				<tr>
+					<td>
+						<input type="text" class="search-input" placeholder="점포명 또는 주소를 입력해주세요."> 
+						<input type="hidden" class="hidden-keyword">
+					</td>
+				</tr>
 			</table>
-
-			<div>
-				<ul class="paging">
-					<c:forEach var="i" begin='${startPage}' end='${endPage}'>
-						<li class="page-number">
-							<p onclick="movePage('${i}')">${i}</p>
-						</li>
-					</c:forEach>
-					<c:if test="${nowPageBlock lt totalPageBlock}">
-						<li class="page-number">
-							<p onclick="movePage('${endPage+1}')">▶</p>
-						</li>
-					</c:if>
-				</ul>
+			<div id="strTable">
+				<table class="table">
+					<thead>
+						<tr>
+							<th>선택</th>
+							<th>점포명</th>
+							<th>주소</th>
+						</tr>
+					</thead>
+					<tbody>
+						<c:forEach var="list" items="${storeList}">
+							<tr>
+								<td scope="row"><input type="radio" name="select-store">
+									<input type="hidden" value="${list.storeSeq}"></td>
+								<td>${list.storeNm}</td>
+								<td>${list.storeAddr}</td>
+							</tr>
+						</c:forEach>
+					</tbody>
+				</table>
 			</div>
-			<input type="button" id="select-store" value="선택">
+			
+			
+			<!-- 페이징 -->
+			<div class="paging pagination">
+
+				<!-- 앞으로 가는 버튼 -->
+				<a href="#"><img
+					src="/resources/img/asMng/free-icon-left-chevron-6015759.png"
+					alt=" 처" onclick="movePage(1)"/></a>
+
+				<c:choose>
+					<c:when test="${currentPage > 1}">
+						<a href="#"><img class="left-btn"
+							src="/resources/img/asMng/free-icon-left-arrow-271220.png"
+							alt="이" onclick="movePage(${currentPage-1})"/></a>
+					</c:when>
+					<c:otherwise>
+						<a href="#" class="left-btn"><img
+							src="/resources/img/asMng/free-icon-left-arrow-271220.png"
+							alt="이" /></a>
+					</c:otherwise>
+				</c:choose>
+				<!-- 리스트 목록 나열 -->
+				<div id="number-list">
+					<div class="page-btn">
+						<c:forEach var="page" begin="${startPage}" end="${endPage}" step="1">
+							<c:if test="${page <= totalPage}">
+								<a href="javascript:void(0)" onclick="movePage(${page})"
+									class="pagination page-btn ${currentPage == page ? 'selected' : ''}">
+									${page} </a>
+							</c:if>
+						</c:forEach>
+					</div>
+				</div>
+
+				<!-- 뒤로 가는 버튼 -->
+				<c:if test="${currentPage < totalPage}">
+					<a href="#" class="right-btn" onclick="movePage(${currentPage+1})"> 
+					<img src="/resources/img/asMng/free-icon-right-arrow-271228.png" alt="다" />
+					</a>
+				</c:if>
+				<c:if test="${currentPage == totalPage}">
+					<a href="javascript:void(0);" class="right-btn" class="disabled-link"> 
+					<img src="/resources/img/asMng/free-icon-right-arrow-271228.png" alt="다" />
+					</a>
+				</c:if>
+
+				<a href="#" class="end-btn" onclick="movePage(${totalPage})" >
+				<img src="/resources/img/asMng/free-icon-fast-forward-double-right-arrows-symbol-54366.png" alt="마" />
+				</a>
+			</div>
 		</div>
 	</div>
 </body>
