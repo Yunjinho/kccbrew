@@ -216,7 +216,7 @@
 				u.approve_yn		AS "approveStatus",
 				u.approve_admin		AS "admWhoAcp",
 				u.eqpmn_cd			AS "machineCode",
-				u.location_cd		AS "mechaLocationCd"
+				u.location_cd		AS "mechaLocationCode"
 			FROM users u
 			WHERE u.user_id = #{userId}
 		]]>
@@ -234,4 +234,32 @@
 			WHERE u.user_id = m.user_id AND s.store_seq = m.store_seq AND u.user_id = #{userId}
 		]]>
 	</select>
+	
+	<!-- 마이페이지 정보 수정하기 -->
+	<update id="updateMyProfile" parameterType="kr.co.kccbrew.comm.main.model.MainPageVo">
+		<![CDATA[
+			UPDATE users
+			SET user_nm		= #{userName},
+				user_email  = #{userEmail},
+				user_telno  = #{userTelNo},
+				user_addr	= #{userAddress},
+				eqpmn_cd 	= #{machineCode, jdbcType=VARCHAR},
+				location_cd = #{mechaLocationCode, jdbcType=VARCHAR}
+			WHERE user_id = #{userId}
+		]]>
+	</update>
+	
+	<!-- 마이페이지 점포 정보 수정 -->
+	<update id="updateMyStore" parameterType="kr.co.kccbrew.comm.main.model.MainPageVo">
+		<![CDATA[
+			UPDATE store
+		    SET store_nm 	= #{storeName, jdbcType=VARCHAR},
+		        store_telno = #{storeTelNo, jdbcType=VARCHAR}
+		    WHERE store_seq IN (
+		        SELECT su.store_seq
+		        FROM store_user_map su
+		        WHERE su.user_id = #{userId}
+		    )
+		]]>
+	</update>
 </mapper>

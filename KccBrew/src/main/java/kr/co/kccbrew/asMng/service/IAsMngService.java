@@ -23,15 +23,10 @@ public interface IAsMngService {
 	public int countASList(AsMngVo asMngVo);
 	
 	/**
-	 * 장비 코드 리스트 조회
-	 * @return : 장비 코드 리스트
+	 * 코드 리스트 조회
+	 * @return : 코드 리스트
 	 */
-	public List<AsMngVo> selectMachineCd();
-	/**
-	 * AS상태 코드 리스트 조회
-	 * @return : AS상태 코드 리스트
-	 */
-	public List<AsMngVo> selectAsStatusCd();
+	public List<AsMngVo> selectCd(String code);
 	
 	/**
 	 * 점포 정보 조회
@@ -57,13 +52,6 @@ public interface IAsMngService {
 	 * @return
 	 */
 	public List<AsMngVo> selectAsImg(String fileDtlId);
-	
-	/**
-	 * 지역코드 조회
-	 * @param locationCd
-	 * @return
-	 */
-	public List<AsMngVo> selectLocationCd();
 	
 	/**
 	 * 지역 상세코드 조회
@@ -113,4 +101,14 @@ public interface IAsMngService {
 	 * 점포점주 AS 결과입력
 	 */
 	public void updateResultMng(AsMngVo asMngVo);
+	
+	
+	/**
+	 * 엑셀로 저장
+	 * @param asMngVo
+	 */
+	public void downloadExcel(AsMngVo asMngVo,String flag,String currentPage);
+	
+	public void asMod(AsMngVo asMngVo);
+	public void deleteFile(AsMngVo asMngVo, String imgSeq);
 }

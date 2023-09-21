@@ -86,10 +86,10 @@
 							</tr>
 							<tr>
 								<td>
-									<input type="text" name="storeName" id="storeName" value="${store.storeName}" required>
+									${store.storeName}
 								</td>
 								<td>
-									<input type="text" name="storeTelNo" id="storeTelNo" value="${store.storeTelNo}" required>
+									${store.storeTelNo}
 								</td>
 							</tr>
 						</c:forEach>

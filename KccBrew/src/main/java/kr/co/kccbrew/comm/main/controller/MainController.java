@@ -32,7 +32,7 @@ public class MainController {
 	@RequestMapping(value = "/mypage", method = RequestMethod.GET)
 	public String showUserInfo(Model model) {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-
+		
 		if(authentication != null) {
 			Object principal = authentication.getPrincipal();
 			if(principal instanceof UserDetails) {
@@ -53,7 +53,7 @@ public class MainController {
 	@RequestMapping(value = "/mypage/mod", method = RequestMethod.GET)
 	public String modUserInfo(Model model) {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-
+		
 		if(authentication != null) {
 			Object principal = authentication.getPrincipal();
 			if(principal instanceof UserDetails) {
@@ -68,13 +68,13 @@ public class MainController {
 		}
 		return "MyPageP2";
 	}
-
+	
 	@RequestMapping(value= "/confirmmod", method = RequestMethod.POST)
 	public String confirmModProfile(Model model, @ModelAttribute MainPageVo mainPageVo,
 						            @RequestParam("machineCode") String machineCode,
 						            @RequestParam("mechaLocationCode") String mechaLocationCode) {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-
+		
 		if(authentication != null) {
 			Object principal = authentication.getPrincipal();
 			if(principal instanceof UserDetails) {
@@ -84,18 +84,17 @@ public class MainController {
 				mainPageVo.setMachineCode(machineCode);
 	            mainPageVo.setMechaLocationCode(mechaLocationCode);
 				mainServiceImple.updateMyProfile(mainPageVo);
-				mainServiceImple.updateMyStore(mainPageVo);
 			}
 		}
 		return "redirect:/mypage";
 	}
-
+	
 	/******************* 비밀번호 변경 *********************/
-
+	
 	@RequestMapping(value = "/mypage/chgpwd", method = RequestMethod.GET)
 	public String chgPassword(Model model) {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-
+		
 		if(authentication != null) {
 			Object principal = authentication.getPrincipal();
 			if(principal instanceof UserDetails) {
@@ -108,11 +107,11 @@ public class MainController {
 		}
 		return "MyPageP3";
 	}
-
+	
 	@RequestMapping(value= "/confirmchg", method = RequestMethod.POST)
 	public String confirmChange(Model model, @ModelAttribute MainPageVo mainPageVo) {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-
+		
 		if(authentication != null) {
 			Object principal = authentication.getPrincipal();
 			if(principal instanceof UserDetails) {
@@ -126,24 +125,6 @@ public class MainController {
 	}
 	
 	/****************** 관리자 페이지 **************************/
-
-	//점포 등록 페이지
-	@RequestMapping(value="/admin/store/register", method=RequestMethod.GET)
-	public String adminStoreRegPage(Model model) {
-		return "adminPageS1";
-	}
-
-	//점포 조회 페이지
-	@RequestMapping(value="/admin/store/check", method=RequestMethod.GET)
-	public String adminStoreListPage(Model model) {
-		return "adminPageS2";
-	}
-
-	//점포 검색 페이지
-	@RequestMapping(value="/admin/store/search", method=RequestMethod.GET)
-	public String adminStoreSearchPage(Model model) {
-		return "adminPageS3";
-	}
 
 	//회원 관리 페이지
 	@RequestMapping(value="/admin/member/manage", method=RequestMethod.GET)
@@ -168,30 +149,29 @@ public class MainController {
 	public String adminCodePage(Model model) {
 		return "adminPageC1";
 	}
-	/************************ 점주 페이지 ******************************/
+	
 
-	//점포 조회 페이지
-	@RequestMapping(value="/manager/store/check", method=RequestMethod.GET)
-	public String goStoreSearchPage(Model model) {
-		return "managerPageS1";
-	}
+
+	
+	/************************ 점주 페이지 ******************************/
 
 	//점포 수정 페이지
 	@RequestMapping(value="/manager/store/mod", method=RequestMethod.GET)
 	public String goStoreModPage(Model model) {
-		return "managerPageS2";
+		return "modStoreInfo";
 	}
 
-	//마이 페이지	
 
 
 	/*************************** 수리 기사 페이지 **************************/
 
-	//일정 조회
 
-	//마이페이지	
-
-
+	
+	
+	
+	
+	
+	
 	/************************** 관리자 메인 ***************************/
 	@RequestMapping(value="/admin/main", method=RequestMethod.GET)
 	public String admMain(Model model) {
@@ -311,5 +291,5 @@ public class MainController {
 	public String openPrivacy() {
 		return "comm/main/privacy";
 	}
-	
+
 }

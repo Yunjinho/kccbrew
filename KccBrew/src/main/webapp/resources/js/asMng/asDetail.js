@@ -12,7 +12,7 @@ function changeLosctionDtlCd(data){
 function changeLocationCd(){
 	var locCd = $("select[name=location] option:selected").val();
 	$.ajax({
-	    type : "GET",           // 타입 (get, post, put 등등)
+	    type : "POST",           // 타입 (get, post, put 등등)
 	    url : "/search-location-cd",           // 요청할 서버url
 	    dataType : "json",       // 데이터 타입 (html, xml, json, text 등등)
 	    data : { 
@@ -29,7 +29,7 @@ function changeMach(){
 	var visitDttm=$("input[name=visitDttm]").val();
 	var machineCd=$("input[name=machineCd]").val();
 	$.ajax({
-		type : "GET",           // 타입 (get, post, put 등등)
+		type : "POST",           // 타입 (get, post, put 등등)
 	    url : "/search-mecha",           // 요청할 서버url
 	    dataType : "json",       // 데이터 타입 (html, xml, json, text 등등)
 	    data : {
@@ -56,7 +56,7 @@ function selectDate(){
 	var strMngId=$("input[name=strMngId]").val();
 	var visitDttm=$("input[name=visitDttm]").val();
 	$.ajax({
-		type : "GET",           // 타입 (get, post, put 등등)
+		type : "POST",           // 타입 (get, post, put 등등)
 	    url : "/check-str-schedule",           // 요청할 서버url
 	    dataType : "json",       // 데이터 타입 (html, xml, json, text 등등)
 	    data : {
@@ -77,9 +77,12 @@ function selectDate(){
 
 function rejectAs(userTypeCd){
 	$("html").css("overflow","hidden");
+	$(".modal-reject").css("display","block");
+}
+function resultAs(reapply){
+	$("html").css("overflow","hidden");
 	$("input[name=resultReapply]").val(reapply);
 	$(".modal-result").css("display","block");
-	$(".modal-reject").css("display","block");
 }
 
 function resubmission(reapply){
