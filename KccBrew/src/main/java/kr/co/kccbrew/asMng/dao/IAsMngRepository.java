@@ -18,6 +18,10 @@ public interface IAsMngRepository {
 	 * @return AS 리스트의 총 수
 	 */
 	public int countASList(AsMngVo asMngVo);
+	/**
+	 *  AS 전체 조회
+	 */
+	public List<AsMngVo>selectAllASList(AsMngVo asMngVo); 
 	
 	/**
 	 * 장비 코드 리스트 조회
@@ -101,7 +105,7 @@ public interface IAsMngRepository {
 	 * 기사 배정
 	 * @param asMngVo
 	 */
-	public AsMngVo insertAsAssign(AsMngVo asMngVo);
+	public void insertAsAssign(AsMngVo asMngVo);
 	
 	/**
 	 * AS status 상태 변경
@@ -121,7 +125,17 @@ public interface IAsMngRepository {
 	public void updateRejectConfirm(Map<String, Object> map);
 	
 	/**
-	 * AS 결과 입력 처리 
+	 * 수리기사 AS 결과 입력 
 	 */
 	public void insertResult(AsMngVo asMngVo);
+
+	/**
+	 * 점포점주 AS 결과입력
+	 */
+	public void updateResultMng(AsMngVo asMngVo);
+	/**
+	 * 재배정 여부
+	 * @param asMngVo
+	 */
+	public void updateAsResultConfirm(AsMngVo asMngVo);
 }

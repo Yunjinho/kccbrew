@@ -2,18 +2,34 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-
+<%@ taglib prefix="sec"
+	uri="http://www.springframework.org/security/tags"%>
 <%@ page import="java.time.LocalDateTime"%>
 <%@ page import="java.time.format.DateTimeFormatter"%>
+
+<%@ page import="kr.co.kccbrew.comm.util.ObjectUtilController"%>
+<%@ page import="kr.co.kccbrew.comm.security.model.UserVo"%>
+<%@ page import="javax.servlet.http.HttpSession"%>
+
 
 <!DOCTYPE html>
 <html>
 <head>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 <!-- css -->
+<link rel="stylesheet" href="/resources/css/schdl/schdl-common.css" />
 <link rel="stylesheet" href="/resources/css/log/mylogtest.css" />
 <link rel="stylesheet" href="/resources/css/log/content-template.css" />
-<link rel="stylesheet" href="/resources/css/schdl/common.css" />
 <link rel="stylesheet" href="/resources/css/schdl/myschedulelist.css" />
+<link rel="stylesheet" href="/resources/css/schdl/myHldyList.css" />
+
+
+<!-- javascript -->
+<script src="<c:url value="/resources/js/schdl/schdl-common.js"/>"></script>
+<script src="<c:url value="/resources/js/schdl/board.js"/>"></script>
+<script src="<c:url value="/resources/js/schdl/search.js"/>"></script>
+<script src="<c:url value="/resources/js/schdl/holidayList.js"/>"></script>
 
 <meta charset="UTF-8">
 <title>Insert title here</title>
@@ -21,6 +37,23 @@
 </head>
 
 <body>
+	<c:set var="user" value="${sessionScope.user}" />
+
+	<!-- 자바스크립트에서 session사용 -->
+	<script>
+    var equipmentCodeValue = "<c:out value='${user.eqpmnCd}' />";
+</script>
+
+	<script>
+    var locationCodeValue = "<c:out value='${user.locationCd}' />";
+</script>
+
+	<script>
+    var userTypeCd = "<c:out value='${user.userTypeCd}' />";
+</script>
+
+
+
 	<div id="page" class="page-nosubmenu">
 		<!-- ********** header영역 시작********** -->
 		<div id="page-header">
@@ -49,7 +82,6 @@
 							</a>
 								<div class="user-info-box popover-box">
 									<div class="user-info-picture">
-										<img src="./게시판_files/f1.png" alt="이세은 사진" class="userpicture">
 										<h4>이세은</h4>
 										<p class="department">화학과</p>
 									</div>
@@ -70,12 +102,7 @@
 							<li class="user-courses"><a
 								class="user-courses-popover icon-a" tabindex="0" role="button"
 								data-toggle="popover" data-placement="bottom"
-								data-original-title="" title="">
-									<div class="header-icon-background">
-										<img src="/resources/img/log/free-icon-checklist-3478402.png"
-											alt="Check List" class="header-icon" />
-									</div>
-							</a>
+								data-original-title="" title=""> </a>
 								<div class="user-courses-box popover-box">
 									<div class="popover-header">진행중인 강좌 (0)</div>
 									<ul class="my-course-lists">
@@ -90,17 +117,10 @@
 							<li class="user-notification"><a
 								class="icon-a user-noti-popover" tabindex="0" role="button"
 								data-toggle="popover" data-placement="bottom"
-								data-original-title="" title="">
-									<div class="header-icon-background">
-										<img
-											src="/resources/img/log/free-icon-notification-bell-3913239.png"
-											alt="Check List" class="header-icon" />
-									</div>
-							</a>
+								data-original-title="" title=""> </a>
 								<div class="user-noti-box popover-box">
 									<div class="popover-header">
-										<span>전체 알림</span> <img
-											src="/resources/img/log/popover-icon.png" alt="" class="gear" />
+										<span>전체 알림</span>
 									</div>
 									<div class="user-noti-lists">
 										<div class="nomessage">Loading...</div>
@@ -114,16 +134,12 @@
 							<!-- 마이 메뉴 -->
 							<li class="user-product"><a class="user-menu-product icon-a"
 								tabindex="0" role="button" data-toggle="popover"
-								data-original-title="" title=""><div
-										class="header-icon-background">
-										<img src="/resources/img/log/free-icon-menu-7421181.png"
-											alt="Check List" class="header-icon" />
-									</div></a>
+								data-original-title="" title=""></a>
 								<div class="hide menu-product">
 									<div class="menu-product-itl">
 										<h5>
-											교육혁신원 홈페이지 <a href="http://ctl.inu.ac.kr/" target="_blank"><img
-												src="./게시판_files/itl_home.png" alt=""></a>
+											교육혁신원 홈페이지 <a href="http://ctl.inu.ac.kr/" target="_blank">
+											</a>
 										</h5>
 										<ul>
 											<li><a href="http://www.inu.ac.kr/" target="_blank">인천대학교
@@ -141,95 +157,17 @@
 									</div>
 								</div></li>
 
-							<!-- 로그아웃 -->
-							<li class="active user-login user-logout hidden-xs"><a
-								href="" class="btn btn-person">로그아웃</a></li>
+
 						</ul>
 					</div>
 					<!-- ********** header메뉴 끝********** -->
 
-					<div class="coursename">
-						<h1>&nbsp;</h1>
-					</div>
+
 				</div>
 			</nav>
 		</div>
 		<!-- ********** header영역 끝********** -->
 
-		<!-- ********** 왼쪽 메뉴 시작 ********** -->
-		<div id="page-lnb">
-			<ul class="left-menus">
-
-				<!-- 관리자 메뉴 -->
-
-				<!-- 메뉴1 -->
-				<li class="" data-original-title="" title=""><a href=""
-					class="left-menu-link left-menu-link-mypage" title="My Page"
-					data-toggle="tooltip" data-placement="right">
-						<h5 class="">A/S관리</h5>
-				</a>
-					<ul>
-						<li class=""><a href="https://cyber.inu.ac.kr/" title="">Dashboard</a></li>
-						<li class=""><a href="https://cyber.inu.ac.kr/user/files.jsp"
-							title="">파일 관리</a></li>
-						<li class=""><a
-							href="https://cyber.inu.ac.kr/mod/ubboard/my.jsp" title="">진행강좌
-								공지</a></li>
-						<li class=""><a
-							href="https://cyber.inu.ac.kr/user/edit.jsp?id=86992" title="">개인정보
-								수정</a></li>
-					</ul></li>
-
-				<!-- 메뉴2 -->
-				<li class="active active-fix" data-original-title="" title=""><a
-					href="" class="left-menu-link left-menu-link-mycourses"
-					title="교과 과정" data-toggle="tooltip" data-placement="right">
-						<h5 class="">시스템관리</h5>
-				</a>
-					<ul>
-						<li class="active"><a href="" title="active">로그조회</a></li>
-						<li class=""><a href="" title="">파일조회</a></li>
-					</ul></li>
-
-				<!-- 메뉴3 -->
-				<li class="" data-original-title="" title=""><a href=""
-					class="left-menu-link left-menu-link-irrcourse" title="비교과 과정"
-					data-toggle="tooltip" data-placement="right">
-						<h5 class="nosubmenu">코드관리</h5>
-				</a></li>
-
-				<!-- 메뉴4 -->
-				<li class="" data-original-title="" title=""><a href=""
-					class="left-menu-link left-menu-link-eclass" title="자율강좌"
-					data-toggle="tooltip" data-placement="right">
-						<h5 class="nosubmenu">수리기사관리</h5>
-				</a></li>
-
-				<!-- 메뉴5 -->
-				<li class="" data-original-title="" title=""><a href=""
-					class="left-menu-link left-menu-link-onlinep" title="교수지원"
-					data-toggle="tooltip" data-placement="right">
-						<h5 class="">점포관리</h5>
-				</a>
-					<ul>
-						<li class=""><a href="" title="">수강 신청</a></li>
-						<li class=""><a href="" title="">수강 현황</a></li>
-						<li class=""><a href="" title="">수료 확인</a></li>
-					</ul></li>
-
-				<!-- 메뉴6 -->
-				<li t class="" data-original-title="" title=""><a href=""
-					class="left-menu-link left-menu-link-online" title="학습지원"
-					data-toggle="tooltip" data-placement="right">
-						<h5 class="">회원관리</h5>
-				</a>
-					<ul>
-						<li class=""><a href="" title="">수강 신청</a></li>
-						<li class=""><a href="" title="">수강 현황</a></li>
-						<li class=""><a href="" title="">수료 확인</a></li>
-					</ul></li>
-			</ul>
-		</div>
 		<!-- ********** 왼쪽 메뉴 끝 ********** -->
 
 		<div id="page-mask">
@@ -248,7 +186,7 @@
 											alt="Check List" class="header-icon" />
 									</div>
 								</li>
-								<li><a href="<c:url value='/schedule2' />">휴가사용현황</a></li>
+								<li><a href="<c:url value='/holiday' />">휴가사용현황</a></li>
 							</ol>
 						</div>
 						<!-- ********** 페이지 네비게이션 끝 ********** -->
@@ -265,80 +203,92 @@
 										<div class="tabNav">
 											<ul class="tab-ul">
 												<li class="active"><a href=""><span>휴가사용현황</span></a></li>
-												<li class="last"><a href="/schedule/calendar"><span>근태현황</span></a></li>
+												<sec:authorize
+													access="hasAnyRole('ROLE_MANAGER', 'ROLE_MECHA')">
+													<li class="last"><a href="/schedule/calendar"><span>나의캘린더</span></a></li>
+												</sec:authorize>
+												<sec:authorize access="hasRole('ROLE_ADMIN')">
+													<li class="last"><a href="/schedule"><span>근태현황</span></a></li>
+												</sec:authorize>
 											</ul>
 										</div>
 
 										<!-- 로그 검색 -->
+										<sec:authorize access="hasRole('ROLE_ADMIN')">
+											<form name="srhForm" action="/admin/holiday/search"
+												method="post">
 
-										<form action="/schedule" method="POST">
+												<input type="hidden" name="currentPage" value="1"> <input
+													type="hidden" name="startDate" value=""> <input
+													type="hidden" name="endDate" value="">
 
-											<div>
-												<span> 사용자검색
-												</span>
-											</div>
+												<div>
+													<span> 사용자검색 </span>
+												</div>
 
-											<div class="search-info">
-												<fieldset>
-													<legend class="blind">사용자검색</legend>
-													<table id="search-box">
-														<tr>
-															<th>위치</th>
-															<td><select class="tx2" name="storeLocation"
-																onchange="chg()">
-																	<option>지역 대분류</option>
-																	<option value="2"
-																		${param.storeLocation == '2' ? 'selected' : ''}>서울</option>
-																	<option value="31"
-																		${param.storeLocation == '31' ? 'selected' : ''}>경기도</option>
-																	<option value="32"
-																		${param.storeLocation == '32' ? 'selected' : ''}>인천</option>
-															</select></td>
+												<div class="search-info">
+													<fieldset>
+														<legend class="blind">사용자검색</legend>
+														<table id="search-box">
+															<tr>
+																<th>위치<span style="color: red;">(필수)</span></th>
+																<td><select class="tx2" name="location"
+																	onchange="changeLocationCd()">
+																		<option value="">지역 대분류</option>
+																		<c:forEach var="location" items="${locationList}">
+																			<c:if test="${location.grpCdId eq 'L'}">
+																				<option value="${location.grpCdDtlId}"
+																					${param.superGrpCdDtlId == location.grpCdDtlId ? 'selected' : ''}>
+																					${location.grpCdDtlNm}</option>
+																			</c:if>
+																		</c:forEach>
+																</select></td>
 
-															<td><select class="tx2" name="storeSubLocation"
-																disabled>
-																	<option>지역 소분류</option>
-															</select></td>
+																<td><select class="tx2" name="locationCd">
+																		<option value="">지역 소분류</option>
+																</select></td>
 
-															<th>유형</th>
-															<td><select class="tx2" name="userType"
-																onchange="updateUserType()">
-																	<option value="">사용자 유형</option>
-																	<option value="기사"
-																		${param.userType == '기사' ? 'selected' : ''}>기사</option>
-																	<option value="점주"
-																		${param.userType == '점주' ? 'selected' : ''}>점주</option>
-															</select></td>
+																<th>유형</th>
+																<td><select class="tx2" name="userType"
+																	id="selectUserType"
+																	onchange="updateUserType(); inputDisableSetting('selectUserType', 'selectKeyword');">
+																		<option value="">사용자 유형</option>
+																		<option value="기사"
+																			${param.userType == '기사' ? 'selected' : ''}>기사</option>
+																		<option value="점주"
+																			${param.userType == '점주' ? 'selected' : ''}>점주</option>
+																</select></td>
 
-															<th>검색어</th>
-															<td><select class="tx2" name="searchKeword"
-																onchange="chgName(this)">
-																	<option value="">검색어</option>
-																	<option value="userId"
-																		${param.searchKeword == '회원ID' ? 'selected' : ''}>회원ID</option>
-																	<option value="userName"
-																		${param.searchKeword == '회원이름' ? 'selected' : ''}>회원이름</option>
-																	<option value="storeId"
-																		${param.searchKeword == '지점ID' ? 'selected' : ''}>지점ID</option>
-																	<option value="storeName"
-																		${param.searchKeword == '지점명' ? 'selected' : ''}>지점명</option>
-															</select></td>
-															<td><input type="text" id="search-word"
-																name="searchKeword" placeholder="키워드 선택 후 입력해주세요"
-																required disabled></td>
+																<th>검색어</th>
+																<td><select class="tx2" name="searchKeword"
+																	id="selectKeyword" onchange="chgName(this)" disabled>
+																		<option value="">검색어</option>
+																		<option value="userId"
+																			${param.searchKeword == '회원ID' ? 'selected' : ''}>회원ID</option>
+																		<option value="userName"
+																			${param.searchKeword == '회원이름' ? 'selected' : ''}>회원이름</option>
+																		<option value="storeId"
+																			${param.searchKeword == '지점ID' ? 'selected' : ''}>지점ID</option>
+																		<option value="storeName"
+																			${param.searchKeword == '지점명' ? 'selected' : ''}>지점명</option>
+																</select></td>
+																<td><input type="text" id="search-word"
+																	name="searchKeword" placeholder="키워드 선택 후 입력해주세요"
+																	required disabled></td>
+															</tr>
 
-														</tr>
-
-													</table>
-													<div class="form-btn-box">
-														<fieldset>
-															<button type="submit" class="form-btn">검색</button>
-															<button type="reset" class="form-btn">초기화</button>
-														</fieldset>
-													</div>
-												</fieldset>
-											</div>
-										</form>
+														</table>
+														<div class="form-btn-box">
+															<fieldset>
+																<button type="button" class="form-btn"
+																	onClick="performSearch();">검색</button>
+																<button type="reset" class="form-btn">초기화</button>
+															</fieldset>
+														</div>
+													</fieldset>
+												</div>
+											</form>
+										</sec:authorize>
 
 
 
@@ -413,141 +363,191 @@
 											}
 										</script>
 
+										<div class="info-box">
 
-										<!-- 로케이션을 서울로 지정 시, 서브로케이션 활성화 -->
-										<script>
-function chg() {
-  const storeLocationSelect = document.getElementsByName('storeLocation')[0];
-  const storeSubLocationSelect = document.getElementsByName('storeSubLocation')[0];
+											<sec:authorize access="hasRole('ROLE_MANAGER')">
 
-  // 대분류 선택값 가져오기
-  const selectedStoreLocation = storeLocationSelect.value;
+												<form name="srhForm" action="/user/holiday/search"
+													method="post" style="display: none;">
+													<input type="hidden" name="startDate" value=""> <input
+														type="hidden" name="endDate" value=""> <input
+														type="hidden" name="currentPage" value="1">
+												</form>
 
-  // 소분류 옵션 초기화
-  storeSubLocationSelect.innerHTML = '<option>지역 소분류</option>';
+												<!-- 점포일 경우 -->
+												<div class="subtitle">점포</div>
+												<table id="search-box">
+													<!-- 점주정보 -->
+													<tr>
+														<th>유형</th>
+														<td><c:out value="점주" /></td>
 
-  // 대분류에 따라 소분류 옵션 추가
-  if (selectedStoreLocation === '2') {
-    storeSubLocationSelect.innerHTML += `
-      <option value="02-200" ${param.storeSubLocation == '02-200' ? 'selected' : ''}>양천</option>
-      <option value="02-300" ${param.storeSubLocation == '02-300' ? 'selected' : ''}>은평,마포,서대문</option>
-  	<option value="02-400"
-		${param.storeSubLocation == '02-400' ? 'selected' : ''}>송파,강동,중량,광진,선동</option>
-	<option value="02-500"
-		${param.storeSubLocation == '02-500' ? 'selected' : ''}>서초,강남,과천시</option>
-	<option value="02-700"
-		${param.storeSubLocation == '02-700' ? 'selected' : ''}>마포,용산,종로</option>
-	<option value="031-200"
-		${param.storeSubLocation == '031-200' ? 'selected' : ''}>수원시</option>
-    `;
-    storeSubLocationSelect.disabled = false;
-  } else {
-	    storeSubLocationSelect.disabled = true;
-	  }
-}
-</script>
+														<th>ID</th>
+														<td><c:out value="${user.userId}" /></td>
 
+														<th>이름</th>
+														<td><c:out value="${user.userNm}" /></td>
 
+														<th>이메일</th>
+														<td><c:out value="${user.userEmail}" /></td>
 
+														<th>연락처</th>
+														<td><c:out value="${user.userTelNo}" /></td>
 
-										<!-- 로그 리스트 -->
+													</tr>
+
+													<!-- 점포정보 -->
+													<tr>
+														<th>점포ID</th>
+														<td><c:out value="${store.storeSeq}" /></td>
+
+														<th>점포명</th>
+														<td><c:out value="${store.storeNm}" /></td>
+
+														<th>점포주소</th>
+														<td colspan="3"><c:out
+																value="${store.storeAddr} ${store.storeAddrDtl}" /></td>
+
+														<th>점포연락처</th>
+														<td><c:out value="${store.storeTelNo}" /></td>
+
+													</tr>
+												</table>
+											</sec:authorize>
+
+											<sec:authorize access="hasRole('ROLE_MECHA')">
+
+												<form name="srhForm" action="/user/holiday/search"
+													method="post" style="display: none;">
+													<input type="hidden" name="startDate" value=""> <input
+														type="hidden" name="endDate" value=""> <input
+														type="hidden" name="currentPage" value="1">
+												</form>
+
+												<div class="subtitle">회원정보</div>
+												<table id="search-box">
+													<tr>
+														<th>유형</th>
+														<td>수리기사</td>
+
+														<th>ID</th>
+														<td><c:out value="${user.userId}" /></td>
+
+														<th>이름</th>
+														<td><c:out value="${user.userNm}" /></td>
+
+														<th>연락처</th>
+														<td><c:out value="${user.userTelNo}" /></td>
+
+													</tr>
+
+													<tr>
+														<th>사용장비코드</th>
+														<td id="equipmentCode"><c:out value="${user.eqpmnCd}" /></td>
+
+														<th>장비명</th>
+														<td id="equipmentName"></td>
+
+														<th>지역코드</th>
+														<td id="locationCode"><c:out
+																value="${user.locationCd}" /></td>
+
+														<th>지역명</th>
+														<td id="locationName"></td>
+
+													</tr>
+												</table>
+											</sec:authorize>
+										</div>
+
 										<div id="logTable">
-											<form name="form" method="get" class="Search">
-												<div class="board-info">
-													<span class="data-info"> 전체<b><span><c:out
-																	value="${totalDataNumber}" /></span></b>건<span
-														id="text-separator"> | </span><b><span><c:out
-																	value="${currentPage}" /></span></b>/<b><span><c:out
-																	value="${totalPage}" /></span></b>쪽
-													</span>
 
-													<fieldset>
-														<legend class="blind">날짜 검색</legend>
-														<label>휴가일</label> <input type="date" id="startDate"
-															name="startDate" required> <input type="date"
-															id="endDate" name="endDate" required> <input
-															type="submit" value="검색">
-													</fieldset>
-												</div>
-											</form>
-											<table>
+											<div class="board-info">
+												<span class="data-info"> 전체<b><span
+														id="totalDataNumber"><c:out
+																value="${totalDataNumber}" /></span></b>건<span id="text-separator">
+														| </span> <b><span id="currentPage"><c:out
+																value="${currentPage}" /></span></b>/<b><span id="totalPage"><c:out
+																value="${totalPage}" /></span></b>쪽
+												</span>
+
+												<fieldset>
+													<legend class="blind">날짜 검색</legend>
+													<label>휴가일</label> <input type="date"
+														id="selectedStartDate" name="selectedStartDate" value=""
+														required> <input type="date" id="selectedEndDate"
+														name="selectedEndDate" value="" required> <input
+														type="button" value="검색" onclick="goDate(); return false;">
+												</fieldset>
+											</div>
+
+											<table id="holiday-info-table">
 												<thead>
 													<tr>
 														<th>순번</th>
-														<th>회원구분</th>
-														<th>회원ID</th>
-														<th>회원이름</th>
-														<th>지점ID</th>
-														<th>지점명</th>
-														<th>위치코드</th>
+														<sec:authorize access="hasRole('ROLE_ADMIN')">
+															<th>사용자분류</th>
+															<th>ID</th>
+														</sec:authorize>
+														<th>휴가번호</th>
 														<th>신청일</th>
 														<th>시작일</th>
 														<th>종료일</th>
+														<th>휴가취소</th>
+														<th>사용여부</th>
 													</tr>
 												</thead>
-												<tbody>
-													<c:forEach var="schedule2" items="${schedules}">
-														<tr>
-															<td><c:out value="${schedule2.rowNumber}" /></td>
-															<td><c:out value="${schedule2.userType}" /></td>
-															<td><c:out value="${schedule2.userId}" /></td>
-															<td><c:out value="${schedule2.userName}" /></td>
-															<td><c:choose>
-																	<c:when test="${schedule2.storeId != 0}">
-																		<c:out value="${schedule2.storeId}" />
-																	</c:when>
-																	<c:otherwise>
-																		<!-- 0인 경우 아무것도 표시하지 않음 -->
-																	</c:otherwise>
-																</c:choose></td>
-															<td><c:out value="${schedule2.storeName}" /></td>
-															<td><c:out value="${schedule2.locationCd}" /></td>
-															<td><c:out value="${schedule2.appDate}" /></td>
-															<td><c:out value="${schedule2.startDate}" /></td>
-															<td><c:out value="${schedule2.endDate}" /></td>
-														</tr>
-													</c:forEach>
+												<tbody id="holiday-list-tbody">
+													<c:choose>
+														<c:when test="${empty schedules}">
+															<tr>
+																<td colspan="10">데이터가 없습니다.</td>
+															</tr>
+														</c:when>
+														<c:otherwise>
+															<c:forEach var="schedule2" items="${schedules}">
+																<tr>
+																	<td><c:out value="${schedule2.rowNumber}" /></td>
+																	<sec:authorize access="hasRole('ROLE_ADMIN')">
+																		<td><c:out value="${schedule2.userType}" /></td>
+																		<td><c:out value="${schedule2.userId}" /></td>
+																	</sec:authorize>
+																	<td><c:out value="${schedule2.scheduleId}" /></td>
+																	<td><c:out value="${schedule2.appDate}" /></td>
+																	<td><c:out value="${schedule2.startDate}" /></td>
+																	<td><c:out value="${schedule2.endDate}" /></td>
+																	<td><button>취소</button></td>
+																	<td><c:out value="${schedule2.actualUse}" /></td>
+																</tr>
+															</c:forEach>
+														</c:otherwise>
+													</c:choose>
+												</tbody>
 											</table>
 										</div>
 
 										<!-- 페이징 -->
 										<div class="paging pagination">
 
-											<!-- 맨 앞으로 가는 버튼 -->
-											<a
-												href="/schedule2?currentPage=1
-															&startYr=${searchContent.startYr}&startMn=${searchContent.startMn}
-															&endYr=${searchContent.endYr}&endMn=${searchContent.endMn}
-															&storeLocation=${searchContent.storeLocation}
-															&storeSubLocation=${searchContentstoreSubLocation}
-															&userType=${searchContent.userType}
-															&userId=${searchContent.userId}
-															&userName=${searchContent.userName}
-															&storeId=${searchContent.storeId}
-															&storeName=${searchContent.storeName}"><img
+											<!-- 맨 앞 버튼 -->
+											<a href="" onclick="goPage(1); return false;"
+												class="pageFirst"> <img
 												src="/resources/img/log/free-icon-left-chevron-6015759.png"
-												alt=" 처음" /></a>
+												alt="처음" />
+											</a>
 
+											<!-- 이전 버튼 -->
 											<c:choose>
 												<c:when test="${currentPage > 1}">
-													<a
-														href="/schedule2?currentPage=${currentPage - 1}
-															&startYr=${searchContent.startYr}&startMn=${searchContent.startMn}
-															&endYr=${searchContent.endYr}&endMn=${searchContent.endMn}
-															&storeLocation=${searchContent.storeLocation}
-															&storeSubLocation=${searchContentstoreSubLocation}
-															&userType=${searchContent.userType}
-															&userId=${searchContent.userId}
-															&userName=${searchContent.userName}
-															&storeId=${searchContent.storeId}
-															&storeName=${searchContent.storeName}">
-														<img
+													<a href=""
+														onclick="goPage(${currentPage - 1}); return false;"
+														class="pagePrev"> <img
 														src="/resources/img/log/free-icon-left-arrow-271220.png"
 														alt="이전" />
 													</a>
 												</c:when>
 												<c:otherwise>
-													<a href="#" class="disabled-link"> <img
+													<a href="" class="disabled-link pagePrev"> <img
 														src="/resources/img/log/free-icon-left-arrow-271220.png"
 														alt="이전" />
 													</a>
@@ -560,63 +560,48 @@ function chg() {
 													<c:forEach var="page" begin="${sharePage * 10 + 1}"
 														end="${(sharePage + 1) * 10}" step="1">
 														<c:if test="${page <= totalPage}">
-															<a
-																href="/schedule2?currentPage=${page}
-																			&startYr=${searchContent.startYr}&startMn=${searchContent.startMn}
-																			&endYr=${searchContent.endYr}&endMn=${searchContent.endMn}
-																			&storeLocation=${searchContent.storeLocation}
-																			&storeSubLocation=${searchContentstoreSubLocation}
-																			&userType=${searchContent.userType}
-																			&userId=${searchContent.userId}
-																			&userName=${searchContent.userName}
-																			&storeId=${searchContent.storeId}
-																			&storeName=${searchContent.storeName}"
-																class="pagination page-btn ${currentPage == page ? 'selected' : ''}">
+															<a href="" onclick="goPage(${page}); return false;"
+																class="pageNow pagination page-btn ${currentPage == page ? 'selected' : ''}">
 																${page} </a>
+
+
+
+
 														</c:if>
 													</c:forEach>
 												</div>
 											</div>
 
-											<!-- 뒤로 가는 버튼 -->
+											<!-- 뒤로 버튼 -->
 											<c:if test="${currentPage < totalPage}">
-												<a
-													href="/schedule2?currentPage=${currentPage + 1}
-															&startYr=${searchContent.startYr}&startMn=${searchContent.startMn}
-															&endYr=${searchContent.endYr}&endMn=${searchContent.endMn}
-															&storeLocation=${searchContent.storeLocation}
-															&storeSubLocation=${searchContentstoreSubLocation}
-															&userType=${searchContent.userType}
-															&userId=${searchContent.userId}
-															&userName=${searchContent.userName}
-															&storeId=${searchContent.storeId}
-															&storeName=${searchContent.storeName}">
-													<img
+												<a href=""
+													onclick="goPage(${currentPage + 1}); return false;"
+													class="pageNext"> <img
 													src="/resources/img/log/free-icon-right-arrow-271228.png"
 													alt="다음" />
 												</a>
 											</c:if>
 											<c:if test="${currentPage == totalPage}">
-												<a href="" class="disabled-link"> <img
+												<a href="" class="disabled-link pageNext"> <img
 													src="/resources/img/log/free-icon-right-arrow-271228.png"
 													alt="다음" />
 												</a>
 											</c:if>
 
-											<a
-												href="/schedule2?currentPage=${totalPage}
-															&startYr=${searchContent.startYr}&startMn=${searchContent.startMn}
-															&endYr=${searchContent.endYr}&endMn=${searchContent.endMn}
-															&storeLocation=${searchContent.storeLocation}
-															&storeSubLocation=${searchContentstoreSubLocation}
-															&userType=${searchContent.userType}
-															&userId=${searchContent.userId}
-															&userName=${searchContent.userName}
-															&storeId=${searchContent.storeId}
-															&storeName=${searchContent.storeName}"><img
+											<!-- 맨 뒤로 버튼 -->
+											<a href="" onclick="goPage(${totalPage}); return false;"
+												class="pageLast"> <img
 												src="/resources/img/log/free-icon-fast-forward-double-right-arrows-symbol-54366.png"
-												alt="마지막" /></a>
+												alt="마지막" />
+											</a>
 										</div>
+
+										<sec:authorize
+											access="hasAnyRole('ROLE_MANAGER', 'ROLE_MECHA')">
+											<div class="right-buttons">
+												<button type="button" id="" onclick="postPopup();">휴가신청</button>
+											</div>
+										</sec:authorize>
 									</div>
 									<!-- ********** 세은 로그 관련 내용 끝 ********** -->
 								</div>
@@ -627,7 +612,5 @@ function chg() {
 			</div>
 		</div>
 	</div>
-	<script src="<c:url value='/js/bootstrap.min.js' />"></script>
-	<script src="<c:url value='/js/jquery.min.js' />"></script>
 </body>
 </html>

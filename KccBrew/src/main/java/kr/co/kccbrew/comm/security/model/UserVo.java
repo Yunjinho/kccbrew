@@ -48,6 +48,7 @@ public class UserVo {
 	 * 회원가입시 등록된  장비군,지역코드를 조회하기 위한 Vo
 	 * @author YUNJINHO
 	 */
+	private String superGrpCdDtlId;
 	private String grpCdDtlId;
 	private String grpCdId;
 	private String grpCdNm;

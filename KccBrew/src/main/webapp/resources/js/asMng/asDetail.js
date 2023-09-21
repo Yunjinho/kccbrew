@@ -15,7 +15,7 @@ function changeLocationCd(){
 	    type : "GET",           // 타입 (get, post, put 등등)
 	    url : "/search-location-cd",           // 요청할 서버url
 	    dataType : "json",       // 데이터 타입 (html, xml, json, text 등등)
-	    data : {
+	    data : { 
 			'locCd' : locCd,
 		},
 	    success : function(data) { // 결과 성공 콜백함수
@@ -77,10 +77,12 @@ function selectDate(){
 
 function rejectAs(userTypeCd){
 	$("html").css("overflow","hidden");
+	$("input[name=resultReapply]").val(reapply);
+	$(".modal-result").css("display","block");
 	$(".modal-reject").css("display","block");
 }
 
-function resubmission(){
+function resubmission(reapply){
 	$("html").css("overflow","hidden");
 	$(".modal-rejectContent").css("display","block");
 }
@@ -88,6 +90,7 @@ function resubmission(){
 function cancelModal(){
 	$("html").css("overflow","auto");
 	$(".modal-reject").css("display","none");
+	$(".modal-result").css("display","none");
 	$(".modal-rejectContent").css("display","none");
 }
 

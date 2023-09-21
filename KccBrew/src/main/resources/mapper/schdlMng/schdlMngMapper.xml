@@ -3,12 +3,6 @@
 <mapper
 	namespace="kr.co.kccbrew.schdlMng.dao.ISchdlMngRepository">
 
-	<!-- <resultMap id="assignResult" type="java.util.Map"> <result property="asAssignSeq" 
-		column="AS_ASSIGN_SEQ" /> <result property="asInfoSeq" column="AS_INFO_SEQ" 
-		/> <result property="visitDate" column="VISIT_DTTM" /> <result property="mechanicId" 
-		column="MECHANIC_ID" /> <result property="managerId" column="STORE_MNG_ID" 
-		/> </resultMap> -->
-
 	<resultMap id="holidayResult"
 		type="kr.co.kccbrew.schdlMng.model.HolidayVo">
 		<result property="holidaySeq" column="HOLIDAY_SEQ" />
@@ -20,6 +14,37 @@
 		<result property="actualUse" column="ACTL_USE" />
 	</resultMap>
 
+	<resultMap id="asAssignResult"
+		type="kr.co.kccbrew.schdlMng.model.AsAssignVo">
+		<result property="AsAssignSeq" column="AS_ASSIGN_SEQ" />
+		<result property="AsInfoSeq" column="AS_INFO_SEQ" />
+		<result property="visitDate" column="VISIT_DTTM" />
+		<result property="confirmDate" column="CONFIRM_DTTM" />
+		<result property="userId" column="MECHANIC_ID" />
+		<result property="modDate" column="MOD_DTTM" />
+		<result property="modUser" column="MOD_USER" />
+		<result property="regDate" column="REG_DTTM" />
+		<result property="regUser" column="REG_USER" />
+		<result property="reAssign" column="REASSIGN" />
+		<result property="rejectContentMecha"
+			column="REJECT_CONTENT_MCHA" />
+	</resultMap>
+
+	<resultMap id="asResultResult"
+		type="kr.co.kccbrew.schdlMng.model.AsResultVo">
+		<result property="asResultSeq" column="AS_RESULT_SEQ" />
+		<result property="asAssignSeq" column="AS_ASSIGN_SEQ" />
+		<result property="resultDetail" column="RESULT_DTL"
+			jdbcType="CLOB" javaType="java.lang.String" />
+		<result property="storeManagerFeedBack" column="STORE_MNG_FB" />
+		<result property="resultDate" column="RESULT_DTTM" />
+		<result property="fileSeq" column="FILE_SEQ" />
+		<result property="asPrice" column="AS_PRICE" />
+		<result property="modUser" column="MOD_USER" />
+		<result property="modDate" column="MOD_DTTM" />
+		<result property="reApply" column="REAPPLY" />
+	</resultMap>
+
 	<resultMap id="scheduleResult"
 		type="kr.co.kccbrew.schdlMng.model.SchdlMngVo">
 		<result property="rowNumber" column="ROW_NUMBER" />
@@ -27,20 +52,33 @@
 		<result property="userId" column="USER_ID" />
 		<result property="userName" column="USER_NM" />
 		<result property="userPhoneNumber" column="USER_TELNO" />
+		<result property="equipmentCd" column="EQPMN_CD" />
 		<result property="storeId" column="STORE_SEQ" />
 		<result property="storeName" column="STORE_NM" />
 		<result property="storePhoneNumber" column="STORE_TELNO" />
 		<result property="locationCd" column="LOCATION_CD" />
 		<result property="scheduleId" column="SCHEDULE_ID" />
+		<result property="scheduleType" column="SCHE DULE_TYPE" />
 		<result property="appDate" column="HLDY_APP" />
 		<result property="startDate" column="START_DATE" />
 		<result property="endDate" column="END_DATE" />
 		<result property="actualUse" column="ACTL_USE" />
+		<result property="visitDate" column="VISIT_DTTM" />
+		<result property="resultDate" column="result_dttm" />
+	</resultMap>
+
+	<resultMap id="userResult"
+		type="kr.co.kccbrew.comm.security.model.UserVo">
+		<result property="superGrpCdDtlId" column="SUPER_GRP_CD_DTL_ID" />
+		<result property="grpCdDtlId" column="GRP_CD_DTL_ID" />
+		<result property="grpCdId" column="GRP_CD_ID" />
+		<result property="grpCdDtlNm" column="GRP_CD_DTL_NM" />
 	</resultMap>
 
 
 	<!-- 휴가사용현황 조회 -->
-	<select id="selectSchedules2" resultMap="scheduleResult">
+	<select id="selectHolidays" parameterType="map"
+		resultMap="scheduleResult">
 		SELECT *
 		FROM
 		(SELECT ROWNUM AS
@@ -59,10 +97,12 @@
 		WHEN
 		gc.GRP_CD_DTL_NM = '기사' THEN
 		users.LOCATION_CD
-		WHEN gc.GRP_CD_DTL_NM =
+		WHEN
+		gc.GRP_CD_DTL_NM =
 		'점주' THEN STORE.LOCATION_CD
 		ELSE NULL
-		END AS LOCATION_CD,
+		END AS
+		LOCATION_CD,
 		holiday.HOLIDAY_SEQ AS SCHEDULE_ID,
 		holiday.HLDY_APP,
 		holiday.HLDY_STAR
@@ -73,7 +113,8 @@
 		FROM
 		holiday
 		LEFT OUTER JOIN users ON
-		holiday.USER_ID = users.USER_ID
+		holiday.USER_ID =
+		users.USER_ID
 		LEFT
 		OUTER JOIN
 		GROUP_CODE_DETAIL gc ON
@@ -92,51 +133,25 @@
 		) subquery
 
 		WHERE 1=1
-		and ACTL_USE='Y'
 		<!-- 날짜검색 -->
-		<if
-			test="searchContent.startYr != null and searchContent.startYr != '' and searchContent.startMn != null and searchContent.startMn != '' and
-          searchContent.endYr != null and searchContent.endYr != '' and searchContent.endMn != null and searchContent.endMn != ''">
-			AND (
-			(YEAR(START_DATE) * 10000 + MONTH(START_DATE) * 100 +
-			DAY(START_DATE))
-			BETWEEN
-			(#{searchContent.startYr} * 10000 +
-			#{searchContent.startMn} * 100 + 01)
-			AND
-			(#{searchContent.endYr} *
-			10000 + #{searchContent.endMn} * 100 + 31)
-			)
-		</if>
+    <![CDATA[AND (TRUNC(START_DATE) <= #{endDate} AND TRUNC(END_DATE) >= #{startDate})]]>
 
 		<!-- 사용자 검색 -->
-		<if
-			test="searchContent.userId != null and searchContent.userId != ''">
-			AND USER_ID = #{searchContent.userId}
+		<if test="userVo.userId != null and userVo.userId != ''">
+			AND USER_ID = #{userVo.userId}
 		</if>
-		<if
-			test="searchContent.userType!= null and searchContent.userType != ''">
-			AND USER_TYPE = #{searchContent.userType}
-		</if>
-		<if
-			test="searchContent.userName != null and searchContent.userName != ''">
-			AND USER_NM = #{searchContent.userName}
+		<!-- <if test="userVo.userId != null and userVo.userId != ''"> AND USER_TYPE 
+			= #{searchContent.userType} </if> -->
+		<if test="userVo.userNm != null and userVo.userNm != ''">
+			AND USER_NM = #{userVo.userNm}
 		</if>
 
 		<!-- 지점 검색 -->
-		<if
-			test="searchContent.storeId != null and searchContent.storeId!= ''">
-			AND STORE_SEQ = #{searchContent.storeId}
+		<if test="userVo.storeSeq != null and userVo.storeSeq != ''">
+			AND STORE_SEQ = #{userVo.storeSeq}
 		</if>
-		<if
-			test="searchContent.storeName != null and searchContent.storeName != ''">
-			AND STORE_NM = #{searchContent.storeName}
-		</if>
-
-		<!-- 스케줄 검색 -->
-		<if
-			test="searchContent.scheduleType != null and searchContent.scheduleType != ''">
-			AND SCHEDULE_TYPE = #{searchContent.scheduleType}
+		<if test="userVo.storeNm != null and userVo.storeNm != ''">
+			AND STORE_NM = #{userVo.storeNm}
 		</if>)
 		
 		<![CDATA[ WHERE ROW_NUMBER BETWEEN #{firstRowNum} AND #{lastRowNum} ]]>
@@ -149,7 +164,7 @@
 
 
 	<!-- 휴가사용현황 개수 조회 -->
-	<select id="selectSchedule2Count" resultType="Integer"
+	<select id="selectHolidayCount" resultType="Integer"
 		parameterType="java.util.Map">
 
 		SELECT COUNT(*)
@@ -195,52 +210,27 @@
 		ORDER BY START_DATE DESC
 		) subquery
 		WHERE 1=1
-		and ACTL_USE='Y'
 
 		<!-- 날짜검색 -->
-		<if
-			test="searchContent.startYr != null and searchContent.startYr != '' and searchContent.startMn != null and searchContent.startMn != '' and
-          searchContent.endYr != null and searchContent.endYr != '' and searchContent.endMn != null and searchContent.endMn != ''">
-			AND (
-			(YEAR(START_DATE) * 10000 + MONTH(START_DATE) * 100 +
-			DAY(START_DATE))
-			BETWEEN
-			(#{searchContent.startYr} * 10000 +
-			#{searchContent.startMn} * 100 + 01)
-			AND
-			(#{searchContent.endYr} *
-			10000 + #{searchContent.endMn} * 100 + 31)
-			)
-		</if>
+    <![CDATA[AND (TRUNC(START_DATE) <= #{endDate} AND TRUNC(END_DATE) >= #{startDate})]]>
+
 
 		<!-- 사용자 검색 -->
-		<if
-			test="searchContent.userId != null and searchContent.userId != ''">
-			AND USER_ID = #{searchContent.userId}
+		<if test="userVo.userId != null and userVo.userId != ''">
+			AND USER_ID = #{userVo.userId}
 		</if>
-		<if
-			test="searchContent.userType!= null and searchContent.userType != ''">
-			AND USER_TYPE = #{searchContent.userType}
-		</if>
-		<if
-			test="searchContent.userName != null and searchContent.userName != ''">
-			AND USER_NM = #{searchContent.userName}
+		<!-- <if test="userVo.userId != null and userVo.userId != ''"> AND USER_TYPE 
+			= #{searchContent.userType} </if> -->
+		<if test="userVo.userNm != null and userVo.userNm != ''">
+			AND USER_NM = #{userVo.userNm}
 		</if>
 
 		<!-- 지점 검색 -->
-		<if
-			test="searchContent.storeId != null and searchContent.storeId!= ''">
-			AND STORE_SEQ = #{searchContent.storeId}
+		<if test="userVo.storeSeq != null and userVo.storeSeq != ''">
+			AND STORE_SEQ = #{userVo.storeSeq}
 		</if>
-		<if
-			test="searchContent.storeName != null and searchContent.storeName != ''">
-			AND STORE_NM = #{searchContent.storeName}
-		</if>
-
-		<!-- 스케줄 검색 -->
-		<if
-			test="searchContent.scheduleType != null and searchContent.scheduleType != ''">
-			AND SCHEDULE_TYPE = #{searchContent.scheduleType}
+		<if test="userVo.storeNm != null and userVo.storeNm != ''">
+			AND STORE_NM = #{userVo.storeNm}
 		</if>
 		)
 
@@ -417,15 +407,216 @@ EXTRACT(YEAR FROM SCHEDULE_DATE) = 2023 AND EXTRACT(MONTH FROM SCHEDULE_DATE) = 
 
 
 
-	<!-- AS배정날짜 목록 조회 -->
+
+
+	<!-- 지역코드 조회 -->
+	<select id="selectLocations" resultMap="userResult">
+		SELECT
+		CASE
+		WHEN
+		INSTR(GRP_CD_DTL_ID, '-') > 0 THEN SUBSTR(GRP_CD_DTL_ID, 1,
+		INSTR(GRP_CD_DTL_ID, '-') - 1)
+		ELSE NULL
+		END AS SUPER_GRP_CD_DTL_ID,
+		GRP_CD_DTL_ID,
+		GRP_CD_ID,
+		GRP_CD_DTL_NM
+		FROM
+		GROUP_CODE_DETAIL
+		WHERE
+		(GRP_CD_ID = 'LL' OR GRP_CD_ID = 'L')
+	</select>
+
+	<select id="selectMechaSchedules" resultMap="scheduleResult"
+		parameterType="kr.co.kccbrew.schdlMng.model.SchdlMngVo">
+		SELECT *
+		FROM
+		(SELECT
+		u.USER_ID,
+		u.USER_NM,
+		u.USER_TELNO,
+		u.LOCATION_CD,
+		u.EQPMN_CD,
+		g.GRP_CD_DTL_NM AS USER_TYPE,
+		h.HLDY_STAR AS
+		START_DATE,
+		h.HLDY_END AS END_DATE,
+		NULL AS VISIT_DTTM,
+		NULL AS
+		result_dttm,
+		'휴무' AS SCHEDULE_TYPE
+		FROM
+		USERS u
+		JOIN
+		GROUP_CODE_DETAIL g ON
+		u.USER_TYPE_CD = g.GRP_CD_DTL_ID
+		LEFT JOIN
+		HOLIDAY h ON u.USER_ID =
+		h.USER_ID
+		WHERE
+		g.GRP_CD_ID = 'U'
+		AND g.GRP_CD_DTL_ID IN ('03')
+		AND
+		h.actl_use = 'Y'
+
+		UNION
+
+		SELECT
+		u.USER_ID,
+		u.USER_NM,
+		u.USER_TELNO,
+		u.LOCATION_CD,
+		u.EQPMN_CD,
+		g.GRP_CD_DTL_NM AS USER_TYPE,
+		NULL AS
+		START_DATE,
+		NULL AS END_DATE,
+		a.VISIT_DTTM,
+		NULL AS result_dttm,
+		'배정' AS
+		SCHEDULE_TYPE
+		FROM
+		USERS u
+		JOIN
+		GROUP_CODE_DETAIL g ON u.USER_TYPE_CD =
+		g.GRP_CD_DTL_ID
+		JOIN
+		AS_ASSIGN a ON u.USER_ID = a.MECHANIC_ID
+		WHERE
+		g.GRP_CD_ID = 'U'
+		AND g.GRP_CD_DTL_ID IN ('03')
+
+		UNION
+
+		SELECT
+		u.USER_ID,
+		u.USER_NM,
+		u.USER_TELNO,
+		u.LOCATION_CD,
+		u.EQPMN_CD,
+		g.GRP_CD_DTL_NM AS
+		USER_TYPE,
+		NULL AS START_DATE,
+		NULL AS END_DATE,
+		NULL AS VISIT_DTTM,
+		r.result_dttm,
+		'근무' AS SCHEDULE_TYPE
+		FROM
+		USERS u
+		JOIN
+		GROUP_CODE_DETAIL g
+		ON u.USER_TYPE_CD = g.GRP_CD_DTL_ID
+		JOIN
+		AS_ASSIGN a ON u.USER_ID =
+		a.MECHANIC_ID
+		JOIN
+		AS_RESULT r ON a.AS_ASSIGN_SEQ = r.AS_ASSIGN_SEQ
+		WHERE
+		g.GRP_CD_ID = 'U'
+		AND g.GRP_CD_DTL_ID IN ('03'))
+		WHERE 1=1
+
+	</select>
+
+	<!-- 검색조건에 따른 아이디리스트 조회 -->
+	<select id="selectIdList" resultType="string"
+		parameterType="kr.co.kccbrew.comm.security.model.UserVo">
+		select USER_ID from users
+		where LOCATION_CD LIKE '%' ||
+		#{locationCd} ||
+		'%'
+		<if test="userId != null and userId != ''">
+			AND USER_ID = #{userId}
+		</if>
+		<if test="userNm != null and userNm != ''">
+			AND USER_NM = #{userNm}
+		</if>
+		<if test="eqpmnCd != null and eqpmnCd != ''">
+			AND EQPMN_CD = #{eqpmnCd}
+		</if>
+	</select>
+
+
+	<!-- 아이디에 따른 휴무일 조회 -->
+	<select id="selectHolidayDates" resultType="java.util.Map"
+		parameterType="string">
+		select HLDY_STAR, HLDY_END from holiday where
+		ACTL_USE='Y' AND user_id
+		=
+		#{Id}
+		<if test="yr != null and yr != '' and mn != null and mn != ''">
+			and (
+			(EXTRACT(YEAR FROM HLDY_STAR) = #{yr} and
+			EXTRACT(MONTH FROM HLDY_STAR) = #{mn})
+			OR
+			(EXTRACT(YEAR FROM HLDY_END)
+			= #{yr} and EXTRACT(MONTH FROM HLDY_END) = #{mn})
+			)
+		</if>
+	</select>
+
+	<!-- 아이디에 따른 배정일 조회 -->
 	<select id="selectAssignDates" parameterType="string"
 		resultType="java.sql.Date">
-		SELECT assign.VISIT_DTTM
-		FROM AS_ASSIGN assign
+		SELECT VISIT_DTTM
+		FROM AS_ASSIGN
+		WHERE MECHANIC_ID =
+		#{Id}
+		<if test="yr != null and yr != '' and mn != null and mn != ''">
+			and
+			(EXTRACT(YEAR FROM VISIT_DTTM) = #{yr} and
+			EXTRACT(MONTH FROM VISIT_DTTM) = #{mn})
+		</if>
+	</select>
+
+	<!-- 아이디에 따른 결과일 조회 -->
+	<select id="selectResultDates" parameterType="string"
+		resultType="java.sql.Date">
+		SELECT AS_RESULT.RESULT_DTTM
+		FROM AS_ASSIGN
 		INNER JOIN
-		AS_INFORMATION info ON assign.AS_INFO_SEQ = info.AS_INFO_SEQ
+		AS_RESULT ON
+		AS_ASSIGN.AS_ASSIGN_SEQ = AS_RESULT.AS_ASSIGN_SEQ
 		WHERE
-		assign.MECHANIC_ID = #{userId} OR info.STORE_MNG_ID = #{userId}
+		AS_ASSIGN.REJECT_CONTENT_MCHA IS NULL and MECHANIC_ID = #{Id}
+		<if test="yr != null and yr != '' and mn != null and mn != ''">
+			and
+			(EXTRACT(YEAR FROM RESULT_DTTM) = #{yr} and
+			EXTRACT(MONTH FROM RESULT_DTTM) =
+			#{mn})
+		</if>
+	</select>
+
+
+	<!-- 휴가 조회 -->
+	<select id="selecHoliday2" parameterType="map"
+		resultMap="holidayResult">
+		SELECT *
+		FROM holiday
+		WHERE user_id = #{userId}
+		AND
+		TRUNC(HLDY_STAR) = TRUNC(#{date})
+	</select>
+
+	<!-- 배정 조회 -->
+	<select id="selectAssign" parameterType="map"
+		resultMap="asAssignResult">
+		SELECT *
+		FROM AS_ASSIGN
+		WHERE MECHANIC_ID = #{userId}
+		AND
+		TRUNC(VISIT_DTTM) = TRUNC(#{date})
+	</select>
+
+	<!-- 결과 조회 -->
+	<select id="selectResult" parameterType="map"
+		resultMap="asResultResult">
+		SELECT ar.*
+		FROM AS_ASSIGN aa
+		INNER JOIN AS_RESULT ar ON
+		aa.AS_ASSIGN_SEQ = ar.AS_ASSIGN_SEQ
+		WHERE MECHANIC_ID = #{userId} AND
+		TRUNC(RESULT_DTTM) = TRUNC(#{date})
 	</select>
 
 

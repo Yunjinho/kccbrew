@@ -12,7 +12,12 @@ public interface IAsMngService {
 	 * @return : 조건으로 검색한 as 리스트
 	 */
 	public List<AsMngVo>selectASList(AsMngVo asMngVo,int page);
+	
 	/**
+	 *  조건에 맞는 AS 전체 조회
+	 */
+	public List<AsMngVo>selectAllASList(AsMngVo asMngVo);
+	/** 
 	 * @return AS 리스트의 총 수
 	 */
 	public int countASList(AsMngVo asMngVo);
@@ -103,4 +108,9 @@ public interface IAsMngService {
 	 * AS 결과 입력
 	 */
 	public void insertAsResult(AsMngVo asMngVo);
+
+	/**
+	 * 점포점주 AS 결과입력
+	 */
+	public void updateResultMng(AsMngVo asMngVo);
 }

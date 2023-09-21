@@ -18,7 +18,7 @@
 	<header class="comm-nav">
 		<div class="top-bar">
 			<p>
-				<c:out value="${user.userId}" />
+				<c:out value="${user.userNm}"/>
 				(관리자)님 환영합니다
 			</p>
 
@@ -31,7 +31,7 @@
 		</div>
 		<nav class="nav-bar">
 			<div class="nav-bar-brand">
-				<c:url var="toMain" value="/adminMain" />
+				<c:url var="toMain" value="/admin/main" />
 				<a href="${toMain}"> <img alt="logo"
 					src="${path}/resources/img/logo.png">
 				</a>
@@ -47,28 +47,30 @@
 						</ul></li>
 					<li class="nav-item"><a class="nav-links" href="#">점포 관리</a>
 						<ul class="comm-nav-dropdown">
-							<c:url var="toStoreRegPage" value="/adminstoreregpage" />
+							<c:url var="toStoreRegPage" value="/admin/store/register" />
 							<li><a href="${toStoreRegPage}">점포 등록</a></li>
-							<c:url var="toStoreListPage" value="/adminstorelistpage" />
+							<c:url var="toStoreListPage" value="/admin/store/check" />
 							<li><a href="${toStoreListPage}">점포 조회</a></li>
-							<c:url var="toStoreSearchPage" value="/adminstoresearchpage" />
+							<c:url var="toStoreSearchPage" value="/admin/store/search" />
 							<li><a href="${toStoreSearchPage}">점포 검색</a></li>
 						</ul></li>
 					<li class="nav-item"><a class="nav-links" href="#">회원 관리</a>
 						<ul class="comm-nav-dropdown">
-							<c:url var="toMemberMngPage" value="/membermngpage" />
+							<c:url var="toMemberMngPage" value="/admin/member/manage" />
 							<li><a href="${toMemberMngPage}">회원 조회</a></li>
 						</ul></li>
 					<li class="nav-item"><a class="nav-links" href="#">시스템 관리</a>
 						<ul class="comm-nav-dropdown">
-							<c:url var="toAdminLogPage" value="/adminlogpage" />
+							<c:url var="toAdminLogPage" value="/admin/log/check" />
 							<li><a href="${toAdminLogPage}">로그 조회</a></li>
-							<c:url var="toAdminFilePage" value="/adminfilepage" />
+							<c:url var="toAdminFilePage" value="/admin/file/check" />
 							<li><a href="${toAdminFilePage}">파일 조회</a></li>
+							<c:url var="toAdminCodePage" value="/admin/code/check" />
+							<li><a href="${toAdminCodePage}">공통 코드 조회</a></li>
 						</ul></li>
 					<li class="nav-item"><a class="nav-links" href="#">마이페이지</a>
 						<ul class="comm-nav-dropdown">
-							<c:url var="toMyPage" value="/userinfo" />
+							<c:url var="toMyPage" value="/mypage" />
 							<li><a href="${toMyPage}">마이페이지</a></li>
 						</ul></li>
 				</ul>
@@ -81,7 +83,7 @@
 	<header class="comm-nav">
 		<div class="top-bar">
 			<p>
-				<c:out value="${user.userId}" />
+				<<c:out value="${user.userNm}"/>
 				(점주)님 환영합니다
 			</p>
 			
@@ -94,7 +96,7 @@
 		</div>
 		<nav class="nav-bar">
 			<div class="nav-bar-brand">
-				<c:url var="toMain" value="/managerMain" />
+				<c:url var="toMain" value="/manager/main" />
 				<a href="${toMain}"> <img alt="logo"
 					src="${path}/resources/img/logo.png">
 				</a>
@@ -110,14 +112,14 @@
 						</ul></li>
 					<li class="nav-item"><a class="nav-links" href="#">점포 관리</a>
 						<ul class="comm-nav-dropdown">
-							<c:url var="toStoreList" value="/storesearchpage" />
+							<c:url var="toStoreList" value="/manager/store/check" />
 							<li><a href="${toStoreList}">점포 조회</a></li>
-							<c:url var="toStoreModPage" value="/storemodpage" />
+							<c:url var="toStoreModPage" value="/manager/store/mod" />
 							<li><a href="${toStoreModPage}">점포 정보 수정</a></li>
 						</ul></li>
 					<li class="nav-item"><a class="nav-links" href="#">마이페이지</a>
 						<ul class="comm-nav-dropdown">
-							<c:url var="toMyPage" value="/userinfo" />
+							<c:url var="toMyPage" value="/mypage" />
 							<li><a href="${toMyPage}">마이페이지</a></li>
 						</ul></li>
 				</ul>
@@ -130,7 +132,7 @@
 	<header class="comm-nav">
 		<div class="top-bar">
 			<p>
-				<c:out value="${user.userId}" />
+				<c:out value="${user.userNm}"/>
 				(수리기사)님 환영합니다
 			</p>
 
@@ -143,7 +145,7 @@
 		</div>
 		<nav class="nav-bar">
 			<div class="nav-bar-brand">
-				<c:url var="toMain" value="/mechanicMain" />
+				<c:url var="toMain" value="/mechanic/main" />
 				<a href="${toMain}"> <img alt="logo"
 					src="${path}/resources/img/logo.png">
 				</a>
@@ -162,7 +164,7 @@
 						</ul></li>
 					<li class="nav-item"><a class="nav-links" href="#">마이페이지</a>
 						<ul class="comm-nav-dropdown">
-							<c:url var="toMyPage" value="/userinfo" />
+							<c:url var="toMyPage" value="/mypage" />
 							<li><a href="${toMyPage}">마이페이지</a></li>
 						</ul></li>
 				</ul>

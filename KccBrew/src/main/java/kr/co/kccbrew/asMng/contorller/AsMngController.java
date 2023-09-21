@@ -1,21 +1,30 @@
 package kr.co.kccbrew.asMng.contorller;
 
-import java.io.File; 
-import java.util.Collection;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
-import java.util.ListIterator;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeMap;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -23,6 +32,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.co.kccbrew.asMng.model.AsMngVo;
 import kr.co.kccbrew.asMng.service.IAsMngService;
+import kr.co.kccbrew.comm.security.model.UserVo;
 import lombok.RequiredArgsConstructor;
 /**
  * @ClassNmae : AsMngController
@@ -39,7 +49,7 @@ import lombok.RequiredArgsConstructor;
  */
 @Controller
 @RequiredArgsConstructor
-public class AsMngController {
+public class AsMngController { 
 	/**
 	 * asMngService 변수 선언
 	 */
@@ -52,7 +62,9 @@ public class AsMngController {
 	@RequestMapping(value="/as-list",method=RequestMethod.GET)
 	public String as(Model model,HttpSession session) {
 		AsMngVo asMngVo=new AsMngVo();
-		asMngVo.setUserId((String)session.getAttribute("userId"));
+		UserVo userVo=(UserVo)session.getAttribute("user");
+		asMngVo.setUserId(userVo.getUserId());
+		System.out.println(asMngVo);
 		
 		
 		List<AsMngVo> list=asMngService.selectMachineCd();
@@ -60,8 +72,8 @@ public class AsMngController {
 		
 		list=asMngService.selectAsStatusCd();
 		model.addAttribute("asStatusCd", list);
-		
-		asMngVo.setUserTypeCd((String)session.getAttribute("userTypeCd"));
+
+		asMngVo.setUserTypeCd(userVo.getUserTypeCd());
 		list=asMngService.selectASList(asMngVo,1);
 		int totalPage = 0;
 		int totalCount = asMngService.countASList(asMngVo);
@@ -106,8 +118,10 @@ public class AsMngController {
 		list=asMngService.selectLocationCd();
 		model.addAttribute("locationCd", list);
 		
-		asMngVo.setUserId((String)session.getAttribute("userId"));
-		asMngVo.setUserTypeCd((String)session.getAttribute("userTypeCd"));
+		UserVo userVo=(UserVo)session.getAttribute("user");
+		asMngVo.setUserId(userVo.getUserId());
+
+		asMngVo.setUserTypeCd(userVo.getUserTypeCd());
 		List<AsMngVo> asList=asMngService.selectASList(asMngVo,asMngVo.getCurrentPage());
 
 		int totalPage = 0;
@@ -141,7 +155,10 @@ public class AsMngController {
 	public String asReceipt(Model model,HttpSession session) {
 		List<AsMngVo> list=asMngService.selectMachineCd();
 		model.addAttribute("machineCd", list);
-		AsMngVo vo=asMngService.selectStrInfo((String)session.getAttribute("userId"));
+
+		UserVo userVo=(UserVo)session.getAttribute("user");
+
+		AsMngVo vo=asMngService.selectStrInfo(userVo.getUserId());
 		model.addAttribute("strInfo", vo);
 		return "asReceipt";
 	}
@@ -155,17 +172,20 @@ public class AsMngController {
 		File folder = new File(folderPath);
         // 폴더가 존재하지 않으면 폴더를 생성합니다.
         if (!folder.exists()) {
-            boolean success = folder.mkdirs(); // 폴더 생성 메소드
+            folder.mkdirs(); // 폴더 생성 메소드
         }
 		HttpSession session=request.getSession();
-		asMngVo.setUserId((String)session.getAttribute("userId"));
+
+		UserVo userVo=(UserVo)session.getAttribute("user");
+		asMngVo.setUserId(userVo.getUserId());
+
 		asMngVo.setStorageLocation(path);
 		asMngVo.setServerSavePath(folderPath);
 		//local 저장 위치 배포할땐 삭제
 		File folder2 = new File(localPath+path);
 		// 폴더가 존재하지 않으면 폴더를 생성합니다.
 		if (!folder2.exists()) {
-			boolean success = folder2.mkdirs(); // 폴더 생성 메소드
+			folder2.mkdirs(); // 폴더 생성 메소드
 		}
 		asMngVo.setLocalSavePath(localPath+path);
 		
@@ -199,10 +219,12 @@ public class AsMngController {
 	@RequestMapping(value="/as-assign",method=RequestMethod.POST)
 	public String asDetail(AsMngVo asMngVo, Model model,HttpServletRequest request) {
 		HttpSession session = request.getSession();
-		asMngVo.setUserId((String) session.getAttribute("userId"));
+		UserVo userVo=(UserVo)session.getAttribute("user");
+		asMngVo.setUserId(userVo.getUserId());
+
 		asMngVo.setAsStatusCd("03");
 		asMngVo=asMngService.insertAsAssign(asMngVo);
-		return "redirect:/as-detail?asInfoSeq="+asMngVo.getAsInfoSeq();
+		return "redirect:/as-detail?asInfoSeq="+asMngVo.getAsInfoSeq()+"&asAssignSeq="+asMngVo.getAsAssignSeq();
 	}
 	
 	/**
@@ -211,8 +233,12 @@ public class AsMngController {
 	@RequestMapping(value="/reject",method=RequestMethod.POST)
 	public String reject(String asInfoSeq,@RequestParam(defaultValue = "0")String asAssignSeq,String rejectRs,HttpServletRequest request) {
 		HttpSession session=request.getSession();
-		String userTypeCd=(String)session.getAttribute("userTypeCd");
-		String userId=(String)session.getAttribute("userId");
+
+		UserVo userVo=(UserVo)session.getAttribute("user");
+		String userTypeCd=userVo.getUserTypeCd();
+		String userId=userVo.getUserId();
+
+
 		if(userTypeCd.equals("01")) {
 			asMngService.updateInfoReject(asInfoSeq, rejectRs,userId);
 		}else if(userTypeCd.equals("03")){
@@ -234,7 +260,9 @@ public class AsMngController {
             boolean success = folder.mkdirs(); // 폴더 생성 메소드
         }
 		HttpSession session=request.getSession();
-		asMngVo.setUserId((String)session.getAttribute("userId"));
+		UserVo userVo=(UserVo)session.getAttribute("user");
+		asMngVo.setUserId(userVo.getUserId());
+
 		asMngVo.setStorageLocation(path);
 		asMngVo.setServerSavePath(folderPath);
 		//local 저장 위치 배포할땐 삭제
@@ -249,6 +277,17 @@ public class AsMngController {
 		return "redirect:/as-detail?asInfoSeq="+asMngVo.getAsInfoSeq()+"&asAssignSeq="+asMngVo.getAsAssignSeq();
 	}
 	/**
+	 * AS 만족도 재신청 여부 입력
+	 */
+	@RequestMapping(value="/as-result-mng",method=RequestMethod.POST)
+	public String asResultMng(AsMngVo asMngVo,HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		UserVo sessionVo=(UserVo)session.getAttribute("user");
+		asMngVo.setUserId(sessionVo.getUserId());
+		asMngService.updateResultMng(asMngVo);
+		return "redirect:/as-list";
+	}
+	/**
 	 * 기사가 신청한 반려건 처리
 	 */
 	@ResponseBody
@@ -256,7 +295,9 @@ public class AsMngController {
 	public String rejectConfirm(String mechanicId,String visitDttm,String asAssignSeq,String asInfoSeq,String flag,HttpServletRequest request) {
 		AsMngVo asMngVo=new AsMngVo();
 		HttpSession session=request.getSession();
-		asMngVo.setUserId((String)session.getAttribute("userId"));
+		UserVo userVo=(UserVo)session.getAttribute("user");
+		asMngVo.setUserId(userVo.getUserId());
+
 		asMngVo.setMechanicId(mechanicId);
 		asMngVo.setVisitDttm(visitDttm);
 		asMngVo.setAsAssignSeq(asAssignSeq);
@@ -296,7 +337,94 @@ public class AsMngController {
 		JSONObject result=new JSONObject(mechaList);
 		return result;
 	}
+	
+	/** 조회한 list 다운로드 */
+	@ResponseBody
+	@RequestMapping(value="/download-list" , method=RequestMethod.GET)
+	public void downloadList(String flag,@RequestParam(defaultValue = "1")String currentPage,
+			@RequestParam(defaultValue = "")String startYr,@RequestParam(defaultValue = "")String startMn,
+			@RequestParam(defaultValue = "")String endYr,@RequestParam(defaultValue = "")String endMn,
+			@RequestParam(defaultValue = "")String asInfoSeq,@RequestParam(defaultValue = "")String storeNm,
+			@RequestParam(defaultValue = "")String storeAddr,@RequestParam(defaultValue = "")String searchId,
+			@RequestParam(defaultValue = "")String machineCd,@RequestParam(defaultValue = "")String asStatusCd,HttpServletRequest request) {
+		//세션값 받기
+		HttpSession session=request.getSession();
+		UserVo user=(UserVo)session.getAttribute("user");
+		AsMngVo vo =new AsMngVo();
+		vo.setStartYr(startYr);
+		vo.setStartMn(startMn);
+		vo.setEndMn(endMn);
+		vo.setAsInfoSeq(asInfoSeq);
+		vo.setStoreNm(storeNm);
+		vo.setStoreAddr(storeAddr);
+		vo.setSearchId(searchId);
+		vo.setMachineCd(machineCd);
+		vo.setAsStatusCd(asStatusCd);
+		vo.setUserId(user.getUserId());
+		vo.setUserTypeCd(user.getUserTypeCd());
+		System.out.println(vo);
+		List<AsMngVo> list;
+		 Map<Integer, Object[]> data = new HashMap();
+		 data.put(1, new Object[]{"AS 번호", "신청일", "AS 상태","점포명","점포 주소"});
+		if(flag.equals("1")) {
+			//현재 페이지 저장
+			list=asMngService.selectASList(vo, Integer.parseInt(currentPage));
+	        for(int i=0;i<list.size();i++) {
+	        	data.put(i+2, new Object[]{list.get(i).getAsInfoSeq(),list.get(i).getRegDttm(),list.get(i).getAsStatusNm(),list.get(i).getStoreNm(),list.get(i).getStoreAddr()+","+list.get(i).getStoreAddrDtl()});
+	        }
+		}else {
+			//전체 페이지 저장
+			list=asMngService.selectAllASList(vo);
+	        for(int i=0;i<list.size();i++) {
+	        	data.put(i+2, new Object[]{list.get(i).getAsInfoSeq(),list.get(i).getRegDttm(),list.get(i).getAsStatusNm(),list.get(i).getStoreNm(),list.get(i).getStoreAddr()+","+list.get(i).getStoreAddrDtl()});
+	        }
+		}
+		XSSFWorkbook workbook = new XSSFWorkbook();
+        // 빈 Sheet를 생성
+        XSSFSheet sheet = workbook.createSheet("조회한 AS 목록");
 
+        // Sheet를 채우기 위한 데이터들을 Map에 저장
 
+        // data에서 keySet를 가져온다. 이 Set 값들을 조회하면서 데이터들을 sheet에 입력한다.
+        Set<Integer> keyset = data.keySet();
+        int rownum = 0;
+        	
+        for (Integer key : keyset) {
+            Row row = sheet.createRow(rownum++);
+            Object[] objArr = data.get(key);
+            int cellnum = 0;
+            for (Object obj : objArr) {
+                Cell cell = row.createCell(cellnum++);
+                if (obj instanceof String) {
+                    cell.setCellValue((String)obj);
+                } else if (obj instanceof Integer) {
+                    cell.setCellValue((Integer)obj);
+                }
+            }
+        }
+
+        try {
+        	String folderPath="C:\\kccbrew";
+    		File folder = new File(folderPath);
+            // 폴더가 존재하지 않으면 폴더를 생성합니다.
+            if (!folder.exists()) {
+                folder.mkdirs(); // 폴더 생성 메소드
+            }
+            // 현재 날짜 구하기
+            LocalDateTime now = LocalDateTime.now();
+            // 포맷 정의
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
+            // 포맷 적용
+            String formatedNow = now.format(formatter);
+     
+            FileOutputStream out = new FileOutputStream(new File("C:\\kccbrew", user.getUserId()+"_"+formatedNow+"_as_list.xlsx"));
+            workbook.write(out);
+            out.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+	}
 }
+
+
 

@@ -27,7 +27,7 @@ public class AsMngService implements IAsMngService{
 	private final IAsMngRepository asRepository;
 	
 	
-	/**
+	/** 
 	 *  조회한 검색 결과
 	 */
 	@Override
@@ -40,7 +40,13 @@ public class AsMngService implements IAsMngService{
 		map.put("end", page*10);
 		return asRepository.selectASList(map);
 	}
-	
+	/**
+	 * 조회한 검색 결과 (페이징 안한거
+	 */
+	@Override
+	public List<AsMngVo> selectAllASList(AsMngVo asMngVo) {
+		return asRepository.selectAllASList(asMngVo);
+	}
 	/**
 	 * 조회할 AS 리스트의 수
 	 */
@@ -153,8 +159,12 @@ public class AsMngService implements IAsMngService{
 	@Transactional
 	@Override
 	public AsMngVo insertAsAssign(AsMngVo asMngVo) {
-		asMngVo=asRepository.insertAsAssign(asMngVo);
+		asRepository.insertAsAssign(asMngVo);
 		asRepository.updateAsInfoStatus(asMngVo);
+		if(asMngVo.getAsResultSeq()!="") {
+			asMngVo.setReapplyConfirm("Y");
+			asRepository.updateAsResultConfirm(asMngVo);
+		}
 		return asMngVo;
 	}
 
@@ -186,6 +196,9 @@ public class AsMngService implements IAsMngService{
 		asMngVo.setAsStatusCd("04");
 		asRepository.updateAsInfoStatus(asMngVo);
 	}
-
+	@Override
+	public void updateResultMng(AsMngVo asMngVo) {
+		asRepository.updateResultMng(asMngVo);
+	}
 
 }

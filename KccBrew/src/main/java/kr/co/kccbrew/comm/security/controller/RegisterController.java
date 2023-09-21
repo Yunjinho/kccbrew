@@ -40,7 +40,7 @@ public class RegisterController {
 	 */
 	@Autowired
 	private UserService userService;
-	
+
 	/** 점포 검색 */
 	@ResponseBody
 	@RequestMapping(value="/search-store-list" , method=RequestMethod.GET)
@@ -48,9 +48,9 @@ public class RegisterController {
 		HashMap<String, Integer> pageInfo= new HashMap<String, Integer>();
 		HashMap<String, UserVo> store= new HashMap<String, UserVo>();
 		HashMap<String, String> searchWord= new HashMap<String, String>();
-		
+
 		JSONArray result = new JSONArray();
-		
+
 		//점포 목록
 		List<UserVo> storeList=userService.selectStoreList(keyword,page);
 		int storeListCount=userService.countStoreList(keyword);
@@ -72,44 +72,50 @@ public class RegisterController {
 		}else {
 			endPage=totalPage;
 		}
-		
+
 		//JSON 형식으로 데이터 삽입
 		JSONArray storeJa= new JSONArray();
 		for(UserVo l: storeList) {
 			storeJa.add(l);
 		}
 		result.add(storeJa);
-		
+
 		pageInfo.put("productCount", storeListCount);
 		pageInfo.put("totalPageCount", totalPage);
-		pageInfo.put("nowPage", page);
-		pageInfo.put("totalPageBlock", totalPageBlock);
+		pageInfo.put("currentPage", page);
+		pageInfo.put("totalPage", totalPage);
 		pageInfo.put("nowPageBlock", nowPageBlock);
 		pageInfo.put("startPage", startPage);
 		pageInfo.put("endPage", endPage);
 		JSONObject pageInfoJo= new JSONObject(pageInfo);
 		result.add(pageInfoJo);
-		
+
 		searchWord.put("keyword", keyword);
 		JSONObject keywordJo= new JSONObject(searchWord);
 
 		result.add(keywordJo);
-		
+
 		return result;
 	}
-	
+
 	/** 점포 검색 */
 	@ResponseBody
 	@RequestMapping(value="/search-location-code" , method=RequestMethod.GET)
 	public JSONArray searchLocationCode(String locCd) {
-		List<UserVo> list=userService.selectLocationDtlCd(locCd);
 		JSONArray result = new JSONArray();
-		for(UserVo l:list) {
-			result.add(l);
+
+		if (locCd == null || locCd.equals("")) {
+			return result;
+			
+		} else {
+			List<UserVo> list=userService.selectLocationDtlCd(locCd);
+			for(UserVo l:list) {
+				result.add(l);
+			}
+			return result;
 		}
-		return result;
 	}
-	
+
 	/** 아이디 중복 체크*/
 	@ResponseBody
 	@RequestMapping(value="/check_user_id" , method=RequestMethod.GET)
@@ -117,5 +123,5 @@ public class RegisterController {
 		int count=userService.checkUserId(userId);
 		return count+"";
 	}
-	
+
 }

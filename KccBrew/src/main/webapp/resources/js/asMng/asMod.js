@@ -1,3 +1,32 @@
+
+var fileIndex = 1; // 파일 인덱스를 추적하기 위한 변수
+
+    function addFile() {
+        
+        var container1 = document.querySelector(".preview-container"); // CSS 스타일을 적용하기 위한 클래스
+        var container2 = document.querySelector(".input-container");
+        
+        var inputField = document.createElement("input");
+        inputField.type = "file";
+        inputField.id = "imgFile" + fileIndex; // 파일 인덱스를 이름에 추가
+        inputField.name = "imgFile"; // 파일 인덱스를 이름에 추가
+        inputField.setAttribute("onchange", "imgTypeCheck(this, " + fileIndex + ")");
+
+        var previewImage = document.createElement("img");
+        previewImage.id = "preview" + fileIndex; // 이미지에 고유한 ID 추가
+        previewImage.className = "preview"; // 이미지에 m래래 추가
+        previewImage.src = "#"; // 초기 미리보기 이미지 설정
+
+        // 생성한 요소들을 컨테이너에 추가
+        container1.appendChild(previewImage);
+        container2.appendChild(inputField);
+ 
+        fileIndex++; // 다음 파일을 위한 인덱스 증가
+
+        // 개행 요소 추가 (예: <br>)
+        /*var lineBreak = document.createElement("br");
+        container2.appendChild(lineBreak);*/
+    }
 window.onload = function () {
     // 이미지 정보를 서버에서 가져오는 요청
     fetch('/as-mod/images?asInfoSeq=' + asInfoSeq + '&asAssignSeq=' + asAssignSeq)
@@ -62,6 +91,7 @@ function removeFile() {
 
         fileIndex--;
         currentIndex = Math.min(currentIndex, fileIndex - 1);
+
     }
 }
 
