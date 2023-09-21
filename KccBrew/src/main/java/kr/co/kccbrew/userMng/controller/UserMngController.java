@@ -71,7 +71,7 @@ public class UserMngController {
 			model.addAttribute("total", totalCount);
 			model.addAttribute("newList", newList);
 			model.addAttribute("list", userList);
-			return "userMng/userMngList";
+			return "adminUserMng";
 		} else {
 			model.addAttribute("message", "로그인 하지 않은 사용자입니다.");
 			return "loginpage";
