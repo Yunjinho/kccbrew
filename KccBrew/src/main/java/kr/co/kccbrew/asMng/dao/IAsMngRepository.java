@@ -22,18 +22,6 @@ public interface IAsMngRepository {
 	 *  AS 전체 조회
 	 */
 	public List<AsMngVo>selectAllASList(AsMngVo asMngVo); 
-	
-	/**
-	 * 장비 코드 리스트 조회
-	 * @return : 장비 코드 리스트
-	 */
-	public List<AsMngVo> selectMachineCd();
-	/**
-	 * AS상태 코드 리스트 조회
-	 * @return : AS상태 코드 리스트
-	 */
-	public List<AsMngVo> selectAsStatusCd();
-	
 	/**
 	 * 점포 정보 조회
 	 * @return 로그인한 아이디로 매핑된 점포 정보 
@@ -72,11 +60,11 @@ public interface IAsMngRepository {
 	public List<AsMngVo> selectAsImg(@Param("asImgSeq")String fileDtlId);
 	
 	/**
-	 * 지역코드 조회
+	 * 코드 조회
 	 * @param locationCd
 	 * @return
 	 */
-	public List<AsMngVo> selectLocationCd();
+	public List<AsMngVo> selectCd(@Param("code")String code);
 	
 	/**
 	 * 지역 상세코드 조회
@@ -138,4 +126,7 @@ public interface IAsMngRepository {
 	 * @param asMngVo
 	 */
 	public void updateAsResultConfirm(AsMngVo asMngVo);
+	
+	void asMod(AsMngVo asMngVo);
+	void deleteFile(String imgSeq);
 }

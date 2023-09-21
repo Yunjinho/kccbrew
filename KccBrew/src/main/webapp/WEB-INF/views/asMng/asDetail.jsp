@@ -156,7 +156,7 @@ window.onload=function(){
 												<td><input type="text"
 													value="${asDetailInfo.storeTelNo}" readonly></td>
 												<th>점포 주소</th>
-												<td colspan="5"><input type="text"
+												<td colspan="3"><input type="text"
 													value="${asDetailInfo.storeAddr}" readonly></td>
 											</tr>
 
@@ -182,14 +182,6 @@ window.onload=function(){
 												<th>배정 기사</th>
 												<td><input type="text"
 													value="${asDetailInfo.mechanicNm}" readonly></td>
-												<th>접수반려</th>
-												<td><c:if test="${asDetailInfo.resubmission eq 'Y'}">
-														<a href="#" onclick="resubmission()"> <input
-															type="text" value="접수수정요구" readonly></a>
-													</c:if> <c:if test="${asDetailInfo.resubmission eq 'N'}">
-														<input type="text" value="N" readonly>
-													</c:if></td>
-
 											</tr>
 											<tr> 
 												<th>접수 내용</th>
@@ -202,6 +194,14 @@ window.onload=function(){
 													<div id="map" style="width: 100%; height: 350px;"></div>
 												</td>
 											</tr>
+											<c:if test="${asDetailInfo.resubmission eq 'Y'}">
+												<tr>
+													<th>접수 반려 내용</th>
+													<td colspan="7">
+														<textarea class="content-textarea" readonly>${asDetailInfo.rejectContentStr}</textarea>
+													</td>
+												</tr>
+											</c:if>
 											<c:if test="${sessionScope.user.userTypeCd eq '01' and asDetailInfo.asStatusCd eq '01'}">
 												<tr>
 													<td colspan="7" style="border-bottom: none;"></td>
@@ -213,9 +213,9 @@ window.onload=function(){
 												</tr>
 											</c:if>
 											<c:if
-												test="${sessionScope.user.userTypeCd eq '02' and asDetailInfo.asStatusCd eq '01' and sessionScope.user.userId eq asDetailInfo.storeMngId}">
+												test="${sessionScope.user.userTypeCd eq '02' and (asDetailInfo.asStatusCd eq '02' or asDetailInfo.asStatusCd eq '01') and sessionScope.user.userId eq asDetailInfo.storeMngId}">
 												<tr>
-													<td colspan="8" style="border-bottom: none;"></td>
+													<td colspan="7" style="border-bottom: none;"></td>
 													<td style="border-bottom: none;">
 														<div>
 															<a href="/as-mod?asInfoSeq=${asDetailInfo.asInfoSeq}&asAssignSeq=${asDetailInfo.asAssignSeq}" class="form-btn"
@@ -224,7 +224,7 @@ window.onload=function(){
 													</td>
 												</tr>
 											</c:if>
-											<c:if test="${sessionScope.user.userTypeCd eq '03'and asDetailInfo.asStatusCd eq '03' and (asDetailInfo.resultReapply eq 'N' or empty asDetailInfo.resultReapply)}">
+											<c:if test="${sessionScope.user.userTypeCd eq '03'and asDetailInfo.asStatusCd eq '03' and asDetailInfo.reassign eq 'N' and ( asDetailInfo.resultReapply eq 'N' or empty asDetailInfo.resultReapply)}">
 												<tr>
 													<td colspan="7" style="border-bottom: none;"></td>
 													<td style="border-bottom: none;">
@@ -374,7 +374,6 @@ window.onload=function(){
 									<!-- 처리 완료된 AS -->
 									<c:if test="${asDetailInfo.asStatusCd eq '04' or asDetailInfo.resultReapply eq 'Y'}">
 									<h1 class="heading">AS 결과</h1>
-										<h1 class="heading">AS 결과</h1>
 										<table id="search-box">
 											<tr>
 												<th style="width: 10%;">결과 사진</th>
@@ -445,7 +444,7 @@ window.onload=function(){
 													</c:choose>
 												</td>
 											</tr>
-										  	<c:if test="${sessionScope.user.userTypeCd eq '02' and asDetailInfo.resultReapply eq 'N' and asDetailInfo.reapplyConfirm eq 'N'}">
+										  	<c:if test="${sessionScope.user.userTypeCd eq '02' and asDetailInfo.resultReapply eq 'N' and asDetailInfo.asStatusCd eq '04' and asDetailInfo.reapplyConfirm eq 'N'}">
 											  	<tr>
 											  		<td colspan="5" style='border-bottom:none' ></td>
 											  		<td style='border-bottom:none;float:right'>
@@ -458,7 +457,7 @@ window.onload=function(){
 										  	</c:if>
 										</table>
 										<!-- AS 재접수 처리 -->
-								  		<c:if test="${sessionScope.user.userTypeCd eq '01' and asDetailInfo.resultReapply eq 'Y' and asDetailInfo.reapplyConfirm eq 'N'}">
+								  		<c:if test="${sessionScope.user.userTypeCd eq '01' and asDetailInfo.resultReapply eq 'Y'  and asDetailInfo.reapplyConfirm eq 'N'}">
 										  	<div>
 										  		<h1 class="heading">기사 재배정</h1>
 												<form action="/as-assign" method="post">

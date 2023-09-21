@@ -3,6 +3,7 @@ package kr.co.kccbrew.asMng.contorller;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.security.Principal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -25,6 +26,7 @@ import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -67,10 +69,10 @@ public class AsMngController {
 		System.out.println(asMngVo);
 		
 		
-		List<AsMngVo> list=asMngService.selectMachineCd();
+		List<AsMngVo> list=asMngService.selectCd("M");
 		model.addAttribute("machineCd", list);
 		
-		list=asMngService.selectAsStatusCd();
+		list=asMngService.selectCd("S");
 		model.addAttribute("asStatusCd", list);
 
 		asMngVo.setUserTypeCd(userVo.getUserTypeCd());
@@ -109,13 +111,13 @@ public class AsMngController {
 	 */
 	@RequestMapping(value="/searchAsList",method=RequestMethod.GET)
 	public String ssearchAsList(AsMngVo asMngVo,Model model,HttpSession session) {
-		List<AsMngVo> list=asMngService.selectMachineCd();
+		List<AsMngVo> list=asMngService.selectCd("M");
 		model.addAttribute("machineCd", list);
 		
-		list=asMngService.selectAsStatusCd();
+		list=asMngService.selectCd("S");
 		model.addAttribute("asStatusCd", list);
 		
-		list=asMngService.selectLocationCd();
+		list=asMngService.selectCd("L");
 		model.addAttribute("locationCd", list);
 		
 		UserVo userVo=(UserVo)session.getAttribute("user");
@@ -153,7 +155,7 @@ public class AsMngController {
 	 */
 	@RequestMapping(value="/as-receipt",method=RequestMethod.GET)
 	public String asReceipt(Model model,HttpSession session) {
-		List<AsMngVo> list=asMngService.selectMachineCd();
+		List<AsMngVo> list=asMngService.selectCd("M");
 		model.addAttribute("machineCd", list);
 
 		UserVo userVo=(UserVo)session.getAttribute("user");
@@ -169,24 +171,11 @@ public class AsMngController {
 	public String asReceipt(@Value("#{serverImgPath['localPath']}")String localPath,@Value("#{serverImgPath['asReceiptPath']}")String path,AsMngVo asMngVo,HttpServletRequest request) {
 
 		String folderPath=request.getServletContext().getRealPath("")+path;
-		File folder = new File(folderPath);
-        // 폴더가 존재하지 않으면 폴더를 생성합니다.
-        if (!folder.exists()) {
-            folder.mkdirs(); // 폴더 생성 메소드
-        }
 		HttpSession session=request.getSession();
-
 		UserVo userVo=(UserVo)session.getAttribute("user");
 		asMngVo.setUserId(userVo.getUserId());
-
 		asMngVo.setStorageLocation(path);
 		asMngVo.setServerSavePath(folderPath);
-		//local 저장 위치 배포할땐 삭제
-		File folder2 = new File(localPath+path);
-		// 폴더가 존재하지 않으면 폴더를 생성합니다.
-		if (!folder2.exists()) {
-			folder2.mkdirs(); // 폴더 생성 메소드
-		}
 		asMngVo.setLocalSavePath(localPath+path);
 		
 		asMngService.insertAs(asMngVo);
@@ -208,7 +197,7 @@ public class AsMngController {
 			model.addAttribute("asResultImgList", list);
 		}
 		model.addAttribute("asDetailInfo", vo);
-		List<AsMngVo> list=asMngService.selectLocationCd();
+		List<AsMngVo> list=asMngService.selectCd("L");
 		model.addAttribute("locationCd", list);
 		return "asDetail";
 	}
@@ -254,23 +243,11 @@ public class AsMngController {
 	@RequestMapping(value="/insertResult",method=RequestMethod.POST)
 	public String insertResult(@Value("#{serverImgPath['localPath']}")String localPath,@Value("#{serverImgPath['asResultPath']}")String path,AsMngVo asMngVo,HttpServletRequest request) {
 		String folderPath=request.getServletContext().getRealPath("")+path;
-		File folder = new File(folderPath);
-        // 폴더가 존재하지 않으면 폴더를 생성합니다.
-        if (!folder.exists()) {
-            boolean success = folder.mkdirs(); // 폴더 생성 메소드
-        }
 		HttpSession session=request.getSession();
 		UserVo userVo=(UserVo)session.getAttribute("user");
 		asMngVo.setUserId(userVo.getUserId());
-
 		asMngVo.setStorageLocation(path);
 		asMngVo.setServerSavePath(folderPath);
-		//local 저장 위치 배포할땐 삭제
-		File folder2 = new File(localPath+path);
-		// 폴더가 존재하지 않으면 폴더를 생성합니다.
-		if (!folder2.exists()) {
-			boolean success = folder2.mkdirs(); // 폴더 생성 메소드
-		}
 		asMngVo.setLocalSavePath(localPath+path);
 		
 		asMngService.insertAsResult(asMngVo);
@@ -308,7 +285,7 @@ public class AsMngController {
 	
 	/** 점포 검색 */
 	@ResponseBody
-	@RequestMapping(value="/search-location-cd" , method=RequestMethod.GET)
+	@RequestMapping(value="/search-location-cd" , method=RequestMethod.POST)
 	public JSONArray searchLocationCode(String locCd) {
 		List<AsMngVo> list=asMngService.selectLocationDtlCd(locCd);
 		JSONArray result = new JSONArray();
@@ -319,7 +296,7 @@ public class AsMngController {
 	}
 	/** 점포 휴무 체크 */
 	@ResponseBody
-	@RequestMapping(value="/check-str-schedule" , method=RequestMethod.GET)
+	@RequestMapping(value="/check-str-schedule" , method=RequestMethod.POST)
 	public JSONObject checkStrSchedule(String strMngId,String visitDttm) {
 		HashMap<String, Integer> check= new HashMap<>();
 		int count=asMngService.checkStrSchedule(visitDttm, strMngId);
@@ -329,7 +306,7 @@ public class AsMngController {
 	}
 	/** 수리기사 조회 */
 	@ResponseBody
-	@RequestMapping(value="/search-mecha" , method=RequestMethod.GET)
+	@RequestMapping(value="/search-mecha" , method=RequestMethod.POST)
 	public JSONObject searchMecha(String locationCd,String visitDttm,String machineCd) {
 		HashMap<String, Object> mechaList= new HashMap<>();
 		List<AsMngVo> list = asMngService.selectMechList(visitDttm, locationCd,machineCd);
@@ -340,7 +317,7 @@ public class AsMngController {
 	
 	/** 조회한 list 다운로드 */
 	@ResponseBody
-	@RequestMapping(value="/download-list" , method=RequestMethod.GET)
+	@RequestMapping(value="/download-list" , method=RequestMethod.POST)
 	public void downloadList(String flag,@RequestParam(defaultValue = "1")String currentPage,
 			@RequestParam(defaultValue = "")String startYr,@RequestParam(defaultValue = "")String startMn,
 			@RequestParam(defaultValue = "")String endYr,@RequestParam(defaultValue = "")String endMn,
@@ -362,67 +339,70 @@ public class AsMngController {
 		vo.setAsStatusCd(asStatusCd);
 		vo.setUserId(user.getUserId());
 		vo.setUserTypeCd(user.getUserTypeCd());
-		System.out.println(vo);
-		List<AsMngVo> list;
-		 Map<Integer, Object[]> data = new HashMap();
-		 data.put(1, new Object[]{"AS 번호", "신청일", "AS 상태","점포명","점포 주소"});
-		if(flag.equals("1")) {
-			//현재 페이지 저장
-			list=asMngService.selectASList(vo, Integer.parseInt(currentPage));
-	        for(int i=0;i<list.size();i++) {
-	        	data.put(i+2, new Object[]{list.get(i).getAsInfoSeq(),list.get(i).getRegDttm(),list.get(i).getAsStatusNm(),list.get(i).getStoreNm(),list.get(i).getStoreAddr()+","+list.get(i).getStoreAddrDtl()});
-	        }
-		}else {
-			//전체 페이지 저장
-			list=asMngService.selectAllASList(vo);
-	        for(int i=0;i<list.size();i++) {
-	        	data.put(i+2, new Object[]{list.get(i).getAsInfoSeq(),list.get(i).getRegDttm(),list.get(i).getAsStatusNm(),list.get(i).getStoreNm(),list.get(i).getStoreAddr()+","+list.get(i).getStoreAddrDtl()});
-	        }
+		asMngService.downloadExcel(vo, flag,currentPage);
+	}
+	
+	@RequestMapping(value = "/as-mod", method = RequestMethod.GET)
+	public String asMod(@Value("#{serverImgPath['localPath']}") String localPath,
+			@Value("#{serverImgPath['asReceiptPath']}") String path, @RequestParam String asInfoSeq, @RequestParam String asAssignSeq, Model model,
+			HttpSession session) {
+		AsMngVo vo = asMngService.selectAsInfoDetail(asInfoSeq, asAssignSeq);
+		vo.setLocalSavePath(localPath + path);
+		session.setAttribute("asInfoSeq", asInfoSeq);
+		session.setAttribute("fileSeq", vo.getFileSeq());
+		model.addAttribute("asInfoSeq", asInfoSeq);
+		model.addAttribute("asAssignSeq", asAssignSeq);
+		// 접수사진
+		if (vo.getFileSeq() != null) {
+			List<AsMngVo> list = asMngService.selectAsImg(vo.getFileSeq());
+			model.addAttribute("asInfoImgList", list);
+			model.addAttribute("fileSeq", vo.getFileSeq());
 		}
-		XSSFWorkbook workbook = new XSSFWorkbook();
-        // 빈 Sheet를 생성
-        XSSFSheet sheet = workbook.createSheet("조회한 AS 목록");
+		model.addAttribute("asDetailInfo", vo);
+		List<AsMngVo> list = asMngService.selectCd("M");
+		model.addAttribute("machineCd", list);
+		return "asMng/asMod2";
+	}
 
-        // Sheet를 채우기 위한 데이터들을 Map에 저장
+	@RequestMapping(value = "/as-mod", method = RequestMethod.POST)
+	public String asMod(@Value("#{serverImgPath['localPath']}") String localPath,
+			@Value("#{serverImgPath['asReceiptPath']}") String path, AsMngVo asMngVo, HttpServletRequest request,
+			Principal principal) {
 
-        // data에서 keySet를 가져온다. 이 Set 값들을 조회하면서 데이터들을 sheet에 입력한다.
-        Set<Integer> keyset = data.keySet();
-        int rownum = 0;
-        	
-        for (Integer key : keyset) {
-            Row row = sheet.createRow(rownum++);
-            Object[] objArr = data.get(key);
-            int cellnum = 0;
-            for (Object obj : objArr) {
-                Cell cell = row.createCell(cellnum++);
-                if (obj instanceof String) {
-                    cell.setCellValue((String)obj);
-                } else if (obj instanceof Integer) {
-                    cell.setCellValue((Integer)obj);
-                }
-            }
-        }
+		String folderPath = request.getServletContext().getRealPath("") + path;
+		String userId = principal.getName();
+		
+		HttpSession session = request.getSession();
+		
+		String asInfoSeq = (String) session.getAttribute("asInfoSeq");
+		String imgSeq = (String) session.getAttribute("fileSeq");
+		asMngVo.setAsInfoSeq(asInfoSeq);
+		asMngVo.setUserId(userId);
+		asMngVo.setStorageLocation(path);
+		asMngVo.setServerSavePath(folderPath);
+		System.out.println("=============================================================");
+		System.out.println(folderPath);
+		System.out.println(path);
+		asMngVo.setLocalSavePath(localPath + path);
+		asMngService.deleteFile(asMngVo, imgSeq);
+		asMngService.asMod(asMngVo);
+		
+		
+		
+		return "redirect:/as-detail?asInfoSeq=" + asInfoSeq + "&asAssignSeq=";
+	}
+	
+	
 
-        try {
-        	String folderPath="C:\\kccbrew";
-    		File folder = new File(folderPath);
-            // 폴더가 존재하지 않으면 폴더를 생성합니다.
-            if (!folder.exists()) {
-                folder.mkdirs(); // 폴더 생성 메소드
-            }
-            // 현재 날짜 구하기
-            LocalDateTime now = LocalDateTime.now();
-            // 포맷 정의
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
-            // 포맷 적용
-            String formatedNow = now.format(formatter);
-     
-            FileOutputStream out = new FileOutputStream(new File("C:\\kccbrew", user.getUserId()+"_"+formatedNow+"_as_list.xlsx"));
-            workbook.write(out);
-            out.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+	@GetMapping("/getAsInfoImages")
+	@ResponseBody
+	public List<AsMngVo> getAsInfoImages(@RequestParam String asInfoSeq, @RequestParam String asAssignSeq) {
+	    // 이미지 정보를 가져와서 List<AsMngVo> 형태로 반환\
+		AsMngVo vo = asMngService.selectAsInfoDetail(asInfoSeq, asAssignSeq);
+		System.out.println(vo.getFileSeq());
+		System.out.println("============================");
+	    List<AsMngVo> imageList = asMngService.selectAsImg(vo.getFileSeq());
+	    return imageList;
 	}
 }
 

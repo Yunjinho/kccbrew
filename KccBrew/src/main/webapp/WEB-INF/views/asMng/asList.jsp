@@ -81,18 +81,17 @@
 												<td>~</td>
 
 												<!-- 종료 연도 선택 필드 -->
-												<td>
-													<select class="tx2" name="endYr" id="yr" onchange="javascript:chg();">
-														<option value="">연도</option>
-														<c:forEach var="i" begin="0" end="9">
-															<c:set var="year" value="${nowYear - i}" />
-															<option value="${year}"
-																${param.endYr == year ? 'selected' : ''}>${year}년</option>
-														</c:forEach>
-													</select>
-												</td>
+													<td colspan="2"><select class="tx2" name="endYr"
+														id="yr" onchange="javascript:chg();">
+															<option value="">연도</option>
+															<c:forEach var="i" begin="0" end="9">
+																<c:set var="year" value="${nowYear - i}" />
+																<option value="${year}"
+																	${param.endYr == year ? 'selected' : ''}>${year}년</option>
+															</c:forEach>
+													</select></td>
 
-												<!-- 종료 월 선택 필드 -->
+													<!-- 종료 월 선택 필드 -->
 												<td>
 													<select class="tx2" name="endMn" id="mn">
 														<option value="">월</option>
@@ -101,9 +100,6 @@
 																${param.endMn == month ? 'selected' : ''}>${month}월</option>
 														</c:forEach>
 													</select>
-												</td>
-												<td>
-													<button type="submit" onclick="" class="form-btn">이동</button>
 												</td>
 											</tr>
 
@@ -181,7 +177,7 @@
 											</tr>
 											<tr>
 												<td colspan="6" style="border-bottom:none;"></td>
-												<td style="text-align: center; border-bottom: 0px;">
+												<td style="text-align: center; border-bottom: 0px;float:right;">
 													<div>
 														<button type="submit" class="form-btn">검색</button>
 													</div>
@@ -210,16 +206,18 @@
 															<option value="${year}"
 																${param.startYr == year ? 'selected' : ''}>${year}년</option>
 														</c:forEach>
-												</select></td>
-
+												</select>
+												</td>
+												<td>
 												<!-- 시작 월 선택 필드 -->
-												<td><select class="tx2" name="startMn" id="mn">
+												<select class="tx2" name="startMn" id="mn">
 														<option value="">월</option>
 														<c:forEach var="month" begin="1" end="12">
 															<option value="${month}"
 																${param.startMn == month ? 'selected' : ''}>${month}월</option>
 														</c:forEach>
-												</select></td>
+												</select>
+												</td>
 
 												<td>~</td>
 
@@ -233,10 +231,8 @@
 																${param.endYr == year ? 'selected' : ''}>${year}년</option>
 														</c:forEach>
 													</select>
-												</td>
-
+													</td><td>
 												<!-- 종료 월 선택 필드 -->
-												<td>
 													<select class="tx2" name="endMn" id="mn">
 														<option value="">월</option>
 														<c:forEach var="month" begin="1" end="12">
@@ -244,9 +240,6 @@
 																${param.endMn == month ? 'selected' : ''}>${month}월</option>
 														</c:forEach>
 													</select>
-												</td>
-												<td>
-													<button type="submit" onclick="" class="form-btn">이동</button>
 												</td>
 											</tr>
 
@@ -377,9 +370,6 @@
 																${param.endMn == month ? 'selected' : ''}>${month}월</option>
 														</c:forEach>
 													</select>
-												</td>
-												<td>
-													<button type="submit" onclick="" class="form-btn">이동</button>
 												</td>
 											</tr>
 

@@ -217,20 +217,7 @@
 			AND ass.mechanic_id=#{userId}
 		</if>
 </select>
-<!-- 장비 코드 조회 -->
-<select id="selectMachineCd" resultType="kr.co.kccbrew.asMng.model.AsMngVo">
-<![CDATA[
-	SELECT grp_cd_dtl_id AS "grpCdDtlId", grp_cd_id AS "grpCdId", grp_cd_dtl_nm AS "grpCdDtlNm" 
-	FROM group_code_detail WHERE grp_cd_id LIKE 'M'
-]]>
-</select>
-<!-- AS 상태 코드 조회 -->
-<select id="selectAsStatusCd" resultType="kr.co.kccbrew.asMng.model.AsMngVo">
-<![CDATA[
-	SELECT grp_cd_dtl_id AS "grpCdDtlId", grp_cd_id AS "grpCdId", grp_cd_dtl_nm AS "grpCdDtlNm" 
-	FROM group_code_detail WHERE grp_cd_id LIKE 'S'
-]]>
-</select>
+
 
 <!-- 점포 정보 조회 -->
 <select id="selectStrInfo" parameterType="hashmap" resultType="kr.co.kccbrew.asMng.model.AsMngVo">
@@ -331,7 +318,8 @@
     LEFT OUTER JOIN store s ON s.store_seq=su.store_seq
     LEFT OUTER JOIN (SELECT * FROM as_assign ss JOIN users u ON ss.mechanic_id=u.user_id) ass ON a.as_info_seq=ass.as_info_seq
     LEFT OUTER JOIN as_result ar ON ar.as_assign_seq=ass.as_assign_seq
-    WHERE a.as_info_seq=#{asInfoSeq} 
+    WHERE 1=1
+        and a.as_info_seq=#{asInfoSeq} 
 ]]> 
 	<if test="asAssignSeq != ''">
 	    AND ass.as_assign_seq=#{asAssignSeq}
@@ -353,17 +341,16 @@
 ]]>
 </select>
 
-<!-- 지역 코드 조회 -->
-<select id="selectLocationCd" resultType="kr.co.kccbrew.asMng.model.AsMngVo">
+<!-- 코드 조회 -->
+<select id="selectCd" parameterType="string" resultType="kr.co.kccbrew.asMng.model.AsMngVo">
 <![CDATA[
 	SELECT grp_cd_dtl_id AS "grpCdDtlId",
 			grp_cd_id AS "grpCdId",
 			grp_cd_dtl_nm AS "grpCdDtlNm"
 	FROM group_code_detail
-	WHERE grp_cd_id='L'
+	WHERE grp_cd_id=#{code}
 ]]>
 </select>
-
 <!-- 지역 상세 코드 조회 -->
 <select id="selectLocationDtlCd" parameterType="string" resultType="kr.co.kccbrew.asMng.model.AsMngVo">
 <![CDATA[
@@ -371,7 +358,8 @@
 			grp_cd_id AS "grpCdId",
 			grp_cd_dtl_nm AS "grpCdDtlNm"
 	FROM group_code_detail
-	WHERE grp_cd_id='LL' AND grp_cd_dtl_id LIKE #{locationCd}||'%'
+	WHERE grp_cd_id='LL' 
+	   AND grp_cd_dtl_id LIKE #{locationCd}||'%'
 ]]>
 </select>
 <!-- 점포 일정 체크 -->
@@ -388,12 +376,15 @@
 ]]>
 </select>
 <select id="selectMechList" parameterType="hashmap" resultType="kr.co.kccbrew.asMng.model.AsMngVo">
-    SELECT u.user_id AS "userId",u.user_nm AS "userNm" FROM users u
-    INNER JOIN (SELECT grp_cd_dtl_nm AS location_cd_nm ,grp_cd_dtl_id AS location_cd 
+    SELECT 
+         u.user_id AS "userId"
+        ,u.user_nm AS "userNm" 
+      FROM users u
+          INNER JOIN (SELECT grp_cd_dtl_nm AS location_cd_nm ,grp_cd_dtl_id AS location_cd 
     			FROM group_code_detail WHERE grp_cd_dtl_id LIKE <if test="locationCd!=''">#{locationCd}||</if>'%'AND grp_cd_id='LL') location ON u.location_cd=location.location_cd
-    INNER JOIN (SELECT grp_cd_dtl_nm AS machine_cd_nm ,grp_cd_dtl_id AS machine_cd 
+          INNER JOIN (SELECT grp_cd_dtl_nm AS machine_cd_nm ,grp_cd_dtl_id AS machine_cd 
     			FROM group_code_detail WHERE grp_cd_dtl_id = #{machineCd} AND  grp_cd_id='M') machine ON u.eqpmn_cd=machine.machine_cd
-    WHERE u.user_type_cd='03'  
+      WHERE u.user_type_cd='03'  
     <if test="date!=''">
         AND u.user_id NOT IN(SELECT mechanic_id FROM as_assign WHERE TO_CHAR(visit_dttm,'YYYY-MM-dd')=#{date})	
     </if>
@@ -449,5 +440,35 @@
 	UPDATE as_result SET reapply_confirm=#{reapplyConfirm} WHERE as_result_seq=#{asResultSeq}
 ]]>
 </update>
+
+
+<update id="asMod" parameterType="kr.co.kccbrew.asMng.model.AsMngVo">
+
+	UPDATE as_information 
+	set
+		wishing_start_date 	=	#{wishingStartDate},
+		wishing_end_date	= 	#{wishingEndDate},
+		as_content			=	#{asContent},
+		machine_cd			=	#{machineCd},
+		mod_user			=	#{userId},
+		mod_dttm			=	SYSDATE,
+		resubmission		=	'N',
+		reject_content_str	=	'',
+		file_seq			=	#{fileSeq}
+	WHERE	
+			 as_info_seq=#{asInfoSeq}
+	AND
+			store_mng_id=#{userId}
+	AND
+			as_status	='01'
+
+
+</update>
+
+<delete id="deleteFile" parameterType="String">
+	delete 
+	from file_info
+	where file_seq=#{imgSeq}
+</delete>
 
 </mapper>
