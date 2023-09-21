@@ -1,5 +1,6 @@
 package kr.co.kccbrew.userMng.controller;
 
+import java.security.Principal;
 import java.util.List; 
 import java.util.Map;
 
@@ -40,8 +41,8 @@ public class UserMngController {
 
 	@GetMapping("/user")
 	public String userAll(Model model, @RequestParam(defaultValue = "1") int currentPage,
-			@ModelAttribute("searchContent") UserMngVo searchContent, HttpSession session) {
-		String approveAdmin = (String) session.getAttribute("userId"); // 세션에서 아이디
+			@ModelAttribute("searchContent") UserMngVo searchContent, HttpSession session, Principal principal) {
+		String approveAdmin = principal.getName();
 		String userTypeCd = (String) session.getAttribute("userTypeCd");
 		//if (approveAdmin != null && !approveAdmin.equals("")) {
 			model.addAttribute("approveAdmin", approveAdmin);
@@ -78,10 +79,10 @@ public class UserMngController {
 	}
 
 	@PostMapping("/updateUserApproval")
-	public ResponseEntity<String> updateUserApproval(UserMngVo user, @RequestParam Map<String, Object> param,  HttpSession session) {
+	public ResponseEntity<String> updateUserApproval(Principal principal, UserMngVo user, @RequestParam Map<String, Object> param,  HttpSession session) {
 		String userId = (String) param.get("userId");
 		String approveYn = (String) param.get("approveYn");
-		String approveAdmin = (String) session.getAttribute("userId");
+		String approveAdmin = principal.getName();
 		user.setApproveAdmin(approveAdmin);
 		user.setUserId(userId);
 		user.setApproveYn(approveYn);
