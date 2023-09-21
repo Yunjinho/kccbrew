@@ -100,10 +100,6 @@
 																	${param.endMn == month ? 'selected' : ''}>${month}월</option>
 															</c:forEach>
 													</select></td>
-
-													<td>
-														<button type="submit" onclick="" class="form-btn">이동</button>
-													</td>
 												</tr>
 
 
@@ -161,16 +157,14 @@
 																Internal Server Error</option>
 													</select></td>
 												</tr>
-												<!-- 4행 -->
-												<tr>
-													<td colspan="7"
-														style="text-align: center; border-bottom: 0px;">
-														<div>
-															<button type="submit" class="form-btn">검색</button>
-														</div>
-													</td>
-												</tr>
 											</table>
+											<div class="form-btn-box">
+												<fieldset>
+													<button type="button" class="form-btn" id="searchButton"
+														onclick="performSearch()">검색</button>
+													<button type="reset" class="form-btn">초기화</button>
+												</fieldset>
+											</div>
 										</form>
 
 
@@ -225,13 +219,15 @@
 										<div class="paging pagination">
 
 											<!-- 앞으로 가는 버튼 -->
-											<a href="/log?currentPage=1&startYr=${searchContent.startYr}&startMn=${searchContent.startMn}&endYr=${searchContent.endYr}&endMn=${searchContent.endMn}&uri=${searchContent.uri}&view=${searchContent.view}&userId=${searchContent.userId}&userType=${searchContent.userType}&ip=${searchContent.ip}&statusCode=${searchContent.statusCode}"><img
+											<a
+												href="/log?currentPage=1&startYr=${searchContent.startYr}&startMn=${searchContent.startMn}&endYr=${searchContent.endYr}&endMn=${searchContent.endMn}&uri=${searchContent.uri}&view=${searchContent.view}&userId=${searchContent.userId}&userType=${searchContent.userType}&ip=${searchContent.ip}&statusCode=${searchContent.statusCode}"><img
 												src="/resources/img/log/free-icon-left-chevron-6015759.png"
 												alt=" 처" /></a>
 
 											<c:choose>
 												<c:when test="${currentPage > 1}">
-													<a href="/log?currentPage=${currentPage - 1}&startYr=${searchContent.startYr}&startMn=${searchContent.startMn}&endYr=${searchContent.endYr}&endMn=${searchContent.endMn}&uri=${searchContent.uri}&view=${searchContent.view}&userId=${searchContent.userId}&userType=${searchContent.userType}&ip=${searchContent.ip}&statusCode=${searchContent.statusCode}"><img
+													<a
+														href="/log?currentPage=${currentPage - 1}&startYr=${searchContent.startYr}&startMn=${searchContent.startMn}&endYr=${searchContent.endYr}&endMn=${searchContent.endMn}&uri=${searchContent.uri}&view=${searchContent.view}&userId=${searchContent.userId}&userType=${searchContent.userType}&ip=${searchContent.ip}&statusCode=${searchContent.statusCode}"><img
 														src="/resources/img/log/free-icon-left-arrow-271220.png"
 														alt="이" /></a>
 												</c:when>
@@ -259,7 +255,9 @@
 
 											<!-- 뒤로 가는 버튼 -->
 											<c:if test="${currentPage < totalPage}">
-												<a href="/log?currentPage=${currentPage + 1}&startYr=${searchContent.startYr}&startMn=${searchContent.startMn}&endYr=${searchContent.endYr}&endMn=${searchContent.endMn}&uri=${searchContent.uri}&view=${searchContent.view}&userId=${searchContent.userId}&userType=${searchContent.userType}&ip=${searchContent.ip}&statusCode=${searchContent.statusCode}"> <img
+												<a
+													href="/log?currentPage=${currentPage + 1}&startYr=${searchContent.startYr}&startMn=${searchContent.startMn}&endYr=${searchContent.endYr}&endMn=${searchContent.endMn}&uri=${searchContent.uri}&view=${searchContent.view}&userId=${searchContent.userId}&userType=${searchContent.userType}&ip=${searchContent.ip}&statusCode=${searchContent.statusCode}">
+													<img
 													src="/resources/img/log/free-icon-right-arrow-271228.png"
 													alt="다" />
 												</a>
@@ -271,7 +269,8 @@
 												</a>
 											</c:if>
 
-											<a href="/log?currentPage=${totalPage}&startYr=${searchContent.startYr}&startMn=${searchContent.startMn}&endYr=${searchContent.endYr}&endMn=${searchContent.endMn}&uri=${searchContent.uri}&view=${searchContent.view}&userId=${searchContent.userId}&userType=${searchContent.userType}&ip=${searchContent.ip}&statusCode=${searchContent.statusCode}"><img
+											<a
+												href="/log?currentPage=${totalPage}&startYr=${searchContent.startYr}&startMn=${searchContent.startMn}&endYr=${searchContent.endYr}&endMn=${searchContent.endMn}&uri=${searchContent.uri}&view=${searchContent.view}&userId=${searchContent.userId}&userType=${searchContent.userType}&ip=${searchContent.ip}&statusCode=${searchContent.statusCode}"><img
 												src="/resources/img/log/free-icon-fast-forward-double-right-arrows-symbol-54366.png"
 												alt="마" /></a>
 										</div>
@@ -286,7 +285,5 @@
 			</div>
 		</div>
 	</div>
-	<script src="<c:url value='/js/bootstrap.min.js' />"></script>
-	<script src="<c:url value='/js/jquery.min.js' />"></script>
 </body>
 </html>

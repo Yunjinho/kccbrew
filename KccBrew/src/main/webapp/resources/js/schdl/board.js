@@ -7,7 +7,7 @@ function onPageLoad() {
 
 	/*폼에 날짜 기본값 설정*/
 	setInputElementValue('startDate', getFirstDayOfYear());
-	setInputElementValue('endDate', getLastDayOfCurrentYear());
+	setInputElementValue('endDate', getCurrentDate());
 
 
 }
@@ -29,10 +29,10 @@ function goPage(arg){
 /*날짜검색*/
 //날짜 이동
 function goDate(startDate, endDate){
+	console.log("goDate함수실행!");
 	var fm = document.srhForm;
 	fm.startDate.value = startDate;
 	fm.endDate.value = endDate;
-	performSearch();
 	return true;
 }
 
@@ -73,57 +73,10 @@ function getCurrentYearAndMonth() {
 
 //이동 버튼 클릭 시 이벤트 처리
 function getPeriod() {
+	console.log("getPeriod함수실행!");
 	var selectedYear = document.getElementById('yearSelect').value;
 	var selectedMonth = document.getElementById('monthSelect').value;
 	var startDate = selectedYear + '-' + selectedMonth + '-01';
 	var endDate = selectedYear + '-' + selectedMonth + '-' + new Date(selectedYear, selectedMonth, 0).getDate();
 	goDate(startDate, endDate);
-}
-
-
-function getLastDayAndPopulateTable() {
-	var selectedYear = document.getElementById('yearSelect').value;
-	var selectedMonth = document.getElementById('monthSelect').value;
-
-	// JavaScript의 Date 객체를 사용하여 마지막 일(day) 계산
-	var lastDay = new Date(selectedYear, selectedMonth, 0).getDate();
-
-	// 테이블 요소를 가져옵니다.
-	var table = document.getElementById('cal-table');
-
-	// thead의 첫 번째 행을 가져옵니다.
-	var firstRow = table.querySelector('thead tr:first-child');
-
-	// thead의 두 번째 행을 가져옵니다.
-	var secondRow = table.querySelector('thead tr:nth-child(2)');
-
-	// 1행 5열부터 20열까지의 자식 요소를 삭제
-	while (firstRow.children[5]) {
-		firstRow.removeChild(firstRow.children[5]);
-	}
-
-	// 2행 5열부터 20열까지의 자식 요소를 삭제
-	while (secondRow.children[0]) {
-		secondRow.removeChild(secondRow.children[0]);
-	}
-
-	// 1행 5열부터 20열까지는 1부터 16까지 표시
-	for (var i = 1; i <= 16; i++) {
-		var td = document.createElement('td');
-		td.textContent = i;
-		firstRow.appendChild(td);
-	}
-
-	// 2행 5열부터 20열까지는 17부터 마지막 일수까지 표시
-	var startDay = 17;
-	for (var i = 5; i <= 20; i++) {
-		var td = document.createElement('td');
-		if (startDay <= lastDay) {
-			td.textContent = startDay;
-			startDay++;
-		} else {
-			td.textContent = "";
-		}
-		secondRow.appendChild(td);
-	} 
 }
