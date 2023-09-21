@@ -18,6 +18,7 @@ public class AsMngVo {
 	//seq
 	private String asInfoSeq;
 	private String asAssignSeq;
+	private String asResultSeq;
 	//조회 날짜 구간 (시작, 끝 - 년도,월)
 	private String startYr;
 	private String startMn; 
@@ -83,7 +84,7 @@ public class AsMngVo {
     private String rejectContentMcha;
     private String visitDttm;
     
-    //재배정 여부, as 결과 , as 날짜, as 만족도, as 결과 이미지 , as 청구 금액, 재접수 여부 
+    //재배정 여부, as 결과 , as 날짜, as 만족도, as 결과 이미지 , as 청구 금액, 재접수 여부 , 재접수 확인여부 
     private String reassign;
     private String resultDtl;
     private String resultDttm;
@@ -91,6 +92,7 @@ public class AsMngVo {
     private String resultFileSeq;
     private String asPrice;
     private String resultReapply;
+    private String reapplyConfirm;
 	
 	//현재페이지
     private int currentPage;

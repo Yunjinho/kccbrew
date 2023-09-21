@@ -93,8 +93,7 @@
 				<div>
 					<img src="<c:url value="resources/img/login/login_id.png"/>">
 				</div>
-				<a href="javascript:;"
-					onclick="javascript:goHelpPage(); return false;" class="icon_01">
+				<a href="user/userSearch" class="icon_01">
 					<dl>
 						<dd>아이디 찾기</dd>
 						<dt>본인 아이디를 잊어버리셨나요?</dt>

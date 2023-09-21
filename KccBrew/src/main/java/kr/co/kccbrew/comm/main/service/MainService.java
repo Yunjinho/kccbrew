@@ -109,5 +109,13 @@ public class MainService implements IMainService{
 		List<MainPageVo> storeInfoListById = mainRepository.showStoreInfoListById(userId);
 		return storeInfoListById;
 	}
+	@Override
+	public void updateMyProfile(MainPageVo mainPageVo) {
+		mainRepository.updateMyProfile(mainPageVo);
+	}
 
+	@Override
+	public void updateMyStore(MainPageVo mainPageVo) {
+		mainRepository.updateMyStore(mainPageVo);
+	}
 }

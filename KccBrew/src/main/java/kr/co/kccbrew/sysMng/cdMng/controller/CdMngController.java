@@ -1,5 +1,6 @@
 package kr.co.kccbrew.sysMng.cdMng.controller;
 
+import java.security.Principal;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -72,32 +73,25 @@ public class CdMngController {
 	public String selectCd(Model model, @PathVariable("cdId") String cdId, @PathVariable("cdDtlId") String cdDtlId) {
 		CdMngVo codeMng = cdMngService.selectCd(cdId, cdDtlId);
 		model.addAttribute("codeMng", codeMng);
-		System.out.println(codeMng);
-		System.out.println("---------------------------------");
 		return "sysMng/cdMng/cdMngDtl";
 	}
 
 	/* 코드등록 */
 	@RequestMapping(value = "/code/insert", method = RequestMethod.GET)
-	public String insert(CdMngVo codeMng, Model model, HttpSession session) {
-		String userId = (String) session.getAttribute("userId"); // 세션에서 아이디
-		String userTypeCd = (String) session.getAttribute("userTypeCd");
-		if (userId != null && !userId.equals("")) {
+	public String insert(CdMngVo codeMng, Model model, HttpSession session, Principal principal) {
+		String userId = principal.getName();
 			model.addAttribute("userId", userId);
 			List<CdMngVo> list = cdMngService.selectNm();
 			model.addAttribute("List", list);
 			model.addAttribute("codeMng", new CdMngVo());
 			return "sysMng/cdMng/cdMngIns";
-		} else {
-			model.addAttribute("message", "로그인 하지 않은 사용자입니다.");
-			return "loginpage";
-		}
+		
 	}
 
 	/* 그룹코드등록 */
 	@RequestMapping(value = "/code/insert1", method = RequestMethod.POST)
-	public String insert1(CdMngVo codeMng, HttpSession session, Model model, RedirectAttributes redirect) {
-		String userId = (String) session.getAttribute("userId");
+	public String insert1(CdMngVo codeMng, HttpSession session, Model model, RedirectAttributes redirect, Principal principal) {
+		String userId = principal.getName();
 		codeMng.setCdRegUser(userId);
 		codeMng.setCdModUser(userId);
 		cdMngService.insert1(codeMng);
@@ -107,8 +101,8 @@ public class CdMngController {
 
 	/* 상세코드등록 */
 	@RequestMapping(value = "/code/insert2", method = RequestMethod.POST)
-	public String insert2(CdMngVo codeMng, @RequestParam String cdId, Model model, RedirectAttributes redirect,  HttpSession session) {
-		String userId = (String) session.getAttribute("userId");
+	public String insert2(CdMngVo codeMng, @RequestParam String cdId, Model model, RedirectAttributes redirect, Principal principal) {
+		String userId = principal.getName();
 		codeMng.setCdDtlRegUser(userId);
 		codeMng.setCdDtlModUser(userId);
 		cdMngService.insert2(codeMng);
@@ -118,26 +112,21 @@ public class CdMngController {
 
 	/* 상세코드수정 */
 	@RequestMapping(value = "/code/update/{cdId}/{cdDtlId}", method = RequestMethod.GET)
-	public String cdMod(Model model, HttpSession session, @PathVariable("cdId") String cdId, @PathVariable("cdDtlId") String cdDtlId) {
-		String userId = (String) session.getAttribute("userId");
+	public String cdMod(Model model, HttpSession session, @PathVariable("cdId") String cdId, @PathVariable("cdDtlId") String cdDtlId, Principal principal) {
+		String userId = principal.getName();
 		//String userTypeCd = (String) session.getAttribute("userTypeCd"); 로그인 구현 완료 이후에 주석 해제
 		//로그인
-		if (userId != null && !userId.equals("")) {
 		CdMngVo codeMng = cdMngService.selectCd(cdId, cdDtlId);
 		List<CdMngVo> list = cdMngService.selectNm();
 		model.addAttribute("List", list);
 		model.addAttribute("codeMng", codeMng);
-		return "sysMng/cdMng/cdMngMod";}
-		else {
-			model.addAttribute("message", "로그인 하지 않은 사용자입니다.");
-			return "loginpage";
-		}
+		return "sysMng/cdMng/cdMngMod";
 	}
 
 	/* 상세코드수정 */
 	@RequestMapping(value = "/code/update", method = RequestMethod.POST)
-	public String cdMod(CdMngVo codeMng, Model model, RedirectAttributes redirectAttrs, HttpSession session) {
-		String userId = (String) session.getAttribute("userId");
+	public String cdMod(CdMngVo codeMng, Model model, RedirectAttributes redirectAttrs, HttpSession session, Principal principal) {
+		String userId = principal.getName();
 		codeMng.setCdDtlModUser(userId);
 		cdMngService.cdMod(codeMng);
 		model.addAttribute("codeMng", codeMng);
@@ -154,25 +143,17 @@ public class CdMngController {
 
 	/* 그룹코드수정 */
 	@RequestMapping(value = "/code/update/{cdId}", method = RequestMethod.GET)
-	public String grpUpdate(HttpSession session, Model model, @PathVariable String cdId) {
-		String userId = (String) session.getAttribute("userId");
-		//String userTypeCd = (String) session.getAttribute("userTypeCd"); 로그인 구현 완료 이후에 주석 해제
+	public String grpUpdate(Principal principal, HttpSession session, Model model, @PathVariable String cdId) {
+		String userId = principal.getName();
 		//로그인
-		if (userId != null && !userId.equals("")) {
 		CdMngVo codeMng = cdMngService.selectGrpDetail(cdId);
 		model.addAttribute("codeMng", codeMng);
 		return "sysMng/cdMng/grpCdMngMod";}
-		else {
-			//로그아웃  로그인 페이지로 이동
-			model.addAttribute("message", "로그인 하지 않은 사용자입니다.");
-			return "loginpage";
-		}
-	}
 
 	/* 그룹코드수정 */
 	@RequestMapping(value = "/code/grpupdate", method = RequestMethod.POST)
-	public String grpUpdate(HttpSession session, CdMngVo codeMng, Model model, RedirectAttributes redirectAttrs) {
-		String userId = (String) session.getAttribute("userId");
+	public String grpUpdate(HttpSession session, Principal principal, CdMngVo codeMng, Model model, RedirectAttributes redirectAttrs) {
+		String userId = principal.getName();
 		codeMng.setCdModUser(userId);
 		cdMngService.grpUpdate(codeMng);
 		model.addAttribute("codeMng", codeMng);

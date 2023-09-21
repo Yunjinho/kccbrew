@@ -20,9 +20,9 @@ body {
 }
 
 /* 검색폼  */
-form {
+/* form {
 	margin: 50px 0;
-}
+} */
 
 #search-box {
 	width: 100%;
@@ -9697,14 +9697,14 @@ td {
 }
 
 .path-mod-workshop .userplan td, .path-mod-workshop .userplan td a,
-	.path-mod-workshop .userplan td a:link, .path-mod-workshop .userplan td a:hover,
+	.path-mod-workshop .userplan td a:link, .path-mod-workshop .userplan td a:hooover,
 	.path-mod-workshop .userplan td a:visited, .path-mod-workshop .userplan td a:active
 	{
 	color: #999
 }
 
 .path-mod-workshop .userplan td.active, .path-mod-workshop .userplan td.active a,
-	.path-mod-workshop .userplan td.active a:link, .path-mod-workshop .userplan td.active a:hover,
+	.path-mod-workshop .userplan td.active a:link, .path-mod-workshop .userplan td.active a:hooover,
 	.path-mod-workshop .userplan td.active a:visited, .path-mod-workshop .userplan td.active a:active
 	{
 	color: black
@@ -11553,7 +11553,7 @@ div.editor_atto_toolbar {
 	width: 100%;
 	padding: 0 0 9px 0
 }
-
+/* 
 div.editor_atto_toolbar
 button {
 	padding: 4px 9px;
@@ -11564,7 +11564,7 @@ button {
 	cursor: pointer;
 	line-height: initial
 }
-
+ */
 div.editor_atto_toolbar button+button {
 	border-left: 1px solid #CCC
 }
@@ -11575,11 +11575,11 @@ div.editor_atto_toolbar button[disabled] {
 	cursor: default
 }
 
-.editor_atto_toolbar button:hover {
+/* .editor_atto_toolbar button:hover {
 	background-image: radial-gradient(ellipse at center, #fff 60%, #dfdfdf 100%);
 	background-color: #ebebeb
 }
-
+ */
 .editor_atto_toolbar button:active, .editor_atto_toolbar
 button.highlight {
 	background-image: radial-gradient(ellipse at center, #fff 40%, #dfdfdf 100%);
@@ -18213,7 +18213,7 @@ a {
 	margin: 10px
 }
 
-.assignfeedback_editpdf_menu li:hover, .assignfeedback_editpdf_menu li:hover a,
+.assignfeedback_editpdf_menu li:hooover, .assignfeedback_editpdf_menu li:hover a,
 	.assignfeedback_editpdf_menu li a:hover {
 	background-color: #ebebeb;
 	background-image: radial-gradient(ellipse at center, #fff 60%, #dfdfdf 100%)
@@ -18241,17 +18241,17 @@ button {
 	background: none
 }
 
-.assignfeedback_editpdf_widget .pageheader button:hover {
+/* .assignfeedback_editpdf_widget .pageheader button:hover {
 	background-color: #ebebeb;
 	background-image: radial-gradient(ellipse at center, #fff 60%, #dfdfdf 100%)
 }
-
-.assignfeedback_editpdf_widget .pageheader button.assignfeedback_editpdf_selectedbutton:hover,
+ */
+/* .assignfeedback_editpdf_widget .pageheader button.assignfeedback_editpdf_selectedbutton:hover,
 	.assignfeedback_editpdf_widget .pageheader
 button.assignfeedback_editpdf_selectedbutton {
 	background-color: #dfdfdf;
 	background-image: radial-gradient(ellipse at center, #fff 40%, #dfdfdf 100%)
-}
+} */
 
 .assignfeedback_editpdf_widget .commentdrawable
 img {
@@ -20560,7 +20560,7 @@ a {
 	display: block
 }
 
-.ubmooc #page-coursemos-left .sub_menu>ul>li>ul>li a:hover, .ubmooc #page-coursemos-left .sub_menu>ul>li>ul>li a:focus,
+.ubmooc #page-coursemos-left .sub_menu>ul>li>ul>li a:hooover, .ubmooc #page-coursemos-left .sub_menu>ul>li>ul>li a:focus,
 	.ubmooc #page-coursemos-left .sub_menu>ul>li>ul>li a:active, .ubmooc #page-coursemos-left .sub_menu>ul>li>ul>li
 a.active {
 	color: #57b4b8
@@ -21870,7 +21870,7 @@ a {
 	background-color: transparent
 }
 
-a:active, a:hover {
+a:active, a:hooover {
 	outline: 0
 }
 
@@ -23207,7 +23207,7 @@ a {
 	text-decoration: none
 }
 
-a:hover, a:focus {
+a:hooover, a:focus {
 	color: #23527c;
 	text-decoration: underline
 }
@@ -25734,7 +25734,7 @@ tbody.collapse.in {
 	white-space: nowrap
 }
 
-.dropdown-menu>li>a:hover, .dropdown-menu>li>a:focus {
+.dropdown-menu>li>a:hooover, .dropdown-menu>li>a:focus {
 	color: #262626;
 	text-decoration: none;
 	background-color: #f5f5f5
@@ -25748,7 +25748,7 @@ tbody.collapse.in {
 	outline: 0
 }
 
-.dropdown-menu>.disabled>a, .dropdown-menu>.disabled>a:hover,
+.dropdown-menu>.disabled>a, .dropdown-menu>.disabled>a:hooover,
 	.dropdown-menu>.disabled>a:focus {
 	color: #777
 }
@@ -26213,14 +26213,14 @@ a.visible {
 	color: #777
 }
 
-.nav>li.disabled>a:hover, .nav>li.disabled>a:focus {
+.nav>li.disabled>a:hooover, .nav>li.disabled>a:focus {
 	color: #777;
 	text-decoration: none;
 	cursor: not-allowed;
 	background-color: transparent
 }
 
-.nav .open>a, .nav .open>a:hover, .nav .open>a:focus {
+.nav .open>a, .nav .open>a:hoover, .nav .open>a:focus {
 	background-color: #eee;
 	border-color: #337ab7
 }
@@ -26256,7 +26256,7 @@ a.visible {
 	border-radius: 4px 4px 0 0
 }
 
-.nav-tabs>li>a:hover, .box.message .messagearea .messagehistory .messagehistorytype a.visible:hover
+.nav-tabs>li>a:hooover, .box.message .messagearea .messagehistory .messagehistorytype a.visible:hover
 	{
 	border-color: #eee #eee #ddd
 }
@@ -40387,14 +40387,14 @@ button:focus, input.form-submit:focus, input[type="button"]:focus, input[type="s
 	outline-offset: -2px
 }
 
-button:hover, input.form-submit:hover, input[type="button"]:hover, input[type="submit"]:hover,
+/* button:hover, input.form-submit:hover, input[type="button"]:hover, input[type="submit"]:hover,
 	input[type="reset"]:hover, button:focus, input.form-submit:focus, input[type="button"]:focus,
 	input[type="submit"]:focus, input[type="reset"]:focus, button.focus,
 	input.form-submit.focus, input[type="button"].focus, input[type="submit"].focus,
 	input[type="reset"].focus {
 	color: #333;
 	text-decoration: none
-}
+} */
 
 button:active, input.form-submit:active, input[type="button"]:active,
 	input[type="submit"]:active, input[type="reset"]:active, button.active,
@@ -40434,14 +40434,14 @@ button:focus, input.form-submit:focus, input[type="button"]:focus, input[type="s
 	background-color: #e6e6e6;
 	border-color: #8c8c8c
 }
-
+/* 
 button:hover, input.form-submit:hover, input[type="button"]:hover, input[type="submit"]:hover,
 	input[type="reset"]:hover {
 	color: #333;
 	background-color: #e6e6e6;
 	border-color: #adadad
 }
-
+ */
 button:active, input.form-submit:active, input[type="button"]:active,
 	input[type="submit"]:active, input[type="reset"]:active, button.active,
 	input.form-submit.active, input[type="button"].active, input[type="submit"].active,
@@ -40453,7 +40453,7 @@ button:active, input.form-submit:active, input[type="button"]:active,
 	border-color: #adadad
 }
 
-button:active:hover, input.form-submit:active:hover, input[type="button"]:active:hover,
+/* button:active:hover, input.form-submit:active:hover, input[type="button"]:active:hover,
 	input[type="submit"]:active:hover, input[type="reset"]:active:hover,
 	button.active:hover, input.form-submit.active:hover, input[type="button"].active:hover,
 	input[type="submit"].active:hover, input[type="reset"].active:hover,
@@ -40478,7 +40478,7 @@ button:active:hover, input.form-submit:active:hover, input[type="button"]:active
 	background-color: #d4d4d4;
 	border-color: #8c8c8c
 }
-
+ */
 button:active, input.form-submit:active, input[type="button"]:active,
 	input[type="submit"]:active, input[type="reset"]:active, button.active,
 	input.form-submit.active, input[type="button"].active, input[type="submit"].active,
@@ -40488,7 +40488,7 @@ button:active, input.form-submit:active, input[type="button"]:active,
 	background-image: none
 }
 
-button.disabled, input.form-submit.disabled, input[type="button"].disabled,
+/* button.disabled, input.form-submit.disabled, input[type="button"].disabled,
 	input[type="submit"].disabled, input[type="reset"].disabled, button[disabled],
 	input.form-submit[disabled], input[type="button"][disabled], input[type="submit"][disabled],
 	input[type="reset"][disabled], fieldset[disabled] button, fieldset[disabled] input.form-submit,
@@ -40529,7 +40529,7 @@ button.disabled, input.form-submit.disabled, input[type="button"].disabled,
 	fieldset[disabled] input[type="button"].active, fieldset[disabled] input[type="submit"].active,
 	fieldset[disabled] input[type="reset"].active {
 	border-color: #ccc
-}
+} */
 
 button .badge, input.form-submit .badge, input[type="button"] .badge,
 	input[type="submit"] .badge, input[type="reset"] .badge {
@@ -40555,13 +40555,13 @@ input.focus {
 	border-color: #122b40
 }
 
-input.form-submit:hover, input#id_submitbutton:hover, input#id_submitbutton2:hover,
+/* input.form-submit:hover, input#id_submitbutton:hover, input#id_submitbutton2:hover,
 	.path-admin .buttons input[type="submit"]:hover, td.submit input:hover
 	{
 	color: #fff;
 	background-color: #286090;
 	border-color: #204d74
-}
+} */
 
 input.form-submit:active, input#id_submitbutton:active, input#id_submitbutton2:active,
 	.path-admin .buttons input[type="submit"]:active, td.submit input:active,
@@ -40576,7 +40576,7 @@ input {
 	border-color: #204d74
 }
 
-input.form-submit:active:hover, input#id_submitbutton:active:hover,
+/* input.form-submit:active:hover, input#id_submitbutton:active:hover,
 	input#id_submitbutton2:active:hover, .path-admin .buttons input[type="submit"]:active:hover,
 	td.submit input:active:hover, input.form-submit.active:hover, input#id_submitbutton.active:hover,
 	input#id_submitbutton2.active:hover, .path-admin .buttons input[type="submit"].active:hover,
@@ -40605,7 +40605,7 @@ input.focus {
 	background-color: #204d74;
 	border-color: #122b40
 }
-
+ */
 input.form-submit:active, input#id_submitbutton:active, input#id_submitbutton2:active,
 	.path-admin .buttons input[type="submit"]:active, td.submit input:active,
 	input.form-submit.active, input#id_submitbutton.active, input#id_submitbutton2.active,
@@ -40617,7 +40617,7 @@ input {
 	background-image: none
 }
 
-input.form-submit.disabled, input#id_submitbutton.disabled, input#id_submitbutton2.disabled,
+/* input.form-submit.disabled, input#id_submitbutton.disabled, input#id_submitbutton2.disabled,
 	.path-admin .buttons input[type="submit"].disabled, td.submit input.disabled,
 	input.form-submit[disabled], input#id_submitbutton[disabled], input#id_submitbutton2[disabled],
 	.path-admin .buttons input[type="submit"][disabled], td.submit input[disabled],
@@ -40668,7 +40668,7 @@ input.active {
 	background-color: #337ab7;
 	border-color: #2e6da4
 }
-
+ */
 input.form-submit .badge, input#id_submitbutton .badge, input#id_submitbutton2 .badge,
 	.path-admin .buttons input[type="submit"] .badge, td.submit input
 .badge {
@@ -40905,10 +40905,10 @@ input[id$="_clearbutton"] .badge, input[type="reset"] .badge {
 	background-color: #fff
 }
 
-button.yui3-button.closebutton, button.yui3-button.closebutton:hover {
+/* button.yui3-button.closebutton, button.yui3-button.closebutton:hover {
 	background-position: 0 0
 }
-
+ */
 input.fp-btn-choose {
 	padding: 5px 10px;
 	margin-top: 4px;
@@ -46337,7 +46337,7 @@ tbody.collapse.in {
 	background-color: #f5f5f5
 }
 
-.dropdown-menu>.active>a, .dropdown-menu>.active>a:hover, .dropdown-menu>.active>a:focus
+.dropdown-menu>.active>a, .dropdown-menu>.active>a:hooover, .dropdown-menu>.active>a:focus
 	{
 	color: #fff;
 	text-decoration: none;
@@ -46350,7 +46350,7 @@ tbody.collapse.in {
 	color: #777
 }
 
-.dropdown-menu>.disabled>a:hover, .dropdown-menu>.disabled>a:focus {
+.dropdown-menu>.disabled>a:hooover, .dropdown-menu>.disabled>a:focus {
 	text-decoration: none;
 	cursor: not-allowed;
 	background-color: transparent;
@@ -46799,7 +46799,7 @@ textarea.input-group-sm>.form-control, textarea.input-group-sm>.input-group-addo
 	padding: 10px 15px
 }
 
-.nav>li>a:hover, .nav>li>a:focus {
+.nav>li>a:hooover, .nav>li>a:focus {
 	text-decoration: none;
 	background-color: #eee
 }
@@ -46851,7 +46851,7 @@ textarea.input-group-sm>.form-control, textarea.input-group-sm>.input-group-addo
 	border-color: #eee #eee #ddd
 }
 
-.nav-tabs>li.active>a, .nav-tabs>li.active>a:hover, .nav-tabs>li.active>a:focus
+.nav-tabs>li.active>a, .nav-tabs>li.active>a:hooover, .nav-tabs>li.active>a:focus
 	{
 	color: #555;
 	cursor: default;
@@ -51114,10 +51114,6 @@ a {
 	background-color: #fff
 }
 
-#page-header .usermenu .lang_select a, a:hover, a:focus, a:visited {
-	color: #000;
-	text-decoration: none
-}
 
 #page-header .usermenu .lang_select .dropdown-toggle {
 	padding-top: 7px

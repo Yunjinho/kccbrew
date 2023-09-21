@@ -61,13 +61,13 @@
 
 										<h6><img src="/resources/img/asMng/check.png" class="tag-image">점포 정보</h6>
 										<div>
-											<div style="font-size:1.5em; flex:0.5;text-align:center;">
+											<div style="align-self:center; flex:0.5;text-align:center;">
 												점포명 
 											</div>
 											<div style="flex:0.5;">
 												<input type="text" name="storeNm" value="${strInfo.storeNm}"readonly>
 											</div>
-											<div style="font-size:1.5em; flex:0.5;text-align:center;">
+											<div style="align-self:center;	flex:0.5;text-align:center;">
 												점포 주소 
 											</div>
 											<div style="flex:2;">
