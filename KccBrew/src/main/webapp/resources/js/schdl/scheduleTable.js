@@ -32,7 +32,7 @@ function performSearch() {
 	// AJAX POST 요청 보내기
 	$.ajax({
 		type: "POST",
-		url: "/schedule", // 데이터를 처리할 URL을 여기에 지정
+		url: "/admin/schedule", // 데이터를 처리할 URL을 여기에 지정
 		data: formData,
 		success: function (response) {
 			// 성공적인 응답 처리
@@ -55,7 +55,6 @@ function performSearch() {
 
 				/*휴무일 리스트*/
 				var holidayDates = schedule.holidayDates;
-				console.log("holidayDates: " + holidayDates);
 				var holidayCount = holidayDates.length;
 				/*배정일 리스트*/
 				var assignDates = schedule.assignDates;
@@ -322,6 +321,53 @@ function scheduleIndexData(userId, scheduleType, scheduleDate) {
 	});
 }
 
+function getLastDayAndPopulateTable() {
+	var selectedYear = document.getElementById('yearSelect').value;
+	var selectedMonth = document.getElementById('monthSelect').value;
+
+	// JavaScript의 Date 객체를 사용하여 마지막 일(day) 계산
+	var lastDay = new Date(selectedYear, selectedMonth, 0).getDate();
+
+	// 테이블 요소를 가져옵니다.
+	var table = document.getElementById('cal-table');
+
+	// thead의 첫 번째 행을 가져옵니다.
+	var firstRow = table.querySelector('thead tr:first-child');
+
+	// thead의 두 번째 행을 가져옵니다.
+	var secondRow = table.querySelector('thead tr:nth-child(2)');
+
+	// 1행 5열부터 20열까지의 자식 요소를 삭제
+	while (firstRow.children[5]) {
+		firstRow.removeChild(firstRow.children[5]);
+	}
+
+	// 2행 5열부터 20열까지의 자식 요소를 삭제
+	while (secondRow.children[0]) {
+		secondRow.removeChild(secondRow.children[0]);
+	}
+
+	// 1행 5열부터 20열까지는 1부터 16까지 표시
+	for (var i = 1; i <= 16; i++) {
+		var td = document.createElement('td');
+		td.textContent = i;
+		firstRow.appendChild(td);
+	}
+
+	// 2행 5열부터 20열까지는 17부터 마지막 일수까지 표시
+	var startDay = 17;
+	for (var i = 5; i <= 20; i++) {
+		var td = document.createElement('td');
+		if (startDay <= lastDay) {
+			td.textContent = startDay;
+			startDay++;
+		} else {
+			td.textContent = "";
+		}
+		secondRow.appendChild(td);
+	} 
+}
+
 
 function displayHolidayData(data) {
 	console.log("data: " + data);
@@ -504,3 +550,4 @@ function formatDate(date) {
 	const day = String(date.getDate()).padStart(2, '0'); // 일을 두 자리로 맞추고 0으로 채웁니다.
 	return `${year}-${month}-${day}`;
 }
+
