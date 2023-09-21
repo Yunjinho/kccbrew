@@ -5,11 +5,11 @@ import java.util.List;
 import kr.co.kccbrew.userMng.model.UserMngVo;
 
 public interface IUserMngService {
-	List<UserMngVo> userList(UserMngVo user, int currentPage);
-	int getUserCount(UserMngVo user);
+	List<UserMngVo> userList(UserMngVo userMngVo, int currentPage);
+	int getUserCount(UserMngVo userMngVo);
 	List<UserMngVo> newList();
-	void updateUserApproval(UserMngVo user);
-	void userMod(UserMngVo user);
+	void updateUserApproval(UserMngVo userMngVo);
+	void userMod(UserMngVo userMngVo);
 	 int getNewCount();
 	 UserMngVo findByUserId(String userId);
 	 UserMngVo findByUserInfo(String userId);

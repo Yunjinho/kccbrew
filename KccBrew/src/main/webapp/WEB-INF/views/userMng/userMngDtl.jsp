@@ -24,41 +24,41 @@
 						</div>
 						</th>
 					<th>ID</th>
-					<td>${user.userId}</td>
+					<td>${userMngVo.userId}</td>
 					<th>이름</th>
-					<td>${user.userNm}</td>
+					<td>${userMngVo.userNm}</td>
 					<th>이메일</th>
-					<td>${user.userEmail}</td>
+					<td>${userMngVo.userEmail}</td>
 
 				</tr>
 				<tr>
 					<th>전화번호</th>
-					<td>${user.userTelNo}</td>
+					<td>${userMngVo.userTelNo}</td>
 					<th>주소</th>
-					<td colspan="3">${user.userAddr}</td>
+					<td colspan="3">${userMngVo.userAddr}</td>
 				</tr>
 				<tr>
 					<th>사용자구분</th>
 					<td style="color: red;"><c:if
-							test="${user.userTypeCd eq '01' }">관리자</c:if> <c:if
-							test="${user.userTypeCd eq '02' }">점주</c:if> <c:if
-							test="${user.userTypeCd eq '03' }">기사</c:if></td>
+							test="${userMngVo.userTypeCd eq '01' }">관리자</c:if> <c:if
+							test="${userMngVo.userTypeCd eq '02' }">점주</c:if> <c:if
+							test="${userMngVo.userTypeCd eq '03' }">기사</c:if></td>
 					<th>가입일자</th>
-					<td>${user.regDttm}</td>
+					<td>${userMngVo.regDttm}</td>
 					<th>수정일자</th>
-					<td>${user.modDttm}</td>
+					<td>${userMngVo.modDttm}</td>
 				</tr>
 				<tr>
 					<th>사용여부</th>
-					<td>${user.useYn}</td>
+					<td>${userMngVo.useYn}</td>
 					<th>승인여부</th>
-					<td>${user.approveYn}</td>
+					<td>${userMngVo.approveYn}</td>
 					<th>승인자</th>
-					<td>${user.approveAdmin}</td>
+					<td>${userMngVo.approveAdmin}</td>
 				</tr>
 			</table>
 
-			<c:if test="${user.userTypeCd eq '02' }">
+			<c:if test="${userMngVo.userTypeCd eq '02' }">
 				<div class="category">상세정보</div>
 				<hr style="border: solid 1.2px; width: 97%;">
 				<table id="search-box">
@@ -72,7 +72,7 @@
 					</tr>
 				</table>
 			</c:if>
-			<c:if test="${user.userTypeCd eq '03' }">
+			<c:if test="${userMngVo.userTypeCd eq '03' }">
 				<div class="category">상세정보</div>
 				<hr style="border: solid 1.2px; width: 97%;">
 				<table id="search-box">

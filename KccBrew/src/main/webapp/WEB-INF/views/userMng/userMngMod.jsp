@@ -25,29 +25,29 @@
 						</div>
 						</th>
 					<th>ID</th>
-					<td>${user.userId}</td>
+					<td>${userMngVo.userId}</td>
 					<th>이름</th>
-					<td>${user.userNm}</td>
+					<td>${userMngVo.userNm}</td>
 					<th>이메일</th>
-					<td>${user.userEmail}</td>
+					<td>${userMngVo.userEmail}</td>
 
 				</tr>
 				<tr>
 					<th>전화번호</th>
-					<td>${user.userTelNo}</td>
+					<td>${userMngVo.userTelNo}</td>
 					<th>주소</th>
-					<td colspan="3">${user.userAddr}</td>
+					<td colspan="3">${userMngVo.userAddr}</td>
 				</tr>
 				<tr>
 					<th>사용자구분</th>
 					<td style="color: red;"><c:if
-							test="${user.userTypeCd eq '01' }">관리자</c:if> <c:if
-							test="${user.userTypeCd eq '02' }">점주</c:if> <c:if
-							test="${user.userTypeCd eq '03' }">기사</c:if></td>
+							test="${userMngVo.userTypeCd eq '01' }">관리자</c:if> <c:if
+							test="${userMngVo.userTypeCd eq '02' }">점주</c:if> <c:if
+							test="${userMngVo.userTypeCd eq '03' }">기사</c:if></td>
 					<th>가입일자</th>
-					<td>${user.regDttm}</td>
+					<td>${userMngVo.regDttm}</td>
 					<th>수정일자</th>
-					<td>${user.modDttm}</td>
+					<td>${userMngVo.modDttm}</td>
 				</tr>
 				<tr>
 					<th>사용여부</th>
@@ -65,11 +65,11 @@
 							<option value="N">거절</option>
 					</select></td>
 					<th>승인자</th>
-					<td>${user.approveAdmin}</td>
+					<td>${userMngVo.approveAdmin}</td>
 				</tr>
 			</table>
 
-			<c:if test="${user.userTypeCd eq '02' }">
+			<c:if test="${userMngVo.userTypeCd eq '02' }">
 				<div class="category">상세정보</div>
 				<hr style="border: solid 1.2px; width: 97%;">
 				<table id="search-box">
@@ -83,7 +83,7 @@
 					</tr>
 				</table>
 			</c:if>
-			<c:if test="${user.userTypeCd eq '03' }">
+			<c:if test="${userMngVo.userTypeCd eq '03' }">
 				<div class="category">상세정보</div>
 				<hr style="border: solid 1.2px; width: 97%;">
 				<table id="search-box">
@@ -104,45 +104,45 @@
 			</div>
 	</section>
 <script>
-	$(".cancelMod").click(function() {
-		$(".Modal1").css("display", "none");
-		$(".ModalMod").css("display", "none");
-		selectedUserId = null;
-	});
-	 $(".submitMod").click(function() {
-         if (selectedUserId) {
-             // <select> 요소의 값을 가져오기
-             const use = $("#useYn").val();
-             const approve = $("#approveYn").val();
-             console.log("useYn:" + use);
-             console.log("approveYn:" + approve);
-             // AJAX 요청을 통해 서버로 사용자 ID와 <select> 요소의 값을 전달하고 업데이트 수행
-             $.ajax({
-                 url: '/user/mod', // 사용자 수정 업데이트를 수행하는 서버 엔드포인트
-                 type: 'POST',
-                 dataType: 'text',
-                 data: {
-                     userId: selectedUserId,
-                     useYn: use, // <select> 요소의 값을 사용
-                     approveYn: approve
-                 },
-                 success: function(response) {
-                     if (response.trim() === "ok") {
-                         alert('사용자를 수정하였습니다.');
-                     } else {
-                         alert('사용자 수정에 실패하였습니다.');
-                     }
-                     // 모달 창 닫기 및 페이지 새로고침
-                     $(".ModalMod").css("display", "none");
-                     location.reload();
-                 },
-                 error: function() {
-                     alert('서버 오류로 수정에 실패하였습니다.');
-                     $(".ModalMod").css("display", "none");
-                 }
-             });
-         }
-     });
+$(".cancelMod").click(function() {
+	$(".Modal1").css("display", "none");
+	$(".ModalMod").css("display", "none");
+	selectedUserId = null;
+});
+$(".submitMod").click(function() {
+	if (selectedUserId) {
+		// <select> 요소의 값을 가져오기
+		const use = $("#useYn").val();
+		const approve = $("#approveYn").val();
+		console.log("useYn:" + use);
+		console.log("approveYn:" + approve);
+		// AJAX 요청을 통해 서버로 사용자 ID와 <select> 요소의 값을 전달하고 업데이트 수행
+		$.ajax({
+			url : '/user/mod', // 사용자 수정 업데이트를 수행하는 서버 엔드포인트
+			type : 'POST',
+			dataType : 'text',
+			data : {
+				userId : selectedUserId,
+				useYn : use, // <select> 요소의 값을 사용
+				approveYn : approve
+			},
+			success : function(response) {
+				if (response.trim() === "ok") {
+					alert('사용자를 수정하였습니다.');
+				} else {
+					alert('사용자 수정에 실패하였습니다.');
+				}
+				// 모달 창 닫기 및 페이지 새로고침
+				$(".ModalMod").css("display", "none");
+				location.reload();
+			},
+			error : function() {
+				alert('서버 오류로 수정에 실패하였습니다.');
+				$(".ModalMod").css("display", "none");
+			}
+		});
+	}
+});
  </script>
 </body>
 </html>
