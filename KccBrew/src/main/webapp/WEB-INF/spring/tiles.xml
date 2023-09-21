@@ -114,27 +114,27 @@
 <!--  관리자 페이지 추가 확장, 타이틀과 헤더, 사이드메뉴  유지, contents만 변경   -->
 	
 	<!-- 관리자 회원 관리 페이지 -->
-	<definition name="adminPageM1" extends="adminPage">
+	<definition name="adminUserMng" extends="adminPage">
 		<put-attribute name="contents" value="/WEB-INF/views/userMng/userMngList.jsp" />
 	</definition>
 	
 	<!-- 관리자 로그 관리 페이지 -->
-	<definition name="adminPageL1" extends="adminPage">
+	<definition name="adminLogManage" extends="adminPage">
 		<put-attribute name="contents" value="/WEB-INF/views/log/logMngList.jsp" />
 	</definition>
 	
 	<!-- 관리자 파일 관리 페이지 -->
-	<definition name="adminPageF1" extends="adminPage">
+	<definition name="adminFileManage" extends="adminPage">
 		<put-attribute name="contents" value="/WEB-INF/views/sysMng/fileMng/fileMngList.jsp" />
 	</definition>
 		
 	<!-- 관리자 코드 관리 페이지 -->
-	<definition name="adminPageC1" extends="adminPage">
+	<definition name="adminCodeManage" extends="adminPage">
 		<put-attribute name="contents" value="/WEB-INF/views/sysMng/cdMng/cdMngList.jsp" />
 	</definition>
 
 	<!-- 관리자 스케줄 조회 페이지 -->
-	<definition name="adminPageH2" extends="adminPage">
+	<definition name="adminSchdlList" extends="adminPage">
 		<put-attribute name="contents" value="/WEB-INF/views/schdl/schdlMngTable.jsp" />
 	</definition>
 

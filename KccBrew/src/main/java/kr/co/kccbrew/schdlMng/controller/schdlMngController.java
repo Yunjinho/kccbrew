@@ -428,7 +428,7 @@ public class schdlMngController {
 	public String getAttendanceStatus(Model model) {
 		List<UserVo> locationList=userService.selectLocationCd();
 		model.addAttribute("locationList", locationList);
-		return "adminPageH2";
+		return "adminSchdlList";
 	}
 
 	/*관리자 월근태현황 검색*/

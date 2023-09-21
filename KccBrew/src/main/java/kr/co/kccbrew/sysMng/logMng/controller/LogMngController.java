@@ -90,6 +90,6 @@ public class LogMngController {
 
 
 
-		return "log/logMngList";
+		return "adminLogManage";
 	}
 }
