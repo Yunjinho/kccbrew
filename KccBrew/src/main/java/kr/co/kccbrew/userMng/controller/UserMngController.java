@@ -43,7 +43,7 @@ public class UserMngController {
 			@ModelAttribute("searchContent") UserMngVo searchContent, HttpSession session) {
 		String approveAdmin = (String) session.getAttribute("userId"); // 세션에서 아이디
 		String userTypeCd = (String) session.getAttribute("userTypeCd");
-		if (approveAdmin != null && !approveAdmin.equals("")) {
+		//if (approveAdmin != null && !approveAdmin.equals("")) {
 			model.addAttribute("approveAdmin", approveAdmin);
 			List<UserMngVo> userList = userMngService.userList(searchContent, currentPage);
 			List<UserMngVo> newList = userMngService.newList();
@@ -54,8 +54,8 @@ public class UserMngController {
 			int sharePage = 0;
 			if (userList != null && !userList.isEmpty()) {
 				totalPage = (int) Math.ceil(totalCountDouble / 10.0);
-			} else {
-			}
+			//} else {
+			//}
 
 			if (currentPage == 1) {
 				sharePage = 0;
