@@ -87,7 +87,7 @@ public class StrMngController {
 		model.addAttribute("list", list);
 		model.addAttribute("List", List);
 		model.addAttribute("seoulList", seoulList);
-		return "strMng/strMngList"; // strMngList.jsp로 반환
+		return "storeList"; // strMngList.jsp로 반환
 	}
 
 	/* 점포정보 */
@@ -148,7 +148,7 @@ public class StrMngController {
 			model.addAttribute("seoullist", seoullist);
 			model.addAttribute("list", list);
 			model.addAttribute("store", store);
-			return "strMng/strMngMod";
+			return "modStoreInfo";
 		} else {
 			//로그아웃  로그인 페이지로 이동
 			model.addAttribute("message", "로그인 하지 않은 사용자입니다.");
