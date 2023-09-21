@@ -62,7 +62,7 @@
 						<ul class="comm-nav-dropdown">
 							<c:url var="toHldyList" value="/holiday" />
 							<li><a href="${toHldyList}">휴가 관리</a></li>
-							<c:url var="toSchdlList" value="admin/schedule" />
+							<c:url var="toSchdlList" value="/admin/schedule" />
 							<li><a href="${toSchdlList}">스케줄 조회</a></li>
 						</ul>
 					</li>
