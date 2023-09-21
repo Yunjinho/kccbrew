@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -23,7 +24,9 @@ import lombok.RequiredArgsConstructor;
 public class UserSearchController {
 	@Autowired
 	private IUserSearchService searchService;
-
+	@Autowired
+	private PasswordEncoder passwordEncoder;
+	
 	@RequestMapping(value = "/user/userSearch", method = RequestMethod.GET)
 	public String userSearch() {
 
@@ -66,8 +69,8 @@ public class UserSearchController {
 	
 			MailUtil mail=new MailUtil(); //메일 전송하기
 			mail.sendEmail(vo1);
-			
-			searchService.updatePwd(vo1);
+			vo.setUserPwd(passwordEncoder.encode(tempPw));
+			searchService.updatePwd(vo);
 			
 			String securePw = encoder.encode(vo1.getUserPwd());//회원 비밀번호를 암호화하면 vo객체에 다시 저장
 			vo1.setUserPwd(securePw);
@@ -78,6 +81,6 @@ public class UserSearchController {
 		}else {
 			result="false";
 		}
-		return result;
+		return "login";
 	}
 }

@@ -58,6 +58,6 @@ public class FileMngController {
 
 		model.addAttribute("typeList", fileTypeList);
 		model.addAttribute("list", fileList);
-		return "sysMng/fileMng/fileMngList";
+		return "adminFileManage";
 	}
 }

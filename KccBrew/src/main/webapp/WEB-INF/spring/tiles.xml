@@ -22,6 +22,8 @@
 		<put-attribute name="footer" value="/WEB-INF/views/tiles/default/basefooter.jsp" />	  <!-- 공통 푸터 -->
 	</definition>
  	
+<!-- !!!!!!!!!!!!!!!!!! 공통 페이지 !!!!!!!!!!!!!!!!!!!!!! -->
+ 	
  	<!-- 로그인 페이지 -->
  	<definition name="loginPage" extends="mainLayout">
  		<!-- 속성 따로 명시하지 않으면 extends 레이아웃 뼈대 자동 상속 -->
@@ -37,22 +39,59 @@
 		<put-attribute name="contents" value="/WEB-INF/views/comm/register/register.jsp" />
 	</definition>
 	
-		<!-- 마이페이지 -->
+	<!-- 마이페이지 -->
 	<definition name="MyPageP1" extends="mainLayout2">
 		<put-attribute name="contents" value="/WEB-INF/views/myPage/myPage.jsp" />
 	</definition>
-
+	
 	<!-- 마이페이지 수정 -->
 	<definition name="MyPageP2" extends="mainLayout2">
 		<put-attribute name="contents" value="/WEB-INF/views/myPage/myModPage.jsp"/>
 	</definition>
-
-	<!-- 비밀번호 변경 -->
+	
+	<!-- 비밀번호 변경 페이지 -->
 	<definition name="MyPageP3" extends="mainLayout2">
 		<put-attribute name="contents" value="/WEB-INF/views/myPage/chgPwd.jsp"/>
 	</definition>
 	
- 	<!-- 사용자 별 메인페이지 -->
+	<!-- A/S 내역 조회 페이지 -->
+	<definition name="asList" extends="mainLayout2">
+		<put-attribute name="title" value="AS 내역 조회" />
+		<put-attribute name="contents" value="/WEB-INF/views/asMng/asList.jsp" />
+	</definition>
+	
+	<!-- A/S 상세 조회 페이지 -->
+	<definition name="asDetail" extends="mainLayout2">
+		<put-attribute name="title" value="AS 상세 조회" />
+		<put-attribute name="contents" value="/WEB-INF/views/asMng/asDetail.jsp" />
+	</definition>
+	
+	<!-- 점포 조회 페이지 -->
+	<definition name="storeList" extends="mainLayout2">
+		<put-attribute name="contents" value="/WEB-INF/views/strMng/strMngList.jsp" />
+	</definition>
+	
+	<!-- 점포 검색 페이지 -->
+	<definition name="storeSearch" extends="mainLayout2">
+		<put-attribute name="contents" value="/WEB-INF/views/strMng/strMngList.jsp" />
+	</definition>
+	
+	<!-- 휴가 관리 페이지 -->
+	<definition name="holiday" extends="mainLayout2">
+		<put-attribute name="contents" value="/WEB-INF/views/schdl/hldyList.jsp" />
+	</definition>
+	
+	
+	
+	
+<!-- !!!!!!!!!!!!!!!!!!!!!! 점주, 수리기사 공통 페이지 - 근태 현황 테이블 !!!!!!!!!!!!!!!!!!!!! -->
+	<definition name="schdlTable" extends="mainLayout2">
+		<put-attribute name="contents" value="/WEB-INF/views/schdl/schdlMngClndr.jsp" />
+	</definition>
+	
+	
+ <!-- !!!!!!!!!!!!!!!!!!!!!  사용자 별 메인페이지  !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-->
+ 
  	<!-- 관리자 페이지 -->
 	<definition name="adminPage" extends="mainLayout2">
 		<put-attribute name="title" value="KccBrew" />
@@ -70,81 +109,57 @@
 		<put-attribute name="title" value="KccBrew" />
 		<put-attribute name="contents" value="/WEB-INF/views/include/manager/managercontents.jsp" />
 	</definition>
-		
-
 	
 	
-	<!--  관리자 페이지 추가 확장, 타이틀과 헤더 유지, contents만 변경   -->
+<!--  관리자 페이지 추가 확장, 타이틀과 헤더, 사이드메뉴  유지, contents만 변경   -->
 	
-	<!-- 점포 등록 페이지 -->
-	<definition name="adminPageS1" extends="adminPage">
-		<put-attribute name="contents" value="/WEB-INF/views/strMng/strMngIns.jsp" />
-	</definition>
-	
-	<!-- 점포 조회 페이지 -->
-	<definition name="adminPageS2" extends="adminPage">
-		<put-attribute name="contents" value="/WEB-INF/views/strMng/strMngList.jsp" />
-	</definition>
-	
-	<!-- 점포 검색 페이지 -->
-	<definition name="adminPageS3" extends="adminPage">
-		<put-attribute name="contents" value="/WEB-INF/views/strMng/strMngSearch.jsp" />
-	</definition>
-	
-	<!-- 회원 관리 페이지 -->
-	<definition name="adminPageM1" extends="adminPage">
+	<!-- 관리자 회원 관리 페이지 -->
+	<definition name="adminUserMng" extends="adminPage">
 		<put-attribute name="contents" value="/WEB-INF/views/userMng/userMngList.jsp" />
 	</definition>
 	
-	<!-- 로그 관리 페이지 -->
-	<definition name="adminPageL1" extends="adminPage">
+	<!-- 관리자 로그 관리 페이지 -->
+	<definition name="adminLogManage" extends="adminPage">
 		<put-attribute name="contents" value="/WEB-INF/views/log/logMngList.jsp" />
 	</definition>
 	
-	<!-- 파일 관리 페이지 -->
-	<definition name="adminPageF1" extends="adminPage">
+	<!-- 관리자 파일 관리 페이지 -->
+	<definition name="adminFileManage" extends="adminPage">
 		<put-attribute name="contents" value="/WEB-INF/views/sysMng/fileMng/fileMngList.jsp" />
 	</definition>
 		
-	<!-- 코드 관리 페이지 -->
-	
-	
-	<!-- 마이페이지 -->
-	<definition name="adminPageC1" extends="adminPage">
+	<!-- 관리자 코드 관리 페이지 -->
+	<definition name="adminCodeManage" extends="adminPage">
 		<put-attribute name="contents" value="/WEB-INF/views/sysMng/cdMng/cdMngList.jsp" />
 	</definition>
 
-
-	<!-- 점주 페이지 추가 확장, 타이틀과 헤더 유지, contents만 변경 -->
-	
-	
-	
-	<!-- 점주 점포 조회 페이지  -->
-	<definition name="managerPageS1" extends="managerPage">
-		<put-attribute name="contents" value="/WEB-INF/views/strMng/strMngList.jsp" />
+	<!-- 관리자 스케줄 조회 페이지 -->
+	<definition name="adminSchdlList" extends="adminPage">
+		<put-attribute name="contents" value="/WEB-INF/views/schdl/schdlMngTable.jsp" />
 	</definition>
-	
-	<!-- 점주 점포 조회 페이지  -->
-	<definition name="managerPageS2" extends="managerPage">
+
+
+<!-- 점주 페이지 추가 확장, 타이틀과 헤더, 사이드메뉴  유지, contents만 변경 -->
+
+	<!-- 점주 점포 수정 페이지  -->
+	<definition name="modStoreInfo" extends="managerPage">
 		<put-attribute name="contents" value="/WEB-INF/views/strMng/strMngMod.jsp" />
 	</definition>
 	
-	
-	<!-- 수리기사 페이지 추가 확장, 타이틀과 헤더 유지, contents만 변경 -->
-	
-	
-	<!-- A/S 관리 -->
-	<definition name="asList" extends="mainLayout2">
-		<put-attribute name="title" value="AS 내역 조회" />
-		<put-attribute name="contents" value="/WEB-INF/views/asMng/asList.jsp" />
-	</definition>
+	<!-- 점주  A/S 신청 페이지 -->
 	<definition name="asReceipt" extends="mainLayout2">
 		<put-attribute name="title" value="AS 접수" />
 		<put-attribute name="contents" value="/WEB-INF/views/asMng/asReceipt.jsp" />
 	</definition>
-	<definition name="asDetail" extends="mainLayout2">
-		<put-attribute name="title" value="AS 상세 조회" />
-		<put-attribute name="contents" value="/WEB-INF/views/asMng/asDetail.jsp" />
+	
+	<!-- 점주 A/S 수정 페이지 -->
+	<definition name="asMod" extends="managerPage">
+		<put-attribute name="title" value="AS 신청 내역 수정" />
+		<put-attribute name="contents" value="/WEB-INF/views/asMng/asMod.jsp" />
 	</definition>
 	
+<!-- 수리기사 페이지 추가 확장, 타이틀과 헤더, 사이드메뉴  유지, contents만 변경 -->
+	
+
+
 </tiles-definitions>

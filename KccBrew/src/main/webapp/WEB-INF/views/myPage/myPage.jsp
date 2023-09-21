@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="sec"
@@ -9,13 +9,27 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-
 <link rel="stylesheet" href="${path}/resources/css/comm/myPage.css"/>
 </head>
 <body>
 	<section id="notice" class="notice">
 		<div class="container2">
-			<div class="category">마이페이지</div>
+			<!-- ********** 페이지 네비게이션 시작 ********** -->
+			<div class="page-content-navigation">
+				<ol class="breadcrumb">
+					<li class="breadcrumb-home"><a href="#">마이페이지</a></li>
+					<li>
+						<div class="header-icon-background">
+							<img
+								src="<c:url value='resources/img/asMng/free-icon-right-arrow-271228.png' />"
+								alt="Check List" class="header-icon" />
+						</div>
+					</li>
+					<li><a href="<c:url value='/as-list' />">내 정보</a></li>
+				</ol>
+			</div>
+			<!-- ********** 페이지 네비게이션 끝 ********** -->
+			<div class="category">내 정보</div>
 			<hr class="line">
 			<table id="search-box">
 				<c:forEach var="user" items="${userInfoList}">
@@ -78,7 +92,7 @@
 							<td>${store.storeName}</td>
 							<td>${store.storeTelNo}</td>
 						</tr>
-						</c:forEach>
+					</c:forEach>
 				</table>
 			</sec:authorize>
 			<sec:authorize access="hasRole('ROLE_MECHA')">
@@ -114,7 +128,7 @@
 						</tr>
 					</c:forEach>
 				</table>
-				</sec:authorize>
+			</sec:authorize>
 			<div class="modButtons">
 				<c:url var="toChgPwdPage" value="/mypage/chgpwd"/>
 				<a href="${toChgPwdPage}" class="updateBtn">

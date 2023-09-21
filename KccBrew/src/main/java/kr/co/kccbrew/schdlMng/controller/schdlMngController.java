@@ -277,7 +277,7 @@ public class schdlMngController {
 
 		model.addAttribute("totalDataNumber", holidayCount);
 		model.addAttribute("schedules", holidays);
-		return "schdl/hldyList";
+		return "holiday";
 	}
 
 	/*관리자용 검색한 휴가 조회*/
@@ -428,7 +428,7 @@ public class schdlMngController {
 	public String getAttendanceStatus(Model model) {
 		List<UserVo> locationList=userService.selectLocationCd();
 		model.addAttribute("locationList", locationList);
-		return "schdl/schdlMngTable";
+		return "adminSchdlList";
 	}
 
 	/*관리자 월근태현황 검색*/
@@ -513,7 +513,7 @@ public class schdlMngController {
 	@GetMapping("/schedule/calendar")
 	public String getCalendar() {
 
-		return "schdl/schdlMngClndr";
+		return "schdlTable";
 	}
 
 	/*회원 캘린더 월별 조회*/

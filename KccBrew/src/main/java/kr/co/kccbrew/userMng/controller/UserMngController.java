@@ -71,7 +71,7 @@ public class UserMngController {
 			model.addAttribute("total", totalCount);
 			model.addAttribute("newList", newList);
 			model.addAttribute("list", userList);
-			return "userMng/userMngList";
+			return "adminUserMng";
 		} else {
 			model.addAttribute("message", "로그인 하지 않은 사용자입니다.");
 			return "loginpage";
@@ -104,7 +104,7 @@ public class UserMngController {
 	}
 	
 	@RequestMapping(value = "/user/mod/{userId}", method = RequestMethod.GET)
-	public String userMod(@PathVariable String userId, Model model) {
+	public String userMod(@RequestParam String userId, Model model) {
 		UserMngVo user = userMngService.findByUserId(userId);
 		UserMngVo userDtl = userMngService.findByUserInfo(userId);
 		model.addAttribute("user", user);
@@ -114,11 +114,11 @@ public class UserMngController {
 	}
 	
 	@PostMapping(value="/user/mod")
-	public ResponseEntity<String> userMod(UserMngVo user, @RequestParam Map<String, Object> param,  HttpSession session) {
+	public ResponseEntity<String> userMod(Principal principal, UserMngVo user, @RequestParam Map<String, Object> param,  HttpSession session) {
 		String userId = (String) param.get("userId");
 		String approveYn = (String) param.get("approveYn");
 		String useYn = (String) param.get("useYn");
-		String approveAdmin = (String) session.getAttribute("userId");
+		String approveAdmin = principal.getName();
 		user.setApproveAdmin(approveAdmin);
 		user.setUserId(userId);
 		user.setUseYn(useYn);
