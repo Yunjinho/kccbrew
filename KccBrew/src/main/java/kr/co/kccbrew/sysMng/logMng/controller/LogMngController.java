@@ -53,7 +53,7 @@ public class LogMngController {
 
 
 	/* 로그조회 */
-	@GetMapping("/log")
+	@GetMapping("/admin/log")
 	public String getLogs(
 			@RequestParam(defaultValue = "1") int currentPage,
 			@ModelAttribute("searchContent") LogMngVo searchContent, // Model에 'searchContent' 자동추가
