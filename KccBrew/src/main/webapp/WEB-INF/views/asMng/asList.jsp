@@ -222,7 +222,7 @@
 												<td>~</td>
 
 												<!-- 종료 연도 선택 필드 -->
-												<td>
+												<td colspan="2">
 													<select class="tx2" name="endYr" id="yr" onchange="javascript:chg();">
 														<option value="">연도</option>
 														<c:forEach var="i" begin="0" end="9">
@@ -350,7 +350,7 @@
 												<td>~</td>
 
 												<!-- 종료 연도 선택 필드 -->
-												<td>
+												<td colspan="2">
 													<select class="tx2" name="endYr" id="yr" onchange="javascript:chg();">
 														<option value="">연도</option>
 														<c:forEach var="i" begin="0" end="9">
