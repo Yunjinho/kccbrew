@@ -44,21 +44,28 @@
 							<!-- 여기에  매핑 url 선언 -->
 							<li><a href="${toAsList}">A/S 내역 조회</a></li>
 							<!-- 매핑 url 변수 링크로 걸기 -->
-						</ul></li>
+						</ul>
+					</li>
 					<li class="nav-item"><a class="nav-links" href="#">점포 관리</a>
 						<ul class="comm-nav-dropdown">
-							<c:url var="toStoreRegPage" value="/admin/store/register" />
-							<li><a href="${toStoreRegPage}">점포 등록</a></li>
-							<c:url var="toStoreListPage" value="/admin/store/check" />
+							<c:url var="toStoreListPage" value="/store" />
 							<li><a href="${toStoreListPage}">점포 조회</a></li>
-							<c:url var="toStoreSearchPage" value="/admin/store/search" />
-							<li><a href="${toStoreSearchPage}">점포 검색</a></li>
-						</ul></li>
+						</ul>
+					</li>
 					<li class="nav-item"><a class="nav-links" href="#">회원 관리</a>
 						<ul class="comm-nav-dropdown">
 							<c:url var="toMemberMngPage" value="/admin/member/manage" />
 							<li><a href="${toMemberMngPage}">회원 조회</a></li>
-						</ul></li>
+						</ul>
+					</li>
+					<li class="nav-item"><a class="nav-links" href="#">스케줄 관리</a>
+						<ul class="comm-nav-dropdown">
+							<c:url var="toHldyList" value="/holiday" />
+							<li><a href="${toHldyList}">휴가 관리</a></li>
+							<c:url var="toSchdlList" value="/schedule" />
+							<li><a href="${toSchdlList}">스케줄 조회</a></li>
+						</ul>
+					</li>
 					<li class="nav-item"><a class="nav-links" href="#">시스템 관리</a>
 						<ul class="comm-nav-dropdown">
 							<c:url var="toAdminLogPage" value="/admin/log/check" />
@@ -67,12 +74,14 @@
 							<li><a href="${toAdminFilePage}">파일 조회</a></li>
 							<c:url var="toAdminCodePage" value="/admin/code/check" />
 							<li><a href="${toAdminCodePage}">공통 코드 조회</a></li>
-						</ul></li>
+						</ul>
+					</li>
 					<li class="nav-item"><a class="nav-links" href="#">마이페이지</a>
 						<ul class="comm-nav-dropdown">
 							<c:url var="toMyPage" value="/mypage" />
-							<li><a href="${toMyPage}">마이페이지</a></li>
-						</ul></li>
+							<li><a href="${toMyPage}">내 정보</a></li>
+						</ul>
+					</li>
 				</ul>
 			</div>
 		</nav>
@@ -83,7 +92,7 @@
 	<header class="comm-nav">
 		<div class="top-bar">
 			<p>
-				<<c:out value="${user.userNm}"/>
+				<c:out value="${user.userNm}"/>
 				(점주)님 환영합니다
 			</p>
 			
@@ -109,19 +118,30 @@
 							<li><a href="${toASReceipt}">A/S 신청</a></li>
 							<c:url var="toAsList" value="/as-list" />
 							<li><a href="${toAsList}">A/S 내역 조회</a></li>
-						</ul></li>
+						</ul>
+					</li>
 					<li class="nav-item"><a class="nav-links" href="#">점포 관리</a>
 						<ul class="comm-nav-dropdown">
-							<c:url var="toStoreList" value="/manager/store/check" />
+							<c:url var="toStoreList" value="/store" />
 							<li><a href="${toStoreList}">점포 조회</a></li>
 							<c:url var="toStoreModPage" value="/manager/store/mod" />
 							<li><a href="${toStoreModPage}">점포 정보 수정</a></li>
-						</ul></li>
+						</ul>
+					</li>
+					<li class="nav-item"><a class="nav-links" href="#">스케줄 관리</a>
+						<ul class="comm-nav-dropdown">
+							<c:url var="toHldyList" value="/holiday" />
+							<li><a href="${toHldyList}">휴가 관리</a></li>
+							<c:url var="toSchdlList" value="/schedule/calendar" />
+							<li><a href="${toSchdlList}">스케줄 조회</a></li>
+						</ul>
+					</li>
 					<li class="nav-item"><a class="nav-links" href="#">마이페이지</a>
 						<ul class="comm-nav-dropdown">
 							<c:url var="toMyPage" value="/mypage" />
-							<li><a href="${toMyPage}">마이페이지</a></li>
-						</ul></li>
+							<li><a href="${toMyPage}">내 정보</a></li>
+						</ul>
+					</li>
 				</ul>
 			</div>
 		</nav>
@@ -156,17 +176,28 @@
 						<ul class="comm-nav-dropdown">
 							<c:url var="toAsList" value="/as-list" />
 							<li><a href="${toAsList}">A/S 내역 조회</a></li>
-						</ul></li>
-					<li class="nav-item"><a class="nav-links" href="#">일정 관리</a>
+						</ul>
+					</li>
+					<li class="nav-item"><a class="nav-links" href="#">점포 관리</a>
 						<ul class="comm-nav-dropdown">
-							<li><a href="#">일정 조회</a></li>
-							<li><a href="#">일정 등록</a></li>
-						</ul></li>
+							<c:url var="toStoreList" value="/store" />
+							<li><a href="${toStoreList}">점포 조회</a></li>
+						</ul>
+					</li>
+					<li class="nav-item"><a class="nav-links" href="#">스케줄 관리</a>
+						<ul class="comm-nav-dropdown">
+							<c:url var="toHldyList" value="/holiday" />
+							<li><a href="${toHldyList}">휴가 관리</a></li>
+							<c:url var="toSchdlList" value="/schedule/calendar" />
+							<li><a href="${toSchdlList}">스케줄 조회</a></li>
+						</ul>
+					</li>
 					<li class="nav-item"><a class="nav-links" href="#">마이페이지</a>
 						<ul class="comm-nav-dropdown">
 							<c:url var="toMyPage" value="/mypage" />
-							<li><a href="${toMyPage}">마이페이지</a></li>
-						</ul></li>
+							<li><a href="${toMyPage}">내 정보</a></li>
+						</ul>
+					</li>
 				</ul>
 			</div>
 		</nav>
