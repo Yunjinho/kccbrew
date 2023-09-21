@@ -50,7 +50,7 @@ import lombok.extern.slf4j.Slf4j;
  * 
  * @   수정일                    수정자                        수정내용
  * ============      ==============     ==============
- * 2023-09-01			           이세은			             최초생성
+ * 2023-09-01			           이세은			        최초생성
  * 2023-09-11                       이세은               휴일등록 메서드 작성
  * 2023-09-12                       이세은               휴일기간 중복방지 유효성검사 메서드작성
  * 2023-09-17                       이세은               검색 기능 수정
@@ -405,26 +405,26 @@ public class schdlMngController {
 	
 	
 	/*휴가신청내역 조회*/
-	@GetMapping("/holiday/registration")
+/*	@GetMapping("/holiday/registration")
 	public String registeredHolidayPage(Model model, Authentication authentication) {
 
-		/*ID에 따른 데이터 조회*/
+		ID에 따른 데이터 조회
 		UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 		String userId = userDetails.getUsername();
 
-		/*남은 휴가일수 조회*/
+		남은 휴가일수 조회
 		int usedHolidays = schdlMngService.getUsedHoliday(userId);
 
 		model.addAttribute("usedHolidays", usedHolidays);
 
 		return "schdl/hldyIns";
-	}
+	}*/
 
 
 	/********************************************************근태현황 조회********************************************************/
 
 	/*관리자 월근태현황 조회*/
-	@GetMapping("/schedule")
+	@GetMapping("admin/schedule")
 	public String getAttendanceStatus(Model model) {
 		List<UserVo> locationList=userService.selectLocationCd();
 		model.addAttribute("locationList", locationList);
@@ -432,7 +432,7 @@ public class schdlMngController {
 	}
 
 	/*관리자 월근태현황 검색*/
-	@PostMapping(value="/schedule", produces = "application/json; charset=utf-8")
+	@PostMapping(value="admin/schedule", produces = "application/json; charset=utf-8")
 	@ResponseBody
 	public List<Map<String, Object>>processSearchRequest(@RequestParam("startDate") String startDate,
 			@RequestParam("endDate") String endDate, 

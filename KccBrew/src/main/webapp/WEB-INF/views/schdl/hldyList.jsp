@@ -55,127 +55,11 @@
 
 
 	<div id="page" class="page-nosubmenu">
-		<!-- ********** header영역 시작********** -->
-		<div id="page-header">
-			<nav
-				class="navbar navbar-default navbar-fixed-top headroom animated slideDown">
-				<div class="container-fluid">
-
-					<!-- 브랜드 로고 -->
-					<div class="navbar-brand">
-						<a href="" class="logo"> <img src="/resources/img/kcc.png"
-							style="height: 100%; background: white;" />
-						</a>
-					</div>
-
-					<!-- ********** header메뉴 시작********** -->
-					<div class="usermenu">
-						<ul class="nav nav-pills" role="tablist">
-							<!-- 사용자 이름 -->
-							<li class="user_department hidden-xs">이세은</li>
-
-							<!-- 사용자 프로필 사진 -->
-							<li class="user-info-menu"><a class="user-info-popover"
-								tabindex="0" role="button" data-toggle="popover"
-								data-placement="bottom" data-original-title="" title=""> <img
-									src="/resources/img/log/f2.png" />
-							</a>
-								<div class="user-info-box popover-box">
-									<div class="user-info-picture">
-										<h4>이세은</h4>
-										<p class="department">화학과</p>
-									</div>
-									<ul class="user-info-submenu clearfix">
-										<li class="items"><a
-											href="https://cyber.inu.ac.kr/user/edit.jsp?id=86992">개인정보
-												수정</a></li>
-										<li class="items"><a
-											href="https://cyber.inu.ac.kr/login/logout.jsp?sesskey=RWLqOGp4Jq">로그아웃</a></li>
-									</ul>
-									<ul class="user-info-shortcut">
-										<li><a href="https://cyber.inu.ac.kr/user/files.jsp">파일
-												관리</a></li>
-									</ul>
-								</div></li>
-
-							<!-- 사용자 할일 -->
-							<li class="user-courses"><a
-								class="user-courses-popover icon-a" tabindex="0" role="button"
-								data-toggle="popover" data-placement="bottom"
-								data-original-title="" title=""> </a>
-								<div class="user-courses-box popover-box">
-									<div class="popover-header">진행중인 강좌 (0)</div>
-									<ul class="my-course-lists">
-										<li class="nocourses">Loading...</li>
-									</ul>
-									<div class="popover-footer">
-										<a href="https://cyber.inu.ac.kr/">MY COURSES</a>
-									</div>
-								</div></li>
-
-							<!-- 알림 -->
-							<li class="user-notification"><a
-								class="icon-a user-noti-popover" tabindex="0" role="button"
-								data-toggle="popover" data-placement="bottom"
-								data-original-title="" title=""> </a>
-								<div class="user-noti-box popover-box">
-									<div class="popover-header">
-										<span>전체 알림</span>
-									</div>
-									<div class="user-noti-lists">
-										<div class="nomessage">Loading...</div>
-									</div>
-									<div class="popover-footer">
-										<a href="https://cyber.inu.ac.kr/local/ubnotification/">모두
-											보기</a>
-									</div>
-								</div></li>
-
-							<!-- 마이 메뉴 -->
-							<li class="user-product"><a class="user-menu-product icon-a"
-								tabindex="0" role="button" data-toggle="popover"
-								data-original-title="" title=""></a>
-								<div class="hide menu-product">
-									<div class="menu-product-itl">
-										<h5>
-											교육혁신원 홈페이지 <a href="http://ctl.inu.ac.kr/" target="_blank">
-											</a>
-										</h5>
-										<ul>
-											<li><a href="http://www.inu.ac.kr/" target="_blank">인천대학교
-													홈페이지</a></li>
-											<li><a href="http://www.kocw.net/home/index.do"
-												target="_blank">KOCW 강의공개 서비스</a></li>
-											<li><a href="http://starinu.inu.ac.kr/" target="_blank">학생역량관리시스템(STARinU)</a></li>
-											<li><a href="http://lib.inu.ac.kr/" target="_blank">도서관</a></li>
-											<li><a href="http://job.inu.ac.kr/" target="_blank">취업경력개발원</a></li>
-											<li><a
-												href="http://rnd.inu.ac.kr/user/indexMain.do?siteId=rnd"
-												target="_blank">산학협력단</a></li>
-											<li><a href="http://scc.inu.ac.kr/" target="_blank">학생생활상담소</a></li>
-										</ul>
-									</div>
-								</div></li>
-
-
-						</ul>
-					</div>
-					<!-- ********** header메뉴 끝********** -->
-
-
-				</div>
-			</nav>
-		</div>
-		<!-- ********** header영역 끝********** -->
-
-		<!-- ********** 왼쪽 메뉴 끝 ********** -->
-
 		<div id="page-mask">
 			<div id="page-container" class="">
 				<div id="page-content" class="clearfix">
 					<div id="page-content-wrap">
 
-						<!-- ********** 페이지 네비게이션 시작 ********** -->
 						<div class="page-content-navigation">
 							<ol class="breadcrumb">
 								<li class="breadcrumb-home"><a href="">스케줄관리</a></li>
@@ -189,6 +73,8 @@
 								<li><a href="<c:url value='/holiday' />">휴가사용현황</a></li>
 							</ol>
 						</div>
+
+
 						<!-- ********** 페이지 네비게이션 끝 ********** -->
 
 						<div id="region-main">
@@ -208,7 +94,7 @@
 													<li class="last"><a href="/schedule/calendar"><span>나의캘린더</span></a></li>
 												</sec:authorize>
 												<sec:authorize access="hasRole('ROLE_ADMIN')">
-													<li class="last"><a href="/schedule"><span>근태현황</span></a></li>
+													<li class="last"><a href="/admin/schedule"><span>근태현황</span></a></li>
 												</sec:authorize>
 											</ul>
 										</div>

@@ -1,5 +1,6 @@
 package kr.co.kccbrew.strMng.controller;
 
+import java.security.Principal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -102,10 +103,8 @@ public class StrMngController {
 
 	/* 점포등록 */
 	@RequestMapping(value = "/store/insert", method = RequestMethod.GET)
-	public String insert(Model model, HttpSession session) {
-		String userId = (String) session.getAttribute("userId"); //세션에서 아이디
-		String userTypeCd = (String) session.getAttribute("userTypeCd"); 
-		System.out.println(userId);
+	public String insert(Model model, HttpSession session, Principal principal) {
+		String userId = principal.getName();
 		//로그인
 		if (userId != null && !userId.equals("")) { 
 			model.addAttribute("userId", userId);
@@ -118,15 +117,15 @@ public class StrMngController {
 			
 		} else {	//로그아웃 로그인페이지로 이동		
 			model.addAttribute("message", "로그인 하지 않은 사용자입니다.");
-			return "loginpage";
+			return "";
 
 		}
 	}
 
 	/* 점포등록 */
 	@RequestMapping(value = "/store/insert", method = RequestMethod.POST, produces = "application/text; charset=utf8")
-	public String insert(StrMngVo store, Model model, HttpSession session) {
-		String userId = (String) session.getAttribute("userId");
+	public String insert(StrMngVo store, Model model, Principal principal) {
+		String userId = principal.getName();
 		store.setRegUser(userId);
 		store.setModUser(userId);
 		storeService.insert(store);
@@ -136,8 +135,8 @@ public class StrMngController {
 
 	/* 점포수정 */
 	@RequestMapping(value = "/store/update/{storeSeq}", method = RequestMethod.GET)
-	public String update(@PathVariable int storeSeq, Model model, HttpSession session) {
-		String userId = (String) session.getAttribute("userId");
+	public String update(@PathVariable int storeSeq, Model model, HttpSession session, Principal principal) {
+		String userId = principal.getName();
 		//String userTypeCd = (String) session.getAttribute("userTypeCd"); 로그인 구현 완료 이후에 주석 해제
 		//로그인
 		if (userId != null && !userId.equals("")) {
@@ -152,14 +151,14 @@ public class StrMngController {
 		} else {
 			//로그아웃  로그인 페이지로 이동
 			model.addAttribute("message", "로그인 하지 않은 사용자입니다.");
-			return "loginpage";
+			return "";
 		}
 	}
 
 	/* 점포수정 */
 	@RequestMapping(value = "/store/update", method = RequestMethod.POST)
-	public String update(Model model, StrMngVo store, HttpSession session) {
-		String userId = (String) session.getAttribute("userId");
+	public String update(Model model, StrMngVo store, HttpSession session, Principal principal) {
+		String userId = principal.getName();
 		store.setModUser(userId);
 		// storeNm에서 ',' 제거
 		String storeNmWithoutComma = store.getStoreNm().replaceAll(",", "");
