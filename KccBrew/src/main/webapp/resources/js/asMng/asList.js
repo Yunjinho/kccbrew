@@ -25,7 +25,7 @@ function downExcel(flag){
 	var asStatusCd=$("#search-form>input[name=asStatusCd]").val();
 	
 	$.ajax({
-		type : "GET",           // 타입 (get, post, put 등등)
+		type : "POST",           // 타입 (get, post, put 등등)
 	    url : "/download-list",           // 요청할 서버url
 	    dataType : "text",       // 데이터 타입 (html, xml, json, text 등등)
 	    data : {

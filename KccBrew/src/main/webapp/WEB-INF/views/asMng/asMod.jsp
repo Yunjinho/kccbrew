@@ -17,52 +17,9 @@
 
 <!-- js -->
 
-<script src="https://code.jquery.com/jquery-3.6.0.slim.js"
-	integrity="sha256-HwWONEZrpuoh951cQD1ov2HUK5zA5DwJ1DNUXaM6FsY="
-	crossorigin="anonymous"></script>
-<script src="<c:url value="/resources/js/asMng/asMod.js"/>"></script>  
-
 <meta charset="UTF-8">
 <title>Insert title here</title>
 
-<style>
-.slider-container {
-  position: relative;
-  width: 300px; /* 슬라이더 컨테이너의 너비를 조절하세요. */
-  overflow: hidden;
-}
-
-.preview-container {
-	transition: transform 0.3s ease;
-	display: flex;
-	
-}
-
-.preview {
-
-  width: 300px; /* 각 이미지의 너비를 조절하세요. */
-  height: auto;
-}
-
-#prev,
-#next {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  background-color: #ccc;
-  border: none;
-  padding: 5px 10px;
-  cursor: pointer;
-}
-
-#prev {
-  left: 0;
-}
-
-#next {
-  right: 0;
-}
-</style>
 </head>
 <body>
 	<div id="page-mask">
@@ -89,7 +46,7 @@
 								<div id="content">
 									<h2 class="heading">AS 접수</h2>
 									<hr>
-									
+
 									<!-- AS 접수-->
 									<form action="/as-mod" method="post" id="receipt-form"
 										enctype="multipart/form-data">
@@ -181,24 +138,15 @@
 											</div>
 										</div>
 										<div class="file-upload-div">
-											<div class="slider-container">
-												<div class="preview-container">
-													
-												</div>
-												<button id="prev">이전</button>
-												<button id="next">다음</button>
-											</div>
-											<div class="input-container">
-												
-											</div>
+											
 										</div>
+
 										<div>
-										<input type="hidden" value='<sec:authentication property="principal.username" />' name="userId"> 
 											<div>
 												<button type="submit" class="form-btn">접수</button>
 											</div>
 											<div>
-												<button onclick="history.back()">취소</button>
+												<a href="/as-list" class="form-btn">취소</a>
 											</div>
 										</div>
 									</form>
@@ -210,14 +158,88 @@
 			</div>
 		</div>
 	</div>
-	<script>
-    var asInfoSeq = "${asInfoSeq}";
-    // 여기서 asInfoSeq 변수를 사용하여 JavaScript 코드를 작성합니다.
-    var asAssignSeq = "${asAssignSeq}";
+	
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> 
+<%-- 	<script src="<c:url value="/resources/js/asMng/asReceipt.js"/>"></script> --%>
+<script type="text/javascript">
+$(document).ready(function() {
+    var asInfoSeq = "${asInfoSeq}"; // 수정 필요한 부분
+    var localUrl = "${asDetailInfo.localSavePath}"
+    $.ajax({
+        url: "/getAsInfoImages?asInfoSeq=" + asInfoSeq + "&asAssignSeq=",
+        method: "GET",
+        dataType: "json",
+        success: function(asInfoImgList) {
+            if (asInfoImgList.length > 0) {
+                asInfoImgList.forEach(function(imgInfo) {
+                    // 이미지 파일의 경로를 가져옵니다.
+                    var imageUrl = "<c:url value='/resources/img/asMng/receipt/' />" + imgInfo.fileServerNm;
+
+                    // 이미지 파일을 다운로드하고 File 객체를 생성합니다.
+                    fetch(imageUrl)
+                        .then(function(response) {
+                            return response.blob();
+                        })
+                        .then(function(blob) {
+                            var fileName = imgInfo.fileServerNm;
+                            var file = new File([blob], fileName);
+
+                            // FileList 객체를 생성하고 File 객체를 추가합니다.
+                            var fileList = new DataTransfer();
+                            fileList.items.add(file);
+
+                            var inputElement = document.createElement("input");
+                            inputElement.type = "file";
+                            inputElement.name = "imgFile";
+                            inputElement.value = "";
+                            inputElement.setAttribute("onchange", "imgTypeCheck(this)");
+
+                            inputElement.files = fileList.files;
+
+                            inputElement.onchange = function() {
+                                imgTypeCheck(this);
+                            };
+
+                            var divElement = document.createElement("div");
+                            divElement.appendChild(inputElement);
+
+                            // 파일 입력란을 파일 업로드 DIV에 추가
+                            document.querySelector(".file-upload-div").appendChild(divElement);
+                        })
+                        .catch(function(error) {
+                            console.error("Error downloading image: " + error);
+                        });
+                });
+            }
+        },
+        error: function(error) {
+            console.error("Error fetching image data: " + error);
+        }
+    });
+});
+
+// 이미지 확장자 체크 함수
+function imgTypeCheck(fileName) {
+    var imgFile = fileName.files[0];
+    if (imgFile) {
+        var fileLen = imgFile.name.length;
+        var lastDot = imgFile.name.lastIndexOf('.');
+        var fileType = imgFile.name.substring(lastDot, fileLen).toLowerCase();
+        if (fileType == ".jpeg" || fileType == ".jpg" || fileType == ".png") {
+        } else {
+            alert("사진 : jpeg, jpg, png 확장자를 가진 파일만 사용하실 수 있습니다.");
+            $(fileName).val("");
+        }
+    }
+}
+function addFile(){
+	var str="<div>\n<input type='file' name='imgFile' value='' onchange='imgTypeCheck(this)'>\n</div>";
+	$(".file-upload-div").append(str);
+}
+function removeFile(){
+	var str=$(".file-upload-div>div:last-child").remove();
+}
 </script>
-	<script src="https://code.jquery.com/jquery-3.6.0.slim.js"
-	integrity="sha256-HwWONEZrpuoh951cQD1ov2HUK5zA5DwJ1DNUXaM6FsY="
-	crossorigin="anonymous"></script>
-	<script src="<c:url value="/resources/js/asMng/asMod.js"/>"></script>
+
 </body>
 </html>

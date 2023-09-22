@@ -1,13 +1,21 @@
 package kr.co.kccbrew.asMng.service;
 
+import java.io.File;
 import java.io.FileOutputStream;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.sql.Date;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.FileCopyUtils;
@@ -60,19 +68,10 @@ public class AsMngService implements IAsMngService{
 	 * @return : 장비 코드 리스트
 	 */
 	@Override
-	public List<AsMngVo> selectMachineCd() {
-		return asRepository.selectMachineCd();
+	public List<AsMngVo> selectCd(String code) {
+		return asRepository.selectCd(code);
 	}
 
-	/**
-	 * AS상태 코드 리스트 조회
-	 * @return : AS상태 코드 리스트
-	 */
-	@Override
-	public List<AsMngVo> selectAsStatusCd() {
-		// TODO Auto-generated method stub
-		return asRepository.selectAsStatusCd();
-	}
 	/**
 	 * 로그인한 사용자와 매핑 되어있는 점포 정보
 	 */
@@ -98,8 +97,17 @@ public class AsMngService implements IAsMngService{
 	 */
 	@Transactional
 	private AsMngVo insertImg(AsMngVo asMngVo) {
+		
+		File folder = new File(asMngVo.getServerSavePath());
+		File folder2 = new File(asMngVo.getLocalSavePath());
+        // 폴더가 존재하지 않으면 폴더를 생성합니다.
+        if (!folder.exists()) {
+            folder.mkdirs(); // 폴더 생성 메소드
+            folder2.mkdirs(); // 폴더 생성 메소드 서버로 배포하면 삭제 필요
+        }
+		
 		AsMngVo vo=new AsMngVo();
-		vo.setGrpCdDtlId("02");
+		vo.setGrpCdDtlId("02");  // 
 		vo.setUserId(asMngVo.getUserId());
 		//기본 파일정보 등록
 		asRepository.insertFile(vo);
@@ -137,11 +145,6 @@ public class AsMngService implements IAsMngService{
 	}
 
 	@Override
-	public List<AsMngVo> selectLocationCd() {
-		return asRepository.selectLocationCd();
-	}
-
-	@Override
 	public List<AsMngVo> selectLocationDtlCd(String locationCd) {
 		return asRepository.selectLocationDtlCd(locationCd);
 	}
@@ -161,7 +164,9 @@ public class AsMngService implements IAsMngService{
 	public AsMngVo insertAsAssign(AsMngVo asMngVo) {
 		asRepository.insertAsAssign(asMngVo);
 		asRepository.updateAsInfoStatus(asMngVo);
-		if(asMngVo.getAsResultSeq()!="") {
+		System.out.println(asMngVo);
+		if(asMngVo.getAsResultSeq()!="" && asMngVo.getAsResultSeq()!=null) {
+			System.out.println(asMngVo);
 			asMngVo.setReapplyConfirm("Y");
 			asRepository.updateAsResultConfirm(asMngVo);
 		}
@@ -200,5 +205,101 @@ public class AsMngService implements IAsMngService{
 	public void updateResultMng(AsMngVo asMngVo) {
 		asRepository.updateResultMng(asMngVo);
 	}
+	
+	/**
+	 * AS 접수
+	 */
+	@Transactional
+	public void asMod(AsMngVo asMngVo) {
+
+		asMngVo = insertImg(asMngVo);
+		asRepository.asMod(asMngVo);
+	}
+
+	@Override
+	public void deleteFile(AsMngVo asMngVo, String imgSeq) {
+		List<AsMngVo> list = asRepository.selectAsImg(imgSeq);
+		AsMngVo vo = new AsMngVo();
+
+		for (AsMngVo e : list) {
+			vo.setFileServerNm(e.getFileServerNm());
+			vo.setServerSavePath(e.getServerSavePath());
+			String targetPath = asMngVo.getServerSavePath() + "\\" + vo.getFileServerNm();
+			File existingImg = new File(targetPath);
+			if (existingImg.exists()) {
+				boolean deleted = existingImg.delete();
+				if (deleted) {
+					
+				}
+			}
+		}
+
+		asRepository.deleteFile(imgSeq);
+	}
+	@Override
+	public void downloadExcel(AsMngVo asMngVo,String flag,String currentPage) {
+		List<AsMngVo> list;
+		 Map<Integer, Object[]> data = new HashMap();
+		 data.put(1, new Object[]{"AS 번호", "신청일", "AS 상태","점포명","점포 주소"});
+		if(flag.equals("1")) {
+			//현재 페이지 저장
+			list=selectASList(asMngVo, Integer.parseInt(currentPage));
+	        for(int i=0;i<list.size();i++) {
+	        	data.put(i+2, new Object[]{list.get(i).getAsInfoSeq(),list.get(i).getRegDttm(),list.get(i).getAsStatusNm(),list.get(i).getStoreNm(),list.get(i).getStoreAddr()+","+list.get(i).getStoreAddrDtl()});
+	        }
+		}else {
+			//전체 페이지 저장
+			list=selectAllASList(asMngVo);
+	        for(int i=0;i<list.size();i++) {
+	        	data.put(i+2, new Object[]{list.get(i).getAsInfoSeq(),list.get(i).getRegDttm(),list.get(i).getAsStatusNm(),list.get(i).getStoreNm(),list.get(i).getStoreAddr()+","+list.get(i).getStoreAddrDtl()});
+	        }
+		}
+		XSSFWorkbook workbook = new XSSFWorkbook();
+       // 빈 Sheet를 생성
+       XSSFSheet sheet = workbook.createSheet("조회한 AS 목록");
+
+       // Sheet를 채우기 위한 데이터들을 Map에 저장
+
+       // data에서 keySet를 가져온다. 이 Set 값들을 조회하면서 데이터들을 sheet에 입력한다.
+       Set<Integer> keyset = data.keySet();
+       int rownum = 0;
+       	
+       for (Integer key : keyset) {
+           Row row = sheet.createRow(rownum++);
+           Object[] objArr = data.get(key);
+           int cellnum = 0;
+           for (Object obj : objArr) {
+               Cell cell = row.createCell(cellnum++);
+               if (obj instanceof String) {
+                   cell.setCellValue((String)obj);
+               } else if (obj instanceof Integer) {
+                   cell.setCellValue((Integer)obj);
+               }
+           }
+       }
+
+       try {
+       	String folderPath="C:\\kccbrew";
+   		File folder = new File(folderPath);
+           // 폴더가 존재하지 않으면 폴더를 생성합니다.
+           if (!folder.exists()) {
+               folder.mkdirs(); // 폴더 생성 메소드
+           }
+           // 현재 날짜 구하기
+           LocalDateTime now = LocalDateTime.now();
+           // 포맷 정의
+           DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
+           // 포맷 적용
+           String formatedNow = now.format(formatter);
+    
+           FileOutputStream out = new FileOutputStream(new File("C:\\kccbrew", asMngVo.getUserId()+"_"+formatedNow+"_as_list.xlsx"));
+           workbook.write(out);
+           out.close();
+       } catch (Exception e) {
+           e.printStackTrace();
+       }
+		
+	}
+
 
 }

@@ -1,6 +1,27 @@
 @charset "UTF-8";
+
+#notice {
+	padding: 20px 20px;
+}
 .container2{
-	margin-top:20px;
+	background-color: #ffffff;
+}
+.header-icon {
+	width: 100%;
+	color: white;
+}
+
+.header-icon-background {
+	width: 20px;
+	height: 20px; 
+}
+
+.breadcrumb {
+	display: flex;
+}
+
+.breadcrumb li {
+	display: inline-flex;
 }
 
 .category{
@@ -8,7 +29,6 @@
     line-height: 1.1;
     color: inherit;
     font-size: 20px;
-    margin-top: 50px
 }
 
 .line {
@@ -91,7 +111,7 @@ input[type="text"] {
 	text-align: center;
 	padding: 0 30px;
 	text-decoration: none;
-
+	
 }
 .updateBtn, #confirmMod, .cancel {
 	margin-right:10px;
