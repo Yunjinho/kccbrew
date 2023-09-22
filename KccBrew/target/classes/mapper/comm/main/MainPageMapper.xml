@@ -200,27 +200,45 @@
 		]]>
 	</select>
 	
-	<!-- 사용자의 정보 리스트 불러오기 -->
+	<!-- 이미지를 포함한 사용자 정보 불러오기 -->
 	<select id="showUserInfoListById" parameterType="kr.co.kccbrew.comm.main.model.MainPageVo" resultType="kr.co.kccbrew.comm.main.model.MainPageVo">
 		<![CDATA[
-			SELECT 
-				u.user_id			AS "userId",
-				u.user_nm			AS "userName",
-				u.user_email		AS "userEmail",
-				u.user_telno		AS "userTelNo",
-				u.user_addr			AS "userAddress",
-				u.user_type_cd		AS "userType",
-				u.reg_dttm			AS "userRegDate",
-				u.mod_dttm			AS "userModDate",
-				u.use_yn			AS "userInUse",
-				u.approve_yn		AS "approveStatus",
-				u.approve_admin		AS "admWhoAcp",
-				u.eqpmn_cd			AS "machineCode",
-				u.location_cd		AS "mechaLocationCode"
+			SELECT
+				u.user_id				AS "userId"
+				,u.user_nm				AS "userName"
+				,u.user_email			AS "userEmail"	
+				,u.user_telno			AS "userTelNo"
+				,u.user_addr			AS "userAddress"
+				,u.eqpmn_cd				AS "machineCode"
+				,u.location_cd			AS "mechaLocationCode"
+				,u.user_type_cd			AS "userType"
+				,u.reg_dttm				AS "userRegDate"
+				,u.mod_dttm				AS "userModDate"
+				,u.use_yn				AS "userInUse"
+				,u.approve_yn			AS "approveStatus"
+				,u.approve_admin		AS "admWhoAcp"
+				,f.file_seq				AS "fileId"
+				,f.grp_cd_dtl_id		AS "groupCodeDetailId"
+				,f.file_reg_dttm		AS "fileRegDate"
+				,f.file_reg_user		AS "fileRegUser"
+				,f.file_mod_dttm		AS "fileModDate"
+				,f.file_mod_user		AS "fileModUser"
+				,fd.file_dtl_seq		AS "fileDetailId"
+				,fd.file_original_nm	AS "fileDetailOriginalName"
+				,fd.storage_location	AS "fileDetailLocation"
+				,fd.reg_dttm 			AS "fileDetailRegDate"
+				,fd.reg_user 			AS "fileDetailRegUser"
+				,fd.mod_dttm 			AS "fileDetailModDate"
+				,fd.file_server_nm		AS "fileDetailServerName"
+				,fd.file_fmt			AS "fileDetailFormat"
+				,fd.mod_user 			AS "fileDetailModUser"
 			FROM users u
+			LEFT JOIN file_info f ON u.file_seq = f.file_seq
+			LEFT JOIN file_detail_info fd ON f.file_seq = fd.file_seq
 			WHERE u.user_id = #{userId}
 		]]>
 	</select>
+	
 	
 	<!-- 점주의 점포 정보 리스트 불러오기 -->
 	<select id="showStoreInfoListById" parameterType="kr.co.kccbrew.comm.main.model.MainPageVo" resultType="kr.co.kccbrew.comm.main.model.MainPageVo">

@@ -535,10 +535,6 @@ public class schdlMngController {
 		return schedules;
 	}
 
-
-
-
-
 	/*휴가취소*/
 	@PostMapping("/holiday/delete")
 	public String deleteHoliday(@RequestParam("holidaySeq") Integer holidaySeq, HttpSession session ) {
