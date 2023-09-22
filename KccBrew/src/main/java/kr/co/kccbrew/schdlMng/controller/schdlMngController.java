@@ -126,14 +126,20 @@ public class schdlMngController {
 		holiday.setGroupCodeDetailId(userTypeCd);
 
 		System.out.println("보정한 holiday확인: " + holiday);
-
+		
+		long startTime = holiday.getStartDate().getTime();
+		long endTime = holiday.getEndDate().getTime();
+		
 		if(isAsAssignDate(holiday.getStartDate(), holiday.getEndDate(), userId)) {
-			message = "등록실패: 수리배정일과 동일한 날짜 선택!";
+			message = "등록실패: 수리배정일과 동일한 날짜입니다.";
 			System.out.println(message);
-		}
-		else if (isOverlapDate(holiday.getStartDate(), holiday.getEndDate()) || isBeforeToday(holiday.getStartDate().toString())) {
-			message = "등록실패: 부적절한 날짜 선택!";
+		} else if (isOverlapDate(holiday.getStartDate(), holiday.getEndDate(), userId)) {
+			message = "등록실패: 이미 휴가신청된 날짜입니다.";
 			System.out.println(message);
+		} else if(isBeforeToday(holiday.getStartDate().toString())) {
+			message = "등록실패: 현재일보다 이전일 입니다.";
+		} else if(startTime > endTime) {
+			message = "등록실패: 종료일은 시작일보다 같거나 이후로 지정해야 합니다.";
 		}
 		else {
 			/*휴가등록*/
@@ -149,10 +155,7 @@ public class schdlMngController {
 
 
 	/*휴가 중복 검사*/
-	public boolean isOverlapDate(Date startDate, Date endDate) {
-
-		/*세션으로 회원정보 확인*/
-		String userId = "ngw01";
+	public boolean isOverlapDate(Date startDate, Date endDate, String userId) {
 
 		List<HolidayVo> vacationDates = schdlMngService.getHoliday(userId);
 		Date startDateToCheck = startDate;

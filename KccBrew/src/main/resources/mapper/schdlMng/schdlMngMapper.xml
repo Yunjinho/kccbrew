@@ -595,7 +595,7 @@ EXTRACT(YEAR FROM SCHEDULE_DATE) = 2023 AND EXTRACT(MONTH FROM SCHEDULE_DATE) = 
 		FROM holiday
 		WHERE user_id = #{userId}
 		AND
-		TRUNC(HLDY_STAR) = TRUNC(#{date})
+    <![CDATA[TRUNC(#{date}) >= TRUNC(HLDY_STAR) AND TRUNC(#{date}) <= TRUNC(HLDY_END)]]>
 	</select>
 
 	<!-- 배정 조회 -->

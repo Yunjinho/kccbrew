@@ -56,6 +56,7 @@ function performSearch() {
 				/*휴무일 리스트*/
 				var holidayDates = schedule.holidayDates;
 				var holidayCount = holidayDates.length;
+
 				/*배정일 리스트*/
 				var assignDates = schedule.assignDates;
 				var assignCount = assignDates.length;
@@ -116,18 +117,23 @@ function performSearch() {
 					var holiday = holidayDates[j];
 					var startDay = new Date(holiday.HLDY_STAR); // 시작 날짜
 					var endDay = new Date(holiday.HLDY_END); // 종료 날짜
+					
+					// 날짜를 밀리초로 변환
+					var startTime = startDay.getTime();
+					var endTime = endDay.getTime();
 
 					// 시작일부터 종료일까지 반복
 					for (var currentDate = new Date(startDay); currentDate <= endDay; currentDate.setDate(currentDate.getDate() + 1)) {
-						var day = currentDate.getDate(); // 현재 날짜의 일(day) 추출
-						// 선택한 행과 열의 <td> 요소를 찾아서 값 대입
+						
+						var day = currentDate.getDate();
+						
 						var rowClassName = "row-" + (i + 1);
 						var cellClassName = "day-" + day; // 클래스 이름 생성
 
 						var $divElement = $("<div class='schedule-index'></div>")
 						.attr("data-user-id", userId)
 						.attr("data-schedule-type", "holiday")
-						.attr("data-schedule-date", startDay);
+						.attr("data-schedule-date", currentDate);
 
 						$divElement.css({
 							"background-color": "pink", // 배경색 설정
@@ -140,11 +146,8 @@ function performSearch() {
 						$divElement.on("click", function() {
 							var $this = $(this);
 							var userId = $this.attr("data-user-id");
-							console.log("userId: " + userId);
 							var scheduleType = $this.attr("data-schedule-type");
-							console.log("scheduleType: " + scheduleType);
 							var scheduleDate = $this.attr("data-schedule-date");
-							console.log("scheduleDate: " + scheduleDate);
 
 							// 데이터를 컨트롤러로 보내는 함수 호출
 							scheduleIndexData(userId, scheduleType, scheduleDate);

@@ -87,7 +87,8 @@
 										<tr>
 											<th>휴가시작일</th>
 											<td><input type="date" id="selectedStartDate"
-												name="startDate" value="" required></td>
+												name="startDate" value="" 
+												required onchange="calculateDays(new Date(this.value), new Date(document.getElementById('selectedEndDate').value))"></td>
 											<th>휴가종료일</th>
 											<td><input type="date" id="selectedEndDate"
 												name="endDate" value="" required
@@ -95,6 +96,9 @@
 											<td><span id="usedDays" contenteditable="true"
 												oninput="calculateNumbers(this.textContent, document.getElementById('remainingDays').textContent)"></span>
 											</td>
+										</tr>
+										<tr>
+										<td id="input-information" colspan="5" hidden="true"></td>
 										</tr>
 
 										<tr>
@@ -108,8 +112,8 @@
 									<div class="notice">
 										<ul>
 											<li>휴가일수는 연 15일 입니다.</li>
-											<li>AS근무가 배정된 날짜에는 휴가신청을 할 수 없습니다.</li>
-											<li>현재날짜를 기준으로 이전일은 휴가신청을 할 수 없습니다.</li>
+											<li>신청일은 종료일과 같거나 이전날짜여야 하며, 중복된 날짜에는 휴가신청을 할 수 없습니다.</li>
+											<li>AS근무가 배정된 날짜 및 공휴일에는 휴가신청을 할 수 없습니다.</li>
 										</ul>
 									</div>
 									<div class="center-button">
