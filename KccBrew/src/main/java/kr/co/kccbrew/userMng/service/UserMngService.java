@@ -17,18 +17,18 @@ public class UserMngService implements IUserMngService {
 	private final IUserMngRepository userMngRepository;
 	
 	@Override
-	public List<UserMngVo> userList(UserMngVo user, int currentPage) {
+	public List<UserMngVo> userList(UserMngVo userMngVo, int currentPage) {
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("UserMngVo", user);
+		map.put("UserMngVo", userMngVo);
 		map.put("firstRowNum", currentPage*10-9);
 		map.put("lastRowNum", currentPage*10);
 		return userMngRepository.userList(map);
 	}
 
 	@Override
-	public int getUserCount(UserMngVo user) {
+	public int getUserCount(UserMngVo userMngVo) {
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("UserMngVo", user);
+		map.put("UserMngVo", userMngVo);
 		return userMngRepository.getUserCount(map);
 	}
 	
@@ -38,15 +38,15 @@ public class UserMngService implements IUserMngService {
 	}
 	
 	  @Override
-	    public void updateUserApproval(UserMngVo user) {
-		  System.out.println(user);
-	            userMngRepository.save(user); // 변경사항을 데이터베이스에 저장
+	    public void updateUserApproval(UserMngVo userMngVo) {
+		  System.out.println(userMngVo);
+	            userMngRepository.save(userMngVo); // 변경사항을 데이터베이스에 저장
 	      
 	    }
 	  @Override
-	    public void userMod(UserMngVo user) {
-		System.out.println(user);
-	    userMngRepository.userMod(user); // 변경사항을 데이터베이스에 저장
+	    public void userMod(UserMngVo userMngVo) {
+		System.out.println(userMngVo);
+	    userMngRepository.userMod(userMngVo); // 변경사항을 데이터베이스에 저장
 	      
 	    }
 	  @Override

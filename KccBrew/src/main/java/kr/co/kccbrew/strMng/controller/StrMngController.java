@@ -147,7 +147,7 @@ public class StrMngController {
 			model.addAttribute("seoullist", seoullist);
 			model.addAttribute("list", list);
 			model.addAttribute("store", store);
-			return "modStoreInfo";
+			return "strMng/strMngMod";
 		} else {
 			//로그아웃  로그인 페이지로 이동
 			model.addAttribute("message", "로그인 하지 않은 사용자입니다.");

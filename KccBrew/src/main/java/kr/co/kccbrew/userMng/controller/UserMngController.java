@@ -1,14 +1,13 @@
 package kr.co.kccbrew.userMng.controller;
 
 import java.security.Principal;
-import java.util.List; 
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -79,52 +78,52 @@ public class UserMngController {
 	}
 
 	@PostMapping("/updateUserApproval")
-	public ResponseEntity<String> updateUserApproval(Principal principal, UserMngVo user, @RequestParam Map<String, Object> param,  HttpSession session) {
+	public ResponseEntity<String> updateUserApproval(Principal principal, UserMngVo userMngVo, @RequestParam Map<String, Object> param,  HttpSession session) {
 		String userId = (String) param.get("userId");
 		String approveYn = (String) param.get("approveYn");
 		String approveAdmin = principal.getName();
-		user.setApproveAdmin(approveAdmin);
-		user.setUserId(userId);
-		user.setApproveYn(approveYn);
+		userMngVo.setApproveAdmin(approveAdmin);
+		userMngVo.setUserId(userId);
+		userMngVo.setApproveYn(approveYn);
 		// 사용자 승인 업데이트를 수행하는 서비스 메서드 호출
-		userMngService.updateUserApproval(user);
+		userMngService.updateUserApproval(userMngVo);
 
 		// 성공적인 경우 200 OK 응답 반환
 		return ResponseEntity.ok("ok"); // 또는 JSON 형태의 응답
 	}
 
 	@RequestMapping(value = "/user/info/{userId}", method = RequestMethod.GET)
-	public String findByUserInfo(@PathVariable String userId, Model model) {
-		UserMngVo user = userMngService.findByUserId(userId);
+	public String findByUserInfo(@PathVariable("userId") String userId, Model model) {
+		UserMngVo userMngVo = userMngService.findByUserId(userId);
 		UserMngVo userDtl = userMngService.findByUserInfo(userId);
-		model.addAttribute("user", user);
+		model.addAttribute("userMngVo", userMngVo);
 		model.addAttribute("userDtl", userDtl);
 		return "userMng/userMngDtl";
 
 	}
 	
 	@RequestMapping(value = "/user/mod/{userId}", method = RequestMethod.GET)
-	public String userMod(@RequestParam String userId, Model model) {
-		UserMngVo user = userMngService.findByUserId(userId);
+	public String userMod(@PathVariable("userId") String userId, Model model) {
+		UserMngVo userMngVo = userMngService.findByUserId(userId);
 		UserMngVo userDtl = userMngService.findByUserInfo(userId);
-		model.addAttribute("user", user);
+		model.addAttribute("userMngVo", userMngVo);
 		model.addAttribute("userDtl", userDtl);
 		return "userMng/userMngMod";
 
 	}
 	
 	@PostMapping(value="/user/mod")
-	public ResponseEntity<String> userMod(Principal principal, UserMngVo user, @RequestParam Map<String, Object> param,  HttpSession session) {
+	public ResponseEntity<String> userMod(Principal principal, UserMngVo userMngVo, @RequestParam Map<String, Object> param,  HttpSession session) {
 		String userId = (String) param.get("userId");
 		String approveYn = (String) param.get("approveYn");
 		String useYn = (String) param.get("useYn");
 		String approveAdmin = principal.getName();
-		user.setApproveAdmin(approveAdmin);
-		user.setUserId(userId);
-		user.setUseYn(useYn);
-		user.setApproveYn(approveYn);
+		userMngVo.setApproveAdmin(approveAdmin);
+		userMngVo.setUserId(userId);
+		userMngVo.setUseYn(useYn);
+		userMngVo.setApproveYn(approveYn);
 		// 사용자 승인 업데이트를 수행하는 서비스 메서드 호출
-		userMngService.userMod(user);
+		userMngService.userMod(userMngVo);
 
 		// 성공적인 경우 200 OK 응답 반환
 		return ResponseEntity.ok("ok"); // 또는 JSON 형태의 응답

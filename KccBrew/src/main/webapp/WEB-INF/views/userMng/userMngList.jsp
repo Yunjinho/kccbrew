@@ -23,13 +23,13 @@
 <meta charset="UTF-8">
 
 <title>회원리스트</title>
-<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 <style>
 div.ModalMod {
 	position: relative;
 	z-index: 1;
 	display: none;
 }
+
 div.Modal2 {
 	position: relative;
 	z-index: 1;
@@ -106,7 +106,8 @@ div.modalBackground {
 	padding: 5px 10px;
 	border-radius: 4px;
 }
-.cancel1, .update, .cancleMod{
+
+.cancel1, .update, .cancleMod {
 	background-color: navy;
 	color: white;
 	border: none;
@@ -253,7 +254,7 @@ div.modalBackground {
 												<tbody>
 													<c:forEach items="${newList}" var="newL" varStatus="loop">
 														<tr>
-															<td><form id="dtl" method="get" style="all:unset;">
+															<td><form id="dtl" method="get" style="all: unset;">
 																	<input type="hidden" value="${param.userId}"> <a
 																		href="javascript:void(0);"
 																		onclick="openModal1('${newL.userId}');">${newL.userId}</a>
@@ -307,12 +308,12 @@ div.modalBackground {
 													<c:forEach items="${list}" var="no" varStatus="loop">
 														<tr>
 															<td>${no.rowNum}</td>
-															<td><form id="dtl" method="get" style="all:unset;">
+															<td><form id="dtl" method="get" style="all: unset;">
 																	<input type="hidden" value="${param.userId}"> <a
 																		href="javascript:void(0);"
 																		onclick="openModal1('${no.userId}');">${no.userId}</a>
 																</form></td>
-															<td  style="height: 36px;">${no.userNm}</td>
+															<td style="height: 36px;">${no.userNm}</td>
 															<td>${no.userType}</td>
 															<td>${no.userTelNo}</td>
 															<td>${no.useYn}</td>
@@ -434,22 +435,26 @@ div.modalBackground {
 			<div class="modal-bodyMod">
 				<%@ include file="userMngMod.jsp"%>
 			</div>
-			
+
 		</div>
 		<div class="modalBackground"></div>
 	</div>
 
-
+	<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script
+		src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 	<script>
 		var selectedUserId = null;
 
 		function openModal1(userId) {
+			console.log(userId);
 			selectedUserId = userId;
 			loadUserDetails(userId); // 모달 내용을 동적으로 불러옴
 			loadUserMod(userId); // 모달 내용을 동적으로 불러옴
 			$(".Modal1").css("display", "block");
 		}
-		
+
 		function loadUserDetails(userId) {
 			$.ajax({
 				url : '/user/info/' + userId,
@@ -463,8 +468,9 @@ div.modalBackground {
 				}
 			});
 		}
-		
+
 		function loadUserMod(userId) {
+			console.log(userId);
 			$.ajax({
 				url : '/user/mod/' + userId,
 				type : 'GET',
@@ -477,9 +483,9 @@ div.modalBackground {
 				}
 			});
 		}
-		
 
 		function openModal(userId) {
+			console.log(userId);
 			selectedUserId = userId;
 			$("#userIdPlaceholder").text(userId);
 			$(".Modal2").css("display", "block");
@@ -547,6 +553,8 @@ div.modalBackground {
 				});
 			}
 		});
+		
+
 		
 	</script>
 </body>
