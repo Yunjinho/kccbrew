@@ -52,55 +52,17 @@
 									<form action="/searchAsList" method="get" id="search-form">
 										<input type='hidden' name='currentPage' value="1">
 										<table id="search-box">
-											<!-- 1행 -->
-											<c:set var="today" value="<%=new java.util.Date()%>" />
-											<fmt:formatDate value="${today}" pattern="yyyy"
-												var="nowYear" />
 											<tr>
 												<th>조회 기간</th>
-												<!-- 시작 연도 선택 필드 -->
-												<td><select class="tx2" name="startYr" id="yr"
-													onchange="javascript:chg();">
-														<option value="">연도</option>
-														<c:forEach var="i" begin="0" end="9">
-															<c:set var="year" value="${nowYear - i}" />
-															<option value="${year}"
-																${param.startYr == year ? 'selected' : ''}>${year}년</option>
-														</c:forEach>
-												</select></td>
-
-												<!-- 시작 월 선택 필드 -->
-												<td><select class="tx2" name="startMn" id="mn">
-														<option value="">월</option>
-														<c:forEach var="month" begin="1" end="12">
-															<option value="${month}"
-																${param.startMn == month ? 'selected' : ''}>${month}월</option>
-														</c:forEach>
-												</select></td>
-
+												<td colspan="2">
+													<input type="date">
+												</td>
 												<td>~</td>
+												<td colspan="3">
+													<input type="date">
+												</td>
 
 												<!-- 종료 연도 선택 필드 -->
-													<td colspan="2"><select class="tx2" name="endYr"
-														id="yr" onchange="javascript:chg();">
-															<option value="">연도</option>
-															<c:forEach var="i" begin="0" end="9">
-																<c:set var="year" value="${nowYear - i}" />
-																<option value="${year}"
-																	${param.endYr == year ? 'selected' : ''}>${year}년</option>
-															</c:forEach>
-													</select></td>
-
-													<!-- 종료 월 선택 필드 -->
-												<td>
-													<select class="tx2" name="endMn" id="mn">
-														<option value="">월</option>
-														<c:forEach var="month" begin="1" end="12">
-															<option value="${month}"
-																${param.endMn == month ? 'selected' : ''}>${month}월</option>
-														</c:forEach>
-													</select>
-												</td>
 											</tr>
 
 
