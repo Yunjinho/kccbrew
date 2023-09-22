@@ -134,7 +134,7 @@ public class schdlMngController {
 			message = "등록실패: 수리배정일과 동일한 날짜입니다.";
 			System.out.println(message);
 		} else if (isOverlapDate(holiday.getStartDate(), holiday.getEndDate(), userId)) {
-			message = "등록실패: 이미 휴가신청된 날짜입니다.";
+			message = "등록실패: 이미 휴가신청된 날짜입니다";
 			System.out.println(message);
 		} else if(isBeforeToday(holiday.getStartDate().toString())) {
 			message = "등록실패: 현재일보다 이전일 입니다.";

@@ -10,7 +10,7 @@
 <html>
 
 <script>
-  var usedHolidays = ${15 - usedHolidays};
+	var usedHolidays = ${15 - usedHolidays};
 </script>
 
 <head>
@@ -87,8 +87,8 @@
 										<tr>
 											<th>휴가시작일</th>
 											<td><input type="date" id="selectedStartDate"
-												name="startDate" value="" 
-												required onchange="calculateDays(new Date(this.value), new Date(document.getElementById('selectedEndDate').value))"></td>
+												name="startDate" value="" required
+												onchange="calculateDays(new Date(this.value), new Date(document.getElementById('selectedEndDate').value))"></td>
 											<th>휴가종료일</th>
 											<td><input type="date" id="selectedEndDate"
 												name="endDate" value="" required
@@ -98,7 +98,7 @@
 											</td>
 										</tr>
 										<tr>
-										<td id="input-information" colspan="5" hidden="true"></td>
+											<td id="input-information" colspan="5" hidden="true"></td>
 										</tr>
 
 										<tr>
@@ -136,6 +136,7 @@
 									<div class="modal-content">
 										<span class="close">&times;</span>
 										<p id="modalMessage"></p>
+										<button id="modal-result-confirmButton">확인</button>
 									</div>
 								</div>
 
@@ -183,6 +184,23 @@
 																				.getElementById("modalMessage");
 																		modalMessage.innerText = message;
 																		resultModal.style.display = "block";
+
+																		if (message === "등록완료!") {
+																			var confirmButton = document
+																					.getElementById("modal-result-confirmButton");
+																			confirmButton.onclick = function() {
+																				window
+																						.close();
+																				window.opener.location
+																						.reload();
+																			};
+																		} else {
+																			var confirmButton = document
+																					.getElementById("modal-result-confirmButton");
+																			confirmButton.onclick = function() {
+																				reoloadPopup();
+																			};
+																		}
 																	},
 																	error : function() {
 																		// 오류 메시지를 결과 모달 창에 표시
@@ -221,8 +239,12 @@
 									document.getElementById("applyNo")
 											.addEventListener("click",
 													closeModal);
+									
+									/* 팝업창 리로드 함수 */
+									function reoloadPopup() {
+										window.location.reload();
+									}
 								</script>
-
 
 
 							</div>

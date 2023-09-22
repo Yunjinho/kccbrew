@@ -178,14 +178,6 @@ textarea.qtype_essay_response.qtype_essay_plain {
 	white-space: pre-wrap;
 	font: inherit
 }
-
-.que.essay
-textarea.qtype_essay_response.qtype_essay_monospaced {
-	white-space: pre;
-	font-family: Andale Mono, Monaco, Courier New, DejaVu Sans Mono,
-		monospace
-}
-
 .que.essay
 .qtype_essay_response {
 	min-height: 3em
@@ -21938,23 +21930,6 @@ td {
 	}
 }
 
-@font-face {
-	font-family: 'Glyphicons Halflings';
-	src:
-		url('/theme/font.php?theme=coursemosv2&component=theme&rev=1688966764&font=glyphicons-halflings-regular.eot');
-	src:
-		url('/theme/font.php?theme=coursemosv2&component=theme&rev=1688966764&font=glyphicons-halflings-regular.eot?#iefix')
-		format('embedded-opentype'),
-		url('/theme/font.php?theme=coursemosv2&component=theme&rev=1688966764&font=glyphicons-halflings-regular.woff2')
-		format('woff2'),
-		url('/theme/font.php?theme=coursemosv2&component=theme&rev=1688966764&font=glyphicons-halflings-regular.woff')
-		format('woff'),
-		url('/theme/font.php?theme=coursemosv2&component=theme&rev=1688966764&font=glyphicons-halflings-regular.ttf')
-		format('truetype'),
-		url('/theme/font.php?theme=coursemosv2&component=theme&rev=1688966764&font=glyphicons-halflings-regular.svg#glyphicons_halflingsregular')
-		format('svg')
-}
-
 .glyphicon {
 	position: relative;
 	top: 1px;
@@ -23033,17 +23008,10 @@ html {
 }
 
 body {
-	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 	font-size: 14px;
 	line-height: 1.42857143;
 	color: #333;
 	background-color: #fff
-}
-
-input, button, select, textarea {
-	font-family: inherit;
-	font-size: inherit;
-	line-height: inherit
 }
 
 a {
@@ -23131,7 +23099,6 @@ hr {
 }
 
 h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
-	font-family: inherit;
 	font-weight: 500;
 	line-height: 1.1;
 	color: inherit
@@ -23468,9 +23435,7 @@ address {
 	line-height: 1.42857143
 }
 
-code, kbd, pre, samp {
-	font-family: Menlo, Monaco, Consolas, "Courier New", monospace
-}
+
 
 code {
 	padding: 2px 4px;
@@ -28377,7 +28342,6 @@ button.close {
 	position: absolute;
 	z-index: 1070;
 	display: block;
-	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 	font-size: 12px;
 	font-style: normal;
 	font-weight: normal;
@@ -28511,7 +28475,6 @@ button.close {
 	display: none;
 	max-width: 276px;
 	padding: 1px;
-	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 	font-size: 14px;
 	font-style: normal;
 	font-weight: normal;
@@ -28816,7 +28779,6 @@ button.close {
 .carousel-control .icon-prev, .carousel-control .icon-next {
 	width: 20px;
 	height: 20px;
-	font-family: serif;
 	line-height: 1
 }
 
@@ -41142,7 +41104,6 @@ img {
 	width: 276px;
 	max-width: 276px;
 	padding: 1px;
-	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 	font-size: 14px;
 	font-style: normal;
 	font-weight: normal;
@@ -43849,12 +43810,6 @@ body {
 	line-height: 1.42857143;
 	color: #333;
 	background-color: #fff
-}
-
-input, button, select, textarea {
-	font-family: inherit;
-	font-size: inherit;
-	line-height: inherit
 }
 
 a {
@@ -50404,22 +50359,6 @@ input {
 	margin-right: -5px
 }
 
-/* h1, h2, h3, h4, h5, h6, p, ul, ol, dl, input, textarea, pre {
-	font-family: 'NanumGothic', "나눔고딕", NanumGothic, '돋움', dotum, Helvetica,
-		sans-serif, AppleGothic
-} */
-
-select, input, button, textarea {
-	font-family: 'Noto Sans', 'NanumGothic', "나눔고딕", NanumGothic, '돋움', dotum, Helvetica,
-		sans-serif, AppleGothic;
-}
-
-.arrow, .arrow_button
-input {
-	font-family: 'NanumGothic', "나눔고딕", NanumGothic, '돋움', dotum, Helvetica,
-		sans-serif, AppleGothic;
-}
-
 html {
 	height: 100%;
 	padding: 0px;
@@ -50427,8 +50366,6 @@ html {
 }
 
 body {
-	font-family: 'NanumGothic', "나눔고딕", NanumGothic, '돋움', dotum, Helvetica,
-		sans-serif, AppleGothic;;
 	position: relative;
 	margin: 0px;
 	background-color: #f7f9fa
