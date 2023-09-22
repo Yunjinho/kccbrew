@@ -56,6 +56,9 @@
 					AND ass.mechanic_id=#{userId}
 				</when>
 			</choose>
+			<if test="searchId !=''">
+				<![CDATA[AND (ass.mechanic_id=#{searchId} OR a.store_mng_id = #{searchId} )]]>
+			</if>
 			ORDER BY a.reg_dttm DESC
 			))
 </select>
@@ -115,6 +118,9 @@
 					AND ass.mechanic_id=#{asVo.userId}
 				</when>
 			</choose>
+			<if test="asVo.searchId !=''">
+				<![CDATA[AND (ass.mechanic_id=#{asVo.searchId} OR a.store_mng_id = #{asVo.searchId} )]]>
+			</if>
 			ORDER BY a.reg_dttm DESC
 			))
 	WHERE rowNumber BETWEEN #{start} AND #{end}
@@ -146,6 +152,9 @@
 		</if>
 		<if test='userTypeCd == "03"'>
 			AND ass.mechanic_id=#{userId}
+		</if>
+		<if test="searchId !=''">
+			<![CDATA[AND (ass.mechanic_id=#{searchId} OR a.store_mng_id = #{searchId} )]]>
 		</if>
 </select>
 

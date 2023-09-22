@@ -86,7 +86,7 @@
 											<tr>
 												<th>사용자 ID</th>
 												<td >
-													<input type="search" name="searchId" placeholder="사용자ID를 입력하세요" value="">
+													<input type="search" name="searchId" placeholder="사용자ID를 입력하세요" value="${searchContent.searchId}">
 												</td>
 												<th>장비 구분</th>
 												<td>
