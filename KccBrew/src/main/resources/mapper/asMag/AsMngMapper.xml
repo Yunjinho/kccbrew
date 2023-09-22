@@ -42,32 +42,11 @@
 					]]>
 				</otherwise>
 			</choose>
-			<choose>
-				<when test="startYr != ''">
-					<![CDATA[
-						AND EXTRACT(YEAR FROM a.mod_dttm) >= #{startYr}
-					]]>
-				</when>
-				<otherwise>
-					<![CDATA[
-						AND EXTRACT(YEAR FROM a.mod_dttm) >= TO_CHAR(SYSDATE-(INTERVAL '10' YEAR),'YYYY')
-					]]>
-				</otherwise>
-			</choose>
-			<if test="startMn != ''">
-				<![CDATA[
-					AND EXTRACT(MONTH FROM a.mod_dttm) >= #{startMn}
-				]]>
+			<if test="wishingEndDate !=''">
+				<![CDATA[ AND a.reg_dttm < ]]>TO_DATE(#{wishingEndDate},'YYYY-MM-DD')+1
 			</if>
-			<if test="endYr != ''">
-				<![CDATA[
-					AND EXTRACT(YEAR FROM a.mod_dttm) <= #{endYr}
-				]]>
-			</if>
-			<if test="endMn != ''">
-				<![CDATA[
-					AND EXTRACT(MONTH FROM a.mod_dttm) <= #{endMn}
-				]]>
+			<if test="wishingStartDate !=''">
+				<![CDATA[ AND a.reg_dttm >= #{wishingStartDate}]]>
 			</if>
 	 		<choose>
 				<when test="userTypeCd == '02'">
@@ -122,32 +101,11 @@
 				</otherwise>
 			</choose>
 	 		<if test="asVo.asInfoSeq != ''">AND a.as_info_seq = #{asVo.asInfoSeq} </if>
-			<choose>
-				<when test="asVo.startYr != ''">
-					<![CDATA[
-						AND EXTRACT(YEAR FROM a.mod_dttm) >= #{asVo.startYr}
-					]]>
-				</when>
-				<otherwise>
-					<![CDATA[
-						AND EXTRACT(YEAR FROM a.mod_dttm) >= TO_CHAR(SYSDATE-(INTERVAL '10' YEAR),'YYYY')
-					]]>
-				</otherwise>
-			</choose>
-			<if test="asVo.startMn != ''">
-				<![CDATA[
-					AND EXTRACT(MONTH FROM a.mod_dttm) >= #{asVo.startMn}
-				]]>
+	 		<if test="asVo.wishingEndDate !=''">
+				<![CDATA[ AND a.reg_dttm < ]]>TO_DATE(#{asVo.wishingEndDate},'YYYY-MM-DD')+1
 			</if>
-			<if test="asVo.endYr != ''">
-				<![CDATA[
-					AND EXTRACT(YEAR FROM a.mod_dttm) <= #{asVo.endYr}
-				]]>
-			</if>
-			<if test="asVo.endMn != ''">
-				<![CDATA[
-					AND EXTRACT(MONTH FROM a.mod_dttm) <= #{asVo.endMn}
-				]]>
+			<if test="asVo.wishingStartDate !=''">
+				<![CDATA[ AND a.reg_dttm >= #{asVo.wishingStartDate}]]>
 			</if>
 	 		<choose>
 				<when test="asVo.userTypeCd == '02'">
@@ -177,39 +135,12 @@
 	 	machine.machine_cd LIKE '%'||#{machineCd}||'%' AND 
 	 	s.store_addr LIKE '%'||#{storeAddr}||'%'
 		<choose><when test="asInfoSeq != ''">AND a.as_info_seq = #{asInfoSeq} </when></choose>
-		<choose>
-			<when test="startYr != ''">
-				<![CDATA[
-					AND EXTRACT(YEAR FROM a.mod_dttm) >= #{startYr}
-				]]>
-			</when>
-			<otherwise>
-				<![CDATA[
-					AND EXTRACT(YEAR FROM a.mod_dttm) >= TO_CHAR(SYSDATE-(INTERVAL '10' YEAR),'YYYY')
-				]]>
-			</otherwise>
-		</choose>
-		<choose>
-			<when test="startMn != ''">
-				<![CDATA[
-					AND EXTRACT(MONTH FROM a.mod_dttm) >= #{startMn}
-				]]>
-			</when>
-		</choose>
-		<choose>
-			<when test="endYr != ''">
-				<![CDATA[
-					AND EXTRACT(YEAR FROM a.mod_dttm) <= #{endYr}
-				]]>
-			</when>
-		</choose>
-		<choose>
-			<when test="endMn != ''">
-				<![CDATA[
-					AND EXTRACT(MONTH FROM a.mod_dttm) <= #{endMn}
-				]]>
-			</when>
-		</choose>
+		<if test="wishingEndDate !=''">
+			<![CDATA[ AND a.reg_dttm < ]]>TO_DATE(#{wishingEndDate},'YYYY-MM-DD')+1
+		</if>
+		<if test="wishingStartDate !=''">
+			<![CDATA[ AND a.reg_dttm >= #{wishingStartDate}]]>
+		</if>
 		<if test="userTypeCd == '02'">
 			AND s.store_seq=(SELECT s.store_seq FROM store s INNER JOIN store_user_map su ON s.store_seq=su.store_seq WHERE su.user_id=#{userId})
 		</if>
