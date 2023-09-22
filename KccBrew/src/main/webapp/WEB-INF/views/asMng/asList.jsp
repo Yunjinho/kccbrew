@@ -90,7 +90,7 @@
 												</td>
 												<th>장비 구분</th>
 												<td>
-													<select class="tx2" name="machineCd" onchange="javascript:chg();">
+													<select class="tx2" name="machineCd">
 															<option value="">장비 구분</option>
 															<c:forEach var="empCd" items="${machineCd}">
 																<c:choose>
@@ -110,7 +110,7 @@
 												</td>
 												<th>AS 상태</th>
 												<td colspan="2">
-													<select class="tx2" name="asStatusCd" value="${searchContent.asStatusCd}" onchange="javascript:chg();">
+													<select class="tx2" name="asStatusCd" >
 															<option value="">AS 상태</option>
 															<c:choose>
 																<c:when test='${searchContent.asStatusCd eq "Y"}'>
@@ -139,6 +139,11 @@
 											</tr>
 											<tr>
 												<td colspan="6" style="border-bottom:none;"></td>
+												<td style="text-align: center; border-bottom: 0px;float:right;">
+													<div>
+														<button type="button" onclick="resetSearch()" class="form-btn">초기화</button>
+													</div>
+												</td>
 												<td style="text-align: center; border-bottom: 0px;float:right;">
 													<div>
 														<button type="submit" class="form-btn">검색</button>
@@ -172,7 +177,7 @@
 												</td>
 												<th>장비 구분</th>
 												<td>
-													<select class="tx2" name="machineCd" onchange="javascript:chg();">
+													<select class="tx2" name="machineCd">
 															<option value="">장비 구분</option>
 															<c:forEach var="empCd" items="${machineCd}">
 																<c:choose>
@@ -192,7 +197,7 @@
 												</td>
 												<th>AS 상태</th>
 												<td colspan="2">
-													<select class="tx2" name="asStatusCd" id="" onchange="javascript:chg();">
+													<select class="tx2" name="asStatusCd" id="" >
 															<option value="">AS 상태</option>
 															<c:choose>
 																<c:when test='${searchContent.asStatusCd eq "Y"}'>
@@ -270,7 +275,7 @@
 											<tr>
 												<th >장비 구분</th>
 												<td colspan="2">
-													<select class="tx2" name="machineCd" id="" onchange="javascript:chg();">
+													<select class="tx2" name="machineCd" id="" >
 															<option value="">장비 구분</option>
 															<c:forEach var="empCd" items="${machineCd}">
 																<c:choose>
@@ -290,7 +295,7 @@
 												</td>
 												<th>AS 상태</th>
 												<td colspan="3">
-													<select class="tx2" name="asStatusCd" id="" onchange="javascript:chg();">
+													<select class="tx2" name="asStatusCd" id="">
 															<option value="">AS 상태</option>
 															<c:choose>
 																<c:when test='${searchContent.asStatusCd eq "Y"}'>

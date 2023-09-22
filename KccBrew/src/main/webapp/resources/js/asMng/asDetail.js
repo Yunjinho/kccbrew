@@ -1,3 +1,26 @@
+function selectReceiptInfo(){
+	$("#view-receipt>div").css("background-color","#043763");
+	$("#view-receipt>div>span").css("color","white");
+	$("#view-result>div").css("background-color","white");
+	$("#view-result>div>span").css("color","#767676");
+
+	$(".as-receipt-info").css("display","block");
+	$(".as-result-info").css("display","none");
+}
+function selectResultInfo(userTypeCd,asResultSeq){
+	
+	if(asResultSeq==null && ( userTypeCd=='01'|| userTypeCd=='02')){
+		alert("AS가 완료되지 않은 신청건입니다.");
+		return;
+	}
+	$("#view-receipt>div").css("background-color","white");
+	$("#view-receipt>div>span").css("color","#767676");
+	$("#view-result>div").css("background-color","#043763");
+	$("#view-result>div>span").css("color","white");
+	
+	$(".as-receipt-info").css("display","none");
+	$(".as-result-info").css("display","block");
+}
 //대분류 지역 조건 변경 시 소분류 지역값들 변경 함수
 function changeLosctionDtlCd(data){
 	var locOption=$("select[name=locationCd]");

@@ -2,29 +2,50 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.co.kccbrew.asMng.dao.IAsMngRepository">
 <select id="selectAllASList" parameterType="kr.co.kccbrew.asMng.model.AsMngVo" resultType="kr.co.kccbrew.asMng.model.AsMngVo">
-	SELECT as_info_seq AS "asInfoSeq",
-	        	store_nm AS "storeNm",
-	        	store_addr AS "storeAddr",
-	    		reg_dttm AS "regDttm",
-	            as_status_nm AS "asStatusNm",
-	            as_status_cd AS "asStatusCd",
-	            machine_cd_nm AS "machineCdNm",
-	            machine_cd AS "machineCd",
-	            mechanic_id AS "mechanicId",
-	            reassign AS "reassign",
-	            as_assign_seq AS "asAssignSeq",
-	            rowNumber,
-	            reapply AS "resultReapply", 
-	            reapply_confirm AS "reapplyConfirm"
-	FROM (SELECT as_info_seq ,store_nm, store_addr, reg_dttm ,as_status_nm,as_status_cd,machine_cd_nm,machine_cd,mechanic_id,reassign,as_assign_seq,rownum AS rowNumber,reapply,reapply_confirm
-		 FROM (select a.as_info_seq ,s.store_nm, s.store_addr, a.reg_dttm , status.as_status_nm,status.as_status_cd,machine.machine_cd_nm,machine.machine_cd,ass.mechanic_id,ass.reassign,ass.as_assign_seq,ar.reapply,ar.reapply_confirm 
+	SELECT as_info_seq AS "asInfoSeq"
+	        	,store_nm AS "storeNm"
+	        	,store_addr AS "storeAddr"
+	    		,reg_dttm AS "regDttm"
+	            ,as_status_nm AS "asStatusNm"
+	            ,as_status_cd AS "asStatusCd"
+	            ,machine_cd_nm AS "machineCdNm"
+	            ,machine_cd AS "machineCd"
+	            ,mechanic_id AS "mechanicId"
+	            ,reassign AS "reassign"
+	            ,as_assign_seq AS "asAssignSeq"
+	            ,rowNumber
+	            ,reapply AS "resultReapply" 
+	            ,reapply_confirm AS "reapplyConfirm"
+	            ,user_nm AS "mechanicNm"
+	            ,visit_dttm AS "visitDttm"
+	            ,result_dttm AS "resultDttm" 
+	FROM (SELECT as_info_seq ,store_nm, store_addr, reg_dttm
+				,as_status_nm,as_status_cd,machine_cd_nm
+				,machine_cd,mechanic_id,reassign,as_assign_seq
+				,rownum AS rowNumber,reapply,reapply_confirm
+				,user_nm,visit_dttm,result_dttm
+		 FROM (select a.as_info_seq
+		 		, s.store_nm
+		 		, s.store_addr
+		 		, a.reg_dttm 
+		 		, status.as_status_nm
+		 		, status.as_status_cd
+		 		, machine.machine_cd_nm
+		 		, machine.machine_cd
+		 		, ass.mechanic_id
+		 		, ass.reassign,ass.as_assign_seq
+		 		, ar.reapply
+		 		, ar.reapply_confirm 
+		 		, ass.user_nm 
+		 		, ass.visit_dttm
+		 		, ar.result_dttm
          FROM as_information a 
  		 INNER JOIN store_user_map su ON a.store_mng_id=su.user_id
 		 INNER JOIN users u ON su.user_id=u.user_id 
 		 INNER JOIN store s ON s.store_seq=su.store_seq
 		 INNER JOIN (SELECT grp_cd_dtl_nm AS as_status_nm ,grp_cd_dtl_id AS as_status_cd from group_code_detail WHERE grp_cd_id LIKE 'S') status ON status.as_status_cd=a.as_status
 		 INNER JOIN (SELECT grp_cd_dtl_nm AS machine_cd_nm ,grp_cd_dtl_id as machine_cd from group_code_detail WHERE grp_cd_id like 'M') machine on machine.machine_cd=a.machine_cd
-         LEFT OUTER JOIN as_assign ass ON a.as_info_seq=ass.as_info_seq
+         LEFT OUTER JOIN (SELECT * FROM as_assign ss JOIN users u ON ss.mechanic_id=u.user_id) ass ON a.as_info_seq=ass.as_info_seq
          LEFT OUTER JOIN as_result ar ON ass.as_assign_seq=ar.as_assign_seq
 	 	 WHERE s.store_nm LIKE '%'||#{storeNm}||'%' AND
 		 		machine.machine_cd LIKE '%'||#{machineCd}||'%' AND 
@@ -64,29 +85,63 @@
 </select>
 <!-- 조건별 AS 조회 -->
 <select id="selectASList" parameterType="java.util.Map" resultType="kr.co.kccbrew.asMng.model.AsMngVo">
-	SELECT as_info_seq AS "asInfoSeq",
-	        	store_nm AS "storeNm",
-	        	store_addr AS "storeAddr",
-	    		reg_dttm AS "regDttm",
-	            as_status_nm AS "asStatusNm",
-	            as_status_cd AS "asStatusCd",
-	            machine_cd_nm AS "machineCdNm",
-	            machine_cd AS "machineCd",
-	            mechanic_id AS "mechanicId",
-	            reassign AS "reassign",
-	            as_assign_seq AS "asAssignSeq",
-  	            rowNumber,
-	            reapply AS "resultReapply",
-	            reapply_confirm AS "reapplyConfirm"
-	FROM (SELECT as_info_seq ,store_nm, store_addr, reg_dttm ,as_status_nm,as_status_cd,machine_cd_nm,machine_cd,mechanic_id,reassign,as_assign_seq,rownum AS rowNumber,reapply,reapply_confirm
-		 FROM (select a.as_info_seq ,s.store_nm, s.store_addr, a.reg_dttm , status.as_status_nm,status.as_status_cd,machine.machine_cd_nm,machine.machine_cd,ass.mechanic_id,ass.reassign,ass.as_assign_seq,ar.reapply,ar.reapply_confirm 
+	SELECT as_info_seq AS "asInfoSeq"
+	        	,store_nm AS "storeNm"
+	        	,store_addr AS "storeAddr"
+	    		,reg_dttm AS "regDttm"
+	            ,as_status_nm AS "asStatusNm"
+	            ,as_status_cd AS "asStatusCd"
+	            ,machine_cd_nm AS "machineCdNm"
+	            ,machine_cd AS "machineCd"
+	            ,mechanic_id AS "mechanicId"
+	            ,reassign AS "reassign"
+	            ,as_assign_seq AS "asAssignSeq"
+  	            ,rowNumber
+	            ,reapply AS "resultReapply"
+	            ,reapply_confirm AS "reapplyConfirm"
+	            ,user_nm AS "mechanicNm"
+	            ,visit_dttm AS "visitDttm"
+	            ,result_dttm AS "resultDttm" 
+	FROM (SELECT as_info_seq 
+			,store_nm
+			, store_addr
+			, reg_dttm 
+			,as_status_nm
+			,as_status_cd
+			,machine_cd_nm
+			,machine_cd
+			,mechanic_id
+			,reassign
+			,as_assign_seq
+			,rownum AS rowNumber
+			,reapply
+			,reapply_confirm
+			,user_nm
+			,visit_dttm
+			,result_dttm
+		 FROM (select a.as_info_seq
+		 		, s.store_nm
+		 		, s.store_addr
+		 		, a.reg_dttm 
+		 		, status.as_status_nm 
+		 		, status.as_status_cd
+		 		, machine.machine_cd_nm
+		 		, machine.machine_cd
+		 		, ass.mechanic_id
+		 		, ass.reassign
+		 		, ass.as_assign_seq
+		 		, ar.reapply
+		 		, ar.reapply_confirm
+		 		, ass.user_nm
+		 		, ass.visit_dttm
+		 		, ar.result_dttm 
          FROM as_information a 
  		 INNER JOIN store_user_map su ON a.store_mng_id=su.user_id
 		 INNER JOIN users u ON su.user_id=u.user_id 
 		 INNER JOIN store s ON s.store_seq=su.store_seq
 		 INNER JOIN (SELECT grp_cd_dtl_nm AS as_status_nm ,grp_cd_dtl_id AS as_status_cd from group_code_detail WHERE grp_cd_id LIKE 'S') status ON status.as_status_cd=a.as_status
 		 INNER JOIN (SELECT grp_cd_dtl_nm AS machine_cd_nm ,grp_cd_dtl_id as machine_cd from group_code_detail WHERE grp_cd_id like 'M') machine on machine.machine_cd=a.machine_cd
-         LEFT OUTER JOIN as_assign ass ON a.as_info_seq=ass.as_info_seq
+         LEFT OUTER JOIN (SELECT * FROM as_assign ss JOIN users u ON ss.mechanic_id=u.user_id) ass ON a.as_info_seq=ass.as_info_seq
          LEFT OUTER JOIN as_result ar ON ass.as_assign_seq=ar.as_assign_seq
 	 	 WHERE s.store_nm LIKE '%'||#{asVo.storeNm}||'%' AND
 		 		machine.machine_cd LIKE '%'||#{asVo.machineCd}||'%' AND 

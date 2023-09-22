@@ -37,7 +37,7 @@ public class AsMngVo {
 	
 	//수정 날짜, 등록 사용자,수정 사용자, AS 접수 이미지,AS 접수 내용
 	private String locationCd;
-	private Date regDttm;
+	private String regDttm;
 	private Date modDttm;
 	private String regUser;
 	private String modUser;
