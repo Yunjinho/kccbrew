@@ -1,7 +1,7 @@
 package kr.co.kccbrew.schdlMng.controller;
 
 
-import java.sql.Date; 
+import java.sql.Date;  
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -14,21 +14,15 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import kr.co.kccbrew.comm.security.model.UserVo;
@@ -39,9 +33,6 @@ import kr.co.kccbrew.schdlMng.model.AsResultVo;
 import kr.co.kccbrew.schdlMng.model.HolidayVo;
 import kr.co.kccbrew.schdlMng.model.SchdlMngVo;
 import kr.co.kccbrew.schdlMng.service.SchdlMngService;
-import kr.co.kccbrew.strMng.model.StrMngVo;
-import kr.co.kccbrew.sysMng.cdMng.model.CdMngVo;
-import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -543,7 +534,7 @@ public class schdlMngController {
 
 
 	/*휴가취소*/
-	@PostMapping("/holiday/delete")
+	@PutMapping("/holiday/delete")
 	public String deleteHoliday(@RequestParam("holidaySeq") Integer holidaySeq, HttpSession session ) {
 
 		/*파라미터 데이터 확인*/
