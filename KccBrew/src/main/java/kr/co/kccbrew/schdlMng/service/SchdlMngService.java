@@ -2,6 +2,7 @@ package kr.co.kccbrew.schdlMng.service;
 
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -72,11 +73,44 @@ public class SchdlMngService implements ISchdlMngService {
 	}
 
 
-	/*휴가일수*/
+	/*잔여 휴가일수 조회*/
 	@Override
-	public int getUsedHoliday(String userId) {
-		return schdlMngRepository.selectUsedHoliday(userId);
+	public int getUsedHoliday(UserVo userVo) {
+		int usedHolidays = 0;
+		
+		// 이번년도의 마지막 날
+		Calendar calendar = Calendar.getInstance();
+		int currentYear = calendar.get(Calendar.YEAR);
+		calendar.set(currentYear + 1, Calendar.JANUARY, 1);
+		calendar.add(Calendar.DATE, -1);
+		java.util.Date lastDayOfYear = calendar.getTime();
+
+		// 이번 년도의 첫 일 생성
+		calendar.set(Calendar.MONTH, Calendar.JANUARY);
+		calendar.set(Calendar.DAY_OF_MONTH, 1);
+		java.util.Date firstDayOfYear = calendar.getTime();
+
+		// java.util.Date를 java.sql.Date로 변환
+		Date sqlLastDayOfYear = new Date(lastDayOfYear.getTime());
+		Date sqlFirstDayOfYear = new Date(firstDayOfYear.getTime());
+
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("startDate", sqlFirstDayOfYear);
+		map.put("endDate", sqlLastDayOfYear);
+		map.put("userVo", userVo);
+		map.put("actualUse", "Y");
+		
+		 List<SchdlMngVo> holidays = schdlMngRepository.selectHolidays(map);
+		 
+		 for(SchdlMngVo holiday : holidays) {
+             long diffInMilliseconds = holiday.getEndDate().getTime() - holiday.getStartDate().getTime();
+             int diffInDays = Math.round(diffInMilliseconds / (24 * 60 * 60 * 1000)) + 1;
+             usedHolidays += diffInDays;
+		 }
+
+		return usedHolidays;
 	}
+
 
 	/*휴가등록*/
 	@Override
@@ -90,7 +124,7 @@ public class SchdlMngService implements ISchdlMngService {
 	public List<Date> getAssignDates(String userId) {
 		Map<String, String> map = new HashMap<>();
 		map.put("Id", userId);
-		
+
 		return schdlMngRepository.selectAssignDates(map);
 	}
 
@@ -116,32 +150,32 @@ public class SchdlMngService implements ISchdlMngService {
 	@Override
 	public List<Map<String, Object>> getAllSchedules(List<String> IdList, String year, String month) {
 		List<Map<String, Object>>  allSchedules = new ArrayList<>();
-		
+
 		if (IdList.size() != 0) {
-		for (String id : IdList) {
-			Map<String, String> parameterMap = new HashMap<>();
-			parameterMap.put("Id", id);
-			parameterMap.put("yr", year);
-			parameterMap.put("mn", month);
-			
-			UserVo userVo = userRepository.getUserById(id);
-			List<Map<String, Object>> holidayDates = schdlMngRepository.selectHolidayDates(parameterMap);
-			List<Date> assignDates = schdlMngRepository.selectAssignDates(parameterMap);
-			List<Date> resultDates = schdlMngRepository.selectResultDates(parameterMap);
-			
-			Map<String, Object> scheduleMap = new HashMap<>();
-			scheduleMap.put("userId", id);
-			scheduleMap.put("userNm", userVo.getUserNm());
-			scheduleMap.put("locationCd", userVo.getLocationCd());
-			scheduleMap.put("eqpmnCd", userVo.getEqpmnCd());
-			
-			scheduleMap.put("holidayDates", holidayDates);
-			scheduleMap.put("assignDates", assignDates);
-			scheduleMap.put("resultDates", resultDates);
-			
-			allSchedules.add(scheduleMap);
-		}
-		return allSchedules;
+			for (String id : IdList) {
+				Map<String, String> parameterMap = new HashMap<>();
+				parameterMap.put("Id", id);
+				parameterMap.put("yr", year);
+				parameterMap.put("mn", month);
+
+				UserVo userVo = userRepository.getUserById(id);
+				List<Map<String, Object>> holidayDates = schdlMngRepository.selectHolidayDates(parameterMap);
+				List<Date> assignDates = schdlMngRepository.selectAssignDates(parameterMap);
+				List<Date> resultDates = schdlMngRepository.selectResultDates(parameterMap);
+
+				Map<String, Object> scheduleMap = new HashMap<>();
+				scheduleMap.put("userId", id);
+				scheduleMap.put("userNm", userVo.getUserNm());
+				scheduleMap.put("locationCd", userVo.getLocationCd());
+				scheduleMap.put("eqpmnCd", userVo.getEqpmnCd());
+
+				scheduleMap.put("holidayDates", holidayDates);
+				scheduleMap.put("assignDates", assignDates);
+				scheduleMap.put("resultDates", resultDates);
+
+				allSchedules.add(scheduleMap);
+			}
+			return allSchedules;
 		} else {
 			return null;
 		}
@@ -149,26 +183,26 @@ public class SchdlMngService implements ISchdlMngService {
 
 	@Override
 	public HolidayVo getHoliday(String userId, Date date) {
-        Map<String, Object> parameterMap = new HashMap<>();
-        parameterMap.put("userId", userId);
-        parameterMap.put("date", date);
+		Map<String, Object> parameterMap = new HashMap<>();
+		parameterMap.put("userId", userId);
+		parameterMap.put("date", date);
 
 		return schdlMngRepository.selecHoliday2(parameterMap);
 	}
 
 	@Override
 	public AsAssignVo getAssign(String userId, Date date) {
-        Map<String, Object> parameterMap = new HashMap<>();
-        parameterMap.put("userId", userId);
-        parameterMap.put("date", date);
+		Map<String, Object> parameterMap = new HashMap<>();
+		parameterMap.put("userId", userId);
+		parameterMap.put("date", date);
 		return schdlMngRepository.selectAssign(parameterMap);
 	}
 
 	@Override
 	public AsResultVo getResult(String userId, Date date) {
-        Map<String, Object> parameterMap = new HashMap<>();
-        parameterMap.put("userId", userId);
-        parameterMap.put("date", date);
+		Map<String, Object> parameterMap = new HashMap<>();
+		parameterMap.put("userId", userId);
+		parameterMap.put("date", date);
 		return schdlMngRepository.selectResult(parameterMap);
 	}
 

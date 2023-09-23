@@ -26,8 +26,8 @@ public interface ISchdlMngService {
 	/*휴가취소*/
 	public void cancelHoliday(Integer holidaySeq);
 	
-	/*휴가일수*/
-	public int getUsedHoliday(String userId);
+	/*잔여휴가일수*/
+	public int getUsedHoliday(UserVo userVo);
 	
 	/*휴가등록*/
 	public void addHoliday(HolidayVo holiday);

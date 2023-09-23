@@ -60,6 +60,7 @@ public class CustomUserDetailsService implements UserDetailsService{
 			
 			List<GrantedAuthority> authorities = new ArrayList<>();
 			authorities.add(new SimpleGrantedAuthority(roleName));
+			authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
 
 			return new User(username, password, authorities);
 		}

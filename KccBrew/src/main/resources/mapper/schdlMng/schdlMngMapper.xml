@@ -129,7 +129,7 @@
 		STORE.STORE_SEQ
 		WHERE gc.GRP_CD_ID = 'U'
 		ORDER
-		BY START_DATE DESC
+		BY HOLIDAY_SEQ DESC
 		) subquery
 
 		WHERE 1=1
@@ -145,6 +145,9 @@
 		<if test="userVo.userNm != null and userVo.userNm != ''">
 			AND USER_NM = #{userVo.userNm}
 		</if>
+		<if test="userVo.locationCd != null and userVo.locationCd != ''">
+			AND LOCATION_CD LIKE '%' || #{userVo.locationCd} || '%'
+		</if>
 
 		<!-- 지점 검색 -->
 		<if test="userVo.storeSeq != null and userVo.storeSeq != ''">
@@ -152,9 +155,18 @@
 		</if>
 		<if test="userVo.storeNm != null and userVo.storeNm != ''">
 			AND STORE_NM = #{userVo.storeNm}
-		</if>)
+		</if>
 		
-		<![CDATA[ WHERE ROW_NUMBER BETWEEN #{firstRowNum} AND #{lastRowNum} ]]>
+		<!-- 실제 사용 여부 -->
+			<if test="actualUse != null and actualUse != ''">
+			AND ACTL_USE = #{actualUse}
+		</if>
+		)
+		<if
+			test="firstRowNum != null and firstRowNum != '' and lastRowNum != null and lastRowNum != ''">
+    <![CDATA[ WHERE ROW_NUMBER BETWEEN #{firstRowNum} AND #{lastRowNum} ]]>
+		</if>
+
 
 	</select>
 
@@ -223,6 +235,9 @@
 			= #{searchContent.userType} </if> -->
 		<if test="userVo.userNm != null and userVo.userNm != ''">
 			AND USER_NM = #{userVo.userNm}
+		</if>
+		<if test="userVo.locationCd != null and userVo.locationCd != ''">
+			AND LOCATION_CD LIKE '%' || #{locationCd} || '%'
 		</if>
 
 		<!-- 지점 검색 -->

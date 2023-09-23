@@ -112,7 +112,7 @@
 									<div class="notice">
 										<ul>
 											<li>휴가일수는 연 15일 입니다.</li>
-											<li>신청일은 종료일과 같거나 이전날짜여야 하며, 중복된 날짜에는 휴가신청을 할 수 없습니다.</li>
+											<li>시작일은 종료일과 같거나 이전날짜여야 하며, 동일한 날짜에 중복신청 할 수 없습니다.</li>
 											<li>AS근무가 배정된 날짜 및 공휴일에는 휴가신청을 할 수 없습니다.</li>
 										</ul>
 									</div>
@@ -124,7 +124,6 @@
 								<!-- 확인 모달 창 -->
 								<div id="confirmModal" class="modal">
 									<div class="modal-content">
-										<span class="close">&times;</span>
 										<p>정말로 휴가를 신청하시겠습니까?</p>
 										<button id="applyYes">예</button>
 										<button id="applyNo">아니오</button>
@@ -134,7 +133,6 @@
 								<!-- 결과 모달 창 -->
 								<div id="resultModal" class="modal">
 									<div class="modal-content">
-										<span class="close">&times;</span>
 										<p id="modalMessage"></p>
 										<button id="modal-result-confirmButton">확인</button>
 									</div>
