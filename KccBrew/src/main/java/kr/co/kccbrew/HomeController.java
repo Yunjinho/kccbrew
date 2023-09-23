@@ -50,13 +50,12 @@ public class HomeController {
 		}
 
 		if(role.equals(new SimpleGrantedAuthority("ROLE_ADMIN"))) {
-			return "redirect: /admin/main";
+			return "redirect:/admin/main";
 		} else if (role.equals(new SimpleGrantedAuthority("ROLE_MANAGER"))) {
-			return "redirect: /manager/main";
+			return "redirect:/manager/main";
 		} else {
-			return "redirect: /mechanic/main";
+			return "redirect:/mechanic/main";
 		}
-
 
 	}
 }

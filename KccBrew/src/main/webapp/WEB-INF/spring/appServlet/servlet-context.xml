@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans:beans xmlns="http://www.springframework.org/schema/mvc"
+<beans:beans
+	xmlns="http://www.springframework.org/schema/mvc"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:beans="http://www.springframework.org/schema/beans"
 	xmlns:context="http://www.springframework.org/schema/context"
@@ -13,7 +14,7 @@
 		infrastructure -->
 
 	<!-- Enables the Spring MVC @Controller programming model -->
-	<annotation-driven />
+	<annotation-driven validator="validator" />
 
 	<!-- Handles HTTP GET requests for /resources/** by efficiently serving 
 		up static resources in the ${webappRoot}/resources directory -->
@@ -58,82 +59,74 @@
 
 
 	<!-- Controller -->
-	<context:component-scan base-package="kr.co.kccbrew" />
-	<!-- <context:component-scan base-package="kr.co.kccbrew.comm.login.controller" /> -->
-	<context:component-scan base-package="kr.co.kccbrew.comm.main.controller" />
-	<!-- <context:component-scan base-package="kr.co.kccbrew.comm.register.controller" /> -->
-	<context:component-scan base-package="kr.co.kccbrew.strMng.controller" />
-	<context:component-scan base-package="kr.co.kccbrew.sysMng.cdMng.controller" />
-	<context:component-scan base-package="kr.co.kccbrew.sysMng.logMng.controller" />
-	<context:component-scan base-package="kr.co.kccbrew.asMng.contorller" />
-	<context:component-scan base-package="kr.co.kccbrew.asMng.asMod" />
-	<context:component-scan base-package="kr.co.kccbrew.userMng.contorller" />
-	<context:component-scan base-package="kr.co.kccbrew.schdlMng.contorller" />
-	<context:component-scan base-package="kr.co.kccbrew.sysMng.fileMng.contorller" />
-	<context:component-scan base-package="kr.co.kccbrew.comm.security.controller" />
-	<context:component-scan base-package="kr.co.kccbrew.comm.util" />
+	<context:component-scan
+		base-package="kr.co.kccbrew" />
+	<!-- <context:component-scan base-package="kr.co.kccbrew.comm.login.controller" 
+		/> -->
+	<context:component-scan
+		base-package="kr.co.kccbrew.comm.main.controller" />
+	<!-- <context:component-scan base-package="kr.co.kccbrew.comm.register.controller" 
+		/> -->
+	<context:component-scan
+		base-package="kr.co.kccbrew.strMng.controller" />
+	<context:component-scan
+		base-package="kr.co.kccbrew.sysMng.cdMng.controller" />
+	<context:component-scan
+		base-package="kr.co.kccbrew.sysMng.logMng.controller" />
+	<context:component-scan
+		base-package="kr.co.kccbrew.asMng.contorller" />
+	<context:component-scan
+		base-package="kr.co.kccbrew.asMng.asMod" />
+	<context:component-scan
+		base-package="kr.co.kccbrew.userMng.contorller" />
+	<context:component-scan
+		base-package="kr.co.kccbrew.schdlMng.contorller" />
+	<context:component-scan
+		base-package="kr.co.kccbrew.sysMng.fileMng.contorller" />
+	<context:component-scan
+		base-package="kr.co.kccbrew.comm.security.controller" />
+	<context:component-scan
+		base-package="kr.co.kccbrew.comm.util" />
 	<!-- Controller -->
 
 
 
 	<view-controller path="/" view-name="/home" />
 
-	<util:properties id="serverImgPath" location="classpath:/config/application.properties"/>
+	<util:properties id="serverImgPath"
+		location="classpath:/config/application.properties" />
 
 	<!-- inteceptor -->
- 	 
+
 	<interceptors>
 		<!-- 로그인 세션 확인 -->
 
-	  <!-- 
-      Properties 파일을 읽어 오기 위한 태그 
-      Java코드에서 @Value('#{id['properties속성']}')
-   		-->
- 	 
+		<!-- Properties 파일을 읽어 오기 위한 태그 Java코드에서 @Value('#{id['properties속성']}') -->
 
-	<!-- 	<interceptor>
-			<mapping path="/**" />
-			<exclude-mapping path="/" />
-			<exclude-mapping path="/login" />
-			<exclude-mapping path="/loginpage" />
-			<exclude-mapping path="/register-form" />
-			<exclude-mapping path="/register" />
-			<exclude-mapping path="/search-store-list" />
-			<exclude-mapping path="/check_user_id" />
-			<exclude-mapping path="/check_user_id" />
-			<exclude-mapping path="/search-location-code" />
-			<exclude-mapping path="/search-location-cd" />
-			<exclude-mapping path="/resources/**/" />
-			<beans:bean
-				class="kr.co.kccbrew.comm.interceptor.component.SessionInterceptor" />
-		</interceptor> -->
+
+		<!-- <interceptor> <mapping path="/**" /> <exclude-mapping path="/" /> 
+			<exclude-mapping path="/login" /> <exclude-mapping path="/loginpage" /> <exclude-mapping 
+			path="/register-form" /> <exclude-mapping path="/register" /> <exclude-mapping 
+			path="/search-store-list" /> <exclude-mapping path="/check_user_id" /> <exclude-mapping 
+			path="/check_user_id" /> <exclude-mapping path="/search-location-code" /> 
+			<exclude-mapping path="/search-location-cd" /> <exclude-mapping path="/resources/**/" 
+			/> <beans:bean class="kr.co.kccbrew.comm.interceptor.component.SessionInterceptor" 
+			/> </interceptor> -->
 
 		<!-- 회원유형별 접근가능 페이지 설정 -->
-		<!-- <interceptor>
-			<mapping path="/관리자만 가능한  API" />
-			<mapping path="/log" />
-			<exclude-mapping path="/" />
-			<exclude-mapping path="/resources/**/" />
-			<beans:bean
-				class="kr.co.kccbrew.comm.interceptor.component.MngAuthInterceptor" />
-		</interceptor> -->
+		<!-- <interceptor> <mapping path="/관리자만 가능한 API" /> <mapping path="/log" 
+			/> <exclude-mapping path="/" /> <exclude-mapping path="/resources/**/" /> 
+			<beans:bean class="kr.co.kccbrew.comm.interceptor.component.MngAuthInterceptor" 
+			/> </interceptor> -->
 
-		<!-- <interceptor>
-			<mapping path="/점포만 가능한  API" />
-			<mapping path="/as-receipt" />
-			<exclude-mapping path="/" />
-			<exclude-mapping path="/resources/**/" />
-			<beans:bean
-				class="kr.co.kccbrew.comm.interceptor.component.StrAuthInterceptor" />
-		</interceptor> -->
+		<!-- <interceptor> <mapping path="/점포만 가능한 API" /> <mapping path="/as-receipt" 
+			/> <exclude-mapping path="/" /> <exclude-mapping path="/resources/**/" /> 
+			<beans:bean class="kr.co.kccbrew.comm.interceptor.component.StrAuthInterceptor" 
+			/> </interceptor> -->
 		<!-- -->
-	<!-- 	<interceptor>
-			<mapping path="/수리 기사만 가능한  API" />
-			<exclude-mapping path="/" />
-			<exclude-mapping path="/resources/**/" />
-			<beans:bean
-				class="kr.co.kccbrew.comm.interceptor.component.MechaAuthInterceptor" />
-		</interceptor> -->
+		<!-- <interceptor> <mapping path="/수리 기사만 가능한 API" /> <exclude-mapping 
+			path="/" /> <exclude-mapping path="/resources/**/" /> <beans:bean class="kr.co.kccbrew.comm.interceptor.component.MechaAuthInterceptor" 
+			/> </interceptor> -->
 
 		<!-- 로그수집 및 저장 -->
 		<interceptor>
@@ -144,7 +137,18 @@
 		</interceptor>
 
 	</interceptors>
-	
-	
+
+	<!-- 유효성검사 -->
+	<beans:bean id="validator"
+		class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean" />
+	<!-- <beans:bean id="legalHolidayValidator" class="kr.co.kccbrew.schdlMng.model.LegalHolidayValidator" 
+		/> -->
+
+	<beans:bean id="messageSource"
+		class="org.springframework.context.support.ResourceBundleMessageSource">
+		<beans:property name="basename" value="messages" />
+		<beans:property name="defaultEncoding" value="UTF-8" />
+	</beans:bean>
+
 
 </beans:beans>

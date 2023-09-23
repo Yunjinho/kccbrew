@@ -6,7 +6,6 @@ import org.springframework.stereotype.Component;
 
 import lombok.Data;
 
-@Component
 @Data
 public class SchdlMngVo {
 	private Integer  rowNumber;

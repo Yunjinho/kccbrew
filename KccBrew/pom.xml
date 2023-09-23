@@ -52,6 +52,20 @@
 			<version>${org.springframework-version}</version>
 		</dependency>
 
+		<!-- Validation -->
+		<dependency>
+			<groupId>javax.validation</groupId>
+			<artifactId>validation-api</artifactId>
+			<version>2.0.1.Final</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.hibernate.validator</groupId>
+			<artifactId>hibernate-validator</artifactId>
+			<version>6.2.0.Final</version> 
+		</dependency>
+
+
 		<!-- AspectJ -->
 		<dependency>
 			<groupId>org.aspectj</groupId>
@@ -254,20 +268,20 @@
 			<artifactId>spring-security-taglibs</artifactId>
 			<version>4.2.3.RELEASE</version>
 		</dependency>
-		
+
 		<!-- poi -->
 		<dependency>
-		    <groupId>org.apache.poi</groupId>
-		    <artifactId>poi-ooxml</artifactId>
-		    <version>3.9</version>
-		</dependency> 
-		
-		
-		  <dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi-ooxml</artifactId>
+			<version>3.9</version>
+		</dependency>
+
+
+		<dependency>
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-email</artifactId>
 			<version>1.5</version>
-		</dependency>  
+		</dependency>
 	</dependencies>
 
 	<build>

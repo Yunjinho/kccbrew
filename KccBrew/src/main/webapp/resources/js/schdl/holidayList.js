@@ -145,7 +145,7 @@ function displaySchedules(schedules) {
 				cancelButton.textContent = "취소";
 				cancelButton.className = "form-btn";
 				cancelButton.onclick = function () {
-					alert("휴가 취소 요청: 휴가 ID " + schedule.scheduleId);
+					openCancelModal(schedule.scheduleId);
 				};
 				cell8.appendChild(cancelButton);
 			} else {
@@ -176,7 +176,7 @@ function displaySchedules(schedules) {
 				cancelButton.textContent = "취소";
 				cancelButton.className = "form-btn";
 				cancelButton.onclick = function () {
-					alert("휴가 취소 요청: 휴가 ID " + schedule.scheduleId);
+					openCancelModal(schedule.scheduleId);
 				};
 				cell5.appendChild(cancelButton);
 			} else {
