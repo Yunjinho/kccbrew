@@ -4,25 +4,21 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-<link rel="stylesheet" href="/resources/css/code/cdMngDtl.css" />
+<!-- <link rel="stylesheet" href="/resources/css/code/cdMngDtl.css" /> -->
 <meta charset="UTF-8">
 <title>회원정보</title>
 <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 </head>
 <body>
-	<section id="notice" class="notice">
-		<div class="container2">
+	<section id="notice" class="notice" style="width: 80%; margin-top:40px;">
+		<div class="container2" style="width: 100%;">
 			<div class="category">회원정보</div>
-			<hr style="border: solid 1.2px; width: 97%;">
+			<hr style="border: solid 1.2px; width: 100%;">
 			<table id="search-box">
 				<tr>
-					<th rowspan="4" colspan="2" style="width: 140px; height: 188px;">
-						<div style="text-align: center;">
+					<th rowspan="4" colspan="2" style="position:relative; height:140px; width:120px;">
 							<img src="${userDtl.imgUrl}${userDtl.imgNm}" border="0"
-								style="margin: auto;">
-						</div>
+								style="position:relative; width:120px;  top: calc(  50% - 70px ); height:140px; ">
 						</th>
 					<th>ID</th>
 					<td>${userMngVo.userId}</td>
@@ -70,8 +66,8 @@
 			</table>
 
 			<c:if test="${userMngVo.userTypeCd eq '02' }">
-				<div class="category">상세정보</div>
-				<hr style="border: solid 1.2px; width: 97%;">
+					<div class="category" style="margin-top: 40px;">상세정보</div>
+				<hr style="border: solid 1.2px; width: 100%;">
 				<table id="search-box">
 					<tr>
 						<th>점포명</th>
@@ -84,8 +80,8 @@
 				</table>
 			</c:if>
 			<c:if test="${userMngVo.userTypeCd eq '03' }">
-				<div class="category">상세정보</div>
-				<hr style="border: solid 1.2px; width: 97%;">
+				<div class="category" style="margin-top: 40px;">상세정보</div>
+				<hr style="border: solid 1.2px; width: 100%;">
 				<table id="search-box">
 					<tr>
 						<th>장비코드</th>
@@ -130,15 +126,15 @@ $(".submitMod").click(function() {
 				if (response.trim() === "ok") {
 					alert('사용자를 수정하였습니다.');
 				} else {
-					alert('사용자 수정에 실패하였습니다.');
+					alert('빈칸을 모두 입력해주세요.');
 				}
 				// 모달 창 닫기 및 페이지 새로고침
 				$(".ModalMod").css("display", "none");
 				location.reload();
 			},
 			error : function() {
-				alert('서버 오류로 수정에 실패하였습니다.');
-				$(".ModalMod").css("display", "none");
+				alert('빈칸을 모두 입력해주세요.');
+				/* $(".ModalMod").css("display", "none"); */
 			}
 		});
 	}

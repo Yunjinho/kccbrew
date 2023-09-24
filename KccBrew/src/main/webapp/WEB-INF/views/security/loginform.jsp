@@ -93,7 +93,7 @@
 				<div>
 					<img src="<c:url value="resources/img/login/login_id.png"/>">
 				</div>
-				<a href="user/userSearch" class="icon_01">
+				<a href="/userSearch" class="icon_01">
 					<dl>
 						<dd>아이디 찾기</dd>
 						<dt>본인 아이디를 잊어버리셨나요?</dt>
@@ -105,8 +105,7 @@
 				<div>
 					<img src="<c:url value="resources/img/login/login_pwd.png"/>">
 				</div>
-				<a href="javascript:;"
-					onclick="javascript:goPwHelpPage(); return false;" class="icon_02">
+				<a href="/userSearch" class="icon_02">
 					<dl>
 						<dd>비밀번호 찾기</dd>
 						<dt>비밀번호를 잊어버리셨나요?</dt>

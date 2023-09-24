@@ -77,7 +77,7 @@ public class UserMngController {
 		}
 	}
 
-	@PostMapping("/updateUserApproval")
+	@PostMapping("/user/approval")
 	public ResponseEntity<String> updateUserApproval(Principal principal, UserMngVo userMngVo, @RequestParam Map<String, Object> param,  HttpSession session) {
 		String userId = (String) param.get("userId");
 		String approveYn = (String) param.get("approveYn");

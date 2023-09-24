@@ -55,7 +55,6 @@
 					<th colspan="1">지역분류</th>
 					<td colspan="3"><select id="location" name="locationCd" size="3">
 							<option value="">지역선택</option>
-							<option value="02">서울</option>
 							<c:forEach var="list" items="${list}">
 								<option value="${list.locationCd}"
 									${store.locationCd == list.locationCd ? 'selected' : ''}>${list.locationNm}</option>
@@ -108,6 +107,12 @@
     function update_selected() {
         var selectedValue = $("#location").val();
         mallsEnabled = (selectedValue === "02");
+        if (mallsEnabled) {
+            $("#locationSeoul").prop('disabled', false);
+        } else {
+            $("#locationSeoul").prop('disabled', true);
+        }
+  
     }
 
     $(function() {
@@ -116,11 +121,7 @@
         $("#location").change(function() {
             update_selected();
 
-            if (mallsEnabled) {
-                $("#locationSeoul").prop('disabled', false);
-            } else {
-                $("#locationSeoul").prop('disabled', true);
-            }
+          
         });
     });
 
@@ -170,7 +171,7 @@
         $.ajax({
             async: true,
             type: 'POST',
-            url: "${pageContext.request.contextPath}/api/namecheck", // 경로 수정
+            url: "${pageContext.request.contextPath}/user/namecheck", // 경로 수정
             data: JSON.stringify(storeNm), // JSON으로 데이터 전송
             dataType: "json", // 서버가 JSON 응답을 반환하는 것으로 예상
             contentType: "application/json; charset=UTF-8",

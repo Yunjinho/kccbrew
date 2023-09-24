@@ -52,7 +52,7 @@
                     <tbody>
                         <c:forEach items="${list}" var="item" varStatus="stat">
                             <tr>
-                                <td>${stat.count}</td>
+                                <td>${stat.count}</td>                                    
                                 <td>${item.userNm}</td>
                                 <td>${item.userTelNo}</td>
                             </tr>

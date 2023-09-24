@@ -8,7 +8,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-<link rel="stylesheet" href="/resources/css/store/store.css" />
+<link rel="stylesheet" href="/resources/css/userMng/userMngList.css" />
+<link rel="stylesheet" href="/resources/css/asMng/content-template.css" />
 
 <!-- font -->
 <!-- notoSans -->
@@ -67,9 +68,9 @@ div.modalBackground {
 
 .modal-dialog1 {
 	position: fixed;
-	top: calc(50% - 350px);
+	top: calc(50% - 300px);
 	left: calc(50% - 500px);
-	height: 700px;
+	height: 600px;
 	padding: 20px 10px;
 	background: #fff;
 	border: #333 solid 1px;
@@ -117,24 +118,32 @@ div.modalBackground {
 </style>
 </head>
 <body>
-	<div id="page" class="page-nosubmenu">
+	<div id="page-mask">
+		<div id="page-container" class="">
+			<div id="page-content" class="clearfix">
+				<div id="page-content-wrap">
+					<!-- ********** 페이지 네비게이션 시작 ********** -->
+					<div class="page-content-navigation">
+						<ol class="breadcrumb">
+							<li class="breadcrumb-home"><a href="#">회원 관리</a></li>
+							<li>
+								<div class="header-icon-background">
+									<img
+										src="<c:url value='resources/img/asMng/free-icon-right-arrow-271228.png' />"
+										alt="Check List" class="header-icon" />
+								</div>
+							</li>
+							<li><a href="<c:url value='/user' />">회원 조회</a></li>
+						</ol>
+					</div>
+					<!-- ********** 페이지 네비게이션 끝 ********** -->
+					<div id="region-main">
+						<div role="main">
+							<span id="maincontent"></span>
+							<div class="user-past">
 
-
-		<div id="page-mask">
-			<div id="page-container" class="">
-				<div id="page-content" class="clearfix">
-					<div id="page-content-wrap">
-
-
-						<!-- ********** 페이지 네비게이션 끝 ********** -->
-
-						<div id="region-main">
-							<div role="main">
-								<span id="maincontent"></span>
-								<div class="user-past">
-
-									<!-- ********** 점포 관련 내용 시작 ********** -->
-									<div id="content">
+								<!-- ********** 회원 리스트 조회 ********** -->
+								<div id="content">
 										<h2 class="heading">회원조회</h2>
 										<!-- 점포 검색 -->
 										<form action="/user" method="get" style="margin-bottom: 10px;">
@@ -223,21 +232,23 @@ div.modalBackground {
 												</tr>
 												<!-- 4행 -->
 												<tr>
-													<td colspan="8"
-														style="text-align: center; border-bottom: 0px;">
-														<div class="find-btn" style="text-align: center;">
+													<td colspan="7" style="border-bottom:none;"></td>
+													<td style="text-align: center; border-bottom: 0px;">
+														<div>
 															<button type="submit" class="form-btn" id="find-btn1">검색</button>
-															<button type="button" class="form-btn" id="find-btn1"
-																onclick="location.href='/user';">초기화</button>
+															<!-- <button type="button" class="form-btn" id="find-btn1"
+																onclick="location.href='/user';">초기화</button> -->
 														</div>
 													</td>
 												</tr>
 											</table>
 										</form>
-										<div id="logTable" style="margin-bottom: 30px;">
+										<div id="logTable">
+										<div class="list-info-div">
 											<p class="data-info">
 												새로운 가입 정보<b><span><c:out value="${newTotal}" /></span></b>건
 											</p>
+										</div>
 											<table class="text-center"
 												style="border: 1.5px solid #444444;">
 												<thead>
@@ -279,8 +290,9 @@ div.modalBackground {
 												</tbody>
 											</table>
 										</div>
+										<hr>
 										<div id="logTable">
-											<div>
+											<div class="list-info-div">
 												<p class="data-info">
 													전체<b><span><c:out value="${total}" /></span></b>건<span
 														id="text-separator"> | </span><b><span><c:out
@@ -402,7 +414,6 @@ div.modalBackground {
 					</div>
 				</div>
 			</div>
-		</div>
 	</div>
 	<div class="Modal2" id="modal-one">
 		<div class="modal-dialog2">
@@ -499,7 +510,7 @@ div.modalBackground {
 			if (selectedUserId) {
 				// AJAX 요청을 통해 서버로 사용자 ID를 전달하고 업데이트 수행
 				$.ajax({
-					url : '/updateUserApproval', // 사용자 승인 업데이트를 수행하는 서버 엔드포인트
+					url : '/user/approval', // 사용자 승인 업데이트를 수행하는 서버 엔드포인트
 					type : 'POST',
 					dataType : 'text',
 					data : {
@@ -529,7 +540,7 @@ div.modalBackground {
 			if (selectedUserId) {
 				// AJAX 요청을 통해 서버로 사용자 ID를 전달하고 업데이트 수행
 				$.ajax({
-					url : '/updateUserApproval',
+					url : '/user/approval',
 					type : 'POST',
 					dataType : 'text',
 					data : {

@@ -169,7 +169,7 @@ public class StrMngController {
 	}
 
 	/* 점포명중복체크 */
-	@RequestMapping(value = "/api/namecheck", method = RequestMethod.POST)
+	@RequestMapping(value = "/user/namecheck", method = RequestMethod.POST)
 	@ResponseBody
 	public String nameCheck(@RequestBody String storeNm) {
 		storeNm = storeNm.replaceAll("\"", "");

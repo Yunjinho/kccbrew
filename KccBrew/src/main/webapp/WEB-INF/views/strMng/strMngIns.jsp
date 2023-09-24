@@ -55,7 +55,6 @@
 						<td><select id="location" name="locationCd" size="3"
 							data-locationCd="${store.locationCd}">
 								<option value="" selected="selected">지역선택</option>
-								<option value="02">서울</option>
 								<c:forEach var="list" items="${list}">
 									<option value="${list.locationCd}"
 										<c:if test="${store.locationCd == list.locationCd}">selected="selected"</c:if>>${list.locationNm}</option>
@@ -103,7 +102,7 @@
         $.ajax({
             async: true,
             type: 'POST',
-            url: "${pageContext.request.contextPath}/api/namecheck", // 경로 수정
+            url: "${pageContext.request.contextPath}/user/namecheck", // 경로 수정
             data: JSON.stringify(storeNm), // JSON으로 데이터 전송
             dataType: "json", // 서버가 JSON 응답을 반환하는 것으로 예상
             contentType: "application/json; charset=UTF-8",

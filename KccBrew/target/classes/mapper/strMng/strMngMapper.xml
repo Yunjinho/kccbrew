@@ -65,7 +65,7 @@
 			<if test="StrMngVo.locationCdSeoul != null and StrMngVo.locationCdSeoul != ''">
 			AND a.location_cd = #{StrMngVo.locationCdSeoul}
 			</if>
-			 <if test="StrMngVo.locationCd != null and StrMngVo.locationCd != '' and StrMngVo.locationCd != '02'.toString()">
+			 <if test="StrMngVo.locationCd != '02'.toString() and StrMngVo.locationCd != null and StrMngVo.locationCd != '' and StrMngVo.locationCd != '02'.toString()">
                 AND a.location_cd = #{StrMngVo.locationCd}
             </if>
             <if  test="StrMngVo.locationCd == '02'.toString() and StrMngVo.locationCdSeoul == '' ">
@@ -278,10 +278,10 @@
 		latitude = #{latitude},
 		longitude = #{longitude},
 		store_telno = #{storeTelNo},
-		<if test='locationCdSeoul != null'>
+		<if test="locationCdSeoul != null ">
 			location_cd = #{locationCdSeoul}
 		</if>
-		<if test='locationCdSeoul == null'>
+		<if test="locationCdSeoul == null and locationCd != '02'.toString()">
 			location_cd = #{locationCd}
 		</if>
 		,
