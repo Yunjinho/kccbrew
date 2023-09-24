@@ -141,8 +141,6 @@
 	<!-- 유효성검사 -->
 	<beans:bean id="validator"
 		class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean" />
-	<!-- <beans:bean id="legalHolidayValidator" class="kr.co.kccbrew.schdlMng.model.LegalHolidayValidator" 
-		/> -->
 
 	<beans:bean id="messageSource"
 		class="org.springframework.context.support.ResourceBundleMessageSource">

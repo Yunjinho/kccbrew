@@ -1,4 +1,4 @@
-package kr.co.kccbrew.schdlMng.validation;
+package kr.co.kccbrew.schdlMng.validator;
 
 import java.lang.annotation.Documented; 
 import java.lang.annotation.ElementType;
@@ -9,13 +9,13 @@ import java.lang.annotation.Target;
 import javax.validation.Constraint;
 
 
-@Constraint(validatedBy = MemberIdValidator.class)
+@Constraint(validatedBy = LegalHolidayValidator.class)
 @Target( { ElementType.METHOD, ElementType.FIELD, ElementType.ANNOTATION_TYPE })
 @Retention(RetentionPolicy.RUNTIME)
 @Documented 
 
-public @interface MemberId{
-   String message() default "유효하지 않은 memberId"; 
+public @interface LegalHoliday{
+   String message() default "주말·공휴일에는 휴가신청이 불가능합니다."; 
 
     Class<?>[] groups() default {};
 

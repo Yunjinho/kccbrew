@@ -138,9 +138,12 @@ function displaySchedules(schedules) {
 			cell6.innerHTML = formatDate(new Date(schedule.startDate));
 			cell7.innerHTML = formatDate(new Date(schedule.endDate));
 
-			if (new Date(schedule.startDate) <= new Date()) {
+			if(schedule.actualUse === "N") {
+				cell8.innerHTML = "취소완료";
+			}
+			else if (new Date(schedule.startDate) <= new Date()) {
 				cell8.innerHTML = "이미 사용된 휴가";
-			} else if (new Date(schedule.startDate) > new Date() && schedule.actualUse === "Y") {
+			} else  {
 				var cancelButton = document.createElement("button");
 				cancelButton.textContent = "취소";
 				cancelButton.className = "form-btn";
@@ -148,9 +151,7 @@ function displaySchedules(schedules) {
 					openCancelModal(schedule.scheduleId);
 				};
 				cell8.appendChild(cancelButton);
-			} else {
-				cell8.innerHTML = "취소완료";
-			}
+			} 
 			cell9.innerHTML = schedule.actualUse;
 		} 
 		/*사용자가 점주 또는 수리기사인 경우*/
@@ -169,9 +170,12 @@ function displaySchedules(schedules) {
 			cell3.innerHTML = formatDate(new Date(schedule.startDate));
 			cell4.innerHTML = formatDate(new Date(schedule.endDate));
 
-			if (new Date(schedule.startDate) <= new Date()) {
+			if(schedule.actualUse === "N") {
+				cell5.innerHTML = "취소완료";
+			}
+			else if (new Date(schedule.startDate) <= new Date()) {
 				cell5.innerHTML = "이미 사용된 휴가";
-			} else if (new Date(schedule.startDate) > new Date() && schedule.actualUse === "Y") {
+			} else  {
 				var cancelButton = document.createElement("button");
 				cancelButton.textContent = "취소";
 				cancelButton.className = "form-btn";
@@ -179,9 +183,7 @@ function displaySchedules(schedules) {
 					openCancelModal(schedule.scheduleId);
 				};
 				cell5.appendChild(cancelButton);
-			} else {
-				cell5.innerHTML = "취소완료";
-			}
+			} 
 			cell6.innerHTML = schedule.actualUse;
 		}
 

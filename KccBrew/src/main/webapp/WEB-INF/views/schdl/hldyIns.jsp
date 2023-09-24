@@ -76,21 +76,8 @@
 							<!-- ********** 세은 로그 관련 내용 시작 ********** -->
 							<div id="content">
 								<h2 class="heading">휴가신청</h2>
-
-						<%-- 		<form:form modelAttribute="holidayVo" method="post">
-									<p>
-										시작일 :
-										<form:input path="startDate" type="date" />
-										<form:errors path="startDate" />
-										<p>
-										종료일 :
-										<form:input path="endDate" type="date" />
-										<form:errors path="endDate" />
-									<p>
-										<input type="submit" value="확인" /> <input type="reset"
-											value="취소" />
-								</form:form> --%>
-										<form:form modelAttribute="holidayVo" method="post" id="addForm">
+								<form:form modelAttribute="holidayVo" method="post" id="addForm">
+								<form:input type="hidden" path="remainingDays"/> 
 									<table id="search-box">
 										<tr>
 											<th>휴가신청일</th>
@@ -104,27 +91,30 @@
 											<td><form:input type="date" id="selectedStartDate"
 													path="startDate" value="" required="true"
 													onchange="calculateDays(new Date(this.value), new Date(document.getElementById('selectedEndDate').value))" />
-												<p><form:errors path="startDate" /></td>
+												<p>
+													<form:errors path="startDate" /></td>
 
 											<th>휴가종료일</th>
 											<td><form:input type="date" id="selectedEndDate"
 													path="endDate" value="" required="true"
 													onchange="calculateDays(new Date(document.getElementById('selectedStartDate').value), new Date(this.value))" />
-												<p><form:errors path="endDate" /></td>
+												<p>
+													<form:errors path="endDate" /></td>
 
 											<td><span id="usedDays" contenteditable="true"
 												oninput="calculateNumbers(this.textContent, document.getElementById('remainingDays').textContent)"></span>
 											</td>
 										</tr>
 										<tr>
-											<td id="input-information" colspan="5" hidden="true"></td>
+											<td id="input-information" colspan="5" hidden="true" style="color: red; font-weight:bold;"></td>
 										</tr>
 
 										<tr>
 											<th>잔여일수/총 휴가일수</th>
-											<td colspan="4"><span id="remainingDays"
-												style="color: red;"><b><c:out
-															value="${ 15 - usedHolidays}" /></b></span> / 15</td>
+											<td id="holiday-days-info" colspan="4">
+											<span id="remainingDays-info" style="color: red; font-weight:bold;"><c:out
+															value="${ 15 - usedHolidays}" /></span> / 15</td>
+											<td id="holiday-days-notice" colspan="4"  hidden="true" style="color: red; font-weight: bold;"></td>
 										</tr>
 
 									</table>
@@ -161,16 +151,16 @@
 
 								<script>
 									// 폼 제출 이벤트 리스너
-									 $("#addForm")
-												.submit(
-														function(event) {
-															event.preventDefault();
+									$("#addForm")
+											.submit(
+													function(event) {
+														event.preventDefault();
 
-															// 확인 모달 창 열기
-															var confirmModal = document
-																	.getElementById("confirmModal");
-															confirmModal.style.display = "block";
-														});  
+														// 확인 모달 창 열기
+														var confirmModal = document
+																.getElementById("confirmModal");
+														confirmModal.style.display = "block";
+													});
 
 									// 확인 모달 창에서 "예" 버튼 클릭 시
 									document
@@ -182,6 +172,13 @@
 														var confirmModal = document
 																.getElementById("confirmModal");
 														confirmModal.style.display = "none";
+														
+												/* 		const remainingDaysElement = document.getElementById('remainingDays');
+														const remainingDaysValue = remainingDaysElement.textContent;
+														
+														console.log("remainingDaysValue: " + remainingDaysValue);
+
+														setInputElementValue('remainingDays', remainingDaysValue); */
 
 														// 폼 데이터를 직렬화
 														var formData = $(

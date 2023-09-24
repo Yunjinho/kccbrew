@@ -1,7 +1,7 @@
 package kr.co.kccbrew.schdlMng.controller;
 
 
-import java.sql.Date;   
+import java.sql.Date;    
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -10,7 +10,6 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
@@ -22,11 +21,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Errors;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import kr.co.kccbrew.comm.security.model.UserVo;
@@ -34,9 +31,7 @@ import kr.co.kccbrew.comm.security.service.UserService;
 import kr.co.kccbrew.comm.util.DateFormat;
 import kr.co.kccbrew.schdlMng.model.AsAssignVo;
 import kr.co.kccbrew.schdlMng.model.AsResultVo;
-import kr.co.kccbrew.schdlMng.model.Holiday;
 import kr.co.kccbrew.schdlMng.model.HolidayVo;
-import kr.co.kccbrew.schdlMng.model.Member;
 import kr.co.kccbrew.schdlMng.model.SchdlMngVo;
 import kr.co.kccbrew.schdlMng.service.SchdlMngService;
 import lombok.extern.slf4j.Slf4j;
@@ -70,51 +65,6 @@ public class schdlMngController {
 
 	/**********************************************************휴가신청**********************************************************/
 
-	@GetMapping("/exam02")
-	public String showForm(Model model) {
-		model.addAttribute("member", new Member());
-		return "webpage13_02";
-	}
-
-	@PostMapping("/exam02")
-	public String submit(@Valid @ModelAttribute Member member, Errors errors) {		
-		if (errors.hasErrors()) {
-			return "webpage13_02";
-		} 
-		return "webpage13_result";
-	}
-	
-	@GetMapping("/exam03")
-	public String showForm2(Model model) {
-		model.addAttribute("holiday", new Holiday());
-		return "webpage13_3";
-	}
-
-	@PostMapping("/exam03")
-	public String submit2(@Valid @ModelAttribute Holiday holiday, Errors errors) {		
-		if (errors.hasErrors()) {
-			return "webpage13_3";
-		} 
-		return "webpage13_result";
-	}
-	
-/*	@GetMapping("/holiday/add")
-	public String holidayAddForm(Model model, Authentication authentication) {
-		model.addAttribute("holidayVo", new HolidayVo());
-		return "schdl/hldyIns";
-	}
-
-	@PostMapping("/holiday/add")
-	public String holidaySubmit(@Valid @ModelAttribute HolidayVo holidayVo, Errors errors, Authentication authentication) {		
-		if (errors.hasErrors()) {
-			return "schdl/hldyIns";
-		} 
-		return "webpage13_result";
-	}*/
-
-
-
-
 	/*휴가신청 페이지*/
 	@GetMapping("/holiday/add")
 	public String holidayAddPage(Model model, Authentication authentication) {
@@ -140,10 +90,20 @@ public class schdlMngController {
 	@ResponseBody
 	public String addHoliday(@Valid @ModelAttribute HolidayVo holidayVo, Errors errors, Authentication authentication)  {
 
-		if (errors.hasErrors()) {
-			return "주말·공휴일에는 휴가신청이 불가능합니다.";
-		} 
+		if (errors.hasFieldErrors("startDate")) {
+			return "시작일을 입력해주세요.";
+			
+		} else if(errors.hasFieldErrors("endDate")) {
+			return "종료일을 입력해주세요.";
+			
+		}else if(errors.hasFieldErrors("remainingDays")) {
+			return "휴가일수는 15일을 초과할 수 없습니다.";
+			
+		} else if(errors.hasFieldErrors("period")) {
+			return "주말·법정공휴일에는 휴가를 신청하실 수 없습니다.";
+		}
 
+		/*매개변수로 들어온 데이터 확인*/
 		System.out.println("holiday: " + holidayVo);
 
 		String message = null;
@@ -198,7 +158,7 @@ public class schdlMngController {
 			message = "등록완료!";
 			System.out.println(message);
 		}
-		return "message";
+		return message;
 	}
 
 
