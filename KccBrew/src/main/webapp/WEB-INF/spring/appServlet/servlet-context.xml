@@ -56,7 +56,13 @@
 		<beans:property name="order" value="1" />
 	</beans:bean>
 
-
+ <!-- BeanNameViewResolver 설정 --> 
+    <beans:bean class="org.springframework.web.servlet.view.BeanNameViewResolver">
+        <beans:property name="order" value="0" />
+    </beans:bean> 
+    
+    <!-- 파일 다운로드를 처리할 클래스를 빈(bean)으로 등록 -->
+    <beans:bean id="fileDownloadUtil" class="kr.co.kccbrew.sysMng.fileMng.util.FileDownloadUtil" />
 
 	<!-- Controller -->
 	<context:component-scan

@@ -8,4 +8,5 @@ public interface IFileMngService {
 	List<FileMngVo> fileList(FileMngVo file, int currentPage);
 	List<FileMngVo> fileTypeList();
 	int getFileCount(FileMngVo file);
+	FileMngVo fileDtl(int fileSeq);
 }

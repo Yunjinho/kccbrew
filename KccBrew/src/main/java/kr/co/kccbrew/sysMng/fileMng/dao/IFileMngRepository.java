@@ -9,5 +9,6 @@ public interface IFileMngRepository {
 	List<FileMngVo> fileList(Map<String, Object> map);
 	int getFileCount(Map<String, Object> map);
 	List<FileMngVo> fileTypeList();
+	FileMngVo fileDtl(int fileSeq);
 }
 
