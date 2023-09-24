@@ -26,29 +26,22 @@ document.addEventListener("DOMContentLoaded", function() {
 //AJAX 요청을 보내는 함수
 function performSearch() {
 	console.log("performSearch()함수 실행!");
-	// 폼 데이터 가져오기
 	var formData = $("form[name='srhForm']").serialize();
 
-	// AJAX POST 요청 보내기
 	$.ajax({
 		type: "POST",
-		url: "/admin/schedule", // 데이터를 처리할 URL을 여기에 지정
+		url: "/admin/schedule", 
 		data: formData,
 		success: function (response) {
-			// 성공적인 응답 처리
 			console.log(response);
 
-			// 데이터 개수 계산
 			var dataCount = response.length;
 
-			// 데이터 개수를 #dataCount 요소에 업데이트
 			$("#dataCount").text(dataCount);
 
-			// HTML 테이블의 tbody를 선택
 			var tbody = $("#cal-table tbody");
 			tbody.empty();
 
-			// 각 데이터를 반복하면서 행 추가
 			for (var i = 0; i < response.length; i++) {
 				var schedule = response[i];
 				var userId = schedule.userId; // userId 키에 해당하는 값
@@ -179,7 +172,7 @@ function performSearch() {
 									$this.find('.div-content').remove();
 								}
 						);*/
-						
+
 						$("." + rowClassName + " ." + cellClassName)
 						.append($divElement);
 					}
@@ -214,11 +207,8 @@ function performSearch() {
 					$divElement.on("click", function() {
 						var $this = $(this);
 						var userId = $this.attr("data-user-id");
-						console.log("userId: " + userId);
 						var scheduleType = $this.attr("data-schedule-type");
-						console.log("scheduleType: " + scheduleType);
 						var scheduleDate = $this.attr("data-schedule-date");
-						console.log("scheduleDate: " + scheduleDate);
 
 						// 데이터를 컨트롤러로 보내는 함수 호출
 						scheduleIndexData(userId, scheduleType, scheduleDate);
@@ -226,10 +216,10 @@ function performSearch() {
 					});
 
 					// 해당 클래스 이름을 가진 <td> 요소에 <div> 추가
-			/*		$("." + rowClassName + " ." + cellClassName)
+					/*		$("." + rowClassName + " ." + cellClassName)
 					.empty() // 기존 내용을 비우기
 					.html($divElement);*/
-					
+
 					$("." + rowClassName + " ." + cellClassName)
 					.append($divElement); 
 				}
@@ -263,11 +253,8 @@ function performSearch() {
 					$divElement.on("click", function() {
 						var $this = $(this);
 						var userId = $this.attr("data-user-id");
-						console.log("userId: " + userId);
 						var scheduleType = $this.attr("data-schedule-type");
-						console.log("scheduleType: " + scheduleType);
 						var scheduleDate = $this.attr("data-schedule-date");
-						console.log("scheduleDate: " + scheduleDate);
 
 						// 데이터를 컨트롤러로 보내는 함수 호출
 						scheduleIndexData(userId, scheduleType, scheduleDate);
@@ -294,26 +281,25 @@ function performSearch() {
 	});
 }
 
-
+/*회원아이디, 스케줄타입에 따른 스케줄정보 조회*/
 function scheduleIndexData(userId, scheduleType, scheduleDate) {
 
 	var date = new Date(scheduleDate);
-	// 날짜를 yyyy-mm-dd 형식으로 포맷팅
 	var year = date.getFullYear();
-	var month = String(date.getMonth() + 1).padStart(2, '0'); // 월은 0부터 시작하므로 1을 더하고 두 자리로 포맷팅
-	var day = String(date.getDate()).padStart(2, '0'); // 일도 두 자리로 포맷팅
+	var month = String(date.getMonth() + 1).padStart(2, '0'); 
+	var day = String(date.getDate()).padStart(2, '0'); 
 	var formattedDate = year + '-' + month + '-' + day;
 
 	$.ajax({
 		type: "POST",
-		url: "/schedule-Info", // 컨트롤러의 URL을 여기에 입력하세요.
+		url: "/schedule-Info", 
 		data: {
 			userId: userId,
 			scheduleType: scheduleType,
 			scheduleDate: formattedDate
 		},
 		success: function(response) {
-			console.log("Response from server:", response);
+			console.log("Response from server:"+ response);
 
 			// scheduleType 값에 따라 다른 함수 호출
 			if (scheduleType === "holiday") {
@@ -377,167 +363,156 @@ function getLastDayAndPopulateTable() {
 	} 
 }
 
-
+/*모달창에 휴가정보 표시*/
 function displayHolidayData(data) {
 	console.log("data: " + data);
 
-	// contentTitle 엘리먼트 가져오기
 	var contentTitle = document.getElementById("contentTitle");
 
-	// contentTitle 엘리먼트의 내용 변경
 	contentTitle.textContent = "휴가상세";
 
-	// 목록 컨테이너 엘리먼트 가져오기
 	var listContainer = document.getElementById("listContainer");
 
-	// 필드명을 사용하여 필드값을 구함
+
 	var holidaySeq = data.holidaySeq;
 	var  startDate = formatDate(new Date(data.startDate));
 	var  endDate = formatDate(new Date(data.endDate));
 	var  appDate = formatDate(new Date(data.appDate));
 
-	// 기존 목록 항목 모두 제거
+	// 기존 자식 요소 모두 제거
 	while (listContainer.firstChild) {
 		listContainer.removeChild(listContainer.firstChild);
 	}
 
-	// 목록 항목 생성 및 내용 설정
-	var listItem1 = document.createElement("li");
-	listItem1.textContent = "휴일 아이디: " + holidaySeq;
-	var listItem4 = document.createElement("li");
-	listItem4.textContent = "신청일: " + appDate;
-	var listItem2 = document.createElement("li");
-	listItem2.textContent = "시작일: " + startDate;
-	var listItem3 = document.createElement("li");
-	listItem3.textContent = "종료일: " + endDate;
+	for (var i = 0; i < data.length; i++) {
+		var holidaySeq = data[i].holidaySeq; // 휴일 아이디 데이터 가져오기
+		var appDate = formatDate(new Date(data[i].appDate)); // 신청일 데이터 가져오기
+		var startDate = formatDate(new Date(data[i].startDate)); // 시작일 데이터 가져오기
+		var endDate = formatDate(new Date(data[i].endDate)); // 종료일 데이터 가져오기
 
+		var listItem1 = document.createElement("li");
+		listItem1.textContent = "휴일 아이디: " + holidaySeq;
+		var listItem4 = document.createElement("li");
+		listItem4.textContent = "신청일: " + appDate;
+		var listItem2 = document.createElement("li");
+		listItem2.textContent = "시작일: " + startDate;
+		var listItem3 = document.createElement("li");
+		listItem3.textContent = "종료일: " + endDate;
 
-	// 목록 컨테이너에 항목 추가
-	listContainer.appendChild(listItem1);
-	listContainer.appendChild(listItem2);
-	listContainer.appendChild(listItem3);
-	listContainer.appendChild(listItem4);
+		listContainer.appendChild(listItem1);
+		listContainer.appendChild(listItem2);
+		listContainer.appendChild(listItem3);
+		listContainer.appendChild(listItem4);
+	}
 }
 
 
+/*모달창에 배정정보 표시*/
 function displayAssignData(data) {
-	console.log("data: " + data);
+	console.log("displayAssignData함수실행!");
 
-	// contentTitle 엘리먼트 가져오기
 	var contentTitle = document.getElementById("contentTitle");
 
-	// contentTitle 엘리먼트의 내용 변경
 	contentTitle.textContent = "AS배정상세";
 
-	// 목록 컨테이너 엘리먼트 가져오기
 	var listContainer = document.getElementById("listContainer");
 
-	// 필드명을 사용하여 필드값을 구함
-	var  AsAssignSeq = data.AsAssignSeq;
-	var  visitDate = formatDate(new Date(data.visitDate));
-	var  confirmDate = formatDate(new Date(data.confirmDate));
-	var  regDate = formatDate(new Date(data.regDate));
-	var  regUser = data.regUser;
-	var  modDate = formatDate(new Date(data.modDate));
-	var  modUser = data.modUser;
-	var  reAssign = data.reAssign;
-
-	// 기존 목록 항목 모두 제거
+	// 기존 자식 요소 모두 제거
 	while (listContainer.firstChild) {
 		listContainer.removeChild(listContainer.firstChild);
 	}
 
-	// 목록 항목 생성 및 내용 설정
-	var listItem1 = document.createElement("li");
-	listItem1.textContent = "접수배정번호: " + AsAssignSeq;
-	var listItem2 = document.createElement("li");
-	listItem2.textContent = "수리예정일: " + visitDate;
-	var listItem3 = document.createElement("li");
-	listItem3.textContent = "배정확인일: " + confirmDate;
-	var listItem4 = document.createElement("li");
-	listItem4.textContent = "등록일: " + regDate;
-	var listItem5 = document.createElement("li");
-	listItem5.textContent = "등록자: " + regUser;
-	var listItem6 = document.createElement("li");
-	listItem6.textContent = "수정일: " + modDate;
-	var listItem7 = document.createElement("li");
-	listItem7.textContent = "수정자: " + modUser;
-	var listItem8 = document.createElement("li");
-	listItem8.textContent = "재배정: " + reAssign;
+	for (var i = 0; i < data.length; i++) {
+		var asAssignSeq = data[i].asAssignSeq;
+		var visitDate = formatDate(new Date(data[i].visitDate));
+		var confirmDate = formatDate(new Date(data[i].confirmDate));
+		var regDate = formatDate(new Date(data[i].regDate));
+		var regUser = data[i].regUser;
+		var modDate = formatDate(new Date(data[i].modDate));
+		var modUser = data[i].modUser;
+		var reAssign = data[i].reAssign;
+		var rejectContentMecha = data[i].rejectContentMecha;
 
+		var listItem1 = document.createElement("li");
+		listItem1.textContent = "접수배정번호: " + asAssignSeq;
+		var listItem2 = document.createElement("li");
+		listItem2.textContent = "수리예정일: " + visitDate;
+		var listItem3 = document.createElement("li");
+		listItem3.textContent = "배정확인일: " + confirmDate;
+		var listItem4 = document.createElement("li");
+		listItem4.textContent = "등록일: " + regDate;
+		var listItem5 = document.createElement("li");
+		listItem5.textContent = "등록자: " + regUser;
+		var listItem6 = document.createElement("li");
+		listItem6.textContent = "수정일: " + modDate;
+		var listItem7 = document.createElement("li");
+		listItem7.textContent = "수정자: " + modUser;
+		var listItem8 = document.createElement("li");
+		listItem8.textContent = "재배정: " + reAssign;
+		var listItem9 = document.createElement("li");
+		listItem9.textContent = "반려내용: " + rejectContentMecha;
 
-	// 목록 컨테이너에 항목 추가
-	listContainer.appendChild(listItem1);
-	listContainer.appendChild(listItem2);
-	listContainer.appendChild(listItem3);
-	listContainer.appendChild(listItem4);
-	listContainer.appendChild(listItem5);
-	listContainer.appendChild(listItem6);
-	listContainer.appendChild(listItem7);
-	listContainer.appendChild(listItem8);
+		listContainer.appendChild(listItem1);
+		listContainer.appendChild(listItem2);
+		listContainer.appendChild(listItem3);
+		listContainer.appendChild(listItem4);
+		listContainer.appendChild(listItem5);
+		listContainer.appendChild(listItem6);
+		listContainer.appendChild(listItem7);
+		listContainer.appendChild(listItem8);
+		if (rejectContentMecha !== null) {
+			listContainer.appendChild(listItem9);
+		}
+	}
 
 }
 
+
+/*모달창에 결과정보 표시*/
 function displayResultData(data) {
-	console.log("data: " + data);
+	console.log("displayResultData 함수 실행!");
 
-	// contentTitle 엘리먼트 가져오기
 	var contentTitle = document.getElementById("contentTitle");
+	contentTitle.textContent = "AS 결과 상세";
 
-	// contentTitle 엘리먼트의 내용 변경
-	contentTitle.textContent = "AS결과상세";
-
-	// 목록 컨테이너 엘리먼트 가져오기
 	var listContainer = document.getElementById("listContainer");
 
-	// 필드명을 사용하여 필드값을 구함
-	var  asResultSeq = data.asResultSeq;
-	var  resultDetail = data.resultDetail;
-	var  storeManagerFeedBack = data.storeManagerFeedBack;
-	var  resultDate = formatDate(new Date(data.resultDate));
-	var  fileSeq = data.fileSeq;
-	var  asPrice = data.asPrice;
-	var  modUser = data.modUser;
-	var  modDate = formatDate(new Date(data.modDate));
-	var  reApply = data.reApply;
-
-	// 기존 목록 항목 모두 제거
+	// 기존 자식 요소 모두 제거
 	while (listContainer.firstChild) {
 		listContainer.removeChild(listContainer.firstChild);
 	}
 
-	// 목록 항목 생성 및 내용 설정
-	var listItem1 = document.createElement("li");
-	listItem1.textContent = "접수결과번호: " + asResultSeq;
-	var listItem2 = document.createElement("li");
-	listItem2.textContent = "처리일: " + resultDate;
-	var listItem3 = document.createElement("li");
-	listItem3.textContent = "처리내용: "  + resultDetail;
-	var listItem4 = document.createElement("li");
-	listItem4.textContent = "점주평가: " + storeManagerFeedBack;
-	var listItem5 = document.createElement("li");
-	listItem5.textContent = "청구비용: " + asPrice;
-	var listItem6 = document.createElement("li");
-	listItem6.textContent = "파일ID: " + fileSeq;
-	var listItem7 = document.createElement("li");
-	listItem7.textContent = "재접수여부: " + reApply;
-	var listItem8 = document.createElement("li");
-	listItem8.textContent = "수정일: " + modDate;
-	var listItem9 = document.createElement("li");
-	listItem9.textContent = "수정자: " + modUser;
+	for (var i = 0; i < data.length; i++) {
+		var listItem = document.createElement("li");
+		var asResultSeq = data[i].asResultSeq;
+		var resultDetail = data[i].resultDetail;
+		var storeManagerFeedBack = data[i].storeManagerFeedBack;
+		var resultDate = formatDate(new Date(data[i].resultDate));
+		var fileSeq = data[i].fileSeq;
+		var asPrice = data[i].asPrice;
+		var modUser = data[i].modUser;
+		var modDate = formatDate(new Date(data[i].modDate));
+		var reApply = data[i].reApply;
 
+		// 각 데이터 항목을 별도의 <li> 요소로 만들어 추가
+		listItem.innerHTML = `
+			<span class="bullet">•</span> 접수결과번호: ${asResultSeq}<br>
+			<span class="bullet">•</span> 처리일: ${resultDate}<br>
+			<span class="bullet">•</span> 처리내용: ${resultDetail}<br>
+			<span class="bullet">•</span> 점주평가: ${storeManagerFeedBack}<br>
+			<span class="bullet">•</span> 청구비용: ${asPrice}<br>
+			<span class="bullet">•</span> 파일ID: ${fileSeq}<br>
+			<span class="bullet">•</span> 재접수여부: ${reApply}<br>
+			<span class="bullet">•</span> 수정일: ${modDate}<br>
+			<span class="bullet">•</span> 수정자: ${modUser}<br>
+			<span>===================</span>
+			`;
 
-	// 목록 컨테이너에 항목 추가
-	listContainer.appendChild(listItem1);
-	listContainer.appendChild(listItem2);
-	listContainer.appendChild(listItem3);
-	listContainer.appendChild(listItem4);
-	listContainer.appendChild(listItem5);
-	listContainer.appendChild(listItem6);
-	listContainer.appendChild(listItem7);
-	listContainer.appendChild(listItem8);
-	listContainer.appendChild(listItem9);
+		listContainer.appendChild(listItem);
+	}
 }
+
+
 
 
 //모달 열기

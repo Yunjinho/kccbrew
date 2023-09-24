@@ -59,13 +59,6 @@ public class SchdlMngService implements ISchdlMngService {
 		return schdlMngRepository.selectCalendarSchedule(schdlMngVo);
 	}
 
-
-	/*휴일조회*/
-	@Override
-	public List<HolidayVo> getHoliday(String userId) {
-		return schdlMngRepository.selectHoliday(userId);
-	}
-
 	/*휴일취소*/
 	@Override
 	public void cancelHoliday(Integer holidaySeq) {
@@ -182,17 +175,36 @@ public class SchdlMngService implements ISchdlMngService {
 		}
 	}
 
-	@Override
-	public HolidayVo getHoliday(String userId, Date date) {
+	
+/*	@Override
+	public List<HolidayVo> getHolidaysByIdAndDate(String userId, Date date) {
 		Map<String, Object> parameterMap = new HashMap<>();
 		parameterMap.put("userId", userId);
 		parameterMap.put("date", date);
 
 		return schdlMngRepository.selecHoliday2(parameterMap);
+	}*/
+	
+	/*휴일조회*/
+	@Override
+	public List<HolidayVo> getHolidays(String userId) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("userId", userId);
+		return schdlMngRepository.selectHoliday(map);
+	}
+	
+	/*휴일조회(실제사용: Y)*/
+	@Override
+	public List<HolidayVo> getHolidays(String userId, Date date) {
+		Map<String, Object> parameterMap = new HashMap<>();
+		parameterMap.put("userId", userId);
+		parameterMap.put("date", date);
+		parameterMap.put("actualUse", "Y");
+		return schdlMngRepository.selectHoliday2(parameterMap);
 	}
 
 	@Override
-	public AsAssignVo getAssign(String userId, Date date) {
+	public List<AsAssignVo> getAssigns(String userId, Date date) {
 		Map<String, Object> parameterMap = new HashMap<>();
 		parameterMap.put("userId", userId);
 		parameterMap.put("date", date);
@@ -200,7 +212,7 @@ public class SchdlMngService implements ISchdlMngService {
 	}
 
 	@Override
-	public AsResultVo getResult(String userId, Date date) {
+	public List<AsResultVo> getResults(String userId, Date date) {
 		Map<String, Object> parameterMap = new HashMap<>();
 		parameterMap.put("userId", userId);
 		parameterMap.put("date", date);

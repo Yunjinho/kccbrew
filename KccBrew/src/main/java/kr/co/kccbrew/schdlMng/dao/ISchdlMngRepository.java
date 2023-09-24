@@ -24,9 +24,6 @@ public interface ISchdlMngRepository {
 	/*회원 캘린더 조회 */
 	public List<SchdlMngVo> selectCalendarSchedule(SchdlMngVo schdlMngVo);
 
-	/*휴일 정보 조회*/
-	public List<HolidayVo> selectHoliday(String userId);
-
 	/*휴가취소*/
 	public void cancelHoliday(Integer holidaySeq);
 
@@ -53,13 +50,16 @@ public interface ISchdlMngRepository {
 
 	/*아이디와 날짜에 따른 근무날짜리스트 조회*/
 	public List<Date> selectResultDates(Map map);
-
-	/*휴가 정보 조회*/
-	public HolidayVo selecHoliday2(Map map);
+	
+	/*휴일 정보 조회*/
+	public List<HolidayVo> selectHoliday(Map map);
+	
+	/*휴일 정보 조회*/
+	public List<HolidayVo> selectHoliday2(Map map);
 	
 	/*배정 정보 조회*/
-	public AsAssignVo selectAssign(Map map);
+	public List<AsAssignVo> selectAssign(Map map);
 	
 	/*휴가 정보 조회*/
-	public AsResultVo selectResult(Map map);
+	public List<AsResultVo> selectResult(Map map);
 }

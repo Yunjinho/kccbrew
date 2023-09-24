@@ -93,13 +93,13 @@ public class schdlMngController {
 
 		if (errors.hasFieldErrors("startDate")) {
 			return "등록실패: 시작일을 입력해주세요.";
-			
+
 		} else if(errors.hasFieldErrors("endDate")) {
 			return "등록실패: 종료일을 입력해주세요.";
-			
+
 		}else if(errors.hasFieldErrors("remainingDays")) {
 			return "등록실패: 휴가일수는 15일을 초과할 수 없습니다.";
-			
+
 		} else if(errors.hasFieldErrors("period")) {
 			return "등록실패: 주말·법정공휴일에는 휴가를 신청하실 수 없습니다.";
 		}
@@ -168,7 +168,7 @@ public class schdlMngController {
 	/*휴가 중복 검사*/
 	public boolean isOverlapDate(Date startDate, Date endDate, String userId) {
 
-		List<HolidayVo> vacationDates = schdlMngService.getHoliday(userId);
+		List<HolidayVo> vacationDates = schdlMngService.getHolidays(userId);
 		Date startDateToCheck = startDate;
 		Date endDateToCheck = endDate;
 
@@ -498,10 +498,49 @@ public class schdlMngController {
 		return allSchedules;
 	}
 
-	/*특정 스케줄 상세조회*/
-	@PostMapping("/schedule-Info")
+	/******************************************************캘린더 조회******************************************************/
+
+	/*캘린더 조회*/
+	@GetMapping("/schedule/calendar")
+	public String getCalendar() {
+
+		return "schdlTable";
+	}
+
+	/*회원 캘린더 월별 조회*/
+	@PostMapping(value="/schedule/calendar", produces = "application/json; charset=utf-8")
 	@ResponseBody
-	public Object getScheduleInfo(@RequestParam("userId") String userId,
+	public List<Map<String, Object>> getUserCalendar(
+			@RequestParam(name = "year", defaultValue="2023") int  year, 
+			@RequestParam(name = "month", defaultValue="9") int month, 
+			Model model, 
+			Authentication authentication) {
+
+		String stringYear = String.valueOf(year);
+		String stringMonth = String.valueOf(month);
+
+		/*매개변수 확인*/
+		System.out.println("year: " + year);
+		System.out.println("month: " + month);
+
+		/*ID에 따른 데이터 조회*/
+
+		UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+		String userId = userDetails.getUsername();
+		List<String> ids = new ArrayList<>();
+		ids.add(userId);
+
+		List<Map<String, Object>> schedules = schdlMngService.getAllSchedules(ids, stringYear, stringMonth);
+
+		return schedules;
+	}
+	
+
+	/*특정 스케줄 상세조회*/
+	@PostMapping(value="/schedule-Info")
+	@ResponseBody
+	public Object getScheduleInfo(
+			@RequestParam("userId") String userId,
 			@RequestParam("scheduleType") String scheduleType,
 			@RequestParam("scheduleDate") String scheduleDate) {
 
@@ -524,55 +563,19 @@ public class schdlMngController {
 
 		switch(scheduleType) {
 		case "holiday":
-			HolidayVo holiday = schdlMngService.getHoliday(userId, sqlDate);
-			return holiday;
+			List<HolidayVo> holidays = schdlMngService.getHolidays(userId, sqlDate);
+			return holidays;
 		case "assign":
-			AsAssignVo assign = schdlMngService.getAssign(userId, sqlDate);
-			return assign;
+			List<AsAssignVo> assigns = schdlMngService.getAssigns(userId, sqlDate);
+			System.out.println("assigns: " + assigns);
+			return assigns;
 		case "result":
-			AsResultVo result = schdlMngService.getResult(userId, sqlDate);
-			return result;
+			List<AsResultVo> results = schdlMngService.getResults(userId, sqlDate);
+			return results;
 		}
 
 		return null;
 
-	}
-
-/******************************************************캘린더 조회******************************************************/
-
-	/*캘린더 조회*/
-	@GetMapping("/schedule/calendar")
-	public String getCalendar() {
-		
-		return "schdlTable";
-	}
-
-	/*회원 캘린더 월별 조회*/
-	@PostMapping(value="/schedule/calendar", produces = "application/json; charset=utf-8")
-	@ResponseBody
-	public List<Map<String, Object>> getUserCalendar(
-																												@RequestParam(name = "year", defaultValue="2023") int  year, 
-																												@RequestParam(name = "month", defaultValue="9") int month, 
-																												Model model, 
-																												Authentication authentication) {
-		
-		String stringYear = String.valueOf(year);
-		String stringMonth = String.valueOf(month);
-		
-		/*매개변수 확인*/
-		System.out.println("year: " + year);
-		System.out.println("month: " + month);
-		
-		/*ID에 따른 데이터 조회*/
-		
-		UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-		String userId = userDetails.getUsername();
-		List<String> ids = new ArrayList<>();
-		ids.add(userId);
-
-		List<Map<String, Object>> schedules = schdlMngService.getAllSchedules(ids, stringYear, stringMonth);
-
-		return schedules;
 	}
 
 

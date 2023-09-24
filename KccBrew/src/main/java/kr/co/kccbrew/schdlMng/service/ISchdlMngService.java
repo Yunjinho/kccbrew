@@ -21,7 +21,7 @@ public interface ISchdlMngService {
 	public List<SchdlMngVo> getCalendarSchedule(SchdlMngVo schdlMngVo);
 	
 	/*휴일 조회*/
-	public List<HolidayVo> getHoliday(String userId);
+	public List<HolidayVo> getHolidays(String userId);
 	
 	/*휴가취소*/
 	public void cancelHoliday(Integer holidaySeq);
@@ -47,13 +47,14 @@ public interface ISchdlMngService {
 	/*회원아이디에 따른 스케줄맵 조회*/
 	public List<Map<String, Object>> getAllSchedules(List<String> IdList, String year, String month);
 	
-	/*휴가 정보 조회*/
-	public HolidayVo getHoliday(String userId, Date date);
+	/*ID, 날짜에 따른 휴가리스트 조회*/
+/*	public List<HolidayVo> getHolidaysByIdAndDate(String userId, Date date);*/
+	public List<HolidayVo> getHolidays(String userId, Date date);
 	
-	/*배정 정보 조회*/
-	public AsAssignVo getAssign(String userId, Date date);
+	/*ID, 날짜에 따른 배정리스트 조회*/
+	public List<AsAssignVo> getAssigns(String userId, Date date);
 	
-	/*휴가 정보 조회*/
-	public AsResultVo getResult(String userId, Date date);
+	/*ID, 날짜에 따른 결과리스트 조회*/
+	public List<AsResultVo> getResults(String userId, Date date);
 	
 }
