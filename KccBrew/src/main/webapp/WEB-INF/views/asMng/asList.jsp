@@ -52,55 +52,17 @@
 									<form action="/searchAsList" method="get" id="search-form">
 										<input type='hidden' name='currentPage' value="1">
 										<table id="search-box">
-											<!-- 1행 -->
-											<c:set var="today" value="<%=new java.util.Date()%>" />
-											<fmt:formatDate value="${today}" pattern="yyyy"
-												var="nowYear" />
 											<tr>
 												<th>조회 기간</th>
-												<!-- 시작 연도 선택 필드 -->
-												<td><select class="tx2" name="startYr" id="yr"
-													onchange="javascript:chg();">
-														<option value="">연도</option>
-														<c:forEach var="i" begin="0" end="9">
-															<c:set var="year" value="${nowYear - i}" />
-															<option value="${year}"
-																${param.startYr == year ? 'selected' : ''}>${year}년</option>
-														</c:forEach>
-												</select></td>
-
-												<!-- 시작 월 선택 필드 -->
-												<td><select class="tx2" name="startMn" id="mn">
-														<option value="">월</option>
-														<c:forEach var="month" begin="1" end="12">
-															<option value="${month}"
-																${param.startMn == month ? 'selected' : ''}>${month}월</option>
-														</c:forEach>
-												</select></td>
-
+												<td colspan="2">
+													<input type="date" name="wishingStartDate" value="${searchContent.wishingStartDate}">
+												</td>
 												<td>~</td>
+												<td colspan="3">
+													<input type="date" name="wishingEndDate" value="${searchContent.wishingEndDate}">
+												</td>
 
 												<!-- 종료 연도 선택 필드 -->
-													<td colspan="2"><select class="tx2" name="endYr"
-														id="yr" onchange="javascript:chg();">
-															<option value="">연도</option>
-															<c:forEach var="i" begin="0" end="9">
-																<c:set var="year" value="${nowYear - i}" />
-																<option value="${year}"
-																	${param.endYr == year ? 'selected' : ''}>${year}년</option>
-															</c:forEach>
-													</select></td>
-
-													<!-- 종료 월 선택 필드 -->
-												<td>
-													<select class="tx2" name="endMn" id="mn">
-														<option value="">월</option>
-														<c:forEach var="month" begin="1" end="12">
-															<option value="${month}"
-																${param.endMn == month ? 'selected' : ''}>${month}월</option>
-														</c:forEach>
-													</select>
-												</td>
 											</tr>
 
 
@@ -124,11 +86,11 @@
 											<tr>
 												<th>사용자 ID</th>
 												<td >
-													<input type="search" name="searchId" placeholder="사용자ID를 입력하세요" value="">
+													<input type="search" name="searchId" placeholder="사용자ID를 입력하세요" value="${searchContent.searchId}">
 												</td>
 												<th>장비 구분</th>
 												<td>
-													<select class="tx2" name="machineCd" onchange="javascript:chg();">
+													<select class="tx2" name="machineCd">
 															<option value="">장비 구분</option>
 															<c:forEach var="empCd" items="${machineCd}">
 																<c:choose>
@@ -148,7 +110,7 @@
 												</td>
 												<th>AS 상태</th>
 												<td colspan="2">
-													<select class="tx2" name="asStatusCd" value="${searchContent.asStatusCd}" onchange="javascript:chg();">
+													<select class="tx2" name="asStatusCd" >
 															<option value="">AS 상태</option>
 															<c:choose>
 																<c:when test='${searchContent.asStatusCd eq "Y"}'>
@@ -179,6 +141,11 @@
 												<td colspan="6" style="border-bottom:none;"></td>
 												<td style="text-align: center; border-bottom: 0px;float:right;">
 													<div>
+														<button type="button" onclick="resetSearch()" class="form-btn">초기화</button>
+													</div>
+												</td>
+												<td style="text-align: center; border-bottom: 0px;float:right;">
+													<div>
 														<button type="submit" class="form-btn">검색</button>
 													</div>
 												</td>
@@ -191,59 +158,16 @@
 									<form action="/searchAsList" method="get" id="search-form">
 										<input type='hidden' name='currentPage' value="1">
 										<table id="search-box">
-											<!-- 1행 -->
-											<c:set var="today" value="<%=new java.util.Date()%>" />
-											<fmt:formatDate value="${today}" pattern="yyyy"
-												var="nowYear" />
 											<tr>
 												<th>조회 기간</th>
-												<!-- 시작 연도 선택 필드 -->
-												<td><select class="tx2" name="startYr" id="yr"
-													onchange="javascript:chg();">
-														<option value="">연도</option>
-														<c:forEach var="i" begin="0" end="9">
-															<c:set var="year" value="${nowYear - i}" />
-															<option value="${year}"
-																${param.startYr == year ? 'selected' : ''}>${year}년</option>
-														</c:forEach>
-												</select>
-												</td>
-												<td>
-												<!-- 시작 월 선택 필드 -->
-												<select class="tx2" name="startMn" id="mn">
-														<option value="">월</option>
-														<c:forEach var="month" begin="1" end="12">
-															<option value="${month}"
-																${param.startMn == month ? 'selected' : ''}>${month}월</option>
-														</c:forEach>
-												</select>
-												</td>
-
-												<td>~</td>
-
-												<!-- 종료 연도 선택 필드 -->
-												<td colspan="2">
-													<select class="tx2" name="endYr" id="yr" onchange="javascript:chg();">
-														<option value="">연도</option>
-														<c:forEach var="i" begin="0" end="9">
-															<c:set var="year" value="${nowYear - i}" />
-															<option value="${year}"
-																${param.endYr == year ? 'selected' : ''}>${year}년</option>
-														</c:forEach>
-													</select>
-													</td><td>
-												<!-- 종료 월 선택 필드 -->
-													<select class="tx2" name="endMn" id="mn">
-														<option value="">월</option>
-														<c:forEach var="month" begin="1" end="12">
-															<option value="${month}"
-																${param.endMn == month ? 'selected' : ''}>${month}월</option>
-														</c:forEach>
-													</select>
-												</td>
+													<td colspan="2">
+														<input type="date" name="wishingStartDate" value="${searchContent.wishingStartDate}">
+													</td>
+													<td>~</td>
+													<td colspan="3">
+														<input type="date" name="wishingEndDate" value="${searchContent.wishingEndDate}">
+													</td>
 											</tr>
-
-
 											<!-- 2행 -->
 											<tr>
 												<th>AS 번호</th>
@@ -253,7 +177,7 @@
 												</td>
 												<th>장비 구분</th>
 												<td>
-													<select class="tx2" name="machineCd" onchange="javascript:chg();">
+													<select class="tx2" name="machineCd">
 															<option value="">장비 구분</option>
 															<c:forEach var="empCd" items="${machineCd}">
 																<c:choose>
@@ -273,7 +197,7 @@
 												</td>
 												<th>AS 상태</th>
 												<td colspan="2">
-													<select class="tx2" name="asStatusCd" id="" onchange="javascript:chg();">
+													<select class="tx2" name="asStatusCd" id="" >
 															<option value="">AS 상태</option>
 															<c:choose>
 																<c:when test='${searchContent.asStatusCd eq "Y"}'>
@@ -321,59 +245,16 @@
 									<form action="/searchAsList" method="get" id="search-form">
 									<input type='hidden' name='currentPage' value="1">
 										<table id="search-box">
-											<!-- 1행 -->
-											<c:set var="today" value="<%=new java.util.Date()%>" />
-											<fmt:formatDate value="${today}" pattern="yyyy"
-												var="nowYear" />
 											<tr>
 												<th>조회 기간</th>
-												<!-- 시작 연도 선택 필드 -->
-												<td><select class="tx2" name="startYr" id="yr"
-													onchange="javascript:chg();">
-														<option value="">연도</option>
-														<c:forEach var="i" begin="0" end="9">
-															<c:set var="year" value="${nowYear - i}" />
-															<option value="${year}"
-																${param.startYr == year ? 'selected' : ''}>${year}년</option>
-														</c:forEach>
-												</select></td>
-
-												<!-- 시작 월 선택 필드 -->
-												<td><select class="tx2" name="startMn" id="mn">
-														<option value="">월</option>
-														<c:forEach var="month" begin="1" end="12">
-															<option value="${month}"
-																${param.startMn == month ? 'selected' : ''}>${month}월</option>
-														</c:forEach>
-												</select></td>
-
-												<td>~</td>
-
-												<!-- 종료 연도 선택 필드 -->
-												<td colspan="2">
-													<select class="tx2" name="endYr" id="yr" onchange="javascript:chg();">
-														<option value="">연도</option>
-														<c:forEach var="i" begin="0" end="9">
-															<c:set var="year" value="${nowYear - i}" />
-															<option value="${year}"
-																${param.endYr == year ? 'selected' : ''}>${year}년</option>
-														</c:forEach>
-													</select>
-												</td>
-
-												<!-- 종료 월 선택 필드 -->
-												<td >
-													<select class="tx2" name="endMn" id="mn">
-														<option value="">월</option>
-														<c:forEach var="month" begin="1" end="12">
-															<option value="${month}"
-																${param.endMn == month ? 'selected' : ''}>${month}월</option>
-														</c:forEach>
-													</select>
-												</td>
+													<td colspan="2">
+														<input type="date" name="wishingStartDate" value="${searchContent.wishingStartDate}">
+													</td>
+													<td>~</td>
+													<td colspan="3">
+														<input type="date" name="wishingEndDate" value="${searchContent.wishingEndDate}">
+													</td>
 											</tr>
-
-
 											<!-- 2행 -->
 											<tr>
 												<th>AS 번호</th>
@@ -394,7 +275,7 @@
 											<tr>
 												<th >장비 구분</th>
 												<td colspan="2">
-													<select class="tx2" name="machineCd" id="" onchange="javascript:chg();">
+													<select class="tx2" name="machineCd" id="" >
 															<option value="">장비 구분</option>
 															<c:forEach var="empCd" items="${machineCd}">
 																<c:choose>
@@ -414,7 +295,7 @@
 												</td>
 												<th>AS 상태</th>
 												<td colspan="3">
-													<select class="tx2" name="asStatusCd" id="" onchange="javascript:chg();">
+													<select class="tx2" name="asStatusCd" id="">
 															<option value="">AS 상태</option>
 															<c:choose>
 																<c:when test='${searchContent.asStatusCd eq "Y"}'>

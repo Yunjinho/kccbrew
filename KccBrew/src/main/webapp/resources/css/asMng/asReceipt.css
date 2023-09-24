@@ -48,8 +48,6 @@ select[name=machineCd]{
 	flex:1;
 }
 #content{
-	background-color: #FFFFFF;
-    margin: 0px 100px;
     padding: 3px 100px;
 }
 .tag-image{

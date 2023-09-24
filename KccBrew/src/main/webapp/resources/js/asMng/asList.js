@@ -1,3 +1,14 @@
+function resetSearch(){
+	$("input[name=wishingStartDate]").val("");
+	$("input[name=wishingEndDate]").val("");
+	$("input[name=asInfoSeq]").val("");
+	$("input[name=storeNm]").val("");
+	$("input[name=storeAddr]").val("");
+	$("input[name=searchId]").val("");
+	$("select[name=machineCd] option:eq(0)").prop("selected", true);
+	$("select[name=asStatusCd] option:eq(0)").prop("selected", true);
+	
+}
 function movePage(pageNumber){
 		
 	$("input[name=currentPage]").val(pageNumber);

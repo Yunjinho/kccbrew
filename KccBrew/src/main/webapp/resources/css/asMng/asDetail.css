@@ -5,7 +5,13 @@ body {
 	font-family: 'Noto Sans', 'Noto Sans KR', sans-serif !important;
 	font-size: 1.3em !important;
 }
-
+.heading-div{
+	margin:50px 0px 0px 0px;
+}
+.heading{
+	padding:10px 0px 0px 0px;
+	border-top: 1px solid #767676
+}
 /* 헤더 */
 .brand-logo {
 	width: 100%;
@@ -148,6 +154,11 @@ select[name=machineCd]{
 .reject-content>form>div{
 	margin:30px;
 	display: flex;
+	justify-content: center;
+}
+.reject-content>form>div > button{
+	margin:0px 30px;
+	
 }
 .reject-content>form>textarea {
 	resize: none;
@@ -224,4 +235,114 @@ input[type=file]{
 }
 .result-form input[type=radio]:checked ~ label{
     text-shadow: 0 0 0 rgba(250, 208, 0, 0.99);
+}
+.modal-heading{
+	font-size: 14px;
+	font-weight: normal;
+	text-align: left
+}
+
+/* 탭메뉴 */
+.tabNav {
+	position: relative;
+	margin-top: 3em;
+	margin-bottom: 7em;
+	display: table;
+	width: 100%;
+	border-top: 1px solid #eaeaea;
+	border-right: 1px solid #eaeaea;
+	border-bottom: 1px solid #eaeaea;
+}
+
+.tabNav:after {
+	display: block;
+	content: "";
+	clear: both;
+}
+
+.tabNav>li {
+	display: table-cell;
+}
+
+.tabNav div {
+	position: relative;
+	display: table;
+	width: 100%;
+	height: 3rem;
+	text-align: center;
+	font-size: 1.3rem;
+	color: #767676;
+	letter-spacing: -0.05em;
+	white-space: nowrap;
+	border-left: 1px solid #eaeaea;
+	transition: all .1s ease;
+	-webkit-transition: all .1s ease;
+}
+
+.tabNav div span {
+	display: table-cell;
+	width: 100%;
+	height: 100%;
+	line-height: 1.5em;
+	vertical-align: middle;
+	word-break: keep-all;
+}
+.tabNav span:hover{
+	color:white;
+} 
+.tab-div:hover{
+	cursor: pointer;
+}
+.tabNav div:hover, .tabNav .active div {
+	background-color: #043763;
+	color: #fff;
+	border-left: 1px solid #043763;
+}
+
+.tabNav div:hover::after, .tabNav .active div::after {
+	width: 100%;
+}
+
+
+.tabNav.col2>li {
+	width: 50%;
+}
+
+.tabNav.col3>li {
+	width: 33.33%;
+}
+
+.tabNav.col3_etc>li {
+	width: 30%;
+}
+
+.tabNav.col3_etc>li .last {
+	width: 10%;
+}
+
+.tabNav.col4, .tabNav.col5, .tabNav.col6, .tabNav.col7, .tabNav.col8 {
+	display: block;
+}
+
+.tabNav.col4>li, .tabNav.col5>li, .tabNav.col6>li, .tabNav.col7>li,
+	.tabNav.col8>li {
+	float: left;
+	display: inline-block;
+	width: 25%;
+}
+.tab-ul {
+	list-style-type: none;
+	padding: 0px;
+	margin: 0px;
+	display: flex;
+}
+
+.tab-ul>li {
+	width: calc(100% * 1/ 2);
+}
+.as-result-info{
+	display:none;
+}
+.form-btn{
+	margin: 0; float: right;
 }
