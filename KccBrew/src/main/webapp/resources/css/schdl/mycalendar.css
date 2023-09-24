@@ -54,4 +54,20 @@
 	background: #043763;
 	color: white;
 }
+
+.fc-scrollgrid-sync-table {
+	width: 100% !important;
+}
+
+.fc-daygrid-body.fc-daygrid-body-unbalanced  {
+		width: 100% !important;
+}
+
+/* 요일 */
+.fc-col-header {
+	width:100% !important;
+}
+
+.fc-event {
+    padding: 3px;
 }

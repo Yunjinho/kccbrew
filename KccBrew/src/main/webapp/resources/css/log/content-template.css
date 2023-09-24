@@ -50397,8 +50397,6 @@ a {
 #page-container {
 	float: left;
 	width: 100%;
-	background: url('/theme/coursemosv2/pix/layout/side_menu_bg.png')
-		repeat-y 218px #f7f9fa
 }
 
 #page-submenu {
@@ -50407,7 +50405,7 @@ a {
 }
 
 #page-content {
-	margin-left: 218px;
+	/* margin-left: 218px; */
 	position: relative
 }
 

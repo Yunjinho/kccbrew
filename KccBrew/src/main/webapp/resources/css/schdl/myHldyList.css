@@ -1,0 +1,13 @@
+/* 폼 */
+input[type="date"] {
+	padding: 5px;
+	border: 2px solid #ccc;
+	border-radius: 5px;
+	font-size: 14px;
+	outline: none;
+}
+
+#form-holiday-period {
+	display: flex;
+	justify-content: space-around;
+}

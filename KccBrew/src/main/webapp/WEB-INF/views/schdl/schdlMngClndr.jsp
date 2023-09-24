@@ -17,6 +17,9 @@
 <link rel="stylesheet" href="/resources/css/schdl/mycalendar.css" />
 <link rel="stylesheet" href="/resources/css/schdl/myschedulelist.css" />
 
+<!-- javascript -->
+<script src="<c:url value="/resources/js/schdl/mySchdlMngClndr.js"/>"></script>
+
 
 <!-- 캘린더 -->
 <meta charset='utf-8' />
@@ -35,302 +38,234 @@
 </head>
 
 <body>
-	<div id="page" class="page-nosubmenu">
 
+	<div id="page-mask">
+		<div id="page-container" class="">
+			<div id="page-content" class="clearfix">
+				<div id="page-content-wrap">
 
-		<!-- ********** 왼쪽 메뉴 끝 ********** -->
+					<!-- ********** 페이지 네비게이션 시작 ********** -->
+					<div class="page-content-navigation">
+						<ol class="breadcrumb">
+							<li class="breadcrumb-home"><a href="">스케줄관리</a></li>
+							<li>
+								<div class="header-icon-background">
+									<img
+										src="<c:url value='/img/log/free-icon-right-arrow-271228.png' />"
+										alt="Check List" class="header-icon" />
+								</div>
+							</li>
+							<li><a href="<c:url value='/schedule/calendar' />">캘린더</a></li>
+						</ol>
+					</div>
+					<!-- ********** 페이지 네비게이션 끝 ********** -->
 
-		<div id="page-mask">
-			<div id="page-container" class="">
-				<div id="page-content" class="clearfix">
-					<div id="page-content-wrap">
+					<div id="region-main">
+						<div role="main">
+							<span id="maincontent"></span>
+							<div class="user-past">
 
-						<!-- ********** 페이지 네비게이션 시작 ********** -->
-						<div class="page-content-navigation">
-							<ol class="breadcrumb">
-								<li class="breadcrumb-home"><a href="">스케줄관리</a></li>
-								<li>
-									<div class="header-icon-background">
-										<img
-											src="<c:url value='/img/log/free-icon-right-arrow-271228.png' />"
-											alt="Check List" class="header-icon" />
+								<!-- ********** 세은 컨텐츠 ********** -->
+								<div id="content">
+									<h2 class="heading">캘린더</h2>
+
+									<div class="tabNav">
+										<ul class="tab-ul">
+											<li class="last"><a href="/holiday"><span>휴가사용현황</span></a></li>
+											<sec:authorize
+												access="hasAnyRole('ROLE_MANAGER', 'ROLE_MECHA')">
+												<li class="active"><a href="/schedule/calendar"><span>나의캘린더</span></a></li>
+											</sec:authorize>
+											<sec:authorize access="hasRole('ROLE_ADMIN')">
+												<li class="last"><a href="/schedule"><span>근태현황</span></a></li>
+											</sec:authorize>
+										</ul>
 									</div>
-								</li>
-								<li><a href="<c:url value='/calendar' />">캘린더</a></li>
-							</ol>
-						</div>
-						<!-- ********** 페이지 네비게이션 끝 ********** -->
 
-						<div id="region-main">
-							<div role="main">
-								<span id="maincontent"></span>
-								<div class="user-past">
+									<div id="calendar"></div>
+									<script>
+										$(document)
+												.ready(
+														function() {
+															var calendarEl = document
+																	.getElementById('calendar');
 
-									<!-- ********** 세은 컨텐츠 ********** -->
-									<div id="content">
-										<h2 class="heading">캘린더</h2>
+															calendar = new FullCalendar.Calendar(
+																	calendarEl,
 
-										<div class="tabNav">
-											<ul class="tab-ul">
-												<li class="last"><a href="/holiday"><span>휴가사용현황</span></a></li>
-												<sec:authorize
-													access="hasAnyRole('ROLE_MANAGER', 'ROLE_MECHA')">
-													<li class="active"><a href="/schedule/calendar"><span>나의캘린더</span></a></li>
-												</sec:authorize>
-												<sec:authorize access="hasRole('ROLE_ADMIN')">
-													<li class="last"><a href="/schedule"><span>근태현황</span></a></li>
-												</sec:authorize>
-											</ul>
-										</div>
+																	{
+																		initialView : 'dayGridMonth',
+																		/* events : [
+																				{
+																					title : '예제 이벤트',
+																					start : '2023-09-07', // 시작 날짜
+																					end : '2023-09-30', // 종료 날짜
+																				}, ], */
 
-										<div id="calendar"></div>
-										<script
-											src="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.0/main.min.js"></script>
-										<script>
-											/* 전역변수 */
-											var calendar;
-											var year;
-											var month;
-											var dateInfo;
+																		headerToolbar : {
+																			left : 'prev,next',
+																			center : 'title',
+																			right : 'today',
+																		},
 
-											/* ajax로 날짜 정보 보내는 함수 */
-											function sendAjaxRequest(year,
-													month) {
-												$
-														.ajax({
-															url : '/calendar',
-															method : 'POST',
-															data : {
-																"year" : year,
-																"month" : month,
-																"dateInfo" : dateInfo
-															},
-															success : function(
-																	response) {
-																var schedules = JSON
-																		.stringify(response);
+																		dateClick : function(
+																				info) {
+																			var selectedDate = prompt(
+																					'날짜를 선택하세요 (YYYY-MM-DD)',
+																					info.dateStr);
 
-																var events = [];
+																			if (selectedDate) {
+																				var dateObj = new Date(
+																						selectedDate);
+																				calendar
+																						.gotoDate(selectedDate);
 
-																for (var i = 0; i < response.length; i++) {
-																	var schedule = response[i];
-																	var scheduleType = schedule.scheduleType;
-																	var scheduleDate = schedule.scheduleDate;
+																				/* 이벤트 확인 */
+																				console
+																						.log("datepicker 날짜 선택")
 
-																	events
-																			.push({
-																				title : scheduleType,
-																				date : scheduleDate
-																			});
-																}
+																				/* 날짜 정보 추출 */
+																				dateInfo = new Date(
+																						calendar.view.title);
+																				year = dateInfo
+																						.getFullYear();
+																				month = dateInfo
+																						.getMonth() + 1;
 
-																calendar
-																		.setOption(
-																				'events',
-																				events);
+																				console
+																						.log("year: "
+																								+ year);
+																				console
+																						.log("month: "
+																								+ month);
 
-															},
+																				/* ajax함수로 데이터 서버로 전송 */
+																				sendAjaxRequest(
+																						year,
+																						month);
+																			}
+																		},
 
-															error : function(
-																	error) {
-																console
-																		.error("Ajax 요청 실패: "
-																				+ error);
-															}
+																	});
+
+															var view = calendar.view;
+															console
+																	.log(
+																			"현재 뷰(View)의 정보:",
+																			view);
+
+															calendar.render();
 														});
-											}
 
-											$(document)
-													.ready(
-															function() {
-																var calendarEl = document
-																		.getElementById('calendar');
+										$(document)
+												.ready(
+														function() {
 
-																calendar = new FullCalendar.Calendar(
-																		calendarEl,
+															$(
+																	"button[title='Previous month']")
+																	.attr('id',
+																			'prevButton');
+															$(
+																	"button[title='Next month']")
+																	.attr('id',
+																			'nextButton');
+															$(
+																	"button[title='This month']")
+																	.attr('id',
+																			'thisButton');
 
-																		{
-																			initialView : 'dayGridMonth',
-																			/* events : [
-																					{
-																						title : '예제 이벤트',
-																						date : '2023-09-07'
-																					}, ], */
+															// 이전 달 버튼 클릭 이벤트 핸들러
+															$('#prevButton')
+																	.click(
+																			function() {
+																				/* 로그 확인 */
+																				console
+																						.log("prevButton 버튼 클릭")
 
-																			headerToolbar : {
-																				left : 'prev,next',
-																				center : 'title',
-																				right : 'today',
-																			},
+																				/* 날짜 정보 추출 */
+																				dateInfo = new Date(
+																						calendar.view.title);
+																				year = dateInfo
+																						.getFullYear();
+																				month = dateInfo
+																						.getMonth() + 1;
 
-																			dateClick : function(
-																					info) {
-																				var selectedDate = prompt(
-																						'날짜를 선택하세요 (YYYY-MM-DD)',
-																						info.dateStr);
+																				console
+																						.log("year: "
+																								+ year);
+																				console
+																						.log("month: "
+																								+ month);
 
-																				if (selectedDate) {
-																					var dateObj = new Date(
-																							selectedDate);
-																					calendar
-																							.gotoDate(selectedDate);
+																				/* ajax함수로 데이터 서버로 전송 */
+																				sendAjaxRequest(
+																						year,
+																						month);
+																			});
 
-																					/* 이벤트 확인 */
-																					console
-																							.log("datepicker 날짜 선택")
+															// 다음 달 버튼 클릭 이벤트 핸들러
+															$('#nextButton')
+																	.click(
+																			function() {
+																				/* 로그 확인 */
+																				console
+																						.log("nextButton 버튼 클릭")
 
-																					/* 날짜 정보 추출 */
-																					dateInfo = new Date(
-																							calendar.view.title);
-																					year = dateInfo
-																							.getFullYear();
-																					month = dateInfo
-																							.getMonth() + 1;
+																				/* 날짜 정보 추출 */
+																				dateInfo = new Date(
+																						calendar.view.title);
+																				year = dateInfo
+																						.getFullYear();
+																				month = dateInfo
+																						.getMonth() + 1;
 
-																					console
-																							.log("year: "
-																									+ year);
-																					console
-																							.log("month: "
-																									+ month);
+																				console
+																						.log("year: "
+																								+ year);
+																				console
+																						.log("month: "
+																								+ month);
 
-																					/* ajax함수로 데이터 서버로 전송 */
-																					sendAjaxRequest(
-																							year,
-																							month,
-																							dateInfo);
-																				}
-																			},
+																				/* ajax함수로 데이터 서버로 전송 */
+																				sendAjaxRequest(
+																						year,
+																						month);
 
-																		});
+																			});
 
-																var view = calendar.view;
-																console
-																		.log(
-																				"현재 뷰(View)의 정보:",
-																				view);
+															// 이번 달 버튼 클릭 이벤트 핸들러
+															$('#thisButton')
+																	.click(
+																			function() {
+																				/* 로그 확인 */
+																				console
+																						.log("thisButton 버튼 클릭")
 
-																calendar
-																		.render();
-															});
+																				/* 날짜 정보 추출 */
+																				dateInfo = new Date(
+																						calendar.view.title);
+																				year = dateInfo
+																						.getFullYear();
+																				month = dateInfo
+																						.getMonth() + 1;
 
-											$(document)
-													.ready(
-															function() {
+																				console
+																						.log("year: "
+																								+ year);
+																				console
+																						.log("month: "
+																								+ month);
 
-																$(
-																		"button[title='Previous month']")
-																		.attr(
-																				'id',
-																				'prevButton');
-																$(
-																		"button[title='Next month']")
-																		.attr(
-																				'id',
-																				'nextButton');
-																$(
-																		"button[title='This month']")
-																		.attr(
-																				'id',
-																				'thisButton');
+																				/* ajax함수로 데이터 서버로 전송 */
+																				sendAjaxRequest(
+																						year,
+																						month);
 
-																// 이전 달 버튼 클릭 이벤트 핸들러
-																$('#prevButton')
-																		.click(
-																				function() {
-																					/* 로그 확인 */
-																					console
-																							.log("prevButton 버튼 클릭")
+																			});
+														});
+									</script>
 
-																					/* 날짜 정보 추출 */
-																					dateInfo = new Date(
-																							calendar.view.title);
-																					year = dateInfo
-																							.getFullYear();
-																					month = dateInfo
-																							.getMonth() + 1;
-
-																					console
-																							.log("year: "
-																									+ year);
-																					console
-																							.log("month: "
-																									+ month);
-
-																					/* ajax함수로 데이터 서버로 전송 */
-																					sendAjaxRequest(
-																							year,
-																							month,
-																							dateInfo);
-
-																				});
-
-																// 다음 달 버튼 클릭 이벤트 핸들러
-																$('#nextButton')
-																		.click(
-																				function() {
-																					/* 로그 확인 */
-																					console
-																							.log("nextButton 버튼 클릭")
-
-																					/* 날짜 정보 추출 */
-																					dateInfo = new Date(
-																							calendar.view.title);
-																					year = dateInfo
-																							.getFullYear();
-																					month = dateInfo
-																							.getMonth() + 1;
-
-																					console
-																							.log("year: "
-																									+ year);
-																					console
-																							.log("month: "
-																									+ month);
-
-																					/* ajax함수로 데이터 서버로 전송 */
-																					sendAjaxRequest(
-																							year,
-																							month,
-																							dateInfo);
-
-																				});
-
-																// 이번 달 버튼 클릭 이벤트 핸들러
-																$('#thisButton')
-																		.click(
-																				function() {
-																					/* 로그 확인 */
-																					console
-																							.log("thisButton 버튼 클릭")
-
-																					/* 날짜 정보 추출 */
-																					dateInfo = new Date(
-																							calendar.view.title);
-																					year = dateInfo
-																							.getFullYear();
-																					month = dateInfo
-																							.getMonth() + 1;
-
-																					console
-																							.log("year: "
-																									+ year);
-																					console
-																							.log("month: "
-																									+ month);
-
-																					/* ajax함수로 데이터 서버로 전송 */
-																					sendAjaxRequest(
-																							year,
-																							month,
-																							dateInfo);
-
-																				});
-															});
-										</script>
-
-										<!-- ********** 세은 컨텐츠 끝 ********** -->
-									</div>
+									<!-- ********** 세은 컨텐츠 끝 ********** -->
 								</div>
 							</div>
 						</div>
@@ -338,5 +273,6 @@
 				</div>
 			</div>
 		</div>
+	</div>
 </body>
 </html>

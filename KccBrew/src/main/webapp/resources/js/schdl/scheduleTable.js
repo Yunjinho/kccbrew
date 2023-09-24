@@ -77,7 +77,7 @@ function performSearch() {
 						$("<td>", { rowspan: 2 }).text(schedule.userNm).appendTo(row);
 						$("<td>", { rowspan: 2 }).text(schedule.locationCd).appendTo(row);
 						$("<td>", { rowspan: 2 }).text(schedule.eqpmnCd).appendTo(row);
-						$("<td>", { rowspan: 2 }).text("휴무일: " + holidayCount + ", 배정일: " + assignCount + ", 처리일: " + resultCount).appendTo(row);
+						$("<td>", { rowspan: 2 }).text("휴무: " + holidayCount + "건, 배정: " + assignCount + "건, 처리: " + resultCount + "건").appendTo(row);
 					}
 				}
 
@@ -117,16 +117,16 @@ function performSearch() {
 					var holiday = holidayDates[j];
 					var startDay = new Date(holiday.HLDY_STAR); // 시작 날짜
 					var endDay = new Date(holiday.HLDY_END); // 종료 날짜
-					
+
 					// 날짜를 밀리초로 변환
 					var startTime = startDay.getTime();
 					var endTime = endDay.getTime();
 
 					// 시작일부터 종료일까지 반복
 					for (var currentDate = new Date(startDay); currentDate <= endDay; currentDate.setDate(currentDate.getDate() + 1)) {
-						
+
 						var day = currentDate.getDate();
-						
+
 						var rowClassName = "row-" + (i + 1);
 						var cellClassName = "day-" + day; // 클래스 이름 생성
 
@@ -136,10 +136,10 @@ function performSearch() {
 						.attr("data-schedule-date", currentDate);
 
 						$divElement.css({
-							"background-color": "pink", // 배경색 설정
+							"background-color": "#b8cff5", // 배경색 설정
 							"width": "1.2em", // 가로 크기 설정
 							"height": "1.2em", // 세로 크기 설정
-							"margin": "0 auto"
+							"margin": "1px"
 						});
 
 						// 마우스 오버 이벤트 핸들러 추가
@@ -179,9 +179,9 @@ function performSearch() {
 									$this.find('.div-content').remove();
 								}
 						);*/
-
-						// 해당 클래스 이름을 가진 <td> 요소에 <div> 추가
-						$("." + rowClassName + " ." + cellClassName).html($divElement);
+						
+						$("." + rowClassName + " ." + cellClassName)
+						.append($divElement);
 					}
 				}
 
@@ -204,10 +204,10 @@ function performSearch() {
 					$divElement.attr("data-schedule-date", currentDate);
 
 					$divElement.css({
-						"background-color": "#f7d474", // 배경색 설정
+						"background-color": "rgb(247, 212, 116)", // 배경색 설정
 						"width": "1.2em", // 가로 크기 설정
 						"height": "1.2em", // 세로 크기 설정
-						"margin": "0 auto" // 가운데 정렬 설정
+						"margin": "1px" // 가운데 정렬 설정
 					});
 
 					// 마우스 오버 이벤트 핸들러 추가
@@ -226,9 +226,12 @@ function performSearch() {
 					});
 
 					// 해당 클래스 이름을 가진 <td> 요소에 <div> 추가
-					$("." + rowClassName + " ." + cellClassName)
+			/*		$("." + rowClassName + " ." + cellClassName)
 					.empty() // 기존 내용을 비우기
-					.html($divElement);
+					.html($divElement);*/
+					
+					$("." + rowClassName + " ." + cellClassName)
+					.append($divElement); 
 				}
 
 
@@ -250,10 +253,10 @@ function performSearch() {
 					$divElement.attr("data-schedule-date", currentDate);
 
 					$divElement.css({
-						"background-color": "#5b8554", // 배경색 설정
+						"background-color": "#e8a9ac", // 배경색 설정
 						"width": "1.2em", // 가로 크기 설정
 						"height": "1.2em", // 세로 크기 설정
-						"margin": "0 auto" // 가운데 정렬 설정
+						"margin": "1px" // 가운데 정렬 설정
 					});
 
 					/*클릭 이벤트핸들러*/
@@ -272,9 +275,12 @@ function performSearch() {
 					});
 
 					// 해당 클래스 이름을 가진 <td> 요소에 <div> 추가
-					$("." + rowClassName + " ." + cellClassName)
+					/*	$("." + rowClassName + " ." + cellClassName)
 					.empty() // 기존 내용을 비우기
-					.html($divElement);
+					.html($divElement);*/
+
+					$("." + rowClassName + " ." + cellClassName)
+					.append($divElement); 
 				}
 
 

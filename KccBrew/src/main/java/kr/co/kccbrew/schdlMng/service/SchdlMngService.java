@@ -159,6 +159,7 @@ public class SchdlMngService implements ISchdlMngService {
 				parameterMap.put("mn", month);
 
 				UserVo userVo = userRepository.getUserById(id);
+				// 실제사용이 Y인 휴가리스트 조회
 				List<Map<String, Object>> holidayDates = schdlMngRepository.selectHolidayDates(parameterMap);
 				List<Date> assignDates = schdlMngRepository.selectAssignDates(parameterMap);
 				List<Date> resultDates = schdlMngRepository.selectResultDates(parameterMap);

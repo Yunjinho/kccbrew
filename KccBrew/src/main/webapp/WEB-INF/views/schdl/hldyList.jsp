@@ -107,9 +107,7 @@
 											<form name="srhForm" action="/admin/holiday/search"
 												method="post">
 
-												<input type="hidden" name="currentPage" value="1"> <input
-													type="hidden" name="startDate" value=""> <input
-													type="hidden" name="endDate" value="">
+												<input type="hidden" name="currentPage" value="1">
 
 												<div>
 													<span> 사용자검색 </span>
@@ -120,7 +118,7 @@
 														<legend class="blind">사용자검색</legend>
 														<table id="search-box">
 															<tr>
-																<th>위치<span style="color: red;">(필수)</span></th>
+																<th>위치</th>
 																<td><select class="tx2" name="location"
 																	onchange="changeLocationCd()">
 																		<option value="">지역 대분류</option>
@@ -132,11 +130,21 @@
 																			</c:if>
 																		</c:forEach>
 																</select></td>
-
 																<td><select class="tx2" name="locationCd">
 																		<option value="">지역 소분류</option>
 																</select></td>
 
+																<th>휴가기간</th>
+																<td id="form-holiday-period"><span><label for="startDate">시작일:</label> <input
+																	type="date" id="startDate" name="startDate" value=""></span>
+
+																	<span><label for="endDate">종료일:</label> <input type="date"
+																	id="endDate" name="endDate" value=""></span></td>
+															</tr>
+
+
+
+															<tr>
 																<th>유형</th>
 																<td><select class="tx2" name="userType"
 																	id="selectUserType"
@@ -358,14 +366,18 @@
 																value="${totalPage}" /></span></b>쪽
 												</span>
 
-												<fieldset>
-													<legend class="blind">날짜 검색</legend>
-													<label>휴가일</label> <input type="date"
-														id="selectedStartDate" name="selectedStartDate" value=""
-														required> <input type="date" id="selectedEndDate"
-														name="selectedEndDate" value="" required> <input
-														type="button" value="검색" onclick="goDate(); return false;">
-												</fieldset>
+												<sec:authorize
+													access="hasAnyRole('ROLE_MANAGER', 'ROLE_MECHA')">
+													<fieldset>
+														<legend class="blind">날짜 검색</legend>
+														<label>휴가일</label> <input type="date"
+															id="selectedStartDate" name="selectedStartDate" value=""
+															required> <input type="date" id="selectedEndDate"
+															name="selectedEndDate" value="" required> <input
+															type="button" value="검색"
+															onclick="goDate(); return false;">
+													</fieldset>
+												</sec:authorize>
 											</div>
 
 											<table id="holiday-info-table">
