@@ -32,7 +32,7 @@
 			<!-- ********** 페이지 네비게이션 끝 ********** -->
 			<div class="myInfo-wrapper">
 				<div class="category">내 정보</div>
-					<form action='<c:url value= '/confirmmod'/>' method="post">
+					<form  method="post">
 					<table id="search-box">
 						<c:forEach var="user" items="${userInfoList}" >
 							<tr>
@@ -149,7 +149,7 @@
 						</table>
 					</sec:authorize>
 					<div class="modButtons">
-						<button type="submit" id="confirmMod">확인</button>
+						<button type="submit" id="confirmMod" formaction='<c:url value= '/confirmmod'/>'>확인</button>
 						<c:url var="cancel" value="/mypage"></c:url>
 						<a href="${cancel}">
 							<button type="button" class="cancel">취소</button>

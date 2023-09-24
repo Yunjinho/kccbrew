@@ -1,5 +1,9 @@
 @charset "UTF-8";
 
+html {
+	overflow-y: scroll;
+}
+
 #notice {
 	padding: 20px 20px;
 }
@@ -154,16 +158,18 @@ input[type="text"] {
 }
 .updateBtn, #confirmMod, .cancel {
 	margin-right:10px;
-	background-color: #ffffff;
-	color:#111111;
-	border:1px solid #93bbff;
-	padding:5px;
+	background-color: navy;
+	color: #ffffff;
+	border: none;
+	padding:5px 10px;
+	border-radius: 4px;
+	width:80px;
+	align-items: center;
 	text-decoration: none;
 }
 .updateBtn:hover, #confirmMod:hover, .cancel:hover {
-	border: 1px solid #cccccc;
-	background-color: #c0c0c0;
-	color: #ffffff;
+	background-color: #E6E6E6;
+	color: #111111;
 }
 
 /*  비밀번호 수정 페이지 */

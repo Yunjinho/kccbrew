@@ -276,9 +276,6 @@
 			            </div>
 					</div>
 				</div>
-				<div class="todoetc">
-					etc
-				</div>
 			</div>
 			<div class="calAndetc">
 				<div id='calendar-container'>
