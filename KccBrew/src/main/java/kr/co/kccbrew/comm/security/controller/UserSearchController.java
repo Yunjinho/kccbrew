@@ -47,7 +47,7 @@ public class UserSearchController {
 		String result = searchService.searchId(userNm, userTelNo);
 		return result;
 	}
-
+ 
 	// 비밀번호 찾기
 	@RequestMapping(value = "/searchPassword", method = RequestMethod.POST)
 	public String findPw(@ModelAttribute UserVo vo, Model model) throws Exception {
