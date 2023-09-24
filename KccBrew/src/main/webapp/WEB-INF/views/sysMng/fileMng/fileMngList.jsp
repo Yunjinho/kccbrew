@@ -150,10 +150,10 @@
 													<tr>
 														<th scope="col">파일번호</th>
 														<th scope="col">원본파일명</th>
-														<th scope="col">서버이름</th>
-														<th scope="col">파일형식</th>
+														<th scope="col">위치</th>
+														<th scope="col">분류</th>
 														<th scope="col">등록일자</th>
-														<th scope="col">구분</th>
+														<th scope="col">다운로드</th>
 													</tr>
 												</thead>
 												<tbody>
@@ -161,10 +161,11 @@
 														<tr>
 															<td>${no.fileSeq}</td>
 															<td>${no.fileOriginNm}</td>
-															<td>${no.fileServerNm}</td>
-															<td>${no.fileFmt}</td>
-															<td><fmt:formatDate value="${no.fileRegDttm}" pattern="yyyy MM/dd" /></td>
+															<td>${no.storageLocation}</td>
 															<td>${no.grpCdDtlNm}</td>
+															<td><fmt:formatDate value="${no.fileRegDttm}" pattern="yyyy MM/dd" /></td>
+															<td><a href="javascript:void(0);"
+															onclick="popup(${no.fileDtlSeq});">상세보기</a></td>
 														</tr>
 													</c:forEach>
 												</tbody>
@@ -224,16 +225,23 @@
 											<a href="/file?currentPage=${totalPage}&startYr=${searchContent.startYr}&startMn=${searchContent.startMn}&endYr=${searchContent.endYr}&endMn=${searchContent.endMn}&grpCdDtlId=${searchContent.grpCdDtlId}&fileRegUser=${searchContent.fileRegUser}&fileOriginNm=${searchContent.fileOriginNm}&fileServerNm=${searchContent.fileServerNm}"><img
 												src="/resources/img/log/free-icon-fast-forward-double-right-arrows-symbol-54366.png"
 												alt="마" /></a>
+											</div>
 										</div>
-
-									</div>
 									</div>
 								</div>
 							</div>
 						</div>
 				</div>
+		</div>
 	</div>
-	</div>
-
+<script>
+function popup(fileDtlSeq) {
+    var url = "file/" + fileDtlSeq;
+    var name = "popup test";
+    var option = "width=900, height=800, top=60, left=400, scrollbars=yes, directories=no, location=no";
+    window.open(url, name, option);
+    window.close();
+}
+</script>
 </body>
 </html>
