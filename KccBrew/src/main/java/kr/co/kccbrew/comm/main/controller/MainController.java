@@ -124,35 +124,6 @@ public class MainController {
 		return "redirect:/mypage";
 	}
 	
-	/****************** 관리자 페이지 **************************/
-
-	//회원 관리 페이지
-	@RequestMapping(value="/admin/member/manage", method=RequestMethod.GET)
-	public String memberMngPage(Model model) {
-		return "adminPageM1";
-	}
-
-	//로그 조회 페이지
-	@RequestMapping(value="/admin/log/check", method=RequestMethod.GET)
-	public String adminLogPage(Model model) {
-		return "adminPageL1";
-	}
-
-	//파일 조회 페이지
-	@RequestMapping(value="/admin/file/check", method=RequestMethod.GET)
-	public String adminFilePage(Model model) {
-		return "adminPageF1";
-	}
-
-	//코드 관리 페이지
-	@RequestMapping(value="/admin/code/check", method=RequestMethod.GET)
-	public String adminCodePage(Model model) {
-		return "adminPageC1";
-	}
-	
-
-
-	
 	/************************ 점주 페이지 ******************************/
 
 	//점포 수정 페이지
@@ -161,17 +132,6 @@ public class MainController {
 		return "modStoreInfo";
 	}
 
-
-
-	/*************************** 수리 기사 페이지 **************************/
-
-
-	
-	
-	
-	
-	
-	
 	/************************** 관리자 메인 ***************************/
 	@RequestMapping(value="/admin/main", method=RequestMethod.GET)
 	public String admMain(Model model) {

@@ -18,7 +18,7 @@
 	<header class="comm-nav">
 		<div class="top-bar">
 			<p>
-				<c:out value="${user.userNm}" />
+				<c:out value="${user.userNm}"/>
 				(관리자)님 환영합니다
 			</p>
 
@@ -32,9 +32,9 @@
 		<nav class="nav-bar">
 			<div class="nav-bar-brand">
 				<c:url var="toMain" value="/admin/main" />
-					<a href="${toMain}"> <img alt="logo"
-						src="${path}/resources/img/logo14.png">
-					</a>
+				<a href="${toMain}"> <img alt="logo"
+					src="${path}/resources/img/logo.png">
+				</a>
 			</div>
 			<div class="nav-box">
 				<ul class="nav-list">
@@ -44,38 +44,44 @@
 							<!-- 여기에  매핑 url 선언 -->
 							<li><a href="${toAsList}">A/S 내역 조회</a></li>
 							<!-- 매핑 url 변수 링크로 걸기 -->
-						</ul></li>
+						</ul>
+					</li>
 					<li class="nav-item"><a class="nav-links" href="#">점포 관리</a>
 						<ul class="comm-nav-dropdown">
 							<c:url var="toStoreListPage" value="/store" />
 							<li><a href="${toStoreListPage}">점포 조회</a></li>
-						</ul></li>
+						</ul>
+					</li>
 					<li class="nav-item"><a class="nav-links" href="#">회원 관리</a>
 						<ul class="comm-nav-dropdown">
-							<c:url var="toMemberMngPage" value="/admin/member/manage" />
+							<c:url var="toMemberMngPage" value="/user" />
 							<li><a href="${toMemberMngPage}">회원 조회</a></li>
-						</ul></li>
+						</ul>
+					</li>
 					<li class="nav-item"><a class="nav-links" href="#">스케줄 관리</a>
 						<ul class="comm-nav-dropdown">
 							<c:url var="toHldyList" value="/holiday" />
 							<li><a href="${toHldyList}">휴가 관리</a></li>
-							<c:url var="toSchdlList" value="/schedule" />
+							<c:url var="toSchdlList" value="/admin/schedule" />
 							<li><a href="${toSchdlList}">스케줄 조회</a></li>
-						</ul></li>
+						</ul>
+					</li>
 					<li class="nav-item"><a class="nav-links" href="#">시스템 관리</a>
 						<ul class="comm-nav-dropdown">
-							<c:url var="toAdminLogPage" value="/admin/log/check" />
+							<c:url var="toAdminLogPage" value="/admin/log" />
 							<li><a href="${toAdminLogPage}">로그 조회</a></li>
-							<c:url var="toAdminFilePage" value="/admin/file/check" />
+							<c:url var="toAdminFilePage" value="/file" />
 							<li><a href="${toAdminFilePage}">파일 조회</a></li>
-							<c:url var="toAdminCodePage" value="/admin/code/check" />
+							<c:url var="toAdminCodePage" value="/code" />
 							<li><a href="${toAdminCodePage}">공통 코드 조회</a></li>
-						</ul></li>
+						</ul>
+					</li>
 					<li class="nav-item"><a class="nav-links" href="#">마이페이지</a>
 						<ul class="comm-nav-dropdown">
 							<c:url var="toMyPage" value="/mypage" />
 							<li><a href="${toMyPage}">내 정보</a></li>
-						</ul></li>
+						</ul>
+					</li>
 				</ul>
 			</div>
 		</nav>
@@ -86,22 +92,22 @@
 	<header class="comm-nav">
 		<div class="top-bar">
 			<p>
-				<c:out value="${user.userNm}" />
+				<c:out value="${user.userNm}"/>
 				(점주)님 환영합니다
 			</p>
-
+			
 			<form action="/logout" method="POST">
 				<button type="submit" class="logout-btn">로그아웃</button>
 				<input name="${_csrf.parameterName}" type="hidden"
 					value="${_csrf.token}" />
 			</form>
-
+			
 		</div>
 		<nav class="nav-bar">
 			<div class="nav-bar-brand">
 				<c:url var="toMain" value="/manager/main" />
 				<a href="${toMain}"> <img alt="logo"
-					src="${path}/resources/img/logo14.png">
+					src="${path}/resources/img/logo.png">
 				</a>
 			</div>
 			<div class="nav-box">
@@ -112,26 +118,28 @@
 							<li><a href="${toASReceipt}">A/S 신청</a></li>
 							<c:url var="toAsList" value="/as-list" />
 							<li><a href="${toAsList}">A/S 내역 조회</a></li>
-						</ul></li>
+						</ul>
+					</li>
 					<li class="nav-item"><a class="nav-links" href="#">점포 관리</a>
 						<ul class="comm-nav-dropdown">
-							<c:url var="toStoreList" value="/store" />
-							<li><a href="${toStoreList}">점포 조회</a></li>
 							<c:url var="toStoreModPage" value="/manager/store/mod" />
 							<li><a href="${toStoreModPage}">점포 정보 수정</a></li>
-						</ul></li>
+						</ul>
+					</li>
 					<li class="nav-item"><a class="nav-links" href="#">스케줄 관리</a>
 						<ul class="comm-nav-dropdown">
 							<c:url var="toHldyList" value="/holiday" />
 							<li><a href="${toHldyList}">휴가 관리</a></li>
 							<c:url var="toSchdlList" value="/schedule/calendar" />
 							<li><a href="${toSchdlList}">스케줄 조회</a></li>
-						</ul></li>
+						</ul>
+					</li>
 					<li class="nav-item"><a class="nav-links" href="#">마이페이지</a>
 						<ul class="comm-nav-dropdown">
 							<c:url var="toMyPage" value="/mypage" />
 							<li><a href="${toMyPage}">내 정보</a></li>
-						</ul></li>
+						</ul>
+					</li>
 				</ul>
 			</div>
 		</nav>
@@ -142,7 +150,7 @@
 	<header class="comm-nav">
 		<div class="top-bar">
 			<p>
-				<c:out value="${user.userNm}" />
+				<c:out value="${user.userNm}"/>
 				(수리기사)님 환영합니다
 			</p>
 
@@ -157,7 +165,7 @@
 			<div class="nav-bar-brand">
 				<c:url var="toMain" value="/mechanic/main" />
 				<a href="${toMain}"> <img alt="logo"
-					src="${path}/resources/img/logo14.png">
+					src="${path}/resources/img/logo.png">
 				</a>
 			</div>
 			<div class="nav-box">
@@ -166,24 +174,22 @@
 						<ul class="comm-nav-dropdown">
 							<c:url var="toAsList" value="/as-list" />
 							<li><a href="${toAsList}">A/S 내역 조회</a></li>
-						</ul></li>
-					<li class="nav-item"><a class="nav-links" href="#">점포 관리</a>
-						<ul class="comm-nav-dropdown">
-							<c:url var="toStoreList" value="/store" />
-							<li><a href="${toStoreList}">점포 조회</a></li>
-						</ul></li>
+						</ul>
+					</li>
 					<li class="nav-item"><a class="nav-links" href="#">스케줄 관리</a>
 						<ul class="comm-nav-dropdown">
 							<c:url var="toHldyList" value="/holiday" />
 							<li><a href="${toHldyList}">휴가 관리</a></li>
 							<c:url var="toSchdlList" value="/schedule/calendar" />
 							<li><a href="${toSchdlList}">스케줄 조회</a></li>
-						</ul></li>
+						</ul>
+					</li>
 					<li class="nav-item"><a class="nav-links" href="#">마이페이지</a>
 						<ul class="comm-nav-dropdown">
 							<c:url var="toMyPage" value="/mypage" />
 							<li><a href="${toMyPage}">내 정보</a></li>
-						</ul></li>
+						</ul>
+					</li>
 				</ul>
 			</div>
 		</nav>

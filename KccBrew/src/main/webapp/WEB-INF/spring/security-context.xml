@@ -40,9 +40,9 @@
 		<intercept-url pattern="/signup" access="isAnonymous()" />
 		<intercept-url pattern="/register"
 			access="isAnonymous()" />
-		<intercept-url pattern="/user/userSearch"
+		<intercept-url pattern="/userSearch/**"
 			access="isAnonymous()" />
-		<intercept-url pattern="/user/searchPassword"
+		<intercept-url pattern="/searchPassword/**"
 			access="isAnonymous()" />
 
 		<!-- 관리자 접근가능 -->
@@ -50,11 +50,13 @@
 			access="hasAuthority('ROLE_ADMIN')" />
 		<intercept-url pattern="/store/**"
 			access="hasAuthority('ROLE_ADMIN')" />
-			<intercept-url pattern="/code/**"
+		<intercept-url pattern="/code/**"
 			access="hasAuthority('ROLE_ADMIN')" />
 		<intercept-url pattern="/log/**"
 			access="hasAuthority('ROLE_ADMIN')" />
-			<intercept-url pattern="/user/**"
+		<intercept-url pattern="/user/**"
+			access="hasAuthority('ROLE_ADMIN')" />
+		<intercept-url pattern="/file/**"
 			access="hasAuthority('ROLE_ADMIN')" />
 
 		<!-- 점주 접근가능 -->

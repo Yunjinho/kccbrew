@@ -16,13 +16,13 @@
 	<div class="profileAndguide">
 		<div class="user-profile">
 			<div class="inner-box">
-
 				<div class="nameAndPhoto">
 					<div class="name-wrapper">
 						<span class="name"><c:out value="${user.userNm}"/></span>님
 					</div>
 					<div class="photo-wrapper">
-						<img src="${path}/img/kcc.png">
+					<c:set var="imagePath" value="${user.storageLocation}${user.fileServerNm}" />
+						<img src="<c:out value='${imagePath}'/>">
 					</div>
 				</div>
 				<span class="job">관리자</span> 

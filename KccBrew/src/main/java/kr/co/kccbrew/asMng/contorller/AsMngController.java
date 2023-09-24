@@ -361,7 +361,7 @@ public class AsMngController {
 		model.addAttribute("asDetailInfo", vo);
 		List<AsMngVo> list = asMngService.selectCd("M");
 		model.addAttribute("machineCd", list);
-		return "asMng/asMod2";
+		return "asMod";
 	}
 
 	@RequestMapping(value = "/as-mod", method = RequestMethod.POST)

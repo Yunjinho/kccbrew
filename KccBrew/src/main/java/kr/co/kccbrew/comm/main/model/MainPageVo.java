@@ -7,16 +7,21 @@ import lombok.Data;
 
 @Data
 public class MainPageVo {
-	String userId; 			//사용자 아이디
-	String userName; 		//사용자 이름
-	String userTelNo; 		//사용자 전화번호
-	String userEmail;		//사용자 이메일
-	String userAddress;		//사용자 주소
-	Date userRegDate;		//사용자 정보 등록일
-	Date userModDate;		//사용자 정보 수정일
-	String userInUse;		//사용자 정보 사용 여부
-	String approveStatus;	//사용자 가입 승인 여부
-	String admWhoAcp;       //가입 승인한 관리자
+	String userId; 				//사용자 아이디
+	String userName; 			//사용자 이름
+	String userTelNo; 			//사용자 전화번호
+	String userEmail;			//사용자 이메일
+	String userAddress;			//사용자 주소
+	Date userRegDate;			//사용자 정보 등록일
+	Date userModDate;			//사용자 정보 수정일
+	String userInUse;			//사용자 정보 사용 여부
+	String approveStatus;		//사용자 가입 승인 여부
+	String admWhoAcp;       	//가입 승인한 관리자
+	int fileId;					//파일 번호
+	String fileDetailLocation; 	//파일 저장 경로
+	String fileDetailServerName;//파일 서버 내 이름
+	String imgName;				//이미지명
+	String imgUrl;				//이미지 url
 	
 	
 	int asAssignNum; 		//배정 번호

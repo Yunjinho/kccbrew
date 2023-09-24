@@ -4,63 +4,67 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-<link rel="stylesheet" href="/resources/css/code/cdMngDtl.css" />
+<!-- <link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"> -->
+<!-- <link rel="stylesheet" href="/resources/css/code/cdMngDtl.css" /> -->
 <meta charset="UTF-8">
 <title>회원정보</title>
 </head>
+<style>
+</style>
 <body>
-	<section id="notice" class="notice">
+	<section id="notice" class="notice"
+		style="width: 80%; margin-top: 40px;">
 		<div class="container2">
 			<div class="category">회원정보</div>
-			<hr style="border: solid 1.2px; width: 97%;">
+			<hr style="border: solid 1.2px; width: 100%;">
 			<table id="search-box">
 				<tr>
-					<th rowspan="4" colspan="2" style="width: 140px; height: 188px;">
-						<div style="text-align: center;">
+					<th rowspan="4" colspan="2"
+						style="position:relative; height:140px; width: 120px;">
 							<img src="${userDtl.imgUrl}${userDtl.imgNm}" border="0"
-								style="margin: auto; width: 120px; height: 168px; ">
-						</div>
-						</th>
+								style="position:relative; width:120px; top: calc(  50% - 70px ); height:140px; ">
+					</th>
+
+
 					<th>ID</th>
-					<td>${user.userId}</td>
+					<td>${userMngVo.userId}</td>
 					<th>이름</th>
-					<td>${user.userNm}</td>
+					<td>${userMngVo.userNm}</td>
 					<th>이메일</th>
-					<td>${user.userEmail}</td>
+					<td>${userMngVo.userEmail}</td>
 
 				</tr>
 				<tr>
 					<th>전화번호</th>
-					<td>${user.userTelNo}</td>
+					<td>${userMngVo.userTelNo}</td>
 					<th>주소</th>
-					<td colspan="3">${user.userAddr}</td>
+					<td colspan="3">${userMngVo.userAddr}</td>
 				</tr>
 				<tr>
 					<th>사용자구분</th>
 					<td style="color: red;"><c:if
-							test="${user.userTypeCd eq '01' }">관리자</c:if> <c:if
-							test="${user.userTypeCd eq '02' }">점주</c:if> <c:if
-							test="${user.userTypeCd eq '03' }">기사</c:if></td>
+							test="${userMngVo.userTypeCd eq '01' }">관리자</c:if> <c:if
+							test="${userMngVo.userTypeCd eq '02' }">점주</c:if> <c:if
+							test="${userMngVo.userTypeCd eq '03' }">기사</c:if></td>
 					<th>가입일자</th>
-					<td>${user.regDttm}</td>
+					<td>${userMngVo.regDttm}</td>
 					<th>수정일자</th>
-					<td>${user.modDttm}</td>
+					<td>${userMngVo.modDttm}</td>
 				</tr>
 				<tr>
 					<th>사용여부</th>
-					<td>${user.useYn}</td>
+					<td>${userMngVo.useYn}</td>
 					<th>승인여부</th>
-					<td>${user.approveYn}</td>
+					<td>${userMngVo.approveYn}</td>
 					<th>승인자</th>
-					<td>${user.approveAdmin}</td>
+					<td>${userMngVo.approveAdmin}</td>
 				</tr>
 			</table>
 
-			<c:if test="${user.userTypeCd eq '02' }">
-				<div class="category">상세정보</div>
-				<hr style="border: solid 1.2px; width: 97%;">
+			<c:if test="${userMngVo.userTypeCd eq '02' }">
+				<div class="category" style="margin-top: 40px;">상세정보</div>
+				<hr style="border: solid 1.2px; width: 100%;">
 				<table id="search-box">
 					<tr>
 						<th>점포명</th>
@@ -72,9 +76,9 @@
 					</tr>
 				</table>
 			</c:if>
-			<c:if test="${user.userTypeCd eq '03' }">
-				<div class="category">상세정보</div>
-				<hr style="border: solid 1.2px; width: 97%;">
+			<c:if test="${userMngVo.userTypeCd eq '03' }">
+				<div class="category" style="margin-top: 40px;">상세정보</div>
+				<hr style="border: solid 1.2px; width: 100%;">
 				<table id="search-box">
 					<tr>
 						<th>장비코드</th>
@@ -86,21 +90,22 @@
 					</tr>
 				</table>
 			</c:if>
-			<div class="modal-footer" style="width: 100%; margin:auto; display: flex;">
+			<div class="modal-footer"
+				style="width: 100%; margin: auto; display: flex;">
 				<button type="button" class="update">수정</button>
 				<button type="button" class="cancel1">닫기</button>
 			</div>
 		</div>
 	</section>
 	<script>
-	$(".cancel1").click(function() {
-		$(".Modal1").css("display", "none");
-		selectedUserId = null;
-	});
-	$(".update").click(function() {
-		$(".Modal1").css("display", "none");
-		$(".ModalMod").css("display", "block");
-	});
+		$(".cancel1").click(function() {
+			$(".Modal1").css("display", "none");
+			selectedUserId = null;
+		});
+		$(".update").click(function() {
+			$(".Modal1").css("display", "none");
+			$(".ModalMod").css("display", "block");
+		});
 	</script>
 </body>
 </html>

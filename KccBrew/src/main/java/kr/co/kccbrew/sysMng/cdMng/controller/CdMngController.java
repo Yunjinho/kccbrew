@@ -65,7 +65,7 @@ public class CdMngController {
 		model.addAttribute("totalLog", totalLogCount);
 
 		model.addAttribute("list", list);
-		return "sysMng/cdMng/cdMngList";
+		return "adminCodeManage";
 	}
 
 	/* 상세코드정보 */

@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.co.kccbrew.userMng.dao.IUserMngRepository">
 
-<resultMap id="userResult"
+<resultMap id="userMngVoResult"
 type="kr.co.kccbrew.userMng.model.UserMngVo">
 <result property="userId" column="user_id" />
 <result property="userPwd" column="user_pwd" />
@@ -25,7 +25,7 @@ type="kr.co.kccbrew.userMng.model.UserMngVo">
 
 </resultMap>
 <select id="userList" parameterType="java.util.Map"
-	resultMap="userResult">
+	resultMap="userMngVoResult">
 		SELECT
 		a.user_id, a.user_nm, a.user_telNo, a.user_Email, a.user_Addr, a.user_Type_Cd, a.use_Yn, a.approve_Yn,
 		a.grp_cd_dtl_nm, a.reg_dttm, ROW_NUM
@@ -135,7 +135,7 @@ WHERE ROW_NUM BETWEEN #{firstRowNum} AND #{lastRowNum}
 
 	</select>
 
-	<select id="newList" resultMap="userResult">
+	<select id="newList" resultMap="userMngVoResult">
 	<![CDATA[
 	SELECT
 		a.user_id, a.user_nm, a.user_telNo, a.user_Email, a.user_Addr, a.user_Type_Cd, a.use_Yn, a.approve_Yn,
@@ -171,7 +171,7 @@ WHERE ROW_NUM BETWEEN #{firstRowNum} AND #{lastRowNum}
 	
 	</select>
 	
-	<select id="findByUserId" resultMap="userResult" parameterType="String">
+	<select id="findByUserId" resultMap="userMngVoResult" parameterType="String">
 	select *
 	from users 
 	where user_id = #{userId}

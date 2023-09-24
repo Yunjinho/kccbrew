@@ -19,10 +19,10 @@ public class MailUtil {
 		String charSet = "utf-8";
 		String hostSMTP = "smtp.gmail.com";
 		String hostSMTPid = "kccbrew@gmail.com"; // 관리자 이메일 아이디
-		String hostSMTPpw = "zpdltltl1!"; // 관리자 이메일 비밀번호
+		String hostSMTPpw = "blmgbgyywnyfubkk"; // 관리자 이메일 비밀번호
 
 		// 보내는 사람
-		String fromEmail = "kccbrew@gmial.com"; // 보내는 사람 이메일
+		String fromEmail = "kccbrew@gmail.com"; // 보내는 사람 이메일
 		String fromName = "관리자"; // 보내는 사람 이름
 
 		String subject = "[kccbrew]임시 비밀번호 발급"; // 메일 제목

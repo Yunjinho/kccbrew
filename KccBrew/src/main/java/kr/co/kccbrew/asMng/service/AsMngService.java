@@ -240,18 +240,42 @@ public class AsMngService implements IAsMngService{
 	public void downloadExcel(AsMngVo asMngVo,String flag,String currentPage) {
 		List<AsMngVo> list;
 		 Map<Integer, Object[]> data = new HashMap();
-		 data.put(1, new Object[]{"AS 번호", "신청일", "AS 상태","점포명","점포 주소"});
+		 data.put(1, new Object[]{"AS 번호", "신청일", "AS 상태","점포명","점포 주소","신청 장비","배정 기사","방문 예정일","AS 처리일","접수 내용","처리 결과 내용"});
 		if(flag.equals("1")) {
 			//현재 페이지 저장
 			list=selectASList(asMngVo, Integer.parseInt(currentPage));
 	        for(int i=0;i<list.size();i++) {
-	        	data.put(i+2, new Object[]{list.get(i).getAsInfoSeq(),list.get(i).getRegDttm(),list.get(i).getAsStatusNm(),list.get(i).getStoreNm(),list.get(i).getStoreAddr()+","+list.get(i).getStoreAddrDtl()});
+	        	data.put(i+2, 
+	        			new Object[]{list.get(i).getAsInfoSeq()
+	        					,list.get(i).getRegDttm()
+	        					,list.get(i).getAsStatusNm()
+	        					,list.get(i).getStoreNm()
+	        					,list.get(i).getStoreAddr()+","+list.get(i).getStoreAddrDtl()
+	        					,list.get(i).getMachineCdNm()
+	        					,list.get(i).getMechanicNm()
+	        					,list.get(i).getVisitDttm()
+	        					,list.get(i).getResultDttm()
+	        					,list.get(i).getAsContent()
+	        					,list.get(i).getResultDtl()
+	        					});
 	        }
 		}else {
 			//전체 페이지 저장
 			list=selectAllASList(asMngVo);
 	        for(int i=0;i<list.size();i++) {
-	        	data.put(i+2, new Object[]{list.get(i).getAsInfoSeq(),list.get(i).getRegDttm(),list.get(i).getAsStatusNm(),list.get(i).getStoreNm(),list.get(i).getStoreAddr()+","+list.get(i).getStoreAddrDtl()});
+	        	data.put(i+2, 
+	        			new Object[]{list.get(i).getAsInfoSeq()
+	        					,list.get(i).getRegDttm()
+	        					,list.get(i).getAsStatusNm()
+	        					,list.get(i).getStoreNm()
+	        					,list.get(i).getStoreAddr()+","+list.get(i).getStoreAddrDtl()
+	        					,list.get(i).getMachineCdNm()
+	        					,list.get(i).getMechanicNm()
+	        					,list.get(i).getVisitDttm()
+	        					,list.get(i).getResultDttm()
+	        					,list.get(i).getAsContent()
+	        					,list.get(i).getResultDtl()
+	        					});
 	        }
 		}
 		XSSFWorkbook workbook = new XSSFWorkbook();

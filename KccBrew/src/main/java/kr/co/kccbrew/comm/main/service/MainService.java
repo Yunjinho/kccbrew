@@ -75,45 +75,54 @@ public class MainService implements IMainService{
 		List<MainPageVo> asResultListById = mainRepository.showAsResultListbyId(userId);
 		return asResultListById;
 	}
-
+	
+	//수리기사 앞으로 온 배정 내역
 	@Override
 	public List<MainPageVo> showAsAssignListbyMechaId(String userId) {
 		List<MainPageVo> asAssignListbyMechaId = mainRepository.showAsAssignListbyMechaId(userId);
 		return asAssignListbyMechaId;
 	}
 
+	//수리기사의 결과 내역
 	@Override
 	public List<MainPageVo> showAsResultListbyMechaId(String userId) {
 		List<MainPageVo> asResultListbyMechaId = mainRepository.showAsResultListbyMechaId(userId);
 		return asResultListbyMechaId;
 	}
-
+	
+	//수리기사의 날짜별 a/s 내역 
 	@Override
 	public List<MainPageVo> getMechaDataInRangeById(String userId, LocalDate startOfWeek, LocalDate endOfWeek) {
 		return mainRepository.getMechaDataInRangeById(userId, startOfWeek, endOfWeek);
 	}
-
+	
+	//날짜별로 a/s 내역 가져오기
 	@Override
 	public List<MainPageVo> getDataInRangeById(String userId, LocalDate startOfWeek, LocalDate endOfWeek) {
 		return mainRepository.getDataInRangeById(userId, startOfWeek, endOfWeek);
 	}
 
+	//사용자 정보 가져오기
 	@Override
 	public List<MainPageVo> showUserInfoListById(String userId) {
 		List<MainPageVo> userInfoListById = mainRepository.showUserInfoListById(userId);
 		return userInfoListById;
 	}
-
+	
+	//점포 정보 가져오기
 	@Override
 	public List<MainPageVo> showStoreInfoListById(String userId) {
 		List<MainPageVo> storeInfoListById = mainRepository.showStoreInfoListById(userId);
 		return storeInfoListById;
 	}
+	
+	//사용자 정보 수정하기
 	@Override
 	public void updateMyProfile(MainPageVo mainPageVo) {
 		mainRepository.updateMyProfile(mainPageVo);
 	}
 
+	//점포 정보 수정하기
 	@Override
 	public void updateMyStore(MainPageVo mainPageVo) {
 		mainRepository.updateMyStore(mainPageVo);

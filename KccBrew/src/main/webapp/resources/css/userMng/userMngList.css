@@ -1,0 +1,200 @@
+@charset "UTF-8";
+
+/* 바디 */
+body {
+	font-family: 'Noto Sans', 'Noto Sans KR', sans-serif !important;
+}
+p{
+	text-align: initial !important;
+}
+/* 헤더 */
+
+
+.header-icon {
+	width: 100%;
+	color: white;
+}
+
+.header-icon-background {
+	width: 20px;
+	height: 20px; 
+}
+
+/* 페이지 네비게이션 */
+.breadcrumb {
+	display: flex;
+}
+
+.breadcrumb li {
+	display: inline-flex;
+}
+
+
+/* 검색폼  */
+form {
+	margin: 50px 0;
+}
+input{
+	width: 100%;
+    line-height: 2 !important;
+}
+#search-box {
+	width: 100%;
+	border-collapse: collapse;
+	border-top: 1px solid #ccc;
+}
+
+#search-box th, #search-box td {
+	padding: 10px;
+	border: 0px;
+	border-bottom: 1px solid #ccc;
+	text-align: center;
+}
+
+.form-btn {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background-color: navy;
+	color: white;
+	border: none;
+	padding: 5px 10px;
+	border-radius: 4px;
+	margin: auto;
+	width:80px;
+}
+.form-btn:hover{
+	background-color: #E6E6E6;
+}
+.tx2 {
+	width: 100%;
+	padding: 5px;
+}
+
+/* 로그 테이블 */
+#text-separator {
+	color: lightgray;
+}
+
+#logTable {
+	width: 100%;
+	margin: auto;
+}
+
+#logTable table {
+	border-collapse: collapse;
+	margin: auto;
+	width: 100%;
+}
+
+h1 {
+	margin: 40px 80px;
+}
+
+#logTable th, td {
+	text-align: left !important;
+	padding: 8px !important;
+	text-align: center !important;
+}
+
+th {
+	background-color: #f2f2f2;
+}
+
+/* tr:nth-child(even) {
+	background-color: #f2f2f2;
+} */
+
+/* pagination */
+.paginginner {
+	width: 100%;
+}
+
+/* .page-btn {
+	display: flex;
+} */
+.pagination {
+	display: flex !important;
+	justify-content: center;
+	margin: 30px 15px !important;
+	flex-direction: row;
+	flex-wrap: nowrap;
+	align-content: center;
+	align-items: center;
+}
+
+.pagination a img {
+	margin-right: 5px; /* 각 링크 사이 간격 조절 */
+	height: 15px;
+}
+
+.pagination .selected {
+	/* 선택된 페이지 스타일 */
+	font-weight: bold;
+	border-radius: 50%;
+}
+
+a {
+	color: black;
+	text-decoration: none;
+	transition: color 0.3s;
+}
+
+#number-list {
+	display: contents;
+	margin: 0 auto;
+}
+
+.page-btn {
+	display: flex;
+	height: 36px;
+	text-align: center;
+	line-height: 33px;
+	margin: 0 5px;
+	text-decoration: none;
+	color: black;
+	flex-direction: row;
+	flex-wrap: nowrap;
+	align-content: center;
+	justify-content: center;
+	align-items: center;
+}
+
+.selected {
+	display: inline-block;
+	width: 35px;
+	height: 36px;
+	text-align: center;
+	line-height: 33px;
+	border-radius: 50%;
+	margin: 0 5px;
+	color: white !important;
+	background-color: navy;
+	text-decoration: none;
+	font-weight: bold;
+}
+
+.page-move {
+	border-radius: 50%;
+	border: 0.1px solid lightgray;
+}
+
+h1 {
+	color: red;
+}
+.list-info-div{
+	display: flex;
+	justify-content: space-between;
+}
+.download-excel{
+	color:#ccc;
+	cursor:pointer;
+	padding:0px 10px
+}
+.list-info-div>div{
+	display:flex;
+}
+.download-excel:hover{
+	color:black;
+}
+
