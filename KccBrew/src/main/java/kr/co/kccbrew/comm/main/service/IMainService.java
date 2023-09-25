@@ -1,11 +1,9 @@
 package kr.co.kccbrew.comm.main.service;
 
-import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
-import org.springframework.web.multipart.MultipartFile;
 
 import kr.co.kccbrew.comm.main.model.MainPageVo;
 
@@ -17,6 +15,8 @@ public interface IMainService {
 	
 	List<MainPageVo> showUserInfoListById(String userId);	//특정 사용자의 정보 리스트
 	List<MainPageVo> showStoreInfoListById(String userId);  //점포 정보 리스트
+	
+	MainPageVo insertUserImg(MainPageVo mainPageVo);//사용자 이미지 넣기
 	
 	void updateMyProfile(MainPageVo mainPageVo);//마이페이지 정보 업데이트
 	void updateMyStore(MainPageVo mainPageVo); //가게 정보 업데이트
