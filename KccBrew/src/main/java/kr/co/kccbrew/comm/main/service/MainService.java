@@ -1,10 +1,16 @@
 package kr.co.kccbrew.comm.main.service;
 
+import java.io.File;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.UUID;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import kr.co.kccbrew.comm.main.dao.IMainRepository;
 import kr.co.kccbrew.comm.main.model.MainPageVo;
@@ -116,10 +122,27 @@ public class MainService implements IMainService{
 		return storeInfoListById;
 	}
 	
-	//사용자 정보 수정하기
+	//사용자 정보 수정하기   mainRepository.updateMyProfile(mainPageVo);
 	@Override
-	public void updateMyProfile(MainPageVo mainPageVo) {
+	public void updateMyProfile( MainPageVo mainPageVo) {
 		mainRepository.updateMyProfile(mainPageVo);
+	}
+	
+	// 랜덤한 이미지 파일 이름 생성
+	private String generateRandomImageName() {
+	    String uuid = UUID.randomUUID().toString();
+	    return uuid + ".jpg"; // 랜덤한 파일 이름 생성 (예: UUID.jpg)
+	}
+	
+	// 이미지 업로드 및 이미지 파일 이름 업데이트 메서드
+	private String updateProfileImage(HttpServletRequest request, String userId, String newImageName, MultipartFile imgFile) throws IOException {
+	    String basePath = "/resources/img/register/users/";
+	    String imagePath = basePath + newImageName;
+
+	    File imageFile = new File(request.getSession().getServletContext().getRealPath(imagePath));
+	    imgFile.transferTo(imageFile);
+
+	    return imagePath;
 	}
 
 	//점포 정보 수정하기

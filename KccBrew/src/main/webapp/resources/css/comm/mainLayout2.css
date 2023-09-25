@@ -24,6 +24,7 @@ html {
 }
 #mainContents {
 	flex:0.86;
+	min-height: 907px;
 }
 #mainFooter {
 }
