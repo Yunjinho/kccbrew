@@ -47,6 +47,9 @@ public class SchdlMngService implements ISchdlMngService {
 		map.put("startDate", startDate);
 		map.put("endDate", endDate);
 		map.put("userVo", userVo);
+		
+		System.out.println("SchdlMngService.getHolidayCount");
+		System.out.println("userVo: " + userVo);
 
 		Integer dataCount = schdlMngRepository.selectHolidayCount(map);
 		int intDataCount = dataCount != null ? dataCount.intValue() : 0;

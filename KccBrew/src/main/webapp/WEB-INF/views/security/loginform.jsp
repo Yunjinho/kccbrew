@@ -26,6 +26,7 @@
 </head>
 <body class="login" onpageshow="if(event.persisted) noBack();"
 	onunload="" marginwidth="0" marginheight="0">
+
 	<div class="wrap">
 		<a href="/"><img src="<c:url value="resources/img/logo.png"/>"
 			class="logo"></a>
@@ -48,7 +49,8 @@
 								<label for="id"></label> <img
 									src="<c:url value="resources/img/login/login_id.png"/>"
 									alt="로그인 텍스트 이미지"> <input type="text" id="id"
-									name="username" value="" title="아이디" placeholder="아이디">
+									name="username" value="${username }" title="아이디"
+									placeholder="아이디">
 							</div>
 							<div>
 								<img src="<c:url value="resources/img/login/login_pwd.png"/>"
@@ -56,9 +58,19 @@
 									onkeyup="enterkey();" type="password" id="pw" name="password"
 									title="비밀번호" placeholder="비밀번호">
 							</div>
-								<button type="submit">로그인</button>
-								<input type="hidden" name="${_csrf.parameterName}"
-									value="${_csrf.token}" />
+
+							<div class="login_error_wrap">
+								<div class="error_message">
+									<c:if test="${not empty errorMessage}">
+										<p id="login-error-message" style="color: red">${errorMessage}</p>
+									</c:if>
+								</div>
+							</div>
+
+
+							<button type="submit">로그인</button>
+							<input type="hidden" name="${_csrf.parameterName}"
+								value="${_csrf.token}" />
 						</form>
 					</fieldset>
 					<!-- 로그인 입력 //-->

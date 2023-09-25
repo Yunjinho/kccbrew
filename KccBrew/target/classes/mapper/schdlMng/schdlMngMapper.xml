@@ -146,7 +146,8 @@
 			AND USER_NM = #{userVo.userNm}
 		</if>
 		<if test="userVo.locationCd != null and userVo.locationCd != ''">
-			AND LOCATION_CD LIKE '%' || #{userVo.locationCd} || '%'
+			AND LOCATION_CD LIKE '%' || #{userVo.locationCd,
+			jdbcType=VARCHAR}|| '%'
 		</if>
 
 		<!-- 지점 검색 -->
@@ -236,8 +237,10 @@
 		<if test="userVo.userNm != null and userVo.userNm != ''">
 			AND USER_NM = #{userVo.userNm}
 		</if>
+
 		<if test="userVo.locationCd != null and userVo.locationCd != ''">
-			AND LOCATION_CD LIKE '%' || #{locationCd} || '%'
+			AND LOCATION_CD LIKE '%' || #{userVo.locationCd,
+			jdbcType=VARCHAR}|| '%'
 		</if>
 
 		<!-- 지점 검색 -->
@@ -537,9 +540,10 @@ EXTRACT(YEAR FROM SCHEDULE_DATE) = 2023 AND EXTRACT(MONTH FROM SCHEDULE_DATE) = 
 	<select id="selectIdList" resultType="string"
 		parameterType="kr.co.kccbrew.comm.security.model.UserVo">
 		select USER_ID from users
-		where LOCATION_CD LIKE '%' ||
-		#{locationCd} ||
-		'%'
+		where 1=1
+		<if test="locationCd != null and locationCd != ''">
+			AND LOCATION_CD LIKE '%' || #{locationCd} || '%'
+		</if>
 		<if test="userId != null and userId != ''">
 			AND USER_ID = #{userId}
 		</if>
@@ -548,6 +552,9 @@ EXTRACT(YEAR FROM SCHEDULE_DATE) = 2023 AND EXTRACT(MONTH FROM SCHEDULE_DATE) = 
 		</if>
 		<if test="eqpmnCd != null and eqpmnCd != ''">
 			AND EQPMN_CD = #{eqpmnCd}
+		</if>
+		<if test="userTypeCd != null and userTypeCd != ''">
+			AND USER_TYPE_CD = #{userTypeCd}
 		</if>
 	</select>
 
@@ -593,7 +600,8 @@ EXTRACT(YEAR FROM SCHEDULE_DATE) = 2023 AND EXTRACT(MONTH FROM SCHEDULE_DATE) = 
 		AS_RESULT ON
 		AS_ASSIGN.AS_ASSIGN_SEQ = AS_RESULT.AS_ASSIGN_SEQ
 		WHERE
-		MECHANIC_ID = #{Id}
+		MECHANIC_ID =
+		#{Id}
 		<if test="yr != null and yr != '' and mn != null and mn != ''">
 			and
 			(EXTRACT(YEAR FROM RESULT_DTTM) = #{yr} and

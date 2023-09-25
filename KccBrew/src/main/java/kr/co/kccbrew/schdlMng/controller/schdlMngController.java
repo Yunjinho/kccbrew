@@ -327,6 +327,10 @@ public class schdlMngController {
 		/*string -> sql.date 형변환*/
 		Date startSqlDate = dateFormat.stringToSqlDate(startDate);
 		Date endSqlDate = dateFormat.stringToSqlDate(endDate);
+		
+		if(userVo.getLocationCd() == null || userVo.getLocationCd().equals("")) {
+			userVo.setLocationCd(userVo.getLocation());
+		}
 
 		/*파라미터 확인*/
 		System.out.println("currentPage: " + currentPage + ", startDate: " + startDate + ", endDate: " + endDate);
@@ -392,6 +396,10 @@ public class schdlMngController {
 
 		UserVo userVo = new UserVo();
 		userVo.setUserId(userId);
+		
+		if(userVo.getLocationCd() == null || userVo.getLocationCd().equals("")) {
+			userVo.setLocationCd(userVo.getLocation());
+		}
 
 		/*파라미터 확인*/
 		System.out.println("currentPage: " + currentPage + ", startDate: " + startDate + ", endDate: " + endDate);
@@ -489,6 +497,8 @@ public class schdlMngController {
 		if(userVo.getLocationCd() == null || userVo.getLocationCd().equals("")) {
 			userVo.setLocationCd(userVo.getLocation());
 		}
+		userVo.setUserTypeCd("03");
+		
 		System.out.println("userVo: " + userVo);
 
 		List<String> idList = schdlMngService.getIdList(userVo);

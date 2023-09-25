@@ -37,13 +37,14 @@ public class CustomUserDetailsService implements UserDetailsService{
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+		
 		UserVo userVo = userRepository.getUserById(username);
 		String password = userVo.getUserPwd();
 		String authorityCode = userVo.getUserTypeCd();
 		String roleName=null;
 
 		if(userVo.getApproveYn() == null || userVo.getApproveYn().equals("N")) {
-			return null;
+			roleName = "ROLE_NOTAPPROVED";
 		}
 		else {
 			switch (authorityCode) {
@@ -57,12 +58,12 @@ public class CustomUserDetailsService implements UserDetailsService{
 				roleName = "ROLE_MECHA";
 				break;
 			}
-			
-			List<GrantedAuthority> authorities = new ArrayList<>();
-			authorities.add(new SimpleGrantedAuthority(roleName));
-
-			return new User(username, password, authorities);
 		}
-
+		
+		List<GrantedAuthority> authorities = new ArrayList<>();
+		authorities.add(new SimpleGrantedAuthority(roleName));
+		return new User(username, password, authorities);
 	}
+
 }
+

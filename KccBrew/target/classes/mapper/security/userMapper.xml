@@ -200,7 +200,7 @@
 		resultMap="userResult">
 		SELECT *
 		FROM users WHERE
-		USER_ID = #{userId}
+		USER_ID = #{userId, jdbcType=VARCHAR}
 	</select>
 
 	<!-- 점주ID로 지점 가져오기 -->
