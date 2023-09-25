@@ -1,68 +1,129 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+
+<%@ page import="java.time.LocalDateTime"%>
+<%@ page import="java.time.format.DateTimeFormatter"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-   <link rel="stylesheet" href="/resources/css/code/cdMngDtl.css" />
-    <meta charset="UTF-8">
-    <title>코드정보</title>
+<meta charset="UTF-8">
+<title>코드정보</title>
 </head>
+<style>
+#search-box th, #search-box td {
+	/*   border: 1px solid #444444; */
+	
+}
+
+#search-box th {
+	width: 92px;
+	min-width: 92px;
+	max-width: 92px;
+}
+
+#search-box td {
+	width: calc(50% - 92px);
+	max-width: calc(50% - 92px);
+	min-width: calc(50% - 92px);
+}
+</style>
 <body>
-    <section id="notice" class="notice">
+	<hr style="border: solid 1.2px; width: 97%;">
+	<form method="post" name="updateCd" id="updateCd">
+		<input type="hidden" name="cdIdx" value="${codeMng.cdIdx}" /> <input
+			type="hidden" name="cdId" id="cdId" value="${codeMng.cdId}" />
+		<table id="search-box" style="width: 100%;">
 
-        <div class="container2">
-            <div class="category">그룹코드</div>
-            <hr style="border: solid 1.2px; width: 97%;">
-            <table id="search-box">
-                <thead>
-                    <tr>
-                        <th scope="col">그룹코드ID</th>
-                        <th scope="col">그룹코드이름</th>
-                    </tr>
-                </thead>
-                <tbody>
-                        <tr>
-                            <td>${codeMng.cdId}</td>
-                            <td>${codeMng.cdNm}</td>
-                        </tr>
-                </tbody>
-            </table>
-        </div>
+			<tr>
+				<th>코드이름</th>
+				<td colspan="3"><input type="text" name="cdDtlNm" id="cdDtlNm"
+					value="${codeMng.cdDtlNm}" required></td>
+			</tr>
+			<tr>
+				<th>코드ID</th>
+				<td><input type="text" name="cdDtlId" id="cdDtlId"
+					value="${codeMng.cdDtlId}" required></td>
+				<th>사용여부</th>
+				<td><select name="cdDtlUseYn">
+						<option value="Y">Y</option>
+						<option value="N">N</option>
+				</select></td>
+			</tr>
+			<tr>
+				<th>등록일</th>
+				<td>${codeMng.cdDtlRegDttm}</td>
+				<th>등록자ID</th>
+				<td>${codeMng.cdDtlRegUser}</td>
+			</tr>
 
-        <div class="container2">
-            <div class="category">그룹상세코드</div>
-            <hr style="border: solid 1.2px; width: 97%;">
-            <table id="search-box">
-                <tr>
-                    <th>그룹상세코드ID</th>
-                    <td>${codeMng.cdDtlId}</td>
-                    <th>그룹상세코드이름</th>
-                    <td>${codeMng.cdDtlNm}</td>
-                    <th>사용여부</th>
-                    <td>${codeMng.cdDtlUseYn}</td>
-                </tr>
-                <tr>
-                    <th>최초등록일</th>
-                    <td>${codeMng.cdDtlRegDttm}</td>
-                    <th>최초등록자ID</th>
-                    <td>${codeMng.cdDtlRegUser}</td>
-                </tr>
-                <tr>
-                    <th>최종수정일</th>
-                    <td>${codeMng.cdDtlModDttm}</td>
-                    <th>최종수정자ID</th>
-                    <td>${codeMng.cdDtlModUser}</td>
-                </tr>
-            </table>
-            <c:url value="/code/update/${codeMng.cdId}/${codeMng.cdDtlId}" var="updateUrl" />
-			<div class="updatecancle" style="text-align: center;">
-				<a href="${updateUrl}"> <button type="button" class="form-btn" id="find-btn1"
-					value="수정">수정</button>
-				</a> <button type="button" class="form-btn" value="취소"  id="find-btn1"
-					onclick="window.close()">취소</button>
-			</div> 
-        </div>
-    </section>
+		</table>
+		<div class="updatecancle"
+			style="text-align: center; float: right; margin: 10px;">
+			<button type="button" name="save" class="form-btn"
+				onClick="submitForm1()" value="저장" id="find-btn1">저장</button>
+			<button type="button" name="insert" class="form-btn"
+				onClick="insertCdForm()" value="추가" id="find-btn1">추가</button>
+		</div>
+	</form>
+	<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+	<script type="text/javascript">
+	var uu = "<c:url value='/code'/>";
+		$(document).ready(function() {
+			$('#cdId').val(id);
+		});
+
+		function submitForm1() {
+			var form = document.getElementById("updateCd");
+
+			// AJAX 요청 보내기
+			$
+					.ajax({
+						type : "POST",
+						url : "<c:url value='/code/update' />",
+						data : $(form).serialize(),
+						contentType : "application/x-www-form-urlencoded; charset=UTF-8",
+						success : function(response) {
+							var Close = confirm("저장이 완료되었습니다");
+							if (Close) {
+								location.replace(location.href);
+							}
+						},
+						error : function(error) {
+							console.error("AJAX 요청 실패:", error);
+							alert("저장에 실패하였습니다.");
+						}
+					});
+			return false;
+		}
+
+		function insertCdForm() {
+			cont = id;
+			document.updateCd.cdId.value = cont;
+
+			console.log(cont);
+			var local = "<c:url value='/code/insert2'/>";
+			var params = $("#updateCd").serialize()
+			console.log(cdId);
+			console.log(local);
+			console.log(JSON.stringify(params));
+			// AJAX 요청 보내기
+			$.ajax({
+				type : "POST", // 또는 "GET" 등 요청 방식 설정
+				url : local,
+				data : JSON.stringify(params), // JSON 형식으로 데이터 변환
+				success : function(response) {
+					// 응답 처리 로직 추가
+					alert("저장이 완료되었습니다");
+					location.href = uu;
+				},
+				error : function(error) {
+					console.error("AJAX 요청 실패:", error);
+					alert("저장에 실패하였습니다.");
+				}
+			});
+		}
+	</script>
 </body>
 </html>
