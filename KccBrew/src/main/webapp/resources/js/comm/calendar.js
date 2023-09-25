@@ -32,22 +32,22 @@
 		          console.log(obj);
 		        },
 		        eventClick: function(info) {
-		            if (confirm("일정을 삭제하겠습니까?")) {
-		              info.event.remove(); // 이벤트 객체 삭제
-		            }
+//		            if (confirm("일정을 삭제하겠습니까?")) {
+//		              info.event.remove(); // 이벤트 객체 삭제
+//		            }
 		        },
-		        select: function(arg) { // 캘린더에서 드래그로 이벤트를 생성할 수 있다.
-		          var title = prompt('추가할 일정을 입력하세요:');
-		          if (title) {
-		            calendar.addEvent({
-		              title: title,
-		              start: arg.start,
-		              end: arg.end,
-		              allDay: arg.allDay
-		            })
-		          }
-		          calendar.unselect();
-		        }
+//		        select: function(arg) { // 캘린더에서 드래그로 이벤트를 생성할 수 있다.
+//		          var title = prompt('추가할 일정을 입력하세요:');
+//		          if (title) {
+//		            calendar.addEvent({
+//		              title: title,
+//		              start: arg.start,
+//		              end: arg.end,
+//		              allDay: arg.allDay
+//		            })
+//		          }
+//		          calendar.unselect();
+//		        }
 		      });
 		      // 캘린더 랜더링
 		      calendar.render();
