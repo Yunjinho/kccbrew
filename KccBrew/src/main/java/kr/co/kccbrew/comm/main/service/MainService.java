@@ -124,15 +124,8 @@ public class MainService implements IMainService{
 	
 	//사용자 정보 수정하기   mainRepository.updateMyProfile(mainPageVo);
 	@Override
-	public void updateMyProfile(String userId, MainPageVo mainPageVo, MultipartFile imgFile) throws IOException {
-		 if (imgFile != null && !imgFile.isEmpty()) {
-		        String newImageName = generateRandomImageName(); // 랜덤한 파일 이름 생성
-		        String imagePath = updateProfileImage(null, userId, newImageName, imgFile);
-		        mainPageVo.setFileDetailLocation(imagePath);
-		    }
-
-		    // 사용자 정보 업데이트
-		    mainRepository.updateMyProfile(mainPageVo);
+	public void updateMyProfile( MainPageVo mainPageVo) {
+		mainRepository.updateMyProfile(mainPageVo);
 	}
 	
 	// 랜덤한 이미지 파일 이름 생성
