@@ -60,7 +60,8 @@
 	height: 70px;
 	background-color: #ffffff;
 	display: flex;
-	justify-content: space-around;
+	/* justify-content: space-around; */
+	align-items: flex-end;
 }
 
 /********** 로고 *****/
@@ -73,12 +74,13 @@
 }
 /** 로고 이미지 **/
 .nav-bar-brand img{
-	padding-left:25px;
+	/* padding-left:25px; */
 	position:absolute;
 	top:0;
 	left:0;
-	width:200px;
-	height:70px;
+	/* width:200px; */
+	/* height:70px; */
+	height: 90%;
 	cursor: pointer;
 }
 

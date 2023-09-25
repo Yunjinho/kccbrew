@@ -129,7 +129,7 @@
 		STORE.STORE_SEQ
 		WHERE gc.GRP_CD_ID = 'U'
 		ORDER
-		BY START_DATE DESC
+		BY HOLIDAY_SEQ DESC
 		) subquery
 
 		WHERE 1=1
@@ -145,6 +145,9 @@
 		<if test="userVo.userNm != null and userVo.userNm != ''">
 			AND USER_NM = #{userVo.userNm}
 		</if>
+		<if test="userVo.locationCd != null and userVo.locationCd != ''">
+			AND LOCATION_CD LIKE '%' || #{userVo.locationCd} || '%'
+		</if>
 
 		<!-- 지점 검색 -->
 		<if test="userVo.storeSeq != null and userVo.storeSeq != ''">
@@ -152,9 +155,18 @@
 		</if>
 		<if test="userVo.storeNm != null and userVo.storeNm != ''">
 			AND STORE_NM = #{userVo.storeNm}
-		</if>)
-		
-		<![CDATA[ WHERE ROW_NUMBER BETWEEN #{firstRowNum} AND #{lastRowNum} ]]>
+		</if>
+
+		<!-- 실제 사용 여부 -->
+		<if test="actualUse != null and actualUse != ''">
+			AND ACTL_USE = #{actualUse}
+		</if>
+		)
+		<if
+			test="firstRowNum != null and firstRowNum != '' and lastRowNum != null and lastRowNum != ''">
+    <![CDATA[ WHERE ROW_NUMBER BETWEEN #{firstRowNum} AND #{lastRowNum} ]]>
+		</if>
+
 
 	</select>
 
@@ -223,6 +235,9 @@
 			= #{searchContent.userType} </if> -->
 		<if test="userVo.userNm != null and userVo.userNm != ''">
 			AND USER_NM = #{userVo.userNm}
+		</if>
+		<if test="userVo.locationCd != null and userVo.locationCd != ''">
+			AND LOCATION_CD LIKE '%' || #{locationCd} || '%'
 		</if>
 
 		<!-- 지점 검색 -->
@@ -365,7 +380,7 @@ EXTRACT(YEAR FROM SCHEDULE_DATE) = 2023 AND EXTRACT(MONTH FROM SCHEDULE_DATE) = 
 
 	<!-- 사용자ID로 휴가조회 -->
 	<select id="selectHoliday" resultMap="holidayResult"
-		parameterType="String">
+		parameterType="map">
 	<![CDATA[
 		select * from holiday	
 		where USER_ID=#{userId}
@@ -537,7 +552,7 @@ EXTRACT(YEAR FROM SCHEDULE_DATE) = 2023 AND EXTRACT(MONTH FROM SCHEDULE_DATE) = 
 	</select>
 
 
-	<!-- 아이디에 따른 휴무일 조회 -->
+	<!-- 아이디에 따른 실제사용이 Y인 휴무일 조회 -->
 	<select id="selectHolidayDates" resultType="java.util.Map"
 		parameterType="string">
 		select HLDY_STAR, HLDY_END from holiday where
@@ -578,24 +593,26 @@ EXTRACT(YEAR FROM SCHEDULE_DATE) = 2023 AND EXTRACT(MONTH FROM SCHEDULE_DATE) = 
 		AS_RESULT ON
 		AS_ASSIGN.AS_ASSIGN_SEQ = AS_RESULT.AS_ASSIGN_SEQ
 		WHERE
-		AS_ASSIGN.REJECT_CONTENT_MCHA IS NULL and MECHANIC_ID = #{Id}
+		MECHANIC_ID = #{Id}
 		<if test="yr != null and yr != '' and mn != null and mn != ''">
 			and
 			(EXTRACT(YEAR FROM RESULT_DTTM) = #{yr} and
-			EXTRACT(MONTH FROM RESULT_DTTM) =
-			#{mn})
+			EXTRACT(MONTH FROM RESULT_DTTM) =#{mn})
 		</if>
 	</select>
 
 
 	<!-- 휴가 조회 -->
-	<select id="selecHoliday2" parameterType="map"
+	<select id="selectHoliday2" parameterType="map"
 		resultMap="holidayResult">
 		SELECT *
 		FROM holiday
 		WHERE user_id = #{userId}
 		AND
-		TRUNC(HLDY_STAR) = TRUNC(#{date})
+    <![CDATA[TRUNC(#{date}) >= TRUNC(HLDY_STAR) AND TRUNC(#{date}) <= TRUNC(HLDY_END)]]>
+		<if test="actualUse != null and actualUse != ''">
+			AND ACTL_USE = #{actualUse}
+		</if>
 	</select>
 
 	<!-- 배정 조회 -->

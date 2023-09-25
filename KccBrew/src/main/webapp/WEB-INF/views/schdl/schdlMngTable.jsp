@@ -94,7 +94,7 @@
 										</div>
 
 										<!-- 회원 검색 -->
-										<form name="srhForm" action="/schedule" method="post">
+										<form name="srhForm" action="admin/schedule" method="post">
 
 											<input type="hidden" name="startDate" value=""> <input
 												type="hidden" name="endDate" value=""> <input
@@ -108,8 +108,30 @@
 												<fieldset>
 													<legend class="blind">사용자검색</legend>
 													<table id="search-box">
+														<c:set var="today" value="<%=new java.util.Date()%>" />
+														<fmt:formatDate value="${today}" pattern="yyyy"
+															var="nowYear" />
 														<tr>
-															<th>위치<span style="color: red;">(필수)</span></th>
+															<th colspan="4">근무년월</th>
+															<!-- 시작 연도 선택 필드 -->
+															<td colspan="4">
+																<div id="dateSelect">
+																	<select id="yearSelect" name="selectedYear" required>
+																		<c:forEach var="year" begin="2020" end="2030">
+																			<option value="${year}">${year}년</option>
+																		</c:forEach>
+																	</select> <select id="monthSelect" name="selectedMonth" required
+																		onChange="getPeriod();">
+																		<c:forEach var="month" begin="1" end="12">
+																			<option value="${month}">${month}월</option>
+																		</c:forEach>
+																	</select>
+																</div>
+															</td>
+														</tr>
+
+														<tr>
+															<th>위치</th>
 															<td><select class="tx2" name="location"
 																onchange="changeLocationCd()">
 																	<option value="">지역 대분류</option>
@@ -149,7 +171,7 @@
 													<div class="form-btn-box">
 														<fieldset>
 															<button type="button" class="form-btn" id="searchButton"
-																onclick="performSearch()">검색</button>
+																onclick="performSearch(); getLastDayAndPopulateTable();">검색</button>
 															<button type="reset" class="form-btn">초기화</button>
 														</fieldset>
 													</div>
@@ -181,19 +203,6 @@
 												<span class="data-info"> 전체<b><span
 														id="dataCount"></span></b>건
 												</span>
-												<fieldset>
-													<label>근무년월</label> <select id="yearSelect"
-														name="selectedYear" required>
-														<c:forEach var="year" begin="2020" end="2030">
-															<option value="${year}">${year}</option>
-														</c:forEach>
-													</select> <select id="monthSelect" name="selectedMonth" required>
-														<c:forEach var="month" begin="1" end="12">
-															<option value="${month}">${month}월</option>
-														</c:forEach>
-													</select> <input type="button" value="이동"
-														onclick="getLastDayAndPopulateTable(); getPeriod();">
-												</fieldset>
 											</div>
 
 											<div class="board-info index"
@@ -203,13 +212,13 @@
 												에 마우스오버나 클릭 시 상세내용이 보입니다.
 
 												<div id="holiday-index"
-													style="background-color: pink; width: 1em; height: 1em;"></div>
+													style="background-color: #b8cff5; width: 1em; height: 1em;"></div>
 												: 휴무
 												<div id="assign-index"
-													style="background-color: #f7d474; width: 1em; height: 1em;"></div>
+													style="background-color: rgb(247, 212, 116); width: 1em; height: 1em;"></div>
 												: 배정
 												<div id="result-index"
-													style="background-color: #5b8554; width: 1em; height: 1em;"></div>
+													style="background-color: #e8a9ac; width: 1em; height: 1em;"></div>
 												: 처리
 											</div>
 

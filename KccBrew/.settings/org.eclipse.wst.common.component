@@ -18,8 +18,7 @@
         
         <property name="java-output-path" value="/KccBrew/target/classes"/>
         <property name="context-root" value="kccbrew"/>
-                    
-    
+
     </wb-module>
         
 

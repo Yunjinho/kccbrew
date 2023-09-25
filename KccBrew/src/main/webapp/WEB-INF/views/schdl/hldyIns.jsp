@@ -5,12 +5,13 @@
 
 <%@ page import="java.time.LocalDateTime"%>
 <%@ page import="java.time.format.DateTimeFormatter"%>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 
 <!DOCTYPE html>
 <html>
 
 <script>
-  var usedHolidays = ${15 - usedHolidays};
+	var usedHolidays = ${15 - usedHolidays};
 </script>
 
 <head>
@@ -75,8 +76,8 @@
 							<!-- ********** 세은 로그 관련 내용 시작 ********** -->
 							<div id="content">
 								<h2 class="heading">휴가신청</h2>
-
-								<form id="addForm" action="" method="post">
+								<form:form modelAttribute="holidayVo" method="post" id="addForm">
+								<form:input type="hidden" path="remainingDays"/> 
 									<table id="search-box">
 										<tr>
 											<th>휴가신청일</th>
@@ -84,43 +85,56 @@
 													value="<%=new java.text.SimpleDateFormat(\"yyyy-MM-dd\").format(new java.util.Date())%>" /></td>
 										</tr>
 
+										<!-- 휴가시작일 -->
 										<tr>
 											<th>휴가시작일</th>
-											<td><input type="date" id="selectedStartDate"
-												name="startDate" value="" required></td>
+											<td><form:input type="date" id="selectedStartDate"
+													path="startDate" value="" required="true"
+													onchange="calculateDays(new Date(this.value), new Date(document.getElementById('selectedEndDate').value))" />
+												<p>
+													<form:errors path="startDate" /></td>
+
 											<th>휴가종료일</th>
-											<td><input type="date" id="selectedEndDate"
-												name="endDate" value="" required
-												onchange="calculateDays(new Date(document.getElementById('selectedStartDate').value), new Date(this.value))"></td>
+											<td><form:input type="date" id="selectedEndDate"
+													path="endDate" value="" required="true"
+													onchange="calculateDays(new Date(document.getElementById('selectedStartDate').value), new Date(this.value))" />
+												<p>
+													<form:errors path="endDate" /></td>
+
 											<td><span id="usedDays" contenteditable="true"
 												oninput="calculateNumbers(this.textContent, document.getElementById('remainingDays').textContent)"></span>
 											</td>
 										</tr>
+										<tr>
+											<td id="input-information" colspan="5" hidden="true" style="color: red; font-weight:bold;"></td>
+										</tr>
 
 										<tr>
 											<th>잔여일수/총 휴가일수</th>
-											<td colspan="4"><span id="remainingDays"
-												style="color: red;"><b><c:out
-															value="${ 15 - usedHolidays}" /></b></span> / 15</td>
+											<td id="holiday-days-info" colspan="4">
+											<span id="remainingDays-info" style="color: red; font-weight:bold;"><c:out
+															value="${ 15 - usedHolidays}" /></span> / 15</td>
+											<td id="holiday-days-notice" colspan="4"  hidden="true" style="color: red; font-weight: bold;"></td>
 										</tr>
 
 									</table>
 									<div class="notice">
 										<ul>
 											<li>휴가일수는 연 15일 입니다.</li>
-											<li>AS근무가 배정된 날짜에는 휴가신청을 할 수 없습니다.</li>
-											<li>현재날짜를 기준으로 이전일은 휴가신청을 할 수 없습니다.</li>
+											<li>시작일은 종료일과 같거나 이전날짜여야 하며, 동일한 날짜에 중복신청 할 수 없습니다.</li>
+											<li>AS근무가 배정된 날짜 및 공휴일에는 휴가신청을 할 수 없습니다.</li>
 										</ul>
 									</div>
 									<div class="center-button">
 										<button type="submit" id="applyButton">휴가신청</button>
 									</div>
-								</form>
+								</form:form>
 
 								<!-- 확인 모달 창 -->
+
+
 								<div id="confirmModal" class="modal">
 									<div class="modal-content">
-										<span class="close">&times;</span>
 										<p>정말로 휴가를 신청하시겠습니까?</p>
 										<button id="applyYes">예</button>
 										<button id="applyNo">아니오</button>
@@ -130,8 +144,8 @@
 								<!-- 결과 모달 창 -->
 								<div id="resultModal" class="modal">
 									<div class="modal-content">
-										<span class="close">&times;</span>
 										<p id="modalMessage"></p>
+										<button id="modal-result-confirmButton">확인</button>
 									</div>
 								</div>
 
@@ -158,6 +172,13 @@
 														var confirmModal = document
 																.getElementById("confirmModal");
 														confirmModal.style.display = "none";
+														
+												/* 		const remainingDaysElement = document.getElementById('remainingDays');
+														const remainingDaysValue = remainingDaysElement.textContent;
+														
+														console.log("remainingDaysValue: " + remainingDaysValue);
+
+														setInputElementValue('remainingDays', remainingDaysValue); */
 
 														// 폼 데이터를 직렬화
 														var formData = $(
@@ -179,14 +200,32 @@
 																				.getElementById("modalMessage");
 																		modalMessage.innerText = message;
 																		resultModal.style.display = "block";
+
+																		if (message === "등록완료!") {
+																			var confirmButton = document
+																					.getElementById("modal-result-confirmButton");
+																			confirmButton.onclick = function() {
+																				window
+																						.close();
+																				window.opener.location
+																						.reload();
+																			};
+																		} else {
+																			var confirmButton = document
+																					.getElementById("modal-result-confirmButton");
+																			confirmButton.onclick = function() {
+																				reoloadPopup();
+																			};
+																		}
 																	},
-																	error : function() {
+																	error : function(
+																			errorMessage) {
 																		// 오류 메시지를 결과 모달 창에 표시
 																		var resultModal = document
 																				.getElementById("resultModal");
 																		var modalMessage = document
 																				.getElementById("modalMessage");
-																		modalMessage.innerText = "오류 발생";
+																		modalMessage.innerText = errorMessage;
 																		resultModal.style.display = "block";
 																	}
 																});
@@ -217,8 +256,12 @@
 									document.getElementById("applyNo")
 											.addEventListener("click",
 													closeModal);
-								</script>
 
+									/* 팝업창 리로드 함수 */
+									function reoloadPopup() {
+										window.location.reload();
+									}
+								</script>
 
 
 							</div>

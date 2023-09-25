@@ -35,5 +35,10 @@ public class FileMngService implements IFileMngService {
 	public List<FileMngVo> fileTypeList(){
 	return fileMngRepository.fileTypeList();	
 	}
+	
+	@Override
+	public FileMngVo fileDtl(int fileSeq) {
+		return fileMngRepository.fileDtl(fileSeq);
+	}
 
 }

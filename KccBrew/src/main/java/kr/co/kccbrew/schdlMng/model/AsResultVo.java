@@ -6,7 +6,6 @@ import org.springframework.stereotype.Component;
 
 import lombok.Data;
 
-@Component
 @Data
 public class AsResultVo {
 	private Integer asResultSeq;
@@ -15,7 +14,7 @@ public class AsResultVo {
 	private Integer storeManagerFeedBack;
 	private Date resultDate;
 	private Integer fileSeq;
-	private Integer asPrice;
+	private double asPrice;
 	private String modUser;
 	private Date modDate;
 	private String reApply;

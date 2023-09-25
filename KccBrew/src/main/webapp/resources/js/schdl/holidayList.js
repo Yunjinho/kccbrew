@@ -1,9 +1,12 @@
 document.addEventListener("DOMContentLoaded", function() {
 
-
 	/*날짜 구간 선택 시 날짜 기본값 설정*/
 	setInputElementValue('selectedStartDate', getFirstDayOfYear());
 	setInputElementValue('selectedEndDate', getLastDayOfCurrentYear());
+
+	/*날짜 구간 선택 시 날짜 기본값 설정*/
+	setInputElementValue('startDate', getFirstDayOfYear());
+	setInputElementValue('endDate', getLastDayOfCurrentYear());
 
 });
 
@@ -75,7 +78,7 @@ function updatePageButtons(currentPage, totalPage, sharePage) {
 			goPage(currentPage - 1);
 		}
 	};
-	
+
 	document.querySelector('.pageNext').href = "javascript:void(0);";
 	document.querySelector('.pageNext img').alt = "다음";
 	document.querySelector('.pageNext').onclick = function() {
@@ -116,6 +119,7 @@ function displaySchedules(schedules) {
 		var row = tableBody.insertRow(-1); 
 
 		if (userTypeCd === "01") {
+			/*사용자가 관리자인 경우*/
 			var cell1 = row.insertCell(0);
 			var cell2 = row.insertCell(1);
 			var cell3 = row.insertCell(2);
@@ -134,43 +138,53 @@ function displaySchedules(schedules) {
 			cell6.innerHTML = formatDate(new Date(schedule.startDate));
 			cell7.innerHTML = formatDate(new Date(schedule.endDate));
 
-			if (new Date(schedule.startDate) > new Date() && schedule.actualUse === "Y") {
+			if(schedule.actualUse === "N") {
+				cell8.innerHTML = "취소완료";
+			}
+			else if (new Date(schedule.startDate) <= new Date()) {
+				cell8.innerHTML = "이미 사용된 휴가";
+			} else  {
 				var cancelButton = document.createElement("button");
 				cancelButton.textContent = "취소";
+				cancelButton.className = "form-btn";
 				cancelButton.onclick = function () {
-					alert("휴가 취소 요청: 휴가 ID " + schedule.scheduleId);
+					openCancelModal(schedule.scheduleId);
 				};
 				cell8.appendChild(cancelButton);
-			} else {
-				cell8.innerHTML = "취소불가";
-			}
+			} 
 			cell9.innerHTML = schedule.actualUse;
-		} else {
+		} 
+		/*사용자가 점주 또는 수리기사인 경우*/
+		else {
 			var cell1 = row.insertCell(0);
+			/*var cell2 = row.insertCell(1);*/
 			var cell2 = row.insertCell(1);
 			var cell3 = row.insertCell(2);
 			var cell4 = row.insertCell(3);
 			var cell5 = row.insertCell(4);
 			var cell6 = row.insertCell(5);
-			var cell7 = row.insertCell(6);
 
 			cell1.innerHTML = schedule.rowNumber;
-			cell2.innerHTML = schedule.scheduleId;
-			cell3.innerHTML = formatDate(new Date(schedule.appDate));
-			cell4.innerHTML = formatDate(new Date(schedule.startDate));
-			cell5.innerHTML = formatDate(new Date(schedule.endDate));
+			/*cell2.innerHTML = schedule.scheduleId;*/
+			cell2.innerHTML = formatDate(new Date(schedule.appDate));
+			cell3.innerHTML = formatDate(new Date(schedule.startDate));
+			cell4.innerHTML = formatDate(new Date(schedule.endDate));
 
-			if (new Date(schedule.startDate) > new Date() && schedule.actualUse === "Y") {
+			if(schedule.actualUse === "N") {
+				cell5.innerHTML = "취소완료";
+			}
+			else if (new Date(schedule.startDate) <= new Date()) {
+				cell5.innerHTML = "이미 사용된 휴가";
+			} else  {
 				var cancelButton = document.createElement("button");
 				cancelButton.textContent = "취소";
+				cancelButton.className = "form-btn";
 				cancelButton.onclick = function () {
-					alert("휴가 취소 요청: 휴가 ID " + schedule.scheduleId);
+					openCancelModal(schedule.scheduleId);
 				};
-				cell6.appendChild(cancelButton);
-			} else {
-				cell6.innerHTML = "취소불가";
-			}
-			cell7.innerHTML = schedule.actualUse;
+				cell5.appendChild(cancelButton);
+			} 
+			cell6.innerHTML = schedule.actualUse;
 		}
 
 
@@ -184,7 +198,9 @@ function goDate(){
 	var selectedEndDate = document.getElementById('selectedEndDate').value;
 	var fm = document.srhForm;
 	fm.startDate.value = selectedStartDate;
+	console.log("selectedStartDate: " + selectedStartDate);
 	fm.endDate.value = selectedEndDate;
+	console.log("selectedEndDate: " + selectedEndDate);
 	performSearch();
 	return true;
 }
@@ -218,4 +234,60 @@ function formatDate(date) {
 	var month = (date.getMonth() + 1).toString().padStart(2, '0'); // 월을 2자리 숫자로 변환
 	var day = date.getDate().toString().padStart(2, '0'); // 일을 2자리 숫자로 변환
 	return `${year}-${month}-${day}`;
+}
+
+/*취소확인 모달창 오픈*/
+function openCancelModal(scheduleId) {
+
+	var modal = document.getElementById("cancelModal");
+	modal.style.display = "block";
+
+	var cancelYesButton = document.getElementById("cancelYes");
+	cancelYesButton.onclick = function () {
+		cancelSchedule(scheduleId);
+
+		modal.style.display = "none";
+	};
+
+	var cancelNoButton = document.getElementById("cancelNo");
+	cancelNoButton.onclick = function () {
+		modal.style.display = "none";
+	};
+}
+
+/*휴가취소*/
+function cancelSchedule(scheduleId) {
+	console.log("cancelSchedule함수실행!");
+
+	$.ajax({
+		url: "/holiday/delete",
+		type: "get",
+		data : {
+			'scheduleId' : scheduleId,
+		},
+		success: function(message) {
+			console.log('Ajax 요청 성공:', message);
+
+			var resultModal = document
+			.getElementById("resultModal");
+			var modalMessage = document
+			.getElementById("modalMessage");
+			modalMessage.innerText = message;
+			resultModal.style.display = "block";
+
+			var confirmButton = document
+			.getElementById("modal-result-confirmButton");
+			confirmButton.onclick = function() {
+				reoload();
+			};
+		},
+		error: function(error) {
+			console.log('Ajax 요청 실패:', error);
+		}
+	});
+}
+
+/* 팝업창 리로드 함수 */
+function reoload() {
+	window.location.reload();
 }

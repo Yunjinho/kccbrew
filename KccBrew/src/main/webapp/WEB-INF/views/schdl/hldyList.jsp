@@ -52,6 +52,9 @@
     var userTypeCd = "<c:out value='${user.userTypeCd}' />";
 </script>
 
+	<c:set var="currentDate" value="<%=new java.util.Date()%>" />
+
+
 
 
 	<div id="page" class="page-nosubmenu">
@@ -99,14 +102,12 @@
 											</ul>
 										</div>
 
-										<!-- 로그 검색 -->
+										<!-- 사용자 검색 -->
 										<sec:authorize access="hasRole('ROLE_ADMIN')">
 											<form name="srhForm" action="/admin/holiday/search"
 												method="post">
 
-												<input type="hidden" name="currentPage" value="1"> <input
-													type="hidden" name="startDate" value=""> <input
-													type="hidden" name="endDate" value="">
+												<input type="hidden" name="currentPage" value="1">
 
 												<div>
 													<span> 사용자검색 </span>
@@ -117,7 +118,7 @@
 														<legend class="blind">사용자검색</legend>
 														<table id="search-box">
 															<tr>
-																<th>위치<span style="color: red;">(필수)</span></th>
+																<th>위치</th>
 																<td><select class="tx2" name="location"
 																	onchange="changeLocationCd()">
 																		<option value="">지역 대분류</option>
@@ -129,11 +130,21 @@
 																			</c:if>
 																		</c:forEach>
 																</select></td>
-
 																<td><select class="tx2" name="locationCd">
 																		<option value="">지역 소분류</option>
 																</select></td>
 
+																<th>휴가기간</th>
+																<td id="form-holiday-period"><span><label for="startDate">시작일:</label> <input
+																	type="date" id="startDate" name="startDate" value=""></span>
+
+																	<span><label for="endDate">종료일:</label> <input type="date"
+																	id="endDate" name="endDate" value=""></span></td>
+															</tr>
+
+
+
+															<tr>
 																<th>유형</th>
 																<td><select class="tx2" name="userType"
 																	id="selectUserType"
@@ -253,16 +264,15 @@
 
 											<sec:authorize access="hasRole('ROLE_MANAGER')">
 
-												<form name="srhForm" action="/user/holiday/search"
-													method="post" style="display: none;">
+												<form name="srhForm" action="/holiday/search" method="post"
+													style="display: none;">
 													<input type="hidden" name="startDate" value=""> <input
 														type="hidden" name="endDate" value=""> <input
 														type="hidden" name="currentPage" value="1">
 												</form>
 
 												<!-- 점포일 경우 -->
-												<div class="subtitle">점포</div>
-												<table id="search-box">
+												<table id="search-box" hidden="true">
 													<!-- 점주정보 -->
 													<tr>
 														<th>유형</th>
@@ -303,15 +313,14 @@
 
 											<sec:authorize access="hasRole('ROLE_MECHA')">
 
-												<form name="srhForm" action="/user/holiday/search"
-													method="post" style="display: none;">
+												<form name="srhForm" action="/holiday/search" method="post"
+													style="display: none;">
 													<input type="hidden" name="startDate" value=""> <input
 														type="hidden" name="endDate" value=""> <input
 														type="hidden" name="currentPage" value="1">
 												</form>
 
-												<div class="subtitle">회원정보</div>
-												<table id="search-box">
+												<table id="search-box" hidden="true">
 													<tr>
 														<th>유형</th>
 														<td>수리기사</td>
@@ -357,14 +366,18 @@
 																value="${totalPage}" /></span></b>쪽
 												</span>
 
-												<fieldset>
-													<legend class="blind">날짜 검색</legend>
-													<label>휴가일</label> <input type="date"
-														id="selectedStartDate" name="selectedStartDate" value=""
-														required> <input type="date" id="selectedEndDate"
-														name="selectedEndDate" value="" required> <input
-														type="button" value="검색" onclick="goDate(); return false;">
-												</fieldset>
+												<sec:authorize
+													access="hasAnyRole('ROLE_MANAGER', 'ROLE_MECHA')">
+													<fieldset>
+														<legend class="blind">날짜 검색</legend>
+														<label>휴가일</label> <input type="date"
+															id="selectedStartDate" name="selectedStartDate" value=""
+															required> <input type="date" id="selectedEndDate"
+															name="selectedEndDate" value="" required> <input
+															type="button" value="검색"
+															onclick="goDate(); return false;">
+													</fieldset>
+												</sec:authorize>
 											</div>
 
 											<table id="holiday-info-table">
@@ -374,12 +387,12 @@
 														<sec:authorize access="hasRole('ROLE_ADMIN')">
 															<th>사용자분류</th>
 															<th>ID</th>
+															<th>휴가번호</th>
 														</sec:authorize>
-														<th>휴가번호</th>
 														<th>신청일</th>
 														<th>시작일</th>
 														<th>종료일</th>
-														<th>휴가취소</th>
+														<th>휴가상태</th>
 														<th>사용여부</th>
 													</tr>
 												</thead>
@@ -392,17 +405,35 @@
 														</c:when>
 														<c:otherwise>
 															<c:forEach var="schedule2" items="${schedules}">
+
+																<c:set var="sqlDate" value="${schedule2.startDate}" />
+																<c:set var="currentDate"
+																	value="<%=new java.util.Date()%>" />
+
 																<tr>
 																	<td><c:out value="${schedule2.rowNumber}" /></td>
 																	<sec:authorize access="hasRole('ROLE_ADMIN')">
 																		<td><c:out value="${schedule2.userType}" /></td>
 																		<td><c:out value="${schedule2.userId}" /></td>
+																		<td><c:out value="${schedule2.scheduleId}" /></td>
 																	</sec:authorize>
-																	<td><c:out value="${schedule2.scheduleId}" /></td>
 																	<td><c:out value="${schedule2.appDate}" /></td>
 																	<td><c:out value="${schedule2.startDate}" /></td>
 																	<td><c:out value="${schedule2.endDate}" /></td>
-																	<td><button>취소</button></td>
+																	<c:choose>
+																		<c:when test="${schedule2.actualUse eq 'N'}">
+																			<td>취소완료</td>
+																		</c:when>
+																		<c:when test="${currentDate.after(sqlDate)}">
+																			<td>이미 사용된 휴가</td>
+																		</c:when>
+																		<c:otherwise>
+																			<td>
+																				<button class="form-btn"
+																					onclick="openCancelModal(${schedule2.scheduleId})">취소</button>
+																			</td>
+																		</c:otherwise>
+																	</c:choose>
 																	<td><c:out value="${schedule2.actualUse}" /></td>
 																</tr>
 															</c:forEach>
@@ -482,10 +513,30 @@
 											</a>
 										</div>
 
+										<!-- 취소확인 모달 창 -->
+										<div id="cancelModal" class="modal">
+											<div class="modal-content">
+												<p>정말로 휴가를 취소하시겠습니까?</p>
+												<button id="cancelYes">예</button>
+												<button id="cancelNo">아니오</button>
+											</div>
+										</div>
+
+										<!-- 결과 모달 창 -->
+										<div id="resultModal" class="modal">
+											<div class="modal-content">
+												<p id="modalMessage"></p>
+												<button id="modal-result-confirmButton">확인</button>
+											</div>
+										</div>
+
 										<sec:authorize
 											access="hasAnyRole('ROLE_MANAGER', 'ROLE_MECHA')">
 											<div class="right-buttons">
-												<button type="button" id="" onclick="postPopup();">휴가신청</button>
+												<div>
+													<button type="button" id="" onclick="postPopup();"
+														class="form-btn">휴가신청</button>
+												</div>
 											</div>
 										</sec:authorize>
 									</div>

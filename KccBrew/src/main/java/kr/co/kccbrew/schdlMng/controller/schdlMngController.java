@@ -1,34 +1,30 @@
 package kr.co.kccbrew.schdlMng.controller;
 
 
-import java.sql.Date; 
+import java.sql.Date;    
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import kr.co.kccbrew.comm.security.model.UserVo;
@@ -39,9 +35,6 @@ import kr.co.kccbrew.schdlMng.model.AsResultVo;
 import kr.co.kccbrew.schdlMng.model.HolidayVo;
 import kr.co.kccbrew.schdlMng.model.SchdlMngVo;
 import kr.co.kccbrew.schdlMng.service.SchdlMngService;
-import kr.co.kccbrew.strMng.model.StrMngVo;
-import kr.co.kccbrew.sysMng.cdMng.model.CdMngVo;
-import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -54,6 +47,7 @@ import lombok.extern.slf4j.Slf4j;
  * 2023-09-11                       이세은               휴일등록 메서드 작성
  * 2023-09-12                       이세은               휴일기간 중복방지 유효성검사 메서드작성
  * 2023-09-17                       이세은               검색 기능 수정
+ * 2023-09-23                       이세은               잔여 휴일 일수 수정
  * 
  * @author LEESEEUN
  * @version 1.0
@@ -72,30 +66,46 @@ public class schdlMngController {
 
 	/**********************************************************휴가신청**********************************************************/
 
-	/*휴가사용현황 페이지*/
+	/*휴가신청 페이지*/
 	@GetMapping("/holiday/add")
 	public String holidayAddPage(Model model, Authentication authentication) {
+
+		UserVo userVo = new UserVo();
 
 		/*ID에 따른 데이터 조회*/
 		UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 		String userId = userDetails.getUsername();
+		userVo.setUserId(userId);
 
-		/*남은 휴가일수 조회*/
-		int usedHolidays = schdlMngService.getUsedHoliday(userId);
-
+		/* 잔여일수 */
+		int usedHolidays = schdlMngService.getUsedHoliday(userVo);
 		model.addAttribute("usedHolidays", usedHolidays);
+		model.addAttribute("holidayVo", new HolidayVo());
 
 		return "schdl/hldyIns";
 	}
 
 
 	/*휴가신청*/
-	@PostMapping(value = "/holiday/add", produces = "text/plain; charset=utf-8")
+	@PostMapping(value="/holiday/add", produces = "text/plain; charset=utf-8")
 	@ResponseBody
-	public String addHoliday(@ModelAttribute HolidayVo holiday, 
-			HttpSession session, 
-			HttpServletResponse response, 
-			Authentication authentication) {
+	public String addHoliday(@Valid @ModelAttribute HolidayVo holidayVo, Errors errors, Authentication authentication)  {
+
+		if (errors.hasFieldErrors("startDate")) {
+			return "등록실패: 시작일을 입력해주세요.";
+
+		} else if(errors.hasFieldErrors("endDate")) {
+			return "등록실패: 종료일을 입력해주세요.";
+
+		}else if(errors.hasFieldErrors("remainingDays")) {
+			return "등록실패: 휴가일수는 15일을 초과할 수 없습니다.";
+
+		} else if(errors.hasFieldErrors("period")) {
+			return "등록실패: 주말·법정공휴일에는 휴가를 신청하실 수 없습니다.";
+		}
+
+		/*매개변수로 들어온 데이터 확인*/
+		System.out.println("holiday: " + holidayVo);
 
 		String message = null;
 
@@ -114,34 +124,41 @@ public class schdlMngController {
 			String role = authority.getAuthority();
 			System.out.println("Role: " + role);
 
+			/*점주인 경우*/
 			if ("ROLE_MANAGER".equals(role)) {
 				userTypeCd = "02";
+				/*수리기사인 경우*/
 			} else if ("ROLE_MECHA".equals(role)) {
 				userTypeCd = "03";
 			}
 		}
 
-		holiday.setUserId(userId);
-		holiday.setAppDate(sqlDate);
-		holiday.setGroupCodeDetailId(userTypeCd);
+		holidayVo.setUserId(userId);
+		holidayVo.setAppDate(sqlDate);
+		holidayVo.setGroupCodeDetailId(userTypeCd);
 
-		System.out.println("보정한 holiday확인: " + holiday);
+		System.out.println("보정한 holiday확인: " + holidayVo);
 
-		if(isAsAssignDate(holiday.getStartDate(), holiday.getEndDate(), userId)) {
-			message = "등록실패: 수리배정일과 동일한 날짜 선택!";
+		long startTime = holidayVo.getStartDate().getTime();
+		long endTime = holidayVo.getEndDate().getTime();
+
+		if(isAsAssignDate(holidayVo.getStartDate(), holidayVo.getEndDate(), userId)) {
+			message = "등록실패: 수리배정일과 동일한 날짜입니다.";
 			System.out.println(message);
-		}
-		else if (isOverlapDate(holiday.getStartDate(), holiday.getEndDate()) || isBeforeToday(holiday.getStartDate().toString())) {
-			message = "등록실패: 부적절한 날짜 선택!";
+		} else if (isOverlapDate(holidayVo.getStartDate(), holidayVo.getEndDate(), userId)) {
+			message = "등록실패: 이미 휴가신청된 날짜입니다";
 			System.out.println(message);
+		} else if(isBeforeToday(holidayVo.getStartDate().toString())) {
+			message = "등록실패: 현재일보다 이전일 입니다.";
+		} else if(startTime > endTime) {
+			message = "등록실패: 종료일은 시작일보다 같거나 이후로 지정해야 합니다.";
 		}
 		else {
 			/*휴가등록*/
-			schdlMngService.addHoliday(holiday);
+			schdlMngService.addHoliday(holidayVo);
 			message = "등록완료!";
 			System.out.println(message);
 		}
-
 		return message;
 	}
 
@@ -149,12 +166,9 @@ public class schdlMngController {
 
 
 	/*휴가 중복 검사*/
-	public boolean isOverlapDate(Date startDate, Date endDate) {
+	public boolean isOverlapDate(Date startDate, Date endDate, String userId) {
 
-		/*세션으로 회원정보 확인*/
-		String userId = "ngw01";
-
-		List<HolidayVo> vacationDates = schdlMngService.getHoliday(userId);
+		List<HolidayVo> vacationDates = schdlMngService.getHolidays(userId);
 		Date startDateToCheck = startDate;
 		Date endDateToCheck = endDate;
 
@@ -165,9 +179,11 @@ public class schdlMngController {
 			Date existingStartDate = vacation.getStartDate();
 			Date existingEndDate = vacation.getEndDate();
 
-			if (startDateToCheck.compareTo(existingEndDate) <= 0 && endDateToCheck.compareTo(existingStartDate) >= 0) {
-				isOverlap = true;
-				break; 
+			if(vacation.getActualUse().equals("Y")) {
+				if (startDateToCheck.compareTo(existingEndDate) <= 0 && endDateToCheck.compareTo(existingStartDate) >= 0) {
+					isOverlap = true;
+					break; 
+				}
 			}
 		}
 
@@ -243,23 +259,37 @@ public class schdlMngController {
 		Date sqlCurrentDate = new Date(lastDayOfYear.getTime());
 		Date sqlFirstDayOfYear = new Date(firstDayOfYear.getTime());
 
-		/*ID에 따른 데이터 조회*/
-		UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-		String userId = userDetails.getUsername();
+		List<SchdlMngVo> holidays = null;
+		int holidayCount = 0;
+		int totalPage = 0;
+		int sharePage = 0; // 첫 페이지 로드이므로 sharePage는 무조건 0
 
 		UserVo userVo = new UserVo();
-		userVo.setUserId(userId);
 
-		/* 스케줄리스트 데이터 */
-		List<SchdlMngVo> holidays = schdlMngService.getHolidays(1, sqlFirstDayOfYear, sqlCurrentDate, userVo);
-		int holidayCount = schdlMngService.getHolidayCount(sqlFirstDayOfYear, sqlCurrentDate, userVo);
 
-		/*DB 데이터 확인*/
-		System.out.println("holidays: " + holidays);
-		System.out.println("holidayCount: " + holidayCount);
+		/*시큐리티로 사용자 역할(role) 확인*/
+		List<GrantedAuthority> authorities = (List<GrantedAuthority>) authentication.getAuthorities();
+		for (GrantedAuthority authority : authorities) {
+			String role = authority.getAuthority();
+			System.out.println("Role: " + role);
 
-		int totalPage = 0;
-		int sharePage = 0;
+
+			if ("ROLE_ADMIN".equals(role)) {
+				/* 스케줄리스트 데이터 */
+				holidays = schdlMngService.getHolidays(1, sqlFirstDayOfYear, sqlCurrentDate, userVo);
+				holidayCount = schdlMngService.getHolidayCount(sqlFirstDayOfYear, sqlCurrentDate, userVo);
+				break;
+			} else {
+				/*ID에 따른 데이터 조회*/
+				UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+				String userId = userDetails.getUsername();
+				userVo.setUserId(userId);
+
+				/* 스케줄리스트 데이터 */
+				holidays = schdlMngService.getHolidays(1, sqlFirstDayOfYear, sqlCurrentDate, userVo);
+				holidayCount = schdlMngService.getHolidayCount(sqlFirstDayOfYear, sqlCurrentDate, userVo);
+			}
+		}
 
 		//   totalPage 구하기
 		if (holidays != null && !holidays.isEmpty()) {
@@ -340,7 +370,7 @@ public class schdlMngController {
 
 
 	/*회원용 휴가 검색 조회*/
-	@PostMapping(value="/user/holiday/search", produces = "application/json; charset=utf-8")
+	@PostMapping(value="/holiday/search", produces = "application/json; charset=utf-8")
 	@ResponseBody
 	public Map<String, Object> getSearchedHolidays(
 			@RequestParam("currentPage") int currentPage,
@@ -401,11 +431,11 @@ public class schdlMngController {
 
 		return data;
 	}
-	
-	
-	
+
+
+
 	/*휴가신청내역 조회*/
-/*	@GetMapping("/holiday/registration")
+	/*	@GetMapping("/holiday/registration")
 	public String registeredHolidayPage(Model model, Authentication authentication) {
 
 		ID에 따른 데이터 조회
@@ -468,10 +498,49 @@ public class schdlMngController {
 		return allSchedules;
 	}
 
-	/*특정 스케줄 상세조회*/
-	@PostMapping("/schedule-Info")
+	/******************************************************캘린더 조회******************************************************/
+
+	/*캘린더 조회*/
+	@GetMapping("/schedule/calendar")
+	public String getCalendar() {
+
+		return "schdlTable";
+	}
+
+	/*회원 캘린더 월별 조회*/
+	@PostMapping(value="/schedule/calendar", produces = "application/json; charset=utf-8")
 	@ResponseBody
-	public Object getScheduleInfo(@RequestParam("userId") String userId,
+	public List<Map<String, Object>> getUserCalendar(
+			@RequestParam(name = "year", defaultValue="2023") int  year, 
+			@RequestParam(name = "month", defaultValue="9") int month, 
+			Model model, 
+			Authentication authentication) {
+
+		String stringYear = String.valueOf(year);
+		String stringMonth = String.valueOf(month);
+
+		/*매개변수 확인*/
+		System.out.println("year: " + year);
+		System.out.println("month: " + month);
+
+		/*ID에 따른 데이터 조회*/
+
+		UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+		String userId = userDetails.getUsername();
+		List<String> ids = new ArrayList<>();
+		ids.add(userId);
+
+		List<Map<String, Object>> schedules = schdlMngService.getAllSchedules(ids, stringYear, stringMonth);
+
+		return schedules;
+	}
+	
+
+	/*특정 스케줄 상세조회*/
+	@PostMapping(value="/schedule-Info")
+	@ResponseBody
+	public Object getScheduleInfo(
+			@RequestParam("userId") String userId,
 			@RequestParam("scheduleType") String scheduleType,
 			@RequestParam("scheduleDate") String scheduleDate) {
 
@@ -494,14 +563,15 @@ public class schdlMngController {
 
 		switch(scheduleType) {
 		case "holiday":
-			HolidayVo holiday = schdlMngService.getHoliday(userId, sqlDate);
-			return holiday;
+			List<HolidayVo> holidays = schdlMngService.getHolidays(userId, sqlDate);
+			return holidays;
 		case "assign":
-			AsAssignVo assign = schdlMngService.getAssign(userId, sqlDate);
-			return assign;
+			List<AsAssignVo> assigns = schdlMngService.getAssigns(userId, sqlDate);
+			System.out.println("assigns: " + assigns);
+			return assigns;
 		case "result":
-			AsResultVo result = schdlMngService.getResult(userId, sqlDate);
-			return result;
+			List<AsResultVo> results = schdlMngService.getResults(userId, sqlDate);
+			return results;
 		}
 
 		return null;
@@ -510,44 +580,19 @@ public class schdlMngController {
 
 
 
-	@GetMapping("/schedule/calendar")
-	public String getCalendar() {
+	/******************************************************휴가취소******************************************************/
 
-		return "schdlTable";
-	}
-
-	/*회원 캘린더 월별 조회*/
-	@PostMapping(value="/schedule/calendar", produces = "text/plain; charset=utf-8")
-	@ResponseBody
-	public List<SchdlMngVo> getUserCalendar(HttpServletRequest request, 
-			@RequestParam("year") Integer year, @RequestParam("month") Integer month,  
-			Model model) {
-		/*매개변수 확인*/
-		System.out.println("year: " + year);
-		System.out.println("month: " + month);
-
-		/*세션에서 회원정보 추출해서 dto에 저장*/
-		HttpSession session = request.getSession();
-		SchdlMngVo schdlMngVo = new SchdlMngVo();
-
-		List<SchdlMngVo> schedules = schdlMngService.getCalendarSchedule(schdlMngVo);
-
-		return schedules;
-	}
 
 	/*휴가취소*/
-	@PostMapping("/holiday/delete")
-	public String deleteHoliday(@RequestParam("holidaySeq") Integer holidaySeq, HttpSession session ) {
+	@GetMapping(value="/holiday/delete", produces = "text/plain; charset=utf-8")
+	@ResponseBody
+	public String deleteHoliday(@RequestParam("scheduleId") Integer scheduleId, HttpSession session ) {
 
 		/*파라미터 데이터 확인*/
-		System.out.println("uri: /holiday/delete, holidaySeq: " + holidaySeq);
+		System.out.println("uri: /holiday/delete, holidaySeq: " + scheduleId);
+		schdlMngService.cancelHoliday(scheduleId);
+		String message = "휴가 취소되었습니다.";
 
-		/*세션에서 사용자ID, 사용자코드 정보 추출*/
-		/*session.getAttribute("user");*/
-
-		/*휴가취소*/
-		schdlMngService.cancelHoliday(holidaySeq);
-
-		return "redirect:/holiday";
+		return message;
 	}
 }
