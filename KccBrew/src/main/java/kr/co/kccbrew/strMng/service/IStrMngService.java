@@ -8,9 +8,9 @@ import kr.co.kccbrew.strMng.model.StrMngVo;
 
 
 public interface IStrMngService {
-	List<StrMngVo> storeAll();
-	List<StrMngVo> strFilter(StrMngVo store, int currentPage);
-	int getStrFilterCount(StrMngVo store);
+	List<StrMngVo> storeAll(StrMngVo strMngVo);
+	List<StrMngVo> strFilter(StrMngVo strMngVo, int page);
+	int getStrFilterCount(StrMngVo strMngVo);
 	List<StrMngVo> locationNm();
 	List<StrMngVo> locationNmSeoul();
 	List<StrMngVo> ownerList(int storeSeq);

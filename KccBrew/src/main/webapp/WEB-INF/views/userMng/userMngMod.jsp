@@ -94,7 +94,7 @@
 				</table>
 			</c:if>
 		</div>
-		<div class="modal-footer" style="width: 100%; margin:auto; display: flex;">
+		<div class="modal-footer" style="width: 100%; margin:auto;">
 				<button type="submit" class="submitMod">저장</button>
 				<button type="button" class="cancelMod">취소</button>
 			</div>
@@ -130,7 +130,7 @@ $(".submitMod").click(function() {
 				}
 				// 모달 창 닫기 및 페이지 새로고침
 				$(".ModalMod").css("display", "none");
-				location.reload();
+				location.href = "/user";
 			},
 			error : function() {
 				alert('빈칸을 모두 입력해주세요.');
