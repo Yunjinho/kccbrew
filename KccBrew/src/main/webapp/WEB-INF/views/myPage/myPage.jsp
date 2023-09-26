@@ -31,14 +31,14 @@
 			<!-- ********** 페이지 네비게이션 끝 ********** -->
 			<div class="myInfo-wrapper">
 				<div class="category">내 정보</div>
-				<form id="changeProfileImg" action="/uploadimg" method="post" enctype="multipart/form-data">
+				<form id="changeProfileImg" name="changeProfileImg" action="/uploadimg" method="post" enctype="multipart/form-data">
 					<table id="search-box">
 						<c:forEach var="user" items="${userInfoList}">
 							<tr>
 								<td rowspan="4">
 									<c:set var="imagePath" value="${path}/${user.fileDetailLocation}${user.fileDetailServerName}" />
 									<img src="<c:out value='${imagePath}'/>" id="profileImg">
-									<input type="file" id="file" name="imgFile" style="display:none" accept=".jpg, .jpeg, .png" onchange="imgTypeCheck(this)"/>
+									<input type="file" id="file" name="userImg" style="display:none" accept=".jpg, .jpeg, .png" onchange="imgTypeCheck(this)"/>
 									<button type="button" id="changeImageBtn" >이미지 변경</button>
 									
 								</td>
@@ -136,7 +136,7 @@
 						</table>
 					</sec:authorize>
 					<div class="modButtons">
-						<button type="submit" id="confirmImgChg">이미지 적용</button>
+						<button type="button" id="confirmImgChg">이미지 적용</button>
 						<c:url var="toChgPwdPage" value="/mypage/chgpwd"/>
 						<a href="${toChgPwdPage}" class="updateBtn">
 							비밀번호 변경
@@ -177,7 +177,7 @@
 	    //form 제출
 	    $('#confirmImgChg').click(function () {
 	        var formData = new FormData();
-	        formData.append('imgFile', $('#file')[0].files[0]);
+	        formData.append('userImg', $('#file')[0].files[0]);
 
 	        $.ajax({
 	            url: '/uploadimg',
@@ -192,15 +192,16 @@
 	                alert("이미지 업로드를 실패했습니다.")
 	            }
 	        });
+	        $("#changeProfileImg").submit();
 	    });
 	});
 	//사진 확장자 체크-> 이미지 사진만 올리게 
     function imgTypeCheck(fileName){
-    	var imgFile=fileName.files[0];
+    	var userImg=fileName.files[0];
     	//파일 확장자 추출	
-    	var fileLen = imgFile.name.length;
-    	var lastDot = imgFile.name.lastIndexOf('.');
-    	var fileType = imgFile.name.substring(lastDot, fileLen).toLowerCase();
+    	var fileLen = userImg.name.length;
+    	var lastDot = userImg.name.lastIndexOf('.');
+    	var fileType = userImg.name.substring(lastDot, fileLen).toLowerCase();
 
     	//확장자 비교
     	if(fileType == ".jpeg" || fileType == ".jpg" || fileType == ".png"){
@@ -212,12 +213,12 @@
     			$("#file").attr("src",e.target.result);
     		};
     		$(".insert-img").css("border","none");
-    		reader.readAsDataURL(imgFile);
+    		reader.readAsDataURL(userImg);
     	}else{
     		$("#imgFileMsg").html("사용자 사진은 jpeg, jpg, png 확장자를 가진 파일만 사용할 수 있습니다.");
     		$("#imgFileMsg").css("display","block");
     		$("#file").css("display","none");
-    		$("input[name=imgFile]").val("");
+    		$("input[name=userImg]").val("");
     	}
     }
 	</script>
