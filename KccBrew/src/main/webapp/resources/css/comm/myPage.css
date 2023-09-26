@@ -65,7 +65,7 @@ button {
 	font-weight: bold;
 }
 .myInfo-wrapper {
-	height:540px;
+	height:auto;
 	padding: 32px 40px;
 }
 
@@ -128,8 +128,14 @@ button {
 	padding: 0 10px;
 	border: 0px;
 	border-bottom: 1px solid #ccc;
-	text-align: left;
+	text-align: center;
 	vertical-align: top;
+}
+tr > th:nth-child(7) {
+	text-align: left;
+}
+.addr {
+	text-align: left !important;
 }
 
 #search-box th {

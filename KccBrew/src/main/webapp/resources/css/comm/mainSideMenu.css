@@ -40,9 +40,9 @@
 	.photo-wrapper img{
 		width:90px;
 		height:110px;
-		position: absolute;
+		position: relative;
 		top:-20px;
-		right:10px;
+		left:10px;
 	}
 	.name {
 		font-size: 1.5em;
