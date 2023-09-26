@@ -283,9 +283,7 @@
 	<update id="updateMyProfileImg" parameterType="kr.co.kccbrew.comm.main.model.MainPageVo">
 		<![CDATA[
 			UPDATE file_detail_info
-			SET 
-				storage_location	= #{fileDetailLocation}
-				,file_servet_nm		= #{fileDetailServerName}
+			SET file_server_nm	= #{fileDetailServerName}
 			WHERE reg_user = {userId}
 		]]>
 	</update>

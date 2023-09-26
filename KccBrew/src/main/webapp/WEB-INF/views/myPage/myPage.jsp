@@ -31,7 +31,7 @@
 			<!-- ********** 페이지 네비게이션 끝 ********** -->
 			<div class="myInfo-wrapper">
 				<div class="category">내 정보</div>
-				<form id="changeProfileImg">
+				<form id="changeProfileImg" action="/uploadimg" method="post" enctype="multipart/form-data">
 					<table id="search-box">
 						<c:forEach var="user" items="${userInfoList}">
 							<tr>
@@ -53,7 +53,7 @@
 								<th>전화번호</th>
 								<td><c:out value="${user.userTelNo}" /></td>
 								<th>주소</th>
-								<td colspan="3"><c:out value="${user.userAddress}" /></td>
+								<td colspan="3" class="addr"><c:out value="${user.userAddress}" /></td>
 							</tr>
 							<tr>
 								<th>사용자구분</th>
@@ -172,6 +172,26 @@
 	    // 이미지 변경 버튼 클릭 시 파일 업로드 input 클릭
 	    $('#changeImageBtn').click(function () {
 	        $('#file').click();
+	    });
+	    
+	    //form 제출
+	    $('#confirmImgChg').click(function () {
+	        var formData = new FormData();
+	        formData.append('imgFile', $('#file')[0].files[0]);
+
+	        $.ajax({
+	            url: '/uploadimg',
+	            type: 'POST',
+	            data: formData,
+	            processData: false,
+	            contentType: false,
+	            success: function (data) {
+	            	alert("이미지 업로드 성공")
+	            },
+	            error: function (xhr, status, error) {
+	                alert("이미지 업로드를 실패했습니다.")
+	            }
+	        });
 	    });
 	});
 	//사진 확장자 체크-> 이미지 사진만 올리게 

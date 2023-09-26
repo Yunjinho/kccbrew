@@ -16,6 +16,7 @@ public interface IMainService {
 	List<MainPageVo> showUserInfoListById(String userId);	//특정 사용자의 정보 리스트
 	List<MainPageVo> showStoreInfoListById(String userId);  //점포 정보 리스트
 	
+	void updateMyProfileImg(MainPageVo mainPageVo); //프로필 이미지 수정
 	MainPageVo insertUserImg(MainPageVo mainPageVo);//사용자 이미지 넣기
 	
 	void updateMyProfile(MainPageVo mainPageVo);//마이페이지 정보 업데이트
