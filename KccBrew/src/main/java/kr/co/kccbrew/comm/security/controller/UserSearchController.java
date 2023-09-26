@@ -1,6 +1,7 @@
 package kr.co.kccbrew.comm.security.controller;
 
 import java.lang.ProcessBuilder.Redirect;
+import java.security.Principal;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -8,6 +9,7 @@ import java.util.UUID;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -19,8 +21,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import kr.co.kccbrew.comm.main.model.MainPageVo;
 import kr.co.kccbrew.comm.security.model.UserVo;
 import kr.co.kccbrew.comm.security.service.IUserSearchService;
+import kr.co.kccbrew.comm.security.service.IUserService;
 import kr.co.kccbrew.comm.util.MailUtil;
 import lombok.RequiredArgsConstructor;
 
@@ -32,6 +36,10 @@ public class UserSearchController {
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 
+	@Autowired
+	IUserService userService;
+	
+	
 	@RequestMapping(value = "/userSearch", method = RequestMethod.GET)
 	public String userSearch() {
 
@@ -83,4 +91,33 @@ public class UserSearchController {
 		}
 		return "security/searchUser";
 	}
+	/******************* 비밀번호 변경 *********************/
+
+	@RequestMapping(value = "/mypage/chgpwd", method = RequestMethod.GET)
+	public String chgPassword(Model model, Principal principal) {
+		String userId = principal.getName();
+		UserVo user = userService.getUserById(userId);
+		String password = user.getUserPwd();
+		System.out.println(password);
+		model.addAttribute("password", password);
+		return "MyPageP3";
+	}
+
+	@RequestMapping(value = "/mypage/chgpwd", method = RequestMethod.POST)
+	public String confirmChange(@ModelAttribute UserVo Vo, HttpServletRequest request, Model model, @ModelAttribute MainPageVo mainPageVo,
+			Principal principal) {
+		
+		String userId = principal.getName();
+		UserVo user = userService.getUserById(userId);
+		String loginPwd = user.getUserPwd();
+		boolean j = passwordEncoder.matches(Vo.getCurrentPassword(), loginPwd);
+		if(j) {
+			 String newPassword = passwordEncoder.encode(Vo.getNewPassword());
+			 user.setUserPwd(newPassword);
+			 searchService.updatePwd(user);
+		}
+		
+		return "redirect:/mypage";
+	}
+
 }

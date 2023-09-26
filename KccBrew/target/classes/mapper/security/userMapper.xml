@@ -196,15 +196,15 @@
 	</insert>
 
 	<!-- ID로 회원정보 가져오기 -->
-	<!-- <select id="getUserById" parameterType="String"
+	<select id="getUserById" parameterType="String"
 		resultMap="userResult">
 		SELECT *
 		FROM users WHERE
 		USER_ID = #{userId}
-	</select> -->
+	</select>
 	
 	<!-- 이미지를 포함한 사용자 정보 불러오기 -->
-	<select id="getUserById" parameterType="kr.co.kccbrew.comm.main.model.MainPageVo" resultType="kr.co.kccbrew.comm.main.model.MainPageVo">
+	<!-- <select id="getUserById" parameterType="kr.co.kccbrew.comm.main.model.MainPageVo" resultType="kr.co.kccbrew.comm.main.model.MainPageVo">
 		<![CDATA[
 			SELECT
 				u.user_id				AS "userId"
@@ -240,7 +240,7 @@
 			LEFT JOIN file_detail_info fd ON f.file_seq = fd.file_seq
 			WHERE u.user_id = #{userId}
 		]]>
-	</select>
+	</select> -->
 
 	<!-- 점주ID로 지점 가져오기 -->
 	<select id="getStoreById" parameterType="String"

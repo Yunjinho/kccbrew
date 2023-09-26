@@ -77,5 +77,6 @@ public class UserVo {
 	private String localSavePath;
 	private String serverSavePath;
 	
-	
+	private String currentPassword;
+	private String newPassword;
 }
