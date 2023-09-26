@@ -33,7 +33,7 @@
 			<div class="nav-bar-brand">
 				<c:url var="toMain" value="/admin/main" />
 				<a href="${toMain}"> <img alt="logo"
-					src="${path}/resources/img/logo.png">
+					src="${path}/resources/img/logo14.png">
 				</a>
 			</div>
 			<div class="nav-box">
@@ -107,7 +107,7 @@
 			<div class="nav-bar-brand">
 				<c:url var="toMain" value="/manager/main" />
 				<a href="${toMain}"> <img alt="logo"
-					src="${path}/resources/img/logo.png">
+					src="${path}/resources/img/logo14.png">
 				</a>
 			</div>
 			<div class="nav-box">
@@ -165,7 +165,7 @@
 			<div class="nav-bar-brand">
 				<c:url var="toMain" value="/mechanic/main" />
 				<a href="${toMain}"> <img alt="logo"
-					src="${path}/resources/img/logo.png">
+					src="${path}/resources/img/logo14.png">
 				</a>
 			</div>
 			<div class="nav-box">

@@ -18,10 +18,14 @@ import kr.co.kccbrew.comm.security.dao.IUserRepository;
 import kr.co.kccbrew.comm.security.model.UserVo;
 import kr.co.kccbrew.comm.security.service.UserService;
 import kr.co.kccbrew.strMng.model.StrMngVo;
+import kr.co.kccbrew.userMng.model.UserMngVo;
+import kr.co.kccbrew.userMng.service.UserMngService;
 
 public class CustomAuthenticationSuccessHandler implements AuthenticationSuccessHandler{
 	@Autowired
 	private UserService userService;
+	@Autowired
+	private UserMngService userMngService;
 
 	@Override
 	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
@@ -32,6 +36,11 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
 		UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 		String userId = userDetails.getUsername();
 		UserVo user = userService.getUserById(userId);
+		
+		// 파일정보 UserVo에 저장
+		UserMngVo userMngVo = userMngService.findByUserInfo(userId);
+		user.setFileServerNm(userMngVo.getImgNm());
+		user.setStorageLocation(userMngVo.getImgUrl());
 
 		// 회원정보 세션에 저장
 		HttpSession session = request.getSession();
@@ -48,7 +57,7 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
 			role = authority;
 		}
 		
-		/*승인되지 않은 회원의 경우 다시 안내메세지*/
+		// 승인되지 않은 회원의 경우 다시 안내메세지
 		if(role.equals(new SimpleGrantedAuthority("ROLE_NOTAPPROVED"))) {
 			response.sendRedirect("/not-approved");
 		} else {
