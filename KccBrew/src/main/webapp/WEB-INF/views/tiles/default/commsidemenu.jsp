@@ -34,37 +34,30 @@
 
 				<h2 class="user-info-wrapper">
 					<c:out value='${user.userNm}' />
-					<span>님</span> 
-					<br> <span class="user-type">관리자</span>
+					<span>님</span> <br> <span class="user-type">관리자</span>
 				</h2>
+
+				<div class="buttons">
+					<c:url var="toMyPage" value="/mypage" />
+					<a href="${toMyPage}" id="toMyPage">마이페이지</a> <span>&nbsp;&nbsp;|&nbsp;</span>
+					<form action="/logout" method="POST">
+						<button type="submit" class="logout">로그아웃</button>
+						<input name="${_csrf.parameterName}" type="hidden"
+							value="${_csrf.token}" />
+					</form>
+				</div>
 
 				<div class="user-task-wrapper">
 					<div class="admin-task">
-					<span>50</span>
-					<br>
-					<span class="task-title">AS신청건수</span>
+						<a class="admin-task-value" href="/as-list"><b class="font-bold">50</b>건</a>
+						<br> <span class="task-title">AS신청건수</span>
 					</div>
 					<div class="admin-task last-task">
-					<span><b>50</b>/100</span>
-					<br><span class="task-title">회원가입 대기건수</span>
+							<a class="admin-task-value" href="/user"><b class="font-bold">50</b>건</a>
+						<br> <span class="task-title">회원가입 대기건수</span>
 					</div>
 
 				</div>
-
-
-
-				<%-- 			<div class="buttons">
-				<c:url var="toMyPage" value="/adminprofilepage" />
-				<a href="${toMyPage}" id="toMyPage">마이페이지</a> 
-
-				<span>&nbsp;&nbsp;|&nbsp;</span>
-
-				<form action="/logout" method="POST">
-					<button type="submit" class="logout">로그아웃</button>
-					<input name="${_csrf.parameterName}" type="hidden"
-						value="${_csrf.token}" />
-				</form>
-			</div> --%>
 
 
 			</div>
