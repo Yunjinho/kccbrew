@@ -2,6 +2,8 @@ package kr.co.kccbrew.sysMng.cdMng.service;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import kr.co.kccbrew.sysMng.cdMng.model.CdMngVo;
 
 
@@ -17,6 +19,7 @@ public interface ICdMngService {
 	void insert2(CdMngVo codeMng);
 	void cdMod(CdMngVo codeMng);
 	void grpUpdate(CdMngVo codeMng);
-
+	List<CdMngVo> grcdList();
+	List<CdMngVo> grcdDtlList(String cdId);
  
 }

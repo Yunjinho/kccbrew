@@ -26,7 +26,15 @@ public class CdMngService implements ICdMngService {
 	public List<CdMngVo> selectNm() {
 		return cdMngRepository.selectNm();
 	}
-
+	
+	@Override
+	public List<CdMngVo> grcdList(){
+		return cdMngRepository.grcdList();
+	}
+	@Override
+	public List<CdMngVo> grcdDtlList(String cdId){
+		return cdMngRepository.grcdDtlList(cdId);
+	}
 	/* 조건검색가능한 코드리스트 */
 	@Override
 	public List<CdMngVo> filter(CdMngVo codeMng, int currentPage) {

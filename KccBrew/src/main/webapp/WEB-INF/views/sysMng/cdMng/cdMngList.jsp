@@ -45,214 +45,59 @@
 
 								<!-- ********** 점포 리스트 조회 ********** -->
 								<div id="content">
-									<h2 class="heading">코드조회</h2>
+									<h2 class="heading" style="margin-bottom: 0px;">코드조회</h2>
 									<!-- 점포 검색 -->
-									<form action="/code" method="get">
-										<table id="search-box">
-											<!-- 1행 -->
-											<c:set var="today" value="<%=new java.util.Date()%>" />
-											<fmt:formatDate value="${today}" pattern="yyyy" var="nowYear" />
-											<tr>
 
-												<th>등록일자</th>
-												<!-- 시작 연도 선택 필드 -->
-												<td><select class="tx2" name="startYr" id="yr"
-													onchange="javascript:chg();">
-														<option value="">연도</option>
-														<c:forEach var="i" begin="0" end="9">
-															<c:set var="year" value="${nowYear - i}" />
-															<option value="${year}"
-																${param.startYr == year ? 'selected' : ''}>${year}년</option>
-														</c:forEach>
-												</select></td>
+									<div id="logTable" style="margin-buttom: 50px;">
 
-												<!-- 시작 월 선택 필드 -->
-												<td><select class="tx2" name="startMn" id="mn">
-														<option value="">월</option>
-														<c:forEach var="month" begin="1" end="12">
-															<option value="${month}"
-																${param.startMn == month ? 'selected' : ''}>${month}월</option>
-														</c:forEach>
-												</select></td>
-
-												<td>~</td>
-
-												<!-- 종료 연도 선택 필드 -->
-												<td><select class="tx2" name="endYr" id="yr"
-													onchange="javascript:chg();">
-														<option value="">연도</option>
-														<c:forEach var="i" begin="0" end="9">
-															<c:set var="year" value="${nowYear - i}" />
-															<option value="${year}"
-																${param.endYr == year ? 'selected' : ''}>${year}년</option>
-														</c:forEach>
-												</select></td>
-
-												<!-- 종료 월 선택 필드 -->
-												<td><select class="tx2" name="endMn" id="mn">
-														<option value="">월</option>
-														<c:forEach var="month" begin="1" end="12">
-															<option value="${month}"
-																${param.endMn == month ? 'selected' : ''}>${month}월</option>
-														</c:forEach>
-												</select></td>
-												<th>그룹코드 사용여부</th>
-												<td><select name="cdUseYn" class="tx2" id="yn"
-													onchange="javascript:chg();">
-														<option value="">선택</option>
-														<option value="Y"
-															${param.cdUseYn == 'Y' ? 'selected' : ''}>Y</option>
-														<option value="N"
-															${param.cdUseYn == 'N' ? 'selected' : ''}>N</option>
-												</select></td>
-											</tr>
-											<!-- 2행 -->
-											<tr>
-
-												<th>그룹코드</th>
-												<td colspan="3"><select class="tx2" name="cdId"
-													onchange="chg()">
-														<option value="">그룹코드명</option>
-														<c:forEach var="list" items="${List}">
-															<option value="${list.cdId}"
-																${param.cdId == list.cdId ? 'selected' : ''}>${list.cdNm}</option>
-														</c:forEach>
-												</select></td>
-
-												<th>상세코드명</th>
-												<!-- Input field for URI -->
-												<td colspan="3"><input type="search" name="keyword"
-													placeholder="상세코드명 입력하세요" value="${param.keyword}"
-													size="30"></td>
-
-											</tr>
-
-
-											<!-- 4행 -->
-											<tr>
-												<td colspan="7" style="border-bottom: none;"></td>
-												<td style="border-bottom: none;">
-												<div>
-														<button type="submit" class="form-btn" id="find-btn1">검색</button>
-														<!-- <button type="button" class="form-btn" id="find-btn1"
-															onclick="location.href='/code';">초기화</button> -->
-													</div>
-												</td>
-											</tr>
-										</table>
-									</form>
-									<div id="logTable">
-										<div class="list-info-div">
-											<p class="data-info">
-												전체<b><span><c:out value="${totalLog}" /></span></b>건<span
-													id="text-separator"> | </span><b><span><c:out
-															value="${currentPage}" /></span></b>/<b><span><c:out
-															value="${totalPage}" /></span></b>쪽
-											</p>
-										</div>
-
-
-										<table class="text-center">
-											<thead>
-												<tr>
-													<th scope="col">코드넘버</th>
-													<th scope="col">그룹코드ID</th>
-													<th scope="col">그룹코드이름</th>
-													<th scope="col">상세코드ID</th>
-													<th scope="col">상세코드이름</th>
-													<th scope="col">상세코드사용여부</th>
-													<th scope="col">상세보기</th>
-												</tr>
-											</thead>
-											<tbody>
-												<c:forEach items="${list}" var="no" varStatus="loop">
-													<tr>
-														<td>${no.cdIdx}</td>
-														<td>${no.cdId}</td>
-														<td><a href="javascript:void(0);"
-															onclick="popup2('${no.cdId}');">${no.cdNm}</a></td>
-														<td>${no.cdDtlId}</td>
-														<td>${no.cdDtlNm}</td>
-														<td>${no.cdDtlUseYn}</td>
-														<td>
-														<c:if test="${no.cdIdx != 0}">
-														<a href="javascript:void(0);"
-															data-cdId="${no.cdId}" data-cdDtlId="${no.cdDtlId}"
-															onclick="popup1(this.getAttribute('data-cdId'), this.getAttribute('data-cdDtlId'));">
-																상세보기
-														</a></c:if></td>
-													</tr>
-												</c:forEach>
-											</tbody>
-										</table>
-										</div>
-										<div id="writebtn">
-											<a href="javascript:void(0);" onclick="popup();"> <button
-												type="button" class="form-btn">코드등록</button>
-											</a>
-										</div>
-									<div class="paging pagination">
-
-										<!-- 앞으로 가는 버튼 -->
-										<a
-											href="/code?currentPage=${page}&cdUseYn=${searchContent.cdUseYn}&startYr=${searchContent.startYr}&startMn=${searchContent.startMn}&endYr=${searchContent.endYr}&endMn=${searchContent.endMn}&cdId=${searchContent.cdId}&keyword=${searchContent.keyword}">
-											<img
-											src="/resources/img/log/free-icon-left-chevron-6015759.png"
-											alt=" 처음" />
-										</a>
-
-										<c:choose>
-											<c:when test="${currentPage > 1}">
-												<a
-													href="/code?currentPage=${page}&cdUseYn=${searchContent.cdUseYn}&startYr=${searchContent.startYr}&startMn=${searchContent.startMn}&endYr=${searchContent.endYr}&endMn=${searchContent.endMn}&cdId=${searchContent.cdId}&keyword=${searchContent.keyword}"><img
-													src="/resources/img/log/free-icon-left-arrow-271220.png"
-													alt="이전" /></a>
-											</c:when>
-											<c:otherwise>
-												<a href="#" disabled="disabled"><img
-													src="/resources/img/log/free-icon-left-arrow-271220.png"
-													alt="이전" /></a>
-											</c:otherwise>
-										</c:choose>
-
-										<!-- 리스트 목록 나열 -->
-										<div id="number-list">
-											<div class="page-btn">
-												<c:forEach var="page" begin="${sharePage * 10 + 1}"
-													end="${(sharePage + 1) * 10}" step="1">
-													<c:if test="${page <= totalPage}">
-														<a
-															href="/code?currentPage=${page}&cdUseYn=${searchContent.cdUseYn}&startYr=${searchContent.startYr}&startMn=${searchContent.startMn}&endYr=${searchContent.endYr}&endMn=${searchContent.endMn}&cdId=${searchContent.cdId}&keyword=${searchContent.keyword}"
-															class="pagination page-btn ${currentPage == page ? 'selected' : ''}">
-															${page} </a>
-													</c:if>
-												</c:forEach>
+										<div style="width: 48%; float: left;">
+											<h3>그룹코드</h3>
+											<div id="grp">
+												<%@ include file="grpCdMngDtl.jsp"%>
 											</div>
+											<table class="left">
+												<thead>
+													<tr>
+														<th scope="col">그룹코드ID</th>
+														<th scope="col">그룹코드이름</th>
+
+													</tr>
+												</thead>
+												<tbody>
+													<c:forEach items="${list}" var="no" varStatus="loop">
+														<tr>
+															<td>${no.cdId}</td>
+															<td><a href="javascript:void(0);"
+																data-cdId="${no.cdId}"
+																onclick="cdSearch(this.getAttribute('data-cdId'));">${no.cdNm}</a></td>
+
+														</tr>
+													</c:forEach>
+												</tbody>
+											</table>
 										</div>
+										<hr
+											style="display: inline-block; height: 60vh; width: .05vw; border-width: 0; color: #D3D3D3; background-color: #D3D3D3; margin-left: 20px;">
+										<div style="width: 48%; float: right;">
+											<h3>상세코드</h3>
+											<div id="cd">
+												<%@ include file="cdMngDtl.jsp"%></div>
+											<table class="right">
+												<thead>
+													<tr>
+														<th scope="col">상세코드ID</th>
+														<th scope="col">상세코드이름</th>
+													
+														<!-- <th scope="col">상세보기</th> -->
+													</tr>
+												</thead>
+												<tbody id="ajaxList">
+													
+												</tbody>
 
-										<!-- 뒤로 가는 버튼 -->
-										<c:if test="${currentPage < totalPage}">
-											<a
-												href="/code?currentPage=${page}&cdUseYn=${searchContent.cdUseYn}&startYr=${searchContent.startYr}&startMn=${searchContent.startMn}&endYr=${searchContent.endYr}&endMn=${searchContent.endMn}&cdId=${searchContent.cdId}&keyword=${searchContent.keyword}">
-												<img
-												src="/resources/img/log/free-icon-right-arrow-271228.png"
-												alt="다음" />
-											</a>
-										</c:if>
-										<c:if test="${currentPage == totalPage}">
-											<a href="javascript:void(0);" class="disabled-link"> <img
-												src="/resources/img/log/free-icon-right-arrow-271228.png"
-												alt="다음" />
-											</a>
-										</c:if>
-
-										<a
-											href="/code?currentPage=${page}&cdUseYn=${searchContent.cdUseYn}&startYr=${searchContent.startYr}&startMn=${searchContent.startMn}&endYr=${searchContent.endYr}&endMn=${searchContent.endMn}&cdId=${searchContent.cdId}&keyword=${searchContent.keyword}"><img
-											src="/resources/img/log/free-icon-fast-forward-double-right-arrows-symbol-54366.png"
-											alt="마지막" /></a>
+											</table>
+										</div>
 									</div>
-
-
 								</div>
 							</div>
 						</div>
@@ -261,35 +106,88 @@
 			</div>
 		</div>
 	</div>
-	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 	<script
 		src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-	<script>
+	<script type="text/javascript">
 		window.name = 'viewPage';
+		var id = null;
+		function cdSearch(cdId) {
+			var url = "<c:url value='/code/dtl/' />" + cdId;
+			id=cdId;
+			$.ajax({
+				type : "get",
+				url : "<c:url value='/code/' />" + cdId,
+				success : function(data) {
+					$("#grp").html(data);
+				},
+				error : function() {
+					// 에러 처리
+					console.error("Ajax 요청 실패");
+				}
+			});
 
-		function popup() {
-			var url = "<c:url value='/code/insert' />";
-			var name = "팝업 테스트";
-			var option = "width=800,height=550,top=200,left=450,scrollbars=yes,directories=no,location=no";
-			window.open(url, name, option);
-			// 팝업 창을 열고 난 후에 window.close(); 함수를 제거하면 팝업 창이 열린 상태로 유지됩니다.
+			$.ajax({
+						type : "get",
+						url : url,
+						data : {
+							"cdId" : cdId
+						},
+						contentType : "application/x-www-form-urlencoded; charset=UTF-8",
+						dataType : "json",
+						success : function(data) {
+							// 받아온 데이터를 처리하여 HTML에 추가
+							$("#ajaxList").empty(); // 이전 데이터를 지우고 새로운 데이터로 갱신
+							ajaxHtml(data);
+
+						},
+						error : function() {
+							// 에러 처리
+							console.error("Ajax 요청 실패");
+						}
+					});
 		}
 
-		function popup1(cdId, cdDtlId) {
+		function ajaxHtml(data) {
+
+			// 데이터를 순회하면서 원하는 작업을 수행합니다.
+			data.forEach(function(item) {
+						var cdId = item.cdId;
+						var cdDtlId = item.cdDtlId;
+						var cdDtlNm = item.cdDtlNm;
+
+						var newRow = "<tr>";
+						newRow += "<td>" + cdDtlId + "</td>";
+						newRow += '<td><a href="javascript:void(0);" data-cdId="'
+								+ cdId
+								+ '" data-cdDtlId="'
+								+ cdDtlId
+								+ '" onclick="searchDtl(this.getAttribute(\'data-cdId\'), this.getAttribute(\'data-cdDtlId\'));">'
+								+ cdDtlNm + '</a></td>';
+						newRow += "</tr>";
+
+						$("#ajaxList").append(newRow);
+					});
+		}
+
+	
+		function searchDtl(cdId, cdDtlId) {
 			var url = "<c:url value='/code/' />" + cdId + "/" + cdDtlId;
-			var name = "팝업 테스트";
-			var option = "width=800,height=600,top=200,left=450,scrollbars=yes,directories=no,location=no";
-			window.open(url, name, option);
-			// 팝업 창을 열고 난 후에 window.close(); 함수를 제거하면 팝업 창이 열린 상태로 유지됩니다.
+			$.ajax({
+				type : "get",
+				url : url,
+				success : function(data) {
+					console.log(data);
+					$("#cd").html(data);
+				},
+				error : function() {
+					// 에러 처리
+					console.error("Ajax 요청 실패");
+				}
+			});
+
 		}
 
-		function popup2(cdId) {
-			var url = "<c:url value='/code/' />" + cdId;
-			var name = "팝업 테스트";
-			var option = "width=800,height=500,top=200,left=450,scrollbars=yes,directories=no,location=no";
-			window.open(url, name, option);
-			// 팝업 창을 열고 난 후에 window.close(); 함수를 제거하면 팝업 창이 열린 상태로 유지됩니다.
-		}
 	</script>
 </body>
 </html>

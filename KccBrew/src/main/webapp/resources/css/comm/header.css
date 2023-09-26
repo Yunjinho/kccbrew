@@ -19,7 +19,7 @@
 .top-bar {
 	display:flex;
 	justify-content:flex-end;
-	padding: 0 200px;
+	padding: 0 20px;
 	font-size:0.8em;
 	color:#ffffff;
 	height: 30px;
@@ -43,16 +43,14 @@
 	margin-top:0;
 	margin-left:10px;
 	padding: 5px 15px;
-	border: 1px solid #00006f;
+	border: none;
 	background-color: #00006f;
 	color:#ffffff;
 	cursor: pointer;
 }
 .logout-btn:hover {
-	text-decoration: underline;
-	background-color: #00006f;
-	border: 1px solid #00006f;
-	color:#ffffff;
+	background-color: #E6E6E6;
+	color:#111111;
 }
 /********* nav 바 *************/
 .nav-bar{

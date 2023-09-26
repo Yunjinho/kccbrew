@@ -11,6 +11,8 @@ import kr.co.kccbrew.sysMng.cdMng.model.CdMngVo;
 
 public interface ICdMngRepository { 
 	List<CdMngVo> selectNm();
+	List<CdMngVo> grcdList();
+	List<CdMngVo> grcdDtlList(@Param("cdId")String cdId);
 	List<CdMngVo> filter(Map<String, Object> map);
 	int getCdFilterCount(Map<String, Object> map);
 	CdMngVo selectCd(@Param("cdId")String cdId, @Param("cdDtlId")String cdDtlId);
