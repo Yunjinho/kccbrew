@@ -12,7 +12,7 @@ import kr.co.kccbrew.strMng.model.StrMngVo;
 
 
 public interface IStrMngRepository {
-	List<StrMngVo> storeAll();
+	List<StrMngVo> storeAll(StrMngVo strMngVo);
 	List<StrMngVo> strFilter(Map<String, Object> map);
 	int getStrFilterCount(Map<String, Object> map);
 	List<StrMngVo> ownerList(int storeSeq);

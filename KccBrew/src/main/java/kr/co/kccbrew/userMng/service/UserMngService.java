@@ -17,17 +17,17 @@ public class UserMngService implements IUserMngService {
 	private final IUserMngRepository userMngRepository;
 	
 	@Override
-	public List<UserMngVo> userList(UserMngVo userMngVo, int currentPage) {
-		Map<String, Object> map = new HashMap<String, Object>();
+	public List<UserMngVo> userList(UserMngVo userMngVo, int page) {
+		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("UserMngVo", userMngVo);
-		map.put("firstRowNum", currentPage*10-9);
-		map.put("lastRowNum", currentPage*10);
+		map.put("start", ((page-1)*10)+1);
+		map.put("end", page*10);
 		return userMngRepository.userList(map);
 	}
 
 	@Override
 	public int getUserCount(UserMngVo userMngVo) {
-		Map<String, Object> map = new HashMap<String, Object>();
+		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("UserMngVo", userMngVo);
 		return userMngRepository.getUserCount(map);
 	}
