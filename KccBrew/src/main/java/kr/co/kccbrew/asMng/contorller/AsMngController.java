@@ -15,6 +15,7 @@ import java.util.Set;
 import java.util.TreeMap;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.poi.ss.usermodel.Cell;
@@ -182,7 +183,9 @@ public class AsMngController {
 		return "redirect:/as-list";
 	}
 	
-	/** as 상세 조회*/
+	/** 
+	 * as 상세 조회
+	 */
 	@RequestMapping(value="/as-detail",method=RequestMethod.GET)
 	public String asDetail(@RequestParam String asInfoSeq,@RequestParam String asAssignSeq, Model model,HttpServletRequest request) {
 		AsMngVo vo = asMngService.selectAsInfoDetail(asInfoSeq,asAssignSeq);
@@ -283,7 +286,9 @@ public class AsMngController {
 	}
 	
 	
-	/** 점포 검색 */
+	/** 
+	 * 점포 검색
+	 */
 	@ResponseBody
 	@RequestMapping(value="/search-location-cd" , method=RequestMethod.POST)
 	public JSONArray searchLocationCode(String locCd) {
@@ -294,7 +299,9 @@ public class AsMngController {
 		}
 		return result;
 	}
-	/** 점포 휴무 체크 */
+	/**
+	 *  점포 휴무 체크 
+	 */
 	@ResponseBody
 	@RequestMapping(value="/check-str-schedule" , method=RequestMethod.POST)
 	public JSONObject checkStrSchedule(String strMngId,String visitDttm) {
@@ -304,7 +311,9 @@ public class AsMngController {
 		JSONObject result=new JSONObject(check);
 		return result;
 	}
-	/** 수리기사 조회 */
+	/** 
+	 * 수리기사 조회
+	 */
 	@ResponseBody
 	@RequestMapping(value="/search-mecha" , method=RequestMethod.POST)
 	public JSONObject searchMecha(String locationCd,String visitDttm,String machineCd) {
@@ -315,7 +324,9 @@ public class AsMngController {
 		return result;
 	}
 	
-	/** 조회한 list 다운로드 */
+	/** 
+	 * 조회한 list 다운로드 
+	 */
 	@ResponseBody
 	@RequestMapping(value="/download-list" , method=RequestMethod.POST)
 	public void downloadList(String flag,@RequestParam(defaultValue = "1")String currentPage,
@@ -323,7 +334,7 @@ public class AsMngController {
 			@RequestParam(defaultValue = "")String endYr,@RequestParam(defaultValue = "")String endMn,
 			@RequestParam(defaultValue = "")String asInfoSeq,@RequestParam(defaultValue = "")String storeNm,
 			@RequestParam(defaultValue = "")String storeAddr,@RequestParam(defaultValue = "")String searchId,
-			@RequestParam(defaultValue = "")String machineCd,@RequestParam(defaultValue = "")String asStatusCd,HttpServletRequest request) {
+			@RequestParam(defaultValue = "")String machineCd,@RequestParam(defaultValue = "")String asStatusCd,HttpServletRequest request,HttpServletResponse response) {
 		//세션값 받기
 		HttpSession session=request.getSession();
 		UserVo user=(UserVo)session.getAttribute("user");
@@ -339,7 +350,7 @@ public class AsMngController {
 		vo.setAsStatusCd(asStatusCd);
 		vo.setUserId(user.getUserId());
 		vo.setUserTypeCd(user.getUserTypeCd());
-		asMngService.downloadExcel(vo, flag,currentPage);
+		asMngService.downloadExcel(response,vo, flag,currentPage);
 	}
 	
 	@RequestMapping(value = "/as-mod", method = RequestMethod.GET)
