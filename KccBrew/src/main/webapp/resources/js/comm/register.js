@@ -58,7 +58,7 @@ function changeType(typeNum){
 function insertTableContent(data){
 	var content = "";
 	for (var i = 0; i < data[0].length; i++) {
-		content += '<tr><td><input type="radio" name="select-store">'
+		content += '<tr><td><input type="radio" name="select-store" onclick="selectStore()">'
 			+ '<input type="hidden" value="'+data[0][i].storeSeq+'"></td>\n'
 			+ '<td>'+data[0][i].storeNm+'</td>\n' 
 			+ '<td>'+data[0][i].storeAddr+'</td>\n</tr>'; 
@@ -384,7 +384,28 @@ function imgTypeCheck(fileName){
 		$("input[name=imgFile]").val("")
 	}
 }
+function selectStore(){
+	var checked=$("input[name=select-store]:checked");
+	var storeId;
+	var storeAddr;
+	var storeNm;
 
+	// 체크된 체크박스 값을 가져온다
+	checked.each(function(i) {
+		// checkbox.parent() : checkbox의 부모는 <td>이다.
+		// checkbox.parent().parent() : <td>의 부모이므로 <tr>이다.
+		var tr = checked.parent().parent().eq(i);
+		var td = tr.children();
+		//선택한 행의 점포 아이디, 점포 주소, 점포 이름 가져오기
+		storeId=td.eq(0).children().eq(1).val();
+		storeNm=td.eq(1).text();
+		storeAddr=td.eq(2).text()
+	});
+	$("input[name=storeId]").val(storeId);
+	$("input[name=storeAddr]").val(storeAddr);
+	$("input[name=storeNm]").val(storeNm);
+	$(".search-store").css("display","none");
+}
 
 window.onload = function(){
 	$(".paging>li").eq(0).children().css("font-weight","bold");

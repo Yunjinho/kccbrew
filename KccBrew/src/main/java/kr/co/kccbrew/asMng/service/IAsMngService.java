@@ -2,6 +2,9 @@ package kr.co.kccbrew.asMng.service;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.apache.ibatis.annotations.Param;
 
 import kr.co.kccbrew.asMng.model.AsMngVo;
@@ -107,7 +110,7 @@ public interface IAsMngService {
 	 * 엑셀로 저장
 	 * @param asMngVo
 	 */
-	public void downloadExcel(AsMngVo asMngVo,String flag,String currentPage);
+	public void downloadExcel(HttpServletResponse response,AsMngVo asMngVo,String flag,String currentPage);
 	
 	public void asMod(AsMngVo asMngVo);
 	public void deleteFile(AsMngVo asMngVo, String imgSeq);

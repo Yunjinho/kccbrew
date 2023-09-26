@@ -19,15 +19,18 @@
 	            ,user_nm AS "mechanicNm"
 	            ,visit_dttm AS "visitDttm"
 	            ,result_dttm AS "resultDttm" 
+	            ,as_content AS "asContent"
+	            ,result_dtl AS "resultDtl"
 	FROM (SELECT as_info_seq ,store_nm, store_addr, reg_dttm
 				,as_status_nm,as_status_cd,machine_cd_nm
 				,machine_cd,mechanic_id,reassign,as_assign_seq
 				,rownum AS rowNumber,reapply,reapply_confirm
-				,user_nm,visit_dttm,result_dttm
+				,user_nm,visit_dttm,result_dttm,as_content,result_dtl
 		 FROM (select a.as_info_seq
 		 		, s.store_nm
 		 		, s.store_addr
 		 		, a.reg_dttm 
+		 		, a.as_content
 		 		, status.as_status_nm
 		 		, status.as_status_cd
 		 		, machine.machine_cd_nm
@@ -39,6 +42,7 @@
 		 		, ass.user_nm 
 		 		, ass.visit_dttm
 		 		, ar.result_dttm
+		 		, ar.result_dtl
          FROM as_information a 
  		 INNER JOIN store_user_map su ON a.store_mng_id=su.user_id
 		 INNER JOIN users u ON su.user_id=u.user_id 
@@ -102,6 +106,8 @@
 	            ,user_nm AS "mechanicNm"
 	            ,visit_dttm AS "visitDttm"
 	            ,result_dttm AS "resultDttm" 
+	            ,as_content AS "asContent"
+	            ,result_dtl AS "resultDtl"
 	FROM (SELECT as_info_seq 
 			,store_nm
 			, store_addr
@@ -119,10 +125,13 @@
 			,user_nm
 			,visit_dttm
 			,result_dttm
+			,result_dtl
+			, as_content
 		 FROM (select a.as_info_seq
 		 		, s.store_nm
 		 		, s.store_addr
 		 		, a.reg_dttm 
+		 		, a.as_content
 		 		, status.as_status_nm 
 		 		, status.as_status_cd
 		 		, machine.machine_cd_nm
@@ -135,6 +144,7 @@
 		 		, ass.user_nm
 		 		, ass.visit_dttm
 		 		, ar.result_dttm 
+		 		, ar.result_dtl
          FROM as_information a 
  		 INNER JOIN store_user_map su ON a.store_mng_id=su.user_id
 		 INNER JOIN users u ON su.user_id=u.user_id 

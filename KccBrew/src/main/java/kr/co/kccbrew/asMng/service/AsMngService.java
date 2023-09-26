@@ -2,8 +2,6 @@ package kr.co.kccbrew.asMng.service;
 
 import java.io.File;
 import java.io.FileOutputStream;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.sql.Date;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -11,6 +9,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
@@ -237,10 +238,10 @@ public class AsMngService implements IAsMngService{
 		asRepository.deleteFile(imgSeq);
 	}
 	@Override
-	public void downloadExcel(AsMngVo asMngVo,String flag,String currentPage) {
+	public void downloadExcel(HttpServletResponse response,AsMngVo asMngVo,String flag,String currentPage) {
 		List<AsMngVo> list;
-		 Map<Integer, Object[]> data = new HashMap();
-		 data.put(1, new Object[]{"AS 번호", "신청일", "AS 상태","점포명","점포 주소","신청 장비","배정 기사","방문 예정일","AS 처리일","접수 내용","처리 결과 내용"});
+		Map<Integer, Object[]> data = new HashMap();
+		data.put(1, new Object[]{"AS 번호", "신청일", "AS 상태","점포명","점포 주소","신청 장비","배정 기사","방문 예정일","AS 처리일","접수 내용","처리 결과 내용"});
 		if(flag.equals("1")) {
 			//현재 페이지 저장
 			list=selectASList(asMngVo, Integer.parseInt(currentPage));
@@ -316,8 +317,9 @@ public class AsMngService implements IAsMngService{
            // 포맷 적용
            String formatedNow = now.format(formatter);
     
-           FileOutputStream out = new FileOutputStream(new File("C:\\kccbrew", asMngVo.getUserId()+"_"+formatedNow+"_as_list.xlsx"));
+           FileOutputStream out = new FileOutputStream(new File(System.getProperty("user.home") + "\\Downloads\\" , asMngVo.getUserId()+"_"+formatedNow+"_as_list.xlsx"));
            workbook.write(out);
+           
            out.close();
        } catch (Exception e) {
            e.printStackTrace();
