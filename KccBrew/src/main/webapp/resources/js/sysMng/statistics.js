@@ -77,7 +77,7 @@ function highRankMecha(data){
 		},
 		title: {
 			align: 'left',
-			text: data[1].date+', 평점 상위 기사 '
+			text: data[1].date+', 평점 상위 기사 (이름 , ID)'
 		},
 		accessibility: {
 			announceNewData: {
@@ -144,7 +144,7 @@ function lowRankMecha(data){
 		},
 		title: {
 			align: 'left',
-			text: data[1].date+', 평점 하위 기사 '
+			text: data[1].date+', 평점 하위 기사 (이름 , ID) '
 		},
 		accessibility: {
 			announceNewData: {
@@ -274,7 +274,7 @@ function moveBeforeYear(){
 	var year=$("input[name=year]").val();
 	year*=1;
 	year-=1;
-	$("input").val(year);
+	$("input[name=year]").val(year);
 	
 	machineByYearAjax(year);
 	highRankMechaAjax(year);
@@ -283,11 +283,11 @@ function moveBeforeYear(){
 }
 
 function moveNextYear(){
-	var year=$("input").val();
+	var year=$("input[name=year]").val();
 	year*=1;
 	year+=1;
 	
-	$("input").val(year);
+	$("input[name=year]").val(year);
 	machineByYearAjax(year);
 	highRankMechaAjax(year);
 	lowRankMechaAjax(year);

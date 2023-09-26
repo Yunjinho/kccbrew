@@ -275,6 +275,7 @@
 				,user_addr			= #{userAddress}
 				,eqpmn_cd 			= #{machineCode, jdbcType=VARCHAR}
 				,location_cd 		= #{mechaLocationCode, jdbcType=VARCHAR}
+				,mod_dttm			= SYSTIMESTAMP 
 			WHERE user_id = #{userId}
 		]]>
 	</update>
@@ -283,8 +284,8 @@
 	<update id="updateMyProfileImg" parameterType="kr.co.kccbrew.comm.main.model.MainPageVo">
 		<![CDATA[
 			UPDATE file_detail_info
-			SET file_server_nm	= #{fileDetailServerName}
-			WHERE reg_user = {userId}
+			SET file_server_nm	= #{fileDetailServerName, jdbcType=VARCHAR}
+			WHERE reg_user = #{userId}
 		]]>
 	</update>
 	

@@ -119,7 +119,7 @@ public class MainService implements IMainService{
 		return storeInfoListById;
 	}
 	
-	//사용자 정보 수정하기   
+	//이미지를 제외한 사용자 정보 수정하기   
 	@Override
 	public void updateMyProfile(MainPageVo mainPageVo) {
 		mainRepository.updateMyProfile(mainPageVo);
@@ -131,7 +131,7 @@ public class MainService implements IMainService{
 		MainPageVo vo = new MainPageVo();
 		vo.setUserId(mainPageVo.getUserId());
 		//기본 파일정보 등록
-		mainRepository.insertFileInfo(mainPageVo);
+		mainRepository.insertFileInfo(vo);
 		MultipartFile imgFile = mainPageVo.getUserImg();
 		vo.setFileOriginalName(imgFile.getOriginalFilename());
 		vo.setFileDetailServerName(mainPageVo.getUserId()+"_"+imgFile.getOriginalFilename());
@@ -139,7 +139,7 @@ public class MainService implements IMainService{
 		vo.setFileDetailLocation(mainPageVo.getFileDetailLocation());
 		mainPageVo.setFileId(vo.getFileId());
 		//파일 상세 정보 등록
-		mainRepository.insertFileDtlInfo(mainPageVo);
+		mainRepository.insertFileDtlInfo(vo);
 		//이미지 파일 저장
 		String targetPath = mainPageVo.getServerSavePath()+"\\"+vo.getFileDetailServerName();
 		String localPath = mainPageVo.getLocalSavePath()+"\\"+vo.getFileDetailServerName();
