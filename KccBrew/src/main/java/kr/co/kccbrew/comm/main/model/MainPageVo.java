@@ -3,6 +3,8 @@ package kr.co.kccbrew.comm.main.model;
 import java.time.LocalDate;
 import java.util.Date;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import lombok.Data;
 
 @Data
@@ -17,11 +19,19 @@ public class MainPageVo {
 	String userInUse;			//사용자 정보 사용 여부
 	String approveStatus;		//사용자 가입 승인 여부
 	String admWhoAcp;       	//가입 승인한 관리자
+	
+	/**
+	 * 파일 저장 VO
+	 **/
+	MultipartFile userImg;		//사용자 이미지
 	int fileId;					//파일 번호
+	String fileOriginalName;	//파일 원본 이름
 	String fileDetailLocation; 	//파일 저장 경로
 	String fileDetailServerName;//파일 서버 내 이름
-	String imgName;				//이미지명
-	String imgUrl;				//이미지 url
+	String fileFmt;				//파일 형식
+	String localSavePath;
+	String serverSavePath;
+	
 	
 	
 	int asAssignNum; 		//배정 번호

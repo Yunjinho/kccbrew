@@ -32,15 +32,13 @@
 			<!-- ********** 페이지 네비게이션 끝 ********** -->
 			<div class="myInfo-wrapper">
 				<div class="category">내 정보</div>
-					<form action='<c:url value= '/confirmmod'/>' method="post">
+					<form  method="post">
 					<table id="search-box">
 						<c:forEach var="user" items="${userInfoList}" >
 							<tr>
 								<td rowspan="4">
 									<c:set var="imagePath" value="${path}/${user.fileDetailLocation}${user.fileDetailServerName}" />
 									<img src="<c:out value='${imagePath}'/>" id="profileImg">
-									<input type="file" id="file" name="imgFile" style="display:none" accept=".jpg, .jpeg, .png"/>
-									<button type="button" id="changeImageBtn" >이미지 변경</button>
 								</td>
 								<th><label for="userId">ID</label></th>
 								<td>
@@ -91,6 +89,9 @@
 							</tr>
 						</c:forEach>
 					</table>
+					<ul class="register-msg">
+						<li id="imgFileMsg">사용자 사진: 필수 정보입니다.</li>
+					</ul>
 	
 					<sec:authorize access="hasRole('ROLE_MANAGER')">
 						<div class="category">상세정보</div>
@@ -149,7 +150,7 @@
 						</table>
 					</sec:authorize>
 					<div class="modButtons">
-						<button type="submit" id="confirmMod">확인</button>
+						<button type="submit" id="confirmMod" formaction='<c:url value= '/confirmmod'/>'>확인</button>
 						<c:url var="cancel" value="/mypage"></c:url>
 						<a href="${cancel}">
 							<button type="button" class="cancel">취소</button>
@@ -176,46 +177,6 @@
 	        
 	        $("form").submit();
 	    });
-
-	    // 파일 업로드 input 변경 시 미리보기 처리
-	    $('#file').on('change', function (e) {
-	        var fileInput = e.target;
-	        var profileImg = $('#profileImg');
-
-	        if (fileInput.files && fileInput.files[0]) {
-	            var reader = new FileReader();
-
-	            reader.onload = function (e) {
-	                profileImg.attr('src', e.target.result);
-	            };
-
-	            reader.readAsDataURL(fileInput.files[0]);
-	        }
-	    });
-	    
-	    
-	    // 이미지 변경 버튼 클릭 시 파일 업로드 input 클릭
-	    $('#changeImageBtn').click(function () {
-	        $('#file').click();
-	    });
-	    
-	    $('#file').change(function() {
-	        var fileInput = this;
-	        var selectedFile = fileInput.files[0];
-
-	        if (selectedFile) {
-	            var allowedExtensions = ['.jpg', '.jpeg', '.png'];
-	            var fileExtension = selectedFile.name.toLowerCase().slice((selectedFile.name.lastIndexOf(".") - 1 >>> 0) + 2);
-
-	            if ($.inArray('.' + fileExtension, allowedExtensions) === -1) {
-	                // 유효한 확장자가 아닌 경우 경고 메시지 표시
-	                alert('jpg, jpeg, png 파일만 업로드할 수 있습니다.');
-	                // 파일 업로드 필드 초기화
-	                $('#file').val('');
-	            }
-	        }
-	    });
-	 	
 	});
 	</script>
 </body>

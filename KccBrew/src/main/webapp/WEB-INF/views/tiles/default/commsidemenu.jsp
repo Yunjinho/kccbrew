@@ -21,8 +21,9 @@
 						<span class="name"><c:out value="${user.userNm}"/></span>님
 					</div>
 					<div class="photo-wrapper">
-					<c:set var="imagePath" value="${user.storageLocation}${user.fileServerNm}" />
+					<c:set var="imagePath" value="${path}/${user.storageLocation}${user.fileServerNm}" />
 						<img src="<c:out value='${imagePath}'/>">
+						<%-- <img src="${path}/resources/img/register/users/admin_마루.png"> --%>
 					</div>
 				</div>
 				<span class="job">관리자</span> 
@@ -193,5 +194,4 @@
 		</div>
 	</div>
 </sec:authorize>
-
 </html>
