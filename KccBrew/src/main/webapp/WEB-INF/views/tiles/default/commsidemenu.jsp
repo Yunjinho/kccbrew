@@ -25,7 +25,6 @@
 	<div class="profileAndguide">
 		<div class="user-profile">
 			<div class="inner-box">
-
 				<div class="photo-wrapper">
 					<c:set var="imagePath"
 						value="${user.storageLocation}${user.fileServerNm}" />
@@ -97,6 +96,7 @@
 				</a>
 			</div>
 		</div> --%>
+	</div>
 	</div>
 </sec:authorize>
 
@@ -209,5 +209,4 @@
 		</div>
 	</div>
 </sec:authorize>
-
 </html>

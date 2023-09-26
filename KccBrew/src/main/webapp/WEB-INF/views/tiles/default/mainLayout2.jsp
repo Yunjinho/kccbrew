@@ -18,7 +18,7 @@
 @font-face {
 	font-family: 'Noto Sans';
 	font-style: normal;
-	src: url("../../fonts/NotoSansKR-Regular.ttf")
+	src: url("${path}/resources/fonts/NotoSansKR-Regular.ttf")
 }
 
 html {

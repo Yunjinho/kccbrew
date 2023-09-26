@@ -22,8 +22,6 @@ public interface IUserRepository {
     /*점주ID로 지점정보 조회*/
     public StrMngVo getStoreById(String userId);
     
-    
-    
     /**
 	 * 운영중인 점포 리스트 조회
 	 * @param keyword : 검색 키워드

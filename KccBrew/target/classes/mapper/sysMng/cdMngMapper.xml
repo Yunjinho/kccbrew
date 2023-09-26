@@ -2,7 +2,35 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper
 	namespace="kr.co.kccbrew.sysMng.cdMng.dao.ICdMngRepository">
+	
+	<select id="grcdList"
+		resultType="kr.co.kccbrew.sysMng.cdMng.model.CdMngVo">
 
+		select
+			a.grp_cd_id AS "cdId",
+			a.grp_cd_name AS "cdNm",
+			a.use_yn AS "cdUseYn"
+		FROM 
+			group_code a 
+			
+			 </select>
+			 
+	<select id="grcdDtlList" parameterType="String"
+		resultType="kr.co.kccbrew.sysMng.cdMng.model.CdMngVo">
+
+		select 
+			grp_cd_id AS "cdId",
+			group_code_idx AS "cdIdx",
+			use_yn AS "cdDtlUseYn",
+			grp_cd_dtl_id AS "cdDtlId",
+			grp_cd_dtl_nm AS "cdDtlNm"
+		FROM 
+			group_code_detail 
+		WHERE
+			grp_cd_id = #{cdId}
+	</select>
+			 
+			 
 	<select id="selectNm"
 		resultType="kr.co.kccbrew.sysMng.cdMng.model.CdMngVo">
 		<![CDATA[

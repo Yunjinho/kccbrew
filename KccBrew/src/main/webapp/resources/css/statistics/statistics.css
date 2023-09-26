@@ -1,0 +1,113 @@
+@charset "UTF-8";
+.statistics>div{
+	display:flex; justify-content:center;
+}
+.statistics>div>div{
+	border:1px solid; margin:10px
+}
+.navi{
+	display:flex;
+	justify-content: center;
+    padding: 20px;
+}
+input{
+	text-align: center;
+    border: none;
+    font-size: 30px;
+}
+.navi-img{
+	width: 50px;
+    height: 50px;
+}
+.navi-img:hover{
+	cursor: pointer;
+}    
+.header-icon-background{
+	width: 20px;
+    height: 20px;
+}
+.header-icon{
+    width: 100%;
+    color: white;
+}
+#page-content-wrap .page-content-navigation
+.breadcrumb {
+	margin: 0px;
+	background-color: transparent;
+	border: 0px;
+	border-radius: 0px;
+	margin: 0px 40px;
+	color: #666;
+	border-bottom: 1px solid #d9dbdb;
+	padding: 8px 0;
+	font-size: 12px
+}
+
+#page-content-wrap .page-content-navigation .breadcrumb
+li {
+	background: url('/theme/coursemosv2/pix/layout/breadcrumb.png')
+		no-repeat 5px center;
+	padding: 6px 3px 3px 25px;
+	line-height: 35px
+}
+
+#page-content-wrap .page-content-navigation .breadcrumb li:first-child {
+	background: none;
+	padding-left: 3px
+}
+
+#page-content-wrap .page-content-navigation .breadcrumb li:last-child
+a {
+	color: #333;
+	font-weight: bold
+}
+
+#page-content-wrap .page-content-navigation .breadcrumb>li+li:before {
+	content: none
+}
+.breadcrumb>li{
+	display: inline-block;
+}
+#page-content-wrap .page-content-navigation .breadcrumb li
+a {
+	color: #666;
+	display: block;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis
+}
+
+#page-content-wrap .page-content-navigation .breadcrumb li a.btn,
+	#page-content-wrap .page-content-navigation .breadcrumb li a.btn:hover,
+	#page-content-wrap .page-content-navigation .breadcrumb li a.btn:active,
+	#page-content-wrap .page-content-navigation .breadcrumb li a.btn:focus
+	{
+	font-size: 12px;
+	padding: 0px;
+	border: 0px;
+	background: transparent;
+	line-height: inherit;
+	border-radius: 0px;
+	box-shadow: none
+}
+
+#page-content-wrap .page-content-navigation .breadcrumb li a.btn:hover {
+	text-decoration: underline
+}
+
+.r1024 #page-content-wrap .page-content-navigation .breadcrumb li
+a {
+	max-width: 120px
+}
+
+#page-content-wrap .page-content-navigation .breadcrumb li.breadcrumb-home a
+img {
+	position: relative;
+	top: -2px
+}
+a, a:hover, a:visited{
+	text-decoration: none;
+}
+.breadcrumb{
+	display: flex;
+}

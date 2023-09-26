@@ -143,7 +143,7 @@
 		flex:0.6;
 		display: flex;
 		justify-content: space-between;
-		min-height: 700px;
+		min-height: 500px;
 		margin-top: 5px;
 	}
 
@@ -159,10 +159,9 @@
 	}
 
 	.to-do-list {
-		flex:0.6;
+		flex:1;
 		background-color:#ffffff;
 		min-height:300px;
-		margin-bottom: 5px;
 		display: flex;
 		flex-direction: column;
 	}
@@ -266,11 +265,6 @@
 		font-size:1.5em;
 		overflow: auto;
 	}
-	.todoetc {
-		flex:0.4;
-		color:green;
-		background-color:yellow;
-	}
 	
 	
 /************* 달력 ******************/	
@@ -279,7 +273,7 @@
 		flex:0.502;
 		background-color:#ffffff;
 		width:500px;
-		min-height:700px;
+		min-height:500px;
 	}
 	
 	#calendar-container > p {

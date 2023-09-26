@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.kccbrew.sysMng.statistics.dao.IStatisticsRepository">
+<select id="machineByMonth" parameterType="string" resultType="kr.co.kccbrew.sysMng.statistics.model.StatisticsVo">
+<![CDATA[
+	SELECT ai.count AS count
+			,gcd.grp_cd_dtl_nm AS machineNm
+	FROM (SELECT machine_cd ,COUNT(*) as count
+			FROM as_information 
+			WHERE TO_CHAR(reg_dttm,'YYYY/MM') >= #{start} 
+				and TO_CHAR(reg_dttm,'YYYY/MM') < TO_CHAR(ADD_MONTHS(TO_DATE(#{end},'YYYY/MM'),1),'YYYY/MM') 
+			GROUP  BY machine_cd) ai
+	INNER JOIN (SELECT * FROM group_code_detail WHERE grp_cd_id = 'M') gcd ON gcd.grp_cd_dtl_id=ai.machine_cd
+]]>
+</select>
+
+<select id="highRankMecha" parameterType="string" resultType="kr.co.kccbrew.sysMng.statistics.model.StatisticsVo">
+<![CDATA[
+	SELECT mechanic_id AS userId
+		,avg_store_mng_fb AS storeMngFb
+		,users.user_nm AS userNm
+	FROM( SELECT aas.mechanic_id 
+				, AVG(ar.store_mng_fb) AS avg_store_mng_fb 
+		FROM as_assign aas
+	    INNER JOIN (SELECT * 
+	    			FROM as_result 
+	    			WHERE TO_CHAR(result_dttm,'YYYY/MM') >= #{start}  
+	    					and TO_CHAR(result_dttm,'YYYY/MM') < TO_CHAR(ADD_MONTHS(TO_DATE(#{end},'YYYY/MM'),1),'YYYY/MM')) ar ON aas.as_assign_seq=ar.as_assign_seq
+	    GROUP BY aas.mechanic_id
+	    HAVING AVG(ar.store_mng_fb) IS NOT NULL
+	    ORDER BY AVG(ar.store_mng_fb) DESC) o 
+	INNER JOIN users ON users.user_id=o.mechanic_id
+	WHERE ROWNUM<6
+]]>
+</select>
+<select id="lowRankMecha" parameterType="string" resultType="kr.co.kccbrew.sysMng.statistics.model.StatisticsVo">
+<![CDATA[
+	SELECT mechanic_id AS userId
+		,avg_store_mng_fb AS storeMngFb
+		,users.user_nm AS userNm
+	FROM( SELECT aas.mechanic_id 
+				, AVG(ar.store_mng_fb) AS avg_store_mng_fb 
+		FROM as_assign aas
+	    INNER JOIN (SELECT * 
+	    			FROM as_result 
+	    			WHERE TO_CHAR(result_dttm,'YYYY/MM') >= #{start} 
+	    			and TO_CHAR(result_dttm,'YYYY/MM') < TO_CHAR(ADD_MONTHS(TO_DATE(#{end},'YYYY/MM'),1),'YYYY/MM')) ar ON aas.as_assign_seq=ar.as_assign_seq
+	    GROUP BY aas.mechanic_id
+	    HAVING AVG(ar.store_mng_fb) IS NOT NULL
+	    ORDER BY AVG(ar.store_mng_fb)) o 
+	INNER JOIN users ON users.user_id=o.mechanic_id
+	WHERE ROWNUM<6
+]]>
+</select>
+<select id="reapplyRateByMachine" parameterType="string" resultType="kr.co.kccbrew.sysMng.statistics.model.StatisticsVo">
+<![CDATA[
+	SELECT o.machineNm AS machineNm
+			, o.yyyymm AS yearmonth
+			, t.reapplyCnt AS reapplyCnt
+			,o.totalCnt AS totalCnt
+			,NVL(((t.reapplyCnt/o.totalCnt)*100),0) AS percents
+	FROM (SELECT TO_CHAR(result_dttm,'YYYY/MM') AS yyyymm, COUNT(*) AS totalCnt ,grp_cd_dtl_nm AS machineNm 
+			FROM (SELECT gcd.grp_cd_dtl_nm,ar.reapply ,ar.result_dttm FROM as_result ar
+                  INNER JOIN as_Assign ass ON ar.as_assign_seq=ass.as_assign_seq
+                  INNER JOIN as_information ai on ai.as_info_seq=ass.as_info_seq
+                  INNER JOIN (SELECT *  FROM group_code_detail WHERE grp_cd_id='M') gcd ON gcd.grp_cd_dtl_id=ai.machine_cd
+                  WHERE TO_CHAR(result_dttm,'YYYY/MM') >= #{start}
+                  		AND TO_CHAR(result_dttm,'YYYY/MM') < TO_CHAR(ADD_MONTHS(TO_DATE(#{end},'YYYY/MM'),1),'YYYY/MM'))
+	        GROUP BY grp_cd_dtl_nm,TO_CHAR(result_dttm,'YYYY/MM')) o
+	LEFT OUTER JOIN (SELECT TO_CHAR(result_dttm,'YYYY/MM') AS yyyymm,COUNT(*) AS reapplyCnt,grp_cd_dtl_nm AS machineNm 
+	            FROM (SELECT gcd.grp_cd_dtl_nm,ar.reapply ,ar.result_dttm 
+	                    FROM as_result ar
+	                    INNER JOIN as_Assign ass ON ar.as_assign_seq=ass.as_assign_seq
+	                    INNER JOIN as_information ai ON ai.as_info_seq=ass.as_info_seq
+	                    INNER JOIN (SELECT *  FROM group_code_detail WHERE grp_cd_id='M') gcd ON gcd.grp_cd_dtl_id=ai.machine_cd
+	                    WHERE TO_CHAR(result_dttm,'YYYY/MM') >= #{start} 
+	                    		AND TO_CHAR(result_dttm,'YYYY/MM') < TO_CHAR(ADD_MONTHS(TO_DATE(#{end},'YYYY/MM'),1),'YYYY/MM'))
+	            WHERE reapply='Y'
+	            GROUP BY grp_cd_dtl_nm,TO_CHAR(result_dttm,'YYYY/MM')) t ON o.machineNm=t.machineNm AND o.yyyymm=t.yyyymm
+]]>
+</select>
+</mapper>

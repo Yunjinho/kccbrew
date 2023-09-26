@@ -11,7 +11,9 @@
 		a.file_reg_dttm		AS	"fileRegDttm",
 		a.file_server_nm	AS 	"fileServerNm",
 		a.file_fmt			AS 	"fileFmt",
-		a.grp_cd_dtl_nm		AS	"grpCdDtlNm"
+		a.grp_cd_dtl_nm		AS	"grpCdDtlNm",
+		a.storage_location	AS	"storageLocation"
+		
 	FROM (
 		SELECT
 		ROW_NUMBER() OVER(ORDER BY a.file_seq) AS ROW_NUM,
@@ -21,7 +23,8 @@
 		a.file_reg_dttm,
 		b.file_server_nm,
 		b.file_fmt,
-		c.grp_cd_dtl_nm
+		c.grp_cd_dtl_nm,
+		b.storage_location
 	FROM file_info a, file_detail_info b, group_code_detail c
 	<![CDATA[
 	WHERE 
@@ -138,4 +141,43 @@
 	]]>
 	</select>
 
+	<select id="fileDtl" parameterType="integer" resultType="kr.co.kccbrew.sysMng.fileMng.model.FileMngVo">
+	SELECT 
+		a.file_seq 			AS	"fileSeq",
+		a.file_dtl_seq		AS 	"fileDtlSeq",
+		a.file_original_nm	AS	"fileOriginNm",
+		a.reg_dttm			AS	"regDttm",
+		a.file_server_nm	AS 	"fileServerNm",
+		a.file_fmt			AS 	"fileFmt",
+		a.grp_cd_dtl_nm		AS	"grpCdDtlNm",
+		a.storage_location	AS	"storageLocation",
+		a.reg_user			AS  "regUser"
+		
+	FROM (
+		SELECT
+		ROW_NUMBER() OVER(ORDER BY a.file_seq) AS ROW_NUM,
+		a.file_seq ,
+		b.file_dtl_seq,
+		b.file_original_nm,
+		b.reg_dttm,
+		b.file_server_nm,
+		b.file_fmt,
+		c.grp_cd_dtl_nm,
+		b.storage_location,
+		b.reg_user
+	FROM file_info a, file_detail_info b, group_code_detail c
+	<![CDATA[
+	WHERE 
+		c.grp_cd_id='F'
+	AND
+
+		a.file_seq(+) = b.file_seq 
+		]]>
+	AND	
+		a.grp_cd_dtl_id = c.grp_cd_dtl_id
+		)a
+	WHERE a.file_dtl_seq = #{fileDtlSeq}
+	
+	
+	</select>
 </mapper>

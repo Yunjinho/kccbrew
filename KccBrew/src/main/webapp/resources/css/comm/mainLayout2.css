@@ -32,7 +32,22 @@ html {
 }
 
 #mainSideMenu {
-	flex: 0.14;
+	flex:0.14;
+}
+
+#mainContents {
+	flex:0.86;
+	min-height: 907px;
+}
+#mainFooter {
+}
+
+#page-container {  
+	background-color: #eef4ff !important;
+}
+
+#page-content{
+ padding: 20px 20px;
 }
 
 #mainContents {

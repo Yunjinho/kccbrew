@@ -74,6 +74,8 @@
 							<li><a href="${toAdminFilePage}">파일 조회</a></li>
 							<c:url var="toAdminCodePage" value="/code" />
 							<li><a href="${toAdminCodePage}">공통 코드 조회</a></li>
+							<c:url var="toStatistics" value="/statistics" />
+							<li><a href="${toStatistics}">통계</a></li>
 						</ul>
 					</li>
 					<li class="nav-item"><a class="nav-links" href="#">마이페이지</a>

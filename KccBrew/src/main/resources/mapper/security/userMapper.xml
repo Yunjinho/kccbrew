@@ -123,7 +123,7 @@
 			SELECT NVL(MAX(file_seq), 0) AS "fileSeq" FROM file_info
 		</selectKey>
 	</insert>
-	
+
 	<!-- 사용자 사진 상세 정보 등록 -->
 	<insert id="insertFileDtlInfo"
 		parameterType="kr.co.kccbrew.comm.security.model.UserVo">
