@@ -16,7 +16,6 @@ public class ObjectUtilController {
 	@RequestMapping(value="/getEquipmentName", produces = "text/plain; charset=utf-8")
 	@ResponseBody
 	public String getEquipmentName(@RequestParam("equipmentCode") String equipmentCode) {
-		System.out.println("equipmentCode: " + equipmentCode);
 		return objectUtilService.getEquipmentName(equipmentCode);
 	} 
 	
@@ -25,6 +24,7 @@ public class ObjectUtilController {
 	@RequestMapping(value="/getLocationName", produces = "text/plain; charset=utf-8")
 	@ResponseBody
 	public String getLocationName(@RequestParam("locationCode") String locationCode) {
+		locationCode = locationCode.trim();
 		String LocationName = objectUtilService.getLocationName(locationCode);
 
 		if (locationCode.contains("-")) {
