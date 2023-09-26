@@ -65,6 +65,12 @@
 		<put-attribute name="title" value="AS 상세 조회" />
 		<put-attribute name="contents" value="/WEB-INF/views/asMng/asDetail.jsp" />
 	</definition>
+
+	<!-- 통계 페이지 -->
+	<definition name="statistics" extends="mainLayout2">
+		<put-attribute name="title" value="통계" />
+		<put-attribute name="contents" value="/WEB-INF/views/sysMng/statistics/statistics.jsp" />
+	</definition>
 	
 	<!-- 점포 조회 페이지 -->
 	<definition name="storeList" extends="mainLayout2">
