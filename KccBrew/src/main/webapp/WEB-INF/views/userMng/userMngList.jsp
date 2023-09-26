@@ -115,6 +115,14 @@ div.modalBackground {
 	padding: 5px 10px;
 	border-radius: 4px;
 }
+
+
+#startDate{
+width: 70%
+}
+#endDate{
+width: 70%;
+}
 </style>
 </head>
 <body>
@@ -129,7 +137,7 @@ div.modalBackground {
 							<li>
 								<div class="header-icon-background">
 									<img
-										src="<c:url value='resources/img/asMng/free-icon-right-arrow-271228.png' />"
+										src="<c:url value='/resources/img/asMng/free-icon-right-arrow-271228.png' />"
 										alt="Check List" class="header-icon" />
 								</div>
 							</li>
@@ -144,269 +152,229 @@ div.modalBackground {
 
 								<!-- ********** 회원 리스트 조회 ********** -->
 								<div id="content">
-										<h2 class="heading">회원조회</h2>
-										<!-- 점포 검색 -->
-										<form action="/user" method="get" style="margin-bottom: 10px;">
-											<table id="search-box">
-												<!-- 1행 -->
-												<c:set var="today" value="<%=new java.util.Date()%>" />
-												<fmt:formatDate value="${today}" pattern="yyyy"
-													var="nowYear" />
-												<tr>
+									<h2 class="heading">회원조회</h2>
+									<!-- 점포 검색 -->
+									<form action="/user/search" method="get" id="search-form"
+										style="margin-bottom: 10px;">
+										<input type='hidden' name='currentPage' value="1">
+										<table id="search-box">
+											<!-- 1행 -->
+											<c:set var="today" value="<%=new java.util.Date()%>" />
+											<tr>
 
-													<th>가입일자</th>
-													<!-- 시작 연도 선택 필드 -->
-													<td><select class="tx2" name="startYr" id="yr"
-														onchange="javascript:chg();">
-															<option value="">연도</option>
-															<c:forEach var="i" begin="0" end="9">
-																<c:set var="year" value="${nowYear - i}" />
-																<option value="${year}"
-																	${param.startYr == year ? 'selected' : ''}>${year}년</option>
-															</c:forEach>
-													</select></td>
+												<th>가입일자</th>
+												<td colspan="2" id="form-holiday-period"><span><label
+														for="startDate">시작일 : &nbsp;</label><input type="date"
+														id="startDate" name="startDate"
+														value="${searchContent.startDate}"></span></td>
+												<td colspan="2"><span><label for="endDate">종료일
+															: &nbsp;</label> <input type="date" id="endDate" name="endDate"
+														value="${searchContent.endDate}"></span></td>
 
-													<!-- 시작 월 선택 필드 -->
-													<td><select class="tx2" name="startMn" id="mn">
-															<option value="">월</option>
-															<c:forEach var="month" begin="1" end="12">
-																<option value="${month}"
-																	${param.startMn == month ? 'selected' : ''}>${month}월</option>
-															</c:forEach>
-													</select></td>
+												<th>사용자 구분</th>
+												<td colspan="1"><select name="userTypeCd" class="tx2"
+													onchange="javascript:chg();">
+														<option value="">선택</option>
+														<option value="01"
+															${searchContent.userTypeCd == '01' ? 'selected' : ''}>관리자</option>
+														<option value="02"
+															${searchContent.userTypeCd == '02' ? 'selected' : ''}>점주</option>
+														<option value="03"
+															${searchContent.userTypeCd == '03' ? 'selected' : ''}>기사</option>
 
-													<td>~</td>
+												</select></td>
 
-													<!-- 종료 연도 선택 필드 -->
-													<td><select class="tx2" name="endYr" id="yr"
-														onchange="javascript:chg();">
-															<option value="">연도</option>
-															<c:forEach var="i" begin="0" end="9">
-																<c:set var="year" value="${nowYear - i}" />
-																<option value="${year}"
-																	${param.endYr == year ? 'selected' : ''}>${year}년</option>
-															</c:forEach>
-													</select></td>
+											</tr>
+											<!-- 2행 -->
+											<tr>
 
-													<!-- 종료 월 선택 필드 -->
-													<td><select class="tx2" name="endMn" id="mn">
-															<option value="">월</option>
-															<c:forEach var="month" begin="1" end="12">
-																<option value="${month}"
-																	${param.endMn == month ? 'selected' : ''}>${month}월</option>
-															</c:forEach>
-													</select></td>
-													<th>ID 사용여부</th>
-													<td><select name="useYn" class="tx2" id="yn"
-														onchange="javascript:chg();">
-															<option value="">선택</option>
-															<option value="Y" ${param.useYn == 'Y' ? 'selected' : ''}>Y</option>
-															<option value="N" ${param.useYn == 'N' ? 'selected' : ''}>N</option>
-													</select></td>
+												<th>사용자이름</th>
+												<td colspan="1"><input type="search" name="userNm"
+													placeholder="사용자이름을 입력하세요" value="${searchContent.userNm}"
+													size="15"></td>
+												<th>사용자ID</th>
+												<td colspan="2"><input type="search" name="userId"
+													placeholder="사용자ID를 입력하세요" value="${searchContent.userId}"
+													size="30"></td>
+												<th>ID 사용여부</th>
+												<td><select name="useYn" class="tx2" id="yn"
+													onchange="javascript:chg();">
+														<option value="">선택</option>
+														<option value="Y"
+															${searchContent.useYn == 'Y' ? 'selected' : ''}>Y</option>
+														<option value="N"
+															${searchContent.useYn == 'N' ? 'selected' : ''}>N</option>
+												</select></td>
 
-												</tr>
-												<!-- 2행 -->
-												<tr>
-
-
-													<th>사용자Id</th>
-													<td colspan="2"><input type="search" name="userId"
-														placeholder="사용자ID를 입력하세요" value="${param.userId}"
-														size="30"></td>
-													<th>사용자이름</th>
-													<td colspan="2"><input type="search" name="userNm"
-														placeholder="사용자ID를 입력하세요" value="${param.userNm}"
-														size="30"></td>
-													<th>사용자 구분</th>
-													<td colspan="1"><select name="userTypeCd" class="tx2"
-														onchange="javascript:chg();">
-															<option value="">선택</option>
-															<option value="01"
-																${param.userTypeCd == '01' ? 'selected' : ''}>관리자</option>
-															<option value="02"
-																${param.userTypeCd == '02' ? 'selected' : ''}>점주</option>
-															<option value="03"
-																${param.userTypeCd == '03' ? 'selected' : ''}>기사</option>
-
-													</select></td>
-												</tr>
-												<!-- 4행 -->
-												<tr>
-													<td colspan="7" style="border-bottom:none;"></td>
-													<td style="text-align: center; border-bottom: 0px;">
-														<div>
-															<button type="submit" class="form-btn" id="find-btn1">검색</button>
-															<!-- <button type="button" class="form-btn" id="find-btn1"
-																onclick="location.href='/user';">초기화</button> -->
-														</div>
-													</td>
-												</tr>
-											</table>
-										</form>
-										<div id="logTable">
+											</tr>
+											<!-- 4행 -->
+											<tr>
+												<td colspan="5" style="border-bottom: none;"></td>
+												<td colspan="2"
+													style="text-align: center; border-bottom: 0px;">
+													<div style=" display: flex;">
+														<button type="button" onclick="resetSearch()"
+															class="form-btn" style="margin-right: 0px;">초기화</button>
+														<button type="submit" class="form-btn" id="find-btn1" style="margin-left: 10px;">검색</button>
+													</div>
+												</td>
+											</tr>
+										</table>
+									</form>
+									<div id="logTable">
 										<div class="list-info-div">
 											<p class="data-info">
 												새로운 가입 정보<b><span><c:out value="${newTotal}" /></span></b>건
 											</p>
 										</div>
-											<table class="text-center"
-												style="border: 1.5px solid #444444;">
-												<thead>
+										<table class="text-center"
+											style="border: 1.5px solid #444444;">
+											<thead>
+												<tr>
+													<th scope="col">사용자ID</th>
+													<th scope="col">사용자이름</th>
+													<th scope="col">사용자구분</th>
+													<th scope="col">전화번호</th>
+													<th scope="col">사용여부</th>
+													<th scope="col">가입일자</th>
+													<th scope="col">승인여부</th>
+												</tr>
+											</thead>
+											<tbody>
+												<c:forEach items="${newList}" var="newL" varStatus="loop">
 													<tr>
-														<th scope="col">사용자ID</th>
-														<th scope="col">사용자이름</th>
-														<th scope="col">사용자구분</th>
-														<th scope="col">전화번호</th>
-														<th scope="col">사용여부</th>
-														<th scope="col">가입일자</th>
-														<th scope="col">승인여부</th>
-													</tr>
-												</thead>
-												<tbody>
-													<c:forEach items="${newList}" var="newL" varStatus="loop">
-														<tr>
-															<td><form id="dtl" method="get" style="all: unset;">
-																	<input type="hidden" value="${param.userId}"> <a
-																		href="javascript:void(0);"
-																		onclick="openModal1('${newL.userId}');">${newL.userId}</a>
-																</form></td>
-															<td>${newL.userNm}</td>
-															<td>${newL.userType}</td>
-															<td>${newL.userTelNo}</td>
-															<td>${newL.useYn}</td>
-															<td><fmt:formatDate value="${newL.regDttm}"
-																	pattern="yyyy MM/dd" /></td>
-															<td><c:choose>
-																	<c:when test="${not empty newL.approveYn}">
+														<td><form id="dtl" method="get" style="all: unset;">
+																<a href="javascript:void(0);"
+																	onclick="openModal1('${newL.userId}');">${newL.userId}</a>
+															</form></td>
+														<td>${newL.userNm}</td>
+														<td>${newL.userType}</td>
+														<td>${newL.userTelNo}</td>
+														<td>${newL.useYn}</td>
+														<td><fmt:formatDate value="${newL.regDttm}"
+																pattern="yyyy MM/dd" /></td>
+														<td><c:choose>
+																<c:when test="${not empty newL.approveYn}">
                             											${newL.approveYn}</c:when>
-																	<c:otherwise>
-																		<!-- 확인 버튼 출력 -->
-																		<a href="javascript:void(0);"
-																			onclick="openModal('${newL.userId}');">확인필요</a>
-																	</c:otherwise>
-																</c:choose></td>
-														</tr>
-													</c:forEach>
-												</tbody>
-											</table>
-										</div>
-										<hr>
-										<div id="logTable">
-											<div class="list-info-div">
-												<p class="data-info">
-													전체<b><span><c:out value="${total}" /></span></b>건<span
-														id="text-separator"> | </span><b><span><c:out
-																value="${currentPage}" /></span></b>/<b><span><c:out
-																value="${totalPage}" /></span></b>쪽
-												</p>
-											</div>
-
-
-
-											<table class="text-center">
-												<thead>
-													<tr>
-														<th scope="col">NO</th>
-														<th scope="col">사용자ID</th>
-														<th scope="col">사용자이름</th>
-														<th scope="col">사용자구분</th>
-														<th scope="col">전화번호</th>
-														<th scope="col">사용여부</th>
-														<th scope="col">가입일자</th>
-														<th scope="col">승인여부</th>
+																<c:otherwise>
+																	<!-- 확인 버튼 출력 -->
+																	<a href="javascript:void(0);"
+																		onclick="openModal('${newL.userId}');">확인필요</a>
+																</c:otherwise>
+															</c:choose></td>
 													</tr>
-												</thead>
-												<tbody>
-													<c:forEach items="${list}" var="no" varStatus="loop">
-														<tr>
-															<td>${no.rowNum}</td>
-															<td><form id="dtl" method="get" style="all: unset;">
-																	<input type="hidden" value="${param.userId}"> <a
-																		href="javascript:void(0);"
-																		onclick="openModal1('${no.userId}');">${no.userId}</a>
-																</form></td>
-															<td style="height: 36px;">${no.userNm}</td>
-															<td>${no.userType}</td>
-															<td>${no.userTelNo}</td>
-															<td>${no.useYn}</td>
-															<td><fmt:formatDate value="${no.regDttm}"
-																	pattern="yyyy MM/dd" /></td>
-															<td><c:choose>
-																	<c:when test="${not empty no.approveYn}">
+												</c:forEach>
+											</tbody>
+										</table>
+									</div>
+									<hr>
+									<div id="logTable">
+										<div class="list-info-div">
+											<p class="data-info">
+												전체<b><span><c:out value="${totalCount}" /></span></b>건<span
+													id="text-separator"> | </span><b><span><c:out
+															value="${currentPage}" /></span></b>/<b><span><c:out
+															value="${totalPage}" /></span></b>쪽
+											</p>
+										</div>
+
+
+
+										<table class="text-center">
+											<thead>
+												<tr>
+													<th scope="col">NO</th>
+													<th scope="col">사용자ID</th>
+													<th scope="col">사용자이름</th>
+													<th scope="col">사용자구분</th>
+													<th scope="col">전화번호</th>
+													<th scope="col">사용여부</th>
+													<th scope="col">가입일자</th>
+													<th scope="col">승인여부</th>
+												</tr>
+											</thead>
+											<tbody>
+												<c:forEach items="${list}" var="no" varStatus="loop">
+													<tr>
+														<td>${no.rowNum}</td>
+														<td><form id="dtl" method="get" style="all: unset;">
+																 <a
+																	href="javascript:void(0);"
+																	onclick="openModal1('${no.userId}');">${no.userId}</a>
+															</form></td>
+														<td style="height: 36px;">${no.userNm}</td>
+														<td>${no.userType}</td>
+														<td>${no.userTelNo}</td>
+														<td>${no.useYn}</td>
+														<td><fmt:formatDate value="${no.regDttm}"
+																pattern="yyyy MM/dd" /></td>
+														<td><c:choose>
+																<c:when test="${not empty no.approveYn}">
                             											${no.approveYn}</c:when>
-																	<c:otherwise>
-																		<!-- 확인 버튼 출력 -->
-																		<a href="javascript:void(0);"
-																			onclick="openModal('${no.userId}');">확인필요</a>
-																	</c:otherwise>
-																</c:choose></td>
-														</tr>
-													</c:forEach>
-												</tbody>
-											</table>
-										</div>
+																<c:otherwise>
+																	<!-- 확인 버튼 출력 -->
+																	<a href="javascript:void(0);"
+																		onclick="openModal('${no.userId}');">확인필요</a>
+																</c:otherwise>
+															</c:choose></td>
+													</tr>
+												</c:forEach>
+											</tbody>
+										</table>
+									</div>
 
-										<!-- 페이징 -->
-										<div class="paging pagination">
+									<!-- 페이징 -->
+									<div class="paging pagination">
 
-											<!-- 앞으로 가는 버튼 -->
-											<a
-												href="/user?currentPage=${page}&startYr=${searchContent.startYr}&startMn=${searchContent.startMn}&endYr=${searchContent.endYr}&endMn=${searchContent.endMn}&userTypeCd=${searchContent.userTypeCd}&useYn=${searchContent.useYn}&userId=${searchContent.userId}&userNm=${searchContent.userNm}">
-												<img
-												src="/resources/img/log/free-icon-left-chevron-6015759.png"
-												alt=" 처음" />
-											</a>
+										<!-- 앞으로 가는 버튼 -->
+										<a href="#"><img
+											src="/resources/img/asMng/free-icon-left-chevron-6015759.png"
+											alt=" 처" onclick="movePage(1)" /></a>
 
-											<c:choose>
-												<c:when test="${currentPage > 1}">
-													<a
-														href="/user?currentPage=${page}&startYr=${searchContent.startYr}&startMn=${searchContent.startMn}&endYr=${searchContent.endYr}&endMn=${searchContent.endMn}&userTypeCd=${searchContent.userTypeCd}&useYn=${searchContent.useYn}&userId=${searchContent.userId}&userNm=${searchContent.userNm}"><img
-														src="/resources/img/log/free-icon-left-arrow-271220.png"
-														alt="이전" /></a>
-												</c:when>
-												<c:otherwise>
-													<a href="#" disabled="disabled"><img
-														src="/resources/img/log/free-icon-left-arrow-271220.png"
-														alt="이전" /></a>
-												</c:otherwise>
-											</c:choose>
+										<c:choose>
+											<c:when test="${currentPage > 1}">
+												<a href="#"><img
+													src="/resources/img/asMng/free-icon-left-arrow-271220.png"
+													alt="이" onclick="movePage(${currentPage-1})" /></a>
+											</c:when>
+											<c:otherwise>
+												<a href="#" disabled="disabled"><img
+													src="/resources/img/asMng/free-icon-left-arrow-271220.png"
+													alt="이" /></a>
+											</c:otherwise>
+										</c:choose>
 
-											<!-- 리스트 목록 나열 -->
-											<div id="number-list">
-												<div class="page-btn">
-													<c:forEach var="page" begin="${sharePage * 10 + 1}"
-														end="${(sharePage + 1) * 10}" step="1">
-														<c:if test="${page <= totalPage}">
-															<a
-																href="/user?currentPage=${page}&startYr=${searchContent.startYr}&startMn=${searchContent.startMn}&endYr=${searchContent.endYr}&endMn=${searchContent.endMn}&userTypeCd=${searchContent.userTypeCd}&useYn=${searchContent.useYn}&userId=${searchContent.userId}&userNm=${searchContent.userNm}"
-																class="pagination page-btn ${currentPage == page ? 'selected' : ''}">
-																${page} </a>
-														</c:if>
-													</c:forEach>
-												</div>
+										<!-- 리스트 목록 나열 -->
+										<div id="number-list">
+											<div class="page-btn">
+												<c:forEach var="page" begin="${startPage}" end="${endPage}"
+													step="1">
+													<c:if test="${page <= totalPage}">
+														<a href="javascript:void(0)" onclick="movePage(${page})"
+															class="pagination page-btn ${currentPage == page ? 'selected' : ''}">
+															${page} </a>
+													</c:if>
+												</c:forEach>
 											</div>
-
-											<!-- 뒤로 가는 버튼 -->
-											<c:if test="${currentPage < totalPage}">
-												<a
-													href="/user?currentPage=${page}&startYr=${searchContent.startYr}&startMn=${searchContent.startMn}&endYr=${searchContent.endYr}&endMn=${searchContent.endMn}&userTypeCd=${searchContent.userTypeCd}&useYn=${searchContent.useYn}&userId=${searchContent.userId}&userNm=${searchContent.userNm}">
-													<img
-													src="/resources/img/log/free-icon-right-arrow-271228.png"
-													alt="다음" />
-												</a>
-											</c:if>
-											<c:if test="${currentPage == totalPage}">
-												<a href="javascript:void(0);" class="disabled-link"> <img
-													src="/resources/img/log/free-icon-right-arrow-271228.png"
-													alt="다음" />
-												</a>
-											</c:if>
-
-											<a
-												href="/user?currentPage=${page}&startYr=${searchContent.startYr}&startMn=${searchContent.startMn}&endYr=${searchContent.endYr}&endMn=${searchContent.endMn}&userTypeCd=${searchContent.userTypeCd}&useYn=${searchContent.useYn}&userId=${searchContent.userId}&userNm=${searchContent.userNm}"><img
-												src="/resources/img/log/free-icon-fast-forward-double-right-arrows-symbol-54366.png"
-												alt="마지막" /></a>
 										</div>
+
+										<!-- 뒤로 가는 버튼 -->
+										<c:if test="${currentPage < totalPage}">
+											<a href="#" onclick="movePage(${currentPage+1})"> <img
+												src="/resources/img/asMng/free-icon-right-arrow-271228.png"
+												alt="다" />
+											</a>
+										</c:if>
+										<c:if test="${currentPage == totalPage}">
+											<a href="javascript:void(0);" class="disabled-link"> <img
+												src="/resources/img/asMng/free-icon-right-arrow-271228.png"
+												alt="다" />
+											</a>
+										</c:if>
+
+										<a href="#" onclick="movePage(${totalPage})"><img
+											src="/resources/img/asMng/free-icon-fast-forward-double-right-arrows-symbol-54366.png"
+											alt="마" /></a>
 									</div>
 								</div>
 							</div>
@@ -414,6 +382,7 @@ div.modalBackground {
 					</div>
 				</div>
 			</div>
+		</div>
 	</div>
 	<div class="Modal2" id="modal-one">
 		<div class="modal-dialog2">
@@ -525,7 +494,7 @@ div.modalBackground {
 						}
 						// 모달 창 닫기 및 페이지 새로고침
 						$(".Modal2").css("display", "none");
-						location.reload();
+						location.href = "/user";
 					},
 					error : function() {
 						alert('서버 오류로 거절에 실패하였습니다.');
@@ -555,7 +524,7 @@ div.modalBackground {
 						}
 						// 모달 창 닫기 및 페이지 새로고침
 						$(".Modal2").css("display", "none");
-						location.reload();
+						location.href = "/user";
 					},
 					error : function() {
 						alert('서버 오류로 승인에 실패하였습니다.');
@@ -565,7 +534,23 @@ div.modalBackground {
 			}
 		});
 		
-
+		function resetSearch(){
+        	$("input[name=startDate]").val("");
+        	$("input[name=endDate]").val("");
+        	$("input[name=userId]").val("");
+        	$("input[name=userNm]").val("");
+        	$("select[name=useYn] option:eq(0)").prop("selected", true);
+        	$("select[name=userTypeCd] option:eq(0)").prop("selected", true);
+        }
+        function movePage(pageNumber){
+        		
+        	$("input[name=currentPage]").val(pageNumber);
+        	
+        	$("#search-form").submit();
+        }
+        window.onload=function(){
+        	history.replaceState({}, null, location.pathname);
+        }
 		
 	</script>
 </body>

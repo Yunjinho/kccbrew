@@ -46,20 +46,13 @@ type="kr.co.kccbrew.userMng.model.UserMngVo">
 		WHERE
 			b.grp_cd_dtl_id	= a.user_type_cd
 		AND b.grp_cd_id='U'
-		<if test="UserMngVo.startYr != null and UserMngVo.startYr != '' and UserMngVo.startMn != null and UserMngVo.startMn != ''">
+		<if test="UserMngVo.startDate != '' and UserMngVo.startDate != null">
                  <![CDATA[
-                  AND (
-                    EXTRACT(YEAR FROM a.REG_DTTM) > #{UserMngVo.startYr}
-                    OR (EXTRACT(YEAR FROM a.REG_DTTM) = #{UserMngVo.startYr} AND EXTRACT(MONTH FROM a.REG_DTTM) >= #{UserMngVo.startMn})
-                )
-                  ]]>
+               AND a.reg_dttm >= #{UserMngVo.startDate}]]>
             </if>
-            <if test="UserMngVo.endYr != null and UserMngVo.endYr != '' and UserMngVo.endMn != null and UserMngVo.endMn != ''">
+            <if test="UserMngVo.endDate != '' and UserMngVo.endDate != null">
                   <![CDATA[
-                AND (
-                    EXTRACT(YEAR FROM a.REG_DTTM) < #{UserMngVo.endYr}
-                    OR (EXTRACT(YEAR FROM a.REG_DTTM) = #{UserMngVo.endYr} AND EXTRACT(MONTH FROM a.REG_DTTM) <= #{UserMngVo.endMn})
-                )
+                AND a.reg_dttm < TO_DATE(#{UserMngVo.endDate},'YYYY-MM-DD')+1
                   ]]>
             </if>
            
@@ -78,7 +71,7 @@ type="kr.co.kccbrew.userMng.model.UserMngVo">
 			a.user_nm LIKE '%'||#{UserMngVo.userNm}||'%'
             </if>
 	)a
-WHERE ROW_NUM BETWEEN #{firstRowNum} AND #{lastRowNum}
+WHERE ROW_NUM BETWEEN #{start} AND #{end}
 
 </select>
 
@@ -100,20 +93,13 @@ WHERE ROW_NUM BETWEEN #{firstRowNum} AND #{lastRowNum}
 		WHERE
 			b.grp_cd_dtl_id	= a.user_type_cd
 		AND b.grp_cd_id='U'
-		<if test="UserMngVo.startYr != null and UserMngVo.startYr != '' and UserMngVo.startMn != null and UserMngVo.startMn != ''">
+		<if test="UserMngVo.startDate != '' and UserMngVo.startDate != null">
                  <![CDATA[
-                  AND (
-                    EXTRACT(YEAR FROM a.REG_DTTM) > #{UserMngVo.startYr}
-                    OR (EXTRACT(YEAR FROM a.REG_DTTM) = #{UserMngVo.startYr} AND EXTRACT(MONTH FROM a.REG_DTTM) >= #{UserMngVo.startMn})
-                )
-                  ]]>
+               AND a.reg_dttm >= #{UserMngVo.startDate}]]>
             </if>
-            <if test="UserMngVo.endYr != null and UserMngVo.endYr != '' and UserMngVo.endMn != null and UserMngVo.endMn != ''">
+            <if test="UserMngVo.endDate != '' and UserMngVo.endDate != null">
                   <![CDATA[
-                AND (
-                    EXTRACT(YEAR FROM a.REG_DTTM) < #{UserMngVo.endYr}
-                    OR (EXTRACT(YEAR FROM a.REG_DTTM) = #{UserMngVo.endYr} AND EXTRACT(MONTH FROM a.REG_DTTM) <= #{UserMngVo.endMn})
-                )
+                AND a.reg_dttm < TO_DATE(#{UserMngVo.endDate},'YYYY-MM-DD')+1
                   ]]>
             </if>
            

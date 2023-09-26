@@ -17,6 +17,15 @@
 <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 
 </head>
+<style>
+
+#startDate{
+width: 70%
+}
+#endDate{
+width: 70%;
+}
+</style>
 <body>
 	<div id="page-mask">
 		<div id="page-container" class="">
@@ -29,11 +38,11 @@
 							<li>
 								<div class="header-icon-background">
 									<img
-										src="<c:url value='resources/img/asMng/free-icon-right-arrow-271228.png' />"
+										src="<c:url value='/resources/img/asMng/free-icon-right-arrow-271228.png' />"
 										alt="Check List" class="header-icon" />
 								</div>
 							</li>
-							<li><a href="<c:url value='file' />">파일 조회</a></li>
+							<li><a href="<c:url value='/file' />">파일 조회</a></li>
 						</ol>
 					</div>
 					<!-- ********** 페이지 네비게이션 끝 ********** -->
@@ -43,205 +52,192 @@
 							<div class="user-past">
 
 								<!-- ********** 파일 리스트 조회 ********** -->
-									<div id="content">
-										<h2 class="heading">파일조회</h2>
-										<!-- 점포 검색 -->
-										<form action="/file" method="get">
-											<table id="search-box">
-												<!-- 1행 -->
-												<c:set var="today" value="<%=new java.util.Date()%>" />
-												<fmt:formatDate value="${today}" pattern="yyyy"
-													var="nowYear" />
-												<tr>
+								<div id="content">
+									<h2 class="heading">파일조회</h2>
+									<!-- 점포 검색 -->
+									<form action="/file/search" method="get" id="search-form">
+										<input type='hidden' name='currentPage' value="1">
+										<table id="search-box">
+											<!-- 1행 -->
+											<c:set var="today" value="<%=new java.util.Date()%>" />
+											<tr>
 
-													<th>등록일자</th>
-													<!-- 시작 연도 선택 필드 -->
-													<td><select class="tx2" name="startYr" id="yr"
-														onchange="javascript:chg();">
-															<option value="">연도</option>
-															<c:forEach var="i" begin="0" end="9">
-																<c:set var="year" value="${nowYear - i}" />
-																<option value="${year}"
-																	${param.startYr == year ? 'selected' : ''}>${year}년</option>
-															</c:forEach>
-													</select></td>
-
-													<!-- 시작 월 선택 필드 -->
-													<td><select class="tx2" name="startMn" id="mn">
-															<option value="">월</option>
-															<c:forEach var="month" begin="1" end="12">
-																<option value="${month}"
-																	${param.startMn == month ? 'selected' : ''}>${month}월</option>
-															</c:forEach>
-													</select></td>
-
-													<td>~</td>
-
-													<!-- 종료 연도 선택 필드 -->
-													<td><select class="tx2" name="endYr" id="yr"
-														onchange="javascript:chg();">
-															<option value="">연도</option>
-															<c:forEach var="i" begin="0" end="9">
-																<c:set var="year" value="${nowYear - i}" />
-																<option value="${year}"
-																	${param.endYr == year ? 'selected' : ''}>${year}년</option>
-															</c:forEach>
-													</select></td>
-
-													<!-- 종료 월 선택 필드 -->
-													<td><select class="tx2" name="endMn" id="mn">
-															<option value="">월</option>
-															<c:forEach var="month" begin="1" end="12">
-																<option value="${month}"
-																	${param.endMn == month ? 'selected' : ''}>${month}월</option>
-															</c:forEach>
-													</select></td>
-												</tr>
-												<!-- 2행 -->
-												<tr>
-												<th>파일 구분</th>
-													<td colspan="2"><select name="grpCdDtlId" class="tx2" id="yn"
-														onchange="javascript:chg();">
-															<option value="">선택</option>
-															<c:forEach var="List" items="${typeList}">
-														<option value="${List.grpCdDtlId}" ${param.grpCdDtlId == List.grpCdDtlId ? 'selected' : ''}>${List.grpCdDtlNm}</option>
+												<th>등록일자</th>
+												<!-- 시작 연도 선택 필드 -->
+												<td colspan="2" id="form-holiday-period"><span><label
+														for="startDate">시작일 : &nbsp;</label><input type="date"
+														id="startDate" name="startDate"
+														value="${searchContent.startDate}"></span></td>
+												<td colspan="2"><span><label for="endDate">종료일
+															: &nbsp;</label> <input type="date" id="endDate" name="endDate"
+														value="${searchContent.endDate}"></span></td>
+											<th>파일 구분</th>
+												<td colspan="2"><select name="grpCdDtlId" class="tx2"
+													id="yn" onchange="javascript:chg();">
+														<option value="">선택</option>
+														<c:forEach var="List" items="${typeList}">
+															<option value="${List.grpCdDtlId}"
+																${searchContent.grpCdDtlId == List.grpCdDtlId ? 'selected' : ''}>${List.grpCdDtlNm}</option>
 														</c:forEach>
-														
-													</select></td>
-													<th>등록자Id</th>
-													<td colspan="2"><input type="search" name="fileRegUser"
-														placeholder="등록자ID를 입력하세요" value="${param.fileRegUser}" size="30"></td>
-														
-												</tr>
-												<!--3행  -->
-												<tr>
-													
-													<th>원본파일명</th>
-													<td colspan="2"><input type="search" name="fileOriginNm"
-														placeholder="원본파일명을 입력하세요" value="${param.fileOriginNm}" size="30"></td>
-													<th>서버파일명</th>
-													<td colspan="2"><input type="search" name="fileServerNm"
-														placeholder="서버파일명을 입력하세요" value="${param.fileServerNm}" size="30"></td>
-														</tr>
-												<!-- 4행 -->
-												<tr>
-													<td colspan="5" style="border-bottom: none;"></td>
-														<td style="border-bottom: none;"><div class="find-btn" style="text-align: center;">
-															<button type="submit" class="form-btn" id="find-btn1">검색</button>
-															<!-- <button type="button" class="form-btn" id="find-btn1"
-																onclick="location.href='/file';">초기화</button> -->
-														</div>
-													</td>
-												</tr>
-											</table>
-										</form>
-										<div id="logTable">
+
+												</select></td>
+											</tr>
+											<!-- 2행 -->
+											<tr>
+
+												<th>서버파일명</th>
+												<td colspan="2"><input type="search"
+													name="fileServerNm" placeholder="서버파일명을 입력하세요"
+													value="${searchContent.fileServerNm}" size="30"></td>
+											<th>원본파일명</th>
+												<td colspan="1"><input type="search"
+													name="fileOriginNm" placeholder="원본파일명을 입력하세요"
+													value="${searchContent.fileOriginNm}" size="30"></td>
+												
+											<th>등록자Id</th>
+												<td colspan="1"><input type="search" name="fileRegUser"
+													placeholder="등록자ID를 입력하세요"
+													value="${searchContent.fileRegUser}" size="30"></td>
+											
+											</tr>
+											<!-- 3행 -->
+											<tr>
+												<td colspan="6" style="border-bottom: none;"></td>
+												<td style="border-bottom: none;">
+												<div style="display: flex;">
+														<button type="button" onclick="resetSearch()"
+															class="form-btn" style="margin-right: 0px;">초기화</button>
+														<button type="submit" class="form-btn" id="find-btn1" style="margin-left: 10px;">검색</button>
+													</div></td>
+											</tr>
+										</table>
+									</form>
 									<div id="logTable">
-												<p class="data-info">
-													전체<b><span><c:out value="${totalLog}" /></span></b>건<span
-														id="text-separator"> | </span><b><span><c:out
-																value="${currentPage}" /></span></b>/<b><span><c:out
-																value="${totalPage}" /></span></b>쪽
-												</p>
-											</div>
+										<div class="list-info-div">
+											<p class="data-info">
+												전체<b><span><c:out value="${totalCount}" /></span></b>건<span
+													id="text-separator"> | </span><b><span><c:out
+															value="${currentPage}" /></span></b>/<b><span><c:out
+															value="${totalPage}" /></span></b>쪽
+											</p>
+										</div>
 
-											<table class="text-center">
-												<thead>
+										<table class="text-center">
+											<thead>
+												<tr>
+													<th scope="col">파일번호</th>
+													<th scope="col">원본파일명</th>
+													<th scope="col">위치</th>
+													<th scope="col">분류</th>
+													<th scope="col">등록일자</th>
+													<th scope="col">다운로드</th>
+												</tr>
+											</thead>
+											<tbody>
+												<c:forEach items="${list}" var="no" varStatus="loop">
 													<tr>
-														<th scope="col">파일번호</th>
-														<th scope="col">원본파일명</th>
-														<th scope="col">위치</th>
-														<th scope="col">분류</th>
-														<th scope="col">등록일자</th>
-														<th scope="col">다운로드</th>
-													</tr>
-												</thead>
-												<tbody>
-													<c:forEach items="${list}" var="no" varStatus="loop">
-														<tr>
-															<td>${no.fileSeq}</td>
-															<td>${no.fileOriginNm}</td>
-															<td>${no.storageLocation}</td>
-															<td>${no.grpCdDtlNm}</td>
-															<td><fmt:formatDate value="${no.fileRegDttm}" pattern="yyyy MM/dd" /></td>
-															<td><a href="javascript:void(0);"
+														<td>${no.fileSeq}</td>
+														<td>${no.fileOriginNm}</td>
+														<td>${no.storageLocation}</td>
+														<td>${no.grpCdDtlNm}</td>
+														<td><fmt:formatDate value="${no.fileRegDttm}"
+																pattern="yyyy MM/dd" /></td>
+														<td><a href="javascript:void(0);"
 															onclick="popup(${no.fileDtlSeq});">상세보기</a></td>
-														</tr>
-													</c:forEach>
-												</tbody>
-											</table>
-										</div>
-										
-										<!-- 페이징 -->
-										<div class="paging pagination">
+													</tr>
+												</c:forEach>
+											</tbody>
+										</table>
+									</div>
 
-											<!-- 앞으로 가는 버튼 -->
-											<a href="/file?currentPage=1&startYr=${searchContent.startYr}&startMn=${searchContent.startMn}&endYr=${searchContent.endYr}&endMn=${searchContent.endMn}&grpCdDtlId=${searchContent.grpCdDtlId}&fileRegUser=${searchContent.fileRegUser}&fileOriginNm=${searchContent.fileOriginNm}&fileServerNm=${searchContent.fileServerNm}"><img
-												src="/resources/img/log/free-icon-left-chevron-6015759.png"
-												alt=" 처" /></a>
+									<!-- 페이징 -->
+									<div class="paging pagination">
 
-											<c:choose>
-												<c:when test="${currentPage > 1}">
-													<a href="/file?currentPage=${currentPage - 1}&startYr=${searchContent.startYr}&startMn=${searchContent.startMn}&endYr=${searchContent.endYr}&endMn=${searchContent.endMn}&grpCdDtlId=${searchContent.grpCdDtlId}&fileRegUser=${searchContent.fileRegUser}&fileOriginNm=${searchContent.fileOriginNm}&fileServerNm=${searchContent.fileServerNm}"><img
-														src="/resources/img/log/free-icon-left-arrow-271220.png"
-														alt="이" /></a>
-												</c:when>
-												<c:otherwise>
-													<a href="#" disabled="disabled"><img
-														src="/resources/img/log/free-icon-left-arrow-271220.png"
-														alt="이" /></a>
-												</c:otherwise>
-											</c:choose>
+										<!-- 앞으로 가는 버튼 -->
+										<a href="#"><img
+											src="/resources/img/asMng/free-icon-left-chevron-6015759.png"
+											alt=" 처" onclick="movePage(1)" /></a>
 
-											<!-- 리스트 목록 나열 -->
-											<div id="number-list">
-												<div class="page-btn">
-													<c:forEach var="page" begin="${sharePage * 10 + 1}"
-														end="${(sharePage + 1) * 10}" step="1">
-														<c:if test="${page <= totalPage}">
-															<a
-																href="/file?currentPage=${page}&startYr=${searchContent.startYr}&startMn=${searchContent.startMn}&endYr=${searchContent.endYr}&endMn=${searchContent.endMn}&grpCdDtlId=${searchContent.grpCdDtlId}&fileRegUser=${searchContent.fileRegUser}&fileOriginNm=${searchContent.fileOriginNm}&fileServerNm=${searchContent.fileServerNm}"
-																class="pagination page-btn ${currentPage == page ? 'selected' : ''}">
-																${page} </a>
-														</c:if>
-													</c:forEach>
-												</div>
-											</div>
+										<c:choose>
+											<c:when test="${currentPage > 1}">
+												<a href="#"><img
+													src="/resources/img/asMng/free-icon-left-arrow-271220.png"
+													alt="이" onclick="movePage(${currentPage-1})" /></a>
+											</c:when>
+											<c:otherwise>
+												<a href="#" disabled="disabled"><img
+													src="/resources/img/asMng/free-icon-left-arrow-271220.png"
+													alt="이" /></a>
+											</c:otherwise>
+										</c:choose>
 
-											<!-- 뒤로 가는 버튼 -->
-											<c:if test="${currentPage < totalPage}">
-												<a href="/file?currentPage=${currentPage + 1}&startYr=${searchContent.startYr}&startMn=${searchContent.startMn}&endYr=${searchContent.endYr}&endMn=${searchContent.endMn}&grpCdDtlId=${searchContent.grpCdDtlId}&fileRegUser=${searchContent.fileRegUser}&fileOriginNm=${searchContent.fileOriginNm}&fileServerNm=${searchContent.fileServerNm}"> <img
-													src="/resources/img/log/free-icon-right-arrow-271228.png"
-													alt="다" />
-												</a>
-											</c:if>
-											<c:if test="${currentPage == totalPage}">
-												<a href="javascript:void(0);" class="disabled-link"> <img
-													src="/resources/img/log/free-icon-right-arrow-271228.png"
-													alt="다" />
-												</a>
-											</c:if>
-
-											<a href="/file?currentPage=${totalPage}&startYr=${searchContent.startYr}&startMn=${searchContent.startMn}&endYr=${searchContent.endYr}&endMn=${searchContent.endMn}&grpCdDtlId=${searchContent.grpCdDtlId}&fileRegUser=${searchContent.fileRegUser}&fileOriginNm=${searchContent.fileOriginNm}&fileServerNm=${searchContent.fileServerNm}"><img
-												src="/resources/img/log/free-icon-fast-forward-double-right-arrows-symbol-54366.png"
-												alt="마" /></a>
+										<!-- 리스트 목록 나열 -->
+										<div id="number-list">
+											<div class="page-btn">
+												<c:forEach var="page" begin="${startPage}" end="${endPage}"
+													step="1">
+													<c:if test="${page <= totalPage}">
+														<a href="javascript:void(0)" onclick="movePage(${page})"
+															class="pagination page-btn ${currentPage == page ? 'selected' : ''}">
+															${page} </a>
+													</c:if>
+												</c:forEach>
 											</div>
 										</div>
+
+										<!-- 뒤로 가는 버튼 -->
+										<c:if test="${currentPage < totalPage}">
+											<a href="#" onclick="movePage(${currentPage+1})"> <img
+												src="/resources/img/asMng/free-icon-right-arrow-271228.png"
+												alt="다" />
+											</a>
+										</c:if>
+										<c:if test="${currentPage == totalPage}">
+											<a href="javascript:void(0);" class="disabled-link"> <img
+												src="/resources/img/asMng/free-icon-right-arrow-271228.png"
+												alt="다" />
+											</a>
+										</c:if>
+
+										<a href="#" onclick="movePage(${totalPage})"><img
+											src="/resources/img/asMng/free-icon-fast-forward-double-right-arrows-symbol-54366.png"
+											alt="마" /></a>
 									</div>
 								</div>
 							</div>
 						</div>
+					</div>
 				</div>
+			</div>
 		</div>
 	</div>
-<script>
+	<script>
 function popup(fileDtlSeq) {
-    var url = "file/" + fileDtlSeq;
+    var url = "/file/" + fileDtlSeq;
     var name = "popup test";
     var option = "width=900, height=800, top=60, left=400, scrollbars=yes, directories=no, location=no";
     window.open(url, name, option);
     window.close();
 }
+
+function resetSearch(){
+	$("input[name=startDate]").val("");
+	$("input[name=endDate]").val("");
+	$("input[name=fileRegUser]").val("");
+	$("input[name=fileOriginNm]").val("");
+	$("input[name=fileServerNm]").val("");
+	$("select[name=grpCdDtlId] option:eq(0)").prop("selected", true);
+}
+function movePage(pageNumber){
+		
+	$("input[name=currentPage]").val(pageNumber);
+	
+	$("#search-form").submit();
+}
+window.onload=function(){
+	history.replaceState({}, null, location.pathname);
+}
+
 </script>
 </body>
 </html>

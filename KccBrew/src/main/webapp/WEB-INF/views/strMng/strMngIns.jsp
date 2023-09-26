@@ -15,7 +15,7 @@
 </head>
 <body>
 	<section id="notice" class="notice">
-		<div class="category">등록 선택</div>
+		<div class="category">점포등록</div>
 				<hr style="border: solid 1.2px; width: 97%;">
 		<div class="container2">
 		<form action="${pageContext.request.contextPath}/store/insert"
@@ -135,7 +135,7 @@
             contentType: "application/x-www-form-urlencoded; charset=UTF-8",  success: function (response) {
                 var Close = confirm("저장이 완료되었습니다. 창을 닫으시겠습니까?");
                 if (Close) {
-                    window.opener.location.reload();
+                    window.opener.location.href = "/store";
                     window.close();
                 }
             },

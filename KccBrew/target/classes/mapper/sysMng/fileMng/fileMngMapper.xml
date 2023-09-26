@@ -35,20 +35,13 @@
 		]]>
 	AND	
 		a.grp_cd_dtl_id = c.grp_cd_dtl_id
-		<if test="FileMngVo.startYr != null and FileMngVo.startYr != '' and FileMngVo.startMn != null and FileMngVo.startMn != ''">
+		 <if test="FileMngVo.startDate != '' and FileMngVo.startDate != null">
                  <![CDATA[
-                  AND (
-                    EXTRACT(YEAR FROM a.FILE_REG_DTTM) > #{FileMngVo.startYr}
-                    OR (EXTRACT(YEAR FROM a.FILE_REG_DTTM) = #{FileMngVo.startYr} AND EXTRACT(MONTH FROM a.FILE_REG_DTTM) >= #{FileMngVo.startMn})
-                )
-                  ]]>
+               AND a.file_reg_dttm >= #{FileMngVo.startDate}]]>
             </if>
-            <if test="FileMngVo.endYr != null and FileMngVo.endYr != '' and FileMngVo.endMn != null and FileMngVo.endMn != ''">
+            <if test="FileMngVo.endDate!= '' and FileMngVo.endDate!= null">
                   <![CDATA[
-                AND (
-                    EXTRACT(YEAR FROM a.FILE_REG_DTTM) < #{FileMngVo.endYr}
-                    OR (EXTRACT(YEAR FROM a.FILE_REG_DTTM) = #{FileMngVo.endYr} AND EXTRACT(MONTH FROM a.FILE_REG_DTTM) <= #{FileMngVo.endMn})
-                )
+                AND a.file_reg_dttm < TO_DATE(#{FileMngVo.endDate},'YYYY-MM-DD')+1
                   ]]>
             </if>
              <if test="FileMngVo.grpCdDtlId != null and FileMngVo.grpCdDtlId != ''">
@@ -70,7 +63,7 @@
             </if>
 		) a
 		
-		WHERE ROW_NUM BETWEEN #{firstRowNum} AND #{lastRowNum}
+		WHERE ROW_NUM BETWEEN #{start} AND #{end}
 	
 	</select>
 	
@@ -94,20 +87,13 @@
 		a.file_seq(+) = b.file_seq ]]>
 	AND	
 		a.grp_cd_dtl_id = c.grp_cd_dtl_id
-		<if test="FileMngVo.startYr != null and FileMngVo.startYr != '' and FileMngVo.startMn != null and FileMngVo.startMn != ''">
+		<if test="FileMngVo.startDate != '' and FileMngVo.startDate != null">
                  <![CDATA[
-                  AND (
-                    EXTRACT(YEAR FROM a.FILE_REG_DTTM) > #{FileMngVo.startYr}
-                    OR (EXTRACT(YEAR FROM a.FILE_REG_DTTM) = #{FileMngVo.startYr} AND EXTRACT(MONTH FROM a.FILE_REG_DTTM) >= #{FileMngVo.startMn})
-                )
-                  ]]>
+               AND a.file_reg_dttm >= #{FileMngVo.startDate}]]>
             </if>
-            <if test="FileMngVo.endYr != null and FileMngVo.endYr != '' and FileMngVo.endMn != null and FileMngVo.endMn != ''">
+            <if test="FileMngVo.endDate!= '' and FileMngVo.endDate!= null">
                   <![CDATA[
-                AND (
-                    EXTRACT(YEAR FROM a.FILE_REG_DTTM) < #{FileMngVo.endYr}
-                    OR (EXTRACT(YEAR FROM a.FILE_REG_DTTM) = #{FileMngVo.endYr} AND EXTRACT(MONTH FROM a.FILE_REG_DTTM) <= #{FileMngVo.endMn})
-                )
+                AND a.file_reg_dttm < TO_DATE(#{FileMngVo.endDate},'YYYY-MM-DD')+1
                   ]]>
             </if>
              <if test="FileMngVo.grpCdDtlId != null and FileMngVo.grpCdDtlId != ''">
