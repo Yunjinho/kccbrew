@@ -11,6 +11,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpRequest;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -164,24 +165,6 @@ public class MainController {
 		return "redirect:/mypage";
 	}
 	
-	/******************* 비밀번호 변경 *********************/
-	
-	@RequestMapping(value = "/mypage/chgpwd", method = RequestMethod.GET)
-	public String chgPassword(Model model) {
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		
-		if(authentication != null) {
-			Object principal = authentication.getPrincipal();
-			if(principal instanceof UserDetails) {
-				UserDetails userDetails = (UserDetails) principal;
-				String userId = userDetails.getUsername();
-				List<MainPageVo> userInfoList = mainServiceImple.showUserInfoListById(userId);
-
-				model.addAttribute("userInfoList", userInfoList);
-			}
-		}
-		return "MyPageP3";
-	}
 	
 	@RequestMapping(value= "/confirmchg", method = RequestMethod.POST)
 	public String confirmChange(Model model, @ModelAttribute MainPageVo mainPageVo) {
@@ -246,8 +229,8 @@ public class MainController {
 
 	/************************** 점주 메인 ***************************/
 	@RequestMapping(value="/manager/main", method=RequestMethod.GET)
-	public String mngMain(Model model, HttpSession session, RedirectAttributes redirectAttributes) {
-
+	public String mngMain(Model model, HttpServletRequest request, RedirectAttributes redirectAttributes) {
+		HttpSession session=request.getSession();
 		UserVo userVo = (UserVo) session.getAttribute("user");
 		String userId = userVo.getUserId();
 
@@ -287,7 +270,8 @@ public class MainController {
 
 	/************************** 수리 기사 메인 ***************************/
 	@RequestMapping(value="/mechanic/main", method=RequestMethod.GET)
-	public String mechaMain(Model model, HttpSession session, RedirectAttributes redirectAttributes) {
+	public String mechaMain(Model model, HttpServletRequest request, RedirectAttributes redirectAttributes) {
+		HttpSession session = request.getSession();
 		UserVo userVo = (UserVo) session.getAttribute("user");
 		String userId = userVo.getUserId();
 
