@@ -55,11 +55,11 @@
 											<tr>
 												<th>조회 기간</th>
 												<td colspan="2">
-													<input type="date" name="wishingStartDate" value="${searchContent.wishingStartDate}">
+													<input type="date" name="wishingStartDate" value="${searchContent.wishingStartDate}" onchange="checkStartDate()">
 												</td>
 												<td>~</td>
 												<td colspan="3">
-													<input type="date" name="wishingEndDate" value="${searchContent.wishingEndDate}">
+													<input type="date" name="wishingEndDate" value="${searchContent.wishingEndDate}" onchange="checkEndDate()">
 												</td>
 
 												<!-- 종료 연도 선택 필드 -->
@@ -71,7 +71,7 @@
 												<th>AS 번호</th>
 												<!-- Input field for URI -->
 												<td>
-													<input type="search" name="asInfoSeq" placeholder="AS 번호를 입력하세요" value="${searchContent.asInfoSeq}">
+													<input type="search" name="asInfoSeq" placeholder="AS 번호를 입력하세요" value="${searchContent.asInfoSeq}" pattern="\d*">
 												</td>
 												<th>점포 이름</th>
 												<td>
@@ -161,11 +161,11 @@
 											<tr>
 												<th>조회 기간</th>
 													<td colspan="2">
-														<input type="date" name="wishingStartDate" value="${searchContent.wishingStartDate}">
+														<input type="date" name="wishingStartDate" value="${searchContent.wishingStartDate}" onchange="checkStartDate()">
 													</td>
 													<td>~</td>
 													<td colspan="3">
-														<input type="date" name="wishingEndDate" value="${searchContent.wishingEndDate}">
+														<input type="date" name="wishingEndDate" value="${searchContent.wishingEndDate}" onchange="checkEndDate()" >
 													</td>
 											</tr>
 											<!-- 2행 -->
@@ -248,11 +248,11 @@
 											<tr>
 												<th>조회 기간</th>
 													<td colspan="2">
-														<input type="date" name="wishingStartDate" value="${searchContent.wishingStartDate}">
+														<input type="date" name="wishingStartDate" value="${searchContent.wishingStartDate}" onchange="checkStartDate()">
 													</td>
 													<td>~</td>
 													<td colspan="3">
-														<input type="date" name="wishingEndDate" value="${searchContent.wishingEndDate}">
+														<input type="date" name="wishingEndDate" value="${searchContent.wishingEndDate}" onchange="checkEndDate()">
 													</td>
 											</tr>
 											<!-- 2행 -->

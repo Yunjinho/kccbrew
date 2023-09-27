@@ -49,13 +49,13 @@
 										<h6><img src="/resources/img/asMng/check.png" class="tag-image">희망 신청일</h6>
 										<div>
 											<div>
-												<input type="date" value="" name="wishingStartDate">
+												<input type="date" value="" name="wishingStartDate" onchange="checkStartDate()">
 											</div>
 											<div style="font-size:2em; text-align:center;">
 												~
 											</div>
 											<div>
-												<input type="date" value="" name="wishingEndDate">
+												<input type="date" value="" name="wishingEndDate" onchange="checkEndDate()">
 											</div>
 										</div>
 

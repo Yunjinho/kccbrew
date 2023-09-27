@@ -67,8 +67,6 @@ public class AsMngController {
 		AsMngVo asMngVo=new AsMngVo();
 		UserVo userVo=(UserVo)session.getAttribute("user");
 		asMngVo.setUserId(userVo.getUserId());
-		System.out.println(asMngVo);
-		
 		
 		List<AsMngVo> list=asMngService.selectCd("M");
 		model.addAttribute("machineCd", list);
@@ -96,7 +94,6 @@ public class AsMngController {
 		model.addAttribute("endPage", endPage);
 
 		model.addAttribute("totalCount", totalCount);
-		model.addAttribute("searchContent",asMngVo);
 		model.addAttribute("searchContent",asMngVo);
 		model.addAttribute("ASList",list);
 		return "asList";
@@ -147,7 +144,6 @@ public class AsMngController {
 		
 		model.addAttribute("searchContent",asMngVo);
 		model.addAttribute("ASList",asList);
-		
 		
 		return "asList";
 	}
@@ -391,14 +387,9 @@ public class AsMngController {
 		asMngVo.setUserId(userId);
 		asMngVo.setStorageLocation(path);
 		asMngVo.setServerSavePath(folderPath);
-		System.out.println("=============================================================");
-		System.out.println(folderPath);
-		System.out.println(path);
 		asMngVo.setLocalSavePath(localPath + path);
 		asMngService.deleteFile(asMngVo, imgSeq);
 		asMngService.asMod(asMngVo);
-		
-		
 		
 		return "redirect:/as-detail?asInfoSeq=" + asInfoSeq + "&asAssignSeq=";
 	}
@@ -410,8 +401,6 @@ public class AsMngController {
 	public List<AsMngVo> getAsInfoImages(@RequestParam String asInfoSeq, @RequestParam String asAssignSeq) {
 	    // 이미지 정보를 가져와서 List<AsMngVo> 형태로 반환\
 		AsMngVo vo = asMngService.selectAsInfoDetail(asInfoSeq, asAssignSeq);
-		System.out.println(vo.getFileSeq());
-		System.out.println("============================");
 	    List<AsMngVo> imageList = asMngService.selectAsImg(vo.getFileSeq());
 	    return imageList;
 	}

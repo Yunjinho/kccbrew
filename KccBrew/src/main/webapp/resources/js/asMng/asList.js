@@ -58,6 +58,26 @@ function downExcel(flag){
 	    }
 	})
 }
+function checkEndDate(){
+	var startDate=$("input[name=wishingStartDate]").val();
+	var endDate=$("input[name=wishingEndDate]").val();
+	
+	if(startDate=="") return;
+	if(startDate>endDate) {
+		alert("검색 마지막 일은 검색 시작일보다 이후이어야 합니다.");
+		$("input[name=wishingEndDate]").val("");
+	}
+	
+}
+function checkStartDate(){
+	var startDate=$("input[name=wishingStartDate]").val();
+	var endDate=$("input[name=wishingEndDate]").val();
+	if(endDate=="") return;
+	if(startDate>endDate) {
+		alert("검색 시작일은 검색 마지막 일보다 이전이어야 합니다.");
+		$("input[name=wishingStartDate]").val("");
+	}
+}
 window.onload=function(){
 	history.replaceState({}, null, location.pathname);
 	

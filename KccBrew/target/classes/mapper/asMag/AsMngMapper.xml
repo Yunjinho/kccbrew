@@ -202,8 +202,8 @@
 	LEFT OUTER JOIN as_assign ass ON a.as_info_seq=ass.as_info_seq
 	LEFT OUTER JOIN as_result ar ON ass.as_assign_seq=ar.as_assign_seq
 	WHERE s.store_nm LIKE '%'||#{storeNm}||'%' AND
-	 	status.as_status LIKE '%'||#{asStatusCd}||'%' AND
-	 	machine.machine_cd LIKE '%'||#{machineCd}||'%' AND 
+	 	a.as_status LIKE '%'||#{asStatusCd}||'%' AND
+	 	a.machine_cd LIKE '%'||#{machineCd}||'%' AND 
 	 	s.store_addr LIKE '%'||#{storeAddr}||'%'
 		<choose><when test="asInfoSeq != ''">AND a.as_info_seq = #{asInfoSeq} </when></choose>
 		<if test="wishingEndDate !=''">

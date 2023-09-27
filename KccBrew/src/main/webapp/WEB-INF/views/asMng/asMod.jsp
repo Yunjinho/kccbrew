@@ -61,7 +61,7 @@
 												<fmt:formatDate value="${wishingStartDate}"
 													pattern="yyyy-MM-dd" var="formattedStartDate" />
 												<input type="date" value="${formattedStartDate}"
-													name="wishingStartDate">
+													name="wishingStartDate" onchange="checkStartDate()">
 											</div>
 											<div style="font-size: 2em; text-align: center;">~</div>
 											<div>
@@ -70,7 +70,7 @@
 												<fmt:formatDate value="${wishingEndDate}"
 													pattern="yyyy-MM-dd" var="formattedEndDate" />
 												<input type="date" value="${formattedEndDate}"
-													name="wishingEndDate">
+													name="wishingEndDate" onchange="checkEndDate()">
 											</div>
 										</div>
 
@@ -162,6 +162,27 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> 
 <%-- 	<script src="<c:url value="/resources/js/asMng/asReceipt.js"/>"></script> --%>
 <script type="text/javascript">
+function checkEndDate(){
+	var startDate=$("input[name=wishingStartDate]").val();
+	var endDate=$("input[name=wishingEndDate]").val();
+	
+	if(startDate==null) return;
+	if(startDate>endDate) {
+		alert("검색 마지막 일은 검색 시작일보다 이후이어야 합니다.");
+		$("input[name=wishingEndDate]").val("");
+	}
+	
+}
+function checkStartDate(){
+	var startDate=$("input[name=wishingStartDate]").val();
+	var endDate=$("input[name=wishingEndDate]").val();
+	
+	if(endDate==null) return;
+	if(startDate>endDate) {
+		alert("검색 시작일은 검색 마지막 일보다 이전이어야 합니다.");
+		$("input[name=wishingStartDate]").val("");
+	}
+}
 $(document).ready(function() {
     var asInfoSeq = "${asInfoSeq}"; // 수정 필요한 부분
     var localUrl = "${asDetailInfo.localSavePath}"
