@@ -33,7 +33,11 @@ public class MainController {
 	@Autowired
 	MainService mainServiceImple;
 
-	/****************** 마이페이지 *********************/
+	/**
+	 * 마이 페이지로 이동
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value = "/mypage", method = RequestMethod.GET)
 	public String showUserInfo(Model model) {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -54,7 +58,11 @@ public class MainController {
 
 	}
 	
-	/****************** 마이페이지 수정 *********************/
+	/**
+	 * 마이페이지 수정 화면으로 이동
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value = "/mypage/mod", method = RequestMethod.GET)
 	public String modUserInfo(Model model) {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -75,15 +83,16 @@ public class MainController {
 	}
 	
 	/**
-	 * 사용자 정보 수정
+	 * 이미지를 제외한 정보만 수정하기
 	 * @param model
 	 * @param mainPageVo
 	 * @param machineCode
 	 * @param mechaLocationCode
 	 * @return
 	 */
-	@RequestMapping(value= "/confirmmod", method = RequestMethod.POST)
-	public String confirmModProfile(Model model, @ModelAttribute MainPageVo mainPageVo,
+	@RequestMapping(value= "/confirmmodexceptimg", method = RequestMethod.POST)
+	public String confirmModProfile(Model model,
+									@ModelAttribute MainPageVo mainPageVo,
 						            @RequestParam("machineCode") String machineCode,
 						            @RequestParam("mechaLocationCode") String mechaLocationCode) {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -96,7 +105,7 @@ public class MainController {
 				mainPageVo.setUserId(userId);
 				mainPageVo.setMachineCode(machineCode);
 	            mainPageVo.setMechaLocationCode(mechaLocationCode);
-				mainServiceImple.updateMyProfile(mainPageVo);
+				mainServiceImple.updateMyProfileExceptImg(mainPageVo);
 			}
 		}
 		return "redirect:/mypage";
@@ -104,71 +113,56 @@ public class MainController {
 	
 	
 	/**
-	 * 사용자 이미지 신규 등록 및 해당 이미지로 프로필 이미지 변경
-	 * @param mainPageVo
-	 * @param localPath
-	 * @param path
-	 * @param request
-	 * @return
-	 */
-	@RequestMapping(value = "/uploadimg", method = RequestMethod.POST)
-	public String uploadImg(MainPageVo mainPageVo,
-							@Value("#{serverImgPath['localPath']}")String localPath,
-							@Value("#{serverImgPath['userPath']}")String path,
-							HttpServletRequest request) {
-		/*데이터확인*/
-		System.out.println("MainPageVO: " + mainPageVo);
-
-		String folderPath=request.getServletContext().getRealPath("")+path;
-		File folder = new File(folderPath);
-		// 폴더가 존재하지 않으면 폴더를 생성합니다.
-		if (!folder.exists()) {
-			boolean success = folder.mkdirs(); // 폴더 생성 메소드
-		}
-		mainPageVo.setFileDetailLocation(path);
-		mainPageVo.setServerSavePath(folderPath);
-
-		//local 저장 위치 배포할땐 삭제
-		File folder2 = new File(localPath+path);
-		// 폴더가 존재하지 않으면 폴더를 생성합니다.
-		if (!folder2.exists()) {
-			boolean success = folder2.mkdirs(); // 폴더 생성 메소드
-		}
-		mainPageVo.setLocalSavePath(localPath+path);
-
-		mainServiceImple.updateMyProfileImg(mainPageVo);
-
-		return "redirect:/mypage";
-	}
-	
-	/**
-	 * 사용자 프로필 이미지 수정
+	 * 이미지를 포함한 사용자 데이터 수정
 	 * @param model
 	 * @param mainPageVo
-	 * @param imgFile
+	 * @param machineCode
+	 * @param mechaLocationCode
 	 * @return
 	 */
-//	@RequestMapping(value="/updateimg", method = RequestMethod.POST)
-//	public String updateUserImg(Model model, @ModelAttribute MainPageVo mainPageVo, @RequestParam("imgFile") MultipartFile imgFile) {
-//		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-//		
-//		if(authentication != null) {
-//			Object principal = authentication.getPrincipal();
-//			if(principal instanceof UserDetails) {
-//				UserDetails userDetails = (UserDetails) principal;
-//				String userId = userDetails.getUsername();
-//				mainPageVo.setUserId(userId);
-//				
-//				try {
-//					mainPageVo.setUserImg(imgFile);
-//					mainServiceImple.updateMyProfileImg(mainPageVo);
-//				}catch (Exception e) {
-//					e.printStackTrace();
-//				}
-//			}
-//		}
-//		return "redirect:/mypage";
-//	}
+	@RequestMapping(value= "/confirmmod", method = RequestMethod.POST)
+	public String confirmModProfile(Model model
+									,@ModelAttribute MainPageVo mainPageVo
+						            ,@RequestParam("machineCode") String machineCode
+						            ,@RequestParam("mechaLocationCode") String mechaLocationCode
+						            ,@Value("#{serverImgPath['localPath']}")String localPath
+									,@Value("#{serverImgPath['userPath']}")String path
+									,HttpServletRequest request) {
+		
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		
+		if(authentication != null) {
+			Object principal = authentication.getPrincipal();
+			if(principal instanceof UserDetails) {
+				UserDetails userDetails = (UserDetails) principal;
+				String userId = userDetails.getUsername();
+				mainPageVo.setUserId(userId);
+				
+				String folderPath=request.getServletContext().getRealPath("")+path;
+				File folder = new File(folderPath);
+				// 폴더가 존재하지 않으면 폴더를 생성합니다.
+				if (!folder.exists()) {
+					boolean success = folder.mkdirs(); // 폴더 생성 메소드
+				}
+				//local 저장 위치 배포할땐 삭제
+				File folder2 = new File(localPath+path);
+				
+				// 폴더가 존재하지 않으면 폴더를 생성합니다.
+				if (!folder2.exists()) {
+					boolean success = folder2.mkdirs(); // 폴더 생성 메소드
+				}
+			
+				mainPageVo.setFileDetailLocation(path);
+				mainPageVo.setServerSavePath(folderPath);
+				mainPageVo.setLocalSavePath(localPath+path);
+				
+				mainPageVo.setMachineCode(machineCode);
+	            mainPageVo.setMechaLocationCode(mechaLocationCode);
+				mainServiceImple.updateMyProfile(mainPageVo);
+			}
+		}
+		return "redirect:/mypage";
+	}
 	
 	/******************* 비밀번호 변경 *********************/
 	

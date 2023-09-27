@@ -31,16 +31,19 @@
 			<!-- ********** 페이지 네비게이션 끝 ********** -->
 			<div class="myInfo-wrapper">
 				<div class="category">내 정보</div>
-				<form id="changeProfileImg" action="/uploadimg" method="post" enctype="multipart/form-data">
+				<form id="changeProfileImg" name="changeProfileImg" action="/uploadimg" method="post" enctype="multipart/form-data">
 					<table id="search-box">
 						<c:forEach var="user" items="${userInfoList}">
 							<tr>
 								<td rowspan="4">
-									<c:set var="imagePath" value="${path}/${user.fileDetailLocation}${user.fileDetailServerName}" />
-									<img src="<c:out value='${imagePath}'/>" id="profileImg">
-									<input type="file" id="file" name="imgFile" style="display:none" accept=".jpg, .jpeg, .png" onchange="imgTypeCheck(this)"/>
-									<button type="button" id="changeImageBtn" >이미지 변경</button>
-									
+									<sec:authorize access="hasAnyRole('ROLE_ADMIN', 'ROLE_MECHA')">
+										<c:set var="imagePath" value="${path}/${user.fileDetailLocation}${user.fileDetailServerName}" />
+										<img src="<c:out value='${imagePath}'/>" id="profileImg">
+									</sec:authorize>
+									<sec:authorize access="hasRole('ROLE_MANAGER')">
+										<c:set var="imagePath" value="resources/img/kcc.png" />
+										<img src="<c:out value='${imagePath}'/>" id="profileImg">
+									</sec:authorize>
 								</td>
 								<th>ID</th>
 								<td><c:out value="${user.userId}" /></td>
@@ -87,7 +90,6 @@
 		
 					<sec:authorize access="hasRole('ROLE_MANAGER')">
 						<div class="category">상세정보</div>
-						<hr style="border: solid 1.2px; width: 97%;">
 						<table id="search-box">
 							<c:forEach var="store" items="${storeInfoList}">
 								<tr>
@@ -103,7 +105,6 @@
 					</sec:authorize>
 					<sec:authorize access="hasRole('ROLE_MECHA')">
 						<div class="category">상세정보</div>
-						<hr style="border: solid 1.2px; width: 97%;">
 						<table id="search-box">
 							<c:forEach var="mecha" items="${userInfoList}">
 								<tr>
@@ -136,7 +137,6 @@
 						</table>
 					</sec:authorize>
 					<div class="modButtons">
-						<button type="submit" id="confirmImgChg">이미지 적용</button>
 						<c:url var="toChgPwdPage" value="/mypage/chgpwd"/>
 						<a href="${toChgPwdPage}" class="updateBtn">
 							비밀번호 변경
@@ -150,76 +150,5 @@
 			</div>
 		</div>
 	</section>
-	<script>
-	$(document).ready(function(){
-	    // 파일 업로드 input 변경 시 미리보기 처리
-	    $('#file').on('change', function (e) {
-	        var fileInput = e.target;
-	        var profileImg = $('#profileImg');
-
-	        if (fileInput.files && fileInput.files[0]) {
-	            var reader = new FileReader();
-
-	            reader.onload = function (e) {
-	                profileImg.attr('src', e.target.result);
-	            };
-
-	            reader.readAsDataURL(fileInput.files[0]);
-	        }
-	    });
-	    
-	    
-	    // 이미지 변경 버튼 클릭 시 파일 업로드 input 클릭
-	    $('#changeImageBtn').click(function () {
-	        $('#file').click();
-	    });
-	    
-	    //form 제출
-	    $('#confirmImgChg').click(function () {
-	        var formData = new FormData();
-	        formData.append('imgFile', $('#file')[0].files[0]);
-
-	        $.ajax({
-	            url: '/uploadimg',
-	            type: 'POST',
-	            data: formData,
-	            processData: false,
-	            contentType: false,
-	            success: function (data) {
-	            	alert("이미지 업로드 성공")
-	            },
-	            error: function (xhr, status, error) {
-	                alert("이미지 업로드를 실패했습니다.")
-	            }
-	        });
-	    });
-	});
-	//사진 확장자 체크-> 이미지 사진만 올리게 
-    function imgTypeCheck(fileName){
-    	var imgFile=fileName.files[0];
-    	//파일 확장자 추출	
-    	var fileLen = imgFile.name.length;
-    	var lastDot = imgFile.name.lastIndexOf('.');
-    	var fileType = imgFile.name.substring(lastDot, fileLen).toLowerCase();
-
-    	//확장자 비교
-    	if(fileType == ".jpeg" || fileType == ".jpg" || fileType == ".png"){
-    		$("#imgFileMsg").css("display","none")
-    		var reader = new FileReader();
-    		reader.onload = (e) => {
-    			var image = new Image();
-    			image.src=e.target.result;
-    			$("#file").attr("src",e.target.result);
-    		};
-    		$(".insert-img").css("border","none");
-    		reader.readAsDataURL(imgFile);
-    	}else{
-    		$("#imgFileMsg").html("사용자 사진은 jpeg, jpg, png 확장자를 가진 파일만 사용할 수 있습니다.");
-    		$("#imgFileMsg").css("display","block");
-    		$("#file").css("display","none");
-    		$("input[name=imgFile]").val("");
-    	}
-    }
-	</script>
 </body>
 </html>
