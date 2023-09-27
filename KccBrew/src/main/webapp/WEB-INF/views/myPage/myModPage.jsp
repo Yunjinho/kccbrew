@@ -10,6 +10,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <link rel="stylesheet" href="${path}/resources/css/comm/myPage.css"/>
+<script src="${path}/resources/js/comm/myPage.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
@@ -32,13 +33,21 @@
 			<!-- ********** 페이지 네비게이션 끝 ********** -->
 			<div class="myInfo-wrapper">
 				<div class="category">내 정보</div>
-					<form  method="post">
+					<form method="post" id="updateProfileForm" name="updateProfileForm" enctype="multipart/form-data">
 					<table id="search-box">
 						<c:forEach var="user" items="${userInfoList}" >
 							<tr>
 								<td rowspan="4">
-									<c:set var="imagePath" value="${path}/${user.fileDetailLocation}${user.fileDetailServerName}" />
-									<img src="<c:out value='${imagePath}'/>" id="profileImg">
+									<sec:authorize access="hasAnyRole('ROLE_ADMIN', 'ROLE_MECHA')">
+										<c:set var="imagePath" value="${path}/${user.fileDetailLocation}${user.fileDetailServerName}" />
+										<img src="<c:out value='${imagePath}'/>" id="profileImg" >
+										<input type="file" id="file" name="userImg" style="display:none" accept=".jpg, .jpeg, .png" onchange="imgTypeCheck(this)"/>
+										<button type="button" id="changeImageBtn" >이미지 변경</button>
+									</sec:authorize>
+									<sec:authorize access="hasRole('ROLE_MANAGER')">
+										<c:set var="imagePath" value="${path}/resources/img/kcc.png" />
+										<img src="<c:out value='${imagePath}'/>" id="profileImg">
+									</sec:authorize>
 								</td>
 								<th><label for="userId">ID</label></th>
 								<td>
@@ -95,7 +104,6 @@
 	
 					<sec:authorize access="hasRole('ROLE_MANAGER')">
 						<div class="category">상세정보</div>
-						<hr style="border: solid 1.2px; width: 97%;">
 						<table id="search-box">
 							<c:forEach var="store" items="${storeInfoList}">
 								<tr>
@@ -115,7 +123,6 @@
 					</sec:authorize>
 					<sec:authorize access="hasRole('ROLE_MECHA')">
 						<div class="category">상세정보</div>
-						<hr style="border: solid 1.2px; width: 97%;">
 						<table id="search-box">
 							<c:forEach var="mecha" items="${userInfoList}">
 								<tr>
@@ -150,7 +157,8 @@
 						</table>
 					</sec:authorize>
 					<div class="modButtons">
-						<button type="submit" id="confirmMod" formaction='<c:url value= '/confirmmod'/>'>확인</button>
+						<button type="button" id="confirmModBtn">확인</button>
+						<button type="button" id="confirmModExceptImgBtn">확인</button>
 						<c:url var="cancel" value="/mypage"></c:url>
 						<a href="${cancel}">
 							<button type="button" class="cancel">취소</button>
@@ -162,22 +170,5 @@
 			</div>
 		</div>
 	</section>
-	<script>
-	$(document).ready(function(){
-		//수정 확인 버튼
-	    $("#confirmMod").click(function(){
-	        var selectedMachineCode = $("#chooseMachineCode").val();
-	        var selectedLocationCode = $("#chooseLocationCode").val();
-	        
-	        console.log(selectedMachineCode + "machine");
-	        console.log(selectedLocationCode + "location");
-	        
-	        $("#machineCodeHidden").val(selectedMachineCode);
-	        $("#locationCodeHidden").val(selectedLocationCode);
-	        
-	        $("form").submit();
-	    });
-	});
-	</script>
 </body>
 </html>
