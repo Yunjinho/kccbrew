@@ -32,7 +32,11 @@ public class MainPageVo {
 	String localSavePath;
 	String serverSavePath;
 	
-	
+	String superGrpCdDtlId; //슈퍼 그룹 코드 디테일 아이디
+	String grpCdId;			//그룹 코드 아이디
+	String grpCdNm;			//그룹 코드명
+	String grpCdDtlId;		//그룹 코드 디테일 아이디
+	String grpCdDtlNm;		//그룹 코드 디테일명
 	
 	int asAssignNum; 		//배정 번호
 	int asInfoNum;  		//접수 번호
@@ -41,10 +45,11 @@ public class MainPageVo {
 	String asStatus; 		//as 상태 코드
 	
 	
-	String mechanicId; 		//수리기사 아이디
-	String mechanicName; 	//수리기사 이름
-	String machineCode; 	//장비 코드
-	String mechaLocationCode;	//활동 지역
+	String mechanicId; 			//수리기사 아이디
+	String mechanicName; 		//수리기사 이름
+	String machineCode; 		//장비 코드
+	String mechaLocationCode; 	//지역 상세 코드
+	String mechaLocation;  		//지역 코드
 	
 	String managerId;  		//점주 아이디
 	String managerName; 	//점주 이름

@@ -67,7 +67,6 @@ public interface IUserRepository {
 	 * 사용자 사진 파일 기본 정보 등록
 	 * @param vo : 사용자 사진 정보를 담고있는 vo
 	 */
-	/*public void insertFileInfo(RegisterVo vo);*/
 	public void insertFileInfo(UserVo vo);
 	
 	/**

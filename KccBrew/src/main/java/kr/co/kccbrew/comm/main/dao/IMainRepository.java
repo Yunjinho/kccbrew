@@ -8,6 +8,7 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import kr.co.kccbrew.comm.main.model.MainPageVo;
+import kr.co.kccbrew.comm.security.model.UserVo;
 
 @Mapper
 @Repository
@@ -20,7 +21,11 @@ public interface IMainRepository {
 	List<MainPageVo> showUserInfoListById(String userId);	//특정 사용자의 정보 리스트
 	List<MainPageVo> showStoreInfoListById(String userId);  //점포 정보 리스트
 	
-	void updateMyProfile(MainPageVo mainPageVo); 			//마이페이지 정보 업데이트 
+	List<MainPageVo> selectLocationCd();					//지역 코드 조회
+	//지역 코드 상세 조회
+	List<MainPageVo> selectLocationDtlCd(@Param("mechaLocationCode")String locationCd);
+	
+	void updateMyProfile(MainPageVo mainPageVo); 			//이미지 포함한 마이페이지 정보 업데이트 
 	void updateMyProfileExceptImg(MainPageVo mainPageVo); 	//이미지 제외한 정보만 업데이트
 	void updateMyStore(MainPageVo mainPageVo); 				//가게 정보 업데이트
 	

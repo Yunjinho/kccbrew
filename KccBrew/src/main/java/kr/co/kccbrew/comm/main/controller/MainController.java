@@ -9,6 +9,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.json.simple.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -74,9 +76,11 @@ public class MainController {
 				String userId = userDetails.getUsername();
 				List<MainPageVo> userInfoList = mainServiceImple.showUserInfoListById(userId);
 				List<MainPageVo> storeInfoList = mainServiceImple.showStoreInfoListById(userId);
+				List<MainPageVo> locationList = mainServiceImple.selectLocationCd();
 
 				model.addAttribute("userInfoList", userInfoList);
 				model.addAttribute("storeInfoList",storeInfoList);
+				model.addAttribute("locationList", locationList);
 			}
 		}
 		return "MyPageP2";
@@ -162,6 +166,23 @@ public class MainController {
 			}
 		}
 		return "redirect:/mypage";
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/searchlocationcode" , method=RequestMethod.GET)
+	public JSONArray searchLocationCode(String locationCd) {
+		JSONArray result = new JSONArray();
+
+		if (locationCd == null || locationCd.equals("")) {
+			return result;
+			
+		} else {
+			List<MainPageVo> list=mainServiceImple.selectLocationDclCd(locationCd);
+			for(MainPageVo l:list) {
+				result.add(l);
+			}
+			return result;
+		}
 	}
 	
 	/******************* 비밀번호 변경 *********************/

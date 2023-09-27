@@ -124,12 +124,20 @@ public class MainService implements IMainService{
 	public void updateMyProfile(MainPageVo mainPageVo) {
 		insertUserImg(mainPageVo);
 		mainRepository.updateMyProfile(mainPageVo);
+		
+		if(mainPageVo.getMechaLocationCode().equals("지역 상세 선택")) {
+			mainPageVo.setMechaLocationCode(mainPageVo.getMechaLocation());
+		}
 	}
 	
 	//이미지를 제외하고 사용자 정보 수정하기
 	@Override
 	public void updateMyProfileExceptImg(MainPageVo mainPageVo) {
 		mainRepository.updateMyProfileExceptImg(mainPageVo);
+		
+		if(mainPageVo.getMechaLocationCode().equals("지역 상세 선택")) {
+			mainPageVo.setMechaLocationCode(mainPageVo.getMechaLocation());
+		}
 	}
 	
 	//이미지 정보 등록하기
@@ -163,5 +171,19 @@ public class MainService implements IMainService{
 	@Override
 	public void updateMyStore(MainPageVo mainPageVo) {
 		mainRepository.updateMyStore(mainPageVo);
+	}
+
+	//지역 코드 조회
+	@Override
+	public List<MainPageVo> selectLocationCd() {
+		List<MainPageVo> list = mainRepository.selectLocationCd();
+		return list;
+	}
+	
+	//상세 지역 코드 조회
+	@Override
+	public List<MainPageVo> selectLocationDclCd(String locationCd) {
+		List<MainPageVo> list = mainRepository.selectLocationDtlCd(locationCd);
+		return list;
 	}
 }

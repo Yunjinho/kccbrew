@@ -128,6 +128,7 @@
 								<tr>
 									<th>담당 장비</th>
 									<th>활동지역</th>
+									<th>활동 지역 상세</th>
 								</tr>
 								<tr>
 									<td>
@@ -141,15 +142,18 @@
 										</select>	
 									</td>
 									<td>
-										<select id="chooseLocationCode">
+										<select id="chooseLocationCode" name="mechaLocation">
 											<option value="" disabled>== 선택 ==</option>
-											<option value="02-200">양천</option>
-											<option value="02-300">은평,마포,서대문,강서</option>
-											<option value="02-400">송파,강동,중랑,광진,성동</option>
-											<option value="02-500">서초, 광명시, 과천시</option>
-											<option value="02-700">마포,용산,종로</option>
-											<option value="02-800">영등포,동작,구로,금천,양서,관악,광명시</option>
-											<option value="02-900">노원,동대문,도봉,강북,성북</option>
+											<c:forEach var="locationList" items="${locationList}">
+												<option value="${locationList.grpCdDtlId}">
+													${locationList.grpCdDtlNm}
+												</option>
+											</c:forEach>
+										</select>
+									</td>
+									<td>
+										<select id="chooseDetailLocationCode" name="mechaLocationCode">
+											<option>== 선택 ==</option>
 										</select>
 									</td>
 								</tr>
