@@ -276,18 +276,26 @@
 				,eqpmn_cd 			= #{machineCode, jdbcType=VARCHAR}
 				,location_cd 		= #{mechaLocationCode, jdbcType=VARCHAR}
 				,mod_dttm			= SYSTIMESTAMP 
+				,file_seq			= #{fileId}
 			WHERE user_id = #{userId}
 		]]>
 	</update>
 	
-	<!-- 마이페이지 사용자 프로필 사진 수정하기 -->
-	<update id="updateMyProfileImg" parameterType="kr.co.kccbrew.comm.main.model.MainPageVo">
+	<!-- 사진을 제외한 마이페이지 정보 수정하기 -->
+	<update id="updateMyProfileExceptImg" parameterType="kr.co.kccbrew.comm.main.model.MainPageVo">
 		<![CDATA[
-			UPDATE file_detail_info
-			SET file_server_nm	= #{fileDetailServerName, jdbcType=VARCHAR}
-			WHERE reg_user = #{userId}
+			UPDATE users
+			SET user_nm				= #{userName}
+				,user_email  		= #{userEmail}
+				,user_telno  		= #{userTelNo}
+				,user_addr			= #{userAddress}
+				,eqpmn_cd 			= #{machineCode, jdbcType=VARCHAR}
+				,location_cd 		= #{mechaLocationCode, jdbcType=VARCHAR}
+				,mod_dttm			= SYSTIMESTAMP 
+			WHERE user_id = #{userId}
 		]]>
 	</update>
+
 	
 	<!-- 마이페이지 점포 정보 수정 -->
 	<update id="updateMyStore" parameterType="kr.co.kccbrew.comm.main.model.MainPageVo">
