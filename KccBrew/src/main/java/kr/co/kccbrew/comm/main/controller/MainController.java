@@ -5,6 +5,8 @@ import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.List;
 
+import javax.mail.Session;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import kr.co.kccbrew.comm.main.model.MainPageVo;
@@ -27,6 +30,7 @@ import kr.co.kccbrew.comm.security.model.UserVo;
 public class MainController {
 	@Autowired
 	MainService mainServiceImple;
+	
 
 	/****************** 마이페이지 *********************/
 	@RequestMapping(value = "/mypage", method = RequestMethod.GET)
@@ -134,7 +138,7 @@ public class MainController {
 
 	/************************** 관리자 메인 ***************************/
 	@RequestMapping(value="/admin/main", method=RequestMethod.GET)
-	public String admMain(Model model) {
+	public String admMain(Model model, HttpSession session) {
 		List<MainPageVo> asAssignList = mainServiceImple.showAllAsAssignList();          //a/s 배정 리스트
 		List<MainPageVo> asList 	= mainServiceImple.showAllAsInfoList();			   //a/s 접수 리스트
 		List<MainPageVo> waitingList = mainServiceImple.showWaitingMemberList();     //회원 승인 대기 리스트
@@ -182,7 +186,7 @@ public class MainController {
 		model.addAttribute("asAssignListById", asAssignListById);
 		model.addAttribute("asListById", asListById);
 		model.addAttribute("resultListById", resultListById);
-
+		
 		LocalDate now = LocalDate.now(); // 현재 날짜
 
 		//하루 구하기

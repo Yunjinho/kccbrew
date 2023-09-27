@@ -93,9 +93,9 @@ html {
 				<tiles:insertAttribute name="sidemenu" />
 
 				<div id="mainContents">
-					<div>
+	
 						<tiles:insertAttribute name="contents" />
-					</div>
+			
 				</div>
 			</div>
 		</div>

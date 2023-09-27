@@ -35,6 +35,13 @@ public class MainService implements IMainService{
 		List<MainPageVo> waitingList = mainRepository.showWaitingMemberList();
 		return waitingList;
 	}
+	
+	//미승인 회원 리스트
+	@Override
+	public List<MainPageVo> showUnapprovedMemberList() {
+		List<MainPageVo> unapprovedMemberList = mainRepository.unapprovedMemberList();
+		return unapprovedMemberList;
+	}
 
 	// a/s 결과 리스트
 	@Override

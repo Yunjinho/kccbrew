@@ -17,7 +17,7 @@
 }
 
 .user-profile {
-	/* height:226px; */
+	height: 500px;
 	margin-bottom: 5px;
 	box-sizing: border-box;
 	flex: 1;
@@ -25,6 +25,8 @@
 	flex-direction: column;
 	justify-content: space-between;
 	background-color: #1A55A1;
+	
+	border-radius: 10px;
 }
 
 .inner-box {
@@ -190,9 +192,14 @@
 	text-decoration: none;
 }
 
-.toMyPage:hover, .logout:hover, #toMyPage:hover, .user-task-value :hover, .manager-task-value:hover {
+.toMyPage:hover, .logout:hover, #toMyPage:hover{
 	text-decoration: underline;
 	font-weight: bold;
+}
+
+.user-task-value :hover, .manager-task-value:hover {
+	font-weight: bold;
+	color: #2fb3f5;
 }
 
 #toMyPage {
@@ -206,6 +213,7 @@
 	margin-bottom: 5px;
 	color: #111111;
 	background-color: #ffffff;
+	    border-radius: 10px;
 }
 
 .shortcut-service p {

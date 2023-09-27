@@ -42,3 +42,21 @@ function getLocationName2(locationCodeValue) {
 		}
 	});
 }
+
+
+/**********관리자 TODO**********/
+/*function getAsReception waiting list(locationCodeValue) {
+	$.ajax({
+		url: '/getLocationName', // Ajax 요청을 처리할 URL
+		type: 'GET',
+		dataType: 'text', // 반환되는 데이터 형식을 text로 설정
+		data: { "locationCode": locationCodeValue },
+		success: function(data) {
+			$('#locationCd').removeAttr('hidden');
+			$('#locationCd').text(data);
+		},
+		error: function(error) {
+			console.log('Ajax 요청 실패:', error);
+		}
+	});
+}*/

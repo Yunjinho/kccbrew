@@ -38,5 +38,12 @@ public class ObjectUtilController {
 		}
 		return LocationName;
 	}
+	
+	/*사용자타입코드로 사용자타입 조회 */
+	@RequestMapping(value="/getUserTypeName", produces = "text/plain; charset=utf-8")
+	@ResponseBody
+	public String getUserTypeName(@RequestParam("userTypeCd") String userTypeCd) {
+		return objectUtilService.getUserTypeName(userTypeCd);
+	} 
 
 }

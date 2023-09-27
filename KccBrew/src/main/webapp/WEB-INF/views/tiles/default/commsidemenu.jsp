@@ -59,11 +59,13 @@
 				<div class="user-task-wrapper">
 					<div class="user-task">
 						<a class="user-task-value" href="/as-list"><b
-							class="font-bold">50</b>건</a> <br> <span class="task-title">AS신청건수</span>
+							class="font-bold"><c:out value="${sessionScope.asListCount}" /></b>건</a> <br>
+						<span class="task-title">AS신청건수</span>
 					</div>
 					<div class="user-task last-task">
-						<a class="user-task-value" href="/user"><b class="font-bold">50</b>건</a>
-						<br> <span class="task-title">회원가입 대기건수</span>
+						<a class="user-task-value" href="/user"><b class="font-bold"><c:out
+									value="${sessionScope.unapprovedMemberList}"/></b>건</a> <br> <span class="task-title">회원가입
+							대기건수</span>
 					</div>
 				</div>
 			</div>
@@ -135,29 +137,31 @@
 					<div class="manager-task"
 						style="border-right: dashed 0.5px #a2c3f5;">
 						<a class="manager-task-value" href="/as-list"><b
-							class="font-bold">1</b>건</a> <br> <span class="task-title"
+							class="font-bold"><c:out
+									value="${sessionScope.asAssignListByIdCount}"/></b>건</a> <br> <span class="task-title"
 							style="padding: 7px;">AS신청건수</span>
 					</div>
 					<div class="manager-task">
 						<a class="manager-task-value" href="/as-list"><b
-							class="font-bold">1</b>건</a> <br> <span class="task-title"
+							class="font-bold"><c:out
+									value="${sessionScope.asListByIdCount}"/></b>건</a> <br> <span class="task-title"
 							style="padding: 7px;">AS배정건수</span>
 					</div>
 					<div class="manager-task last-task"
 						style="border-right: dashed 0.5px #a2c3f5;">
 						<a class="manager-task-value" href="/as-list"><b
-							class="font-bold">1</b>건</a> <br> <span class="task-title"
+							class="font-bold"><c:out
+									value="${sessionScope.resultListByIdCount}"/></b>건</a> <br> <span class="task-title"
 							style="padding: 7px;">AS결과건수</span>
 					</div>
 					<div class="manager-task last-task">
 						<a class="manager-task-value" href="/holiday"><b
-							class="font-bold">3</b>건</a> <br> <span class="task-title"
+							class="font-bold"><c:out
+									value="${sessionScope.usedHolidays}"/></b>일</a> <br> <span class="task-title"
 							style="padding: 7px;">휴점일수</span>
 					</div>
 
 				</div>
-
-
 			</div>
 
 
@@ -227,7 +231,7 @@
 				<h2 class="user-info-wrapper">
 					<c:out value='${user.userNm}' />
 					<span>님</span> <br> <span class="user-type"
-						style="margin: 0px"> (수리기사)</span> 
+						style="margin: 0px"> (수리기사)</span>
 				</h2>
 
 				<div class="user-info">
@@ -256,11 +260,13 @@
 				<div class="user-task-wrapper">
 					<div class="user-task">
 						<a class="user-task-value" href="/as-list"><b
-							class="font-bold">50</b>건</a> <br> <span class="task-title">AS배정건수</span>
+							class="font-bold"><c:out
+									value="${sessionScope.asAssignListCount}"/></b>건</a> <br> <span class="task-title">AS배정건수</span>
 					</div>
 					<div class="user-task last-task">
 						<a class="user-task-value" href="/holiday"><b
-							class="font-bold">3</b>/15건</a> <br> <span class="task-title">휴가사용일수</span>
+							class="font-bold"><c:out
+									value="${sessionScope.usedHolidays}"/></b>/15건</a> <br> <span class="task-title">휴가사용일수</span>
 					</div>
 				</div>
 			</div>

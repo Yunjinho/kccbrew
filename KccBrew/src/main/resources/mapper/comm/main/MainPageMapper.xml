@@ -4,7 +4,9 @@
 
 
 	<!-- 전체 a/s 배정 리스트 -->
-	<select id="showAllAsAssignList" parameterType="kr.co.kccbrew.comm.main.model.MainPageVo" resultType="kr.co.kccbrew.comm.main.model.MainPageVo">
+	<select id="showAllAsAssignList"
+		parameterType="kr.co.kccbrew.comm.main.model.MainPageVo"
+		resultType="kr.co.kccbrew.comm.main.model.MainPageVo">
 		<![CDATA[
 			SELECT
 				a.as_assign_seq				AS "asAssignNum",      
@@ -18,9 +20,11 @@
 			ORDER BY a.visit_dttm ASC
 		]]>
 	</select>
-	
+
 	<!-- 전체 a/s 접수 리스트 -->
-	<select id="showAllAsInfoList" parameterType="kr.co.kccbrew.comm.main.model.MainPageVo" resultType="kr.co.kccbrew.comm.main.model.MainPageVo">
+	<select id="showAllAsInfoList"
+		parameterType="kr.co.kccbrew.comm.main.model.MainPageVo"
+		resultType="kr.co.kccbrew.comm.main.model.MainPageVo">
 		<![CDATA[
 			SELECT
 				i.as_info_seq									AS "asInfoNum",     
@@ -32,9 +36,11 @@
 			WHERE i.store_mng_id = u.user_id
 		]]>
 	</select>
-	
+
 	<!-- 전체 회원 승인 대기 리스트 -->
-	<select id="showWaitingMemberList" parameterType="kr.co.kccbrew.comm.main.model.MainPageVo" resultType="kr.co.kccbrew.comm.main.model.MainPageVo">
+	<select id="showWaitingMemberList"
+		parameterType="kr.co.kccbrew.comm.main.model.MainPageVo"
+		resultType="kr.co.kccbrew.comm.main.model.MainPageVo">
 		<![CDATA[
 			SELECT
 				user_id							AS "userId",     
@@ -45,9 +51,27 @@
 			FROM users
 		]]>
 	</select>
-	
+
+
+	<select id="unapprovedMemberList"
+		parameterType="kr.co.kccbrew.comm.main.model.MainPageVo"
+		resultType="kr.co.kccbrew.comm.main.model.MainPageVo">
+		<![CDATA[
+		   SELECT
+		    user_id             AS "userId",
+		    user_nm             AS "userName",
+		    user_telno          AS "userTelNo",
+		    user_type_cd        AS "userType",
+		    approve_yn          AS "approveStatus"
+			FROM users
+			WHERE APPROVE_YN = 'N' OR APPROVE_YN IS NULL
+		]]>
+	</select>
+
 	<!-- 전체 a/s 결과 리스트 -->
-	<select id="showAsResultList" parameterType="kr.co.kccbrew.comm.main.model.MainPageVo" resultType="kr.co.kccbrew.comm.main.model.MainPageVo">
+	<select id="showAsResultList"
+		parameterType="kr.co.kccbrew.comm.main.model.MainPageVo"
+		resultType="kr.co.kccbrew.comm.main.model.MainPageVo">
 		<![CDATA[
 			SELECT
 				r.as_assign_seq					AS "asAssignNum",     
@@ -57,9 +81,10 @@
 			WHERE r.as_assign_seq = a.as_assign_seq AND a.as_info_seq = i.as_info_seq
 		]]>
 	</select>
-	
+
 	<!-- 전체 A/S 날짜 범위 별로 구하기 -->
-	<select id="getDataInRange" parameterType="java.time.LocalDate" resultType="kr.co.kccbrew.comm.main.model.MainPageVo">
+	<select id="getDataInRange" parameterType="java.time.LocalDate"
+		resultType="kr.co.kccbrew.comm.main.model.MainPageVo">
     <![CDATA[
         SELECT
             a.as_assign_seq             AS "asAssignNum",
@@ -75,9 +100,11 @@
         ORDER BY a.visit_dttm ASC
     ]]>
 	</select>
-	
+
 	<!-- 점주 a/s 일정 날짜 범위 별로 구하기 -->
-	<select id="getDataInRangeById" parameterType="kr.co.kccbrew.comm.main.model.MainPageVo" resultType="kr.co.kccbrew.comm.main.model.MainPageVo">
+	<select id="getDataInRangeById"
+		parameterType="kr.co.kccbrew.comm.main.model.MainPageVo"
+		resultType="kr.co.kccbrew.comm.main.model.MainPageVo">
     <![CDATA[
         SELECT
             a.as_assign_seq           AS "asAssignNum",
@@ -95,9 +122,11 @@
          ORDER BY a.visit_dttm ASC
 	    ]]>
 	</select>
-	
+
 	<!-- 수리 기사의 수리 일정 날짜 범위 별로 구하기 -->
-	<select id="getMechaDataInRangeById" parameterType="kr.co.kccbrew.comm.main.model.MainPageVo" resultType="kr.co.kccbrew.comm.main.model.MainPageVo">
+	<select id="getMechaDataInRangeById"
+		parameterType="kr.co.kccbrew.comm.main.model.MainPageVo"
+		resultType="kr.co.kccbrew.comm.main.model.MainPageVo">
     <![CDATA[
         SELECT
             a.as_assign_seq             AS "asAssignNum",
@@ -112,10 +141,12 @@
         ORDER BY a.visit_dttm ASC
     ]]>
 	</select>
-	
-	
+
+
 	<!-- 특정 점주 a/s 접수 리스트 -->
-	<select id="showAsInfoListbyId" parameterType="kr.co.kccbrew.comm.main.model.MainPageVo" resultType="kr.co.kccbrew.comm.main.model.MainPageVo">
+	<select id="showAsInfoListbyId"
+		parameterType="kr.co.kccbrew.comm.main.model.MainPageVo"
+		resultType="kr.co.kccbrew.comm.main.model.MainPageVo">
 		<![CDATA[
 			SELECT
 				i.as_info_seq									AS "asInfoNum",     
@@ -128,9 +159,11 @@
 			ORDER BY i.as_info_seq ASC
 		]]>
 	</select>
-	
+
 	<!-- 특정 점주 a/s 배정 리스트 -->
-	<select id="showAsAssiginListbyId" parameterType="kr.co.kccbrew.comm.main.model.MainPageVo" resultType="kr.co.kccbrew.comm.main.model.MainPageVo">
+	<select id="showAsAssiginListbyId"
+		parameterType="kr.co.kccbrew.comm.main.model.MainPageVo"
+		resultType="kr.co.kccbrew.comm.main.model.MainPageVo">
     <![CDATA[
         SELECT
             a.as_assign_seq           AS "asAssignNum",
@@ -150,9 +183,11 @@
         ORDER BY a.visit_dttm ASC
 	    ]]>
 	</select>
-	
+
 	<!-- 특정 점주 a/s 배정 리스트 -->
-	<select id="showAsAssignListbyMechaId" parameterType="kr.co.kccbrew.comm.main.model.MainPageVo" resultType="kr.co.kccbrew.comm.main.model.MainPageVo">
+	<select id="showAsAssignListbyMechaId"
+		parameterType="kr.co.kccbrew.comm.main.model.MainPageVo"
+		resultType="kr.co.kccbrew.comm.main.model.MainPageVo">
     <![CDATA[
         SELECT
             a.as_assign_seq           AS "asAssignNum",
@@ -173,9 +208,11 @@
 	    ]]>
 	</select>
 
-	
+
 	<!-- 특정 점주 a/s 결과 리스트 -->
-	<select id="showAsResultListbyId" parameterType="kr.co.kccbrew.comm.main.model.MainPageVo" resultType="kr.co.kccbrew.comm.main.model.MainPageVo">
+	<select id="showAsResultListbyId"
+		parameterType="kr.co.kccbrew.comm.main.model.MainPageVo"
+		resultType="kr.co.kccbrew.comm.main.model.MainPageVo">
 		<![CDATA[
 			SELECT
 				r.as_assign_seq					AS "asAssignNum",     
@@ -186,9 +223,11 @@
 			WHERE r.as_assign_seq = a.as_assign_seq AND a.as_info_seq = i.as_info_seq AND i.store_mng_id = u.user_id AND user_id=#{userId}
 		]]>
 	</select>
-	
+
 	<!-- 특정 수리기사 a/s 결과 리스트 -->
-	<select id="showAsResultListbyMechaId" parameterType="kr.co.kccbrew.comm.main.model.MainPageVo" resultType="kr.co.kccbrew.comm.main.model.MainPageVo">
+	<select id="showAsResultListbyMechaId"
+		parameterType="kr.co.kccbrew.comm.main.model.MainPageVo"
+		resultType="kr.co.kccbrew.comm.main.model.MainPageVo">
 		<![CDATA[
 			SELECT
 				r.as_assign_seq					AS "asAssignNum",     
@@ -199,9 +238,11 @@
 			WHERE r.as_assign_seq = a.as_assign_seq AND a.as_info_seq = i.as_info_seq AND a.mechanic_id = u.user_id AND user_id=#{userId}
 		]]>
 	</select>
-	
+
 	<!-- 이미지를 포함한 사용자 정보 불러오기 -->
-	<select id="showUserInfoListById" parameterType="kr.co.kccbrew.comm.main.model.MainPageVo" resultType="kr.co.kccbrew.comm.main.model.MainPageVo">
+	<select id="showUserInfoListById"
+		parameterType="kr.co.kccbrew.comm.main.model.MainPageVo"
+		resultType="kr.co.kccbrew.comm.main.model.MainPageVo">
 		<![CDATA[
 			SELECT
 				u.user_id				AS "userId"
@@ -238,10 +279,12 @@
 			WHERE u.user_id = #{userId}
 		]]>
 	</select>
-	
-	
+
+
 	<!-- 점주의 점포 정보 리스트 불러오기 -->
-	<select id="showStoreInfoListById" parameterType="kr.co.kccbrew.comm.main.model.MainPageVo" resultType="kr.co.kccbrew.comm.main.model.MainPageVo">
+	<select id="showStoreInfoListById"
+		parameterType="kr.co.kccbrew.comm.main.model.MainPageVo"
+		resultType="kr.co.kccbrew.comm.main.model.MainPageVo">
 		<![CDATA[
 			SELECT 
 				u.user_id			AS "userId",
@@ -252,9 +295,10 @@
 			WHERE u.user_id = m.user_id AND s.store_seq = m.store_seq AND u.user_id = #{userId}
 		]]>
 	</select>
-	
+
 	<!-- 마이페이지 정보 수정하기 -->
-	<update id="updateMyProfile" parameterType="kr.co.kccbrew.comm.main.model.MainPageVo">
+	<update id="updateMyProfile"
+		parameterType="kr.co.kccbrew.comm.main.model.MainPageVo">
 		<![CDATA[
 			UPDATE users
 			SET user_nm		= #{userName},
@@ -266,9 +310,10 @@
 			WHERE user_id = #{userId}
 		]]>
 	</update>
-	
+
 	<!-- 마이페이지 점포 정보 수정 -->
-	<update id="updateMyStore" parameterType="kr.co.kccbrew.comm.main.model.MainPageVo">
+	<update id="updateMyStore"
+		parameterType="kr.co.kccbrew.comm.main.model.MainPageVo">
 		<![CDATA[
 			UPDATE store
 		    SET store_nm 	= #{storeName, jdbcType=VARCHAR},

@@ -13,8 +13,16 @@
 	<!-- 지역코드로 지역이름 조회 -->
 	<select id="selectLocationName" parameterType="string"
 		resultType="string">
-		SELECT GRP_CD_DTL_NM FROM GROUP_CODE_DETAIL WHERE (GRP_CD_ID = 'L' OR
+		SELECT GRP_CD_DTL_NM FROM GROUP_CODE_DETAIL WHERE
+		(GRP_CD_ID = 'L' OR
 		GRP_CD_ID = 'LL') AND GRP_CD_DTL_ID = #{codeId}
+	</select>
+
+	<!-- 사용자타입코드로 사용자타입이름 조회 -->
+	<select id="selectUserTypeName" parameterType="string"
+		resultType="string">
+		select grp_cd_dtl_nm from group_code_detail where grp_cd_id = 'U' and
+		grp_cd_dtl_id=#{codeId}
 	</select>
 
 
