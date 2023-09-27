@@ -16,7 +16,7 @@
 		<div class="container2">
 			<div class="category">마이페이지</div>
 			<hr class="line">
-				<form action='<c:url value= '/confirmmod'/>' method="post">
+				<form action='<c:url value= '/mypage/chgpwd'/>' method="post">
 				<div class="form-wrapper">
 					<div class="formAndBtns">
 						<div class="changePasswordForm">
@@ -31,7 +31,7 @@
 							<li id="userPwdConfirmMsg">비밀번호가 일치하지 않습니다.</li>
 						</ul>
 						<div class="modButtons">
-							<button type="submit" id="confirmMod">확인</button>
+							<button type="submit" id="confirmMod" onclick="checkUserPwd();">확인</button>
 							<c:url var="cancel" value="/mypage"></c:url>
 							<a href="${cancel}">
 								<button type="button" class="cancel">취소</button>
@@ -44,28 +44,16 @@
 	</section>
 	<script>
 	$(document).ready(function(){
-		//수정 확인 버튼
-	    $("#").click(function(){
-	        var selectedMachineCode = $("#chooseMachineCode").val();
-	        var selectedLocationCode = $("#chooseLocationCode").val();
-	        
-	        console.log(selectedMachineCode + "machine");
-	        console.log(selectedLocationCode + "location");
-	        
-	        $("#machineCodeHidden").val(selectedMachineCode);
-	        $("#locationCodeHidden").val(selectedLocationCode);
-	        
-	        $("form").submit();
-	    });
-	    
 	  	//사용자 비밀번호 조건 확인
 		function checkUserPwd(){
 			var userPwd=$("input[name=newPassword]");
 			if(userPwd.val()==""){
+				console.log("ddddddddddddddddddddddddddddddddddd");
 				userPwd.parent().css("border","1px solid red");
 				$("#userPwdMsg").css("display","block");
 				return false;
 			}else{
+				console.log("ddddddddddddddddddddddddddddddddddd");
 				//비밀번호 정규식 체크
 				var regex=/^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@#$%^&+=!_])[A-Za-z\d@#$%^&+=!_]{8,16}$/
 					if(!(regex).test(userPwd.val())){

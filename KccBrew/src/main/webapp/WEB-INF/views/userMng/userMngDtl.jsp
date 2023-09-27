@@ -91,7 +91,7 @@
 				</table>
 			</c:if>
 			<div class="modal-footer"
-				style="width: 100%; margin: auto; display: flex;">
+				style="width: 100%; margin: auto;">
 				<button type="button" class="update">수정</button>
 				<button type="button" class="cancel1">닫기</button>
 			</div>

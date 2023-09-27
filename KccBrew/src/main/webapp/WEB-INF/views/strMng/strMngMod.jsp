@@ -14,7 +14,7 @@
 <body>
 	<section id="notice" class="notice">
 		 <div class="container2">
-            <div class="category">점포정보</div>
+            <div class="category">점포수정</div>
             <hr style="border: solid 1.2px; width: 97%;">
             
 		<form action="/store/update" method="post" id="storeForm"
@@ -165,9 +165,6 @@
             alert("점포명을 입력해주세요.");
             return;
         }
-
-       
-		
         $.ajax({
             async: true,
             type: 'POST',
@@ -207,7 +204,7 @@
                 var Close = confirm("저장이 완료되었습니다. 창을 닫으시겠습니까?");
                 console.log(storeNm);
                 if (Close) {
-                    window.opener.location.reload();
+                    window.opener.location.href = "/store";
                     window.close();
                 }
             },
