@@ -87,6 +87,8 @@
 		base-package="kr.co.kccbrew.comm.security.controller" />
 	<context:component-scan
 		base-package="kr.co.kccbrew.comm.util" />
+	<context:component-scan
+		base-package="kr.co.kccbrew.sysMng.statistics.controller" />
 	<!-- Controller -->
 
 
@@ -135,8 +137,8 @@
 			<beans:bean
 				class="kr.co.kccbrew.comm.interceptor.component.LogInterceptor" />
 		</interceptor>
-		
-				<!-- 사용자 프로필 지속적으로 업데이트 -->
+
+		<!-- 사용자 프로필 지속적으로 업데이트 -->
 		<interceptor>
 			<mapping path="/**" />
 			<exclude-mapping path="/resources/**/" />
@@ -149,7 +151,7 @@
 	<!-- 유효성검사 -->
 	<beans:bean id="validator"
 		class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean" />
-		
+
 	<beans:bean id="messageSource"
 		class="org.springframework.context.support.ResourceBundleMessageSource">
 		<beans:property name="basename" value="messages" />

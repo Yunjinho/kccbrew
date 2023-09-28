@@ -25,6 +25,7 @@
 	<mybatis-spring:scan base-package="kr.co.kccbrew.userMng.dao"/>
 	<mybatis-spring:scan base-package="kr.co.kccbrew.comm.security.dao" />
 	<mybatis-spring:scan base-package="kr.co.kccbrew.comm.util" />
+	<mybatis-spring:scan base-package="kr.co.kccbrew.sysMng.statistics.dao"/>
 
 	<!-- DAO -->
 	
@@ -42,6 +43,7 @@
 	<context:component-scan base-package="kr.co.kccbrew.userMng.service"/>
 	<context:component-scan base-package="kr.co.kccbrew.comm.security.service" />
 	<context:component-scan base-package="kr.co.kccbrew.comm.util" />
+	<context:component-scan base-package="kr.co.kccbrew.sysMng.statistics.service" />
 
 	<!--Service -->
 	<!-- @Transactional 사용하기 위한 태그 -->
