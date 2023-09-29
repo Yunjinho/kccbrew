@@ -17,21 +17,6 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<!-- css -->
-<sec:authorize access="hasRole('ROLE_ADMIN')">
-<link rel="stylesheet"
-	href="${path}/resources/css/comm/mainSideMenu-admin.css" />
-</sec:authorize>
-
-<sec:authorize access="hasRole('ROLE_MANAGER')">
-<link rel="stylesheet"
-	href="${path}/resources/css/comm/mainSideMenu-manager.css" />
-</sec:authorize>
-
-<sec:authorize access="hasRole('ROLE_MECHA')">
-<link rel="stylesheet"
-	href="${path}/resources/css/comm/mainSideMenu-mecha.css" />
-</sec:authorize>
 
 <!-- js -->
 <script src="<c:url value="/resources/js/comm/commsidemenu.js"/>"></script>
@@ -90,7 +75,7 @@
 
 		<div class="shortcut-service">
 			<div class="inner-box">
-				<p id="shortcuts-mark">바로 가기 서비스</p>
+				<p id="shortcuts-mark">바로가기 서비스</p>
 				<ul class="shortcut-list">
 					<li class="shortcuts"><img class="round-btn" src="${path}/resources/img/main/icon-repair.png"></img><a
 						href="/as-list">A/S내역조회</a></li>
@@ -183,7 +168,7 @@
 		</div>
 		<div class="shortcut-service">
 			<div class="inner-box">
-				<p id="shortcuts-mark">바로 가기 서비스</p>
+				<p id="shortcuts-mark">바로가기 서비스</p>
 				<ul class="shortcut-list">
 					<li class="shortcuts"><img class="round-btn" src="${path}/resources/img/main/icon-repair.png"></img><a
 						href="/as-list">A/S신청내역조회</a></li>
@@ -256,28 +241,16 @@
 
 		<div class="shortcut-service">
 			<div class="inner-box">
-				<p id="shortcuts-mark">바로 가기 서비스</p>
+				<p id="shortcuts-mark">바로가기 서비스</p>
 				<ul class="shortcut-list">
-					<li class="shortcuts"><span class="round-btn">01</span>&nbsp;&nbsp;<a
-						href="#">A/S 접수</a></li>
-					<li class="shortcuts"><span class="round-btn">02</span>&nbsp;&nbsp;<a
-						href="#">A/S 접수</a></li>
-					<li class="shortcuts"><span class="round-btn">03</span>&nbsp;&nbsp;<a
-						href="#">A/S 접수</a></li>
-					<li class="shortcuts"><span class="round-btn">04</span>&nbsp;&nbsp;<a
-						href="#">A/S 접수</a></li>
+					<li class="shortcuts"><img class="round-btn" src="${path}/resources/img/main/icon-repair.png"></img><a
+						href="/as-list">A/S배정내역조회</a></li>
+					<li class="shortcuts last"><img class="round-btn" src="${path}/resources/img/main/icon-chair.png"></img><a
+						href="/holiday">휴가신청내역조회</a></li>
 				</ul>
 			</div>
 		</div>
-		<%-- 		<div class="toKccBrew">
-			<div class="inner-box">
-				<a href="#"> <img alt="logo" class="tomainimg"
-					src="${path}/resources/img/logo.png">
-				</a> <a href="#">
-					<button class="kcclink">KccBrew 홈페이지로 이동 ▶</button>
-				</a>
-			</div>
-		</div> --%>
+
 	</div>
 </sec:authorize>
 

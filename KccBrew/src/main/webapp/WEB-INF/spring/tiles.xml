@@ -17,9 +17,23 @@
 			value="/WEB-INF/views/tiles/default/basefooter.jsp" />	  <!-- 공통 푸터 -->
 	</definition>
 
-	<!-- 기본 레이아웃 뼈대 역할, 사이드 메뉴가 포함되는 페이지용 -->
+	<!-- 기본 레이아웃 뼈대 역할, 사이드 메뉴가 포함되는 메인페이지용 -->
 	<definition name="mainLayout2"
 		template="/WEB-INF/views/tiles/default/mainLayout2.jsp">
+		<put-attribute name="title" value="" />
+		<put-attribute name="header"
+			value="/WEB-INF/views/tiles/default/commheader.jsp" />   <!-- 공통 헤더 -->
+		<put-attribute name="sidemenu"
+			value="/WEB-INF/views/tiles/default/commsidemenu.jsp" /><!-- 빈 사이드 메뉴 -->
+		<put-attribute name="contents"
+			value="/WEB-INF/views/tiles/default/basebody.jsp" />	  <!-- 빈 파일 -->
+		<put-attribute name="footer"
+			value="/WEB-INF/views/tiles/default/basefooter.jsp" />	  <!-- 공통 푸터 -->
+	</definition>
+	
+		<!-- 기본 레이아웃 뼈대 역할, 사이드 메뉴가 포함되는 메인 외 페이지용 -->
+	<definition name="pageLayout"
+		template="/WEB-INF/views/tiles/default/pageLayout.jsp">
 		<put-attribute name="title" value="" />
 		<put-attribute name="header"
 			value="/WEB-INF/views/tiles/default/commheader.jsp" />   <!-- 공통 헤더 -->
@@ -51,51 +65,51 @@
 	</definition>
 
 	<!-- 마이페이지 -->
-	<definition name="MyPageP1" extends="mainLayout2">
+	<definition name="MyPageP1" extends="pageLayout">
 		<put-attribute name="contents"
 			value="/WEB-INF/views/myPage/myPage.jsp" />
 	</definition>
 
 	<!-- 마이페이지 수정 -->
-	<definition name="MyPageP2" extends="mainLayout2">
+	<definition name="MyPageP2" extends="pageLayout">
 		<put-attribute name="contents"
 			value="/WEB-INF/views/myPage/myModPage.jsp" />
 	</definition>
 
 	<!-- 비밀번호 변경 페이지 -->
-	<definition name="MyPageP3" extends="mainLayout2">
+	<definition name="MyPageP3" extends="pageLayout">
 		<put-attribute name="contents"
 			value="/WEB-INF/views/myPage/chgPwd.jsp" />
 	</definition>
 
 	<!-- A/S 내역 조회 페이지 -->
-	<definition name="asList" extends="mainLayout2">
+	<definition name="asList" extends="pageLayout">
 		<put-attribute name="title" value="AS 내역 조회" />
 		<put-attribute name="contents"
 			value="/WEB-INF/views/asMng/asList.jsp" />
 	</definition>
 
 	<!-- A/S 상세 조회 페이지 -->
-	<definition name="asDetail" extends="mainLayout2">
+	<definition name="asDetail" extends="pageLayout">
 		<put-attribute name="title" value="AS 상세 조회" />
 		<put-attribute name="contents"
 			value="/WEB-INF/views/asMng/asDetail.jsp" />
 	</definition>
 
 	<!-- 점포 조회 페이지 -->
-	<definition name="storeList" extends="mainLayout2">
+	<definition name="storeList" extends="pageLayout">
 		<put-attribute name="contents"
 			value="/WEB-INF/views/strMng/strMngList.jsp" />
 	</definition>
 
 	<!-- 점포 검색 페이지 -->
-	<definition name="storeSearch" extends="mainLayout2">
+	<definition name="storeSearch" extends="pageLayout">
 		<put-attribute name="contents"
 			value="/WEB-INF/views/strMng/strMngList.jsp" />
 	</definition>
 
 	<!-- 휴가 관리 페이지 -->
-	<definition name="holiday" extends="mainLayout2">
+	<definition name="holiday" extends="pageLayout">
 		<put-attribute name="contents"
 			value="/WEB-INF/views/schdl/hldyList.jsp" />
 	</definition>
@@ -111,7 +125,7 @@
 
 
 	<!-- !!!!!!!!!!!!!!!!!!!!!! 점주, 수리기사 공통 페이지 - 근태 현황 테이블 !!!!!!!!!!!!!!!!!!!!! -->
-	<definition name="schdlTable" extends="mainLayout2">
+	<definition name="schdlTable" extends="pageLayout">
 		<put-attribute name="contents"
 			value="/WEB-INF/views/schdl/schdlMngClndr.jsp" />
 	</definition>

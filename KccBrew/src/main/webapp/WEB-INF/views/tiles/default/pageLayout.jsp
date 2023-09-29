@@ -44,24 +44,24 @@ html {
 
 <!--------------------- CSS ----------------------------->
 <!--------------------- 메인 페이지 및 공통 CSS ------------------>
-<link rel="stylesheet" href="${path}/resources/css/comm/mainLayout2.css">
+<link rel="stylesheet" href="${path}/resources/css/comm/pageLayout.css">
 <link rel="stylesheet" href="${path}/resources/css/comm/reset.css">
 <link rel="stylesheet" href="${path}/resources/css/comm/reset.css">
 <link rel="stylesheet" href="${path}/resources/css/comm/footer.css" />
 
 <sec:authorize access="hasRole('ROLE_ADMIN')">
 	<link rel="stylesheet"
-		href="${path}/resources/css/comm/mainSideMenu-admin.css" />
+		href="${path}/resources/css/comm/pageSideMenu-admin.css" />
 </sec:authorize>
 
 <sec:authorize access="hasRole('ROLE_MANAGER')">
 	<link rel="stylesheet"
-		href="${path}/resources/css/comm/mainSideMenu-manager.css" />
+		href="${path}/resources/css/comm/pageSideMenu-manager.css" />
 </sec:authorize>
 
 <sec:authorize access="hasRole('ROLE_MECHA')">
 	<link rel="stylesheet"
-		href="${path}/resources/css/comm/mainSideMenu-mecha.css" />
+		href="${path}/resources/css/comm/pageSideMenu-mecha.css" />
 </sec:authorize>
 
 
@@ -106,9 +106,9 @@ html {
 				<tiles:insertAttribute name="sidemenu" />
 
 				<div id="mainContents">
-
-					<tiles:insertAttribute name="contents" />
-
+	
+						<tiles:insertAttribute name="contents" />
+			
 				</div>
 			</div>
 		</div>

@@ -17,13 +17,16 @@
 }
 
 .user-profile {
-    height: 570px;
-    box-sizing: border-box;
-    flex-direction: column;
-    justify-content: space-between;
-    background-color: #1A55A1;
-    border-radius: 10px;
-    margin-bottom: 10px;
+	height: 505px;
+	/* margin-bottom: 0px; */
+	box-sizing: border-box;
+	/* flex: 1; */
+	/* display: flex; */
+	flex-direction: column;
+	justify-content: space-between;
+	background-color: #1A55A1;
+	border-radius: 10px;
+	margin-bottom: 10px;
 }
 
 .inner-box {
