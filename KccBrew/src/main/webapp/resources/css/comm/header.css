@@ -54,6 +54,10 @@
 	border: 1px solid #00006f;
 	color:#ffffff;
 }
+
+#header-logout {
+	margin: 0px;
+}
 /********* nav 바 *************/
 .nav-bar{
 	position:relative;

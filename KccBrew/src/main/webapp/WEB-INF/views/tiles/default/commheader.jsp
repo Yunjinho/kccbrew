@@ -22,7 +22,7 @@
 				(관리자)님 환영합니다
 			</p>
 
-			<form action="/logout" method="POST">
+			<form id="header-logout" action="/logout" method="POST">
 				<button type="submit" class="logout-btn">로그아웃</button>
 				<input name="${_csrf.parameterName}" type="hidden"
 					value="${_csrf.token}" />

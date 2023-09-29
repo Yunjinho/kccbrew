@@ -158,31 +158,31 @@
 	<!-- 관리자 페이지 추가 확장, 타이틀과 헤더, 사이드메뉴 유지, contents만 변경 -->
 
 	<!-- 관리자 회원 관리 페이지 -->
-	<definition name="adminUserMng" extends="adminPage">
+	<definition name="adminUserMng" extends="pageLayout">
 		<put-attribute name="contents"
 			value="/WEB-INF/views/userMng/userMngList.jsp" />
 	</definition>
 
 	<!-- 관리자 로그 관리 페이지 -->
-	<definition name="adminLogManage" extends="adminPage">
+	<definition name="adminLogManage" extends="pageLayout">
 		<put-attribute name="contents"
 			value="/WEB-INF/views/log/logMngList.jsp" />
 	</definition>
 
 	<!-- 관리자 파일 관리 페이지 -->
-	<definition name="adminFileManage" extends="adminPage">
+	<definition name="adminFileManage" extends="pageLayout">
 		<put-attribute name="contents"
 			value="/WEB-INF/views/sysMng/fileMng/fileMngList.jsp" />
 	</definition>
 
 	<!-- 관리자 코드 관리 페이지 -->
-	<definition name="adminCodeManage" extends="adminPage">
+	<definition name="adminCodeManage" extends="pageLayout">
 		<put-attribute name="contents"
 			value="/WEB-INF/views/sysMng/cdMng/cdMngList.jsp" />
 	</definition>
 
 	<!-- 관리자 스케줄 조회 페이지 -->
-	<definition name="adminSchdlList" extends="adminPage">
+	<definition name="adminSchdlList" extends="pageLayout">
 		<put-attribute name="contents"
 			value="/WEB-INF/views/schdl/schdlMngTable.jsp" />
 	</definition>
@@ -191,20 +191,20 @@
 	<!-- 점주 페이지 추가 확장, 타이틀과 헤더, 사이드메뉴 유지, contents만 변경 -->
 
 	<!-- 점주 점포 수정 페이지 -->
-	<definition name="modStoreInfo" extends="managerPage">
+	<definition name="modStoreInfo" extends="pageLayout">
 		<put-attribute name="contents"
 			value="/WEB-INF/views/strMng/strMngMod.jsp" />
 	</definition>
 
 	<!-- 점주 A/S 신청 페이지 -->
-	<definition name="asReceipt" extends="mainLayout2">
+	<definition name="asReceipt" extends="pageLayout">
 		<put-attribute name="title" value="AS 접수" />
 		<put-attribute name="contents"
 			value="/WEB-INF/views/asMng/asReceipt.jsp" />
 	</definition>
 
 	<!-- 점주 A/S 수정 페이지 -->
-	<definition name="asMod" extends="managerPage">
+	<definition name="asMod" extends="pageLayout">
 		<put-attribute name="title" value="AS 신청 내역 수정" />
 		<put-attribute name="contents"
 			value="/WEB-INF/views/asMng/asMod.jsp" />

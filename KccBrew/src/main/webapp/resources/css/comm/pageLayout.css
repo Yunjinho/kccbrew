@@ -5,7 +5,7 @@ html {
 }
 
 #mainContainer {
-	background-color: #eef4ff;
+	background-color: white;
 	display: flex;
 	flex-direction: column;
 	overflow-y: auto;
@@ -17,18 +17,19 @@ html {
 
 #main-content {
 	/* margin-bottom: 50px; */
-	margin: 50px 150px;
+/* 	margin: 50px 150px; */
 	display: flex;
 }
 
 .contents_warp {
-	width: 1400px;
-	margin: 0 auto;
+/* 	width: 1400px;
+	margin: 0 auto; */
 	/* padding: 40px 0; */
+	width: 100%;
 }
 
 #mainHeader {
-	
+	border-bottom: solid 1px black;
 }
 
 #mainSideMenu {
@@ -36,12 +37,7 @@ html {
 }
 
 #mainContents {
-	flex: 0.86;
-	
-	/* 추가 / 2023-09-26 이세은 */
-	float: right;
-	width: 80%;
-	height: 100%;
+margin-left: 200px;
 }
 
 #mainFooter {
@@ -49,11 +45,12 @@ html {
 }
 
 #page-container {
-	background-color: #eef4ff !important;
+	background-color: white !important;
 }
 
 #page-content {
-	padding: 20px 20px;
+	padding: 0 15px;
+	background-color: white;
 }
 
 #page-content-wrap {
