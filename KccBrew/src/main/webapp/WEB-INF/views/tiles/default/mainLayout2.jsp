@@ -45,10 +45,6 @@ html {
 <link rel="stylesheet" href="${path}/resources/css/comm/mainLayout2.css">
 <link rel="stylesheet" href="${path}/resources/css/comm/reset.css">
 <link rel="stylesheet" href="${path}/resources/css/comm/reset.css">
-<link rel="stylesheet"
-	href="${path}/resources/css/comm/maincontents.css" />
-<%-- <link rel="stylesheet"
-	href="${path}/resources/css/comm/mainSideMenu.css" /> --%>
 <link rel="stylesheet" href="${path}/resources/css/comm/footer.css" />
 
 

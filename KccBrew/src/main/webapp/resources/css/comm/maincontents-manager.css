@@ -1,0 +1,402 @@
+@charset "UTF-8";
+
+/**************** body 스타일 *******************8**/
+@font-face {
+	font-family: 'Noto Sans';
+	font-style: normal;
+	src: url("../../fonts/NotoSansKR-Regular.ttf")
+}
+
+* {
+	box-sizing: border-box;
+}
+
+body {
+	font-family: 'Noto Sans';
+	font-size: 14px;
+}
+
+ul, li {
+	list-style: none;
+}
+
+p {
+	text-align: center;
+}
+
+button {
+	background: none;
+	border: none;
+}
+
+.body-wrapper {
+	padding: 0 20px;
+	padding-bottom: 0;
+	flex-direction: column;
+	background-color: #eef4ff;
+	width: 100%;
+	height: 100%;
+}
+
+/*************** 상단 메뉴 *************************/
+.top-menu {
+	background-color: #eef4ff;
+	flex: 0.4;
+	/* display:flex;
+		justify-content:space-between; */
+	/* font-size: 0.8em; */
+	margin-bottom: 3px;
+	width: 100%;
+	float: left;
+}
+
+.btm {
+	align-items: center;
+	position: relative;
+	/* width: 100%; */
+	height: 217px;
+	max-height: 100%;
+	flex: 1;
+	margin-right: 5px;
+	background-color: #ffffff;
+	/* 	border-top: 1.5px solid #1A55A1;
+	border-bottom: 1.5px solid #1A55A1; */
+	overflow-y: auto;
+	border-radius: 10px;
+}
+
+.new-receipt.btm {
+	width: 27%;
+	float: left;
+}
+
+.assigned-as.btm {
+	width: 40%;
+	float: left;
+}
+
+.as-result.btm {
+	width: 30%;
+	float: left;
+}
+
+.btm thead th {
+	position: sticky;
+	top: 33.44px;
+	border: none;
+	border-top: 1px solid #1A55A1;
+	border-bottom: 1.5px solid #1A55A1;
+	z-index: 1;
+}
+
+.btm thead th:after, .btm thead th:before {
+	content: "";
+	position: absolute;
+	left: 0;
+	width: 100%;
+	background-color: #1A55A1;
+}
+
+.btm thead th:after {
+	height: 2px;
+	top: -1.0px;
+}
+
+.btm thead th:before {
+	height: 1.5px;
+	bottom: -1px;
+}
+
+.btm::-webkit-scrollbar {
+	width: 5px;
+}
+
+.btm::-webkit-scrollbar-thumb {
+	background-color: #1A55A1;
+}
+
+.btm::-webkit-scrollbar-track {
+	background-color: #c0c0c0;
+	border-top: 1.5px solid #c0c0c0;
+}
+
+.tablecap {
+	width: 100%;
+	text-align: left;
+	font-size: 1em;
+	font-weight: bold;
+	padding: 10px 10px;
+	position: sticky;
+	top: 0;
+	background-color: #ffffff;
+	height: 35px;
+	background-color: navy;
+	color: white;
+}
+
+.task-list {
+	position: relative;
+	width: 100%;
+	max-height: 100vh;
+	border-collapse: collapse;
+	border-spacing: 0;
+	box-sizing: border-box;
+	display: table;
+}
+
+.task-list thead {
+	width: 100%;
+}
+
+.task-list tbody {
+	width: 100%;
+}
+
+.task-list th, .task-list td {
+	padding: 10px;
+	text-align: center;
+	font-size: 12px;
+	width: auto;
+}
+
+.task-list th {
+	background-color: #ffffff;
+	font-weight: bold;
+}
+
+.task-list td {
+	border: none;
+}
+
+.task-list tr:hover {
+	background-color: #e4e4e4;
+}
+
+/*********  하단 메뉴   **********/
+.bottom-menu {
+	height: 570px;
+	width: 100%;
+	flex: 0.6;
+	margin-bottom: 10px;
+}
+
+.bottom-menu>div {
+	margin-right: 5px;
+	margin-bottom: 5px;
+}
+
+/************ A/S 일정 **************/
+.todoAndetc {
+	float: left;
+	width: 37%;
+	height: 250px;
+	flex: 0.498;
+	display: flex;
+	flex-direction: column;
+	margin-right: 5px;
+	flex: 0.498;
+}
+
+.to-do-list {
+	flex: 0.6;
+	background-color: #ffffff;
+	min-height: 250px;
+	margin-bottom: 5px;
+	display: flex;
+	flex-direction: column;
+}
+
+.to-do-list>p {
+	font-size: 1em;
+	font-weight: bold;
+	padding: 10px;
+	background-color: #ffffff;
+	color: #111111;
+	text-align: left;
+}
+
+.tab-pane {
+	overflow-y: auto;
+	height: 100%;
+}
+
+.tab-pane thead th {
+	position: sticky;
+	top: 0;
+	border: none;
+	border-top: 1px solid #1A55A1;
+	border-bottom: 1px solid #1A55A1;
+}
+
+.tab-pane thead th:after, .tab-pane thead th:before {
+	content: "";
+	position: absolute;
+	left: 0;
+	width: 100%;
+	background-color: #1A55A1;
+}
+
+.tab-pane thead th:after {
+	height: 2px;
+	top: -1.0px;
+}
+
+.tab-pane thead th:before {
+	height: 1.5px;
+	bottom: -0.5px;
+}
+
+.tab-pane::-webkit-scrollbar {
+	width: 5px;
+}
+
+.tab-pane::-webkit-scrollbar-thumb {
+	background-color: #1A55A1;
+}
+
+.tab-pane::-webkit-scrollbar-track {
+	background-color: #c0c0c0;
+	border-top: 1.5px solid #c0c0c0;
+}
+
+.tabnav {
+	font-size: 0;
+	/* border: 1px solid #c0c0c0; */
+	border-right: none;
+	border-top: none;
+	padding: 0;
+}
+
+.tabnav li {
+	left: 0;
+	display: inline-block;
+	height: 35px;
+	text-align: center;
+	/* border-top: 1px solid #c0c0c0; */
+	border-right: 1px solid #c0c0c0;
+	width: calc(100%/ 3);
+	border-top-right-radius: 10px;
+	background-color: navy;
+}
+
+.tabnav li a:before {
+	content: "";
+	position: absolute;
+	left: 0;
+	top: 0px;
+	width: 100%;
+	height: 2px;
+}
+
+.tabnav li a.active:before {
+	/* background: #1A55A1; */
+	
+}
+
+.tabnav li a.active {
+	border-bottom: 1px solid #ffffff;
+}
+
+.tabnav li a {
+	position: relative;
+	display: block;
+	/* background: #f8f8f8; */
+	color: white;
+	padding: 0 30px;
+	line-height: 35px;
+	text-decoration: none;
+	font-size: 14px;
+}
+
+.tabnav li a:hover, .tabnav li a.active {
+	background: #c7dcf2;
+	/* border-bottom: 1px solid #1A55A1; */
+	color: black;
+	border-top-right-radius: 10px;
+}
+
+.tabcontent {
+	flex-grow: 1;
+	background-color: #ffffff;
+	/* height: 270px; */
+	border: 1px solid #c0c0c0;
+	border-top: none;
+	font-size: 1.5em;
+	overflow: auto;
+	border-bottom-right-radius: 10px;
+	border-bottom-left-radius: 10px;
+}
+
+.todoetc {
+	flex: 0.4;
+	color: green;
+	background-color: yellow;
+}
+
+/************* 달력 ******************/
+.calAndetc {
+	flex: 0.502;
+	background-color: #ffffff;
+	/* 	width: 500px;
+	min-height: 700px; */
+	float: left;
+	width: 60%;
+	height: 500px;
+	padding: 15px;
+	border-radius: 10px;
+}
+
+#calendar-container {
+	height: 100%;
+}
+
+#calendar-container>p {
+	font-size: 1em;
+	font-weight: bold;
+	margin: 0;
+	padding: 10px;
+	background-color: #ffffff;
+	color: #111111;
+	text-align: left;
+}
+
+#calendar {
+	height: 100%;
+}
+
+/* 캘린더 위의 해더 스타일(날짜가 있는 부분) */
+.fc-header-toolbar {
+	padding-top: 1em;
+	padding-left: 1em;
+	padding-right: 1em;
+	font-size: 0.5em;
+}
+
+.fc .fc-toolbar-title {
+	font-size: 20px !important;
+	font-weight: 600;
+}
+
+/************* 교육 ******************/
+#education-mark {
+	float: left;
+	width: 37%;
+	height: 245px;
+	background-color: antiquewhite;
+	padding: 15px;
+}
+
+/************* 신청 ******************/
+#application-mark {
+	height: 65px;
+	width: 98%;
+	background-color: burlywood;
+	float: left;
+}
+
+/* 회원가입대기 */
+.new-member-apply.btm {
+	float: left;
+	width: 37%;
+	height: 250px;
+}

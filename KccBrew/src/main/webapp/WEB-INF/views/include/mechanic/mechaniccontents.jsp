@@ -10,6 +10,9 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+
+<link rel="stylesheet"
+	href="${path}/resources/css/comm/maincontents-mecha.css" />
 </head>
 <body>
 	<div class="body-wrapper">
