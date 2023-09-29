@@ -138,7 +138,7 @@
 					<div class="modButtons">
 						<button type="button" id="confirmImgChg">이미지 적용</button>
 						<c:url var="toChgPwdPage" value="/mypage/chgpwd"/>
-						<a href="${toChgPwdPage}" class="updateBtn">
+						<a href="javascript:void(0);" class="updateBtn" onclick="popup();">
 							비밀번호 변경
 						</a>
 						<c:url var="toModPage" value="/mypage/mod"/>
@@ -220,6 +220,14 @@
     		$("#file").css("display","none");
     		$("input[name=userImg]").val("");
     	}
+    }
+	
+    function popup(local) {
+        var url = "/mypage/chgpwd";
+        var name = "popup test";
+        var option = "width=600, height=600, top=130, left=550, scrollbars=yes, directories=no, location=no";
+        window.open(url, name, option);
+        window.close();
     }
 	</script>
 </body>

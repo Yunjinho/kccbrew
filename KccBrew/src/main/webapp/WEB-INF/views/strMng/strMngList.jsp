@@ -141,12 +141,7 @@ input {
 															value="${currentPage}" /></span></b>/<b><span><c:out
 															value="${totalPage}" /></span></b>쪽
 											</p>
-											<div>
-												<p class="download-excel" onclick="downExcel(1)">현재 페이지
-													다운로드</p>
-												<p class="download-excel" onclick="downExcel(2)">전체 페이지
-													다운로드</p>
-											</div>
+										
 										</div>
 										<table>
 											<thead>
@@ -174,7 +169,7 @@ input {
 									</div>
 
 									<div id="writebtn"
-										style="text-align: center; border-bottom: 0px; float: right;">
+										style="text-align: center; border-bottom: 0; float: right;">
 										<a href="javascript:void(0);" onclick="popup1();">
 											<button type="button" class="form-btn"
 												style="margin: 10px; margin-right: 30px;">점포등록</button>
