@@ -200,7 +200,7 @@
 					</thead>
 					<tbody>
 						<c:forEach var="main" items="${asList}">
-							<c:if test="${main.asStatus == '01'}">
+							<c:if test="${main.asStatus == '01' && main.visitDate == null}">
 								<tr>
 									<td><c:out value="${main.asInfoNum}" /></td>
 									<td><c:choose>

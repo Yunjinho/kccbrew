@@ -73,17 +73,14 @@
 
 		<div class="shortcut-service">
 			<div class="inner-box">
-				<p>바로 가기 서비스</p>
-				<br> <br>
+				<p id="shortcuts-mark">바로 가기 서비스</p>
 				<ul class="shortcut-list">
-					<li class="shortcuts"><span class="round-btn">01</span>&nbsp;&nbsp;<a
-						href="#">A/S 접수</a></li>
-					<li class="shortcuts"><span class="round-btn">02</span>&nbsp;&nbsp;<a
-						href="#">A/S 접수</a></li>
-					<li class="shortcuts"><span class="round-btn">03</span>&nbsp;&nbsp;<a
-						href="#">A/S 접수</a></li>
-					<li class="shortcuts"><span class="round-btn">04</span>&nbsp;&nbsp;<a
-						href="#">A/S 접수</a></li>
+					<li class="shortcuts"><img class="round-btn" src="${path}/resources/img/main/icon-repair.png"></img><a
+						href="/as-list">A/S내역조회</a></li>
+					<li class="shortcuts"><img class="round-btn" src="${path}/resources/img/main/icon-chair.png"></img><a
+						href="/holiday">휴가현황조회</a></li>
+					<li class="shortcuts last"><img class="round-btn" src="${path}/resources/img/main/icon-schedule.png"></img><a
+						href="/admin/schedule">월근태현황조회</a></li>
 				</ul>
 			</div>
 		</div>

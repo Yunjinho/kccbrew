@@ -70,6 +70,8 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
 			response.sendRedirect("/");
 		} 
 	}
+	
+	
 
 	/*사용자 프로필에 사용자 할일 표시*/
 	public void SaveTasksInSessions(HttpSession session, UserVo user) {
@@ -83,6 +85,9 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
 			session.setAttribute("asListCount", asListCount);
 			session.setAttribute("unapprovedMemberList", unapprovedMemberList);
 		}
+		
+		
+		
 		// 점주 프로필 정보 세션에 저장
 		else if(user.getUserTypeCd().equals("02")) {
 			StrMngVo store = userService.getStoreById(userId);
@@ -101,6 +106,9 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
 			int usedHolidays = schdlMngService.getUsedHoliday(user);
 			session.setAttribute("usedHolidays", usedHolidays);
 		}
+		
+		
+		
 		// 수리기사 프로필 정보 세션에 저장
 		else if(user.getUserTypeCd().equals("03")) {
 			List<AsMngVo> asAssignList = userService.getAsSubmissionCompleted(userId);
