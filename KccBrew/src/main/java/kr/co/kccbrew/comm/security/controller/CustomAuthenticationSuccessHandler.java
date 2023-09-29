@@ -79,7 +79,7 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
 		
 		// 관리자 프로필 정보 세션에 저장
 		if(user.getUserTypeCd().equals("01")) {
-			List<AsMngVo> asList = userService.getAsAccepting("");
+			List<AsMngVo> asList = userService.getAsAccepting(null);
 			int asListCount = asList.size();
 			int unapprovedMemberList = mainService.showUnapprovedMemberList().size();
 			session.setAttribute("asListCount", asListCount);

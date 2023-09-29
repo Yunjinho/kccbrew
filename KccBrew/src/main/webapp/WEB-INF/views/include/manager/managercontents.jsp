@@ -144,12 +144,27 @@
 					</div>
 				</div>
 			</div>
-			
+
 			<div id="education-mark">
+				<img src="${path}/resources/img/main/coffee-machine3.jpg">
+				<div id="education-content">
+					<span>장비사용시 안전수칙</span> <a href=""><img
+						src="${path}/resources/img/main/icon-direction.png"></a>
+				</div>
 			</div>
 			
-			
 			<div id="application-mark">
+				<div id="application-title">신청 가능 서비스</div>
+				<div id="application-content">
+					<div>
+						<img src="${path}/resources/img/main/icon-mechanic.png"> <a
+							href="/as-receipt">AS신청 </a>
+					</div>
+					<div class="last">
+						<img src="${path}/resources/img/main/icon-close-sign.png"> <a
+							href="/holiday">휴가신청</a>
+					</div>
+				</div>
 			</div>
 
 		</div>

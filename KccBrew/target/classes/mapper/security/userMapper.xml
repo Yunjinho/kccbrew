@@ -295,6 +295,19 @@
 		WHERE 1=1
 		AND (status.as_status_cd LIKE '%' || 01 || '%' )
 		AND visit_dttm IS NULL
+		<!-- userId 변수에 대한 추가 조건문 -->
+		<if test="userId != null and userId != ''">
+			AND (
+			s.store_seq = (
+			SELECT s.store_seq
+			FROM store s
+			INNER JOIN store_user_map su ON s.store_seq = su.store_seq
+			WHERE su.user_id = #{userId}
+			)
+			OR ass.mechanic_id = #{userId}
+			)
+		</if>
+		<!-- /userId 변수에 대한 추가 조건문 -->
 		ORDER BY a.reg_dttm DESC
 		)
 		)
@@ -306,9 +319,11 @@
 		store_nm AS "storeNm",
 		store_addr AS "storeAddr",
 		reg_dttm AS "regDttm",
-		as_status_nm AS "asStatusNm",
+		as_status_nm AS
+		"asStatusNm",
 		as_status_cd AS "asStatusCd",
-		machine_cd_nm AS "machineCdNm",
+		machine_cd_nm AS
+		"machineCdNm",
 		machine_cd AS "machineCd",
 		mechanic_id AS "mechanicId",
 		reassign AS "reassign",
@@ -318,7 +333,8 @@
 		reapply_confirm AS "reapplyConfirm",
 		user_nm AS "mechanicNm",
 		visit_dttm AS "visitDttm",
-		result_dttm AS "resultDttm"
+		result_dttm AS
+		"resultDttm"
 		FROM (
 		SELECT as_info_seq,
 		store_nm,
@@ -355,39 +371,51 @@
 		ass.visit_dttm,
 		ar.result_dttm
 		FROM as_information a
-		INNER JOIN store_user_map su ON a.store_mng_id = su.user_id
-		INNER JOIN users u ON su.user_id = u.user_id
-		INNER JOIN store s ON s.store_seq = su.store_seq
+		INNER
+		JOIN store_user_map su ON a.store_mng_id = su.user_id
+		INNER JOIN users
+		u ON su.user_id = u.user_id
+		INNER JOIN store s ON s.store_seq =
+		su.store_seq
 		INNER JOIN (
 		SELECT grp_cd_dtl_nm AS as_status_nm,
 		grp_cd_dtl_id AS as_status_cd
 		FROM group_code_detail
-		WHERE grp_cd_id LIKE 'S'
+		WHERE grp_cd_id
+		LIKE 'S'
 		) status ON status.as_status_cd = a.as_status
 		INNER JOIN (
 		SELECT grp_cd_dtl_nm AS machine_cd_nm,
 		grp_cd_dtl_id AS machine_cd
-		FROM group_code_detail
+		FROM
+		group_code_detail
 		WHERE grp_cd_id LIKE 'M'
-		) machine ON machine.machine_cd = a.machine_cd
+		) machine ON
+		machine.machine_cd = a.machine_cd
 		LEFT OUTER JOIN (
 		SELECT *
-		FROM as_assign ss
+		FROM
+		as_assign ss
 		JOIN users u ON ss.mechanic_id = u.user_id
-		) ass ON a.as_info_seq = ass.as_info_seq
-		LEFT OUTER JOIN as_result ar ON ass.as_assign_seq = ar.as_assign_seq
+		) ass ON
+		a.as_info_seq = ass.as_info_seq
+		LEFT OUTER JOIN as_result ar ON
+		ass.as_assign_seq = ar.as_assign_seq
 		WHERE 1=1
 
-		AND status.as_status_cd LIKE '%' || '03' || '%'
+		AND status.as_status_cd
+		LIKE '%' || '03' || '%'
 		AND result_dttm IS NULL
 		AND (
 		s.store_seq = (
 		SELECT s.store_seq
 		FROM store s
-		INNER JOIN store_user_map su ON s.store_seq = su.store_seq
+		INNER JOIN store_user_map su ON
+		s.store_seq = su.store_seq
 		WHERE su.user_id = #{userId}
 		)
-		OR ass.mechanic_id = #{userId}
+		OR
+		ass.mechanic_id = #{userId}
 		)
 		ORDER BY a.reg_dttm DESC
 		)
@@ -400,9 +428,11 @@
 		store_nm AS "storeNm",
 		store_addr AS "storeAddr",
 		reg_dttm AS "regDttm",
-		as_status_nm AS "asStatusNm",
+		as_status_nm AS
+		"asStatusNm",
 		as_status_cd AS "asStatusCd",
-		machine_cd_nm AS "machineCdNm",
+		machine_cd_nm AS
+		"machineCdNm",
 		machine_cd AS "machineCd",
 		mechanic_id AS "mechanicId",
 		reassign AS "reassign",
@@ -412,7 +442,8 @@
 		reapply_confirm AS "reapplyConfirm",
 		user_nm AS "mechanicNm",
 		visit_dttm AS "visitDttm",
-		result_dttm AS "resultDttm"
+		result_dttm AS
+		"resultDttm"
 		FROM (
 		SELECT as_info_seq,
 		store_nm,
@@ -449,39 +480,51 @@
 		ass.visit_dttm,
 		ar.result_dttm
 		FROM as_information a
-		INNER JOIN store_user_map su ON a.store_mng_id = su.user_id
-		INNER JOIN users u ON su.user_id = u.user_id
-		INNER JOIN store s ON s.store_seq = su.store_seq
+		INNER
+		JOIN store_user_map su ON a.store_mng_id = su.user_id
+		INNER JOIN users
+		u ON su.user_id = u.user_id
+		INNER JOIN store s ON s.store_seq =
+		su.store_seq
 		INNER JOIN (
 		SELECT grp_cd_dtl_nm AS as_status_nm,
 		grp_cd_dtl_id AS as_status_cd
 		FROM group_code_detail
-		WHERE grp_cd_id LIKE 'S'
+		WHERE grp_cd_id
+		LIKE 'S'
 		) status ON status.as_status_cd = a.as_status
 		INNER JOIN (
 		SELECT grp_cd_dtl_nm AS machine_cd_nm,
 		grp_cd_dtl_id AS machine_cd
-		FROM group_code_detail
+		FROM
+		group_code_detail
 		WHERE grp_cd_id LIKE 'M'
-		) machine ON machine.machine_cd = a.machine_cd
+		) machine ON
+		machine.machine_cd = a.machine_cd
 		LEFT OUTER JOIN (
 		SELECT *
-		FROM as_assign ss
+		FROM
+		as_assign ss
 		JOIN users u ON ss.mechanic_id = u.user_id
-		) ass ON a.as_info_seq = ass.as_info_seq
-		LEFT OUTER JOIN as_result ar ON ass.as_assign_seq = ar.as_assign_seq
+		) ass ON
+		a.as_info_seq = ass.as_info_seq
+		LEFT OUTER JOIN as_result ar ON
+		ass.as_assign_seq = ar.as_assign_seq
 		WHERE 1=1
 
-		AND status.as_status_cd LIKE '%' || '04' || '%'
+		AND status.as_status_cd
+		LIKE '%' || '04' || '%'
 		AND visit_dttm IS NOT NULL
 		AND (
 		s.store_seq = (
 		SELECT s.store_seq
 		FROM store s
-		INNER JOIN store_user_map su ON s.store_seq = su.store_seq
+		INNER JOIN store_user_map su ON
+		s.store_seq = su.store_seq
 		WHERE su.user_id = #{userId}
 		)
-		OR ass.mechanic_id = #{userId}
+		OR
+		ass.mechanic_id = #{userId}
 		) -- IF NEEDED
 		ORDER BY a.reg_dttm DESC
 		)
