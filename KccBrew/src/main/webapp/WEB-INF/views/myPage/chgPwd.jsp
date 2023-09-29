@@ -22,6 +22,7 @@ button:disabled {
 	cursor: default;
 	box-shadow: none;
 	opacity: .65;
+	background-color: navy;
 }
 
 .modButtons {
@@ -108,8 +109,8 @@ button:disabled {
 									</div>
 								</div>
 								<div class="modButtons">
-									<button type="submit" id="confirmMod"
-										style="width: 100%; border-radius: 0;" disabled>확인</button>
+									<button type="submit" id="confirmMod" class="updateBtn"
+										style=" width: 100%; border-radius: 0;" disabled>확인</button>
 									<c:url var="cancel" value="/mypage"></c:url>
 									<div style="display: block; margin-top: 150px;">
 										<a href="#" onclick="window.close();"> 돌아가기 </a>
