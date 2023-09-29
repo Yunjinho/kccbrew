@@ -20,7 +20,7 @@
 		<form action="/store/update" method="post" id="storeForm"
 			onsubmit="return submitForm()" style="margin-top:20px">
 			<table id="search-box">
-				<tr> 
+				<tr>
 					<th>지점명</th>
 					<td><input type="text" id="storeNm" name="storeNm"
 						value="${store.storeNm}" required> <input type="hidden"
