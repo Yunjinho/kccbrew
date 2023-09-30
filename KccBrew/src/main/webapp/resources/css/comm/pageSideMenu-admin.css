@@ -1,4 +1,9 @@
 @charset "UTF-8";
+
+#mainContents {
+margin-left: 200px;
+}
+
 /************* 회원 정보 및 페이지 링크 ******************/
 .profileAndguide {
 	font-family: 'Noto-Sans';
