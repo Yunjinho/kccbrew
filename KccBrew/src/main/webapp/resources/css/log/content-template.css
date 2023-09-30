@@ -53355,6 +53355,11 @@ a {
 	text-decoration: underline
 }
 
+#page-content-wrap .page-content-navigation .breadcrumb li {
+    padding: 6px 3px 3px 25px;
+    line-height: 35px;
+}
+
 .r1024 #page-content-wrap .page-content-navigation .breadcrumb li
 a {
 	max-width: 120px
