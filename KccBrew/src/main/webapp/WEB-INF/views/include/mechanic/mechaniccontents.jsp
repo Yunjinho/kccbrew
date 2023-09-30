@@ -24,7 +24,179 @@
 
 			<div class="calAndetc">
 				<div id='calendar-container'>
-					<div id='calendar'></div>
+							<div id="calendar"></div>
+									<script>
+										$(document)
+												.ready(
+														function() {
+															var calendarEl = document
+																	.getElementById('calendar');
+
+															calendar = new FullCalendar.Calendar(
+																	calendarEl,
+
+																	{
+																		height : 'auto',
+																		initialView : 'dayGridMonth',
+																		 locale: 'ko',
+																		headerToolbar : {
+																			left : 'prev,next',
+																			center : 'title',
+																			right : 'today',
+																		},
+
+																		dateClick : function(
+																				info) {
+																			var selectedDate = prompt(
+																					'날짜를 선택하세요 (YYYY-MM-DD)',
+																					info.dateStr);
+
+																			if (selectedDate) {
+																				var dateObj = new Date(
+																						selectedDate);
+																				calendar
+																						.gotoDate(selectedDate);
+
+																				/* 이벤트 확인 */
+																				console
+																						.log("datepicker 날짜 선택")
+
+																				/* 날짜 정보 추출 */
+																				dateInfo = parseDateStr(calendar.view.title);
+																				year = dateInfo
+																						.year;
+																				month = dateInfo
+																						.month;
+
+																				console
+																						.log("year: "
+																								+ year);
+																				console
+																						.log("month: "
+																								+ month);
+
+																				/* ajax함수로 데이터 서버로 전송 */
+																				sendAjaxRequest(
+																						year,
+																						month);
+																			}
+																		},
+
+																	});
+
+															var view = calendar.view;
+															console
+																	.log(
+																			"현재 뷰(View)의 정보:",
+																			view);
+
+															calendar.render();
+														});
+
+										$(document)
+												.ready(
+														function() {
+
+															$(
+																	"button[title='Previous month']")
+																	.attr('id',
+																			'prevButton');
+															$(
+																	"button[title='Next month']")
+																	.attr('id',
+																			'nextButton');
+															$(
+																	"button[title='This month']")
+																	.attr('id',
+																			'thisButton');
+
+															// 이전 달 버튼 클릭 이벤트 핸들러
+															$('#prevButton')
+																	.click(
+																			function() {
+																				/* 로그 확인 */
+																				console
+																						.log("prevButton 버튼 클릭")
+
+																				/* 날짜 정보 추출 */
+																				dateInfo = parseDateStr(calendar.view.title);
+																				year = dateInfo
+																						.year;
+																				month = dateInfo
+																						.month;
+
+																				console
+																						.log("year: "
+																								+ year);
+																				console
+																						.log("month: "
+																								+ month);
+
+																				/* ajax함수로 데이터 서버로 전송 */
+																				sendAjaxRequest(
+																						year,
+																						month);
+																			});
+
+															// 다음 달 버튼 클릭 이벤트 핸들러
+															$('#nextButton')
+																	.click(
+																			function() {
+																				/* 로그 확인 */
+																				console
+																						.log("nextButton 버튼 클릭")
+
+																				/* 날짜 정보 추출 */
+																				dateInfo = parseDateStr(calendar.view.title);
+																				year = dateInfo
+																						.year;
+																				month = dateInfo
+																						.month;
+
+																				console
+																						.log("year: "
+																								+ year);
+																				console
+																						.log("month: "
+																								+ month);
+
+																				/* ajax함수로 데이터 서버로 전송 */
+																				sendAjaxRequest(
+																						year,
+																						month);
+
+																			});
+
+															// 이번 달 버튼 클릭 이벤트 핸들러
+															$('#thisButton')
+																	.click(
+																			function() {
+																				/* 로그 확인 */
+																				console
+																						.log("thisButton 버튼 클릭")
+
+																		/* 날짜 정보 추출 */
+																				dateInfo = parseDateStr(calendar.view.title);
+																				year = dateInfo
+																						.year;
+																				month = dateInfo
+																						.month;
+
+																				console
+																						.log("year: "
+																								+ year);
+																				console
+																						.log("month: "
+																								+ month);
+
+																				/* ajax함수로 데이터 서버로 전송 */
+																				sendAjaxRequest(
+																						year,
+																						month);
+
+																			});
+														});
+									</script>
 				</div>
 			</div>
 
@@ -142,7 +314,7 @@
 			</div>
 
 			<div id="application-mark">
-				<div id="application-title">신청 서비스</div>
+				<div id="application-title">서비스 신청</div>
 				<div id="application-content">
 					<div class="last">
 						<img src="${path}/resources/img/main/icon-close-sign.png"> <a
@@ -226,44 +398,18 @@
 			</div>
 
 			<div class="notice btm">
-			<div class="tablecap">공지사항</div>
-<%-- 				<table class="task-list">
-					<caption class="tablecap">공지사항</caption>
-					<tbody>
-						<tr>
-							<td>최근 지역별 지점 확대 안내</td>
-						</tr>
-						<tr>
-							<td>재구축 홈페이지 오픈 안내</td>
-						</tr>
-						<tr>
-							<td>서울권 수리기사 오프라인 교육 안내</td>
-						</tr>
-						<tr>
-							<td>동대문점 지점 신설</td>
-						</tr>
-					</tbody>
-						</table> --%>
-					
-					<ul>
-					<li>최근 지역별 지점 확대 안내
-					</li>
-						<li>재구축 홈페이지 오픈 안내
-					</li>
-						<li>서울권 수리기사 오프라인 교육 안내
-					</li>
-						<li>동대문점 지점 신설
-					</li>
-					</ul>
-			
+				<div class="tablecap">공지사항</div>
+				<ul>
+					<li>최근 지역별 지점 확대 안내</li>
+					<li>재구축 홈페이지 오픈 안내</li>
+					<li>서울권 수리기사 오프라인 교육 안내</li>
+					<li>동대문점 지점 신설</li>
+				</ul>
 			</div>
 
 		</div>
-
-
-		<!-------------- 하단 메뉴 ----------------------->
-
-
 	</div>
+
+
 </body>
 </html>

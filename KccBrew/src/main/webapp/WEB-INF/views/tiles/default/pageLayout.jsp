@@ -49,6 +49,7 @@ html {
 <link rel="stylesheet" href="${path}/resources/css/comm/reset.css">
 <link rel="stylesheet" href="${path}/resources/css/comm/footer.css" />
 
+
 <sec:authorize access="hasRole('ROLE_ADMIN')">
 	<link rel="stylesheet"
 		href="${path}/resources/css/comm/pageSideMenu-admin.css" />

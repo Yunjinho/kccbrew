@@ -34,7 +34,7 @@ button {
 }
 
 .body-wrapper {
-	padding: 0 20px;
+	padding: 0 10px;
 	padding-bottom: 0;
 	flex-direction: column;
 	background-color: #eef4ff;
@@ -203,6 +203,7 @@ button {
 	line-height: 2;
 	padding-left: 5px;
 	list-style: inside;
+	font-size: 12px;
 }
 
 /************ A/S 일정 **************/

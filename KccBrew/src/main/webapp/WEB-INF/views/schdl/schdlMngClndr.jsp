@@ -94,14 +94,8 @@
 																	calendarEl,
 
 																	{
+																		height : 'auto',
 																		initialView : 'dayGridMonth',
-																		/* events : [
-																				{
-																					title : '예제 이벤트',
-																					start : '2023-09-07', // 시작 날짜
-																					end : '2023-09-30', // 종료 날짜
-																				}, ], */
-
 																		headerToolbar : {
 																			left : 'prev,next',
 																			center : 'title',
@@ -185,6 +179,7 @@
 																				/* 날짜 정보 추출 */
 																				dateInfo = new Date(
 																						calendar.view.title);
+																				console.log("dateInfo: " + dateInfo);
 																				year = dateInfo
 																						.getFullYear();
 																				month = dateInfo

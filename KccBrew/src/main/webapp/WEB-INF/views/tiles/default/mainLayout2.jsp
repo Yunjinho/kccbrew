@@ -70,9 +70,16 @@ html {
 <link
 	href='https://cdn.jsdelivr.net/npm/fullcalendar@5.10.0/main.min.css'
 	rel='stylesheet' />
-
+<link rel="stylesheet" href="${path}/resources/css/schdl/mycalendar.css" />
 
 <!--------------------- JS ------------------------------>
+<sec:authorize access="hasRole('ROLE_ADMIN')">
+	<script src="<c:url value="/resources/js/schdl/mySchdlMngClndr-admin.js"/>"></script>
+</sec:authorize>
+
+<sec:authorize access="hasAnyRole('ROLE_MANAGER', 'ROLE_MECHA')">
+	<script src="<c:url value="/resources/js/schdl/mySchdlMngClndr.js"/>"></script>
+</sec:authorize>
 <!-------------------- 공통 JS 및 JQuery ---------------------->
 <script src="http://code.jquery.com/jquery-latest.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
