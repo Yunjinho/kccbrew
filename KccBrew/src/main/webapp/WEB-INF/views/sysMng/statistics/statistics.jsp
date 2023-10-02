@@ -31,6 +31,9 @@
 					<input type="text" value="${year}" name="year" readonly>
 					<img src="/resources/img/asMng/free-icon-right-arrow-271228.png" alt="right"onclick="moveNextYear()" class="navi-img"/>
 				</div>
+				<div>
+					<p class="download-excel" onclick="downExcel()">통계 다운로드</p>
+				</div>
 				<div class="statistics">
 					<div>
 						<div>
