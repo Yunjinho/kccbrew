@@ -1,19 +1,16 @@
 @charset "UTF-8";
 /************* 회원 정보 및 페이지 링크 ******************/
 .profileAndguide {
-	font-family: 'Noto-Sans';
-	flex: 0.2;
-	display: flex;
-	height: 100%;
-	flex-direction: column;
-	justify-content: space-between;
-	min-height: 700px;
-	background-color: #eef4ff;
-	color: #ffffff;
-	box-sizing: border-box;
-	/* 추가 / 2023-09-26 이세은  */
-	float: left;
-	width: 20%;
+    font-family: 'Noto-Sans';
+    display: flex;
+    height: 100%;
+    flex-direction: column;
+    min-height: 700px;
+    background-color: #eef4ff;
+    color: #ffffff;
+    box-sizing: border-box;
+    float: left;
+    width: 20%;
 }
 
 .user-profile {
@@ -205,8 +202,7 @@
 }
 
 .shortcut-service {
-	height: 226px;
-	flex: 1;
+	height: 220px;
 	color: #111111;
 	background-color: #ffffff;
 	border-radius: 10px;
@@ -225,9 +221,8 @@
     margin: 5px auto;
     height: 50%;
     text-align: center;
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
+	display: flex;
+	align-items: center;
 }
 
 .shortcuts.last {
