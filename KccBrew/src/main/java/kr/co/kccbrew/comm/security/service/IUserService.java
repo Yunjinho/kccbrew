@@ -3,6 +3,8 @@ package kr.co.kccbrew.comm.security.service;
 import java.util.List; 
 
 import org.apache.ibatis.annotations.Param;
+
+import kr.co.kccbrew.asMng.model.AsMngVo;
 import kr.co.kccbrew.comm.security.model.UserVo;
 import kr.co.kccbrew.strMng.model.StrMngVo;
 
@@ -52,4 +54,23 @@ public interface IUserService {
 	 * @return 선택된 코드의 지역 코드 목록
 	 */
 	public List<UserVo> selectLocationDtlCd(String locCd);
+	
+	/**
+	 * 회원ID에 따른 AS신청(배정전) 리스트 조회
+	 * @param userId : 사용자 아이디
+	 *  @return List<AsMngVo>: AS신청(배정전) 리스트
+	 */
+	public List<AsMngVo>getAsAccepting(String userId);
+	/**
+	 * 회원ID에 따른 AS배정(처리전) 리스트 조회
+	 * @param userId : 사용자 아이디
+	 *@return List<AsMngVo>: AS배정(처리전) 리스트
+	 */
+	public List<AsMngVo>getAsSubmissionCompleted(String userId);
+	/**
+	 * 회원ID에 따른 AS처리완료 리스트 조회
+	 * @param userId : 사용자 아이디@return
+	 * @return List<AsMngVo>:  AS처리완료 리스트
+	 */
+	public List<AsMngVo>getAsProcessingCompleted(String userId);
 }

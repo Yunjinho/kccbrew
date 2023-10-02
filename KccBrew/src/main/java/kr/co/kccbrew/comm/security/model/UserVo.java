@@ -1,6 +1,6 @@
 package kr.co.kccbrew.comm.security.model;
 
-import java.sql.Date;
+import java.sql.Date; 
 
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
@@ -17,7 +17,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-@Component
 public class UserVo {
 	//공통 데이터
 	private String userTypeCd;

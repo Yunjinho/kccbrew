@@ -1,0 +1,54 @@
+@charset "UTF-8";
+
+html {
+	overflow: overlay;
+}
+
+#mainContainer {
+	background-color: white;
+	display: flex;
+	flex-direction: column;
+	overflow-y: auto;
+}
+
+#mainHeader, #content, #mainFooter {
+	width: 100%;
+}
+
+#main-content {
+	/* margin-bottom: 50px; */
+/* 	margin: 50px 150px; */
+	display: flex;
+}
+
+.contents_warp {
+/* 	width: 1400px;
+	margin: 0 auto; */
+	/* padding: 40px 0; */
+	width: 100%;
+}
+
+#mainHeader {
+	border-bottom: solid 1px black;
+}
+
+#mainSideMenu {
+	flex: 0.14;
+}
+
+#mainFooter {
+	
+}
+
+#page-container {
+	background-color: white !important;
+}
+
+#page-content {
+	    padding: 0px 15px 50px 15px;
+	background-color: white;
+}
+
+#page-content-wrap {
+	background-color: #ffffff;
+}

@@ -18,7 +18,7 @@
 <!-- css -->
 <link rel="stylesheet" href="/resources/css/schdl/schdl-common.css" />
 <link rel="stylesheet" href="/resources/css/log/mylogtest.css" />
-<link rel="stylesheet" href="/resources/css/log/content-template.css" />
+<link rel="stylesheet" href="/resources/css/asMng/content-template.css" />
 <link rel="stylesheet" href="/resources/css/schdl/mycalendar.css" />
 <link rel="stylesheet" href="/resources/css/schdl/myschedulelist.css" />
 

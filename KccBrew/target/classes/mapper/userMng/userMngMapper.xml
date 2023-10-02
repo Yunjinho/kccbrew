@@ -188,7 +188,7 @@ WHERE ROW_NUM BETWEEN #{start} AND #{end}
 	
 	
 	<select id="findByUserInfo" resultType="kr.co.kccbrew.userMng.model.UserMngVo" parameterType="String">
-	select 
+	select DISTINCT
 		a.user_nm 			AS "userNm",
 		b.grp_cd_dtl_nm 	AS "eqpmnNm", 
 		c.grp_cd_dtl_nm		AS "locationNm",

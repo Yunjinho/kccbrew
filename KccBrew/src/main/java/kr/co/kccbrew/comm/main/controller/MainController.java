@@ -1,11 +1,9 @@
 package kr.co.kccbrew.comm.main.controller;
 
-import java.io.File;
-import java.security.Principal;
+import java.io.File; 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -15,22 +13,17 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import kr.co.kccbrew.comm.main.model.MainPageVo;
 import kr.co.kccbrew.comm.main.service.MainService;
 import kr.co.kccbrew.comm.security.model.UserVo;
-import kr.co.kccbrew.comm.security.service.IUserSearchService;
-import kr.co.kccbrew.comm.security.service.IUserService;
 
 @Controller
 public class MainController {
@@ -191,6 +184,7 @@ public class MainController {
 		List<MainPageVo> asList = mainServiceImple.showAllAsInfoList(); // a/s 접수 리스트
 		List<MainPageVo> waitingList = mainServiceImple.showWaitingMemberList(); // 회원 승인 대기 리스트
 		List<MainPageVo> resultList = mainServiceImple.showAsResultList(); // a/s 결과 리스트
+
 		model.addAttribute("asAssignList", asAssignList);
 		model.addAttribute("asList", asList);
 		model.addAttribute("waitingList", waitingList);
@@ -234,7 +228,7 @@ public class MainController {
 		model.addAttribute("asAssignListById", asAssignListById);
 		model.addAttribute("asListById", asListById);
 		model.addAttribute("resultListById", resultListById);
-
+		
 		LocalDate now = LocalDate.now(); // 현재 날짜
 
 		// 하루 구하기
@@ -301,5 +295,7 @@ public class MainController {
 	public String openPrivacy() {
 		return "comm/main/privacy";
 	}
+
+	
 
 }

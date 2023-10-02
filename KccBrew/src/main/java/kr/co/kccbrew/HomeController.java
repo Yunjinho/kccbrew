@@ -1,12 +1,10 @@
 package kr.co.kccbrew;
 
-import java.text.DateFormat;
+import java.text.DateFormat; 
 import java.util.Date;
-import java.util.List;
 import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -55,7 +53,7 @@ public class HomeController {
 			return "redirect:/manager/main";
 		} else {
 			return "redirect:/mechanic/main";
-		}
+		} 
 
 	}
 }

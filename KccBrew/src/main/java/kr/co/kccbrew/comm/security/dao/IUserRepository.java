@@ -1,11 +1,14 @@
 package kr.co.kccbrew.comm.security.dao;
 
-import java.util.List; 
+import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Repository;
+
+import kr.co.kccbrew.asMng.model.AsMngVo;
 import kr.co.kccbrew.comm.security.model.UserVo;
 import kr.co.kccbrew.strMng.model.StrMngVo;
 
@@ -82,5 +85,24 @@ public interface IUserRepository {
 	 * @param StoreSeq : 선택한 점포 
 	 */
 	public void insertStoreUserMap(@Param("userId")String userId,@Param("storeId")int StoreSeq);
+	
+	/**
+	 * 회원ID에 따른 AS신청(배정전) 리스트 조회
+	 * @param userId : 사용자 아이디
+	 *  @return List<AsMngVo>: AS신청(배정전) 리스트
+	 */
+	public List<AsMngVo>selectAsAccepting(String userId);
+	/**
+	 * 회원ID에 따른 AS배정(처리전) 리스트 조회
+	 * @param userId : 사용자 아이디
+	 *@return List<AsMngVo>: AS배정(처리전) 리스트
+	 */
+	public List<AsMngVo>selectAsSubmissionCompleted(String userId);
+	/**
+	 * 회원ID에 따른 AS처리완료 리스트 조회
+	 * @param userId : 사용자 아이디@return
+	 * @return List<AsMngVo>:  AS처리완료 리스트
+	 */
+	public List<AsMngVo>selectAsProcessingCompleted(String userId);
     
 }
