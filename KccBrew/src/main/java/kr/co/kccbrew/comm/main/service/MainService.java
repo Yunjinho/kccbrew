@@ -148,6 +148,7 @@ public class MainService implements IMainService{
 		//기본 파일정보 등록
 		mainRepository.insertFileInfo(vo);
 		MultipartFile imgFile = mainPageVo.getUserImg();
+		
 		vo.setFileOriginalName(imgFile.getOriginalFilename());
 		vo.setFileDetailServerName(mainPageVo.getUserId()+"_"+imgFile.getOriginalFilename());
 		vo.setFileFmt(imgFile.getContentType());

@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.kccbrew.notice.dao.INoticeRepository">
+	
+	<!-- 공지사항 목록 출력 -->
+	<select id="showAllNoticeList" parameterType="kr.co.kccbrew.notice.model.noticeVo" resultType="kr.co.kccbrew.notice.model.noticeVo">
+		<![CDATA[
+			SELECT
+				notice_seq		AS "noticeSeq"
+				,writer_name	AS "writerName"
+				,write_dttm		AS "writeDate"
+				,notice_title	AS "noticeTitle"
+				,views			AS "views"
+			FROM notification
+			ORDER BY notice_seq DESC
+		]]>
+	</select>
+	
+	<!-- 공지사항 상세 조회 -->
+	<select id="readNotice" parameterType="kr.co.kccbrew.notice.model.noticeVo" resultType="kr.co.kccbrew.notice.model.noticeVo">
+		<![CDATA[
+			SELECT
+				n.notice_seq			AS "noticeSeq"
+				,n.writer_id			AS "writerId"
+				,n.writer_name			AS "writerName"
+				,n.write_dttm			AS "writeDate"
+				,n.mod_dttm				AS "modDate"
+				,n.mod_user				AS "modUser"
+				,n.notice_title			AS "noticeTitle"
+				,n.notice_content		AS "noticeContent"
+				,n.views				AS "views"
+				,f.file_seq				AS "fileId"
+				,f.file_seq				AS "fileId"
+				,f.grp_cd_dtl_id		AS "groupCodeDetailId"
+				,f.file_reg_dttm		AS "fileRegDate"
+				,f.file_reg_user		AS "fileRegUser"
+				,f.file_mod_dttm		AS "fileModDate"
+				,f.file_mod_user		AS "fileModUser"
+				,fd.file_dtl_seq		AS "fileDetailId"
+				,fd.file_original_nm	AS "fileDetailOriginalName"
+				,fd.storage_location	AS "fileDetailLocation"
+				,fd.reg_dttm 			AS "fileDetailRegDate"
+				,fd.reg_user 			AS "fileDetailRegUser"
+				,fd.mod_dttm 			AS "fileDetailModDate"
+				,fd.file_server_nm		AS "fileDetailServerName"
+				,fd.file_fmt			AS "fileDetailFormat"
+				,fd.mod_user 			AS "fileDetailModUser"
+			FROM notification n
+			LEFT JOIN file_info f 			ON n.file_seq = f.file_seq
+			LEFT JOIN file_detail_info fd 	ON f.file_seq = fd.file_seq
+			WHERE n.notice_seq = #{noticeSeq}
+		]]>
+	</select>
+	
+	<!-- 공지 사진 기본 정보 등록 -->
+	<insert id="insertFileInfo" parameterType="kr.co.kccbrew.notice.model.noticeVo">
+		INSERT INTO file_info
+		VALUES(file_seq.NEXTVAL,'01',SYSDATE,#{writerId},SYSDATE,#{writerId})
+		<selectKey resultType="int" keyProperty="fileId" order="AFTER">
+			SELECT NVL(MAX(file_seq), 0) AS "fileId" FROM file_info
+		</selectKey> 
+	</insert>
+	
+	<!-- 공지 사진 상세 정보 등록 -->
+	<insert id="insertFileDtlInfo" parameterType="kr.co.kccbrew.notice.model.noticeVo">
+	<![CDATA[
+		INSERT INTO file_detail_info VALUES(
+				file_dtl_seq.NEXTVAL,
+				#{fileId},
+				#{fileOriginalName},
+				#{fileDetailLocation},
+				SYSDATE,
+				#{writerId},
+				SYSDATE,
+				#{fileDetailServerName},
+				#{fileFmt},
+				#{writerId})
+	]]>
+	</insert>
+</mapper>

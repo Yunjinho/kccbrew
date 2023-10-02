@@ -87,7 +87,15 @@
 		<put-attribute name="contents" value="/WEB-INF/views/schdl/hldyList.jsp" />
 	</definition>
 	
+	<!-- 공지사항 목록 페이지 -->
+	<definition name="notice" extends="mainLayout2">
+		<put-attribute name="contents" value="/WEB-INF/views/notice/noticeList.jsp" />
+	</definition>
 	
+	<!-- 공지사항 상세 페이지 -->
+	<definition name="noticeDetail" extends="mainLayout2">
+		<put-attribute name="contents" value="/WEB-INF/views/notice/noticeDetail.jsp" />
+	</definition>
 	
 	
 <!-- !!!!!!!!!!!!!!!!!!!!!! 점주, 수리기사 공통 페이지 - 근태 현황 테이블 !!!!!!!!!!!!!!!!!!!!! -->
@@ -144,7 +152,17 @@
 		<put-attribute name="contents" value="/WEB-INF/views/schdl/schdlMngTable.jsp" />
 	</definition>
 
-
+	<!-- 관리자 공지 등록 페이지 -->
+	<definition name="adminNoticeInsert" extends="adminPage">
+		<put-attribute name="contents" value="/WEB-INF/views/notice/insertNotice.jsp" />
+	</definition>
+	
+	<!-- 관리자 공지 수정 페이지 -->
+	<definition name="adminNoticeUpdate" extends="adminPage">
+		<put-attribute name="contents" value="/WEB-INF/views/notice/modNotice.jsp" />
+	</definition>
+	
+	
 <!-- 점주 페이지 추가 확장, 타이틀과 헤더, 사이드메뉴  유지, contents만 변경 -->
 
 	<!-- 점주 점포 수정 페이지  -->

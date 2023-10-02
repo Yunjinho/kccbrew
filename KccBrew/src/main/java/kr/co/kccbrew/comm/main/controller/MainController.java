@@ -168,6 +168,7 @@ public class MainController {
 		return "redirect:/mypage";
 	}
 	
+	
 	@ResponseBody
 	@RequestMapping(value="/searchlocationcode" , method=RequestMethod.GET)
 	public JSONArray searchLocationCode(String locationCd) {

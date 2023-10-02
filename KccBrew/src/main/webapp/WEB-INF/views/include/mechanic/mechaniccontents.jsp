@@ -212,7 +212,7 @@
 					<p>  나의 일정  </p>
 					<div id='calendar'></div>
 				</div>
-			</div>	
+			</div>
 		</div>
 	</div>
 </body>

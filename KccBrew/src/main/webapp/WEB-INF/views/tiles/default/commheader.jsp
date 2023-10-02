@@ -82,6 +82,8 @@
 						<ul class="comm-nav-dropdown">
 							<c:url var="toMyPage" value="/mypage" />
 							<li><a href="${toMyPage}">내 정보</a></li>
+							<c:url var="toNotification" value="/noticelist" />
+							<li><a href="${toNotification}">공지사항</a></li>
 						</ul>
 					</li>
 				</ul>
