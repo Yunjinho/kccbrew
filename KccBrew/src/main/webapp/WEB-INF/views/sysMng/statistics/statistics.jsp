@@ -7,8 +7,10 @@
 <script src="https://code.highcharts.com/highcharts.js"></script>
 <script src="<c:url value="resources/js/sysMng/statistics.js"/>"></script>
 <link rel="stylesheet" href="/resources/css/statistics/statistics.css" />
+<link rel="stylesheet" href="/resources/css/asMng/content-template.css" />
 </head>
 <body>
+<div class="contents_warp">
 <div id="page-mask">
 	<div id="page-container" class="">
 		<div id="page-content" class="clearfix">
@@ -56,6 +58,6 @@
 		</div>
 	</div>
 </div>
-
+</div>
 </body>
 </html>
