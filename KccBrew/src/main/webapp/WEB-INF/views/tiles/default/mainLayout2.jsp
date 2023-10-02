@@ -6,6 +6,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jstl/core_rt"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="sql" uri="http://java.sun.com/jsp/jstl/sql"%>
+<%@ taglib prefix="sec"
+	uri="http://www.springframework.org/security/tags"%>
 
 <%@ page import="java.time.LocalDateTime"%>
 <%@ page import="java.time.format.DateTimeFormatter"%>
@@ -45,11 +47,22 @@ html {
 <link rel="stylesheet" href="${path}/resources/css/comm/mainLayout2.css">
 <link rel="stylesheet" href="${path}/resources/css/comm/reset.css">
 <link rel="stylesheet" href="${path}/resources/css/comm/reset.css">
-<link rel="stylesheet"
-	href="${path}/resources/css/comm/maincontents.css" />
-<link rel="stylesheet"
-	href="${path}/resources/css/comm/mainSideMenu.css" />
 <link rel="stylesheet" href="${path}/resources/css/comm/footer.css" />
+
+<sec:authorize access="hasRole('ROLE_ADMIN')">
+	<link rel="stylesheet"
+		href="${path}/resources/css/comm/mainSideMenu-admin.css" />
+</sec:authorize>
+
+<sec:authorize access="hasRole('ROLE_MANAGER')">
+	<link rel="stylesheet"
+		href="${path}/resources/css/comm/mainSideMenu-manager.css" />
+</sec:authorize>
+
+<sec:authorize access="hasRole('ROLE_MECHA')">
+	<link rel="stylesheet"
+		href="${path}/resources/css/comm/mainSideMenu-mecha.css" />
+</sec:authorize>
 
 
 <!--------------------- Full Calendar CSS --------------------------->
@@ -57,9 +70,16 @@ html {
 <link
 	href='https://cdn.jsdelivr.net/npm/fullcalendar@5.10.0/main.min.css'
 	rel='stylesheet' />
-
+<link rel="stylesheet" href="${path}/resources/css/schdl/mycalendar.css" />
 
 <!--------------------- JS ------------------------------>
+<sec:authorize access="hasRole('ROLE_ADMIN')">
+	<script src="<c:url value="/resources/js/schdl/mySchdlMngClndr-admin.js"/>"></script>
+</sec:authorize>
+
+<sec:authorize access="hasAnyRole('ROLE_MANAGER', 'ROLE_MECHA')">
+	<script src="<c:url value="/resources/js/schdl/mySchdlMngClndr.js"/>"></script>
+</sec:authorize>
 <!-------------------- 공통 JS 및 JQuery ---------------------->
 <script src="http://code.jquery.com/jquery-latest.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
@@ -93,9 +113,9 @@ html {
 				<tiles:insertAttribute name="sidemenu" />
 
 				<div id="mainContents">
-					<div>
-						<tiles:insertAttribute name="contents" />
-					</div>
+
+					<tiles:insertAttribute name="contents" />
+
 				</div>
 			</div>
 		</div>

@@ -2,12 +2,7 @@
 
 /* 캘린더 */
 .fc-header-toolbar.fc-toolbar.fc-toolbar-ltr {
-	/* 여기에 CSS 스타일을 추가하세요 */
-	/* 예: */
-	background-color: #e6e6e6;
-	color: #333;
-	font-size: 16px;
-	/* 다른 스타일 속성을 추가하세요 */
+	font-size: 12px;
 }
 
 .fc .fc-button-group>.fc-button {
@@ -59,15 +54,75 @@
 	width: 100% !important;
 }
 
-.fc-daygrid-body.fc-daygrid-body-unbalanced  {
-		width: 100% !important;
+.fc-daygrid-body.fc-daygrid-body-unbalanced {
+	width: 100% !important;
+}
+
+.fc .fc-daygrid-body-unbalanced .fc-daygrid-day-events {
+	min-height: 0.5em !important;
+}
+
+.fc-scrollgrid-sync-table {
+	height: 100%;
+}
+
+.fc-daygrid-body fc-daygrid-body-unbalanced fc-daygrid-body-natural {
+	height: 100%;
+}
+
+.fc-scroller {
+	height: 100%;
+}
+
+.fc-scroller-harness {
+	height: 100%;
+}
+
+.fc-scrollgrid-section.fc-scrollgrid-section-body {
+	height: 100%;
+}
+
+.fc-scrollgrid-section.fc-scrollgrid-section-body>td {
+	height: 100%;
+}
+
+.fc-view-harness.fc-view-harness-passive {
+	height: 100%;
+}
+
+.fc-daygrid.fc-dayGridMonth-view fc-view {
+	height: 100%;
+}
+
+.fc-scrollgrid {
+	height: 100%;
+}
+
+.fc-daygrid.fc-dayGridMonth-view.fc-view {
+	height: 100%;
+}
+
+.fc-scrollgrid {
+	height: 100%;
+}
+
+.fc-daygrid-body.fc-daygrid-body-unbalanced.fc-daygrid-body-natural {
+	height: 100%;
+}
+
+.fc-scrollgrid-sync-table {
+	height: 100% !important;
+}
+
+.fc-scrollgrid-sync-table>tbody {
+	height: 100%;
 }
 
 /* 요일 */
 .fc-col-header {
-	width:100% !important;
+	width: 100% !important;
 }
 
 .fc-event {
-    padding: 3px;
+	padding: 3px;
 }

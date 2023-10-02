@@ -94,7 +94,7 @@
 	<context:component-scan
 		base-package="kr.co.kccbrew.comm.util" />
 	<context:component-scan
-		base-package="kr.co.kccbrew.sysMng.statistics.controller"/>
+		base-package="kr.co.kccbrew.sysMng.statistics.controller" />
 	<!-- Controller -->
 
 
@@ -138,10 +138,18 @@
 
 		<!-- 로그수집 및 저장 -->
 		<interceptor>
-			<mapping path="/logtest" />
+			<mapping path="/admin/log" />
 			<exclude-mapping path="/resources/**/" />
 			<beans:bean
 				class="kr.co.kccbrew.comm.interceptor.component.LogInterceptor" />
+		</interceptor>
+
+		<!-- 사용자 프로필 지속적으로 업데이트 -->
+		<interceptor>
+			<mapping path="/**" />
+			<exclude-mapping path="/resources/**/" />
+			<beans:bean
+				class="kr.co.kccbrew.comm.interceptor.component.UserProfileInterceptor" />
 		</interceptor>
 
 	</interceptors>

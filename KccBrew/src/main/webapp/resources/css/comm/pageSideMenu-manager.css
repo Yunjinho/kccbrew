@@ -1,4 +1,9 @@
 @charset "UTF-8";
+
+#mainContents {
+	margin-left: 250px;
+}
+
 /************* 회원 정보 및 페이지 링크 ******************/
 .profileAndguide {
 	font-family: 'Noto-Sans';
@@ -13,22 +18,20 @@
 	box-sizing: border-box;
 	/* 추가 / 2023-09-26 이세은  */
 	float: left;
-	width: 20%;
+	width: 250px;
 }
 
 .user-profile {
-	/* height:226px; */
-	margin-bottom: 5px;
+	height: 600px;
 	box-sizing: border-box;
-	flex: 1;
-	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
 	background-color: #1A55A1;
 }
 
 .inner-box {
-	padding: 20px;
+	padding-top: 0px;
+	padding: 15px;
 	width: 100%;
 	height: 100%;
 }
@@ -48,13 +51,16 @@
 	height: 150px;
 	margin: 0 auto;
 	margin-bottom: 20px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 	/* 	flex: 0.4;
 	top: 0; */
 }
 
 .photo-wrapper img {
-	width: 150px;
-	height: 150px;
+	width: 130px;
+	height: 130px;
 	/* position: absolute; */
 	background-color: white;
 	border-radius: 50%;
@@ -64,7 +70,7 @@
 	text-align: center;
 	font-size: 19px;
 	font-weight: 600;
-	margin-bottom: 20px;
+	margin-bottom: 10px;
 }
 
 .user-info-wrapper span {
@@ -75,10 +81,40 @@
 	display: block;
 	font-size: 15px;
 	margin-top: 10px;
+	line-height: 1.5;
+}
+
+.user-info {
+	margin-bottom: 10px;
+}
+
+.user-info>div {
+	display: flex;
+	align-items: baseline;
+}
+
+.user-info-index {
+	background-color: #094188;
+	border-radius: 15px;
+	padding: 7px;
+	width: 30%;
+	text-align: center;
+	margin-right: 5px;
+	margin-bottom: 3px;
+}
+
+/* 로그아웃 */
+.inner-box form {
+	margin: 0px;
+}
+
+.inner-box .logout {
+	background-color: transparent;
+	border: 0px;
 }
 
 .user-task-wrapper {
-	height: 200px;
+	height: 210px;
 	text-align: center;
 }
 
@@ -90,18 +126,51 @@
 	border-bottom: dashed 0.5px #a2c3f5;
 }
 
-.admin-task {
+.user-task-wrapper>div {
+	padding-bottom: 30px;
+}
+
+.user-task {
 	height: 50%;
+	padding-bottom: 25px;
 }
 
 .task-title {
+	background-color: #094188;
+	padding: 7px;
+	border-radius: 15px;
+	top: 40%;
 	position: relative;
-	bottom: 30%;
 }
 
-.admin-task span {
+.user-task-value {
+	top: 20%;
+	font-size: 25px;
+	color: white;
+	text-decoration: none;
 	position: relative;
-	top: 30%;
+}
+
+.user-task span {
+	position: relative;
+}
+
+.manager-task {
+	float: left;
+	width: 50%;
+	height: 50%;
+}
+
+.manager-task-value {
+	top: 20%;
+	font-size: 25px;
+	color: white;
+	text-decoration: none;
+	position: relative;
+}
+
+.font-bold {
+	font-weight: bold;
 }
 
 }
@@ -125,6 +194,10 @@
 .buttons {
 	text-align: center;
 	height: 30px;
+	display: flex;
+	align-items: baseline;
+	justify-content: center;
+	margin-bottom: 10px;
 }
 
 .toMyPage, .logout {
@@ -136,50 +209,78 @@
 	text-decoration: none;
 }
 
-.toMyPage:hover, .logout:hover {
-	text-decoration: underline;
+.toMyPage:hover, .inner-box .logout:hover, #toMyPage:hover {
+	text-decoration: underline !important;
+	font-weight: bold !important;
+	background-color: transparent !important;
+	color: white;
+}
+
+.user-task-value:hover, .manager-task-value:hover {
+	font-weight: bold;
+	color: rgb(47, 179, 245);
+}
+
+#toMyPage {
+	color: white;
+	text-decoration: none;
 }
 
 .shortcut-service {
 	height: 226px;
 	flex: 1;
-	margin-bottom: 5px;
 	color: #111111;
-	background-color: #ffffff;
+	background-color: #b2c0d6;
 }
 
 .shortcut-service p {
 	text-align: left;
-	font-size: 1.2em;
+	font-size: 14px;
 	font-weight: bold;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
 
 .shortcuts {
-	margin-bottom: 10px;
-	color: #717171;
+	padding-bottom: 5px;
+	font-size: 14px;
+	border-bottom: dashed 0.5px black;
+	margin: 5px auto;
+	height: 55px;
+	text-align: center;
+	display: flex;
+	align-items: center;
+	justify-content: flex-start;
+}
+
+.shortcuts.last {
+	border: none;
 }
 
 .round-btn {
-	display: inline-block;
-	text-align: center;
-	font-size: 0.9em;
-	width: 30px;
-	height: 20px;
-	line-height: 17px;
-	color: #1A55A1;
-	border: 1.5px solid #1A55A1;
-	font-weight: bold;
-	border-radius: 75px/75px;
+	width: 20px;
+	margin: 0 20px;
 }
 
 .shortcuts a {
-	font-weight: normal;
-	color: #717171;
+	font-weight: bold;
+	color: black;
 	text-decoration: none;
 }
 
 .shortcuts a:hover {
 	text-decoration: underline;
+}
+
+#shortcuts-mark {
+	height: 45px;
+	background-color: white;
+	border-radius: 10px;
+}
+
+.shortcut-list {
+	height: 90%;
 }
 
 .toKccBrew {
@@ -196,6 +297,7 @@
 	transform: translate(-50%, -50%);
 	top: 50%;
 	left: 50%;
+	height: 100%;
 }
 
 .tomainimg {
@@ -208,4 +310,9 @@
 	border: 3px solid #1A55A1;
 	color: #111111;
 	border-radius: 10px;
+}
+
+.separator {
+	margin-right: 5px;
+	color: #a2c3f5;
 }

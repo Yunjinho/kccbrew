@@ -1,0 +1,295 @@
+@charset "UTF-8";
+/************* 회원 정보 및 페이지 링크 ******************/
+.profileAndguide {
+	font-family: 'Noto-Sans';
+	flex: 0.2;
+	display: flex;
+	height: 100%;
+	flex-direction: column;
+	justify-content: space-between;
+	min-height: 700px;
+	background-color: #eef4ff;
+	color: #ffffff;
+	box-sizing: border-box;
+	/* 추가 / 2023-09-26 이세은  */
+	float: left;
+	width: 20%;
+}
+
+.user-profile {
+	height: 505px;
+	/* margin-bottom: 0px; */
+	box-sizing: border-box;
+	/* flex: 1; */
+	/* display: flex; */
+	flex-direction: column;
+	justify-content: space-between;
+	background-color: #1A55A1;
+	border-radius: 10px;
+	margin-bottom: 10px;
+}
+
+.inner-box {
+	padding-top: 0px;
+	padding: 15px;
+	width: 100%;
+	padding-top: none;
+	height: 100%;
+}
+
+.nameAndPhoto {
+	position: relative;
+	display: flex;
+	height: 50px;
+}
+
+.name-wrapper {
+	flex: 0.6;
+}
+
+.photo-wrapper {
+	width: 150px;
+	height: 150px;
+	margin: 0 auto;
+	margin-bottom: 20px;
+	/* 	flex: 0.4;
+	top: 0; */
+}
+
+.photo-wrapper img {
+	width: 150px;
+	height: 150px;
+	/* position: absolute; */
+	background-color: white;
+	border-radius: 50%;
+}
+
+.user-info-wrapper {
+	text-align: center;
+	font-size: 19px;
+	font-weight: 600;
+	margin-bottom: 10px;
+}
+
+.user-info-wrapper span {
+	font-weight: 400;
+}
+
+.user-info-wrapper span.user-type {
+	display: block;
+	font-size: 15px;
+	margin-top: 10px;
+	line-height: 1.5;
+}
+
+.user-info {
+	margin-bottom: 10px;
+}
+
+.user-info>div {
+	display: flex;
+	align-items: baseline;
+}
+
+.user-info-index {
+	background-color: #094188;
+	border-radius: 15px;
+	padding: 7px;
+	width: 30%;
+	text-align: center;
+	margin-right: 5px;
+	margin-bottom: 3px;
+}
+
+.user-task-wrapper {
+	height: 210px;
+	text-align: center;
+}
+
+.user-task-wrapper .last-task {
+	border-bottom: none;
+}
+
+.user-task-wrapper div {
+	border-bottom: dashed 0.5px #a2c3f5;
+}
+
+.user-task {
+	height: 50%;
+}
+
+.task-title {
+	background-color: #094188;
+	padding: 7px;
+	border-radius: 15px;
+	top: 40%;
+	position: relative;
+}
+
+.user-task-value {
+	top: 20%;
+	font-size: 25px;
+	color: white;
+	text-decoration: none;
+	position: relative;
+}
+
+.user-task span {
+	position: relative;
+}
+
+.manager-task {
+	float: left;
+	width: 50%;
+	height: 50%;
+}
+
+.manager-task-value {
+	top: 20%;
+	font-size: 25px;
+	color: white;
+	text-decoration: none;
+	position: relative;
+}
+
+.font-bold {
+	font-weight: bold;
+}
+
+}
+.name {
+	font-size: 1.5em;
+}
+
+.job {
+	font-size: 1em;
+}
+
+.last-ip, .last-login {
+	font-size: 0.8em;
+	font-weight: 600;
+}
+
+.ip, .time {
+	font-size: 0.8em;
+}
+
+.buttons {
+	text-align: center;
+	height: 30px;
+	display: flex;
+	align-items: baseline;
+	justify-content: center;
+	margin-bottom: 10px;
+}
+
+.toMyPage, .logout {
+	color: #ffffff;
+	cursor: pointer;
+	font-weight: normal;
+	font-size: 1em;
+	margin-bottom: 10px;
+	text-decoration: none;
+}
+
+.toMyPage:hover, .logout:hover, #toMyPage:hover {
+	text-decoration: underline;
+	font-weight: bold;
+}
+
+.user-task-value :hover, .manager-task-value:hover {
+	font-weight: bold;
+	color: #2fb3f5;
+}
+
+#toMyPage {
+	color: white;
+	text-decoration: none;
+}
+
+.shortcut-service {
+	height: 226px;
+	flex: 1;
+	color: #111111;
+	background-color: #ffffff;
+	border-radius: 10px;
+}
+
+.shortcut-service p {
+	text-align: left;
+	font-size: 14px;
+	font-weight: bold;
+}
+
+.shortcuts {
+    padding-bottom: 5px;
+    font-size: 14px;
+    border-bottom: dashed 0.5px #a2c3f5;
+    margin: 5px auto;
+    height: calc(100%/3);
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.shortcuts.last {
+	border: none;
+}
+
+.round-btn {
+width: 20px;
+    margin: 0 20px;
+}
+
+.shortcuts a {
+    font-weight: bold;
+    color: black;
+    text-decoration: none;
+}
+
+.shortcuts a:hover {
+	text-decoration: underline;
+}
+
+#shortcuts-mark {
+	height: 10%;
+}
+
+.shortcut-list {
+	height: 90%;
+}
+
+.toKccBrew {
+	position: relative;
+	height: 226px;
+	text-align: center;
+	flex: 1;
+	color: navy;
+	background-color: #ffffff;
+}
+
+.toKccBrew .inner-box {
+	position: absolute;
+	transform: translate(-50%, -50%);
+	top: 50%;
+	left: 50%;
+	height: 100%;
+}
+
+.tomainimg {
+	width: 200px;
+	height: 80px;
+}
+
+.kcclink {
+	cursor: pointer;
+	border: 3px solid #1A55A1;
+	color: #111111;
+	border-radius: 10px;
+}
+
+.separator {
+	margin-right: 5px;
+	color: #a2c3f5;
+}

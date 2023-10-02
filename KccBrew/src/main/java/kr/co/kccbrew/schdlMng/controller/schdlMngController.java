@@ -17,6 +17,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -327,7 +328,7 @@ public class schdlMngController {
 		/*string -> sql.date 형변환*/
 		Date startSqlDate = dateFormat.stringToSqlDate(startDate);
 		Date endSqlDate = dateFormat.stringToSqlDate(endDate);
-		
+
 		if(userVo.getLocationCd() == null || userVo.getLocationCd().equals("")) {
 			userVo.setLocationCd(userVo.getLocation());
 		}
@@ -396,7 +397,7 @@ public class schdlMngController {
 
 		UserVo userVo = new UserVo();
 		userVo.setUserId(userId);
-		
+
 		if(userVo.getLocationCd() == null || userVo.getLocationCd().equals("")) {
 			userVo.setLocationCd(userVo.getLocation());
 		}
@@ -498,7 +499,7 @@ public class schdlMngController {
 			userVo.setLocationCd(userVo.getLocation());
 		}
 		userVo.setUserTypeCd("03");
-		
+
 		System.out.println("userVo: " + userVo);
 
 		List<String> idList = schdlMngService.getIdList(userVo);
@@ -534,17 +535,25 @@ public class schdlMngController {
 		System.out.println("month: " + month);
 
 		/*ID에 따른 데이터 조회*/
+		List<String> ids = new ArrayList<>();
 
 		UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-		String userId = userDetails.getUsername();
-		List<String> ids = new ArrayList<>();
-		ids.add(userId);
+		GrantedAuthority role = null;
+		for ( GrantedAuthority authority : userDetails.getAuthorities()) {
+			role = authority;
+		}
+		if(role.equals(new SimpleGrantedAuthority("ROLE_ADMIN"))) {
+			ids = null;
+		} else {
+			String userId = userDetails.getUsername();
+			ids.add(userId);
+		}
 
 		List<Map<String, Object>> schedules = schdlMngService.getAllSchedules(ids, stringYear, stringMonth);
 
 		return schedules;
 	}
-	
+
 
 	/*특정 스케줄 상세조회*/
 	@PostMapping(value="/schedule-Info")

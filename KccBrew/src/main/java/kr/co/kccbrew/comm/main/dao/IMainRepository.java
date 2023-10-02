@@ -16,6 +16,7 @@ public interface IMainRepository {
 	List<MainPageVo> showAllAsInfoList();	  // a/s 접수 리스트
 	List<MainPageVo> showWaitingMemberList(); // 회원 승인 대기 리스트
 	List<MainPageVo> showAsResultList();      // a/s 결과 리스트
+	List<MainPageVo> unapprovedMemberList(); // 미승인된 회원리스트
 	
 	List<MainPageVo> showUserInfoListById(String userId);	//특정 사용자의 정보 리스트
 	List<MainPageVo> showStoreInfoListById(String userId);  //점포 정보 리스트

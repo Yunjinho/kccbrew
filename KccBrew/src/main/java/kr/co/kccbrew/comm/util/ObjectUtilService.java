@@ -18,6 +18,14 @@ public class ObjectUtilService implements IObjectUtilService {
 		return objectUtilRepository.selectLocationName(codeId);
 	}
 	
-	
+	/**
+	 * 사용자타입코드에 따른 사용자타입명 조회
+	 * @param codeId: 사용자타입코드
+	 * @return String: 사용자타입명
+	 */
+	@Override
+	public String getUserTypeName(String codeId) {
+		return objectUtilRepository.selectUserTypeName(codeId);
+	}
 
 }
