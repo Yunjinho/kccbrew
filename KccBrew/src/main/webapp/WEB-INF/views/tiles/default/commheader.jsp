@@ -7,9 +7,79 @@
 <!DOCTYPE html>
 <html>
 <head>
+
+<!-- 스프링 시큐리티 통해서 userId사용 -->
+<sec:authentication property="principal.username" var="userId" />
+
+<script>
+    var userId = '${userId}';
+    console.log(userId);
+</script>
+
+<!-- css -->
 <link rel="stylesheet" href="${path}/css/comm/header.css">
 <link rel="stylesheet" href="${path}/css/comm/common.css">
+
+<!-- javascript -->
+<script src="<c:url value="/resources/js/sysMng/alarm/websocket.js"/>"></script>
+
+<!-- socket -->
+<script
+	src="https://cdn.jsdelivr.net/npm/sockjs-client@1.6.1/dist/sockjs.min.js"></script>
 </head>
+
+<script>
+	document.addEventListener("DOMContentLoaded", function() {
+
+		/*소켓연결*/
+		var ping;
+		var sockjs;
+
+		sockjs = new SockJS("http://localhost:8080/echoHandler");
+
+		sockjs.onopen = function(evt) {
+			console.log("socket연결");
+	
+			if (typeof sockjs != 'undefined') {
+				var userData = {
+						userId: userId 
+				};
+				sockjs.send(userData);
+			} else {
+				console.log("연결되지 않음.");
+			}
+		};
+
+		sockjs.onclose = function(evt) {
+			console.log("socket연결해제");
+		};
+
+		sockjs.onmessage = function(evt) {
+			console.log("socketHandler에서 받은 메세지: " + evt.data);
+		};
+
+		sockjs.onerror = function(evt) {
+			alert('에러:' + evt.data);
+		};
+
+	});
+	</script>
+
+<script>
+				var isClicked = false;
+				function handleClick(event) {
+					event.preventDefault();
+
+					var olElement = document
+							.getElementById("notification-list");
+					if (isClicked) {
+						olElement.style.display = "none";
+					} else {
+						olElement.style.display = "block";
+					}
+					isClicked = !isClicked;
+				}
+			</script>
 
 <c:set var="user" value="${sessionScope.user}" />
 <c:set var="store" value="${sessionScope.store}" />
@@ -17,8 +87,46 @@
 <sec:authorize access="hasRole('ROLE_ADMIN')">
 	<header class="comm-nav">
 		<div class="top-bar">
+
+			<div class="header-icon-background">
+				<a href="#" id="notification-link" onclick="handleClick(event);">
+					<img id="notification-image"
+					src="<c:url value='/img/main/icon-notification-bell.png' />"
+					alt="Check List" class="header-icon" /> <img
+					id="new-notification-image"
+					src="<c:url value='/img/main/icon-notification.png' />"
+					alt="Check List" class="header-icon" hidden="true" />
+				</a>
+
+
+				<ol class="list-group list-group-numbered" id="notification-list"
+					style="display: none;">
+					<li
+						class="list-group-item d-flex justify-content-between align-items-start">
+						<div class="ms-2 me-auto">
+							<div class="fw-bold">배정</div>
+							Content for list item
+						</div> <span class="badge bg-primary rounded-pill">N</span>
+					</li>
+					<li
+						class="list-group-item d-flex justify-content-between align-items-start">
+						<div class="ms-2 me-auto">
+							<div class="fw-bold">배정</div>
+							Content for list item
+						</div> <span class="badge bg-primary rounded-pill">N</span>
+					</li>
+					<li
+						class="list-group-item d-flex justify-content-between align-items-start">
+						<div class="ms-2 me-auto">
+							<div class="fw-bold">배정</div>
+							Content for list item
+						</div> <span class="badge bg-primary rounded-pill">N</span>
+					</li>
+				</ol>
+			</div>
+
 			<p>
-				<c:out value="${user.userNm}"/>
+				<c:out value="${user.userNm}" />
 				(관리자)님 환영합니다
 			</p>
 
@@ -29,7 +137,7 @@
 			</form>
 
 		</div>
-		<nav class="nav-bar">
+		<nav class="nav-bar" id="nav-bar">
 			<div class="nav-bar-brand">
 				<c:url var="toMain" value="/admin/main" />
 				<a href="${toMain}"> <img alt="logo"
@@ -44,28 +152,24 @@
 							<!-- 여기에  매핑 url 선언 -->
 							<li><a href="${toAsList}">A/S 내역 조회</a></li>
 							<!-- 매핑 url 변수 링크로 걸기 -->
-						</ul>
-					</li>
+						</ul></li>
 					<li class="nav-item"><a class="nav-links" href="#">점포 관리</a>
 						<ul class="comm-nav-dropdown">
 							<c:url var="toStoreListPage" value="/store" />
 							<li><a href="${toStoreListPage}">점포 조회</a></li>
-						</ul>
-					</li>
+						</ul></li>
 					<li class="nav-item"><a class="nav-links" href="#">회원 관리</a>
 						<ul class="comm-nav-dropdown">
 							<c:url var="toMemberMngPage" value="/user" />
 							<li><a href="${toMemberMngPage}">회원 조회</a></li>
-						</ul>
-					</li>
+						</ul></li>
 					<li class="nav-item"><a class="nav-links" href="#">스케줄 관리</a>
 						<ul class="comm-nav-dropdown">
 							<c:url var="toHldyList" value="/holiday" />
 							<li><a href="${toHldyList}">휴가 관리</a></li>
 							<c:url var="toSchdlList" value="/admin/schedule" />
 							<li><a href="${toSchdlList}">스케줄 조회</a></li>
-						</ul>
-					</li>
+						</ul></li>
 					<li class="nav-item"><a class="nav-links" href="#">시스템 관리</a>
 						<ul class="comm-nav-dropdown">
 							<c:url var="toAdminLogPage" value="/admin/log" />
@@ -76,17 +180,28 @@
 							<li><a href="${toAdminCodePage}">공통 코드 조회</a></li>
 							<c:url var="toStatistics" value="/statistics" />
 							<li><a href="${toStatistics}">통계</a></li>
-						</ul>
-					</li>
+						</ul></li>
 					<li class="nav-item"><a class="nav-links" href="#">마이페이지</a>
 						<ul class="comm-nav-dropdown">
 							<c:url var="toMyPage" value="/mypage" />
 							<li><a href="${toMyPage}">내 정보</a></li>
-						</ul>
-					</li>
+						</ul></li>
 				</ul>
 			</div>
 		</nav>
+
+		<script>
+        const navBar = document.getElementById('nav-bar');
+
+        navBar.addEventListener('mouseenter', () => {
+            navBar.style.zIndex = '999';
+        });
+
+        navBar.addEventListener('mouseleave', () => {
+            navBar.style.zIndex = '1';
+        });
+    </script>
+
 	</header>
 </sec:authorize>
 
@@ -94,16 +209,16 @@
 	<header class="comm-nav">
 		<div class="top-bar">
 			<p>
-				<c:out value="${user.userNm}"/>
+				<c:out value="${user.userNm}" />
 				(점주)님 환영합니다
 			</p>
-			
+
 			<form action="/logout" method="POST">
 				<button type="submit" class="logout-btn">로그아웃</button>
 				<input name="${_csrf.parameterName}" type="hidden"
 					value="${_csrf.token}" />
 			</form>
-			
+
 		</div>
 		<nav class="nav-bar">
 			<div class="nav-bar-brand">
@@ -120,28 +235,24 @@
 							<li><a href="${toASReceipt}">A/S 신청</a></li>
 							<c:url var="toAsList" value="/as-list" />
 							<li><a href="${toAsList}">A/S 내역 조회</a></li>
-						</ul>
-					</li>
+						</ul></li>
 					<li class="nav-item"><a class="nav-links" href="#">점포 관리</a>
 						<ul class="comm-nav-dropdown">
 							<c:url var="toStoreModPage" value="/manager/store/mod" />
 							<li><a href="${toStoreModPage}">점포 정보 수정</a></li>
-						</ul>
-					</li>
+						</ul></li>
 					<li class="nav-item"><a class="nav-links" href="#">스케줄 관리</a>
 						<ul class="comm-nav-dropdown">
 							<c:url var="toHldyList" value="/holiday" />
 							<li><a href="${toHldyList}">휴가 관리</a></li>
 							<c:url var="toSchdlList" value="/schedule/calendar" />
 							<li><a href="${toSchdlList}">스케줄 조회</a></li>
-						</ul>
-					</li>
+						</ul></li>
 					<li class="nav-item"><a class="nav-links" href="#">마이페이지</a>
 						<ul class="comm-nav-dropdown">
 							<c:url var="toMyPage" value="/mypage" />
 							<li><a href="${toMyPage}">내 정보</a></li>
-						</ul>
-					</li>
+						</ul></li>
 				</ul>
 			</div>
 		</nav>
@@ -152,7 +263,7 @@
 	<header class="comm-nav">
 		<div class="top-bar">
 			<p>
-				<c:out value="${user.userNm}"/>
+				<c:out value="${user.userNm}" />
 				(수리기사)님 환영합니다
 			</p>
 
@@ -176,22 +287,19 @@
 						<ul class="comm-nav-dropdown">
 							<c:url var="toAsList" value="/as-list" />
 							<li><a href="${toAsList}">A/S 내역 조회</a></li>
-						</ul>
-					</li>
+						</ul></li>
 					<li class="nav-item"><a class="nav-links" href="#">스케줄 관리</a>
 						<ul class="comm-nav-dropdown">
 							<c:url var="toHldyList" value="/holiday" />
 							<li><a href="${toHldyList}">휴가 관리</a></li>
 							<c:url var="toSchdlList" value="/schedule/calendar" />
 							<li><a href="${toSchdlList}">스케줄 조회</a></li>
-						</ul>
-					</li>
+						</ul></li>
 					<li class="nav-item"><a class="nav-links" href="#">마이페이지</a>
 						<ul class="comm-nav-dropdown">
 							<c:url var="toMyPage" value="/mypage" />
 							<li><a href="${toMyPage}">내 정보</a></li>
-						</ul>
-					</li>
+						</ul></li>
 				</ul>
 			</div>
 		</nav>
