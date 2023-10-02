@@ -39,20 +39,13 @@
         JOIN group_code_detail b ON a.location_cd = b.grp_cd_dtl_id
         WHERE
             (b.grp_cd_id='L' OR b.grp_cd_id='LL')
-            <if test="StrMngVo.startYr != null and StrMngVo.startYr != '' and StrMngVo.startMn != null and StrMngVo.startMn != ''">
+            <if test="StrMngVo.startDate != '' and StrMngVo.startDate != null">
                  <![CDATA[
-                  AND (
-                    EXTRACT(YEAR FROM a.REG_DTTM) > #{StrMngVo.startYr}
-                    OR (EXTRACT(YEAR FROM a.REG_DTTM) = #{StrMngVo.startYr} AND EXTRACT(MONTH FROM a.REG_DTTM) >= #{StrMngVo.startMn})
-                )
-                  ]]>
+               AND a.reg_dttm >= #{StrMngVo.startDate}]]>
             </if>
-            <if test="StrMngVo.endYr != null and StrMngVo.endYr != '' and StrMngVo.endMn != null and StrMngVo.endMn != ''">
+            <if test="StrMngVo.endDate!= '' and StrMngVo.endDate!= null">
                   <![CDATA[
-                AND (
-                    EXTRACT(YEAR FROM a.REG_DTTM) < #{StrMngVo.endYr}
-                    OR (EXTRACT(YEAR FROM a.REG_DTTM) = #{StrMngVo.endYr} AND EXTRACT(MONTH FROM a.REG_DTTM) <= #{StrMngVo.endMn})
-                )
+                AND a.reg_dttm < TO_DATE(#{StrMngVo.endDate},'YYYY-MM-DD')+1
                   ]]>
             </if>
            
@@ -78,7 +71,7 @@
             </if>
             
     ) a
-    WHERE ROW_NUM BETWEEN #{firstRowNum} AND #{lastRowNum}
+    WHERE ROW_NUM BETWEEN #{start} AND #{end}
 </select>
 
 
@@ -103,20 +96,13 @@
 			OR
 			b.grp_cd_id='LL')
 		<!-- 검색 조건 -->
-            <if test="StrMngVo.startYr != null and StrMngVo.startYr != '' and StrMngVo.startMn != null and StrMngVo.startMn != ''">
+               <if test="StrMngVo.startDate != '' and StrMngVo.startDate != null">
                  <![CDATA[
-                  AND (
-                    EXTRACT(YEAR FROM a.REG_DTTM) > #{StrMngVo.startYr}
-                    OR (EXTRACT(YEAR FROM a.REG_DTTM) = #{StrMngVo.startYr} AND EXTRACT(MONTH FROM a.REG_DTTM) >= #{StrMngVo.startMn})
-                )
-                  ]]>
+               AND a.reg_dttm >= #{StrMngVo.startDate}]]>
             </if>
-            <if test="StrMngVo.endYr != null and StrMngVo.endYr != '' and StrMngVo.endMn != null and StrMngVo.endMn != ''">
+            <if test="StrMngVo.endDate!= '' and StrMngVo.endDate!= null">
                   <![CDATA[
-                AND (
-                    EXTRACT(YEAR FROM a.REG_DTTM) < #{StrMngVo.endYr}
-                    OR (EXTRACT(YEAR FROM a.REG_DTTM) = #{StrMngVo.endYr} AND EXTRACT(MONTH FROM a.REG_DTTM) <= #{StrMngVo.endMn})
-                )
+                AND a.reg_dttm < TO_DATE(#{StrMngVo.endDate},'YYYY-MM-DD')+1
                   ]]>
             </if>
            

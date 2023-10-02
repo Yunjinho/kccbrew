@@ -5,7 +5,7 @@ import java.util.List;
 import kr.co.kccbrew.userMng.model.UserMngVo;
 
 public interface IUserMngService {
-	List<UserMngVo> userList(UserMngVo userMngVo, int currentPage);
+	List<UserMngVo> userList(UserMngVo userMngVo, int page);
 	int getUserCount(UserMngVo userMngVo);
 	List<UserMngVo> newList();
 	void updateUserApproval(UserMngVo userMngVo);

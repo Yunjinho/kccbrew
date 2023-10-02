@@ -50,9 +50,9 @@
 	</definition>
 	
 	<!-- 비밀번호 변경 페이지 -->
-	<definition name="MyPageP3" extends="mainLayout2">
+<!-- 	<definition name="MyPageP3" extends="mainLayout2">
 		<put-attribute name="contents" value="/WEB-INF/views/myPage/chgPwd.jsp"/>
-	</definition>
+	</definition> -->
 	
 	<!-- A/S 내역 조회 페이지 -->
 	<definition name="asList" extends="mainLayout2">

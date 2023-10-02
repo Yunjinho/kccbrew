@@ -54,7 +54,7 @@ function downExcel(flag){
 	    	'asStatusCd': asStatusCd
 		},
 	    success : function(data) { // 결과 성공 콜백함수
-	    	alert("'C:\\kccbrew' 경로에 저장되었습니다.")
+	    	alert("다운로드가 완료되었습니다.")
 	    }
 	})
 }

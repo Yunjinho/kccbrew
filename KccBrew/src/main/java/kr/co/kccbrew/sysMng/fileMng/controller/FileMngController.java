@@ -38,30 +38,46 @@ public class FileMngController {
 	private final IFileMngService fileMngService;
 
 	@GetMapping("/file")
-	public String fileAll(Model model, @RequestParam(defaultValue = "1") int currentPage,
-			@ModelAttribute("searchContent") FileMngVo searchContent, HttpSession session) {
-		List<FileMngVo> fileList = fileMngService.fileList(searchContent, currentPage);
+	public String fileAll(Model model, FileMngVo fileMngVo, HttpSession session) {
+		List<FileMngVo> fileList = fileMngService.fileList(fileMngVo, 1);
 		List<FileMngVo> fileTypeList = fileMngService.fileTypeList();
 		int totalPage = 0;
-		int totalLogCount = fileMngService.getFileCount(searchContent);
-		double totalLogCountDouble = (double) totalLogCount;
-		int sharePage = 0;
+		int totalCount = fileMngService.getFileCount(fileMngVo);
+		double totalCountDouble = (double) totalCount;
 		if (fileList != null && !fileList.isEmpty()) {
-			totalPage = (int) Math.ceil(totalLogCountDouble / 10.0);
-		} else {
-		}
-
-		if (currentPage == 1) {
-			sharePage = 0;
-		} else {
-			sharePage = (currentPage - 1) / 10;
-		}
+			totalPage = (int) Math.ceil(totalCountDouble / 10.0);
+		} 
+		int startPage=((int)Math.ceil(fileMngVo.getCurrentPage()/10) * 10) + 1;
+		int endPage=((int)Math.ceil(fileMngVo.getCurrentPage()/10) + 1) * 10;
 		model.addAttribute("totalPage", totalPage);
-		model.addAttribute("currentPage", currentPage);
-		model.addAttribute("sharePage", sharePage);
+		model.addAttribute("currentPage", 1);
+		model.addAttribute("startPage", startPage);
+		model.addAttribute("endPage", endPage);
 
-		model.addAttribute("totalLog", totalLogCount);
+		model.addAttribute("totalCount", totalCount);
+		model.addAttribute("typeList", fileTypeList);
+		model.addAttribute("list", fileList);
+		return "adminFileManage";
+	}
+	
+	@GetMapping("/file/search")
+	public String fileSearch(Model model, FileMngVo fileMngVo, HttpSession session) {
+		List<FileMngVo> fileList = fileMngService.fileList(fileMngVo, fileMngVo.getCurrentPage());
+		List<FileMngVo> fileTypeList = fileMngService.fileTypeList();
+		int totalPage = 0;
+		int totalCount = fileMngService.getFileCount(fileMngVo);
+		double totalCountDouble = (double) totalCount;
+		if (fileList != null && !fileList.isEmpty()) {
+			totalPage = (int) Math.ceil(totalCountDouble / 10.0);
+		} 
+		int startPage=((int)Math.ceil(fileMngVo.getCurrentPage()/10) * 10) + 1;
+		int endPage=((int)Math.ceil(fileMngVo.getCurrentPage()/10) + 1) * 10;
+		model.addAttribute("totalPage", totalPage);
+		model.addAttribute("currentPage", fileMngVo.getCurrentPage());
+		model.addAttribute("startPage", startPage);
+		model.addAttribute("endPage", endPage);
 
+		model.addAttribute("totalCount", totalCount);
 		model.addAttribute("typeList", fileTypeList);
 		model.addAttribute("list", fileList);
 		return "adminFileManage";

@@ -17,18 +17,18 @@ public class FileMngService implements IFileMngService {
 	private final IFileMngRepository fileMngRepository;
 	
 	@Override
-	public List<FileMngVo> fileList(FileMngVo file, int currentPage) {
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("FileMngVo", file);
-		map.put("firstRowNum", currentPage*10-9);
-		map.put("lastRowNum", currentPage*10);
+	public List<FileMngVo> fileList(FileMngVo fileMngVo, int page) {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("FileMngVo", fileMngVo);
+		map.put("start", ((page-1)*10)+1);
+		map.put("end", page*10);
 		return fileMngRepository.fileList(map);
 	}
 	
 	@Override
-	public int getFileCount(FileMngVo file) {
+	public int getFileCount(FileMngVo fileMngVo) {
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("FileMngVo", file);
+		map.put("FileMngVo", fileMngVo);
 		return fileMngRepository.getFileCount(map);
 	}
 	@Override
