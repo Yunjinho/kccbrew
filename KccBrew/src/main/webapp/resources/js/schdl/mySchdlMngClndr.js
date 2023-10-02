@@ -1,7 +1,11 @@
 document.addEventListener("DOMContentLoaded", function() {
 	var calendar;
 	var year;
-	var month ;
+	var month;
+
+	var currentDate = new Date();
+	year = currentDate.getFullYear();
+	month = currentDate.getMonth() + 1; 
 
 	sendAjaxRequest(year, month);
 

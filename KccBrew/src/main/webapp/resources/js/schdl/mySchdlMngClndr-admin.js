@@ -3,7 +3,11 @@
 document.addEventListener("DOMContentLoaded", function() {
 	var calendar;
 	var year;
-	var month ;
+	var month;
+
+	var currentDate = new Date();
+	year = currentDate.getFullYear();
+	month = currentDate.getMonth() + 1; 
 
 	sendAjaxRequest(year, month);
 
@@ -51,9 +55,9 @@ function sendAjaxRequest(year, month) {
 					borderColor: 'transparent',
 				});
 			}
-			
-			
-			
+
+
+
 			/*AS결과일*/
 			console.log("**********resultDates**********");
 			var resultDates = map.resultDates;
