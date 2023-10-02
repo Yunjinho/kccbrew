@@ -2,16 +2,13 @@
 /************* 회원 정보 및 페이지 링크 ******************/
 .profileAndguide {
 	font-family: 'Noto-Sans';
-	flex: 0.2;
 	display: flex;
 	height: 100%;
 	flex-direction: column;
-	justify-content: space-between;
 	min-height: 700px;
 	background-color: #eef4ff;
 	color: #ffffff;
 	box-sizing: border-box;
-	/* 추가 / 2023-09-26 이세은  */
 	float: left;
 	width: 20%;
 }
@@ -208,8 +205,7 @@
 }
 
 .shortcut-service {
-	height: 226px;
-	flex: 1;
+	height: 230px;
 	color: #111111;
 	background-color: #ffffff;
 	border-radius: 10px;
@@ -222,15 +218,15 @@
 }
 
 .shortcuts {
-    padding-bottom: 5px;
-    font-size: 14px;
-    border-bottom: dashed 0.5px #a2c3f5;
-    margin: 5px auto;
-    height: calc(100%/3);
-    text-align: center;
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
+	padding-bottom: 5px;
+	font-size: 14px;
+	border-bottom: dashed 0.5px #a2c3f5;
+	margin: 5px auto;
+	height: calc(100%/ 3);
+	text-align: center;
+	display: flex;
+	align-items: center;
+	justify-content: flex-start;
 }
 
 .shortcuts.last {
@@ -238,14 +234,14 @@
 }
 
 .round-btn {
-width: 20px;
-    margin: 0 20px;
+	width: 20px;
+	margin: 0 20px;
 }
 
 .shortcuts a {
-    font-weight: bold;
-    color: black;
-    text-decoration: none;
+	font-weight: bold;
+	color: black;
+	text-decoration: none;
 }
 
 .shortcuts a:hover {
