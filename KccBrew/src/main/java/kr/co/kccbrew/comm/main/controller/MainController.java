@@ -168,17 +168,21 @@ public class MainController {
 		return "redirect:/mypage";
 	}
 	
-	
+	/**
+	 *  수리기사용 지역 코드 
+	 * @param locCd
+	 * @return
+	 */
 	@ResponseBody
 	@RequestMapping(value="/searchlocationcode" , method=RequestMethod.GET)
-	public JSONArray searchLocationCode(String locationCd) {
+	public JSONArray searchLocationCode(String locCd) {
 		JSONArray result = new JSONArray();
 
-		if (locationCd == null || locationCd.equals("")) {
+		if (locCd == null || locCd.equals("")) {
 			return result;
 			
 		} else {
-			List<MainPageVo> list=mainServiceImple.selectLocationDclCd(locationCd);
+			List<MainPageVo> list=mainServiceImple.selectLocationDtlCd(locCd);
 			for(MainPageVo l:list) {
 				result.add(l);
 			}

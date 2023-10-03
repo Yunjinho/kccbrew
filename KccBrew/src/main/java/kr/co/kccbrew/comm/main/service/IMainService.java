@@ -16,8 +16,8 @@ public interface IMainService {
 	List<MainPageVo> showUserInfoListById(String userId);	//특정 사용자의 정보 리스트
 	List<MainPageVo> showStoreInfoListById(String userId);  //점포 정보 리스트
 	
-	List<MainPageVo> selectLocationCd(); 					//지역 코드 조회
-	List<MainPageVo> selectLocationDclCd(String locationCd);//지역 코드 상세 조회
+	List<MainPageVo> selectLocationCd();					//지역 코드 조회
+	List<MainPageVo> selectLocationDtlCd(String locCd);		//지역 코드 상세 조회
 	
 	MainPageVo insertUserImg(MainPageVo mainPageVo);		//사용자 이미지 넣기
 	void updateMyProfileExceptImg(MainPageVo mainPageVo); 	//이미지 제외하고 정보 업데이트

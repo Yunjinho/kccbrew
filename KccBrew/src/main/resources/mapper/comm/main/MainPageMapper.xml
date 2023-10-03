@@ -343,7 +343,7 @@
 			FROM group_code_detail
 			WHERE grp_cd_id='LL' 
 			AND grp_cd_dtl_id 
-			LIKE #{locationCd}||'%'
+			LIKE #{mechaLocationCode}||'%'
 		]]>
 	</select>
 	

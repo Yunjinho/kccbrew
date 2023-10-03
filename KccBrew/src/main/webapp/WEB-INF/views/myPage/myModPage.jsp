@@ -10,8 +10,8 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <link rel="stylesheet" href="${path}/resources/css/comm/myPage.css"/>
-<script src="${path}/resources/js/comm/myPage.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="${path}/resources/js/comm/myPage.js"></script>
 </head>
 <body>
 	<section id="notice" class="notice">
@@ -142,8 +142,8 @@
 										</select>	
 									</td>
 									<td>
-										<select id="chooseLocationCode" name="mechaLocation">
-											<option value="" disabled>== 선택 ==</option>
+										<select id="chooseLocationCode" name="mechaLocation" onchange="changeLocationCd()">
+											<option value="">== 선택 ==</option>
 											<c:forEach var="locationList" items="${locationList}">
 												<option value="${locationList.grpCdDtlId}">
 													${locationList.grpCdDtlNm}
