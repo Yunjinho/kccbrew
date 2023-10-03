@@ -1,18 +1,15 @@
 package kr.co.kccbrew.sysMng.alarm.controller;
 
 import java.io.IOException;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
-
-import javax.servlet.http.HttpSession;
 
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketHandler;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
-
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import kr.co.kccbrew.comm.security.model.UserVo;
@@ -21,9 +18,10 @@ import kr.co.kccbrew.comm.security.model.UserVo;
  * @ClassNmae : EchoHandler
  * @Decription : AS절차에 따른 사용자 알람수신
  * 
- * @   수정일               			수정자             		수정내용
- * ============      ==============     ==============
- * 2023-09-28							이세은						최초생성
+ * @   수정일               			수정자             					수정내용
+ * ============      ==============     ========================
+ * 2023-09-28							이세은									최초생성
+ * 2023-10-03							이세은						휴가신청에 따른 알람 구현
  * 
  * @author LEESEEION
  * @version 1.0
@@ -33,54 +31,122 @@ import kr.co.kccbrew.comm.security.model.UserVo;
 public class EchoHandler extends TextWebSocketHandler implements WebSocketHandler{
 
 	Map<String, WebSocketSession> userIdSessions = new HashMap<>();
-	Map<String, WebSocketSession> userTypeCdSessions = new HashMap<>();
-	HttpSession session;
-
+	Map<String, WebSocketSession> adminSessions = new HashMap<>();
+	Map<String, WebSocketSession> managerSessions = new HashMap<>();
+	Map<String, WebSocketSession> mechaSessions = new HashMap<>();
+	
+	String userId = null;
+	String userType = null;
 
 
 	@Override
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
-
 	}
 
 
 
 	@Override
 	public void handleTextMessage(WebSocketSession session, TextMessage textMessage) throws IOException {
+		String sendMessege = "test";
+
+		// JSON타입 메세지 파싱
 		System.out.println("Received JSON: " + textMessage.getPayload());
 		System.out.println("userIdSessions: " + userIdSessions);
 
-		// JSON 문자열을 파싱하여 JavaScript 객체로 변환
+		String messageJson = textMessage.getPayload();
 		ObjectMapper objectMapper = new ObjectMapper();
-		Map<String, Object> jsonMap = objectMapper.readValue(textMessage.getPayload(), new TypeReference<Map<String, Object>>() {});
+		Map<String, Object> messageMap = objectMapper.readValue(messageJson, Map.class);
 
-		System.out.println("jsonMap:" + jsonMap);
-		
-		// userId 필드가 있는지 확인
-		if (jsonMap.containsKey("userId")) {
-			String userId = (String) jsonMap.get("userId");
+		// 사용자 정보 저장
+		setUserInfo(session, messageMap);
+
+		// 행위에 따른 알람 메세지 전송
+		if (messageMap.containsKey("title")) {
+			String title = (String) messageMap.get("title");
+			switch(title){
+			case "holiday" : 
+				holidayMessage(messageMap);
+				break;
+			}
+		}
+	}
+
+
+	/*사용자 정보(ID, 권한) 저장*/
+	public 	void setUserInfo(WebSocketSession session, Map<String, Object> messageMap) {
+
+		if (messageMap.containsKey("userId")) {
+			userId = (String) messageMap.get("userId");
 			userIdSessions.put(userId, session);
-			System.out.println("userId: " + userId);
+			System.out.println("userIdSessions:" + userIdSessions);
 		}
 
-		// userTypeCd 필드가 있는지 확인
-/*		if (jsonMap.containsKey("userTypeCd")) {
-			String userTypeCd = (String) jsonMap.get("userTypeCd");
-			System.out.println("userTypeCd: " + userTypeCd);
-		}*/
+		if (messageMap.containsKey("userType")) {
+			String userType = (String) messageMap.get("userType");
+
+			switch(userType){
+			case "[ROLE_ADMIN]" : 
+				adminSessions.put(userId, session); 
+				System.out.println("adminSessions: " + adminSessions);
+				break;
+			case "[ROLE_MANAGER]" : 
+				managerSessions.put(userId, session); 
+				System.out.println("managerSessions: " + managerSessions);
+				break;  
+			default :
+				mechaSessions.put(userId, session);
+				System.out.println("mechaSessions: " + mechaSessions);
+			}
+
+		}
+	}
 
 
+	/*휴가신청 시 관리자에게 알람메세지 전송*/
+	public void holidayMessage(Map<String, Object> messageMap) {
+	    String userType = getUserType((String) messageMap.get("userType"));
+	    String userId = (String) messageMap.get("userId");
+	    String startDate = (String) messageMap.get("startDate");
+	    String endDate = (String) messageMap.get("endDate");
+	    
+		String message = userType + "(" + userId + ")님이 휴가" + "(" + startDate + "~" + endDate + ")" + "를 신청하였습니다.";
 
-		session.sendMessage(new TextMessage(textMessage.getPayload()));
+	    // JSON 객체 생성
+	    Map<String, Object> jsonMessage = new HashMap<>();
+	    jsonMessage.put("category", "alarm");
+	    jsonMessage.put("title", "휴가신청");
+	    jsonMessage.put("content", message);
 
-		System.out.println("session: " + session);
+	    try {
+	        ObjectMapper objectMapper = new ObjectMapper();
+	        String jsonStr = objectMapper.writeValueAsString(jsonMessage);
 
-		Map<String, Object> webSocketSession = session.getAttributes();
-		System.out.println("webSocketSession: " + webSocketSession);
-
-		String websocketId = session.getId();
-		System.out.println("websocketId: " + websocketId);
-
+	        // 관리자 웹소켓 세션에 전송
+	        Collection<WebSocketSession> sessions = adminSessions.values();
+	        for (WebSocketSession session : sessions) {
+	            try {
+	                session.sendMessage(new TextMessage(jsonStr));
+	            } catch (IOException e) {
+	                e.printStackTrace();
+	            }
+	        }
+	    } catch (IOException e) {
+	        e.printStackTrace();
+	    }
+	}
+	
+	
+	/*사용자의 타입을 한글로 반환*/
+	public String getUserType(String userType) {
+		switch(userType){
+		case "[ROLE_ADMIN]" : 
+			return "관리자";
+		case "[ROLE_MANAGER]" : 
+			return "점주";
+		default :
+			return "수리기사";
+		}
+		
 	}
 
 
@@ -89,23 +155,6 @@ public class EchoHandler extends TextWebSocketHandler implements WebSocketHandle
 	public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
 		// TODO Auto-generated method stub
 		super.afterConnectionClosed(session, status);
-	}
-
-
-
-	/*사용자ID에 따른 session Map*/
-	private String getUserId(WebSocketSession session) {
-		Map<String, Object> httpSession = session.getAttributes();
-		UserVo userVo = (UserVo) httpSession.get("user");
-		return userVo.getUserId();
-
-	}
-
-	/*사용자타입에 따른 session Map*/
-	private String getUserTypeCd(WebSocketSession session) {
-		Map<String, Object> httpSession = session.getAttributes();
-		UserVo userVo = (UserVo) httpSession.get("user");
-		return userVo.getUserTypeCd();
 	}
 
 

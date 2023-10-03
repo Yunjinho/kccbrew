@@ -8,12 +8,16 @@
 <html>
 <head>
 
-<!-- 스프링 시큐리티 통해서 userId사용 -->
+<!-- 스프링 시큐리티 통해서 userId, userType사용 -->
 <sec:authentication property="principal.username" var="userId" />
+<sec:authentication property="authorities" var="roles" />
 
 <script>
     var userId = '${userId}';
     console.log(userId);
+    
+    var userType = '${roles}';
+    console.log(userType);
 </script>
 
 <!-- css -->
@@ -27,43 +31,6 @@
 <script
 	src="https://cdn.jsdelivr.net/npm/sockjs-client@1.6.1/dist/sockjs.min.js"></script>
 </head>
-
-<script>
-	document.addEventListener("DOMContentLoaded", function() {
-
-		/*소켓연결*/
-		var ping;
-		var sockjs;
-
-		sockjs = new SockJS("http://localhost:8080/echoHandler");
-
-		sockjs.onopen = function(evt) {
-			console.log("socket연결");
-	
-			if (typeof sockjs != 'undefined') {
-				var userData = {
-						userId: userId 
-				};
-				sockjs.send(userData);
-			} else {
-				console.log("연결되지 않음.");
-			}
-		};
-
-		sockjs.onclose = function(evt) {
-			console.log("socket연결해제");
-		};
-
-		sockjs.onmessage = function(evt) {
-			console.log("socketHandler에서 받은 메세지: " + evt.data);
-		};
-
-		sockjs.onerror = function(evt) {
-			alert('에러:' + evt.data);
-		};
-
-	});
-	</script>
 
 <script>
 				var isClicked = false;
@@ -135,8 +102,15 @@
 				<input name="${_csrf.parameterName}" type="hidden"
 					value="${_csrf.token}" />
 			</form>
-
 		</div>
+
+<div>
+
+					<div class="alert alert-primary" role="alert" hidden="true">
+			<div id="alert-title"></div>
+			<div id="alert-content"></div>
+		</div>
+
 		<nav class="nav-bar" id="nav-bar">
 			<div class="nav-bar-brand">
 				<c:url var="toMain" value="/admin/main" />
@@ -188,18 +162,17 @@
 						</ul></li>
 				</ul>
 			</div>
+
 		</nav>
+		</div>
+	
 
 		<script>
-        const navBar = document.getElementById('nav-bar');
+/*         const navBar = document.getElementById('nav-bar');
 
-        navBar.addEventListener('mouseenter', () => {
-            navBar.style.zIndex = '999';
-        });
+        navBar.addEventListener('mouseenter', () => {navBar.style.zIndex = '999';});
 
-        navBar.addEventListener('mouseleave', () => {
-            navBar.style.zIndex = '1';
-        });
+        navBar.addEventListener('mouseleave', () => {navBar.style.zIndex = '1';}); */
     </script>
 
 	</header>

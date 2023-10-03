@@ -36,9 +36,43 @@
 	height: 30px;
 }
 
+/****** 실시간 알림 *******/
+.alert.alert-primary {
+	width: 70%;
+	background-color: moccasin;
+	position: fixed;
+	z-index: 99;
+	border-radius: 10px;
+	margin: 10px 15%;
+	height: 50px;
+	line-height: 3;
+	padding: 0px !important;
+	opacity: 1;
+	transition: opacity 0.5s ease-in-out;
+}
+
+#alert-title {
+	width: 30%;
+	height: 100%;
+	float: left;
+	text-align: center;
+	font-weight: 600;
+	font-size: large;
+}
+
+#alert-content {
+	width: 70%;
+	height: 100%;
+	float: right;
+	text-align: center;
+}
+
 /****** 알림 *******/
+#notification-link {
+	display: flex;
+}
+
 #notification-list {
-	display: block;
 	width: 300px;
 	position: absolute;
 	max-height: 500px;
@@ -74,12 +108,12 @@
 }
 
 .list-group-item {
-	display: flex;
-	justify-content: space-around;
-	align-items: center;
-	padding: 10px;
-	border: 1px solid #ccc;
-	border-radius: 5px;
+	display: flex !important;
+	justify-content: space-around !important;
+	align-items: center !important;
+	padding: 10px !important;
+	border: 1px solid #ccc !important;
+	border-radius: 5px !important;
 }
 
 .list-group-item .fw-bold {
@@ -87,12 +121,14 @@
 }
 
 .badge {
-	background-color: #007bff;
-	border-radius: 50%;
-	width: 30px;
-	height: 30px;
-	text-align: center;
-	font-weight: 600;
+	line-height: 2 !important;
+	background-color: #007bff !important;
+	border-radius: 50% !important;
+	width: 30px !important;
+	height: 30px !important;
+	text-align: center !important;
+	font-weight: 600 !important;
+	background-color: #007bff !important;
 }
 
 .list-group-numbered {
@@ -147,8 +183,8 @@
 /********* nav 바 *************/
 .nav-bar {
 	position: relative;
-	padding-left: 7px;
-	padding-right: 25px;
+	/* 	padding-left: 7px;
+	padding-right: 25px; */
 	height: 70px;
 	background-color: #ffffff;
 	display: flex;
