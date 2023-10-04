@@ -280,6 +280,8 @@ function cancelSchedule(scheduleId) {
 			confirmButton.onclick = function() {
 				reoload();
 			};
+			sendHolidayCancel();
+
 		},
 		error: function(error) {
 			console.log('Ajax 요청 실패:', error);

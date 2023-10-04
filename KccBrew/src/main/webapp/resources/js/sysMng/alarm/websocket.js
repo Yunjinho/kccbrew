@@ -53,7 +53,30 @@ function sendHolidayAdd() {
 
 	if (typeof sockjs != 'undefined') {
 		var data = {
-				title: "holiday",
+				title: "holiday-add",
+				userId: userId,
+				userType: userType,
+				startDate: selectedStartDate,
+				endDate: selectedEndDate
+		};
+		var jsonStr = JSON.stringify(data);
+		sockjs.send(jsonStr);
+	} else {
+		console.log("연결되지 않음.");
+	}
+}
+
+/*휴가 취소 시 알람 발신*/
+function sendHolidayCancel() {
+	console.log(" sendHolidayCancel 함수실행!");
+	console.log("sockjs: " + sockjs);
+
+	var selectedStartDate = document.getElementById('selectedStartDate').value;
+	var selectedEndDate = document.getElementById('selectedEndDate').value;
+
+	if (typeof sockjs != 'undefined') {
+		var data = {
+				title: "holiday-cancel",
 				userId: userId,
 				userType: userType,
 				startDate: selectedStartDate,
@@ -67,7 +90,7 @@ function sendHolidayAdd() {
 }
 
 
-/*알람 수신*/
+/*실시간알람 수신*/
 function executeAlarmFunction(jsonMessage) {
 	var title = jsonMessage.title;
 	var content = jsonMessage.content;

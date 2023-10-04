@@ -72,8 +72,11 @@ public class EchoHandler extends TextWebSocketHandler implements WebSocketHandle
 		if (messageMap.containsKey("title")) {
 			String title = (String) messageMap.get("title");
 			switch(title){
-			case "holiday" : 
-				holidayMessage(messageMap);
+			case "holiday-add" : 
+				holidayAddMessage(messageMap);
+				break;
+			case "holiday-cancel" : 
+				holidayCancelMessage(messageMap);
 				break;
 			}
 		}
@@ -111,7 +114,7 @@ public class EchoHandler extends TextWebSocketHandler implements WebSocketHandle
 
 
 	/*휴가신청 시 관리자에게 알람메세지 전송 및 DB저장*/
-	public void holidayMessage(Map<String, Object> messageMap) {
+	public void holidayAddMessage(Map<String, Object> messageMap) {
 		String userType = getUserType((String) messageMap.get("userType"));
 		String userId = (String) messageMap.get("userId");
 		String startDate = (String) messageMap.get("startDate");
@@ -130,6 +133,50 @@ public class EchoHandler extends TextWebSocketHandler implements WebSocketHandle
 		alarmVo.setCauseAgent(userId);
 		alarmVo.setReceiverType("관리자");
 		alarmVo.setAlarmTitle("휴가신청");
+		alarmVo.setAlarmContent(message);
+        java.util.Date utilDate = new java.util.Date();
+        java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
+		alarmVo.setCauseDate(sqlDate);
+		
+		try {
+			ObjectMapper objectMapper = new ObjectMapper();
+			String jsonStr = objectMapper.writeValueAsString(jsonMessage);
+
+			// 관리자 웹소켓 세션에 전송
+			Collection<WebSocketSession> sessions = adminSessions.values();
+			for (WebSocketSession session : sessions) {
+				try {
+					session.sendMessage(new TextMessage(jsonStr));
+					alarmService.addAlarm(alarmVo);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	/*휴가취소 시 관리자에게 알람메세지 전송 및 DB저장*/
+	public void holidayCancelMessage(Map<String, Object> messageMap) {
+		String userType = getUserType((String) messageMap.get("userType"));
+		String userId = (String) messageMap.get("userId");
+		String startDate = (String) messageMap.get("startDate");
+		String endDate = (String) messageMap.get("endDate");
+
+		String message = userType + "(" + userId + ")님이 휴가" + "(" + startDate + "~" + endDate + ")" + "를 취소하였습니다.";
+
+		// JSON 객체 생성
+		Map<String, Object> jsonMessage = new HashMap<>();
+		jsonMessage.put("category", "alarm");
+		jsonMessage.put("title", "휴가취소");
+		jsonMessage.put("content", message);
+
+		// AlarmVo객체에 값 대입
+		AlarmVo alarmVo = new AlarmVo();
+		alarmVo.setCauseAgent(userId);
+		alarmVo.setReceiverType("관리자");
+		alarmVo.setAlarmTitle("휴가취소");
 		alarmVo.setAlarmContent(message);
         java.util.Date utilDate = new java.util.Date();
         java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
