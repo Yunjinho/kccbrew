@@ -216,6 +216,7 @@
 	flex: 0.15;
 	height: 60px;
 	line-height: 60px;
+	margin-left: 15px;
 }
 /** 로고 이미지 **/
 .nav-bar-brand img {
