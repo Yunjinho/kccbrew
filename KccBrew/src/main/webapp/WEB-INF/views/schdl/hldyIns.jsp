@@ -208,8 +208,6 @@
 																	data : formData,
 																	success : function(
 																			message) {
-																		sendHolidayAdd();
-
 																		// 결과 모달 창 열고 메시지 표시
 																		var resultModal = document
 																				.getElementById("resultModal");
@@ -227,6 +225,7 @@
 																				window.opener.location
 																						.reload();
 																			};
+																			sendHolidayAdd();
 																		} else {
 																			var confirmButton = document
 																					.getElementById("modal-result-confirmButton");

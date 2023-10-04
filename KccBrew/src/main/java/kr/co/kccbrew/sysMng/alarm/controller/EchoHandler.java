@@ -1,10 +1,13 @@
 package kr.co.kccbrew.sysMng.alarm.controller;
 
 import java.io.IOException;
+import java.security.Timestamp;
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketHandler;
@@ -13,6 +16,8 @@ import org.springframework.web.socket.handler.TextWebSocketHandler;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import kr.co.kccbrew.comm.security.model.UserVo;
+import kr.co.kccbrew.sysMng.alarm.model.AlarmVo;
+import kr.co.kccbrew.sysMng.alarm.service.IAlarmService;
 
 /**
  * @ClassNmae : EchoHandler
@@ -30,11 +35,14 @@ import kr.co.kccbrew.comm.security.model.UserVo;
 
 public class EchoHandler extends TextWebSocketHandler implements WebSocketHandler{
 
+	@Autowired
+	private IAlarmService alarmService;
+
 	Map<String, WebSocketSession> userIdSessions = new HashMap<>();
 	Map<String, WebSocketSession> adminSessions = new HashMap<>();
 	Map<String, WebSocketSession> managerSessions = new HashMap<>();
 	Map<String, WebSocketSession> mechaSessions = new HashMap<>();
-	
+
 	String userId = null;
 	String userType = null;
 
@@ -102,40 +110,51 @@ public class EchoHandler extends TextWebSocketHandler implements WebSocketHandle
 	}
 
 
-	/*휴가신청 시 관리자에게 알람메세지 전송*/
+	/*휴가신청 시 관리자에게 알람메세지 전송 및 DB저장*/
 	public void holidayMessage(Map<String, Object> messageMap) {
-	    String userType = getUserType((String) messageMap.get("userType"));
-	    String userId = (String) messageMap.get("userId");
-	    String startDate = (String) messageMap.get("startDate");
-	    String endDate = (String) messageMap.get("endDate");
-	    
+		String userType = getUserType((String) messageMap.get("userType"));
+		String userId = (String) messageMap.get("userId");
+		String startDate = (String) messageMap.get("startDate");
+		String endDate = (String) messageMap.get("endDate");
+
 		String message = userType + "(" + userId + ")님이 휴가" + "(" + startDate + "~" + endDate + ")" + "를 신청하였습니다.";
 
-	    // JSON 객체 생성
-	    Map<String, Object> jsonMessage = new HashMap<>();
-	    jsonMessage.put("category", "alarm");
-	    jsonMessage.put("title", "휴가신청");
-	    jsonMessage.put("content", message);
+		// JSON 객체 생성
+		Map<String, Object> jsonMessage = new HashMap<>();
+		jsonMessage.put("category", "alarm");
+		jsonMessage.put("title", "휴가신청");
+		jsonMessage.put("content", message);
 
-	    try {
-	        ObjectMapper objectMapper = new ObjectMapper();
-	        String jsonStr = objectMapper.writeValueAsString(jsonMessage);
+		// AlarmVo객체에 값 대입
+		AlarmVo alarmVo = new AlarmVo();
+		alarmVo.setCauseAgent(userId);
+		alarmVo.setReceiverType("관리자");
+		alarmVo.setAlarmTitle("휴가신청");
+		alarmVo.setAlarmContent(message);
+        java.util.Date utilDate = new java.util.Date();
+        java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
+		alarmVo.setCauseDate(sqlDate);
+		
+		try {
+			ObjectMapper objectMapper = new ObjectMapper();
+			String jsonStr = objectMapper.writeValueAsString(jsonMessage);
 
-	        // 관리자 웹소켓 세션에 전송
-	        Collection<WebSocketSession> sessions = adminSessions.values();
-	        for (WebSocketSession session : sessions) {
-	            try {
-	                session.sendMessage(new TextMessage(jsonStr));
-	            } catch (IOException e) {
-	                e.printStackTrace();
-	            }
-	        }
-	    } catch (IOException e) {
-	        e.printStackTrace();
-	    }
+			// 관리자 웹소켓 세션에 전송
+			Collection<WebSocketSession> sessions = adminSessions.values();
+			for (WebSocketSession session : sessions) {
+				try {
+					session.sendMessage(new TextMessage(jsonStr));
+					alarmService.addAlarm(alarmVo);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
-	
-	
+
+
 	/*사용자의 타입을 한글로 반환*/
 	public String getUserType(String userType) {
 		switch(userType){
@@ -146,7 +165,7 @@ public class EchoHandler extends TextWebSocketHandler implements WebSocketHandle
 		default :
 			return "수리기사";
 		}
-		
+
 	}
 
 
