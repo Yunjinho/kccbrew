@@ -6,19 +6,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-
 import org.json.simple.JSONArray;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import kr.co.kccbrew.comm.security.model.UserVo;
 import kr.co.kccbrew.sysMng.statistics.model.StatisticsVo;
 import kr.co.kccbrew.sysMng.statistics.service.IStatisticsService;
 import lombok.RequiredArgsConstructor;
@@ -199,20 +193,5 @@ public class StatisticsController {
 		result.add(map);
 		return result;
 	}
-	
-	/** 
-	 * 통계 다운로드 
-	 */
-	@ResponseBody
-	@RequestMapping(value="/download-statistics" , method=RequestMethod.POST)
-	public void downloadList(@RequestParam(defaultValue = "")String year,HttpServletRequest request,HttpServletResponse response) {
-		//세션값 받기
-		HttpSession session=request.getSession();
-		UserVo user=(UserVo)session.getAttribute("user");
-		StatisticsVo vo=new StatisticsVo();
-		vo.setDate(year);
-		vo.setUserId(user.getUserId());
-		service.downloadExcel(response, vo);
-	}
-	
+
 }

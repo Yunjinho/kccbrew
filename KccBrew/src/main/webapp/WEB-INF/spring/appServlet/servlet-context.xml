@@ -77,8 +77,6 @@
 	<!-- <context:component-scan base-package="kr.co.kccbrew.comm.register.controller" 
 		/> -->
 	<context:component-scan
-		base-package="kr.co.kccbrew.notice.controller" />
-	<context:component-scan
 		base-package="kr.co.kccbrew.strMng.controller" />
 	<context:component-scan
 		base-package="kr.co.kccbrew.sysMng.cdMng.controller" />
@@ -180,6 +178,17 @@
 
 	<beans:bean id="echoHandler"
 		class="kr.co.kccbrew.sysMng.alarm.controller.EchoHandler" />
+ 
+<!-- 웹소켓 -->
+	<beans:bean id="echoHandle" class="kr.co.kccbrew.comm.util.EchoHandle" />        
+	
+	<websocket:handlers>
+		<websocket:mapping handler="echoHandle" path="/echo"/>
+		<websocket:handshake-interceptors>
+			<beans:bean class="org.springframework.web.socket.server.support.HttpSessionHandshakeInterceptor"/>
+		</websocket:handshake-interceptors>
+		<websocket:sockjs />
+	</websocket:handlers>   
 
 
 </beans:beans>

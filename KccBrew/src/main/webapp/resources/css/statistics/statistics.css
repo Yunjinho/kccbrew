@@ -111,16 +111,3 @@ a, a:hover, a:visited{
 .breadcrumb{
 	display: flex;
 }
-.download-excel{
-	color:#ccc;
-	cursor:pointer;
-	padding:0px 10px;
-    margin-left: 1300px;
-    font-size: 20px;
-}
-.list-info-div>div{
-	display:flex;
-}
-.download-excel:hover{
-	color:black;
-}

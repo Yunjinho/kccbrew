@@ -116,12 +116,12 @@ div.modalBackground {
 	border-radius: 4px;
 }
 
-
-#startDate{
-width: 70%
+#startDate {
+	width: 70%
 }
-#endDate{
-width: 70%;
+
+#endDate {
+	width: 70%;
 }
 </style>
 </head>
@@ -212,10 +212,11 @@ width: 70%;
 												<td colspan="5" style="border-bottom: none;"></td>
 												<td colspan="2"
 													style="text-align: center; border-bottom: 0px;">
-													<div style=" display: flex;">
+													<div style="display: flex;">
 														<button type="button" onclick="resetSearch()"
 															class="form-btn" style="margin-right: 0px;">초기화</button>
-														<button type="submit" class="form-btn" id="find-btn1" style="margin-left: 10px;">검색</button>
+														<button type="submit" class="form-btn" id="find-btn1"
+															style="margin-left: 10px;">검색</button>
 													</div>
 												</td>
 											</tr>
@@ -298,8 +299,7 @@ width: 70%;
 													<tr>
 														<td>${no.rowNum}</td>
 														<td><form id="dtl" method="get" style="all: unset;">
-																 <a
-																	href="javascript:void(0);"
+																<a href="javascript:void(0);"
 																	onclick="openModal1('${no.userId}');">${no.userId}</a>
 															</form></td>
 														<td style="height: 36px;">${no.userNm}</td>
@@ -322,7 +322,10 @@ width: 70%;
 											</tbody>
 										</table>
 									</div>
-
+<li class="nav-item"><a id="dropdownLI" class="nav-link collapsed"
+		aria-expanded="true" aria-controls="collapseTwo"
+		href="/admin/adminchat"> <i class="fas fa-fw fa-cog"></i> <span>Chat</span>
+	</a></li>
 									<!-- 페이징 -->
 									<div class="paging pagination">
 
@@ -419,7 +422,6 @@ width: 70%;
 		</div>
 		<div class="modalBackground"></div>
 	</div>
-
 	<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	<script
@@ -551,7 +553,14 @@ width: 70%;
         window.onload=function(){
         	history.replaceState({}, null, location.pathname);
         }
-		
+
+        const dropdown = document.querySelector("#dropdownLI");
+        const dropdiv = document.querySelector('.collapse');
+        dropdiv.style.transition = 'all 2s ease 0s';
+
+        dropdown.addEventListener('click', function(){
+        	dropdiv.classList.toggle('show');
+        });
 	</script>
 </body>
 </html>

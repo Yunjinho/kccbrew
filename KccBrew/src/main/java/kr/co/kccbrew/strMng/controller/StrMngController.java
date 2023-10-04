@@ -210,14 +210,5 @@ public class StrMngController {
 		model.addAttribute("list", list);
 		return "strMng/strMngSearch";
 	}
-	
-	/**
-	 * 점포 조회
-	*/
-	@RequestMapping(value="/store-list",method=RequestMethod.GET)
-	public String strMngStrList() {
-		
-		
-		return "strMngStrList";
-	}
+
 }

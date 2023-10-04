@@ -82,8 +82,6 @@
 						<ul class="comm-nav-dropdown">
 							<c:url var="toMyPage" value="/mypage" />
 							<li><a href="${toMyPage}">내 정보</a></li>
-							<c:url var="toNotification" value="/noticelist" />
-							<li><a href="${toNotification}">공지사항</a></li>
 						</ul>
 					</li>
 				</ul>
@@ -126,8 +124,6 @@
 					</li>
 					<li class="nav-item"><a class="nav-links" href="#">점포 관리</a>
 						<ul class="comm-nav-dropdown">
-							<c:url var="toStoreMngListPage" value="/store-list" />
-							<li><a href="${toStoreMngListPage}">점포 조회</a></li>
 							<c:url var="toStoreModPage" value="/manager/store/mod" />
 							<li><a href="${toStoreModPage}">점포 정보 수정</a></li>
 						</ul>

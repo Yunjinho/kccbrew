@@ -18,14 +18,10 @@ public interface IMainService {
 	List<MainPageVo> showStoreInfoListById(String userId);  //점포 정보 리스트
 	
 	void updateMyProfileImg(MainPageVo mainPageVo); //프로필 이미지 수정
-	List<MainPageVo> selectLocationCd();					//지역 코드 조회
-	List<MainPageVo> selectLocationDtlCd(String locCd);		//지역 코드 상세 조회
+	MainPageVo insertUserImg(MainPageVo mainPageVo);//사용자 이미지 넣기
 	
-	MainPageVo insertUserImg(MainPageVo mainPageVo);		//사용자 이미지 넣기
-	void updateMyProfileExceptImg(MainPageVo mainPageVo); 	//이미지 제외하고 정보 업데이트
-	void updateMyProfile(MainPageVo mainPageVo);			//마이페이지 정보 업데이트
-	
-	void updateMyStore(MainPageVo mainPageVo); 				//가게 정보 업데이트
+	void updateMyProfile(MainPageVo mainPageVo);//마이페이지 정보 업데이트
+	void updateMyStore(MainPageVo mainPageVo); //가게 정보 업데이트
 	
 	List<MainPageVo> showAsAssiginListbyId(String userId);
 	List<MainPageVo> showAsInfoListbyId(String userId);

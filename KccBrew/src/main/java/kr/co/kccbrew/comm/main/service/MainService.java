@@ -38,6 +38,13 @@ public class MainService implements IMainService{
 		List<MainPageVo> waitingList = mainRepository.showWaitingMemberList();
 		return waitingList;
 	}
+	
+	//미승인 회원 리스트
+	@Override
+	public List<MainPageVo> showUnapprovedMemberList() {
+		List<MainPageVo> unapprovedMemberList = mainRepository.unapprovedMemberList();
+		return unapprovedMemberList;
+	}
 
 	// a/s 결과 리스트
 	@Override
@@ -119,25 +126,10 @@ public class MainService implements IMainService{
 		return storeInfoListById;
 	}
 	
-	//사용자 정보 수정하기   
+	//이미지를 제외한 사용자 정보 수정하기   
 	@Override
 	public void updateMyProfile(MainPageVo mainPageVo) {
-		insertUserImg(mainPageVo);
 		mainRepository.updateMyProfile(mainPageVo);
-		
-		if(mainPageVo.getMechaLocationCode().equals("지역 상세 선택")) {
-			mainPageVo.setMechaLocationCode(mainPageVo.getMechaLocation());
-		}
-	}
-	
-	//이미지를 제외하고 사용자 정보 수정하기
-	@Override
-	public void updateMyProfileExceptImg(MainPageVo mainPageVo) {
-		mainRepository.updateMyProfileExceptImg(mainPageVo);
-		
-		if(mainPageVo.getMechaLocationCode().equals("지역 상세 선택")) {
-			mainPageVo.setMechaLocationCode(mainPageVo.getMechaLocation());
-		}
 	}
 	
 	//이미지 정보 등록하기
@@ -148,7 +140,6 @@ public class MainService implements IMainService{
 		//기본 파일정보 등록
 		mainRepository.insertFileInfo(vo);
 		MultipartFile imgFile = mainPageVo.getUserImg();
-		
 		vo.setFileOriginalName(imgFile.getOriginalFilename());
 		vo.setFileDetailServerName(mainPageVo.getUserId()+"_"+imgFile.getOriginalFilename());
 		vo.setFileFmt(imgFile.getContentType());
@@ -168,37 +159,16 @@ public class MainService implements IMainService{
 	return mainPageVo;
 	}
 	
+	//사용자 이미지 수정 및 신규 이미지 추가
+	@Override
+	public void updateMyProfileImg(MainPageVo mainPageVo) {
+		insertUserImg(mainPageVo);
+		mainRepository.updateMyProfileImg(mainPageVo);
+	}
+		
 	//점포 정보 수정하기
 	@Override
 	public void updateMyStore(MainPageVo mainPageVo) {
 		mainRepository.updateMyStore(mainPageVo);
 	}
-
-	//지역 코드 조회
-	@Override
-	public List<MainPageVo> selectLocationCd() {
-		List<MainPageVo> list = mainRepository.selectLocationCd();
-		return list;
-	}
-	
-	//상세 지역 코드 조회
-	@Override
-	public List<MainPageVo> selectLocationDtlCd(String locCd) {
-		List<MainPageVo> list = mainRepository.selectLocationDtlCd(locCd);
-		return list;
-	}
-
-	//미승인 회원 리스트
-	@Override
-	public List<MainPageVo> showUnapprovedMemberList() {
-		List<MainPageVo> unapprovedMemberList = mainRepository.unapprovedMemberList();
-		return unapprovedMemberList;
-	}
-
-	//사용자 이미지 수정 및 신규 이미지 추가
-		@Override
-		public void updateMyProfileImg(MainPageVo mainPageVo) {
-			insertUserImg(mainPageVo);
-			mainRepository.updateMyProfileImg(mainPageVo);
-		}
 }
