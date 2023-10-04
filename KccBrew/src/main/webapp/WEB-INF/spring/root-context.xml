@@ -27,7 +27,6 @@
 	<mybatis-spring:scan base-package="kr.co.kccbrew.comm.security.dao" />
 	<mybatis-spring:scan base-package="kr.co.kccbrew.comm.util" />
 	<mybatis-spring:scan base-package="kr.co.kccbrew.sysMng.statistics.dao" />
-	<mybatis-spring:scan base-package="kr.co.kccbrew.sysMng.chatting.dao" />
 
 
 	<!-- DAO -->
@@ -49,7 +48,7 @@
 	<context:component-scan base-package="kr.co.kccbrew.comm.security.service" />
 	<context:component-scan base-package="kr.co.kccbrew.comm.util" />
 	<context:component-scan base-package="kr.co.kccbrew.sysMng.statistics.service" />
-	<context:component-scan base-package="kr.co.kccbrew.sysMng.chatting.service" />
+
 	<!--Service -->
 	<!-- @Transactional 사용하기 위한 태그 -->
 	<tx:annotation-driven/>
@@ -57,6 +56,4 @@
       Properties 파일을 읽어 오기 위한 태그 
       Java코드에서 @Value('#{id['properties속성']}')
 		-->
-	
-
 </beans>
