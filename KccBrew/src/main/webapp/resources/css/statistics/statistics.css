@@ -124,3 +124,6 @@ a, a:hover, a:visited{
 .download-excel:hover{
 	color:black;
 }
+.highcharts-root{
+	font-size:1em !important;
+}

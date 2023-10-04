@@ -486,7 +486,7 @@ window.onload=function(){
 												</td>
 												<th>AS 비용</th>
 												<td>
-													<input type="text" value="${asDetailInfo.asPrice}" readonly>
+													<input type="text" name="asPrice" value="${asDetailInfo.asPrice}" readonly>
 												</td>
 												<th>만족도</th>
 												<td>
