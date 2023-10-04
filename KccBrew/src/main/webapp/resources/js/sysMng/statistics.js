@@ -77,7 +77,7 @@ function highRankMecha(data){
 		},
 		title: {
 			align: 'left',
-			text: data[1].date+', 평점 상위 기사 '
+			text: data[1].date+', 평점 상위 기사 (이름 , ID)'
 		},
 		accessibility: {
 			announceNewData: {
@@ -144,7 +144,7 @@ function lowRankMecha(data){
 		},
 		title: {
 			align: 'left',
-			text: data[1].date+', 평점 하위 기사 '
+			text: data[1].date+', 평점 하위 기사 (이름 , ID) '
 		},
 		accessibility: {
 			announceNewData: {
@@ -274,7 +274,7 @@ function moveBeforeYear(){
 	var year=$("input[name=year]").val();
 	year*=1;
 	year-=1;
-	$("input").val(year);
+	$("input[name=year]").val(year);
 	
 	machineByYearAjax(year);
 	highRankMechaAjax(year);
@@ -283,15 +283,31 @@ function moveBeforeYear(){
 }
 
 function moveNextYear(){
-	var year=$("input").val();
+	var year=$("input[name=year]").val();
 	year*=1;
 	year+=1;
 	
-	$("input").val(year);
+	$("input[name=year]").val(year);
 	machineByYearAjax(year);
 	highRankMechaAjax(year);
 	lowRankMechaAjax(year);
 	reapplyRateByMachineAjax(year);
+}
+function downExcel(flag){
+	
+	var year=$("input[name=year]").val();
+	
+	$.ajax({
+		type : "POST",           // 타입 (get, post, put 등등)
+	    url : "/download-statistics",           // 요청할 서버url
+	    dataType : "text",       // 데이터 타입 (html, xml, json, text 등등)
+	    data : {
+	    	'year': year,
+		},
+	    success : function(data) { // 결과 성공 콜백함수
+	    	alert("다운로드가 완료되었습니다.")
+	    }
+	})
 }
 window.onload=function(){
 	var now = new Date();

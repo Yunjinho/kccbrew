@@ -31,9 +31,8 @@ public class FileMngVo {
 	String fileServerNm;
 	String fileFmt;
 	String	grpCdDtlNm;
-	private Integer startYr;
-	private Integer startMn;
-	private Integer endYr;
-	private Integer endMn;
+	int currentPage;
+	String startDate;
+	String endDate;
 
 }

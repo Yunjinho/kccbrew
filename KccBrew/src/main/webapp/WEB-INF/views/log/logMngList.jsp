@@ -11,7 +11,7 @@
 <head>
 <!-- css -->
 <link rel="stylesheet" href="/resources/css/log/mylogtest.css" />
-<link rel="stylesheet" href="/resources/css/log/content-template.css" />
+<link rel="stylesheet" href="/resources/css/asMng/content-template.css" />
 
 <meta charset="UTF-8">
 <title>Insert title here</title>

@@ -38,44 +38,63 @@ public class UserMngController {
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 	private final IUserMngService userMngService;
 
-	@GetMapping("/user")
-	public String userAll(Model model, @RequestParam(defaultValue = "1") int currentPage,
-			@ModelAttribute("searchContent") UserMngVo searchContent, HttpSession session, Principal principal) {
-		String approveAdmin = principal.getName();
-		String userTypeCd = (String) session.getAttribute("userTypeCd");
-		//if (approveAdmin != null && !approveAdmin.equals("")) {
+		@GetMapping("/user")
+		public String userAll(Model model, UserMngVo userMngVo, HttpSession session, Principal principal) {
+			String approveAdmin = principal.getName();
 			model.addAttribute("approveAdmin", approveAdmin);
-			List<UserMngVo> userList = userMngService.userList(searchContent, currentPage);
-			List<UserMngVo> newList = userMngService.newList();
-			int newTotal = userMngService.getNewCount();
-			int totalPage = 0;
-			int totalCount = userMngService.getUserCount(searchContent);
-			double totalCountDouble = (double) totalCount;
-			int sharePage = 0;
-			if (userList != null && !userList.isEmpty()) {
-				totalPage = (int) Math.ceil(totalCountDouble / 10.0);
-			//} else {
-			//}
+				List<UserMngVo> userList = userMngService.userList(userMngVo, 1);
+				List<UserMngVo> newList = userMngService.newList();
+				int newTotal = userMngService.getNewCount();
+				int totalPage = 0;
+				int totalCount = userMngService.getUserCount(userMngVo);
+				double totalCountDouble = (double) totalCount;
+				if (userList != null && !userList.isEmpty()) {
+					totalPage = (int) Math.ceil(totalCountDouble / 10.0);
+				}
 
-			if (currentPage == 1) {
-				sharePage = 0;
-			} else {
-				sharePage = (currentPage - 1) / 10;
-			}
-			model.addAttribute("newTotal", newTotal);
-			model.addAttribute("totalPage", totalPage);
-			model.addAttribute("currentPage", currentPage);
-			model.addAttribute("sharePage", sharePage);
+				int startPage=((int)Math.ceil(userMngVo.getCurrentPage()/10) * 10) + 1;
+				int endPage=((int)Math.ceil(userMngVo.getCurrentPage()/10) + 1) * 10;
+				model.addAttribute("totalPage", totalPage);
+				model.addAttribute("currentPage", 1);
+				model.addAttribute("startPage", startPage);
+				model.addAttribute("endPage", endPage);
 
-			model.addAttribute("total", totalCount);
-			model.addAttribute("newList", newList);
-			model.addAttribute("list", userList);
-			return "adminUserMng";
-		} else {
-			model.addAttribute("message", "로그인 하지 않은 사용자입니다.");
-			return "loginpage";
+				model.addAttribute("totalCount", totalCount);
+				
+				model.addAttribute("newTotal", newTotal);
+				model.addAttribute("newList", newList);
+				model.addAttribute("list", userList);
+				return "adminUserMng";
 		}
-	}
+		
+		@GetMapping("/user/search")
+		public String userSearch(Model model, UserMngVo userMngVo, HttpSession session, Principal principal) {
+			String approveAdmin = principal.getName();
+				model.addAttribute("approveAdmin", approveAdmin);
+				List<UserMngVo> userList = userMngService.userList(userMngVo, userMngVo.getCurrentPage());
+				List<UserMngVo> newList = userMngService.newList();
+				int newTotal = userMngService.getNewCount();
+				int totalPage = 0;
+				int totalCount = userMngService.getUserCount(userMngVo);
+				double totalCountDouble = (double) totalCount;
+				if (userList != null && !userList.isEmpty()) {
+					totalPage = (int) Math.ceil(totalCountDouble / 10.0);
+				}
+
+				int startPage=((int)Math.ceil(userMngVo.getCurrentPage()/10) * 10) + 1;
+				int endPage=((int)Math.ceil(userMngVo.getCurrentPage()/10) + 1) * 10;
+				model.addAttribute("totalPage", totalPage);
+				model.addAttribute("currentPage", userMngVo.getCurrentPage());
+				model.addAttribute("startPage", startPage);
+				model.addAttribute("endPage", endPage);
+
+				model.addAttribute("totalCount", totalCount);
+				
+				model.addAttribute("newTotal", newTotal);
+				model.addAttribute("newList", newList);
+				model.addAttribute("list", userList);
+				return "adminUserMng";
+		}
 
 	@PostMapping("/user/approval")
 	public ResponseEntity<String> updateUserApproval(Principal principal, UserMngVo userMngVo, @RequestParam Map<String, Object> param,  HttpSession session) {

@@ -50443,17 +50443,6 @@ a {
 		no-repeat
 }
 
-.coursemos-course-menu-expand .btn-course-menu.btn-course-menu-close {
-	background: url('/theme/coursemosv2/pix/layout/course-menu-close.png')
-		no-repeat;
-	display: block
-}
-
-#page-container.menu-close {
-	background: url('/theme/coursemosv2/pix/layout/side_menu_close_bg.png')
-		repeat-y left #f7f9fa
-}
-
 #page-container.menu-close #page-submenu {
 	display: none;
 	width: 0px
@@ -53364,6 +53353,11 @@ a {
 
 #page-content-wrap .page-content-navigation .breadcrumb li a.btn:hover {
 	text-decoration: underline
+}
+
+#page-content-wrap .page-content-navigation .breadcrumb li {
+    padding: 6px 3px 3px 25px;
+    line-height: 35px;
 }
 
 .r1024 #page-content-wrap .page-content-navigation .breadcrumb li

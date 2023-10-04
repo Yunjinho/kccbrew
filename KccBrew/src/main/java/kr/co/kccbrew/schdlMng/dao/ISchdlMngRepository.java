@@ -51,6 +51,9 @@ public interface ISchdlMngRepository {
 	/*아이디와 날짜에 따른 근무날짜리스트 조회*/
 	public List<Date> selectResultDates(Map map);
 	
+	/*관리자가 처리해야 할 AS신청 날짜리스트 조회*/
+	public List<Date> selectAsRegDates(Map map);
+	
 	/*휴일 정보 조회*/
 	public List<HolidayVo> selectHoliday(Map map);
 	

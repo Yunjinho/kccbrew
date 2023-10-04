@@ -256,7 +256,7 @@
 					<tbody>
 						<c:forEach var="list" items="${storeList}">
 							<tr>
-								<td scope="row"><input type="radio" name="select-store">
+								<td scope="row"><input type="radio" name="select-store" onclick="selectStore()">
 									<input type="hidden" value="${list.storeSeq}"></td>
 								<td>${list.storeNm}</td>
 								<td>${list.storeAddr}</td>

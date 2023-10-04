@@ -21,24 +21,23 @@ public class StrMngService implements IStrMngService {
 	private final IStrMngRepository storeRepository;
 
 	@Override
-	public List<StrMngVo> storeAll() {
-		return storeRepository.storeAll();
+	public List<StrMngVo> storeAll(StrMngVo strMngVo) {
+		return storeRepository.storeAll(strMngVo);
 	}
 
 	@Override
-	public List<StrMngVo> strFilter(StrMngVo store, int currentPage) {
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("StrMngVo", store);
-		map.put("firstRowNum", currentPage*10-9);
-		map.put("lastRowNum", currentPage*10);
-
+	public List<StrMngVo> strFilter(StrMngVo strMngVo, int page) {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("StrMngVo", strMngVo);
+		map.put("start", ((page-1)*10)+1);
+		map.put("end", page*10);
 		return storeRepository.strFilter(map);
 	};
 
 	@Override
-	public int getStrFilterCount(StrMngVo store) {
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("StrMngVo", store);
+	public int getStrFilterCount(StrMngVo strMngVo) {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("StrMngVo", strMngVo);
 		return storeRepository.getStrFilterCount(map);
 	}
 

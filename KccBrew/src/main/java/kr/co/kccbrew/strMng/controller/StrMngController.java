@@ -50,41 +50,60 @@ public class StrMngController {
 	private final IStrMngService storeService;
 
 	/* 점포조회 */
-	/*@RequestMapping("/store")
-	public String storeAll(Model model) {
-		List<StrMngVo> list = storeService.storeAll(); // 점포목록
-		model.addAttribute("list", list);
-		return "strMng/strMngList"; // strMngList.jsp로 반환
-	}*/
-	
-	/* 점포조회 */
-	@GetMapping("/store")
-	public String store(Model model,@RequestParam(defaultValue = "1") int currentPage,
-			@ModelAttribute("searchContent") StrMngVo searchContent, HttpSession session) {
-		List<StrMngVo> list = storeService.strFilter(searchContent, currentPage); // 점포목록
+	@RequestMapping("/store")
+	public String storeAll(Model model, StrMngVo strMngVo, HttpSession session) {
+		List<StrMngVo> list = storeService.strFilter(strMngVo, 1); // 점포목록
 		List<StrMngVo> List = storeService.locationNm(); // 지역코드리스트
 		List<StrMngVo> seoulList = storeService.locationNmSeoul();// 상세지역코드리스트
 		int totalPage = 0;
-		int totalLogCount = storeService.getStrFilterCount(searchContent);
-		double totalLogCountDouble = (double) totalLogCount;
-		int sharePage = 0;
+		int totalCount = storeService.getStrFilterCount(strMngVo);
+		double totalCountDouble = (double) totalCount;
+		if (list != null && !list.isEmpty()) {
+			totalPage = (int) Math.ceil(totalCountDouble/10.0);
+		} 
+
+		int startPage=((int)Math.ceil(strMngVo.getCurrentPage()/10) * 10) + 1;
+		int endPage=((int)Math.ceil(strMngVo.getCurrentPage()/10) + 1) * 10;
+		
+		model.addAttribute("totalPage", totalPage);
+		model.addAttribute("currentPage", 1);
+		model.addAttribute("startPage", startPage);
+		model.addAttribute("endPage", endPage);
+
+		model.addAttribute("totalCount", totalCount);
+		
+		model.addAttribute("searchContent", strMngVo);
+		model.addAttribute("list", list);
+		model.addAttribute("List", List);
+		model.addAttribute("seoulList", seoulList);
+		return "storeList"; // strMngList.jsp로 반환
+	
+	}
+	
+	/* 점포조회 */
+	@GetMapping("/store/search")
+	public String store(Model model, StrMngVo strMngVo, HttpSession session) {
+		List<StrMngVo> list = storeService.strFilter(strMngVo, strMngVo.getCurrentPage()); // 점포목록
+		List<StrMngVo> List = storeService.locationNm(); // 지역코드리스트
+		List<StrMngVo> seoulList = storeService.locationNmSeoul();// 상세지역코드리스트
+		int totalPage = 0;
+		int totalCount = storeService.getStrFilterCount(strMngVo);
+		double totalLogCountDouble = (double) totalCount;
 		if (list != null && !list.isEmpty()) {
 			totalPage = (int) Math.ceil(totalLogCountDouble/10.0);
-		} else {
-		}
+		} 
 
-		if (currentPage == 1) {
-			sharePage = 0;
-		} else {
-			sharePage = (currentPage-1) / 10;
-		}
-
+		int startPage=((int)Math.ceil(strMngVo.getCurrentPage()/10) * 10) + 1;
+		int endPage=((int)Math.ceil(strMngVo.getCurrentPage()/10) + 1) * 10;
+		
 		model.addAttribute("totalPage", totalPage);
-		model.addAttribute("currentPage", currentPage);
-		model.addAttribute("sharePage", sharePage);
+		model.addAttribute("currentPage", strMngVo.getCurrentPage());
+		model.addAttribute("startPage", startPage);
+		model.addAttribute("endPage", endPage);
 
-		model.addAttribute("totalLog", totalLogCount);
-
+		model.addAttribute("totalCount", totalCount);
+		
+		model.addAttribute("searchContent", strMngVo);
 		model.addAttribute("list", list);
 		model.addAttribute("List", List);
 		model.addAttribute("seoulList", seoulList);

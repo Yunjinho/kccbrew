@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.multipart.MultipartFile;
+
+import kr.co.kccbrew.asMng.model.AsMngVo;
 import kr.co.kccbrew.comm.security.dao.IUserRepository;
 import kr.co.kccbrew.comm.security.model.UserVo;
 import kr.co.kccbrew.strMng.model.StrMngVo;
@@ -151,6 +153,38 @@ public class UserService implements IUserService{
 	public StrMngVo getStoreById(String userId) {
 		return userRepository.getStoreById(userId);
 	}
+
+	/**
+	 * 회원ID에 따른 AS신청(배정전) 리스트 조회
+	 * @param userId : 사용자 아이디
+	 *  @return List<AsMngVo>: AS신청(배정전) 리스트
+	 */
+	@Override
+	public List<AsMngVo> getAsAccepting(String userId) {
+		return userRepository.selectAsAccepting(userId);
+	}
+
+	/**
+	 * 회원ID에 따른 AS배정(처리전) 리스트 조회
+	 * @param userId : 사용자 아이디
+	 *@return List<AsMngVo>: AS배정(처리전) 리스트
+	 */
+	@Override
+	public List<AsMngVo> getAsSubmissionCompleted(String userId) {
+		return userRepository.selectAsSubmissionCompleted(userId);
+	}
+
+	/**
+	 * 회원ID에 따른 AS처리완료 리스트 조회
+	 * @param userId : 사용자 아이디@return
+	 * @return List<AsMngVo>:  AS처리완료 리스트
+	 */
+	@Override
+	public List<AsMngVo> getAsProcessingCompleted(String userId) {
+		return userRepository.selectAsProcessingCompleted(userId);
+	}
+	
+	
 
 
 }

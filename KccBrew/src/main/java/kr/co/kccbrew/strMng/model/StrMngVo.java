@@ -37,9 +37,8 @@ public class StrMngVo {
 	String userTelNo;
 	int storeSeq;
 	//검색조건
-	private Integer startYr;
-	private Integer startMn;
-	private Integer endYr;
-	private Integer endMn;
+	int currentPage;
+	String startDate;
+	String endDate;
 	String keyword;
 }

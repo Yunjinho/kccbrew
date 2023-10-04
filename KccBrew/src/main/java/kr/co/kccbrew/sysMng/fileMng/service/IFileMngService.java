@@ -5,8 +5,8 @@ import java.util.List;
 import kr.co.kccbrew.sysMng.fileMng.model.FileMngVo;
 
 public interface IFileMngService {
-	List<FileMngVo> fileList(FileMngVo file, int currentPage);
+	List<FileMngVo> fileList(FileMngVo fileMngVo, int page);
 	List<FileMngVo> fileTypeList();
-	int getFileCount(FileMngVo file);
+	int getFileCount(FileMngVo fileMngVo);
 	FileMngVo fileDtl(int fileSeq);
 }

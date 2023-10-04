@@ -47,7 +47,15 @@ public class UserController {
 	private UserService userService;
 
 	@GetMapping("/login")
-	public String requestMethod(Model model) {
+	public String requestMethod(
+			@RequestParam(value = "error", required = false) String error,
+			@RequestParam(value = "exception", required = false) String exception,
+			Model model) {
+
+		/* 에러와 예외를 모델에 담아 view resolve */
+		model.addAttribute("error", error);
+		model.addAttribute("errorMessage", exception);
+
 		return "security/loginform";
 	}
 
@@ -127,6 +135,15 @@ public class UserController {
 		userService.registerUser(userVo);
 
 		return "redirect:/login";
+	}
+
+	/*인증되지 않은 회원 로그인 시 안내문구 표시*/
+	@GetMapping("/not-approved")
+	public String notApproved(HttpServletRequest request, Model model) {
+		System.out.println("UserController.notApproved");
+		model.addAttribute("errorMessage",  "아직 승인되지 않은 회원입니다. 관리자에게 문의해주세요.");
+
+		return "security/loginform";
 	}
 
 }

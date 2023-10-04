@@ -2,8 +2,11 @@ package kr.co.kccbrew.sysMng.statistics.service;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletResponse;
+
 import org.apache.ibatis.annotations.Param;
 
+import kr.co.kccbrew.asMng.model.AsMngVo;
 import kr.co.kccbrew.sysMng.statistics.model.StatisticsVo;
 
 public interface IStatisticsService {
@@ -28,4 +31,11 @@ public interface IStatisticsService {
 	 * @return
 	 */
 	public List<StatisticsVo> reapplyRateByMachine(String date);
+	
+	/**
+	 * 통계 엑셀다운로드
+	 * @param response
+	 * @param vo
+	 */
+	public void downloadExcel(HttpServletResponse response,StatisticsVo vo);
 }

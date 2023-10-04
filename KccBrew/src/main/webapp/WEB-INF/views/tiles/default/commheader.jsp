@@ -22,7 +22,7 @@
 				(관리자)님 환영합니다
 			</p>
 
-			<form action="/logout" method="POST">
+			<form id="header-logout" action="/logout" method="POST">
 				<button type="submit" class="logout-btn">로그아웃</button>
 				<input name="${_csrf.parameterName}" type="hidden"
 					value="${_csrf.token}" />
@@ -33,7 +33,7 @@
 			<div class="nav-bar-brand">
 				<c:url var="toMain" value="/admin/main" />
 				<a href="${toMain}"> <img alt="logo"
-					src="${path}/resources/img/logo.png">
+					src="${path}/resources/img/logo14.png">
 				</a>
 			</div>
 			<div class="nav-box">
@@ -111,7 +111,7 @@
 			<div class="nav-bar-brand">
 				<c:url var="toMain" value="/manager/main" />
 				<a href="${toMain}"> <img alt="logo"
-					src="${path}/resources/img/logo.png">
+					src="${path}/resources/img/logo14.png">
 				</a>
 			</div>
 			<div class="nav-box">
@@ -169,7 +169,7 @@
 			<div class="nav-bar-brand">
 				<c:url var="toMain" value="/mechanic/main" />
 				<a href="${toMain}"> <img alt="logo"
-					src="${path}/resources/img/logo.png">
+					src="${path}/resources/img/logo14.png">
 				</a>
 			</div>
 			<div class="nav-box">

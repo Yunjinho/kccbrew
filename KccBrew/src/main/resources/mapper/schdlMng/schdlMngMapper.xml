@@ -146,7 +146,8 @@
 			AND USER_NM = #{userVo.userNm}
 		</if>
 		<if test="userVo.locationCd != null and userVo.locationCd != ''">
-			AND LOCATION_CD LIKE '%' || #{userVo.locationCd} || '%'
+			AND LOCATION_CD LIKE '%' || #{userVo.locationCd,
+			jdbcType=VARCHAR}|| '%'
 		</if>
 
 		<!-- 지점 검색 -->
@@ -236,8 +237,10 @@
 		<if test="userVo.userNm != null and userVo.userNm != ''">
 			AND USER_NM = #{userVo.userNm}
 		</if>
+
 		<if test="userVo.locationCd != null and userVo.locationCd != ''">
-			AND LOCATION_CD LIKE '%' || #{locationCd} || '%'
+			AND LOCATION_CD LIKE '%' || #{userVo.locationCd,
+			jdbcType=VARCHAR}|| '%'
 		</if>
 
 		<!-- 지점 검색 -->
@@ -537,9 +540,10 @@ EXTRACT(YEAR FROM SCHEDULE_DATE) = 2023 AND EXTRACT(MONTH FROM SCHEDULE_DATE) = 
 	<select id="selectIdList" resultType="string"
 		parameterType="kr.co.kccbrew.comm.security.model.UserVo">
 		select USER_ID from users
-		where LOCATION_CD LIKE '%' ||
-		#{locationCd} ||
-		'%'
+		where 1=1
+		<if test="locationCd != null and locationCd != ''">
+			AND LOCATION_CD LIKE '%' || #{locationCd} || '%'
+		</if>
 		<if test="userId != null and userId != ''">
 			AND USER_ID = #{userId}
 		</if>
@@ -549,6 +553,9 @@ EXTRACT(YEAR FROM SCHEDULE_DATE) = 2023 AND EXTRACT(MONTH FROM SCHEDULE_DATE) = 
 		<if test="eqpmnCd != null and eqpmnCd != ''">
 			AND EQPMN_CD = #{eqpmnCd}
 		</if>
+		<if test="userTypeCd != null and userTypeCd != ''">
+			AND USER_TYPE_CD = #{userTypeCd}
+		</if>
 	</select>
 
 
@@ -556,9 +563,10 @@ EXTRACT(YEAR FROM SCHEDULE_DATE) = 2023 AND EXTRACT(MONTH FROM SCHEDULE_DATE) = 
 	<select id="selectHolidayDates" resultType="java.util.Map"
 		parameterType="string">
 		select HLDY_STAR, HLDY_END from holiday where
-		ACTL_USE='Y' AND user_id
-		=
-		#{Id}
+		ACTL_USE='Y'
+		<if test="id != null and id != ''">
+			AND user_id = #{id}
+		</if>
 		<if test="yr != null and yr != '' and mn != null and mn != ''">
 			and (
 			(EXTRACT(YEAR FROM HLDY_STAR) = #{yr} and
@@ -570,34 +578,74 @@ EXTRACT(YEAR FROM SCHEDULE_DATE) = 2023 AND EXTRACT(MONTH FROM SCHEDULE_DATE) = 
 		</if>
 	</select>
 
-	<!-- 아이디에 따른 배정일 조회 -->
+	<!-- 아이디에 따른 배정일 조회(배정일이 정해졌으며 수리기사가 반려하지 않은 건) -->
 	<select id="selectAssignDates" parameterType="string"
 		resultType="java.sql.Date">
-		SELECT VISIT_DTTM
-		FROM AS_ASSIGN
-		WHERE MECHANIC_ID =
-		#{Id}
-		<if test="yr != null and yr != '' and mn != null and mn != ''">
-			and
-			(EXTRACT(YEAR FROM VISIT_DTTM) = #{yr} and
-			EXTRACT(MONTH FROM VISIT_DTTM) = #{mn})
+		SELECT as_assign.visit_dttm
+		FROM as_information
+		LEFT OUTER JOIN
+		as_assign
+		ON as_information.AS_INFO_SEQ = as_assign.AS_INFO_SEQ
+		WHERE
+		1=1
+		<if test="id != null and id != ''">
+			AND (as_information.STORE_MNG_ID = #{id} OR
+			as_assign.mechanic_id =
+			#{id})
 		</if>
+		AND as_assign.visit_dttm IS NOT NULL
+		AND as_assign.reject_content_mcha
+		IS NULL
+		<if test="yr != null and yr != '' and mn != null and mn != ''">
+			AND
+			(EXTRACT(YEAR FROM as_assign.VISIT_DTTM) = #{yr} AND
+			EXTRACT(MONTH FROM as_assign.VISIT_DTTM) = #{mn})
+		</if>
+
 	</select>
 
 	<!-- 아이디에 따른 결과일 조회 -->
 	<select id="selectResultDates" parameterType="string"
 		resultType="java.sql.Date">
-		SELECT AS_RESULT.RESULT_DTTM
-		FROM AS_ASSIGN
-		INNER JOIN
-		AS_RESULT ON
-		AS_ASSIGN.AS_ASSIGN_SEQ = AS_RESULT.AS_ASSIGN_SEQ
-		WHERE
-		MECHANIC_ID = #{Id}
+		SELECT as_result.result_dttm
+		FROM as_information
+		LEFT OUTER JOIN
+		as_assign
+		ON as_information.AS_INFO_SEQ = as_assign.AS_ASSIGN_SEQ
+		LEFT
+		OUTER JOIN as_result
+		ON as_assign.AS_ASSIGN_SEQ =
+		as_result.AS_ASSIGN_SEQ
+		WHERE 1=1
+		<if test="id != null and id != ''">
+			AND (as_information.STORE_MNG_ID = #{id} OR
+			as_assign.mechanic_id =
+			#{id})
+		</if>
+		and as_result.result_dttm is not null
 		<if test="yr != null and yr != '' and mn != null and mn != ''">
 			and
 			(EXTRACT(YEAR FROM RESULT_DTTM) = #{yr} and
 			EXTRACT(MONTH FROM RESULT_DTTM) =#{mn})
+		</if>
+	</select>
+
+	<!-- AS신청건 조회 -->
+	<select id="selectAsRegDates" parameterType="string"
+		resultType="java.sql.Date">
+		SELECT as_information.reg_dttm
+		FROM as_information
+		LEFT OUTER JOIN
+		as_assign
+		ON as_information.AS_INFO_SEQ = as_assign.AS_INFO_SEQ
+		where
+		1=1
+		<!-- as_assign.visit_dttm is null AND as_information.reject_content_str 
+			IS NULL -->
+		<if test="yr != null and yr != '' and mn != null and mn != ''">
+			AND
+			(EXTRACT(YEAR FROM as_information.reg_dttm ) = #{yr} and
+			EXTRACT(MONTH FROM as_information.reg_dttm ) =#{mn})
 		</if>
 	</select>
 
@@ -635,6 +683,7 @@ EXTRACT(YEAR FROM SCHEDULE_DATE) = 2023 AND EXTRACT(MONTH FROM SCHEDULE_DATE) = 
 		WHERE MECHANIC_ID = #{userId} AND
 		TRUNC(RESULT_DTTM) = TRUNC(#{date})
 	</select>
+
 
 
 

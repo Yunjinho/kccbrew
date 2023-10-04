@@ -24,6 +24,10 @@
 	<beans:bean id="customAuthenticationSuccessHandler"
 		class="kr.co.kccbrew.comm.security.controller.CustomAuthenticationSuccessHandler" />
 
+	<!-- 로그인 실패시 수행 -->
+	<beans:bean id="customAuthenticationFailureHandler"
+		class="kr.co.kccbrew.comm.security.controller.CustomAuthenticationFailureHandler" />
+
 
 	<http auto-config="true" use-expressions="true">
 		<intercept-url pattern="/resources/**"
@@ -33,6 +37,8 @@
 		<intercept-url pattern="/search-location-code"
 			access="permitAll" />
 		<intercept-url pattern="/check_user_id"
+			access="permitAll" />
+			<intercept-url pattern="/login-failure"
 			access="permitAll" />
 
 		<!-- 비회원만 접근가능 -->
@@ -71,9 +77,10 @@
 
 		<!-- 로그인 설정 -->
 		<form-login login-page="/login"
-			login-processing-url="/login" default-target-url="/security-test"
-			username-parameter="username" password-parameter="password"
-			authentication-failure-url="/user/loginform?error=true"
+			login-processing-url="/login" 
+			username-parameter="username"
+			password-parameter="password"
+			authentication-failure-handler-ref="customAuthenticationFailureHandler"
 			authentication-success-handler-ref="customAuthenticationSuccessHandler" />
 
 		<csrf disabled="true" />
