@@ -23,5 +23,7 @@ public interface IStrMngRepository {
 	void insert(StrMngVo store);
 	void update(StrMngVo store);
 	StrMngVo selectStoreByName(String storeNm);
-
+	
+	
+	List<StrMngVo> selectMyStr(String userId);
 }
