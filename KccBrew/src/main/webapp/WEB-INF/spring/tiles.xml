@@ -165,6 +165,13 @@
 	
 <!-- 점주 페이지 추가 확장, 타이틀과 헤더, 사이드메뉴  유지, contents만 변경 -->
 
+	<!-- 점주 점포 조회 페이지 -->
+	<definition name="strMngStrList" extends="pageLayout">
+		<put-attribute name="title" value="점포 조회" />
+		<put-attribute name="contents"
+			value="/WEB-INF/views/strMng/strMngStrList.jsp" />
+	</definition>
+
 	<!-- 점주 점포 수정 페이지  -->
 	<definition name="modStoreInfo" extends="managerPage">
 		<put-attribute name="contents" value="/WEB-INF/views/strMng/strMngMod.jsp" />
