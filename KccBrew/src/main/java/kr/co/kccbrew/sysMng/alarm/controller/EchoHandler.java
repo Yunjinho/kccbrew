@@ -159,6 +159,8 @@ public class EchoHandler extends TextWebSocketHandler implements WebSocketHandle
 	
 	/*휴가취소 시 관리자에게 알람메세지 전송 및 DB저장*/
 	public void holidayCancelMessage(Map<String, Object> messageMap) {
+		System.out.println("TextWebSocketHandler.holidayCancelMessage");
+		
 		String userType = getUserType((String) messageMap.get("userType"));
 		String userId = (String) messageMap.get("userId");
 		String startDate = (String) messageMap.get("startDate");

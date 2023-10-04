@@ -54,40 +54,22 @@
 	<header class="comm-nav">
 		<div class="top-bar">
 
+			<!-- 비실시간 알람메세지 -->
 			<div class="header-icon-background">
 				<a href="#" id="notification-link" onclick="handleClick(event);">
+				
 					<img id="notification-image"
 					src="<c:url value='/img/main/icon-notification-bell.png' />"
-					alt="Check List" class="header-icon" /> <img
+					alt="Check List" class="header-icon" /> 
+					
+					<img
 					id="new-notification-image"
 					src="<c:url value='/img/main/icon-notification.png' />"
 					alt="Check List" class="header-icon" hidden="true" />
 				</a>
 
-
 				<ol class="list-group list-group-numbered" id="notification-list"
 					style="display: none;">
-					<li
-						class="list-group-item d-flex justify-content-between align-items-start">
-						<div class="ms-2 me-auto">
-							<div class="fw-bold">배정</div>
-							Content for list item
-						</div> <span class="badge bg-primary rounded-pill">N</span>
-					</li>
-					<li
-						class="list-group-item d-flex justify-content-between align-items-start">
-						<div class="ms-2 me-auto">
-							<div class="fw-bold">배정</div>
-							Content for list item
-						</div> <span class="badge bg-primary rounded-pill">N</span>
-					</li>
-					<li
-						class="list-group-item d-flex justify-content-between align-items-start">
-						<div class="ms-2 me-auto">
-							<div class="fw-bold">배정</div>
-							Content for list item
-						</div> <span class="badge bg-primary rounded-pill">N</span>
-					</li>
 				</ol>
 			</div>
 
@@ -102,7 +84,7 @@
 					value="${_csrf.token}" />
 			</form>
 		</div>
-		
+
 		<div>
 			<!-- 실시간 알림 -->
 			<div class="alert alert-primary" role="alert" hidden="true">
@@ -180,6 +162,23 @@
 <sec:authorize access="hasRole('ROLE_MANAGER')">
 	<header class="comm-nav">
 		<div class="top-bar">
+
+			<div class="header-icon-background">
+				<a href="#" id="notification-link" onclick="handleClick(event);">
+					<img id="notification-image"
+					src="<c:url value='/img/main/icon-notification-bell.png' />"
+					alt="Check List" class="header-icon" /> <img
+					id="new-notification-image"
+					src="<c:url value='/img/main/icon-notification.png' />"
+					alt="Check List" class="header-icon" hidden="true" />
+				</a>
+
+
+				<ol class="list-group list-group-numbered" id="notification-list"
+					style="display: none;">
+				</ol>
+			</div>
+
 			<p>
 				<c:out value="${user.userNm}" />
 				(점주)님 환영합니다
@@ -242,6 +241,33 @@
 <sec:authorize access="hasRole('ROLE_MECHA')">
 	<header class="comm-nav">
 		<div class="top-bar">
+
+			<div class="header-icon-background">
+				<a href="#" id="notification-link" onclick="handleClick(event);">
+					<img id="notification-image"
+					src="<c:url value='/img/main/icon-notification-bell.png' />"
+					alt="Check List" class="header-icon" /> <img
+					id="new-notification-image"
+					src="<c:url value='/img/main/icon-notification.png' />"
+					alt="Check List" class="header-icon" hidden="true" />
+				</a>
+
+
+				<ol class="list-group list-group-numbered" id="notification-list"
+					style="display: none;">
+					<!-- 		<li
+						class="list-group-item d-flex justify-content-between align-items-start">
+						<div class="ms-2 me-auto">
+							<div class="fw-bold non-real-time alarm-title ">휴가신청</div>
+							<div class="non-real-time alarm-content">수리기사(mechanic2)님이
+								휴가(2023-01-01~2023-12-31)을 취소하였습니다.</div>
+							<div class="non-real-time alarm-date">10-04</div>
+						</div>
+						 <span class="badge bg-primary rounded-pill">N</span>
+					</li> -->
+				</ol>
+			</div>
+
 			<p>
 				<c:out value="${user.userNm}" />
 				(수리기사)님 환영합니다
@@ -294,6 +320,12 @@
 		</div>
 	</header>
 </sec:authorize>
+
+<script>
+	document.addEventListener("DOMContentLoaded", function() {
+		getAlarmData();
+	});
+</script>
 
 
 

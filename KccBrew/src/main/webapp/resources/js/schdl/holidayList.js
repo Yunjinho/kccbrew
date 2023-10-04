@@ -148,7 +148,7 @@ function displaySchedules(schedules) {
 				cancelButton.textContent = "취소";
 				cancelButton.className = "form-btn";
 				cancelButton.onclick = function () {
-					openCancelModal(schedule.scheduleId);
+					openCancelModal(schedule.scheduleId, schedule.startDate, schedule.endDate);
 				};
 				cell8.appendChild(cancelButton);
 			} 
@@ -180,7 +180,7 @@ function displaySchedules(schedules) {
 				cancelButton.textContent = "취소";
 				cancelButton.className = "form-btn";
 				cancelButton.onclick = function () {
-					openCancelModal(schedule.scheduleId);
+					openCancelModal(schedule.scheduleId, schedule.startDate, schedule.endDate);
 				};
 				cell5.appendChild(cancelButton);
 			} 
@@ -237,14 +237,14 @@ function formatDate(date) {
 }
 
 /*취소확인 모달창 오픈*/
-function openCancelModal(scheduleId) {
+function openCancelModal(scheduleId, startDate, endDate) {
 
 	var modal = document.getElementById("cancelModal");
 	modal.style.display = "block";
 
 	var cancelYesButton = document.getElementById("cancelYes");
 	cancelYesButton.onclick = function () {
-		cancelSchedule(scheduleId);
+		cancelSchedule(scheduleId, startDate, endDate);
 
 		modal.style.display = "none";
 	};
@@ -256,14 +256,14 @@ function openCancelModal(scheduleId) {
 }
 
 /*휴가취소*/
-function cancelSchedule(scheduleId) {
+function cancelSchedule(scheduleId, startDate, endDate) {
 	console.log("cancelSchedule함수실행!");
 
 	$.ajax({
 		url: "/holiday/delete",
 		type: "get",
 		data : {
-			'scheduleId' : scheduleId,
+			'scheduleId' : scheduleId
 		},
 		success: function(message) {
 			console.log('Ajax 요청 성공:', message);
@@ -280,7 +280,7 @@ function cancelSchedule(scheduleId) {
 			confirmButton.onclick = function() {
 				reoload();
 			};
-			sendHolidayCancel();
+			sendHolidayCancel(startDate, endDate);
 
 		},
 		error: function(error) {
