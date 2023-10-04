@@ -77,4 +77,21 @@
 				#{writerId})
 	]]>
 	</insert>
+	
+	<!-- 조회수 증가 -->
+	<update id="updateReadCount" parameterType="int">
+		<![CDATA[
+			UPDATE notification
+				SET views = views + 1
+			WHERE notice_seq = #{noticeSeq}
+		]]>
+	</update>
+	
+	<!-- 공지 삭제 -->
+	<delete id="deleteNotice" parameterType="int">
+	<![CDATA[
+		DELETE notification 
+		WHERE notice_seq = #{noticeSeq}
+	]]>
+	</delete>
 </mapper>

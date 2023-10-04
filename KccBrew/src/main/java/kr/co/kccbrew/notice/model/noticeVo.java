@@ -20,6 +20,8 @@ public class noticeVo {
 	String noticeTitle;		//공지사항 제목
 	String noticeContent;	//공지사항 내용
 	int views;				//조회수
+	int page;				//페이지
+	
 	
 	/**
 	 * 파일 저장 VO

@@ -9,12 +9,20 @@
 <head>
 <meta charset="UTF-8">
 <title>공지사항</title>
-<link rel="stylesheet" href="${path}/resources/css/notice/notice.css"/>
+<style>
+	@font-face {
+		font-family: 'Noto Sans';
+		font-style: normal;
+		src: url("${path}/resources/fonts/NotoSansKR-Regular.ttf")
+	}
+</style>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
-<script src="${path}/resources/summerNote/summernote-lite.js"></script>
-<script src="${path}/resources/summerNote/lang/summernote-ko-KR.js"></script>
+<link rel="stylesheet" href="${path}/resources/css/notice/notice.css"/>
+
+<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.18/lang/summernote-ko-KR.min.js"></script>
 </head>
 <body>
 	<div class="body-wrapper">
@@ -46,10 +54,12 @@
 						<tr>
 							<th>글 내용</th>
 							<td>
-								<textarea id="notice-content" name="noticeContent"  maxlength="1000" placeholder="1000자까지 입력할 수 있습니다." required></textarea>
-								<div id="count-text">
-									<span id="count">0</span>/1000
+								<div class="summer">
+									<textarea class="summernote" id="notice-content" name="noticeContent" maxlength="1000" required></textarea>
 								</div>
+								<!-- <div id="count-text">
+									<span id="count">0</span>/1000
+								</div> -->
 							</td>
 						</tr>
 						<tr>
@@ -65,30 +75,83 @@
 						</a>
 					</div>
 				</form>
-				<div class="test">
-					<textarea class="summernote" name="editordata"></textarea>
-				</div>
 			</div>
 		</div>
 	</div>
 	<script>
 	$(document).ready(function() {
-		$('#notice-content').on('keyup', function() {
-			var textCount = $(this).val().length;
+		$('.summernote').summernote({
+			  // 에디터 높이
+			  height: 300,
+			  width: 1112,
+			  // 에디터 한글 설정
+			  lang: "ko-KR",
+			  // 에디터에 커서 이동 (input창의 autofocus라고 생각하시면 됩니다.)
+			  focus : true,
+			  toolbar: [
+				    // 글꼴 설정
+				    ['fontname', ['fontname']],
+				    // 글자 크기 설정
+				    ['fontsize', ['fontsize']],
+				    // 굵기, 기울임꼴, 밑줄,취소 선, 서식지우기
+				    ['style', ['bold', 'italic', 'underline','strikethrough', 'clear']],
+				    // 글자색
+				    ['color', ['forecolor','color']],
+				    // 표만들기
+				    ['table', ['table']],
+				    // 글머리 기호, 번호매기기, 문단정렬
+				    ['para', ['ul', 'ol', 'paragraph']],
+				    // 줄간격
+				    ['height', ['height']],
+				    // 그림첨부, 링크만들기, 동영상첨부
+				    ['insert',['picture','link','video']],
+				    // 코드보기, 확대해서보기, 도움말
+				    ['view', ['codeview','fullscreen', 'help']]
+				  ],
+			// 추가한 글꼴
+			fontNames: ['Noto Sans KR', 'Arial', 'Arial Black', 'Comic Sans MS', 'Courier New','맑은 고딕','궁서','굴림체','굴림','돋음체','바탕체'],
+			fontNamesIgnoreCheck: ['Noto Sans KR', 'Arial', 'Arial Black', 'Comic Sans MS', 'Courier New','맑은 고딕','궁서','굴림체','굴림','돋음체','바탕체'],
+			// 추가한 폰트사이즈
+			fontSizes: ['8','9','10','11','12','14','16','18','20','22','24','28','30','36','50','72'],
+			
+			callbacks: {
+				onImageUpload : function(files){
+					sendFile(files[0], this);
+				}
+			}
+		});
+		
+		function sendFile(file, editor){
+			var data = new FormData();
+			data.append("file", file);
+			console.log(file);
+			$.ajax ({
+				data : data,
+				type : "POST",
+				url : "SummerNoteImageFile",
+				contentType : false,
+				processData : false,
+				success : function(data){
+					console.log(data);
+					console.log(editor);
+					$(editor).summernote("insertImage",data.url);
+				}
+			});
+		}
+		
+		/* $('.summernote').summernote('code', '');
+		
+		$('.summernote').on('summernote.keyup', function() {
+			var textCount = $(this).summernote('code').length;
 			$('#count').html(textCount);
 			$('#count').css('color', 'red');
 			
             if(textCount > 1000) {
-                $(this).val($(this).val().substring(0, 1000));
+            	$(this).summernote('code', $(this).summernote('code').substring(0, 1000));
                 $('#count').html("1000");
             }
-		});
+		});	 */	
 	});
-	
-	$('.summernote').summernote({
-		  height: 150,
-		  lang: "ko-KR"
-		});
 	</script>
 </body>
 </html>

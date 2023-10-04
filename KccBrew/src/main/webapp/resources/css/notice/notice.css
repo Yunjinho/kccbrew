@@ -1,4 +1,6 @@
 @charset "UTF-8";
+
+/***************** 공지사항 페이지 공통 **************************************/
 .body-wrapper {
 	width:100%;
 	height:100%;
@@ -71,7 +73,7 @@ h2 {
 	border-bottom: 2px solid #111111;
 }
 
-/*************** 공지 목록 페이지  *******************/
+/****************** 공지 목록 페이지  *****************************************************/
 
 .table-wrapper {
 	background-color: #ffffff;
@@ -139,7 +141,7 @@ h2 {
 	text-decoration: underline;
 }
 
-.writeBtn, #insertNoticeBtn, .cancel{
+.writeBtn, #insertNoticeBtn, .cancel, .toListBtn, .deleteBtn, .updateBtn{
 	background-color: navy;
 	color: #ffffff;
 	border: none;
@@ -150,12 +152,12 @@ h2 {
 	text-decoration: none;
 	margin-right:30px;
 }
-.writeBtn:hover, #insertNoticeBtn:hover, .cancel:hover{
+.writeBtn:hover, #insertNoticeBtn:hover, .cancel:hover, .toListBtn:hover, .deleteBtn:hover, .updateBtn:hover{
 	background-color: #E6E6E6;
 	color: #111111;
 	text-decoration: none;
 }
-/******************* 공지 등록 페이지 *********************************/
+/************************ 공지 작성 페이지 **************************************************/
 .insert-notice-table {
 	border:none;
 	width:100%;
@@ -193,15 +195,8 @@ input[type="file"] {
     border: 1px solid #ccc;
 }
 
-#notice-content {
-	height:180px;
-	min-height:180px;
-	max-height:400px;
-	width:100%;
-	min-width:1113px;
-	max-width:1113px;
-}
 #count-text {
+	margin-top: 10px;
 	text-align: right;
 }
 #count {
@@ -214,6 +209,36 @@ input[type="file"] {
 	text-align: center;
 }
 
+/******************* 공지 상세 페이지 CSS ****************************************/
+#noticeDtlTitle {
+	height:70px;
+	line-height: 70px;
+	text-align: center;
+	font-size: 1.3em;
+	font-weight: normal;
+	border-bottom: 1px solid #111111;
+}
+#noticeDtlInfo {
+	font-size:1.1em;
+	height:50px;
+	line-height: 50px;
+	text-align: center;
+	background-color: #f2f2f2;
+	border-bottom: 1px solid #c0c0c0;
+	margin-bottom: 50px;
+}
+.info-name {
+	font-weight:600;
+}
+
+/******************** summernote cdn css 덮어씌우기 *********************************/
+
+.note-frame {
+	font-family: 'Noto Sans';
+}
+.note-editable p {
+	text-align: left;
+}
 
 
 

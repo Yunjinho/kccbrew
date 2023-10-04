@@ -1,11 +1,18 @@
 package kr.co.kccbrew.notice.service;
 
+import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
+import java.util.UUID;
 
+import org.apache.commons.io.FileUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.multipart.MultipartFile;
+
+import com.google.gson.JsonObject;
 
 import kr.co.kccbrew.notice.dao.INoticeRepository;
 import kr.co.kccbrew.notice.model.noticeVo;
@@ -23,9 +30,9 @@ public class noticeService implements INoticeServie{
 	}
 
 	@Override
-	public void readNotice(int noticeSeq) {
-		// TODO Auto-generated method stub
-		
+	public noticeVo readNotice(int noticeSeq) {
+		noticeRepository.updateReadCount(noticeSeq);
+		return noticeRepository.readNotice(noticeSeq);
 	}
 
 	@Override
@@ -42,8 +49,7 @@ public class noticeService implements INoticeServie{
 
 	@Override
 	public void deleteNotice(int noticeSeq) {
-		// TODO Auto-generated method stub
-		
+		noticeRepository.deleteNotice(noticeSeq);
 	}
 
 	@Override
@@ -75,5 +81,4 @@ public class noticeService implements INoticeServie{
 		}
 		return noticeVo;
 	}
-	
 }

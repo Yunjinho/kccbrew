@@ -33,7 +33,6 @@
 			<!-- ********** 페이지 네비게이션 끝 ********** -->
 			<div class="content-wrapper">
 				<h2>공지사항</h2>
-				<c:url var="toInsertNotice" value="/insertnotice"/>
 				<table class="notice-table">	
 					<thead>
 						<tr>
@@ -51,7 +50,7 @@
 								<c:out value="${noti.noticeSeq}"/>
 							</td>
 							<td class="noticeTitle">
-								<c:url var="toNoticeDetail" value="/noticedetail"/>
+								<c:url var="toNoticeDetail" value="/noticedetail/${noti.noticeSeq}"/>
 								<a href="${toNoticeDetail}">
 									<c:out value="${noti.noticeTitle}"/>
 								</a>
@@ -70,6 +69,7 @@
 					</c:forEach>
 				</table>
 				<div class="btn-wrapper">
+				<c:url var="toInsertNotice" value="/insertnotice"/>
 					<a href="${toInsertNotice}" class="writeBtn">
 						글 쓰기
 					</a>
