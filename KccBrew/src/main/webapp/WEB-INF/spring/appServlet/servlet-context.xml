@@ -54,13 +54,13 @@
 		class="org.springframework.web.servlet.view.UrlBasedViewResolver">
 		<beans:property name="viewClass"
 			value="org.springframework.web.servlet.view.tiles3.TilesView" />
-		<beans:property name="order" value="1" />
+		<beans:property name="order" value="0" />
 	</beans:bean>
 
 	<!-- BeanNameViewResolver 설정 -->
 	<beans:bean
 		class="org.springframework.web.servlet.view.BeanNameViewResolver">
-		<beans:property name="order" value="0" />
+		<beans:property name="order" value="1" />
 	</beans:bean>
 
 	<!-- 파일 다운로드를 처리할 클래스를 빈(bean)으로 등록 -->
