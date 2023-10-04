@@ -346,5 +346,26 @@
 			LIKE #{mechaLocationCode}||'%'
 		]]>
 	</select>
-	
+	<select id="unapprovedMemberList"
+		parameterType="kr.co.kccbrew.comm.main.model.MainPageVo"
+		resultType="kr.co.kccbrew.comm.main.model.MainPageVo">
+		<![CDATA[
+		   SELECT
+		    user_id             AS "userId",
+		    user_nm             AS "userName",
+		    user_telno          AS "userTelNo",
+		    user_type_cd        AS "userType",
+		    approve_yn          AS "approveStatus"
+			FROM users
+			WHERE APPROVE_YN = 'N' OR APPROVE_YN IS NULL
+		]]>
+	</select>	
+	<!-- 마이페이지 사용자 프로필 사진 수정하기 -->
+	<update id="updateMyProfileImg" parameterType="kr.co.kccbrew.comm.main.model.MainPageVo">
+	<![CDATA[
+			UPDATE file_detail_info
+			SET file_server_nm	= #{fileDetailServerName, jdbcType=VARCHAR}
+			WHERE reg_user = #{userId}
+	]]>
+	</update>
 </mapper>

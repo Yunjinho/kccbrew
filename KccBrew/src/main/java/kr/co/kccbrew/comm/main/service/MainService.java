@@ -158,7 +158,7 @@ public class MainService implements IMainService{
 		mainRepository.insertFileDtlInfo(vo);
 		//이미지 파일 저장
 		String targetPath = mainPageVo.getServerSavePath()+"\\"+vo.getFileDetailServerName();
-		String localPath = mainPageVo.getLocalSavePath()+vo.getFileDetailServerName();
+		String localPath = mainPageVo.getLocalSavePath()+"\\"+vo.getFileDetailServerName();
 		try {
 			FileCopyUtils.copy(imgFile.getInputStream(), new FileOutputStream(targetPath));
 			FileCopyUtils.copy(imgFile.getInputStream(), new FileOutputStream(localPath));
@@ -187,4 +187,18 @@ public class MainService implements IMainService{
 		List<MainPageVo> list = mainRepository.selectLocationDtlCd(locCd);
 		return list;
 	}
+
+	//미승인 회원 리스트
+	@Override
+	public List<MainPageVo> showUnapprovedMemberList() {
+		List<MainPageVo> unapprovedMemberList = mainRepository.unapprovedMemberList();
+		return unapprovedMemberList;
+	}
+
+	//사용자 이미지 수정 및 신규 이미지 추가
+		@Override
+		public void updateMyProfileImg(MainPageVo mainPageVo) {
+			insertUserImg(mainPageVo);
+			mainRepository.updateMyProfileImg(mainPageVo);
+		}
 }

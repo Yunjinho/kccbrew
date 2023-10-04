@@ -72,6 +72,7 @@ public class MainPageVo {
 	String locationCode; 	//점포 지역 코드
 	String userType; 		//사용자 구분 코드
 	
+	String groupCodeName;	//그룹 코드 이름
 	LocalDate startOfWeek;	//A/S 일정 날짜 구분
 	LocalDate endOfWeek;	//A/S 일정 날짜 구분
 }
