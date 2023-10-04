@@ -45,6 +45,22 @@
 		]]>
 	</select>
 	
+	<!-- 미승인 회원 리스트 -->
+	<select id="unapprovedMemberList"
+		parameterType="kr.co.kccbrew.comm.main.model.MainPageVo"
+		resultType="kr.co.kccbrew.comm.main.model.MainPageVo">
+		<![CDATA[
+		   SELECT
+		    user_id             AS "userId",
+		    user_nm             AS "userName",
+		    user_telno          AS "userTelNo",
+		    user_type_cd        AS "userType",
+		    approve_yn          AS "approveStatus"
+			FROM users
+			WHERE APPROVE_YN = 'N' OR APPROVE_YN IS NULL
+		]]>
+	</select>
+	
 	<!-- 전체 a/s 결과 리스트 -->
 	<select id="showAsResultList" parameterType="kr.co.kccbrew.comm.main.model.MainPageVo" resultType="kr.co.kccbrew.comm.main.model.MainPageVo">
 		<![CDATA[
@@ -150,7 +166,7 @@
 	    ]]>
 	</select>
 	
-	<!-- 특정 점주 a/s 배정 리스트 -->
+	<!-- 특정 수리기사 a/s 배정 리스트 -->
 	<select id="showAsAssignListbyMechaId" parameterType="kr.co.kccbrew.comm.main.model.MainPageVo" resultType="kr.co.kccbrew.comm.main.model.MainPageVo">
     <![CDATA[
         SELECT

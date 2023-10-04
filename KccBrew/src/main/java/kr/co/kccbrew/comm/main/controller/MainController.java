@@ -190,41 +190,6 @@ public class MainController {
 		}
 	}
 	
-	/******************* 비밀번호 변경 *********************/
-	
-	@RequestMapping(value = "/mypage/chgpwd", method = RequestMethod.GET)
-	public String chgPassword(Model model) {
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		
-		if(authentication != null) {
-			Object principal = authentication.getPrincipal();
-			if(principal instanceof UserDetails) {
-				UserDetails userDetails = (UserDetails) principal;
-				String userId = userDetails.getUsername();
-				List<MainPageVo> userInfoList = mainServiceImple.showUserInfoListById(userId);
-
-				model.addAttribute("userInfoList", userInfoList);
-			}
-		}
-		return "MyPageP3";
-	}
-	
-	@RequestMapping(value= "/confirmchg", method = RequestMethod.POST)
-	public String confirmChange(Model model, @ModelAttribute MainPageVo mainPageVo) {
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		
-		if(authentication != null) {
-			Object principal = authentication.getPrincipal();
-			if(principal instanceof UserDetails) {
-				UserDetails userDetails = (UserDetails) principal;
-				String userId = userDetails.getUsername();
-				mainPageVo.setUserId(userId);
-				mainServiceImple.updateMyProfile(mainPageVo);
-			}
-		}
-		return "redirect:/mypage";
-	}
-	
 	/************************ 점주 페이지 ******************************/
 
 	//점포 수정 페이지
