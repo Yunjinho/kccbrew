@@ -7,10 +7,8 @@
 <script src="https://code.highcharts.com/highcharts.js"></script>
 <script src="<c:url value="resources/js/sysMng/statistics.js"/>"></script>
 <link rel="stylesheet" href="/resources/css/statistics/statistics.css" />
-<link rel="stylesheet" href="/resources/css/asMng/content-template.css" />
 </head>
 <body>
-<div class="contents_warp">
 <div id="page-mask">
 	<div id="page-container" class="">
 		<div id="page-content" class="clearfix">
@@ -32,9 +30,6 @@
 					<img src="/resources/img/asMng/free-icon-left-arrow-271220.png" alt="left" onclick="moveBeforeYear()" class="navi-img"/>
 					<input type="text" value="${year}" name="year" readonly>
 					<img src="/resources/img/asMng/free-icon-right-arrow-271228.png" alt="right"onclick="moveNextYear()" class="navi-img"/>
-				</div>
-				<div>
-					<p class="download-excel" onclick="downExcel()">통계 다운로드</p>
 				</div>
 				<div class="statistics">
 					<div>
@@ -58,6 +53,6 @@
 		</div>
 	</div>
 </div>
-</div>
+
 </body>
 </html>

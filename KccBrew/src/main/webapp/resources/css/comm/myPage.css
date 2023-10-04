@@ -53,9 +53,7 @@ button {
 	color: #666;
 	display: block;
 	white-space: nowrap;
-	text-overflow: ellipsis;
-	padding: 6px 3px 3px 25px;
-	line-height: 35px
+	text-overflow: ellipsis
 }
 .container2 .page-content-navigation .breadcrumb li:first-child {
 	background: none;
@@ -72,6 +70,8 @@ button {
 }
 
 .container2 .page-content-navigation .breadcrumb li {
+	padding: 6px 3px 3px 25px;
+	line-height: 35px
 }
 
 .category{

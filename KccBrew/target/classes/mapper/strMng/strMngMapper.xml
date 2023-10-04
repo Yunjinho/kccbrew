@@ -289,16 +289,4 @@
         WHERE store_nm = #{storeNm}
         ]]>
 	</select>
-	
-<select id="selectMyStr" parameterType="string">
-<![CDATA[
-	SELECT 	
-		,stroe_nm AS storeNm;
-		,store_addr AS storeAddr;
-		,store_addr_dtl AS storeAddrDtl
-		,store_telno AS storeTelNo
-	FROM store s INNER JOIN store_user_map su ON su.store_seq=s.store_seq 
-	WHERE user_id=#{userId};
-]]>
-</select>
 </mapper>

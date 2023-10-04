@@ -440,9 +440,10 @@ window.onload=function(){
 												<th style="width: 10%;">결과 사진</th>
 												<td colspan="7">
 													<!-- AS 상세 조회-->
-													<div id="carouselExampleFade" class="carousel slide carousel-fade">
-													  <div class="carousel-inner">
-													    <c:forEach var="asResultImgList"
+													<div id="carouselExampleControlsNoTouching"
+														class="carousel slide" data-bs-touch="false">
+														<div class="carousel-inner">
+															<c:forEach var="asResultImgList"
 																items="${asResultImgList}" varStatus="status">
 																<c:choose>
 																	<c:when test="${status.index == 0}">
@@ -461,15 +462,19 @@ window.onload=function(){
 																	</c:otherwise>
 																</c:choose>
 															</c:forEach>
-													  </div>
-													  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="prev">
-													    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-													    <span class="visually-hidden">Previous</span>
-													  </button>
-													  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="next">
-													    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-													    <span class="visually-hidden">Next</span>
-													  </button>
+														</div>
+														<button class="carousel-control-prev" type="button"
+															data-bs-target="#carouselExampleControlsNoTouching"
+															data-bs-slide="prev">
+															<span class="carousel-control-prev-icon"
+																aria-hidden="true"></span> <span class="visually-hidden">Previous</span>
+														</button>
+														<button class="carousel-control-next" type="button"
+															data-bs-target="#carouselExampleControlsNoTouching"
+															data-bs-slide="next">
+															<span class="carousel-control-next-icon"
+																aria-hidden="true"></span> <span class="visually-hidden">Next</span>
+														</button>
 													</div>
 												</td>
 											</tr>
@@ -486,7 +491,7 @@ window.onload=function(){
 												</td>
 												<th>AS 비용</th>
 												<td>
-													<input type="text" name="asPrice" value="${asDetailInfo.asPrice}" readonly>
+													<input type="text" value="${asDetailInfo.asPrice}" readonly>
 												</td>
 												<th>만족도</th>
 												<td>

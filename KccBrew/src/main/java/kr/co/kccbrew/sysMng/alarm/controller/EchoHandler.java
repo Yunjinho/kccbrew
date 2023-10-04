@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
@@ -37,9 +36,11 @@ public class EchoHandler extends TextWebSocketHandler{
 		String userTypeCd = getUserTypeCd(session);
 		userTypeCdSession.put("userTypeCd", session);*/
 
+
+
 		session.sendMessage(new TextMessage(textMessage.getPayload()));
 	}
-	
+
 	/*사용자ID에 따른 session Map*/
 	private String getUserId(WebSocketSession session) {
 		Map<String, Object> httpSession = session.getAttributes();
