@@ -109,25 +109,16 @@ html {
 			<tiles:insertAttribute name="header" />
 		</div>
 		
-		<%-- <div id="main-content">
+		<div id="main-content">
 			<div class="contents_warp">
 				<tiles:insertAttribute name="sidemenu" />
 				<div id="mainContents">
 					<tiles:insertAttribute name="contents" />
 				</div>
 			</div>
-		</div> --%>
-		<div id="main-content">
-			<div id="mainSideMenu">
-				<tiles:insertAttribute name="sidemenu"/>
-			</div>
-			<div id="mainContents">
-				<tiles:insertAttribute name="contents"/>
-			</div>
-		</div>
-		
+		</div> 
 		<div id="mainFooter">
-			<tiles:insertAttribute name="footer" />
+			<tiles:insertAttribute name="footer"/>
 		</div>
 	</div>
 </body>
