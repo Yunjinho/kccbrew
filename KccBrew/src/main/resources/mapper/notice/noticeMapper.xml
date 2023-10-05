@@ -95,7 +95,7 @@
 		]]>
 	</insert>
 	
-	<!-- 공지사항 수정하기 -->
+	<!-- 파일 포함 공지사항 수정하기 -->
 	<update id="updateNotice"
 		parameterType="kr.co.kccbrew.notice.model.noticeVo">
 		<![CDATA[
@@ -104,16 +104,20 @@
 				,mod_dttm		= #{modDate}
 				,notice_title	= #{noticeTitle}
 				,notice_content = #{noticeContent}
+				,file_seq		= #{fileId}
 			WHERE notice_seq = #{noticeSeq}
 		]]>
 	</update>
 	
-	<!-- 공지사항 이미지 수정하기 -->
+	<!-- 파일 제외 공지사항 수정하기 -->
 	<update id="updateNoticeImg" parameterType="kr.co.kccbrew.notice.model.noticeVo">
 		<![CDATA[
-			UPDATE file_detail_info
-			SET file_server_nm = #{fileDetailServerName, jdbcType=VARCHAR}
-			WHERE file_seq = #{fileId}
+			UPDATE notification
+			SET mod_user		= #{modUser}
+				,mod_dttm		= #{modDate}
+				,notice_title	= #{noticeTitle}
+				,notice_content = #{noticeContent}
+			WHERE notice_seq = #{noticeSeq}
 		]]>
 	</update>
 	
