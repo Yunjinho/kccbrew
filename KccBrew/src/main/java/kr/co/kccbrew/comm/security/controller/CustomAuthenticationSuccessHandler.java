@@ -104,7 +104,7 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
 			session.setAttribute("resultListByIdCount", resultListByIdCount);
 
 			int usedHolidays = schdlMngService.getUsedHoliday(user);
-			session.setAttribute("usedHolidays", usedHolidays);
+			session.setAttribute("usedHolidays", usedHolidays+1);
 		}
 		
 		
@@ -117,6 +117,6 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
 
 			int usedHolidays = schdlMngService.getUsedHoliday(user);
 			session.setAttribute("usedHolidays", usedHolidays);
-		} 
+		}
 	}
 }

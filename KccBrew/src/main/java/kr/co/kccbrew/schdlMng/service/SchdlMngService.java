@@ -65,7 +65,7 @@ public class SchdlMngService implements ISchdlMngService {
 	/*휴일취소*/
 	@Override
 	public void cancelHoliday(Integer holidaySeq) {
-		schdlMngRepository.cancelHoliday(holidaySeq);		
+		schdlMngRepository.cancelHoliday(holidaySeq);
 	}
 
 
