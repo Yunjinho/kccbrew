@@ -16,7 +16,7 @@
 		]]>
 	</select>
 	
-	<!-- 공지사항 상세 조회 -->
+	<!-- 이미지 포함 공지사항 상세 조회 -->
 	<select id="readNotice" parameterType="kr.co.kccbrew.notice.model.noticeVo" resultType="kr.co.kccbrew.notice.model.noticeVo">
 		<![CDATA[
 			SELECT
@@ -63,35 +63,78 @@
 	
 	<!-- 공지 사진 상세 정보 등록 -->
 	<insert id="insertFileDtlInfo" parameterType="kr.co.kccbrew.notice.model.noticeVo">
-	<![CDATA[
-		INSERT INTO file_detail_info VALUES(
-				file_dtl_seq.NEXTVAL,
-				#{fileId},
-				#{fileOriginalName},
-				#{fileDetailLocation},
-				SYSDATE,
-				#{writerId},
-				SYSDATE,
-				#{fileDetailServerName},
-				#{fileFmt},
-				#{writerId})
-	]]>
+		<![CDATA[
+			INSERT INTO file_detail_info VALUES(
+					file_dtl_seq.NEXTVAL,
+					#{fileId},
+					#{fileOriginalName},
+					#{fileDetailLocation},
+					SYSDATE,
+					#{writerId},
+					SYSDATE,
+					#{fileDetailServerName},
+					#{fileFmt},
+					#{writerId})
+		]]>
 	</insert>
+	
+	<!-- 공지사항 등록하기 -->
+	<insert id="insertNotice" parameterType="kr.co.kccbrew.notice.model.noticeVo">
+		<![CDATA[
+			INSERT INTO notification VALUES (
+				notice_seq.NEXTVAL
+				,#{writerId}
+				,#{writerName}
+				,SYSDATE
+				,SYSDATE
+				,#{writerId}
+				,#{noticeTitle}
+				,#{noticeContent}
+				,#{fileId}
+				,0)
+		]]>
+	</insert>
+	
+	<!-- 파일 포함 공지사항 수정하기 -->
+	<update id="updateNotice"
+		parameterType="kr.co.kccbrew.notice.model.noticeVo">
+		<![CDATA[
+			UPDATE notification
+			SET mod_user		= #{modUser}
+				,mod_dttm		= #{modDate}
+				,notice_title	= #{noticeTitle}
+				,notice_content = #{noticeContent}
+				,file_seq		= #{fileId}
+			WHERE notice_seq = #{noticeSeq}
+		]]>
+	</update>
+	
+	<!-- 파일 제외 공지사항 수정하기 -->
+	<update id="updateNoticeImg" parameterType="kr.co.kccbrew.notice.model.noticeVo">
+		<![CDATA[
+			UPDATE notification
+			SET mod_user		= #{modUser}
+				,mod_dttm		= #{modDate}
+				,notice_title	= #{noticeTitle}
+				,notice_content = #{noticeContent}
+			WHERE notice_seq = #{noticeSeq}
+		]]>
+	</update>
 	
 	<!-- 조회수 증가 -->
 	<update id="updateReadCount" parameterType="int">
 		<![CDATA[
 			UPDATE notification
-				SET views = views + 1
+			SET views = views + 1
 			WHERE notice_seq = #{noticeSeq}
 		]]>
 	</update>
 	
 	<!-- 공지 삭제 -->
 	<delete id="deleteNotice" parameterType="int">
-	<![CDATA[
-		DELETE notification 
-		WHERE notice_seq = #{noticeSeq}
-	]]>
+		<![CDATA[
+			DELETE notification 
+			WHERE notice_seq = #{noticeSeq}
+		]]>
 	</delete>
 </mapper>

@@ -160,11 +160,12 @@ h2 {
 /************************ 공지 작성 페이지 **************************************************/
 .insert-notice-table {
 	border:none;
+	width:1032px;
 	height: 100%;
 }
 .insert-notice-table tr {
 	height:60px;
-	border-bottom: 1px solid #111111;
+	border-bottom: 1px solid #c0c0c0;
 }
 
 .insert-notice-table tr:nth-child(2){
@@ -173,32 +174,77 @@ h2 {
 
 .insert-notice-table th {
 	background-color: #eef4ff;
-	width: 200px;
+	padding: 0 10px;
 }
 
 .insert-notice-table td {
 	padding: 10px 10px;
-	border:none;
+	border-right: none;
 }
 
 input[type="text"] {
-    width: 1000px;
+    width: 900px;
     padding: 10px; 
     border: 1px solid #ccc;
 }
 
 input[type="file"] {
-    width: 1000px;
+    width: 860px;
     padding: 10px; 
     border: 1px solid #ccc;
 }
 
+#notice-content {
+	height:250px;
+	width:100%;
+	resize:none;
+}
 #count-text {
-	margin-top: 10px;
 	text-align: right;
 }
 #count {
 	color:red;
+}
+#fileCount {
+	display: inline-block;
+	width:810px;
+	border:1px solid #cecece;
+	padding:10px;
+	color:#a4a4a4;
+	font-size: 0.9em;
+}
+#fileUploadBtn {
+	background-color: navy;
+	height:37px;
+	line-height:37px;
+	color: #ffffff;
+	border: none;
+	padding: 0 10px;
+	display:inline-block;
+	align-items: center;
+	text-decoration: none;
+}
+#fileUploadBtn:hover {
+	background-color: #E6E6E6;
+	color: #111111;
+	text-decoration: none;
+}
+#fileInput {
+	display:none;
+}
+.file-list {
+	height:auto;
+}
+
+.file-list .filebox p {
+	display: inline-block;
+}
+.delete {
+	color:red;
+	margin-left:5px;
+}
+.filebox {
+	margin-bottom: 10px;
 }
 
 .modButtons {
