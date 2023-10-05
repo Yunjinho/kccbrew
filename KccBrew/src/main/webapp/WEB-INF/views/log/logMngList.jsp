@@ -158,14 +158,14 @@
 											<table>
 												<thead>
 													<tr>
-														<th>Log Seq</th>
-														<th>Date</th>
-														<th>URI</th>
-														<th>View</th>
-														<th>User ID</th>
-														<th>User Type</th>
+														<th>로그번호</th>
+														<th>날짜</th>
+														<th>경로</th>
+														<th>화면</th>
+														<th>사용자ID</th>
+														<th>사용자유형</th>
 														<th>IP</th>
-														<th>Status Code</th>
+														<th>상태코드</th>
 													</tr>
 												</thead>
 												<tbody id="logTableBody">
