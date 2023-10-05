@@ -36,7 +36,7 @@ public class noticeController {
 	noticeService noticeService;
 	
 	/**
-	 * 공지사항 목록 페이지
+	 * 공지사항 목록 조회
 	 * @param model
 	 * @return
 	 */
@@ -76,7 +76,7 @@ public class noticeController {
 	 * @param request
 	 * @return
 	 */
-	@RequestMapping(value="/insertnotice", method=RequestMethod.POST)
+	@RequestMapping(value="/insertnoticeform", method=RequestMethod.POST)
 	public String insertNotice(Model model
 								,@ModelAttribute noticeVo noticeVo
 					            ,@Value("#{serverImgPath['localPath']}")String localPath
