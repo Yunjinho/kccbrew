@@ -71,10 +71,7 @@
 		WHERE 1=1
 
 		<!-- 검색 조건 -->
-		<if
-			test="logMngVo.startDate != null and logMngVo.startDate != '' and logMngVo.endDate != null and logMngVo.endDate != ''">
-       <![CDATA[AND (TRUNC(LOG_DTTM) <= #{endDate} AND TRUNC(LOG_DTTM) >= #{startDate})]]>
-		</if>
+       <![CDATA[AND (TRUNC(LOG_DTTM) <= #{logMngVo.endDate} AND TRUNC(LOG_DTTM) >= #{logMngVo.startDate})]]>
 		<if test="logMngVo.uri != null and logMngVo.uri != ''">
 			AND API_ENDPOINT = #{logMngVo.uri}
 		</if>
@@ -112,10 +109,7 @@
 		FROM LOG
 		WHERE 1=1
 		<!-- 검색 조건 -->
-		<if
-			test="startDate != null and startDate != '' and endDate != null and endDate != ''">
        <![CDATA[AND (TRUNC(LOG_DTTM) <= #{endDate} AND TRUNC(LOG_DTTM) >= #{startDate})]]>
-		</if>
 		<if test="uri != null and uri != ''">
 			AND API_ENDPOINT = #{uri}
 		</if>

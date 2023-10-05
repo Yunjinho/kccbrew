@@ -76,19 +76,31 @@ public class LogMngController {
 	}
 
 
-	/* 로그조회 */
+	/**
+	 * 로그조회 페이지 요청할 때 페이지 반환한다.
+	 * 
+	 * @param int currentPage - 현재 페이지 
+	 * @param LogMngVo searchContent - model에 추가하기 위한 LogMngVo객체
+	 * @param Model model - 데이터를 저장해서 jsp에 뿌려줄 용도
+	 * 
+	 * @return data(Map<String, Object>) - 페이징과 검색에 따른 로그 데이터를 저장한 map
+	 * @throws 
+	 */
 	@GetMapping("/admin/log")
 	public String getLogs(
 			@RequestParam(defaultValue = "1") int currentPage,
 			@ModelAttribute("searchContent") LogMngVo searchContent, // Model에 'searchContent' 자동추가
-			Model model,
-			HttpSession session
+			Model model
 			) {
-
+		Date firstDay = dateFormat.getFirstDayOfYear();
+		Date lastDay = dateFormat.getLastDayOfYear();
+		
+		searchContent.setStartDate(firstDay);
+		searchContent.setEndDate(lastDay);
+		
 		log.info("이세은 LogController#log: currentPage={}, searchContent={}", currentPage, searchContent);
 
 		List<LogMngVo> selectedLogs = logService.selectSearchedLogs(searchContent, currentPage);
-		System.out.println("selectedLogs: " + selectedLogs);
 		int totalPage = 0;
 		int totalLogCount = logService.getSearchedLogsCount(searchContent);
 		int sharePage = 0;
@@ -109,7 +121,7 @@ public class LogMngController {
 		model.addAttribute("currentPage", currentPage);
 		model.addAttribute("sharePage", sharePage);
 
-		model.addAttribute("totalLog", totalLogCount);
+		model.addAttribute("totalDataNumber", totalLogCount);
 		model.addAttribute("logs", selectedLogs);
 
 
@@ -122,30 +134,20 @@ public class LogMngController {
 	/**
 	 * 검색한 조건에 따른 로그 데이터를 반환한다.
 	 * 
-	 * @param int currentPage 현재 페이지 
-	 * @param String startDate 날짜 검색 시작일
-	 * @param String endDate 날짜 검색 종료일
-	 * @param LogMngVo logMngVo 로그검색조건
-	 * @return data(Map<String, Object>)-페이징과 검색에 따른 로그 데이터를 저장한 map
-	 * @throws 
+	 * @param int currentPage - 현재 페이지 
+	 * @param String startDate - 날짜 검색 시작일
+	 * @param String endDate - 날짜 검색 종료일
+	 * @param LogMngVo logMngVo - 로그검색조건
+	 * 
+	 * @return data(Map<String, Object>) - 페이징과 검색에 따른 로그 데이터를 저장한 map
 	 */
 	@PostMapping(value="/admin/log", produces = "application/json; charset=utf-8")
 	@ResponseBody
 	public Map<String, Object> getSearchedLogs(
-			@RequestParam("currentPage") int currentPage,
+			@RequestParam(value="currentPage", defaultValue="1") int currentPage,
 			@ModelAttribute LogMngVo logMngVo
 			) {
 		System.out.println("LogMngController.getSearchedLogs");
-
-		/*string -> sql.date 형변환*/
-/*		Date startSqlDate = dateFormat.stringToSqlDate(startDate);
-		Date endSqlDate = dateFormat.stringToSqlDate(endDate);
-		
-		logMngVo.setStartDate(startSqlDate);
-		logMngVo.setEndDate(endSqlDate);
-
-		파라미터 확인
-		System.out.println("currentPage: " + currentPage + ", startDate: " + startDate + ", endDate: " + endDate);*/
 		System.out.println("logMngVo: " + logMngVo);
 
 		List<LogMngVo> logs = logService.selectSearchedLogs(logMngVo, currentPage); //검색에 따른 페이지별 로그 리스트

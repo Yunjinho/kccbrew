@@ -86,9 +86,14 @@ input[type="date"] {
 	outline: none;
 }
 
-#form-holiday-period {
-	display: flex;
-	justify-content: space-around;
+input[type="text"] {
+	width: 150px !important;
+}
+
+#form-period>span {
+	width: 50%;
+	display: block;
+	float: left;
 }
 
 /* 로그 테이블 */

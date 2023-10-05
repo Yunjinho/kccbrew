@@ -16,6 +16,7 @@
 <!-- javascript -->
 <script src="<c:url value="/resources/js/sysMng/log/log.js"/>"></script>
 <script src="<c:url value="/resources/js/board/pagination.js"/>"></script>
+<script src="<c:url value="/resources/js/comm/date/date.js"/>"></script>
 
 <meta charset="UTF-8">
 <title>Insert title here</title>
@@ -65,19 +66,23 @@
 
 												<tr>
 													<th>사용자 유형</th>
-													<td><select class="tx2" name="userType" id=""
+													<td><select class="tx2" name="userType"
 														onchange="javascript:chg();">
 															<option value="">사용자</option>
-															<option value="admin"
+															<option value="관리자"
 																${param.userType == 'admin' ? 'selected' : ''}>관리자</option>
-															<option value="store-owner"
-																${param.userType == 'store-owner' ? 'selected' : ''}>점주</option>
-															<option value="mechanic"
+															<option value="점주"
+																${param.userType == 'manager' ? 'selected' : ''}>점주</option>
+															<option value="기사"
 																${param.userType == 'mechanic' ? 'selected' : ''}>기사</option>
 													</select></td>
 
-													<th>휴가기간</th>
-													<td id="form-holiday-period"><span><label
+													<th>사용자ID</th>
+													<td><input type="text" name="userId"
+														placeholder="ID를 입력하세요" value="${param.userId}"></td>
+
+													<th>기간</th>
+													<td colspan="3" id="form-period"><span><label
 															for="startDate">시작일:</label> <input type="date"
 															id="startDate" name="startDate" value=""></span> <span><label
 															for="endDate">종료일:</label> <input type="date"
@@ -91,23 +96,18 @@
 													<!-- Input field for URI -->
 													<td><input type="text" name="uri"
 														placeholder="경로를 입력하세요" value="${param.uri}"></td>
+
 													<th>화면</th>
 													<td><input type="text" name="view"
 														placeholder="화면을 입력하세요" value="${param.view}"></td>
-													<th>사용자ID</th>
-													<td colspan="2"><input type="text" name="userId"
-														placeholder="사용자ID를 입력하세요" value="${param.userId}"></td>
-
-												</tr>
-												<!-- 3행 -->
-												<tr>
 
 													<th>IP</th>
 													<td><input type="text" name="ip"
 														placeholder="IP를 입력하세요" value="${param.ip}"></td>
+
 													<th>상태코드</th>
-													<td colspan="2"><select class="tx2" name="statusCode"
-														id="yr" onchange="javascript:chg();">
+													<td><select class="tx2" name="statusCode" id="yr"
+														onchange="javascript:chg();">
 															<option value="">상태코드</option>
 															<option value="200 OK"
 																${param.statusCode == '200 OK' ? 'selected' : ''}>200
@@ -128,13 +128,16 @@
 																${param.statusCode == '500 Internal Server Error' ? 'selected' : ''}>500
 																Internal Server Error</option>
 													</select></td>
+
 												</tr>
+
 											</table>
 											<div class="form-btn-box">
 												<fieldset>
 													<button type="button" class="form-btn" id="searchButton"
-														onclick="performSearch()">검색</button>
-													<button type="reset" class="form-btn">초기화</button>
+														onclick="performSearch();">검색</button>
+													<button type="button" class="form-btn"
+														onclick="resetForm();">초기화</button>
 												</fieldset>
 											</div>
 										</form>

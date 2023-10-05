@@ -8,6 +8,10 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -82,6 +86,27 @@ public class LogInterceptor extends Interceptor {
 
 
 		String status = String.valueOf(response.getStatus());
+		switch(status) {
+		case "200":
+			status = "200 OK";
+			break;
+		case "201":
+			status = "201 Created";
+			break;
+		case "400": 
+			status = "400 Bad Request";
+			break;
+		case "403":
+			status = "403 Forbidden";
+			break;
+		case "404":
+			status = "404 Not Found";
+			break;
+		case "500":
+			status = "500 Internal Server Error";
+			break;
+		}
+
 		log.info("status={}", status);
 
 		String view = (String) session.getAttribute("view");
@@ -105,6 +130,29 @@ public class LogInterceptor extends Interceptor {
 
 		logService.insertlogVO(logMngVo);
 	}
+
+	public String getUserId(Authentication authentication) {
+		UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+		String userId = userDetails.getUsername();
+		return userId;
+	}
+
+	public String getUserType(Authentication authentication) {
+		UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+		GrantedAuthority role = null;
+		for ( GrantedAuthority authority : userDetails.getAuthorities()) {
+			role = authority;
+		}
+
+		if(role.equals(new SimpleGrantedAuthority("ROLE_ADMIN"))) {
+			return "admin";
+		} else if (role.equals(new SimpleGrantedAuthority("ROLE_MANAGER"))) {
+			return "manager";
+		} else {
+			return "mechanic";
+		} 
+	}
+
 
 
 }

@@ -1,15 +1,19 @@
 package kr.co.kccbrew.sysMng.logMng.model;
 
-
 import java.sql.Date;
 
-import org.springframework.stereotype.Component;
+import org.springframework.beans.factory.annotation.Autowired;
 
+import kr.co.kccbrew.comm.util.DateFormat;
 import lombok.Data;
 
 
 @Data
 public class LogMngVo {
+	@Autowired
+	private DateFormat dateFormat;
+
+
 	private Integer logSeq;
 	private Date date; 
 	private String uri;
@@ -20,6 +24,19 @@ public class LogMngVo {
 	private String statusCode;
 
 	/*검색용*/
-	private String startDate;
-	private String endDate;
+	private Date startDate;
+	public void setStartDate(Date startDate) {
+		this.startDate = startDate;
+	}
+	public void setStartDate(String startDate) {
+		setStartDate(dateFormat.stringToSqlDate(startDate));
+	}
+
+	private Date endDate;
+	public void setEndDate(Date endDate) {
+		this.endDate = endDate;
+	}
+	public void setEndDate(String endDate) {
+		setEndDate(dateFormat.stringToSqlDate(endDate));
+	}
 }
