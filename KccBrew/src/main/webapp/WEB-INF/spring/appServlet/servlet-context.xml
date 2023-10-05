@@ -101,6 +101,8 @@
 		base-package="kr.co.kccbrew.comm.util" />
 	<context:component-scan
 		base-package="kr.co.kccbrew.sysMng.statistics.controller" />
+			<context:component-scan
+		base-package="kr.co.kccbrew.sysMng.alarm.controller" />
 	<!-- Controller -->
 
 

@@ -27,7 +27,6 @@ function sendAjaxRequest(year, month) {
 				var map = data[i];
 
 				/*휴가일*/
-				console.log("**********holidayDates**********");
 				var holidayDates = map.holidayDates;
 				if (holidayDates !== null) {
 					console.log("holidayDates.length: " + holidayDates.length);
@@ -58,7 +57,6 @@ function sendAjaxRequest(year, month) {
 			}
 
 			/*배정일*/
-			console.log("**********assignDates**********");
 			var assignDates = map.assignDates;
 			console.log("assignDates: " + assignDates);
 			for (var j = 0; j < assignDates.length; j++) {
@@ -79,7 +77,6 @@ function sendAjaxRequest(year, month) {
 
 
 			/*결과일*/
-			console.log("**********resultDates**********");
 			var resultDates = map.resultDates;
 			console.log("resultDates: " + resultDates);
 			for (var j = 0; j < resultDates.length; j++) {
