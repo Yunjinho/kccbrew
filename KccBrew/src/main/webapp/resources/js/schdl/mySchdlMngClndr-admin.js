@@ -30,7 +30,6 @@ function sendAjaxRequest(year, month) {
 			}
 
 			/*AS신청일*/
-			console.log("**********asRegDates**********");
 			var asRegDates = map.asRegDates;
 			var asRegDateCountByDate = {}; // 날짜별 AS 신청 건수를 추적하는 객체
 
@@ -59,7 +58,6 @@ function sendAjaxRequest(year, month) {
 
 
 			/*AS결과일*/
-			console.log("**********resultDates**********");
 			var resultDates = map.resultDates;
 			var resultDateCountByDate = {}; // 날짜별 AS 신청 건수를 추적하는 객체
 

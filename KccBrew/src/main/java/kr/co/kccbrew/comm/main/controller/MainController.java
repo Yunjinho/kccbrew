@@ -138,37 +138,7 @@ public class MainController {
 		return "redirect:/mypage";
 	}
 
-	/**
-	 * 사용자 프로필 이미지 수정
-	 * 
-	 * @param model
-	 * @param mainPageVo
-	 * @param imgFile
-	 * @return
-	 */
-//	@RequestMapping(value="/updateimg", method = RequestMethod.POST)
-//	public String updateUserImg(Model model, @ModelAttribute MainPageVo mainPageVo, @RequestParam("imgFile") MultipartFile imgFile) {
-//		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-//		
-//		if(authentication != null) {
-//			Object principal = authentication.getPrincipal();
-//			if(principal instanceof UserDetails) {
-//				UserDetails userDetails = (UserDetails) principal;
-//				String userId = userDetails.getUsername();
-//				mainPageVo.setUserId(userId);
-//				
-//				try {
-//					mainPageVo.setUserImg(imgFile);
-//					mainServiceImple.updateMyProfileImg(mainPageVo);
-//				}catch (Exception e) {
-//					e.printStackTrace();
-//				}
-//			}
-//		}
-//		return "redirect:/mypage";
-//	}
-
-
+	
 	/************************ 점주 페이지 ******************************/
 
 	// 점포 수정 페이지

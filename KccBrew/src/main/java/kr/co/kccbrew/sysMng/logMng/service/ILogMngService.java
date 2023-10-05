@@ -1,6 +1,7 @@
 package kr.co.kccbrew.sysMng.logMng.service;
 
 
+import java.sql.Date;
 import java.util.List;
 
 import kr.co.kccbrew.sysMng.logMng.model.LogMngVo;
