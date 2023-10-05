@@ -9,6 +9,8 @@ import org.springframework.stereotype.Repository;
 
 import kr.co.kccbrew.sysMng.logMng.model.LogMngVo;
 
+@Repository
+@Mapper
 public interface ILogMngRepository {
 	public void insertLog(LogMngVo log);
 	
