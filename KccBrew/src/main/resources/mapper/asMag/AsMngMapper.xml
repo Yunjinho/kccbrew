@@ -232,7 +232,8 @@
 			s.latitude "latitude",
 			s.longitude "longitude",
 			s.store_telno "storeTelNo",
-			s.store_addr_dtl "storeAddrDtl"
+			s.store_addr_dtl "storeAddrDtl",
+			s.store_seq "storeSeq"
  	FROM store s
 	JOIN store_user_map su ON s.store_seq=su.store_seq
 	WHERE su.user_id=#{userId}
@@ -277,7 +278,8 @@
 		SYSDATE,
 		SYSDATE,
 		'N',
-		null)
+		null,
+		#{storeNm})
 ]]>
 </insert>
 <!-- AS 상세 조회 -->

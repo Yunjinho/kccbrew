@@ -41,4 +41,6 @@ public class StrMngVo {
 	String startDate;
 	String endDate;
 	String keyword;
+	
+	String rowNumber;
 }

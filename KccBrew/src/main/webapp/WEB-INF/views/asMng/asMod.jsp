@@ -61,7 +61,7 @@
 												<fmt:formatDate value="${wishingStartDate}"
 													pattern="yyyy-MM-dd" var="formattedStartDate" />
 												<input type="date" value="${formattedStartDate}"
-													name="wishingStartDate">
+													name="wishingStartDate" onchange="changeStartDate()">
 											</div>
 											<div style="font-size: 2em; text-align: center;">~</div>
 											<div>
@@ -70,7 +70,7 @@
 												<fmt:formatDate value="${wishingEndDate}"
 													pattern="yyyy-MM-dd" var="formattedEndDate" />
 												<input type="date" value="${formattedEndDate}"
-													name="wishingEndDate">
+													name="wishingEndDate" onchange="changeEndDate()">
 											</div>
 										</div>
 

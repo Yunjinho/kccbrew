@@ -23,7 +23,7 @@ public interface IUserRepository {
     public UserVo getUserById(String userId);
     
     /*점주ID로 지점정보 조회*/
-    public StrMngVo getStoreById(String userId);
+    public List<StrMngVo> getStoreById(String userId);
     
     /**
 	 * 운영중인 점포 리스트 조회

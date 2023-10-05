@@ -26,7 +26,7 @@ public interface IAsMngRepository {
 	 * 점포 정보 조회
 	 * @return 로그인한 아이디로 매핑된 점포 정보 
 	 */
-	public AsMngVo selectStrInfo(@Param("userId")String userId);
+	public List<AsMngVo> selectStrInfo(@Param("userId")String userId);
 	
 	/**
 	 * AS 이미지 파일 등록

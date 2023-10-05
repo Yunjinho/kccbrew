@@ -289,4 +289,24 @@
         WHERE store_nm = #{storeNm}
         ]]>
 	</select>
+	
+<select id="selectMyStr" parameterType="string" resultType="kr.co.kccbrew.strMng.model.StrMngVo"> 
+<![CDATA[
+	SELECT 	
+		s.store_nm AS storeNm
+		,s.store_addr AS storeAddr
+		,s.store_addr_dtl AS storeAddrDtl
+		,s.store_telno AS storeTelNo
+		,s.store_seq AS storeSeq
+		,rownum AS rowNumber
+	FROM store s 
+	INNER JOIN store_user_map su ON su.store_seq=s.store_seq 
+	WHERE su.user_id=#{userId}
+]]>
+</select>
+<insert id="insertStr" parameterType="hashmap">
+<![CDATA[
+INSERT INTO store_user_map VALUES(#{storeSeq},#{userId})
+]]>
+</insert>
 </mapper>

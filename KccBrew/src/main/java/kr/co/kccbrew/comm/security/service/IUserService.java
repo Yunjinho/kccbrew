@@ -14,7 +14,7 @@ public interface IUserService {
 	public UserVo insertUserImg(UserVo user);
 	
 	public UserVo getUserById(String userId);
-    public StrMngVo getStoreById(String userId);
+    public List<StrMngVo> getStoreById(String userId);
     
     
 	/**

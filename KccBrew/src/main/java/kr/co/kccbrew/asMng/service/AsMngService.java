@@ -77,7 +77,7 @@ public class AsMngService implements IAsMngService{
 	 * 로그인한 사용자와 매핑 되어있는 점포 정보
 	 */
 	@Override
-	public AsMngVo selectStrInfo(String userId) {
+	public List<AsMngVo> selectStrInfo(String userId) {
 		return asRepository.selectStrInfo(userId);
 	}
 	

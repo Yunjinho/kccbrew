@@ -114,7 +114,7 @@ public class UserMngController {
 	@RequestMapping(value = "/user/info/{userId}", method = RequestMethod.GET)
 	public String findByUserInfo(@PathVariable("userId") String userId, Model model) {
 		UserMngVo userMngVo = userMngService.findByUserId(userId);
-		UserMngVo userDtl = userMngService.findByUserInfo(userId);
+		List<UserMngVo> userDtl = userMngService.findByUserInfo(userId);
 		model.addAttribute("userMngVo", userMngVo);
 		model.addAttribute("userDtl", userDtl);
 		return "userMng/userMngDtl";
@@ -124,7 +124,7 @@ public class UserMngController {
 	@RequestMapping(value = "/user/mod/{userId}", method = RequestMethod.GET)
 	public String userMod(@PathVariable("userId") String userId, Model model) {
 		UserMngVo userMngVo = userMngService.findByUserId(userId);
-		UserMngVo userDtl = userMngService.findByUserInfo(userId);
+		List<UserMngVo> userDtl = userMngService.findByUserInfo(userId);
 		model.addAttribute("userMngVo", userMngVo);
 		model.addAttribute("userDtl", userDtl);
 		return "userMng/userMngMod";
