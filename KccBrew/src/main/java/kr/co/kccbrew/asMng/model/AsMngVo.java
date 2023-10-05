@@ -57,7 +57,7 @@ public class AsMngVo {
 	private String resubmission;
 	private String rejectContentStr;
 	
-	//점주 아이디, 점포 이름, 점포 주소, 점포 상세 주소,위도, 경도, 점포 전화번호
+	//점주 아이디, 점포 이름, 점포 주소, 점포 상세 주소,위도, 경도, 점포 전화번호, 점포 SEQ
 	private String storeMngId;
 	private String storeNm;
 	private String storeAddr;
@@ -65,7 +65,7 @@ public class AsMngVo {
 	private String latitude;
 	private String longitude;
 	private String storeTelNo;
-	
+	private String storeSeq;
 	//그룸코드
 	//장비 코드 리스트
 	//as 상태 코드 리스트

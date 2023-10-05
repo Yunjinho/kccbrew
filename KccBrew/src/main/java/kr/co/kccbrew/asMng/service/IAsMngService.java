@@ -35,7 +35,7 @@ public interface IAsMngService {
 	 * 점포 정보 조회
 	 * @return 로그인한 아이디로 매핑된 점포 정보 
 	 */
-	public AsMngVo selectStrInfo(String userId);
+	public List<AsMngVo> selectStrInfo(String userId);
 	
 	/**
 	 * AS 등록

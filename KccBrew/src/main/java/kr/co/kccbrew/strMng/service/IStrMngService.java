@@ -20,4 +20,16 @@ public interface IStrMngService {
 	void update(StrMngVo store);
 	StrMngVo selectStoreByName(String storeNm);
 
+	/**
+	 * 내 계정에 등록된 점포 조회
+	 * @return
+	 */
+	List<StrMngVo> selectMyStr(String userId);
+	/**
+	 * 내 계정에 점포 추가 등록
+	 * @param userId
+	 * @param storeSeq
+	 */
+	public void insertStr(@Param("userId")String userId,@Param("storeSeq")String storeSeq);
+
 }

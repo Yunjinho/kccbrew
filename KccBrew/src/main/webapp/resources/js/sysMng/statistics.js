@@ -293,6 +293,22 @@ function moveNextYear(){
 	lowRankMechaAjax(year);
 	reapplyRateByMachineAjax(year);
 }
+function downExcel(flag){
+	
+	var year=$("input[name=year]").val();
+	
+	$.ajax({
+		type : "POST",           // 타입 (get, post, put 등등)
+	    url : "/download-statistics",           // 요청할 서버url
+	    dataType : "text",       // 데이터 타입 (html, xml, json, text 등등)
+	    data : {
+	    	'year': year,
+		},
+	    success : function(data) { // 결과 성공 콜백함수
+	    	alert("다운로드가 완료되었습니다.")
+	    }
+	})
+}
 window.onload=function(){
 	var now = new Date();
 	dateFormat='YYYY';

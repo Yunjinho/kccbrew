@@ -150,7 +150,7 @@ public class UserService implements IUserService{
 
 
 	@Override
-	public StrMngVo getStoreById(String userId) {
+	public List<StrMngVo> getStoreById(String userId) {
 		return userRepository.getStoreById(userId);
 	}
 

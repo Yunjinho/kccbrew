@@ -49,13 +49,13 @@
 										<h6><img src="/resources/img/asMng/check.png" class="tag-image">희망 신청일</h6>
 										<div>
 											<div>
-												<input type="date" value="" name="wishingStartDate">
+												<input type="date" value="" name="wishingStartDate" onchange="changeStartDate()">
 											</div>
 											<div style="font-size:2em; text-align:center;">
 												~
 											</div>
 											<div>
-												<input type="date" value="" name="wishingEndDate">
+												<input type="date" value="" name="wishingEndDate" onchange="changeEndDate()">
 											</div>
 										</div>
 
@@ -65,13 +65,27 @@
 												점포명 
 											</div>
 											<div style="flex:0.5;">
-												<input type="text" name="storeNm" value="${strInfo.storeNm}"readonly>
+												<select onchange="changeStr()" name="storeNm" required="required" style=" max-width: initial; width:100%;">
+													<option value="">점포 명</option>
+													<c:forEach var="list" items="${strInfo}">
+														<option value="${list.storeSeq}">
+															${list.storeNm}
+														</option>
+													</c:forEach>
+												</select>
 											</div>
 											<div style="align-self:center;	flex:0.5;text-align:center;">
 												점포 주소 
 											</div>
 											<div style="flex:2;">
-												<input name="storeAddr" value="${strInfo.storeAddr},${strInfo.storeAddrDtl}" style=" max-width: initial; width:100%;"type="text"  readonly>
+												<select name="storeAddr" required="required" style=" max-width: initial; width:100%;" readonly>
+													<option value="">점포 주소</option>
+													<c:forEach var="list" items="${strInfo}">
+														<option>
+															${list.storeAddr},${list.storeAddrDtl}
+														</option>
+													</c:forEach>
+												</select>
 											</div>
 										</div>
 										

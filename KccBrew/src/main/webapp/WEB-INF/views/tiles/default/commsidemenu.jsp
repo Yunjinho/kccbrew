@@ -111,10 +111,10 @@
 				</h2>
 
 				<div class="user-info">
-					<div>
+				<div>
 						<span class="user-info-index">지역 </span> <span id="locationCd"
 							hidden="true"> <c:out value="${store.locationCd}" /></span>
-					</div>
+					</div> 
 					<div>
 						<span class="user-info-index">지점명 </span> <span><c:out
 								value='${store.storeNm}' /></span>
