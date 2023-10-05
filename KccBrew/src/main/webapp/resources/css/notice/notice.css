@@ -1,0 +1,263 @@
+@charset "UTF-8";
+
+/***************** 공지사항 페이지 공통 **************************************/
+.body-wrapper {
+	width:100%;
+	height:100%;
+	background-color: #eef4ff;
+	padding:20px 20px;
+}
+.header-icon {
+	width: 100%;
+	color: white;
+}
+
+.header-icon-background {
+	position:relative;
+	width: 20px;
+	height: 20px;
+	top:6.5px;
+}
+
+.breadcrumb {
+	height:60.67px;
+	display: flex;
+	margin: 0px;
+	background-color: transparent;
+	border: 0px;
+	border-radius: 0px;
+	margin: 0px 40px;
+	color: #666;
+	border-bottom: 1px solid #d9dbdb;
+	padding: 8px 0;
+	font-size: 12px
+}
+
+.breadcrumb-home {
+	display:inline-block;
+	width:45.9px;
+}
+.right-arrow {
+	position: relative;
+}
+
+.breadcrumb li {
+	color: #666;
+	display: block;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	padding: 6px 3px 3px 25px;
+	line-height: 35px
+}
+.breadcrumb li:first-child {
+	background: none;
+	padding-left: 3px;
+}
+
+.breadcrumb li:last-child {
+	color: #333;
+	font-weight: bold;
+}
+
+.content-wrapper {
+	height:auto;
+	padding: 32px 40px;	
+}
+
+h2 {
+	text-align:left;
+	height:100px;
+	line-height:100px;
+	font-size: 2em;
+	font-weight: 500;
+	border-bottom: 2px solid #111111;
+}
+
+/****************** 공지 목록 페이지  *****************************************************/
+
+.table-wrapper {
+	background-color: #ffffff;
+	min-height:700px;
+}
+
+
+.notice-table {
+	width:100%;
+	border:none;
+	border-collapse: collapse;
+}
+
+.notice-table tbody td:nth-child(1) {
+	width:10%;
+}
+.notice-table tbody td:nth-child(2) {
+	width:60%;
+	text-align:left;
+}
+.notice-table tbody td:nth-child(3) {
+	width:10%;
+}
+.notice-table tbody td:nth-child(4) {
+	width:10%;
+}
+.notice-table tbody td:nth-child(5) {
+	width:10%;
+}
+
+.notice-table th, .notice-table td {
+	border:none;
+}
+
+.notice-table th {
+	height:60px;
+	border-bottom:1px solid #111111;
+	border-collapse: collapse;
+	text-align: center;
+	font-weight: bold;
+}
+.notice-table td {
+	height:55px;
+	border-bottom:1px solid #111111;
+	border-collapse: collapse;
+	text-align: center;
+}
+.notice-table tbody tr:hover {
+	background-color: #eeeeee;
+}
+
+.btn-wrapper {
+	margin-top: 50px;
+	display: block;
+	height:24px;
+	text-align: center;
+}
+
+.noticeTitle a {
+	text-decoration: none;
+	color:#111111;
+}
+
+.noticeTitle a:hover {
+	text-decoration: underline;
+}
+
+.writeBtn, #insertNoticeBtn, .cancel, .toListBtn, .deleteBtn, .updateBtn{
+	background-color: navy;
+	color: #ffffff;
+	border: none;
+	padding:5px 10px;
+	border-radius: 4px;
+	display:inline-block;
+	align-items: center;
+	text-decoration: none;
+	margin-right:30px;
+}
+.writeBtn:hover, #insertNoticeBtn:hover, .cancel:hover, .toListBtn:hover, .deleteBtn:hover, .updateBtn:hover{
+	background-color: #E6E6E6;
+	color: #111111;
+	text-decoration: none;
+}
+/************************ 공지 작성 페이지 **************************************************/
+.insert-notice-table {
+	border:none;
+	height: 100%;
+}
+.insert-notice-table tr {
+	height:60px;
+	border-bottom: 1px solid #111111;
+}
+
+.insert-notice-table tr:nth-child(2){
+	height:200px;
+}
+
+.insert-notice-table th {
+	background-color: #eef4ff;
+	width: 200px;
+}
+
+.insert-notice-table td {
+	padding: 10px 10px;
+	border:none;
+}
+
+input[type="text"] {
+    width: 1000px;
+    padding: 10px; 
+    border: 1px solid #ccc;
+}
+
+input[type="file"] {
+    width: 1000px;
+    padding: 10px; 
+    border: 1px solid #ccc;
+}
+
+#count-text {
+	margin-top: 10px;
+	text-align: right;
+}
+#count {
+	color:red;
+}
+
+.modButtons {
+	margin-top:50px;
+	display: block;
+	text-align: center;
+}
+
+/******************* 공지 상세 페이지 CSS ****************************************/
+#noticeDtlTitle {
+	height:70px;
+	line-height: 70px;
+	text-align: center;
+	font-size: 1.3em;
+	font-weight: normal;
+	border-bottom: 1px solid #111111;
+}
+#noticeDtlInfo {
+	font-size:1.1em;
+	height:50px;
+	line-height: 50px;
+	text-align: center;
+	background-color: #f2f2f2;
+	border-bottom: 1px solid #c0c0c0;
+	margin-bottom: 50px;
+}
+.info-name {
+	font-weight:600;
+}
+
+/******************** summernote cdn css 덮어씌우기 *********************************/
+
+.note-frame {
+	font-family: 'Noto Sans';
+}
+.note-editable p {
+	text-align: left;
+}
+.note-editor.note-airframe, .note-editor.note-frame {
+	width:1000px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

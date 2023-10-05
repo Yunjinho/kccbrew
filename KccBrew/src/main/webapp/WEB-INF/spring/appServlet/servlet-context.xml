@@ -77,6 +77,9 @@
 	<!-- <context:component-scan base-package="kr.co.kccbrew.comm.register.controller" 
 		/> -->
 	<context:component-scan
+		base-package="kr.co.kccbrew.notice.controller" />
+	
+	<context:component-scan
 		base-package="kr.co.kccbrew.strMng.controller" />
 	<context:component-scan
 		base-package="kr.co.kccbrew.sysMng.cdMng.controller" />
