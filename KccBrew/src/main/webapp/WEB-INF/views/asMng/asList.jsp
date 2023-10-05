@@ -55,11 +55,11 @@
 											<tr>
 												<th>조회 기간</th>
 												<td colspan="2">
-													<input type="date" name="wishingStartDate" value="${searchContent.wishingStartDate}">
+													<input type="date" name="wishingStartDate" value="${searchContent.wishingStartDate}" onchange="changeStartDate()">
 												</td>
 												<td>~</td>
 												<td colspan="3">
-													<input type="date" name="wishingEndDate" value="${searchContent.wishingEndDate}">
+													<input type="date" name="wishingEndDate" value="${searchContent.wishingEndDate}" onchange="changeEndDate()">
 												</td>
 
 												<!-- 종료 연도 선택 필드 -->

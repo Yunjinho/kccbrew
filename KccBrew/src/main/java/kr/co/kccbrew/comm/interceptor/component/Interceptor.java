@@ -16,7 +16,7 @@ public class Interceptor implements HandlerInterceptor {
 
 	/* ip반환 메소드 */
 	public String getClientIp(HttpServletRequest request) {
-		String ip = request.getHeader("X-Forwarded-For");
+/*		String ip = request.getHeader("X-Forwarded-For");
 
 		if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
 			ip = request.getHeader("Proxy-Client-IP");
@@ -42,7 +42,24 @@ public class Interceptor implements HandlerInterceptor {
 		if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
 			ip = request.getRemoteAddr();
 		}
-		return ip;
+		return ip;*/
+	    String ip = request.getHeader("X-FORWARDED-FOR"); 
+        
+        //proxy 환경일 경우
+        if (ip == null || ip.length() == 0) {
+            ip = request.getHeader("Proxy-Client-IP");
+        }
+
+        //웹로직 서버일 경우
+        if (ip == null || ip.length() == 0) {
+            ip = request.getHeader("WL-Proxy-Client-IP");
+        }
+
+        if (ip == null || ip.length() == 0) {
+            ip = request.getRemoteAddr() ;
+        }
+        
+        return ip;
 	}
 
 	@Override

@@ -135,11 +135,11 @@
 																</select></td>
 
 																<th>휴가기간</th>
-																<td id="form-holiday-period"><span><label for="startDate">시작일:</label> <input
-																	type="date" id="startDate" name="startDate" value=""></span>
-
-																	<span><label for="endDate">종료일:</label> <input type="date"
-																	id="endDate" name="endDate" value=""></span></td>
+																<td id="form-holiday-period"><span><label
+																		for="startDate">시작일:</label> <input type="date"
+																		id="startDate" name="startDate" value=""></span> <span><label
+																		for="endDate">종료일:</label> <input type="date"
+																		id="endDate" name="endDate" value=""></span></td>
 															</tr>
 
 
@@ -430,7 +430,8 @@
 																		<c:otherwise>
 																			<td>
 																				<button class="form-btn"
-																					onclick="openCancelModal(${schedule2.scheduleId})">취소</button>
+																				onclick="openCancelModal('${schedule2.scheduleId}', '${schedule2.startDate}', '${schedule2.endDate}')">취소
+																				</button>
 																			</td>
 																		</c:otherwise>
 																	</c:choose>
@@ -545,9 +546,9 @@
 							</div>
 						</div>
 					</div>
-					
-					
-					
+
+
+
 				</div>
 			</div>
 		</div>

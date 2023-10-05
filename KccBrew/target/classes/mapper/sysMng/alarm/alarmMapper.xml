@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper
+	namespace="kr.co.kccbrew.sysMng.alarm.dao.IAlarmRepository">
+
+	<resultMap id="alarmResult"
+		type="kr.co.kccbrew.sysMng.alarm.model.AlarmVo">
+		<result property="alarmSeq" column="ALARM_SEQ" />
+		<result property="causeAgent" column="CAUSE_AGENT" />
+		<result property="receiverType" column="RECEIVER_TYPE" />
+		<result property="receiverId" column="RECEIVER_ID" />
+		<result property="alarmCategory" column="ALARM_CATEGORY" />
+		<result property="alarmTitle" column="ALARM_TITLE" />
+		<result property="alarmContent" column="ALARM_CONTENT" />
+		<result property="causeDate" column="CAUSE_DTTM" />
+	</resultMap>
+
+
+	<!-- 알람정보 저장 -->
+	<insert id="insertAlarm"
+		parameterType="kr.co.kccbrew.sysMng.alarm.model.AlarmVo">
+		<selectKey keyProperty="alarmSeq" resultType="int"
+			order="BEFORE">
+			SELECT ALARM_SEQ.nextval FROM DUAL
+		</selectKey>
+		INSERT INTO alarm
+		(
+		ALARM_SEQ,
+		CAUSE_AGENT,
+		RECEIVER_TYPE,
+		RECEIVER_ID,
+		ALARM_CATEGORY,
+		ALARM_TITLE,
+		ALARM_CONTENT,
+		CAUSE_DTTM
+		)
+		VALUES
+		(
+		#{alarmSeq},
+		#{causeAgent},
+		#{receiverType, jdbcType=VARCHAR},
+		#{receiverId, jdbcType=VARCHAR},
+		#{alarmCategory, jdbcType=VARCHAR},
+		#{alarmTitle, jdbcType=VARCHAR},
+		#{alarmContent, jdbcType=VARCHAR},
+		#{causeDate}
+		)
+	</insert>
+
+	<!-- 여러 조건에 따른 알람리스트 조회(현재날짜를 기준으로 3일 이내의 데이터만 조회) -->
+	<select id="selectAlarmsByConditions" resultMap="alarmResult"
+		parameterType="map">
+		SELECT * FROM alarm
+		WHERE 1=1
+		<if
+			test="(receiverId != null and receiverId != '') or (receiverType != null and receiverType != '')">
+        <![CDATA[
+        AND ((RECEIVER_ID = #{receiverId}) OR (RECEIVER_TYPE = #{receiverType}))
+        ]]>
+		</if>
+    <![CDATA[
+    AND (TRUNC(SYSDATE) - TRUNC(CAUSE_DTTM)) <= 3
+    ORDER BY CAUSE_DTTM DESC
+    ]]>
+	</select>
+
+
+
+</mapper>

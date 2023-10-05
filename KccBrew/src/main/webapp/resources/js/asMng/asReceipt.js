@@ -18,7 +18,32 @@ function imgTypeCheck(fileName){
 		$("input[name=imgFile]").val("")
 	}
 }
-window.onload=function(){
-	history.replaceState({}, null, location.pathname); 
+function changeStr(){
+	var selected=$("select[name=storeNm] option:selected");
+	var index=selected.index();
 	
+	var addr=$("select[name=storeAddr]");
+	addr.prop("selectedIndex", index);
+};
+function changeStartDate(){
+	var start=$("input[name=wishingStartDate]").val();
+	var end=$("input[name=wishingEndDate]").val();
+	if(end=='') return;
+	if(start>end){
+		alert("시작일은 마지막일보다 이전이여야합니다.");
+		$("input[name=wishingStartDate]").val("");
+	}
 }
+function changeEndDate(){
+	var start=$("input[name=wishingStartDate]").val();
+	var end=$("input[name=wishingEndDate]").val();
+	if(start=='') return;
+	if(start>end){
+		alert("마지막일은 시작일보다 이후이여야합니다.");
+		$("input[name=wishingEndDate]").val("");
+	}
+}
+window.onload=function(){
+	
+	history.replaceState({}, null, location.pathname);
+};

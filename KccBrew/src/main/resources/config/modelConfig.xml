@@ -7,5 +7,6 @@
 		<typeAlias type="kr.co.kccbrew.sysMng.logMng.model.LogMngVo"  alias="logResult" />
 		<typeAlias type="kr.co.kccbrew.comm.security.model.UserVo"  alias="userResult" />
 		<typeAlias type="kr.co.kccbrew.strMng.model.StrMngVo" alias="storeResult" />
+		<typeAlias type="kr.co.kccbrew.sysMng.alarm.model.AlarmVo" alias="alarmResult" />
 	</typeAliases>
 </configuration>

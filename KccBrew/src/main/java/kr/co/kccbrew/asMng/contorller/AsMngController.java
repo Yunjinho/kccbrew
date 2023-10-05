@@ -161,7 +161,7 @@ public class AsMngController {
 
 		UserVo userVo=(UserVo)session.getAttribute("user");
 
-		AsMngVo vo=asMngService.selectStrInfo(userVo.getUserId());
+		List<AsMngVo> vo=asMngService.selectStrInfo(userVo.getUserId());
 		model.addAttribute("strInfo", vo);
 		return "asReceipt";
 	}
