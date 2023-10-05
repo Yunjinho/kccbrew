@@ -46,6 +46,11 @@ public class noticeService implements INoticeServie{
 		// TODO Auto-generated method stub
 		
 	}
+	
+	@Override
+	public void updateNoticeImg(noticeVo noticeVo) {
+		
+	}
 
 	@Override
 	public void deleteNotice(int noticeSeq) {
