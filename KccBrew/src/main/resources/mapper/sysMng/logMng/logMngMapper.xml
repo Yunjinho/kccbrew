@@ -5,7 +5,7 @@
 
 <mapper
 	namespace="kr.co.kccbrew.sysMng.logMng.dao.ILogMngRepository">
-	
+
 	<resultMap id="logResult"
 		type="kr.co.kccbrew.sysMng.logMng.model.LogMngVo">
 		<result property="logSeq" column="LOG_SEQ" />
@@ -61,7 +61,9 @@
 	<!-- 검색된 로그 조회 -->
 	<select id="selectSearchedLogs" resultMap="logResult"
 		parameterType="java.util.Map">
-		SELECT LOG_SEQ, TO_TIMESTAMP(TO_CHAR(LOG_DTTM, 'YYYY-MM-DD HH24:MI:SS'), 'YYYY-MM-DD HH24:MI:SS') AS LOG_DTTM, IP_ADDR, USER_ID, API_ENDPOINT, RSPN_STTS_CODE, USR_TYP, VIEW_TMPLT
+		SELECT LOG_SEQ, TO_TIMESTAMP(TO_CHAR(LOG_DTTM, 'YYYY-MM-DD
+		HH24:MI:SS'), 'YYYY-MM-DD HH24:MI:SS') AS LOG_DTTM, IP_ADDR, USER_ID,
+		API_ENDPOINT, RSPN_STTS_CODE, USR_TYP, VIEW_TMPLT
 		FROM (
 		SELECT
 		ROW_NUMBER() OVER(ORDER BY LOG_SEQ) AS ROW_NUM, LOG.*
@@ -70,22 +72,8 @@
 
 		<!-- 검색 조건 -->
 		<if
-			test="logMngVo.startYr != null and logMngVo.startYr != '' and logMngVo.startMn != null and logMngVo.startMn != ''">
-        <![CDATA[
-        AND (
-            EXTRACT(YEAR FROM LOG_DTTM) > #{logMngVo.startYr}
-            OR (EXTRACT(YEAR FROM LOG_DTTM) = #{logMngVo.startYr} AND EXTRACT(MONTH FROM LOG_DTTM) >= #{logMngVo.startMn})
-        )
-        ]]>
-		</if>
-		<if
-			test="endYr != null and endYr != '' and endMn != null and endMn != ''">
-        <![CDATA[
-        AND (
-            EXTRACT(YEAR FROM LOG_DTTM) < #{logMngVo.endYr}
-            OR (EXTRACT(YEAR FROM LOG_DTTM) = #{logMngVo.endYr} AND EXTRACT(MONTH FROM LOG_DTTM) <= #{logMngVo.endMn})
-        )
-        ]]>
+			test="logMngVo.startDate != null and logMngVo.startDate != '' and logMngVo.endDate != null and logMngVo.endDate != ''">
+       <![CDATA[AND (TRUNC(LOG_DTTM) <= #{endDate} AND TRUNC(LOG_DTTM) >= #{startDate})]]>
 		</if>
 		<if test="logMngVo.uri != null and logMngVo.uri != ''">
 			AND API_ENDPOINT = #{logMngVo.uri}
@@ -102,7 +90,8 @@
 		<if test="logMngVo.ip != null and logMngVo.ip != ''">
 			AND IP_ADDR = #{logMngVo.ip}
 		</if>
-		<if test="logMngVo.statusCode != null and logMngVo.statusCode != ''">
+		<if
+			test="logMngVo.statusCode != null and logMngVo.statusCode != ''">
 			AND RSPN_STTS_CODE = #{logMngVo.statusCode}
 		</if>
 		)
@@ -124,22 +113,8 @@
 		WHERE 1=1
 		<!-- 검색 조건 -->
 		<if
-			test="startYr != null and startYr != '' and startMn != null and startMn != ''">
-		<![CDATA[
-		AND (
-			EXTRACT(YEAR FROM LOG_DTTM) > #{startYr}
-			OR (EXTRACT(YEAR FROM LOG_DTTM) = #{startYr} AND EXTRACT(MONTH FROM LOG_DTTM) >= #{startMn})
-		)
-		]]>
-		</if>
-		<if
-			test="endYr != null and endYr != '' and endMn != null and endMn != ''">
-		<![CDATA[
-		AND (
-			EXTRACT(YEAR FROM LOG_DTTM) < #{endYr}
-			OR (EXTRACT(YEAR FROM LOG_DTTM) = #{endYr} AND EXTRACT(MONTH FROM LOG_DTTM) <= #{endMn})
-		)
-		]]>
+			test="startDate != null and startDate != '' and endDate != null and endDate != ''">
+       <![CDATA[AND (TRUNC(LOG_DTTM) <= #{endDate} AND TRUNC(LOG_DTTM) >= #{startDate})]]>
 		</if>
 		<if test="uri != null and uri != ''">
 			AND API_ENDPOINT = #{uri}
@@ -159,7 +134,7 @@
 		<if test="statusCode != null and statusCode != ''">
 			AND RSPN_STTS_CODE = #{statusCode}
 		</if>
-		) 
+		)
 	</select>
 
 
