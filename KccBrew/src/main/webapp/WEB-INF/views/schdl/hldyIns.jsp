@@ -13,10 +13,7 @@
 <html>
 
 <script>
-	var usedHolidays = $
-	{
-		15 - usedHolidays
-	};
+	var usedHolidays = ${15 - usedHolidays};
 </script>
 
 <head>

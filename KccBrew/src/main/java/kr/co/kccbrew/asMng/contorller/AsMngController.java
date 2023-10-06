@@ -48,6 +48,7 @@ import lombok.RequiredArgsConstructor;
  * 2023-09-07			윤진호				AS 접수
  * 2023-09-13			윤진호				AS 기사 배정
  * 2023-10-06			이세은				AS접수 비동기(ajax)로 변경
+ * 2023-10-06			이세은				AS배정 비동기(ajax)로 변경
  * @author YUNJINHO
  * @version 1.0
  */
@@ -175,11 +176,6 @@ public class AsMngController {
 													  @Value("#{serverImgPath['asReceiptPath']}")String path,
 													  AsMngVo asMngVo,
 													  HttpServletRequest request) {
-
-		/*매개변수 확인*/
-		System.out.println("AsMngController.asReceipt");
-		System.out.println("asMngVo: " + asMngVo);
-		
 		
 		String folderPath=request.getServletContext().getRealPath("")+path;
 		HttpSession session=request.getSession();
@@ -218,14 +214,20 @@ public class AsMngController {
 	 * AS건에 수리기사 배정 후 상태 변경
 	 */
 	@RequestMapping(value="/as-assign",method=RequestMethod.POST)
-	public String asDetail(AsMngVo asMngVo, Model model,HttpServletRequest request) {
+	@ResponseBody
+	public void asDetail(AsMngVo asMngVo, Model model,HttpServletRequest request) {
+		
+		/*파라미터 데이터 확인*/
+		System.out.println("AsMngController.asDetail");
+		System.out.println("asMngVo: " + asMngVo);
+		
 		HttpSession session = request.getSession();
 		UserVo userVo=(UserVo)session.getAttribute("user");
 		asMngVo.setUserId(userVo.getUserId());
 
 		asMngVo.setAsStatusCd("03");
 		asMngVo=asMngService.insertAsAssign(asMngVo);
-		return "redirect:/as-detail?asInfoSeq="+asMngVo.getAsInfoSeq()+"&asAssignSeq="+asMngVo.getAsAssignSeq();
+		/*return "redirect:/as-detail?asInfoSeq="+asMngVo.getAsInfoSeq()+"&asAssignSeq="+asMngVo.getAsAssignSeq();*/
 	}
 	
 	/**
