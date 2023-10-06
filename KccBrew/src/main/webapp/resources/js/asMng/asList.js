@@ -15,11 +15,11 @@ function movePage(pageNumber){
 	
 	$("#search-form").submit();
 }
-function selectAsDetail(asInfoSeq,asAssignSeq){
-	if(asAssignSeq==null){
+function selectAsDetail(asInfoSeq,asAssignSeq,storeSeq){
+	if(asAssignSeq==-1){
 		asAssignSeq=""
 	}
-	location.href="/as-detail?asInfoSeq="+asInfoSeq+"&asAssignSeq="+asAssignSeq;
+	location.href="/as-detail?asInfoSeq="+asInfoSeq+"&asAssignSeq="+asAssignSeq+"&storeSeq="+storeSeq;
 }
 function changeStartDate(){
 	var start=$("input[name=wishingStartDate]").val();

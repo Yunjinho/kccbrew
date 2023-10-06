@@ -391,7 +391,16 @@
 															</c:choose>
 														</td>
 														</c:if>
-														<td><a href="#" onclick="selectAsDetail(${list.asInfoSeq},${list.asAssignSeq})"class="form-btn">조회</a></td>
+														<td>
+															<c:choose>
+																<c:when test="${list.asAssignSeq eq nul}">
+																	<a href="#" onclick="selectAsDetail(${list.asInfoSeq},-1,${list.storeSeq})"class="form-btn">조회</a>
+																</c:when>
+																<c:otherwise>
+																	<a href="#" onclick="selectAsDetail(${list.asInfoSeq},${list.asAssignSeq},${list.storeSeq})"class="form-btn">조회</a>
+																</c:otherwise>
+															</c:choose>
+														</td>
 													</tr>
 												</c:forEach>
 											</tbody>

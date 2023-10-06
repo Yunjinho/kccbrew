@@ -28,6 +28,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
 	// 메세지 수신 시
 	sockjs.onmessage = function(evt) {
+		console.log("onmessage실행!");
 
 		var jsonMessage = JSON.parse(evt.data);
 		var category = jsonMessage.category;
@@ -86,7 +87,7 @@ function sendHolidayCancel(startDate, endDate) {
 	}
 }
 
-/*AS배정신청 시 알람 발신(점주->관리자)*/
+/*AS신청 시 알람 발신(점주->관리자)*/
 function sendAsReceiptAlarm() {
 	console.log(" sendAsReceiptAlarm함수실행!");
 
@@ -113,6 +114,31 @@ function sendAsReceiptAlarm() {
 				machine: machine,
 				startDate: wishingStartDate,
 				endDate: wishingEndDate
+		};
+		var jsonStr = JSON.stringify(data);
+		sockjs.send(jsonStr);
+	} else {
+		console.log("연결되지 않음.");
+	}
+}
+
+
+/*AS배정 시 알람 발신(관리자->수리기사)*/
+function sendAsAssignAlarm() {
+	console.log(" sendAsAssignAlarm함수실행!");
+
+	var storeNm = document.getElementById("storeNm").value;
+	var visitDate = document.getElementById("visitDate").value;
+	var mechanicId = document.getElementById("mechanicId").value;
+
+
+	if (typeof sockjs != 'undefined') {
+		var data = {
+				title: "as-assign",
+				adminId: userId,
+				mechanicId: mechanicId,
+				storeName: storeNm,
+				visitDate: visitDate
 		};
 		var jsonStr = JSON.stringify(data);
 		sockjs.send(jsonStr);
