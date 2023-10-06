@@ -127,53 +127,53 @@ public class MainService implements IMainService{
 	}
 	
 	//사용자 정보 수정하기   
-		@Override
-		public void updateMyProfile(MainPageVo mainPageVo) {
-			insertUserImg(mainPageVo);
-			mainRepository.updateMyProfile(mainPageVo);
-			
-			if(mainPageVo.getMechaLocationCode().equals("지역 상세 선택")) {
-				mainPageVo.setMechaLocationCode(mainPageVo.getMechaLocation());
-			}
-		}
+	@Override
+	public void updateMyProfile(MainPageVo mainPageVo) {
+		insertUserImg(mainPageVo);
+		mainRepository.updateMyProfile(mainPageVo);
 		
-		//이미지를 제외하고 사용자 정보 수정하기
-		@Override
-		public void updateMyProfileExceptImg(MainPageVo mainPageVo) {
-			mainRepository.updateMyProfileExceptImg(mainPageVo);
-			
-			if(mainPageVo.getMechaLocationCode().equals("지역 상세 선택")) {
-				mainPageVo.setMechaLocationCode(mainPageVo.getMechaLocation());
-			}
+		if(mainPageVo.getMechaLocationCode().equals("지역 상세 선택")) {
+			mainPageVo.setMechaLocationCode(mainPageVo.getMechaLocation());
 		}
+	}
+	
+	//이미지를 제외하고 사용자 정보 수정하기
+	@Override
+	public void updateMyProfileExceptImg(MainPageVo mainPageVo) {
+		mainRepository.updateMyProfileExceptImg(mainPageVo);
 		
-		//이미지 정보 등록하기
-		@Override
-		public MainPageVo insertUserImg(MainPageVo mainPageVo) {
-			MainPageVo vo = new MainPageVo();
-			vo.setUserId(mainPageVo.getUserId());
-			//기본 파일정보 등록
-			mainRepository.insertFileInfo(vo);
-			MultipartFile imgFile = mainPageVo.getUserImg();
-			
-			vo.setFileOriginalName(imgFile.getOriginalFilename());
-			vo.setFileDetailServerName(mainPageVo.getUserId()+"_"+imgFile.getOriginalFilename());
-			vo.setFileFmt(imgFile.getContentType());
-			vo.setFileDetailLocation(mainPageVo.getFileDetailLocation());
-			mainPageVo.setFileId(vo.getFileId());
-			//파일 상세 정보 등록
-			mainRepository.insertFileDtlInfo(vo);
-			//이미지 파일 저장
-			String targetPath = mainPageVo.getServerSavePath()+"\\"+vo.getFileDetailServerName();
-			String localPath = mainPageVo.getLocalSavePath()+vo.getFileDetailServerName();
-			try {
-				FileCopyUtils.copy(imgFile.getInputStream(), new FileOutputStream(targetPath));
-				FileCopyUtils.copy(imgFile.getInputStream(), new FileOutputStream(localPath));
-		}catch(Exception e) {
-			System.out.println(e.getMessage());
+		if(mainPageVo.getMechaLocationCode().equals("지역 상세 선택")) {
+			mainPageVo.setMechaLocationCode(mainPageVo.getMechaLocation());
 		}
-		return mainPageVo;
-		}
+	}
+	
+	//이미지 정보 등록하기
+	@Override
+	public MainPageVo insertUserImg(MainPageVo mainPageVo) {
+		MainPageVo vo = new MainPageVo();
+		vo.setUserId(mainPageVo.getUserId());
+		//기본 파일정보 등록
+		mainRepository.insertFileInfo(vo);
+		MultipartFile imgFile = mainPageVo.getUserImg();
+		
+		vo.setFileOriginalName(imgFile.getOriginalFilename());
+		vo.setFileDetailServerName(mainPageVo.getUserId()+"_"+imgFile.getOriginalFilename());
+		vo.setFileFmt(imgFile.getContentType());
+		vo.setFileDetailLocation(mainPageVo.getFileDetailLocation());
+		mainPageVo.setFileId(vo.getFileId());
+		//파일 상세 정보 등록
+		mainRepository.insertFileDtlInfo(vo);
+		//이미지 파일 저장
+		String targetPath = mainPageVo.getServerSavePath()+"\\"+vo.getFileDetailServerName();
+		String localPath = mainPageVo.getLocalSavePath()+vo.getFileDetailServerName();
+		try {
+			FileCopyUtils.copy(imgFile.getInputStream(), new FileOutputStream(targetPath));
+			FileCopyUtils.copy(imgFile.getInputStream(), new FileOutputStream(localPath));
+	}catch(Exception e) {
+		System.out.println(e.getMessage());
+	}
+	return mainPageVo;
+	}
 		
 	//점포 정보 수정하기
 	@Override

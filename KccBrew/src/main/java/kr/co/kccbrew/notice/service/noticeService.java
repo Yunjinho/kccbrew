@@ -34,22 +34,25 @@ public class noticeService implements INoticeServie{
 		noticeRepository.updateReadCount(noticeSeq);
 		return noticeRepository.readNotice(noticeSeq);
 	}
+	
+	@Override
+	public noticeVo readNoticeById(String writerId) {
+		return noticeRepository.readNoticeById(writerId);
+	}
 
 	@Override
 	public void insertNotice(noticeVo noticeVo) {
-		insertNoticeImg(noticeVo);
-		noticeRepository.insertNotice(noticeVo);
+		if(noticeVo.getNoticeImg() == null) {
+			noticeRepository.insertNotice(noticeVo);
+		}else {
+			insertNoticeImg(noticeVo);
+			noticeRepository.insertNotice(noticeVo);
+		}
 	}
 
 	@Override
 	public void updateNotice(noticeVo noticeVo) {
-		// TODO Auto-generated method stub
-		
-	}
-	
-	@Override
-	public void updateNoticeImg(noticeVo noticeVo) {
-		
+		noticeRepository.updateNotice(noticeVo);
 	}
 
 	@Override
