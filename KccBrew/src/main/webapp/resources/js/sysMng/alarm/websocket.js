@@ -43,7 +43,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
 });
 
-/*휴가 신청 시 알람 발신*/
+/*휴가 신청 시 알람 발신(기사,점주->관리자)*/
 function sendHolidayAdd() {
 	console.log(" sendHolidayAdd함수실행!");
 	console.log("sockjs: " + sockjs);
@@ -66,7 +66,7 @@ function sendHolidayAdd() {
 	}
 }
 
-/*휴가 취소 시 알람 발신*/
+/*휴가 취소 시 알람 발신(기사,점주->관리자)*/
 function sendHolidayCancel(startDate, endDate) {
 	console.log(" sendHolidayCancel 함수실행!");
 	console.log("sockjs: " + sockjs);
@@ -78,6 +78,41 @@ function sendHolidayCancel(startDate, endDate) {
 				userType: userType,
 				startDate: startDate,
 				endDate: endDate
+		};
+		var jsonStr = JSON.stringify(data);
+		sockjs.send(jsonStr);
+	} else {
+		console.log("연결되지 않음.");
+	}
+}
+
+/*AS배정신청 시 알람 발신(점주->관리자)*/
+function sendAsReceiptAlarm() {
+	console.log(" sendAsReceiptAlarm함수실행!");
+
+	var wishingStartDate = document.getElementById('wishingStartDate').value;
+	var wishingEndDate = document.getElementById('wishingEndDate').value;
+
+	var storeElement = document.getElementById("storeNm"); 
+	var storeOption = storeElement.options[storeElement.selectedIndex]; 
+	var storeNm = storeOption.textContent; 
+	var storeSeq = storeOption.value;
+
+	var machineElement = document.getElementById("machineCd"); 
+	var machineOption = machineElement.options[machineElement.selectedIndex];
+	var machine = machineOption.textContent; 
+
+
+	if (typeof sockjs != 'undefined') {
+		var data = {
+				title: "as-receipt",
+				userId: userId,
+				userType: userType,
+				storeId: storeSeq,
+				storeName: storeNm,
+				machine: machine,
+				startDate: wishingStartDate,
+				endDate: wishingEndDate
 		};
 		var jsonStr = JSON.stringify(data);
 		sockjs.send(jsonStr);
@@ -122,29 +157,8 @@ function getAlarmData() {
 		success: function(data) {
 			var notificationList = document.getElementById("notification-list");
 
-
 			notificationList.innerHTML = "";
 
-			/*	// 데이터를 반복하여 목록에 추가
-			for (var i = 0; i < alarmData.length; i++) {
-				var item = alarmData[i];
-				var listItem = document.createElement("li");
-				listItem.className =
-					"list-group-item d-flex justify-content-between align-items-start";
-				listItem.innerHTML =
-					'<div class="ms-2 me-auto">' +
-					'<div class="w-bold non-real-time alarm-title">' +
-					item.alarmTitle +
-					'</div>' +
-					'<div class="non-real-time alarm-content">' +
-					item.alarmContent +
-					'</div>' +
-					"</div> ";
-
-				notificationList.appendChild(listItem);
-			}*/
-
-			// 데이터를 반복하여 목록에 추가
 			for (var i = 0; i < data.length; i++) {
 				var item = data[i];
 				var listItem = document.createElement("li");

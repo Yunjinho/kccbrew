@@ -8,9 +8,9 @@ function removeFile(){
 function imgTypeCheck(fileName){
 	var imgFile=fileName.files[0];
 	//파일 확장자 추출	
-    var fileLen = imgFile.name.length;
-    var lastDot = imgFile.name.lastIndexOf('.');
-    var fileType = imgFile.name.substring(lastDot, fileLen).toLowerCase();
+	var fileLen = imgFile.name.length;
+	var lastDot = imgFile.name.lastIndexOf('.');
+	var fileType = imgFile.name.substring(lastDot, fileLen).toLowerCase();
 	//확장자 비교
 	if(fileType == ".jpeg" || fileType == ".jpg" || fileType == ".png"){
 	}else{
@@ -21,7 +21,7 @@ function imgTypeCheck(fileName){
 function changeStr(){
 	var selected=$("select[name=storeNm] option:selected");
 	var index=selected.index();
-	
+
 	var addr=$("select[name=storeAddr]");
 	addr.prop("selectedIndex", index);
 };
@@ -44,6 +44,31 @@ function changeEndDate(){
 	}
 }
 window.onload=function(){
-	
+
 	history.replaceState({}, null, location.pathname);
 };
+
+/*ajax로 AS접수*/
+function performSubmit() {
+	var form = document.getElementById("receipt-form");
+	var formData = new FormData(form);
+
+	$.ajax({
+		url: form.action,
+		type: form.method,
+		data: formData,
+		processData: false, 
+		contentType: false, 
+		success: function(data) {
+			sendAsReceiptAlarm();
+			
+			window.location.href = '/as-list';
+			alert('AS접수가 등록되었습니다!');
+		},
+		error: function(error) {
+			console.log('performSubmit()함수의 ajax 요청 실패:', error);
+		}
+	});
+}
+
+

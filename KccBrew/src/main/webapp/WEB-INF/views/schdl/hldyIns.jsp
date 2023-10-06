@@ -13,16 +13,24 @@
 <html>
 
 <script>
-	var usedHolidays = ${15 - usedHolidays};
+	var usedHolidays = $
+	{
+		15 - usedHolidays
+	};
 </script>
 
 <head>
 
-<!-- 스프링 시큐리티 통해서 userId, userType사용 -->
+<!-- 스프링 시큐리티사용 -->
 <sec:authentication property="principal.username" var="userId" />
 <sec:authentication property="authorities" var="roles" />
 
 <script>
+	/* 세션 사용 */
+	var storeNm = "${sessionScope.store.storeNm}";
+	var storeSeq = "${sessionScope.store.storeSeq}";
+
+	/* 시큐리티 사용 */
 	var userId = '${userId}';
 	console.log(userId);
 
@@ -36,7 +44,6 @@
 <link rel="stylesheet" href="/resources/css/schdl/schdl-common.css" />
 <link rel="stylesheet" href="/resources/css/schdl/myinsertform.css" />
 <link rel="stylesheet" href="/resources/css/log/mylogtest.css" />
-<link rel="stylesheet" href="/resources/css/log/content-template.css" />
 
 <!-- javascript -->
 <script src="<c:url value="/resources/js/schdl/myHldyIns.js"/>"></script>
@@ -67,6 +74,8 @@
 </head>
 
 <body>
+
+
 
 	<%-- Import the necessary Java classes --%>
 	<%@ page import="java.util.Date"%>

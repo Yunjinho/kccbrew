@@ -47,6 +47,7 @@ import lombok.RequiredArgsConstructor;
  * 2023-09-06			윤진호				AS 조회 구현
  * 2023-09-07			윤진호				AS 접수
  * 2023-09-13			윤진호				AS 기사 배정
+ * 2023-10-06			이세은				AS접수 비동기(ajax)로 변경
  * @author YUNJINHO
  * @version 1.0
  */
@@ -169,8 +170,17 @@ public class AsMngController {
 	 * AS 접수
 	 */
 	@RequestMapping(value="/receipt",method=RequestMethod.POST)
-	public String asReceipt(@Value("#{serverImgPath['localPath']}")String localPath,@Value("#{serverImgPath['asReceiptPath']}")String path,AsMngVo asMngVo,HttpServletRequest request) {
+	@ResponseBody
+	public void asReceipt(@Value("#{serverImgPath['localPath']}")String localPath,
+													  @Value("#{serverImgPath['asReceiptPath']}")String path,
+													  AsMngVo asMngVo,
+													  HttpServletRequest request) {
 
+		/*매개변수 확인*/
+		System.out.println("AsMngController.asReceipt");
+		System.out.println("asMngVo: " + asMngVo);
+		
+		
 		String folderPath=request.getServletContext().getRealPath("")+path;
 		HttpSession session=request.getSession();
 		UserVo userVo=(UserVo)session.getAttribute("user");
@@ -180,7 +190,6 @@ public class AsMngController {
 		asMngVo.setLocalSavePath(localPath+path);
 		
 		asMngService.insertAs(asMngVo);
-		return "redirect:/as-list";
 	}
 	
 	/** 
