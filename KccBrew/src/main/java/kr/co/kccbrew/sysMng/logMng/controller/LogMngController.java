@@ -77,7 +77,7 @@ public class LogMngController {
 
 
 	/**
-	 * 로그조회 페이지 요청할 때 페이지 반환한다.
+	 * 로그조회 - 로그조회 페이지 요청할 때 페이지 반환한다.
 	 * 
 	 * @param int currentPage - 현재 페이지 
 	 * @param LogMngVo searchContent - model에 추가하기 위한 LogMngVo객체
@@ -132,7 +132,7 @@ public class LogMngController {
 
 
 	/**
-	 * 검색한 조건에 따른 로그 데이터를 반환한다.
+	 * 로그검색 - 검색한 조건에 따른 로그 데이터를 반환한다.
 	 * 
 	 * @param int currentPage - 현재 페이지 
 	 * @param String startDate - 날짜 검색 시작일

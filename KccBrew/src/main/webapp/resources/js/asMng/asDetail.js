@@ -1,3 +1,21 @@
+function deleteAs(){
+	if(confirm("접수를 취소하시겠습니까?")){
+		var asInfoSeq=$("input[name=asInfoSeq]").val();
+		
+		$.ajax({
+		    type : "POST",           // 타입 (get, post, put 등등)
+		    url : "/delete-as",           // 요청할 서버url
+		    dataType : "text",       // 데이터 타입 (html, xml, json, text 등등)
+		    data : { 
+				'asInfoSeq' : asInfoSeq,
+			},
+		    success : function(data) { // 결과 성공 콜백함수
+				location.href="/as-list";
+		    }
+		});
+		
+	}
+}
 function selectReceiptInfo(){
 	$("#view-receipt>div").css("background-color","#043763");
 	$("#view-receipt>div>span").css("color","white");
@@ -76,14 +94,14 @@ function insertMechaList(data){
 }
 function selectLocation(){changeMach()}
 function selectDate(){
-	var strMngId=$("input[name=strMngId]").val();
+	var storeSeq=$("input[name=storeSeq]").val();
 	var visitDttm=$("input[name=visitDttm]").val();
 	$.ajax({
 		type : "POST",           // 타입 (get, post, put 등등)
 	    url : "/check-str-schedule",           // 요청할 서버url
 	    dataType : "json",       // 데이터 타입 (html, xml, json, text 등등)
 	    data : {
-	    	'strMngId'	: strMngId,
+	    	'storeSeq'	: storeSeq,
 			'visitDttm' : visitDttm
 		},
 	    success : function(data) { // 결과 성공 콜백함수

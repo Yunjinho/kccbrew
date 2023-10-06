@@ -50,7 +50,7 @@ public interface IAsMngRepository {
 	 * @param asInfoSeq : seq 번호
 	 * @return
 	 */
-	public AsMngVo selectAsInfoDetail(@Param("asInfoSeq")String asInfoSeq,@Param("asAssignSeq")String asAssignSeq);
+	public AsMngVo selectAsInfoDetail(@Param("asInfoSeq")String asInfoSeq,@Param("asAssignSeq")String asAssignSeq,@Param("storeSeq")String storeSeq);
 	
 	/**
 	 * AS건에 등록한 파일 정보 조회
@@ -79,7 +79,7 @@ public interface IAsMngRepository {
 	 * @param userId AS 신청인
 	 * @return
 	 */
-	public int checkStrSchedule(@Param("date")String date,@Param("userId")String userId);
+	public int checkStrSchedule(@Param("date")String date,@Param("storeSeq")String storeSeq);
 	
 	/**
 	 * 
@@ -129,4 +129,9 @@ public interface IAsMngRepository {
 	
 	void asMod(AsMngVo asMngVo);
 	void deleteFile(String imgSeq);
+	/**
+	 * AS 접수 취소
+	 * @param asInfoSeq
+	 */
+	public void deleteAs(@Param("asInfoSeq")String asInfoSeq);
 }

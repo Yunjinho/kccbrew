@@ -94,6 +94,7 @@ window.onload=function(){
 										</div>
 										<div class="as-receipt-info">
 										<!-- 기사 배정 및 반려 -->
+										<input type="hidden" name="storeSeq" value="${asDetailInfo.storeSeq}">
 								  		<c:if test="${(asDetailInfo.asStatusCd eq '01' and sessionScope.user.userTypeCd eq '01' and asDetailInfo.asAssignSeq == null) or (sessionScope.user.userTypeCd eq '01' and asDetailInfo.reassign eq'Y')}">
 									  	<div>
 									  		<div class="heading-div">
@@ -108,6 +109,7 @@ window.onload=function(){
 																<td colspan="9"></td>
 																<td>
 																	<div>
+																		<input type="hidden" name="storeSeq" value="${asDetailInfo.storeSeq}">
 																		<button type="submit" class="form-btn">기사 배정</button>
 																	</div>
 																</td>
@@ -222,6 +224,7 @@ window.onload=function(){
 													<input type="hidden" name="asInfoSeq" value="${asDetailInfo.asInfoSeq}">
 													<input type="hidden" name="machineCd" value="${asDetailInfo.machineCd}">
 													<input type="hidden" name="asResultSeq" value="${asDetailInfo.asResultSeq}">
+													<input type="hidden" name="storeSeq" value="${asDetailInfo.storeSeq}">
 												</form>
 									  		</div>
 									  	</c:if>
@@ -245,8 +248,12 @@ window.onload=function(){
 													<td colspan="7"></td>
 													<td >
 														<div>
-															<a href="/as-mod?asInfoSeq=${asDetailInfo.asInfoSeq}&asAssignSeq=${asDetailInfo.asAssignSeq}" class="form-btn"
-																style="margin: 0; float: right;">수정</a>
+															<a onclick="deleteAs()" class="form-btn"
+																style="margin:0px 5px;">취소</a>
+														</div>
+														<div>
+															<a href="/as-mod?asInfoSeq=${asDetailInfo.asInfoSeq}&asAssignSeq=${asDetailInfo.asAssignSeq}&storeSeq=${asDetailInfo.storeSeq}" class="form-btn"
+																style="margin:0px 5px;">수정</a>
 														</div>
 													</td>
 												</tr>
@@ -386,6 +393,7 @@ window.onload=function(){
 								  			<form action="/insertResult" method="post" enctype="multipart/form-data">
 								  				<input type="hidden" name="asInfoSeq" value="${asDetailInfo.asInfoSeq}"> 
 								  				<input type="hidden" name="asAssignSeq" value="${asDetailInfo.asAssignSeq}"> 
+								  				<input type="hidden" name="storeSeq" value="${asDetailInfo.storeSeq}"> 
 								  				<table id="search-box">
 								  					<tr>
 														<th>처리 일자</th>
@@ -534,6 +542,8 @@ window.onload=function(){
 				<hr>
 				<input type="hidden" name="asInfoSeq"
 					value="${asDetailInfo.asInfoSeq}">
+				<input type="hidden" name="storeSeq"
+					value="${asDetailInfo.storeSeq}">
 				<textarea class="content-textarea" name="rejectRs"></textarea>
 				<c:if test="${sessionScope.user.userTypeCd =='03'}">
 					<input type="hidden" name="asAssignSeq" value="${asDetailInfo.asAssignSeq}">
