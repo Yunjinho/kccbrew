@@ -1,27 +1,13 @@
 package kr.co.kccbrew.asMng.contorller;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.security.Principal;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.TreeMap;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.xssf.usermodel.XSSFSheet;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Value;
@@ -47,6 +33,7 @@ import lombok.RequiredArgsConstructor;
  * 2023-09-06			윤진호				AS 조회 구현
  * 2023-09-07			윤진호				AS 접수
  * 2023-09-13			윤진호				AS 기사 배정
+ * 2023-10-06			윤진호				점포 점주 다대다 매핑 수정
  * @author YUNJINHO
  * @version 1.0
  */
@@ -187,8 +174,8 @@ public class AsMngController {
 	 * as 상세 조회
 	 */
 	@RequestMapping(value="/as-detail",method=RequestMethod.GET)
-	public String asDetail(@RequestParam String asInfoSeq,@RequestParam String asAssignSeq, Model model,HttpServletRequest request) {
-		AsMngVo vo = asMngService.selectAsInfoDetail(asInfoSeq,asAssignSeq);
+	public String asDetail(@RequestParam String asInfoSeq,@RequestParam String asAssignSeq, @RequestParam String storeSeq, Model model,HttpServletRequest request) {
+		AsMngVo vo = asMngService.selectAsInfoDetail(asInfoSeq,asAssignSeq,storeSeq);
 		//접수사진
 		if(vo.getFileSeq()!=null) {
 			List<AsMngVo> list=asMngService.selectAsImg(vo.getFileSeq());
@@ -216,14 +203,14 @@ public class AsMngController {
 
 		asMngVo.setAsStatusCd("03");
 		asMngVo=asMngService.insertAsAssign(asMngVo);
-		return "redirect:/as-detail?asInfoSeq="+asMngVo.getAsInfoSeq()+"&asAssignSeq="+asMngVo.getAsAssignSeq();
+		return "redirect:/as-detail?asInfoSeq="+asMngVo.getAsInfoSeq()+"&asAssignSeq="+asMngVo.getAsAssignSeq()+"&storeSeq="+asMngVo.getStoreSeq();
 	}
 	
 	/**
 	 * 반려 신청
 	 */
 	@RequestMapping(value="/reject",method=RequestMethod.POST)
-	public String reject(String asInfoSeq,@RequestParam(defaultValue = "0")String asAssignSeq,String rejectRs,HttpServletRequest request) {
+	public String reject(String asInfoSeq,String storeSeq,@RequestParam(defaultValue = "0")String asAssignSeq,String rejectRs,HttpServletRequest request) {
 		HttpSession session=request.getSession();
 
 		UserVo userVo=(UserVo)session.getAttribute("user");
@@ -236,7 +223,7 @@ public class AsMngController {
 		}else if(userTypeCd.equals("03")){
 			asMngService.updateAssignReject(asAssignSeq, rejectRs,userId);
 		}
-		return "redirect:/as-detail?asInfoSeq="+asInfoSeq+"&asAssignSeq="+asAssignSeq;
+		return "redirect:/as-detail?asInfoSeq="+asInfoSeq+"&asAssignSeq="+asAssignSeq+"&storeSeq="+storeSeq;
 	}
 	
 	/**
@@ -254,7 +241,7 @@ public class AsMngController {
 		asMngVo.setLocalSavePath(localPath+path);
 		
 		asMngService.insertAsResult(asMngVo);
-		return "redirect:/as-detail?asInfoSeq="+asMngVo.getAsInfoSeq()+"&asAssignSeq="+asMngVo.getAsAssignSeq();
+		return "redirect:/as-detail?asInfoSeq="+asMngVo.getAsInfoSeq()+"&asAssignSeq="+asMngVo.getAsAssignSeq()+"&storeSeq="+asMngVo.getStoreSeq();
 	}
 	/**
 	 * AS 만족도 재신청 여부 입력
@@ -304,9 +291,9 @@ public class AsMngController {
 	 */
 	@ResponseBody
 	@RequestMapping(value="/check-str-schedule" , method=RequestMethod.POST)
-	public JSONObject checkStrSchedule(String strMngId,String visitDttm) {
+	public JSONObject checkStrSchedule(String storeSeq,String visitDttm) {
 		HashMap<String, Integer> check= new HashMap<>();
-		int count=asMngService.checkStrSchedule(visitDttm, strMngId);
+		int count=asMngService.checkStrSchedule(visitDttm, storeSeq);
 		check.put("count", count);
 		JSONObject result=new JSONObject(check);
 		return result;
@@ -354,15 +341,19 @@ public class AsMngController {
 	}
 	
 	@RequestMapping(value = "/as-mod", method = RequestMethod.GET)
-	public String asMod(@Value("#{serverImgPath['localPath']}") String localPath,
-			@Value("#{serverImgPath['asReceiptPath']}") String path, @RequestParam String asInfoSeq, @RequestParam String asAssignSeq, Model model,
-			HttpSession session) {
-		AsMngVo vo = asMngService.selectAsInfoDetail(asInfoSeq, asAssignSeq);
+	public String asMod(@Value("#{serverImgPath['localPath']}") String localPath
+			, @Value("#{serverImgPath['asReceiptPath']}") String path, @RequestParam String asInfoSeq
+			, @RequestParam String asAssignSeq,@RequestParam String storeSeq,Model model, HttpSession session) {
+		AsMngVo vo = asMngService.selectAsInfoDetail(asInfoSeq, asAssignSeq,storeSeq);
 		vo.setLocalSavePath(localPath + path);
 		session.setAttribute("asInfoSeq", asInfoSeq);
+		session.setAttribute("asAssignSeq", asAssignSeq);
+		session.setAttribute("storeSeq", storeSeq);
 		session.setAttribute("fileSeq", vo.getFileSeq());
+		
 		model.addAttribute("asInfoSeq", asInfoSeq);
 		model.addAttribute("asAssignSeq", asAssignSeq);
+		model.addAttribute("storeSeq", storeSeq);
 		// 접수사진
 		if (vo.getFileSeq() != null) {
 			List<AsMngVo> list = asMngService.selectAsImg(vo.getFileSeq());
@@ -386,6 +377,8 @@ public class AsMngController {
 		HttpSession session = request.getSession();
 		
 		String asInfoSeq = (String) session.getAttribute("asInfoSeq");
+		String asAssignSeq = (String) session.getAttribute("asAssignSeq");
+		String storeSeq = (String) session.getAttribute("storeSeq");
 		String imgSeq = (String) session.getAttribute("fileSeq");
 		asMngVo.setAsInfoSeq(asInfoSeq);
 		asMngVo.setUserId(userId);
@@ -400,22 +393,26 @@ public class AsMngController {
 		
 		
 		
-		return "redirect:/as-detail?asInfoSeq=" + asInfoSeq + "&asAssignSeq=";
+		return "redirect:/as-detail?asInfoSeq=" + asInfoSeq + "&asAssignSeq="+asAssignSeq+"&storeSeq="+storeSeq;
 	}
 	
 	
 
 	@GetMapping("/getAsInfoImages")
 	@ResponseBody
-	public List<AsMngVo> getAsInfoImages(@RequestParam String asInfoSeq, @RequestParam String asAssignSeq) {
+	public List<AsMngVo> getAsInfoImages(@RequestParam String asInfoSeq, @RequestParam String asAssignSeq,@RequestParam String storeSeq) {
 	    // 이미지 정보를 가져와서 List<AsMngVo> 형태로 반환\
-		AsMngVo vo = asMngService.selectAsInfoDetail(asInfoSeq, asAssignSeq);
+		AsMngVo vo = asMngService.selectAsInfoDetail(asInfoSeq, asAssignSeq,storeSeq);
 		System.out.println(vo.getFileSeq());
 		System.out.println("============================");
 	    List<AsMngVo> imageList = asMngService.selectAsImg(vo.getFileSeq());
 	    return imageList;
 	}
+	
+	@RequestMapping(value="/delete-as")
+	@ResponseBody
+	public String deleteAS(@RequestParam String asInfoSeq) {
+		asMngService.deleteAs(asInfoSeq);
+		return "";
+	}
 }
-
-
-

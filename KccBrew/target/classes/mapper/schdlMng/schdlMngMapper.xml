@@ -79,59 +79,29 @@
 	<!-- 휴가사용현황 조회 -->
 	<select id="selectHolidays" parameterType="map"
 		resultMap="scheduleResult">
-		SELECT *
-		FROM
-		(SELECT ROWNUM AS
-		ROW_NUMBER, subquery.*
-		FROM (
-		SELECT
-		gc.GRP_CD_DTL_NM AS
-		USER_TYPE,
-		users.USER_ID,
-		users.USER_NM,
-		users.USER_TELNO,
-		store.STORE_SEQ,
-		STORE.STORE_NM,
-		STORE.STORE_TELNO,
-		CASE
-		WHEN
-		gc.GRP_CD_DTL_NM = '기사' THEN
-		users.LOCATION_CD
-		WHEN
-		gc.GRP_CD_DTL_NM =
-		'점주' THEN STORE.LOCATION_CD
-		ELSE NULL
-		END AS
-		LOCATION_CD,
-		holiday.HOLIDAY_SEQ AS SCHEDULE_ID,
-		holiday.HLDY_APP,
-		holiday.HLDY_STAR
-		AS START_DATE,
-		holiday.HLDY_END AS
-		END_DATE,
-		holiday.ACTL_USE
-		FROM
-		holiday
-		LEFT OUTER JOIN users ON
-		holiday.USER_ID =
-		users.USER_ID
-		LEFT
-		OUTER JOIN
-		GROUP_CODE_DETAIL gc ON
-		users.USER_TYPE_CD =
-		gc.GRP_CD_DTL_ID
-		LEFT OUTER
-		JOIN STORE_USER_MAP sum
-		ON users.USER_ID =
-		sum.USER_ID
-		LEFT OUTER JOIN
-		STORE ON sum.STORE_SEQ =
-		STORE.STORE_SEQ
-		WHERE gc.GRP_CD_ID = 'U'
-		ORDER
-		BY HOLIDAY_SEQ DESC
-		) subquery
-
+		SELECT * 
+		FROM (SELECT ROWNUM AS ROW_NUMBER, subquery.*
+			FROM ( SELECT gc.GRP_CD_DTL_NM AS USER_TYPE
+							, users.USER_ID
+							, users.USER_NM
+							, users.USER_TELNO
+							, store.STORE_SEQ
+							, STORE.STORE_NM
+							, STORE.STORE_TELNO
+							, CASE WHEN gc.GRP_CD_DTL_NM = '기사' THEN users.LOCATION_CD 
+									WHEN gc.GRP_CD_DTL_NM = '점주' THEN STORE.LOCATION_CD
+									ELSE NULL 
+							END AS LOCATION_CD
+							, holiday.HOLIDAY_SEQ AS SCHEDULE_ID
+							, holiday.HLDY_APP
+							, holiday.HLDY_STAR AS START_DATE
+							, holiday.HLDY_END AS END_DATE
+							, holiday.ACTL_USE
+					FROM holiday
+					LEFT OUTER JOIN users ON holiday.USER_ID = users.USER_ID 
+					LEFT OUTER JOIN (SELECT grp_cd_dtl_id,grp_cd_dtl_nm FROM GROUP_CODE_DETAIL WHERE grp_cd_id='U') gc ON users.USER_TYPE_CD = gc.GRP_CD_DTL_ID 
+					LEFT OUTER JOIN STORE ON holiday.STORE_SEQ = STORE.STORE_SEQ
+					ORDER BY HOLIDAY_SEQ DESC ) subquery 
 		WHERE 1=1
 		<!-- 날짜검색 -->
     <![CDATA[AND (TRUNC(START_DATE) <= #{endDate} AND TRUNC(END_DATE) >= #{startDate})]]>
@@ -417,10 +387,13 @@ EXTRACT(YEAR FROM SCHEDULE_DATE) = 2023 AND EXTRACT(MONTH FROM SCHEDULE_DATE) = 
 			order="BEFORE">
 			SELECT HOLIDAY_SEQ.nextval FROM DUAL
 		</selectKey>
-  <![CDATA[
-    INSERT INTO holiday (HOLIDAY_SEQ, GRP_CD_DTL_ID, USER_ID, HLDY_APP, HLDY_STAR, HLDY_END)
-    VALUES (#{holidaySeq}, #{groupCodeDetailId}, #{userId}, #{appDate}, #{startDate}, #{endDate})
-  ]]>
+    INSERT INTO holiday (HOLIDAY_SEQ, GRP_CD_DTL_ID, USER_ID, HLDY_APP, HLDY_STAR, HLDY_END,STORE_SEQ)
+    VALUES (#{holidaySeq}, #{groupCodeDetailId}, #{userId}, #{appDate}, #{startDate}, #{endDate}
+    <choose>
+    	<when test="groupCodeDetailId eq '02'">,#{storeSeq}</when>
+    	<otherwise>,null</otherwise>
+    </choose>
+    )
 	</insert>
 
 
@@ -560,22 +533,45 @@ EXTRACT(YEAR FROM SCHEDULE_DATE) = 2023 AND EXTRACT(MONTH FROM SCHEDULE_DATE) = 
 
 
 	<!-- 아이디에 따른 실제사용이 Y인 휴무일 조회 -->
-	<select id="selectHolidayDates" resultType="java.util.Map"
-		parameterType="string">
-		select HLDY_STAR, HLDY_END from holiday where
-		ACTL_USE='Y'
-		<if test="id != null and id != ''">
-			AND user_id = #{id}
-		</if>
-		<if test="yr != null and yr != '' and mn != null and mn != ''">
-			and (
-			(EXTRACT(YEAR FROM HLDY_STAR) = #{yr} and
-			EXTRACT(MONTH FROM HLDY_STAR) = #{mn})
-			OR
-			(EXTRACT(YEAR FROM HLDY_END)
-			= #{yr} and EXTRACT(MONTH FROM HLDY_END) = #{mn})
-			)
-		</if>
+	<select id="selectHolidayDates" resultType="java.util.Map" parameterType="string">
+	<choose>
+		<when test="userTypeCd eq '02'">
+			select holiday.HLDY_STAR as "HLDY_STAR"
+					, holiday.HLDY_END  as "HLDY_END"
+					, s.store_nm as "STORE_NM"
+			from holiday 
+			inner join store s on s.store_seq = holiday.store_seq
+			where ACTL_USE='Y'
+			<if test="id != null and id != ''">
+				AND user_id = #{id}
+			</if>
+			<if test="yr != null and yr != '' and mn != null and mn != ''">
+				and (
+				(EXTRACT(YEAR FROM HLDY_STAR) = #{yr} and
+				EXTRACT(MONTH FROM HLDY_STAR) = #{mn})
+				OR
+				(EXTRACT(YEAR FROM HLDY_END)
+				= #{yr} and EXTRACT(MONTH FROM HLDY_END) = #{mn})
+				)
+			</if>
+		</when>
+		<otherwise>
+			select HLDY_STAR, HLDY_END from holiday where
+			ACTL_USE='Y'
+			<if test="id != null and id != ''">
+				AND user_id = #{id}
+			</if>
+			<if test="yr != null and yr != '' and mn != null and mn != ''">
+				and (
+				(EXTRACT(YEAR FROM HLDY_STAR) = #{yr} and
+				EXTRACT(MONTH FROM HLDY_STAR) = #{mn})
+				OR
+				(EXTRACT(YEAR FROM HLDY_END)
+				= #{yr} and EXTRACT(MONTH FROM HLDY_END) = #{mn})
+				)
+			</if>
+		</otherwise>
+	</choose>
 	</select>
 
 	<!-- 아이디에 따른 배정일 조회(배정일이 정해졌으며 수리기사가 반려하지 않은 건) -->
@@ -683,12 +679,4 @@ EXTRACT(YEAR FROM SCHEDULE_DATE) = 2023 AND EXTRACT(MONTH FROM SCHEDULE_DATE) = 
 		WHERE MECHANIC_ID = #{userId} AND
 		TRUNC(RESULT_DTTM) = TRUNC(#{date})
 	</select>
-
-
-
-
-
-
-
-
 </mapper>

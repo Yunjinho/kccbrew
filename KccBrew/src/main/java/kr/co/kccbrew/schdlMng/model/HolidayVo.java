@@ -31,6 +31,7 @@ public class HolidayVo {
 	private Date endDate;
 	private Date appDate;
 	private String actualUse;
+	private String storeSeq;
 
 	/***유효성검증***/
 	@PositiveOrZero
@@ -79,6 +80,9 @@ public class HolidayVo {
 			period = new HashMap<>();
 			period.put(dateType, date);
 		}
+	}
+	public void setStoreSeq(String storeSeq) {
+		this.storeSeq = storeSeq;
 	}
 
 

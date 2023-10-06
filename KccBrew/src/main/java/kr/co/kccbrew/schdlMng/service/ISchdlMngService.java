@@ -45,7 +45,7 @@ public interface ISchdlMngService {
 	public List<String> getIdList(UserVo userVo);
 	
 	/*회원아이디에 따른 스케줄맵 조회*/
-	public List<Map<String, Object>> getAllSchedules(List<String> IdList, String year, String month);
+	public List<Map<String, Object>> getAllSchedules(List<String> IdList, String year, String month,String role);
 	
 	/*ID, 날짜에 따른 휴가리스트 조회*/
 /*	public List<HolidayVo> getHolidaysByIdAndDate(String userId, Date date);*/

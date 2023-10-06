@@ -105,7 +105,23 @@
 											<td colspan="4"><c:out
 													value="<%=new java.text.SimpleDateFormat(\"yyyy-MM-dd\").format(new java.util.Date())%>" /></td>
 										</tr>
-
+										<c:if test="${roles eq '[ROLE_MANAGER]'}">
+										<tr>
+											<th>휴무 점포</th>
+											<td colspan="3">
+												<form:select path="storeSeq" required="required" 
+														style="padding: 5px; border: 2px solid #ccc; border-radius: 5px; 
+																font-size: 14px; outline: none; width: 80%;">
+													<form:option value="">점포명</form:option>
+													<c:forEach var="list" items="${strInfo}">
+														<form:option value="${list.storeSeq}">
+															${list.storeNm}
+														</form:option>
+													</c:forEach>
+												</form:select>
+											</td>
+										</tr>										
+										</c:if>
 										<!-- 휴가시작일 -->
 										<tr>
 											<th>휴가시작일</th>

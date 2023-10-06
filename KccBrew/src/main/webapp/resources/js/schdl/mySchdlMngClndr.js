@@ -30,6 +30,7 @@ function sendAjaxRequest(year, month) {
 				var holidayDates = map.holidayDates;
 				if (holidayDates !== null) {
 					console.log("holidayDates.length: " + holidayDates.length);
+					console.log("holidayDates.length: " + holidayDates[0]);
 					for (var j = 0; j < holidayDates.length; j++) {
 						var HLDY_STAR = holidayDates[j].HLDY_STAR;
 						var HLDY_END = holidayDates[j].HLDY_END;
@@ -46,7 +47,7 @@ function sendAjaxRequest(year, month) {
 
 
 						events.push({
-							title: '휴가',
+							title: '휴가 - '+holidayDates[j].STORE_NM,
 							start: formatStartDate, 
 							end: formatEndDate,    
 							backgroundColor: '#b8cff5', 
