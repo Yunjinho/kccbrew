@@ -78,6 +78,9 @@ public class EchoHandler extends TextWebSocketHandler implements WebSocketHandle
 			case "holiday-cancel" : 
 				holidayCancelMessage(messageMap);
 				break;
+			case "as-receipt" : 
+				asReceiptMessage(messageMap);
+				break;
 			}
 		}
 	}
@@ -179,6 +182,53 @@ public class EchoHandler extends TextWebSocketHandler implements WebSocketHandle
 		alarmVo.setCauseAgent(userId);
 		alarmVo.setReceiverType("관리자");
 		alarmVo.setAlarmTitle("휴가취소");
+		alarmVo.setAlarmContent(message);
+        java.util.Date utilDate = new java.util.Date();
+        java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
+		alarmVo.setCauseDate(sqlDate);
+		
+		try {
+			ObjectMapper objectMapper = new ObjectMapper();
+			String jsonStr = objectMapper.writeValueAsString(jsonMessage);
+
+			// 관리자 웹소켓 세션에 전송
+			Collection<WebSocketSession> sessions = adminSessions.values();
+			for (WebSocketSession session : sessions) {
+				try {
+					session.sendMessage(new TextMessage(jsonStr));
+					alarmService.addAlarm(alarmVo);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	/*AS접수 시 관리자에게 알람메세지 전송 및 DB저장*/
+	public void asReceiptMessage(Map<String, Object> messageMap) {
+		System.out.println("TextWebSocketHandler.holidayCancelMessage");
+		
+		String storeName = (String) messageMap.get("storeName");
+		String storeId = (String) messageMap.get("storeId");
+		String machine = (String)messageMap.get("machine");
+		String startDate = (String) messageMap.get("startDate");
+		String endDate = (String) messageMap.get("endDate");
+
+		String message = storeName + "(지점번호: " + storeId + ")에서" + machine + " AS접수" + "(" + startDate + "~" + endDate + ")" + "를 하였습니다.";
+
+		// JSON 객체 생성
+		Map<String, Object> jsonMessage = new HashMap<>();
+		jsonMessage.put("category", "alarm");
+		jsonMessage.put("title", "AS접수");
+		jsonMessage.put("content", message);
+
+		// AlarmVo객체에 값 대입
+		AlarmVo alarmVo = new AlarmVo();
+		alarmVo.setCauseAgent(storeId);
+		alarmVo.setReceiverType("관리자");
+		alarmVo.setAlarmTitle("AS접수");
 		alarmVo.setAlarmContent(message);
         java.util.Date utilDate = new java.util.Date();
         java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());

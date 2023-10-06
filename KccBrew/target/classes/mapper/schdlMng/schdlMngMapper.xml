@@ -115,7 +115,8 @@
 		<if test="userVo.userNm != null and userVo.userNm != ''">
 			AND USER_NM = #{userVo.userNm}
 		</if>
-		<if test="userVo.locationCd != null and userVo.locationCd != ''">
+		<if
+			test="userVo.userTypeCd != '02' and userVo.locationCd != null and userVo.locationCd != ''">
 			AND LOCATION_CD LIKE '%' || #{userVo.locationCd,
 			jdbcType=VARCHAR}|| '%'
 		</if>
@@ -640,7 +641,8 @@ EXTRACT(YEAR FROM SCHEDULE_DATE) = 2023 AND EXTRACT(MONTH FROM SCHEDULE_DATE) = 
 			IS NULL -->
 		<if test="yr != null and yr != '' and mn != null and mn != ''">
 			AND
-			(EXTRACT(YEAR FROM as_information.reg_dttm ) = #{yr} and
+			(EXTRACT(YEAR FROM as_information.reg_dttm ) = #{yr}
+			and
 			EXTRACT(MONTH FROM as_information.reg_dttm ) =#{mn})
 		</if>
 	</select>
