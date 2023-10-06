@@ -46,7 +46,6 @@ html {
 <!--------------------- 메인 페이지 및 공통 CSS ------------------>
 <link rel="stylesheet" href="${path}/resources/css/comm/mainLayout2.css">
 <link rel="stylesheet" href="${path}/resources/css/comm/reset.css">
-<link rel="stylesheet" href="${path}/resources/css/comm/reset.css">
 <link rel="stylesheet" href="${path}/resources/css/comm/footer.css" />
 
 <sec:authorize access="hasRole('ROLE_ADMIN')">

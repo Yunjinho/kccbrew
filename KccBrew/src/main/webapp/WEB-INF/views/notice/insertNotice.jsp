@@ -31,7 +31,7 @@
 					<li class="right-arrow">
 						<div class="header-icon-background">
 							<img
-								src="<c:url value='resources/img/asMng/free-icon-right-arrow-271228.png' />"
+								src="<c:url value='${path}/resources/img/asMng/free-icon-right-arrow-271228.png' />"
 								alt="Check List" class="header-icon" />
 						</div>
 					</li>
@@ -47,7 +47,7 @@
 						<tbody>
 							<tr>
 								<th>글 제목</th>
-								<td><input type="text" name="noticeTitle" placeholder="제목을 입력하세요" required></td>
+								<td><input type="text" name="noticeTitle" placeholder="제목을 입력하세요" autocomplete="off" required></td>
 							</tr>
 							<tr>
 								<th>글 내용</th>
@@ -63,7 +63,7 @@
 								<td>
 									<div id="fileCount">업로드할 파일을 선택해주세요.(최대 5개)</div>
 									<label for="fileInput" id="fileUploadBtn">파일 선택 </label>
-									<input id="fileInput" type="file" name="noticeImg" onchange="addFile(this);" multiple>
+									<input id="fileInput" type="file" name="noticeFile" onchange="addFile(this);" multiple>
 								</td>
 							</tr>
 							<tr>
@@ -74,8 +74,10 @@
 							</tr>
 						</tbody>
 					</table>
+					<input type="hidden" id="writerName" name="writerName" value="<c:out value="${noticeVo.writerName}"/>">
 					<div class="modButtons">
 						<button type="button" id="insertNoticeBtn">등록</button>
+		
 						<c:url var="cancel" value="/noticelist"></c:url>
 						<a href="${cancel}">
 							<button type="button" class="cancel">취소</button>

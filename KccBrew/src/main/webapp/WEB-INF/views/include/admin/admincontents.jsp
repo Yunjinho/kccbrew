@@ -242,10 +242,6 @@
 					</table>
 				</div>
 				
-				<div class="main-content">
-				
-				</div>
-				
 					<!-- A/S일정 -->
 								<div class="todoAndetc">
 					<div class="to-do-list">

@@ -1,6 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.co.kccbrew.notice.dao.INoticeRepository">
+
+	<!-- 사용자 정보 가져오기 -->
+	<select id="selectUserInfo" parameterType="kr.co.kccbrew.notice.model.noticeVo" resultType="kr.co.kccbrew.notice.model.noticeVo">
+		<![CDATA[
+			SELECT * 
+			FROM users
+			WHERE user_id = #{writetId}
+		]]>
+	</select>
+	
+	<!-- 사용자 정보 가져오기 -->
+	<select id="selectUserName" parameterType="kr.co.kccbrew.notice.model.noticeVo" resultType="kr.co.kccbrew.notice.model.noticeVo">
+		<![CDATA[
+			SELECT user_nm
+			FROM users
+			WHERE user_id = #{writetId}
+		]]>
+	</select>
 	
 	<!-- 공지사항 목록 출력 -->
 	<select id="showAllNoticeList" parameterType="kr.co.kccbrew.notice.model.noticeVo" resultType="kr.co.kccbrew.notice.model.noticeVo">
@@ -101,22 +119,10 @@
 		<![CDATA[
 			UPDATE notification
 			SET mod_user		= #{modUser}
-				,mod_dttm		= #{modDate}
+				,mod_dttm		= SYSDATE
 				,notice_title	= #{noticeTitle}
 				,notice_content = #{noticeContent}
 				,file_seq		= #{fileId}
-			WHERE notice_seq = #{noticeSeq}
-		]]>
-	</update>
-	
-	<!-- 파일 제외 공지사항 수정하기 -->
-	<update id="updateNoticeImg" parameterType="kr.co.kccbrew.notice.model.noticeVo">
-		<![CDATA[
-			UPDATE notification
-			SET mod_user		= #{modUser}
-				,mod_dttm		= #{modDate}
-				,notice_title	= #{noticeTitle}
-				,notice_content = #{noticeContent}
 			WHERE notice_seq = #{noticeSeq}
 		]]>
 	</update>

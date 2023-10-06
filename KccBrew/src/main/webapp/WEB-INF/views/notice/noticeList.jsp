@@ -56,7 +56,7 @@
 								</a>
 							</td>
 							<td>
-								<c:out value="${noti.writerName}"/>
+								관리자
 							</td>
 							<td>
 								<fmt:formatDate value="${noti.writeDate}" pattern="yyyy-MM-dd"/>
