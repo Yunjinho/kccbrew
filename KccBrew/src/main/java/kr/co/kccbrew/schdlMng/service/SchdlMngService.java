@@ -119,7 +119,7 @@ public class SchdlMngService implements ISchdlMngService {
 	@Override
 	public List<Date> getAssignDates(String userId) {
 		Map<String, String> map = new HashMap<>();
-		map.put("Id", userId);
+		map.put("id", userId);
 
 		return schdlMngRepository.selectAssignDates(map);
 	}
