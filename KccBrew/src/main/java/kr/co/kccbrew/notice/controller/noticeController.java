@@ -31,6 +31,7 @@ import com.google.gson.JsonObject;
 
 import kr.co.kccbrew.comm.security.model.UserVo;
 import kr.co.kccbrew.notice.dao.INoticeRepository;
+import kr.co.kccbrew.notice.model.PagingVo;
 import kr.co.kccbrew.notice.model.noticeVo;
 import kr.co.kccbrew.notice.service.noticeService;
 
@@ -41,24 +42,30 @@ public class noticeController {
 	INoticeRepository noticeRepository;
 	
 	/**
-	 * 공지사항 목록 조회
+	 * 공지 목록 조회 - 페이징 처리
+	 * @param vo
 	 * @param model
+	 * @param nowPage
+	 * @param cntPerPage
 	 * @return
 	 */
 	@RequestMapping(value = "/noticelist", method = RequestMethod.GET)
-	public String showNoticeList(Model model) {
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+	public String boardList(PagingVo vo, Model model
+							,@RequestParam(value="nowPage", required=false)String nowPage
+							,@RequestParam(value="cntPerPage", required=false)String cntPerPage) {
 		
-		if(authentication != null) {
-			Object principal = authentication.getPrincipal();
-			if(principal instanceof UserDetails) {
-				UserDetails userDetails = (UserDetails) principal;
-				String userId = userDetails.getUsername();
-				List<noticeVo> noticeList = noticeService.showAllNoticeList();
-				
-				model.addAttribute("noticeList", noticeList);
-			}
+		int total = noticeService.countNotice();
+		if (nowPage == null && cntPerPage == null) {
+			nowPage = "1";
+			cntPerPage = "10";
+		} else if (nowPage == null) {
+			nowPage = "1";
+		} else if (cntPerPage == null) { 
+			cntPerPage = "10";
 		}
+		vo = new PagingVo(total, Integer.parseInt(nowPage), Integer.parseInt(cntPerPage));
+		model.addAttribute("paging", vo);
+		model.addAttribute("viewAll", noticeService.selectNotice(vo));
 		return "notice";
 	}
 	
@@ -88,12 +95,12 @@ public class noticeController {
 								,@Value("#{serverImgPath['userPath']}")String path
 								,HttpServletRequest request) {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		HttpSession session = request.getSession();
-		
+
 		if(authentication != null) {
 			Object principal = authentication.getPrincipal();
 			if(principal instanceof UserDetails) {
 				UserDetails userDetails = (UserDetails) principal;
+				
 				String writerId = userDetails.getUsername();
 				String writerName = userDetails.getUsername();
 				
@@ -122,7 +129,7 @@ public class noticeController {
 				noticeService.insertNotice(noticeVo);
 			}
 		}
-		return "notice";
+		return "redirect:/noticelist";
 	}
 	
 	/**
@@ -192,8 +199,19 @@ public class noticeController {
 		return "adminNoticeUpdate";
 	}
 	
-	@RequestMapping(value="/notice/update", method=RequestMethod.POST)
+	
+	/**
+	 * 공지 수정 
+	 * @param model
+	 * @param noticeVo
+	 * @param localPath
+	 * @param path
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(value="/notice/update/{noticeSeq}", method=RequestMethod.POST)
 	public String updateNotice(Model model
+								,@PathVariable int noticeSeq
 								,@ModelAttribute noticeVo noticeVo
 					            ,@Value("#{serverImgPath['localPath']}")String localPath
 								,@Value("#{serverImgPath['userPath']}")String path
@@ -229,7 +247,7 @@ public class noticeController {
 				noticeService.updateNotice(noticeVo);
 			}
 		}
-		return "notice";
+		return "/noticedetail/" + noticeSeq;
 	}
 	
 }

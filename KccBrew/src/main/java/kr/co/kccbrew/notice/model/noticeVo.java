@@ -42,4 +42,12 @@ public class noticeVo {
 	String grpCdNm;			//그룹 코드명
 	String grpCdDtlId;		//그룹 코드 디테일 아이디
 	String grpCdDtlNm;		//그룹 코드 디테일명
+	
+	/**
+	 * 페이징 변수 
+	 */
+    int currentPage;
+    int pageSize;
+    int totalPages;
+    int totalCount;
 }

@@ -20,6 +20,34 @@
 		]]>
 	</select>
 	
+	<!-- 공지사항 총 개수 -->
+	<select id="countNotice" resultType="int">
+		<![CDATA[
+			SELECT COUNT(*) FROM notification
+		]]>
+	</select>
+	
+	<!-- 페이징 처리 후 공지사항 조회 -->
+	<select id="selectNotice" resultType="kr.co.kccbrew.notice.model.noticeVo">
+		<![CDATA[
+		SELECT * 
+			FROM (
+				SELECT ROWNUM RN, A.* 
+					FROM (
+							SELECT
+								notice_seq		AS "noticeSeq"
+								,writer_name	AS "writerName"
+								,write_dttm		AS "writeDate"
+								,notice_title	AS "noticeTitle"
+								,views			AS "views"
+							FROM notification
+							ORDER BY notice_seq DESC
+							) A
+					)
+		WHERE RN BETWEEN #{start} AND #{end}
+		]]>
+</select>
+	
 	<!-- 공지사항 목록 출력 -->
 	<select id="showAllNoticeList" parameterType="kr.co.kccbrew.notice.model.noticeVo" resultType="kr.co.kccbrew.notice.model.noticeVo">
 		<![CDATA[
@@ -122,7 +150,6 @@
 				,mod_dttm		= SYSDATE
 				,notice_title	= #{noticeTitle}
 				,notice_content = #{noticeContent}
-				,file_seq		= #{fileId}
 			WHERE notice_seq = #{noticeSeq}
 		]]>
 	</update>

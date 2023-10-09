@@ -15,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.google.gson.JsonObject;
 
 import kr.co.kccbrew.notice.dao.INoticeRepository;
+import kr.co.kccbrew.notice.model.PagingVo;
 import kr.co.kccbrew.notice.model.noticeVo;
 import lombok.RequiredArgsConstructor;
 
@@ -23,23 +24,26 @@ import lombok.RequiredArgsConstructor;
 public class noticeService implements INoticeServie{
 	private final INoticeRepository noticeRepository;
 
+	//공지 전체 조회
 	@Override
 	public List<noticeVo> showAllNoticeList() {
 		List<noticeVo> noticeList = noticeRepository.showAllNoticeList();
 		return noticeList;
 	}
-
+	
+	//공지 상세 조회
 	@Override
 	public noticeVo readNotice(int noticeSeq) {
 		noticeRepository.updateReadCount(noticeSeq);
 		return noticeRepository.readNotice(noticeSeq);
 	}
 	
-	@Override
-	public noticeVo readNoticeById(String writerId) {
-		return noticeRepository.readNoticeById(writerId);
-	}
+//	@Override
+//	public noticeVo readNoticeById(String writerId) {
+//		return noticeRepository.readNoticeById(writerId);
+//	}
 
+	//공지 등록
 	@Override
 	public void insertNotice(noticeVo noticeVo) {
 		if(noticeVo.getNoticeImg() == null) {
@@ -50,16 +54,20 @@ public class noticeService implements INoticeServie{
 		}
 	}
 
+	//공지 수정
 	@Override
 	public void updateNotice(noticeVo noticeVo) {
 		noticeRepository.updateNotice(noticeVo);
 	}
 
+	//공지 삭제
 	@Override
 	public void deleteNotice(int noticeSeq) {
 		noticeRepository.deleteNotice(noticeSeq);
 	}
 
+	
+	//공지 이미지 등록
 	@Override
 	public noticeVo insertNoticeImg(noticeVo noticeVo) {
 		noticeVo vo = new noticeVo();
@@ -88,5 +96,17 @@ public class noticeService implements INoticeServie{
 			System.out.println(e.getMessage());
 		}
 		return noticeVo;
+	}
+
+	// 공지사항 총 개수 조회
+	@Override
+	public int countNotice() {
+		return noticeRepository.countNotice();
+	}
+
+	//공지사항 페이징 처리
+	@Override
+	public List<noticeVo> selectNotice(PagingVo vo) {
+		return noticeRepository.selectNotice(vo);
 	}
 }

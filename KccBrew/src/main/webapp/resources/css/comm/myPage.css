@@ -7,9 +7,11 @@ html {
 button {
 	font-family: "Noto Sans";
 }
-
+#mypage-main-wrapper {
+	
+}
 #mypage-wrapper {
-	padding: 20px 20px;
+	padding: 0 20px;
 }
 .arrowAndContents{
 	background-color: #ffffff;
@@ -28,7 +30,7 @@ button {
 }
 
 .breadcrumb {
-	height:60.67px;
+	height:43.67px;
 	display: flex;
 	margin: 0px;
 	background-color: transparent;
@@ -43,17 +45,13 @@ button {
 
 .breadcrumb-home {
 	display:inline-block;
-	width:45.9px;
+	width:60px;
 }
 .right-arrow {
 	position: relative;
 }
 
 .arrowAndContents .page-content-navigation .breadcrumb li {
-	color: #666;
-	display: block;
-	white-space: nowrap;
-	text-overflow: ellipsis;
 	padding: 6px 3px 3px 25px;
 	line-height: 35px
 }
@@ -71,14 +69,15 @@ button {
 	padding: 32px 40px;
 }
 
-.arrowAndContents .page-content-navigation .breadcrumb li {
+.breadcrumb-home {
+	height:44px;
 }
 
 .category{
 	font-weight: 500;
     line-height: 1.1;
     color: inherit;
-    font-size: 2.2em;
+    font-size: 30px;
     margin-top:20px;
 }
 
@@ -143,13 +142,15 @@ tr > th:nth-child(7) {
 }
 
 input[type="text"] {
-    width: 100%;
+    width: 90%;
     padding: 10px; 
     border: 1px solid #ccc;
     border-radius: 5px; 
 }
 
-
+#userAddress {
+	width:97%;
+}
 .modButtons {
 	width: 100%;
 	height:24px;

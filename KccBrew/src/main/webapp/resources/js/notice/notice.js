@@ -18,9 +18,9 @@ $(document).ready(function() {
 	});
 	
 	//공지 수정
-//	$('#updateNoticeBtn').on('click', function(){
-//		updateForm();
-//	});
+	$('#updateNoticeBtn').on('click', function(){
+		updateForm();
+	});
 	
 	$("#updateNoticeBtn").click(function(){
         var formData = new FormData();
@@ -148,6 +148,7 @@ function updateForm(){
 	var formData = new FormData();
 	var noticeTitle = $('input[name="noticeTitle"]').val();
 	var noticeContent = $('#notice-content').val();
+	var noticeSeq = $('input[name="noticeSeq"]').val();
 	formData.append('noticeTitle', noticeTitle);
 	formData.append('noticeContent', noticeContent);
 
@@ -157,7 +158,7 @@ function updateForm(){
 	}
 	
 	$.ajax({
-		url: '/notice/update/{noticeSeq}',
+		url: '/notice/update/' + noticeSeq,
 		type: 'POST',
 		data: formData,
 		processData: false,
@@ -170,7 +171,6 @@ function updateForm(){
 		}
 	});
 }
-
 	
 /* 폼 전송 */
 //function submitForm() {

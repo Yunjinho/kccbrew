@@ -169,10 +169,10 @@ public class MainService implements IMainService{
 		try {
 			FileCopyUtils.copy(imgFile.getInputStream(), new FileOutputStream(targetPath));
 			FileCopyUtils.copy(imgFile.getInputStream(), new FileOutputStream(localPath));
-	}catch(Exception e) {
-		System.out.println(e.getMessage());
-	}
-	return mainPageVo;
+		}catch(Exception e) {
+			System.out.println(e.getMessage());
+		}
+		return mainPageVo;
 	}
 		
 	//점포 정보 수정하기
