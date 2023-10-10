@@ -24,9 +24,10 @@ import kr.co.kccbrew.sysMng.alarm.service.IAlarmService;
  * @Decription : AS절차에 따른 사용자 알람수신
  * 
  * @   수정일               			수정자             					수정내용
- * ============      ==============     ========================
+ * ============      ==============     ================================================
  * 2023-09-28							이세은									최초생성
  * 2023-10-03							이세은						휴가신청에 따른 알람 구현
+ * 2023-10-10							이세은						다중 점포 소유점주에 따라 알림메세지에 점포정보 포함
  * 
  * @author LEESEEION
  * @version 1.0
@@ -55,7 +56,6 @@ public class EchoHandler extends TextWebSocketHandler implements WebSocketHandle
 
 	@Override
 	public void handleTextMessage(WebSocketSession session, TextMessage textMessage) throws IOException {
-		String sendMessege = "test";
 
 		// JSON타입 메세지 파싱
 		System.out.println("Received JSON: " + textMessage.getPayload());
@@ -80,6 +80,9 @@ public class EchoHandler extends TextWebSocketHandler implements WebSocketHandle
 				break;
 			case "as-receipt" : 
 				asReceiptMessage(messageMap);
+				break;
+			case "as-assign" : 
+				asAssignMessage(messageMap);
 				break;
 			}
 		}
@@ -107,7 +110,7 @@ public class EchoHandler extends TextWebSocketHandler implements WebSocketHandle
 				managerSessions.put(userId, session); 
 				System.out.println("managerSessions: " + managerSessions);
 				break;  
-			default :
+			case "[ROLE_MECHA]" : 
 				mechaSessions.put(userId, session);
 				System.out.println("mechaSessions: " + mechaSessions);
 			}
@@ -118,12 +121,19 @@ public class EchoHandler extends TextWebSocketHandler implements WebSocketHandle
 
 	/*휴가신청 시 관리자에게 알람메세지 전송 및 DB저장*/
 	public void holidayAddMessage(Map<String, Object> messageMap) {
+		System.out.println("EchoHandler.holidayAddMessage");
+
 		String userType = getUserType((String) messageMap.get("userType"));
 		String userId = (String) messageMap.get("userId");
 		String startDate = (String) messageMap.get("startDate");
 		String endDate = (String) messageMap.get("endDate");
+		String storeNm =  (String) messageMap.get("storeNm");
+		String storeSeq = (String) messageMap.get("storeSeq");
+		String message = userType + "(" + userId + ")님이 휴가" + "(" + startDate + "~" + endDate + ")" + "를 신청하였습니다";
 
-		String message = userType + "(" + userId + ")님이 휴가" + "(" + startDate + "~" + endDate + ")" + "를 신청하였습니다.";
+		if(userType.equals("점주")) {
+			message = storeNm + "(지점번호: " + storeSeq + ")에서 휴가(" + startDate + "~" + endDate + ")를 신청하였습니다.";
+		}
 
 		// JSON 객체 생성
 		Map<String, Object> jsonMessage = new HashMap<>();
@@ -137,10 +147,10 @@ public class EchoHandler extends TextWebSocketHandler implements WebSocketHandle
 		alarmVo.setReceiverType("관리자");
 		alarmVo.setAlarmTitle("휴가신청");
 		alarmVo.setAlarmContent(message);
-        java.util.Date utilDate = new java.util.Date();
-        java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
+		java.util.Date utilDate = new java.util.Date();
+		java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
 		alarmVo.setCauseDate(sqlDate);
-		
+
 		try {
 			ObjectMapper objectMapper = new ObjectMapper();
 			String jsonStr = objectMapper.writeValueAsString(jsonMessage);
@@ -159,17 +169,22 @@ public class EchoHandler extends TextWebSocketHandler implements WebSocketHandle
 			e.printStackTrace();
 		}
 	}
-	
+
 	/*휴가취소 시 관리자에게 알람메세지 전송 및 DB저장*/
 	public void holidayCancelMessage(Map<String, Object> messageMap) {
-		System.out.println("TextWebSocketHandler.holidayCancelMessage");
-		
+		System.out.println("EchoHandler.holidayCancelMessage");
+
 		String userType = getUserType((String) messageMap.get("userType"));
 		String userId = (String) messageMap.get("userId");
 		String startDate = (String) messageMap.get("startDate");
 		String endDate = (String) messageMap.get("endDate");
+		String storeNm =  (String) messageMap.get("storeNm");
+		String storeSeq = (String) messageMap.get("storeSeq");
+		String message = userType + "(" + userId + ")님이 휴가" + "(" + startDate + "~" + endDate + ")" + "를 취소하였습니다";
 
-		String message = userType + "(" + userId + ")님이 휴가" + "(" + startDate + "~" + endDate + ")" + "를 취소하였습니다.";
+		if(userType.equals("점주")) {
+			message = storeNm + "(지점번호: " + storeSeq + ")에서 휴가(" + startDate + "~" + endDate + ")를 취소하였습니다.";
+		}
 
 		// JSON 객체 생성
 		Map<String, Object> jsonMessage = new HashMap<>();
@@ -183,10 +198,10 @@ public class EchoHandler extends TextWebSocketHandler implements WebSocketHandle
 		alarmVo.setReceiverType("관리자");
 		alarmVo.setAlarmTitle("휴가취소");
 		alarmVo.setAlarmContent(message);
-        java.util.Date utilDate = new java.util.Date();
-        java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
+		java.util.Date utilDate = new java.util.Date();
+		java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
 		alarmVo.setCauseDate(sqlDate);
-		
+
 		try {
 			ObjectMapper objectMapper = new ObjectMapper();
 			String jsonStr = objectMapper.writeValueAsString(jsonMessage);
@@ -205,11 +220,11 @@ public class EchoHandler extends TextWebSocketHandler implements WebSocketHandle
 			e.printStackTrace();
 		}
 	}
-	
+
 	/*AS접수 시 관리자에게 알람메세지 전송 및 DB저장*/
 	public void asReceiptMessage(Map<String, Object> messageMap) {
-		System.out.println("TextWebSocketHandler.holidayCancelMessage");
-		
+		System.out.println("EchoHandler.asReceiptMessage");
+
 		String storeName = (String) messageMap.get("storeName");
 		String storeId = (String) messageMap.get("storeId");
 		String machine = (String)messageMap.get("machine");
@@ -230,10 +245,10 @@ public class EchoHandler extends TextWebSocketHandler implements WebSocketHandle
 		alarmVo.setReceiverType("관리자");
 		alarmVo.setAlarmTitle("AS접수");
 		alarmVo.setAlarmContent(message);
-        java.util.Date utilDate = new java.util.Date();
-        java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
+		java.util.Date utilDate = new java.util.Date();
+		java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
 		alarmVo.setCauseDate(sqlDate);
-		
+
 		try {
 			ObjectMapper objectMapper = new ObjectMapper();
 			String jsonStr = objectMapper.writeValueAsString(jsonMessage);
@@ -243,6 +258,54 @@ public class EchoHandler extends TextWebSocketHandler implements WebSocketHandle
 			for (WebSocketSession session : sessions) {
 				try {
 					session.sendMessage(new TextMessage(jsonStr));
+					alarmService.addAlarm(alarmVo);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+
+	/*AS배정 시 수리기사에게 알람메세지 전송 및 DB저장*/
+	public void asAssignMessage(Map<String, Object> messageMap) {
+		System.out.println("EchoHandler.asAssignMessage");
+
+		String mechanicId = (String)messageMap.get("mechanicId");
+		String adminId = (String)messageMap.get("adminId");
+		String storeName = (String) messageMap.get("storeName");
+		//		String storeId = (String) messageMap.get("storeId");
+		String visitDate = (String) messageMap.get("visitDate");;
+
+		String message = storeName + "의 AS접수가 배정" + "(" + visitDate + ")" + "되었습니다.";
+
+		// JSON 객체 생성
+		Map<String, Object> jsonMessage = new HashMap<>();
+		jsonMessage.put("category", "alarm");
+		jsonMessage.put("title", "AS배정");
+		jsonMessage.put("content", message);
+
+		// AlarmVo객체에 값 대입
+		AlarmVo alarmVo = new AlarmVo();
+		alarmVo.setCauseAgent(adminId);
+		alarmVo.setReceiverType("수리기사");
+		alarmVo.setReceiverId(mechanicId);
+		alarmVo.setAlarmTitle("AS배정");
+		alarmVo.setAlarmContent(message);
+		java.util.Date utilDate = new java.util.Date();
+		java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
+		alarmVo.setCauseDate(sqlDate);
+
+		try {
+			ObjectMapper objectMapper = new ObjectMapper();
+			String jsonStr = objectMapper.writeValueAsString(jsonMessage);
+
+			// 관리자 웹소켓 세션에 전송
+			if(userIdSessions.containsKey(mechanicId)) {
+				try {
+					userIdSessions.get(mechanicId).sendMessage(new TextMessage(jsonStr));
 					alarmService.addAlarm(alarmVo);
 				} catch (IOException e) {
 					e.printStackTrace();

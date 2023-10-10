@@ -53,5 +53,4 @@ public class EchoHandle extends TextWebSocketHandler{
 		logger.info("Socket 끊음");
 		//웹 소켓이 종료될 때마다 리스트에서 뺀다.
 		sessions.remove(session);
-	}
-}
+	}}

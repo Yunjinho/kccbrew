@@ -39,16 +39,12 @@
 <body>
 	<c:set var="user" value="${sessionScope.user}" />
 
-	<!-- 자바스크립트에서 session사용 -->
 	<script>
+	var storeNm = "${sessionScope.store.storeNm}";
+	var storeSeq = "${sessionScope.store.storeSeq}";
+	
     var equipmentCodeValue = "<c:out value='${user.eqpmnCd}' />";
-</script>
-
-	<script>
     var locationCodeValue = "<c:out value='${user.locationCd}' />";
-</script>
-
-	<script>
     var userTypeCd = "<c:out value='${user.userTypeCd}' />";
 </script>
 
@@ -389,6 +385,9 @@
 															<th>ID</th>
 															<th>휴가번호</th>
 														</sec:authorize>
+														<sec:authorize access="hasRole('ROLE_MANAGER')">
+															<th>지점명</th>
+														</sec:authorize>
 														<th>신청일</th>
 														<th>시작일</th>
 														<th>종료일</th>
@@ -417,6 +416,10 @@
 																		<td><c:out value="${schedule2.userId}" /></td>
 																		<td><c:out value="${schedule2.scheduleId}" /></td>
 																	</sec:authorize>
+																	<sec:authorize access="hasRole('ROLE_MANAGER')">
+																		<td data-store-id="${schedule2.storeId}"><c:out
+																				value="${schedule2.storeName}" /></td>
+																	</sec:authorize>
 																	<td><c:out value="${schedule2.appDate}" /></td>
 																	<td><c:out value="${schedule2.startDate}" /></td>
 																	<td><c:out value="${schedule2.endDate}" /></td>
@@ -430,7 +433,8 @@
 																		<c:otherwise>
 																			<td>
 																				<button class="form-btn"
-																				onclick="openCancelModal('${schedule2.scheduleId}', '${schedule2.startDate}', '${schedule2.endDate}')">취소
+																					onclick="openCancelModal('${schedule2.scheduleId}', '${schedule2.startDate}', '${schedule2.endDate}'); 
+																					getStoreData('${schedule2.storeId}', '${schedule2.storeName}');">취소
 																				</button>
 																			</td>
 																		</c:otherwise>
