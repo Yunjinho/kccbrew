@@ -255,3 +255,7 @@ fieldset>form>div {
 	cursor: pointer;
 		font-weight: 600;
 }
+
+.error_message {
+	    margin: 10px 5px;
+}
