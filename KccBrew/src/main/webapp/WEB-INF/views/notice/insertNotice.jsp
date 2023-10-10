@@ -61,9 +61,15 @@
 							<tr>
 								<th>첨부 파일</th>
 								<td>
-									<div id="fileCount">업로드할 파일을 선택해주세요.(최대 3개)</div>
-									<label for="fileInput" id="fileUploadBtn">파일 선택 </label>
-									<input type="file" id="fileInput" name="noticeImg" onchange="addFile(this);" multiple accept=".jpg, .jpeg, .png">
+									<div style="display:flex;">
+										<div id="fileCount" style="margin: 0px 5px 0px 0px;">업로드할 파일을 선택해주세요.(최대 3개)</div>
+										<div class="file-box">
+											<div class="file-label">
+												<label for="fileInput" id="fileUploadBtn">파일 선택 </label>
+												<input type="file" id="fileInput" name="noticeImg" onchange="addFile(this);" multiple accept=".jpg, .jpeg, .png">
+											</div>
+										</div>
+									</div>
 								</td>
 							</tr>
 							<tr>

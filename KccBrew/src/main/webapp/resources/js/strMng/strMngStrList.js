@@ -1,3 +1,19 @@
+function deleteStrDetail(storeSeq){
+	 if (!confirm("해당 점포를 내 점포에서 삭제 하시겠습니까?")) {
+	 } else {
+	    	$.ajax({
+	    		type : "POST",           // 타입 (get, post, put 등등)
+	    		url : "/delete-my-store",           // 요청할 서버url
+	    		dataType : "text",       // 데이터 타입 (html, xml, json, text 등등)
+	    		data : {
+	    			'storeSeq' : storeSeq
+	    		},
+	    		success : function(data) { // 결과 성공 콜백함수
+	    			 window.location.href = "/store-list";
+	    		}
+	    	});
+	  }
+}
 function selectStore(storeSeq){
 	 if (!confirm("해당 점포를 내 점포에 등록 하시겠습니까?")) {
 	 } else {
@@ -12,7 +28,7 @@ function selectStore(storeSeq){
 	    			 window.location.href = "/store-list";
 	    		}
 	    	});
-	    }
+	  }
 }
 
 //점포 목록 테이블 데이터 변경
