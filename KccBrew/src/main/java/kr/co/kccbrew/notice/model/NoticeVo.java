@@ -23,6 +23,7 @@ public class NoticeVo {
 	int views;				//조회수
 	int page;				//페이지
 	
+	String noticeId;
 	
 	/**
 	 * 파일 저장 VO

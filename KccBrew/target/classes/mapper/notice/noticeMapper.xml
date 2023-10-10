@@ -161,4 +161,13 @@
 		WHERE file_seq=#{fileSeq}
 	]]>
 	</select>
+	<select id="selectMainNotice" resultType="kr.co.kccbrew.notice.model.NoticeVo">
+	<![CDATA[
+		SELECT notice_seq AS noticeId
+				,notice_title AS noticeTitle
+		FROM notification
+		WHERE ROWNUM BETWEEN 1 AND 5 
+		ORDER BY notice_seq DESC
+	]]>
+	</select>
 </mapper>

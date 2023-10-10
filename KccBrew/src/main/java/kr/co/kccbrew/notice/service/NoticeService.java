@@ -110,4 +110,9 @@ public class NoticeService implements INoticeServie{
 	public List<NoticeVo> noticeImageList(String fieleSeq) {
 		return noticeRepository.noticeImageList(fieleSeq);
 	}
+
+	@Override
+	public List<NoticeVo> selectMainNotice() {
+		return noticeRepository.selectMainNotice();
+	}
 }
