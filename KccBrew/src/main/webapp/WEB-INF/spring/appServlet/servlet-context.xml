@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans:beans xmlns="http://www.springframework.org/schema/mvc"
+<beans:beans
+	xmlns="http://www.springframework.org/schema/mvc"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:beans="http://www.springframework.org/schema/beans"
 	xmlns:context="http://www.springframework.org/schema/context"
@@ -87,8 +88,7 @@
 		base-package="kr.co.kccbrew.sysMng.logMng.controller" />
 	<context:component-scan
 		base-package="kr.co.kccbrew.asMng.contorller" />
-	<context:component-scan
-		base-package="kr.co.kccbrew.asMng.asMod" />
+
 	<context:component-scan
 		base-package="kr.co.kccbrew.userMng.contorller" />
 	<context:component-scan
@@ -101,6 +101,8 @@
 		base-package="kr.co.kccbrew.comm.util" />
 	<context:component-scan
 		base-package="kr.co.kccbrew.sysMng.statistics.controller" />
+	<context:component-scan
+		base-package="kr.co.kccbrew.comm.chat.controller" />
 			<context:component-scan
 		base-package="kr.co.kccbrew.sysMng.alarm.controller" />
 	<!-- Controller -->
@@ -194,6 +196,19 @@
 		</websocket:handshake-interceptors>
 		<websocket:sockjs />
 	</websocket:handlers>   
+
+	<!-- 웹소켓 -->
+	<beans:bean id="echoHandle"
+		class="kr.co.kccbrew.comm.util.EchoHandle" />
+
+	<websocket:handlers>
+		<websocket:mapping handler="echoHandle" path="/echo" />
+		<websocket:handshake-interceptors>
+			<beans:bean
+				class="org.springframework.web.socket.server.support.HttpSessionHandshakeInterceptor" />
+		</websocket:handshake-interceptors>
+		<websocket:sockjs />
+	</websocket:handlers>
 
 
 </beans:beans>

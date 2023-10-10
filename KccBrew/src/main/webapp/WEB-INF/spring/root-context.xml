@@ -27,6 +27,7 @@
 	<mybatis-spring:scan base-package="kr.co.kccbrew.comm.security.dao" />
 	<mybatis-spring:scan base-package="kr.co.kccbrew.comm.util" />
 	<mybatis-spring:scan base-package="kr.co.kccbrew.sysMng.statistics.dao" />
+	<mybatis-spring:scan base-package="kr.co.kccbrew.comm.chat.dao" />
 	<mybatis-spring:scan base-package="kr.co.kccbrew.sysMng.alarm.dao" />
 
 
@@ -49,6 +50,7 @@
 	<context:component-scan base-package="kr.co.kccbrew.comm.security.service" />
 	<context:component-scan base-package="kr.co.kccbrew.comm.util" />
 	<context:component-scan base-package="kr.co.kccbrew.sysMng.statistics.service" />
+	<context:component-scan base-package="kr.co.kccbrew.comm.chat.service" />
 	<context:component-scan base-package="kr.co.kccbrew.sysMng.alarm.service" />
 
 	<!--Service -->
