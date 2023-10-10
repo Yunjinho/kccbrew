@@ -36,4 +36,10 @@ public interface IStrMngRepository {
 	 * @param storeSeq
 	 */
 	public void insertStr(@Param("userId")String userId,@Param("storeSeq")String storeSeq);
+	/**
+	 * 점포 제거
+	 * @param userId
+	 * @param storeSeq
+	 */
+	void deleteStr(@Param("userId")String userId,@Param("storeSeq")String storeSeq);
 }

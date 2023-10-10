@@ -232,7 +232,7 @@
 													<c:when test="${main.machineCode == '04'}">에어컨</c:when>
 													<c:when test="${main.machineCode == '05'}">온수기</c:when>
 												</c:choose></td>
-											<td>강남점</td>
+											<td><c:out value="${main.storeNm}" /></td>
 											<td><c:out value="${main.mechanicName}" /></td>
 										</tr>
 									</c:forEach>
@@ -263,7 +263,7 @@
 													<c:when test="${main.machineCode == '04'}">에어컨</c:when>
 													<c:when test="${main.machineCode == '05'}">온수기</c:when>
 												</c:choose></td>
-											<td>강남점</td>
+											<td><c:out value="${main.storeNm}" /></td>
 											<td><c:out value="${main.mechanicName}" /></td>
 										</tr>
 									</c:forEach>
@@ -294,7 +294,7 @@
 													<c:when test="${main.machineCode == '04'}">에어컨</c:when>
 													<c:when test="${main.machineCode == '05'}">온수기</c:when>
 												</c:choose></td>
-											<td>강남점</td>
+											<td><c:out value="${main.storeNm}" /></td>
 											<td><c:out value="${main.mechanicName}" /></td>
 										</tr>
 									</c:forEach>

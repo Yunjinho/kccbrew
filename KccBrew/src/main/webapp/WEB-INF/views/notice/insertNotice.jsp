@@ -41,8 +41,8 @@
 			<!-- ********** 페이지 네비게이션 끝 ********** -->
 			
 			<div class="content-wrapper">
-				<h2>공지사항 등록</h2>
-				<form method="POST" id="insertNoticeForm" name="insertNoticeForm" onsubmit="return false;" enctype="multipart/form-data">
+				<h2>공지사항 작성</h2>
+				<form method="POST" id="insertNoticeForm" action="/insertnoticeform" name="insertNoticeForm" enctype="multipart/form-data">
 					<table class="insert-notice-table">
 						<tbody>
 							<tr>
@@ -61,9 +61,15 @@
 							<tr>
 								<th>첨부 파일</th>
 								<td>
-									<div id="fileCount">업로드할 파일을 선택해주세요.(최대 5개)</div>
-									<label for="fileInput" id="fileUploadBtn">파일 선택 </label>
-									<input id="fileInput" type="file" name="noticeFile" onchange="addFile(this);" multiple>
+									<div style="display:flex;">
+										<div id="fileCount" style="margin: 0px 5px 0px 0px;">업로드할 파일을 선택해주세요.(최대 3개)</div>
+										<div class="file-box">
+											<div class="file-label">
+												<label for="fileInput" id="fileUploadBtn">파일 선택 </label>
+												<input type="file" id="fileInput" name="noticeImg" onchange="addFile(this);" multiple accept=".jpg, .jpeg, .png">
+											</div>
+										</div>
+									</div>
 								</td>
 							</tr>
 							<tr>
@@ -72,12 +78,17 @@
 									<div class="file-list"></div>
 								</td>
 							</tr>
+							<tr>
+								<th>파일 <br>미리보기</th>
+								<td>
+									<div class="img-list"></div>
+								</td>
+							</tr>
 						</tbody>
 					</table>
 					<input type="hidden" id="writerName" name="writerName" value="<c:out value="${noticeVo.writerName}"/>">
 					<div class="modButtons">
-						<button type="button" id="insertNoticeBtn">등록</button>
-		
+						<button type="submit" id="insertNoticeBtn">등록</button>
 						<c:url var="cancel" value="/noticelist"></c:url>
 						<a href="${cancel}">
 							<button type="button" class="cancel">취소</button>
@@ -85,6 +96,8 @@
 					</div>
 				</form>
 			</div>
+			
+			
 		</div>
 	</div>
 </body>

@@ -293,4 +293,21 @@ public class StrMngController {
 		map.put("strObj", store);
 		return map;
 	}
+	
+	/**
+	 * 상세 정보 조회
+	 * @param storeSeq
+	 * @param request
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value="/delete-my-store",method=RequestMethod.GET)
+	public String deleteStr(String storeSeq,HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		UserVo user = (UserVo)session.getAttribute("user");
+		String userId=user.getUserId();
+		
+		storeService.deleteStr(userId, storeSeq);
+		return "";
+	}
 }
