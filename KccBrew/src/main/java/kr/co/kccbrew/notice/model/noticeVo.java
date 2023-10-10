@@ -1,6 +1,7 @@
 package kr.co.kccbrew.notice.model;
 
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.web.multipart.MultipartFile;
 
@@ -26,14 +27,14 @@ public class noticeVo {
 	/**
 	 * 파일 저장 VO
 	 **/
-	MultipartFile noticeImg;	//공지사항 이미지
+	List<MultipartFile> noticeImg;	//공지사항 이미지
 	int fileId;					//파일 번호
 	String fileOriginalName;	//파일 원본 이름
 	String fileDetailLocation; 	//파일 저장 경로
 	String fileDetailServerName;//파일 서버 내 이름
 	String fileFmt;				//파일 형식
-	String localSavePath;
-	String serverSavePath;
+	String localSavePath;		//로컬 저장 경로
+	String serverSavePath;		//서버 저장 경로
 	
 	/**
 	 * 그룹 코드 VO
@@ -42,4 +43,12 @@ public class noticeVo {
 	String grpCdNm;			//그룹 코드명
 	String grpCdDtlId;		//그룹 코드 디테일 아이디
 	String grpCdDtlNm;		//그룹 코드 디테일명
+	
+	/**
+	 * 페이징 변수 
+	 */
+    int currentPage;
+    int pageSize;
+    int totalPages;
+    int totalCount;
 }

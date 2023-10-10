@@ -230,6 +230,8 @@
 							<ul class="comm-nav-dropdown">
 								<c:url var="toMyPage" value="/mypage" />
 								<li><a href="${toMyPage}">내 정보</a></li>
+								<c:url var="toNotification" value="/noticelist" />
+								<li><a href="${toNotification}">공지사항</a></li>
 							</ul></li>
 					</ul>
 				</div>
@@ -305,13 +307,15 @@
 							<ul class="comm-nav-dropdown">
 								<c:url var="toHldyList" value="/holiday" />
 								<li><a href="${toHldyList}">휴가 관리</a></li>
-								<c:url var="toSchdlList" value="/schedule/calendar" />
+								<c:url var="toSchdlList" value="/schedule/calendar"/>
 								<li><a href="${toSchdlList}">스케줄 조회</a></li>
 							</ul></li>
 						<li class="nav-item"><a class="nav-links" href="#">마이페이지</a>
 							<ul class="comm-nav-dropdown">
 								<c:url var="toMyPage" value="/mypage" />
 								<li><a href="${toMyPage}">내 정보</a></li>
+								<c:url var="toNotification" value="/noticelist" />
+								<li><a href="${toNotification}">공지사항</a></li>
 							</ul></li>
 					</ul>
 				</div>

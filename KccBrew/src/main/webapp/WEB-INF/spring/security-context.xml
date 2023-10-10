@@ -43,6 +43,7 @@
 		<intercept-url pattern="/chat/**"
 			access="permitAll" />
 
+
 		<!-- 비회원만 접근가능 -->
 		<intercept-url pattern="/login" access="isAnonymous()" />
 		<intercept-url pattern="/signup" access="isAnonymous()" />
@@ -71,12 +72,14 @@
 		<intercept-url pattern="/manager/**"
 			access="hasRole('ROLE_MANAGER')" />
 
+
 		<!-- 수리기사 접근가능 -->
 		<intercept-url pattern="/mecha/**"
 			access="hasRole('ROLE_MECHA')" />
 
 		<intercept-url pattern="/**" access="isAuthenticated()" />
-
+		<intercept-url pattern="/chat/**" access="hasRole('ROLE_MECHA','ROLE_MANAGER')" />
+		
 		<!-- 로그인 설정 -->
 		<form-login login-page="/login"
 			login-processing-url="/login" username-parameter="username"

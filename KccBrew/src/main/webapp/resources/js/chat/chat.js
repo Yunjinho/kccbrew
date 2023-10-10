@@ -26,4 +26,3 @@ function onMessage(msg) {
 function onClose(evt) {
 	$("#messageArea").append("연결 끊김"); 
 }
-

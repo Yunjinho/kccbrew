@@ -1,5 +1,3 @@
-var url = "ws://192.168.0.103:8080/userchat";
-var webSocket = null;
 
 //var webSocket = new WebSocket("ws://localhost:8080/userchat");
 
@@ -8,6 +6,13 @@ var sessionUserId = document.querySelector('#sessionUserId').value;
 var chatIcon = document.querySelector('#chatIcon');
 var chatArea = document.querySelector(".chatArea");
 var uuid = null;
+var url = "ws://localhost:8080/userchat/" + sessionUserId;
+var webSocket = null;
+
+function scrollToBottom() {
+    let chatboxBody = document.querySelector('.chatbox_body');
+    chatboxBody.scrollTop = chatboxBody.scrollHeight;
+}
 
 chatIcon.addEventListener('click', function(){
 	chatArea.classList.toggle("hidden");
@@ -18,7 +23,7 @@ chatIcon.addEventListener('click', function(){
 		
 		//접속 시
 		webSocket.onopen = function(message) {
-
+			 webSocket.send("user_id:" + sessionUserId);
 			//기존 데이터 찾기
 			$.ajax({
 				url : '/getChatLog',
@@ -34,17 +39,54 @@ chatIcon.addEventListener('click', function(){
 							//내 메세지
 							if(!msg.includes("입장")){	
 								if(user_id == sender){
-									messageTextArea.value += "(나) : "+msg+"\n";
+									 let messageElement = document.createElement("div");
+									    messageElement.className = "message sender";
+
+									    let messageText = document.createElement("div");
+									    messageText.className = "message_text";
+									    messageText.innerText = msg;
+
+									    messageElement.appendChild(messageText);
+
+									    // Add the new message element to .chatbox_body
+									    let chatboxBody = document.querySelector('.chatbox_body');
+									    chatboxBody.appendChild(messageElement);
+									    scrollToBottom();
 								}
 								
 								if(sender == "admin"){
-									messageTextArea.value += "(관리자) : "+msg+"\n";
+									let messageElement = document.createElement("div");
+								    messageElement.className = "message receive";
+
+								    let messageText = document.createElement("div");
+								    messageText.className = "message_text";
+								    messageText.innerText = msg;
+
+								    messageElement.appendChild(messageText);
+
+								    // Add the new message element to .chatbox_body
+								    let chatboxBody = document.querySelector('.chatbox_body');
+								    chatboxBody.appendChild(messageElement);
+								    scrollToBottom();
 								}
 							}
 						})
 					}
 					else{//첫 입장
-						messageTextArea.value += "문의사항을 남겨주세요. \n";
+						 let messageElement = document.createElement("div");
+						    messageElement.className = "message receive";
+
+						    let messageText = document.createElement("div");
+						    messageText.className = "message_text";
+						    messageText.innerText = "무엇을 도와드릴까요?";
+
+						    messageElement.appendChild(messageText);
+
+						    // Add the new message element to .chatbox_body
+						    let chatboxBody = document.querySelector('.chatbox_body');
+						    chatboxBody.appendChild(messageElement);
+						    scrollToBottom();
+						    
 					}
 				},
 				error : function(){
@@ -63,41 +105,74 @@ chatIcon.addEventListener('click', function(){
 		};
 
 		//서버-> 뷰 메세지 도착 
-		webSocket.onmessage = function(message) {
-			if(message.data.includes("uuid:")){
-				uuid = message.data.split(':')[1];
-				$.ajax({
-					url : '/chatCreate',
-					data : {"uuid" : uuid, "id" : sessionUserId, "msg" : "입장"},
-					type : 'post'
-				});
-			}
-			else {
-				messageTextArea.value += "(admin) : " + message.data + "\n";
-			}
+		webSocket.onmessage = function (message) {
+		    let parts = message.data.split(",");
+		    console.log(message);
+		    if (parts[0].includes("uuid:")) {
+		        uuid = parts[0].split(":")[1];
+		        // user_id는 이제 parts[1]에 있습니다
+		        $.ajax({
+		            url: '/chatCreate',
+		            data: { "uuid": uuid, "id": sessionUserId, "msg": "입장" },
+		            type: 'post'
+		        });
+		    } else {
+		        /*messageTextArea.value += "(관리자) : " + message.data + "\n";*/
+		        let messageElement = document.createElement("div");
+			    messageElement.className = "message receive";
+
+			    let messageText = document.createElement("div");
+			    messageText.className = "message_text";
+			    messageText.innerText =message.data;
+
+			    messageElement.appendChild(messageText);
+
+			    // Add the new message element to .chatbox_body
+			    let chatboxBody = document.querySelector('.chatbox_body');
+			    chatboxBody.appendChild(messageElement);
+			    scrollToBottom();
+		    }
 		};
 	}
 
 });
 
 //뷰 -> 서버 메세지 전송
-function sendMessage() {	
-	let message = document.getElementById("textMessage");
-	messageTextArea.value += "(나) : " + message.value + "\n";
+function sendMessage() {
+    let message = document.getElementById("textMessage").value;
+    if (message.trim() === "") {
+        return;
+    }
+
+    // Create a new message element
+    let messageElement = document.createElement("div");
+    messageElement.className = "message sender";
+
+    let messageText = document.createElement("div");
+    messageText.className = "message_text";
+    messageText.innerText = message;
+
+    messageElement.appendChild(messageText);
+
+    // Add the new message element to .chatbox_body
+    let chatboxBody = document.querySelector('.chatbox_body');
+    chatboxBody.appendChild(messageElement);
+
+    scrollToBottom();
 	$.ajax({
 		url : '/chatCreate',
-		data : {"uuid" : uuid, "id" : sessionUserId, "msg" : message.value},
+		data : {"uuid" : uuid, "id" : sessionUserId, "msg" : message},
 		type : 'post'
 	});
 	
-	webSocket.send(sessionUserId+","+message.value);
-	message.value = "";
+	webSocket.send(sessionUserId+","+message);
+	document.getElementById("textMessage").value = "";
 }
 
 //종료
 function closeChat(){
 	if(confirm("종료 시 채팅 로그는 삭제됩니다.")){
-		messageTextArea.value += "이용해 주셔서 감사합니다.";
+		/*messageTextArea.value += "이용해 주셔서 감사합니다.";*/
 		$.ajax({
 			url : '/chatDelete',
 			data : {"id" : sessionUserId},
@@ -106,9 +181,10 @@ function closeChat(){
 		chatArea.classList.add("hidden");
 		
 		webSocket.close();
+		location.reload();
 		
-		var chatD = document.querySelector('#userChat');
-		chatD.style.display = "none";
+		/*var chatD = document.querySelector('#userChat');
+		chatD.style.display = "none";*/
 	}
 	else return;
 }

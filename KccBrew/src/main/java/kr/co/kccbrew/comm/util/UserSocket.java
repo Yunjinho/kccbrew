@@ -1,6 +1,7 @@
 package kr.co.kccbrew.comm.util;
 
 import java.io.IOException;
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -11,10 +12,12 @@ import javax.websocket.OnClose;
 import javax.websocket.OnMessage;
 import javax.websocket.OnOpen;
 import javax.websocket.Session;
+import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
 
-@ServerEndpoint("/userchat")
+@ServerEndpoint("/userchat/{user_id}")
 public class UserSocket {
+	
 
 	//searchUser 함수의 filter 표현식을 위한 인터페이스
 	private interface SearchExpression {
@@ -22,13 +25,14 @@ public class UserSocket {
 		boolean expression(User user);
 	}
 	//서버와 유저간의 접속을 key로 구분하기 위한 이너 클래스
-	private class User {
-		Session session;
-		String key;
+	public class User {
+	    Session session;
+	    String key;
+	    String user_id; // 유저 아이디 필드 추가
 	}
 	
 	//유저와 서버간의 접속 리스트 -> 동기화처리
-	private static List<User> sessionUsers = Collections.synchronizedList(new ArrayList<>());
+	public static List<User> sessionUsers = Collections.synchronizedList(new ArrayList<>());
 	//리스트에서 탐색(session)
 	private static User getUser(Session session) {
 		return searchUser(x -> x.session == session);
@@ -50,18 +54,16 @@ public class UserSocket {
 	
 	//접속
 	@OnOpen
-	public void handleOpen(Session userSession) throws IOException {	
-		User user = new User();
-		user.key = UUID.randomUUID().toString().replace("-", "");
-		//User에 websocektsession 부여
-		user.session = userSession;
-		System.out.println(userSession);
-		System.out.println("==================================");
-		//유저 리스트에 등록한다. (방 유지)
-		sessionUsers.add(user);
-		user.session.getBasicRemote().sendText("uuid:" + user.key);
-		//운영자 Client에 유저가 접속한 것을 알린다. -> admin 방 생성 처리
-		AdminSocket.visit(user.key);
+	public void handleOpen(Session userSession, @PathParam("user_id") String user_id) throws IOException {
+	    User user = new User();
+	    user.key = UUID.randomUUID().toString().replace("-", "");
+	    user.user_id = user_id; // 전달된 user_id 사용
+	    user.session = userSession;
+	    System.out.println(userSession);
+	    sessionUsers.add(user);
+	    // key와 user_id 모두 전송
+	    user.session.getBasicRemote().sendText("uuid:" + user.key + ",user_id:" + user.user_id);
+	    AdminSocket.visit(user.key, user.user_id); // visit 메소드에 user_id도 전달
 	}
 	
 	//JS에서 전달받을 때
@@ -69,6 +71,7 @@ public class UserSocket {
 	public void handleMessage(String message, Session userSession) throws IOException {
 		User user = getUser(userSession);
 		if (user != null) {
+			System.out.println(message);
 			//어떤 유저가 메세지를 보냈는지 admin에게 전달
 			AdminSocket.sendMessage(user.key, message);
 		}
@@ -78,6 +81,8 @@ public class UserSocket {
 		User user = getUser(key);
 		if (user != null) {
 			try {
+				System.out.println("0000000000000000000000000000000000000000");
+				System.out.println(message);
 				//메세지 받음(기존 usersession = 웹소켓세션)
 				user.session.getBasicRemote().sendText(message);
 			} catch (IOException e) {
