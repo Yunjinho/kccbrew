@@ -78,7 +78,7 @@
 			access="hasRole('ROLE_MECHA')" />
 
 		<intercept-url pattern="/**" access="isAuthenticated()" />
-		<intercept-url pattern="/chat/**" access="hasRole('ROLE_MECHA','ROLE_MANAGER')" />
+		<intercept-url pattern="/chat/**" access="hasAnyRole('ROLE_MECHA' , 'ROLE_MANAGER')" />
 		
 		<!-- 로그인 설정 -->
 		<form-login login-page="/login"
