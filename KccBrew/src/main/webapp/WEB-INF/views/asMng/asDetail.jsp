@@ -36,12 +36,11 @@
 	integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9"
 	crossorigin="anonymous">
 
-
 <script>
-
 window.onload=function(){
 	var lat=${asDetailInfo.latitude}; 
 	var log=${asDetailInfo.longitude}; 
+
 	var mapContainer = document.getElementById("map"), // 지도를 표시할 div 
     mapOption = { 
         center: new kakao.maps.LatLng(lat, log), // 지도의 중심좌표
@@ -62,6 +61,16 @@ window.onload=function(){
 	marker.setMap(map);
 }
 </script>
+
+<!-- 스프링 시큐리티사용 -->
+<sec:authentication property="principal.username" var="userId" />
+<sec:authentication property="authorities" var="roles" />
+
+<script>
+	var userId = '${userId}';
+	var userType = '${roles}';
+</script>
+
 </head>
 <body>
 	<div id="page-mask">
@@ -103,13 +112,17 @@ window.onload=function(){
 										<!-- 기사 배정 및 반려 -->
 										<input type="hidden" name="storeSeq"
 											value="${asDetailInfo.storeSeq}">
+
+
+
+										<!-- 기사 배정 및 반려 -->
 										<c:if
 											test="${(asDetailInfo.asStatusCd eq '01' and sessionScope.user.userTypeCd eq '01' and asDetailInfo.asAssignSeq == null) or (sessionScope.user.userTypeCd eq '01' and asDetailInfo.reassign eq'Y')}">
 											<div>
 												<div class="heading-div">
 													<h1 class="heading">기사 배정</h1>
 												</div>
-												<form action="/as-assign" method="post">
+												<form action="/as-assign" method="post" id="as-assign-form">
 													<table id="search-box">
 														<c:choose>
 															<c:when
@@ -120,7 +133,9 @@ window.onload=function(){
 																		<div>
 																			<input type="hidden" name="storeSeq"
 																				value="${asDetailInfo.storeSeq}">
-																			<button type="submit" class="form-btn">기사 배정</button>
+																			<button type="submit" class="form-btn"
+																				onclick="performSubmit();">기사 배정</button>
+
 																		</div>
 																	</td>
 																</tr>
@@ -147,8 +162,8 @@ window.onload=function(){
 																		<div>
 																			<textarea class="content-textarea" readonly>${asDetailInfo.rejectContentMcha}</textarea>
 																			<input type="hidden" name="asAssignSeq"
-																				value="${asDetailInfo.asAssignSeq}"> <input
-																				type="hidden" name="asInfoSeq"
+																				id="asAssignSeq" value="${asDetailInfo.asAssignSeq}">
+																			<input type="hidden" name="asInfoSeq" id="asInfoSeq"
 																				value="${asDetailInfo.asInfoSeq}">
 																		</div>
 																	</td>
@@ -171,11 +186,12 @@ window.onload=function(){
 																	<option value="">지역 선택</option>
 															</select></td>
 															<th>날짜 선택</th>
+
 															<td><input type="date" name="visitDttm"
-																onchange="selectDate()" required></td>
+																id="visitDate" onchange="selectDate()" required></td>
 															<th>수리 기사 목록</th>
 															<td><select name="mechanicId" class="selectMcha"
-																required>
+																id="mechanicId" required>
 																	<option value="">수리 기사 선택</option>
 															</select></td>
 														</tr>
@@ -187,6 +203,7 @@ window.onload=function(){
 												</form>
 											</div>
 										</c:if>
+
 										<!-- AS 재접수 처리 -->
 										<c:if
 											test="${sessionScope.user.userTypeCd eq '01' and asDetailInfo.resultReapply eq 'Y'  and asDetailInfo.reapplyConfirm eq 'N'}">
@@ -200,7 +217,7 @@ window.onload=function(){
 															<td colspan="9"></td>
 															<td>
 																<div>
-																	<button type="submit" class="form-btn">기사 배정</button>
+																	<button type="submit" class="form-btn" onclick="performSubmit();">기사 배정</button>
 																</div>
 															</td>
 														</tr>
@@ -220,10 +237,10 @@ window.onload=function(){
 															</select></td>
 															<th>날짜 선택</th>
 															<td><input type="date" name="visitDttm"
-																onchange="selectDate()" required></td>
+																id="visitDate" onchange="selectDate()" required></td>
 															<th>수리 기사 목록</th>
 															<td><select name="mechanicId" class="selectMcha"
-																required>
+																required id="mechanicId">
 																	<option value="">수리 기사 선택</option>
 															</select></td>
 														</tr>
@@ -239,6 +256,7 @@ window.onload=function(){
 												</form>
 											</div>
 										</c:if>
+
 										<div class="heading-div">
 											<h1 class="heading">접수 정보</h1>
 										</div>
@@ -270,10 +288,12 @@ window.onload=function(){
 															<a
 																href="/as-mod?asInfoSeq=${asDetailInfo.asInfoSeq}&asAssignSeq=${asDetailInfo.asAssignSeq}&storeSeq=${asDetailInfo.storeSeq}"
 																class="form-btn" style="margin: 0px 5px;">수정</a>
+
 														</div>
 													</td>
 												</tr>
 											</c:if>
+											
 											<c:if
 												test="${sessionScope.user.userTypeCd eq '03'and asDetailInfo.asStatusCd eq '03' and asDetailInfo.reassign eq 'N' and ( asDetailInfo.resultReapply eq 'N' or empty asDetailInfo.resultReapply)}">
 												<tr>
@@ -341,7 +361,7 @@ window.onload=function(){
 													value="${asDetailInfo.wishingEndDate}" readonly></td>
 												<th>방문 예정일</th>
 												<td><input type="text"
-													value="${asDetailInfo.visitDttm}" readonly></td>
+													value="${asDetailInfo.visitDttm}" readonly id="visitDate"></td>
 												<th>AS 처리일</th>
 												<td><input type="text"
 													value="${asDetailInfo.resultDttm}" readonly></td>
@@ -350,7 +370,7 @@ window.onload=function(){
 											<tr>
 												<th>점포명</th>
 												<td><input type="text" value="${asDetailInfo.storeNm}"
-													readonly></td>
+													id="storeNm" readonly></td>
 												<th>점포 번호</th>
 												<td><input type="text"
 													value="${asDetailInfo.storeTelNo}" readonly></td>
@@ -401,6 +421,9 @@ window.onload=function(){
 											</c:if>
 										</table>
 									</div>
+
+
+
 									<!-- 결과 처리 입력 form-->
 									<div class="as-result-info">
 										<c:if
