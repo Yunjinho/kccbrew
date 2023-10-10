@@ -8,19 +8,19 @@ button {
 	font-family: "Noto Sans";
 }
 
-#notice {
+#mypage-wrapper {
 	padding: 20px 20px;
 }
-.container2{
+.arrowAndContents{
 	background-color: #ffffff;
 	min-height: 600px;
 }
-.header-icon {
+.right-arrow .header-icon {
 	width: 100%;
 	color: white;
 }
 
-.header-icon-background {
+.right-arrow .header-icon-background {
 	position:relative;
 	width: 20px;
 	height: 20px;
@@ -49,7 +49,7 @@ button {
 	position: relative;
 }
 
-.container2 .page-content-navigation .breadcrumb li {
+.arrowAndContents .page-content-navigation .breadcrumb li {
 	color: #666;
 	display: block;
 	white-space: nowrap;
@@ -57,12 +57,12 @@ button {
 	padding: 6px 3px 3px 25px;
 	line-height: 35px
 }
-.container2 .page-content-navigation .breadcrumb li:first-child {
+.arrowAndContents .page-content-navigation .breadcrumb li:first-child {
 	background: none;
 	padding-left: 3px;
 }
 
-.container2 .page-content-navigation .breadcrumb li:last-child {
+.arrowAndContents .page-content-navigation .breadcrumb li:last-child {
 	color: #333;
 	font-weight: bold;
 }
@@ -71,7 +71,7 @@ button {
 	padding: 32px 40px;
 }
 
-.container2 .page-content-navigation .breadcrumb li {
+.arrowAndContents .page-content-navigation .breadcrumb li {
 }
 
 .category{

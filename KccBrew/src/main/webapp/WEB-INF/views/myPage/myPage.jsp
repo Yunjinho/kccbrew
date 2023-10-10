@@ -12,8 +12,8 @@
 <link rel="stylesheet" href="${path}/resources/css/comm/myPage.css"/>
 </head>
 <body>
-	<section id="notice" class="notice">
-		<div class="container2">
+	<section id="mypage-wrapper" class="mypage-wrapper">
+		<div class="arrowAndContents">
 			<!-- ********** 페이지 네비게이션 시작 ********** -->
 			<div class="page-content-navigation">
 				<ol class="breadcrumb">

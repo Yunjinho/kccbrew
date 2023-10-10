@@ -141,7 +141,7 @@ h2 {
 	text-decoration: underline;
 }
 
-.writeBtn, #insertNoticeBtn, .cancel, .toListBtn, .deleteBtn, .updateBtn{
+.writeBtn, #insertNoticeBtn, .cancel, .toListBtn, .deleteBtn, .updateBtn, #updateNoticeBtn{
 	background-color: navy;
 	color: #ffffff;
 	border: none;
@@ -152,7 +152,8 @@ h2 {
 	text-decoration: none;
 	margin-right:30px;
 }
-.writeBtn:hover, #insertNoticeBtn:hover, .cancel:hover, .toListBtn:hover, .deleteBtn:hover, .updateBtn:hover{
+
+.writeBtn:hover, #insertNoticeBtn:hover, .cancel:hover, .toListBtn:hover, .deleteBtn:hover, .updateBtn:hover, #updateNoticeBtn:hover{
 	background-color: #E6E6E6;
 	color: #111111;
 	text-decoration: none;
@@ -275,6 +276,13 @@ input[type="file"] {
 	font-weight:600;
 }
 
+#noticeImgContent {
+	border:1px solid black;
+	text-align: center;
+	height:300px;
+	line-height: 300px;
+	margin-bottom: 50px;
+}
 /******************** summernote cdn css 덮어씌우기 *********************************/
 
 .note-frame {
