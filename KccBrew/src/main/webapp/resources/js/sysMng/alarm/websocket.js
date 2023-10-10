@@ -2,6 +2,9 @@
 var ping;
 var sockjs;
 
+var storeSeq;
+var storeNm;
+
 /*기본적으로 로그인한 회원의 ID, 권한을 전송*/
 document.addEventListener("DOMContentLoaded", function() {
 
@@ -44,10 +47,26 @@ document.addEventListener("DOMContentLoaded", function() {
 
 });
 
+function getStoreData(storeId, storeName) {
+	storeSeq = storeId;
+	storeNm = storeName;
+}
+
 /*휴가 신청 시 알람 발신(기사,점주->관리자)*/
 function sendHolidayAdd() {
 	console.log(" sendHolidayAdd함수실행!");
-	console.log("sockjs: " + sockjs);
+
+	var selectedStoreSeq = null;
+	var selectedStoreNm = null;
+
+	var storeSeqElement = document.getElementById("storeSeq");
+	if (storeSeqElement) {
+		selectedStoreSeq = storeSeqElement.value;
+		var selectedIndex = storeSeqElement.selectedIndex;
+		if (selectedIndex !== -1) {
+			selectedStoreNm = storeSeqElement.options[selectedIndex].text;
+		}
+	}
 
 	var selectedStartDate = document.getElementById('selectedStartDate').value;
 	var selectedEndDate = document.getElementById('selectedEndDate').value;
@@ -58,7 +77,9 @@ function sendHolidayAdd() {
 				userId: userId,
 				userType: userType,
 				startDate: selectedStartDate,
-				endDate: selectedEndDate
+				endDate: selectedEndDate,
+				storeNm: selectedStoreNm,
+				storeSeq: selectedStoreSeq
 		};
 		var jsonStr = JSON.stringify(data);
 		sockjs.send(jsonStr);
@@ -70,7 +91,6 @@ function sendHolidayAdd() {
 /*휴가 취소 시 알람 발신(기사,점주->관리자)*/
 function sendHolidayCancel(startDate, endDate) {
 	console.log(" sendHolidayCancel 함수실행!");
-	console.log("sockjs: " + sockjs);
 
 	if (typeof sockjs != 'undefined') {
 		var data = {
@@ -78,7 +98,9 @@ function sendHolidayCancel(startDate, endDate) {
 				userId: userId,
 				userType: userType,
 				startDate: startDate,
-				endDate: endDate
+				endDate: endDate,
+				storeNm: storeNm,
+				storeSeq: storeSeq
 		};
 		var jsonStr = JSON.stringify(data);
 		sockjs.send(jsonStr);

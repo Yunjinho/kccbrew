@@ -23,9 +23,6 @@
 <sec:authentication property="authorities" var="roles" />
 
 <script>
-	/* 세션 사용 */
-	var storeNm = "${sessionScope.store.storeNm}";
-	var storeSeq = "${sessionScope.store.storeSeq}";
 
 	/* 시큐리티 사용 */
 	var userId = '${userId}';
@@ -100,7 +97,6 @@
 						<span id="maincontent"></span>
 						<div class="user-past">
 
-							<!-- ********** 세은 로그 관련 내용 시작 ********** -->
 							<div id="content">
 								<h2 class="heading">휴가신청</h2>
 								<form:form modelAttribute="holidayVo" method="post" id="addForm">

@@ -154,7 +154,44 @@ function displaySchedules(schedules) {
 			} 
 			cell9.innerHTML = schedule.actualUse;
 		} 
-		/*사용자가 점주 또는 수리기사인 경우*/
+
+		/*사용자가 점주인 경우*/
+		else if (userTypeCd === "02") {
+			var cell1 = row.insertCell(0);
+			/*var cell2 = row.insertCell(1);*/
+			var cell2 = row.insertCell(1);
+			var cell3 = row.insertCell(2);
+			var cell4 = row.insertCell(3);
+			var cell5 = row.insertCell(4);
+			var cell6 = row.insertCell(5);
+			var cell7 = row.insertCell(6);
+
+			cell1.innerHTML = schedule.rowNumber;
+			/*cell2.innerHTML = schedule.scheduleId;*/
+			cell2.innerHTML = schedule.storeName;
+			cell2.setAttribute('data-store-id', schedule.storeId);
+			cell3.innerHTML = formatDate(new Date(schedule.appDate));
+			cell4.innerHTML = formatDate(new Date(schedule.startDate));
+			cell5.innerHTML = formatDate(new Date(schedule.endDate));
+
+			if(schedule.actualUse === "N") {
+				cell6.innerHTML = "취소완료";
+			}
+			else if (new Date(schedule.startDate) <= new Date()) {
+				cell6.innerHTML = "이미 사용된 휴가";
+			} else  {
+				var cancelButton = document.createElement("button");
+				cancelButton.textContent = "취소";
+				cancelButton.className = "form-btn";
+				cancelButton.onclick = function () {
+					openCancelModal(schedule.scheduleId, schedule.startDate, schedule.endDate);
+				};
+				cell6.appendChild(cancelButton);
+			} 
+			cell7.innerHTML = schedule.actualUse;
+		} 
+
+		/*사용자가 수리기사인 경우*/
 		else {
 			var cell1 = row.insertCell(0);
 			/*var cell2 = row.insertCell(1);*/
@@ -186,8 +223,6 @@ function displaySchedules(schedules) {
 			} 
 			cell6.innerHTML = schedule.actualUse;
 		}
-
-
 	});
 }
 
@@ -288,6 +323,7 @@ function cancelSchedule(scheduleId, startDate, endDate) {
 		}
 	});
 }
+
 
 /* 팝업창 리로드 함수 */
 function reoload() {
