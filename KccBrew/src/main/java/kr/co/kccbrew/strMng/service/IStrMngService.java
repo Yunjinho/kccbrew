@@ -31,5 +31,11 @@ public interface IStrMngService {
 	 * @param storeSeq
 	 */
 	public void insertStr(@Param("userId")String userId,@Param("storeSeq")String storeSeq);
+	/**
+	 * 점포 제거
+	 * @param userId
+	 * @param storeSeq
+	 */
+	void deleteStr(String userId, String storeSeq);
 
 }

@@ -358,7 +358,7 @@
 			grp_cd_id AS "grpCdId",
 			grp_cd_dtl_nm AS "grpCdDtlNm"
 	FROM group_code_detail
-	WHERE grp_cd_id=#{code}
+	WHERE grp_cd_id=#{code} AND use_yn='Y'
 ]]>
 </select>
 <!-- 지역 상세 코드 조회 -->
@@ -369,7 +369,8 @@
 			grp_cd_dtl_nm AS "grpCdDtlNm"
 	FROM group_code_detail
 	WHERE grp_cd_id='LL' 
-	   AND grp_cd_dtl_id LIKE #{locationCd}||'%'
+		AND use_yn='Y'
+	   	AND grp_cd_dtl_id LIKE #{locationCd}||'%'
 ]]>
 </select>
 <!-- 점포 일정 체크 -->
@@ -387,7 +388,7 @@
     SELECT 
          u.user_id AS "userId"
         ,u.user_nm AS "userNm" 
-      FROM users u
+      FROM (SELECT * FROM users WHERE use_yn='Y') u
           INNER JOIN (SELECT grp_cd_dtl_nm AS location_cd_nm ,grp_cd_dtl_id AS location_cd 
     			FROM group_code_detail WHERE grp_cd_dtl_id LIKE <if test="locationCd!=''">#{locationCd}||</if>'%'AND grp_cd_id='LL') location ON u.location_cd=location.location_cd
           INNER JOIN (SELECT grp_cd_dtl_nm AS machine_cd_nm ,grp_cd_dtl_id AS machine_cd 

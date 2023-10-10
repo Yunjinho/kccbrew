@@ -309,4 +309,9 @@
 INSERT INTO store_user_map VALUES(#{storeSeq},#{userId})
 ]]>
 </insert>
+<delete id="deleteStr" parameterType="hashmap">
+<![CDATA[
+DELETE FROM store_user_map WHERE store_seq=#{storeSeq} AND user_id=#{userId}
+]]>
+</delete>
 </mapper>

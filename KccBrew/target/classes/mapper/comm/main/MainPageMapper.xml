@@ -15,9 +15,12 @@
 				a.mechanic_id				AS "mechanicId",
 				u.user_nm					AS "mechanicName",
 				i.machine_cd				AS "machineCode",
-				i.as_status					AS "asStatus"
-			FROM as_assign a, users u, as_information i
-			WHERE a.mechanic_id = u.user_id	AND a.as_info_seq = i.as_info_seq
+				i.as_status					AS "asStatus",
+				s.store_nm                  AS "storeNm",
+                ar.reapply					AS "reapply"
+			FROM  users u, as_information i, store s,as_assign a
+			LEFT OUTER JOIN as_result ar ON a.as_assign_seq=ar.as_assign_seq
+			WHERE a.mechanic_id = u.user_id	AND a.as_info_seq = i.as_info_seq AND i.store_seq=s.store_seq AND ar.reapply IS NULL
 			ORDER BY a.visit_dttm ASC
 		]]>
 	</select>
@@ -76,9 +79,11 @@
 			SELECT
 				r.as_assign_seq					AS "asAssignNum",     
 				i.machine_cd					AS "machineCode",
-				i.as_status						AS "asStatus"
-			FROM as_result r, as_assign a, as_information i
-			WHERE r.as_assign_seq = a.as_assign_seq AND a.as_info_seq = i.as_info_seq
+				i.as_status						AS "asStatus",
+				s.store_nm                      AS "storeNm",
+                r.reapply						AS "reapply"
+			FROM as_result r, as_assign a, as_information i, store s
+			WHERE r.as_assign_seq = a.as_assign_seq AND a.as_info_seq = i.as_info_seq AND s.store_seq=i.store_seq
 		]]>
 	</select>
 

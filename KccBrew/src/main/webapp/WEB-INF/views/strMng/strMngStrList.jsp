@@ -52,7 +52,7 @@
 													<th>점포 이름</th>
 													<th>점포 번호</th> 
 													<th>점포 주소</th>
-													<th>상세 조회</th>
+													<th>비고</th>
 												</tr>
 											</thead>
 											<tbody>
@@ -69,7 +69,12 @@
 																<td><c:out value="${list.storeAddr}, ${list.storeAddrDtl}"/></td>
 															</c:otherwise>
 														</c:choose>
-														<td><div onclick="selectStrDetail(${list.storeSeq})"class="form-btn">조회</div></td>
+														<td>
+															<div style="display:flex;">
+																<div onclick="selectStrDetail(${list.storeSeq})"class="form-btn">조회</div>
+																<div onclick="deleteStrDetail(${list.storeSeq})"class="form-btn">삭제</div>
+															</div>
+														</td>
 													</tr>
 												</c:forEach>
 											</tbody>
@@ -169,7 +174,7 @@
 							<th>점포명</th>
 							<th>주소</th>
 						</tr>
-					</thead>
+					</thead> 
 					<tbody>
 						<c:forEach var="list" items="${storeList}">
 							<tr>

@@ -110,14 +110,18 @@ function addFile(obj){
             htmlData += '   <a class="delete" onclick="deleteFile(' + fileNo + ');"><i class="far fa-minus-square"></i></a>';
             htmlData += '</div>';
             $('.file-list').append(htmlData);
-            fileNo++;
+            
             };
             reader.readAsDataURL(file)
         } else {
             continue;
         }
 	}
-	//초기화
+	$(".file-label").css("display","none");
+	var test='<div class="file-label"><label for="fileInput'+fileNo+'" id="fileUploadBtn">파일 선택 </label>'+
+		'<input style="display:none;"type="file" id="fileInput'+fileNo+'" name="noticeImg" onchange="addFile(this);" multiple accept=".jpg, .jpeg, .png"></div>'
+	$(".file-box").append(test);
+	fileNo++;
 }
 
 //파일 개수 업데이트

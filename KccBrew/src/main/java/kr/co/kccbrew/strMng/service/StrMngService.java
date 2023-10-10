@@ -98,4 +98,9 @@ public class StrMngService implements IStrMngService {
 	public void insertStr(String userId, String storeSeq) {
 		storeRepository.insertStr(userId, storeSeq);
 	}
+
+	@Override
+	public void deleteStr(String userId, String storeSeq) {
+		storeRepository.deleteStr(userId, storeSeq);
+	}
 }

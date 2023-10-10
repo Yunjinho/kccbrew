@@ -276,7 +276,7 @@
 														<c:when test="${main.machineCode == '04'}">에어컨</c:when>
 														<c:when test="${main.machineCode == '05'}">온수기</c:when>
 													</c:choose></td>
-												<td>강남점</td>
+												<td><c:out value="${main.storeNm}" /></td>
 												<td><c:out value="${main.mechanicName}" /></td>
 											</tr>
 										</c:forEach>
@@ -307,7 +307,7 @@
 														<c:when test="${main.machineCode == '04'}">에어컨</c:when>
 														<c:when test="${main.machineCode == '05'}">온수기</c:when>
 													</c:choose></td>
-												<td>강남점</td>
+												<td><c:out value="${main.storeNm}" /></td>
 												<td><c:out value="${main.mechanicName}" /></td>
 											</tr>
 										</c:forEach>
@@ -338,7 +338,7 @@
 														<c:when test="${main.machineCode == '04'}">에어컨</c:when>
 														<c:when test="${main.machineCode == '05'}">온수기</c:when>
 													</c:choose></td>
-												<td>강남점</td>
+												<td><c:out value="${main.storeNm}" /></td>
 												<td><c:out value="${main.mechanicName}" /></td>
 											</tr>
 										</c:forEach>
@@ -419,7 +419,7 @@
 										<c:when test="${main.machineCode == '04'}">에어컨</c:when>
 										<c:when test="${main.machineCode == '05'}">온수기</c:when>
 									</c:choose></td>
-								<td>강남점</td>
+								<td><c:out value="${main.storeNm}" /></td>
 								<td><c:out value="${main.mechanicName}" /></td>
 							</tr>
 						</c:forEach>
@@ -450,12 +450,13 @@
 										<c:when test="${main.machineCode == '05'}">온수기</c:when>
 									</c:choose></td>
 								<td><c:choose>
+										<c:when test="${main.reapply == 'Y'}">재접수</c:when>
 										<c:when test="${main.asStatus == '01'}">접수 중</c:when>
 										<c:when test="${main.asStatus == '02'}">반려</c:when>
 										<c:when test="${main.asStatus == '03'}">접수 완료</c:when>
 										<c:when test="${main.asStatus == '04'}">수리 완료</c:when>
 									</c:choose></td>
-								<td>동대문점</td>
+								<td><c:out value="${main.storeNm}" /></td>
 							</tr>
 						</c:forEach>
 					</tbody>
