@@ -10,22 +10,18 @@ import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
 
+import kr.co.kccbrew.comm.security.model.UserVo;
+import kr.co.kccbrew.comm.security.service.IUserService;
 import kr.co.kccbrew.strMng.model.StrMngVo;
 import kr.co.kccbrew.strMng.service.IStrMngService;
 import lombok.RequiredArgsConstructor;
@@ -35,6 +31,7 @@ import lombok.RequiredArgsConstructor;
  * @Decription : 코드 관리하기 위한 controller
  * 
  * @ 수정일 수정자 수정내용 ============ ============== ============== 2023-08-23 배수연 최초생성
+ * @ 수정일 수정자 수정내용 ============ ============== ============== 2023-10-05 윤진호 점포 점주 다대다 매칭
  * @author BAESOOYEON
  * @version 1.0
  */
@@ -48,7 +45,7 @@ import lombok.RequiredArgsConstructor;
 public class StrMngController {
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 	private final IStrMngService storeService;
-
+	private final IUserService userService;
 	/* 점포조회 */
 	@RequestMapping("/store")
 	public String storeAll(Model model, StrMngVo strMngVo, HttpSession session) {
@@ -210,5 +207,90 @@ public class StrMngController {
 		model.addAttribute("list", list);
 		return "strMng/strMngSearch";
 	}
+	
+	/**
+	 * 점포 조회
+	*/
+	@RequestMapping(value="/store-list",method=RequestMethod.GET)
+	public String strMngStrList(Model model,HttpServletRequest request,Principal principal) {
+		
+		
+		
+		String userId=principal.getName();
 
+		
+		List<StrMngVo> list = storeService.locationNm();
+		List<StrMngVo> seoullist = storeService.locationNmSeoul();// 지역상세리스트
+		List<StrMngVo> vo= storeService.selectMyStr(userId);
+		StrMngVo store = storeService.storeDetail(vo.get(0).getStoreSeq());
+
+		model.addAttribute("seoullist", seoullist);
+		model.addAttribute("list", list);
+		model.addAttribute("myStrList", vo);
+		model.addAttribute("store", store);
+		model.addAttribute("userId", userId);
+		
+		
+		List<UserVo> storeList=userService.selectStoreList("",1);
+		int storeListCount=userService.countStoreList("");
+		int totalPage = 0;
+		if (storeListCount > 0) {
+			// 점포 목록을 5개씩 보여줄 때의 총 페이지 수
+			totalPage = (int) Math.ceil(storeListCount / 5.0); 
+		}
+		// 페이지 수을 5개씩 보여줄 때의 총 페이지 블럭 수 ex - (1,2,3,4,5),(6,7,8,9,10) 
+		int totalPageBlock = (int) (Math.ceil(totalPage / 5.0)); 
+		//현재 페이지 블럭 ex)-1,2,3,4,5
+		int nowPageBlock = (int) (Math.ceil(1 / 5.0));
+		// 블럭의 시작 번호 ex) 1,6,11
+		int startPage = (nowPageBlock-1) * 5 + 1;
+		// 끝페이지
+		int endPage=0;
+		if(totalPage>nowPageBlock*5) {
+			endPage=nowPageBlock*5;
+		}else {
+			endPage=totalPage;
+		}
+
+		model.addAttribute("totalPage", totalPage);
+		model.addAttribute("currentPage", 1);
+		model.addAttribute("totalPageBlock", totalPageBlock);
+		model.addAttribute("nowPageBlock", nowPageBlock);
+		model.addAttribute("startPage", startPage);
+		model.addAttribute("endPage", endPage);
+		model.addAttribute("storeList", storeList);
+		model.addAttribute("keyword", "");
+		
+		
+		return "strMngStrList";
+	}
+	/**
+	 * 점포 등록
+	 * @param storeSeq
+	 * @param request
+	 */
+	@ResponseBody
+	@RequestMapping(value="/insert-my-store",method=RequestMethod.POST)
+	public String insertMyStore(String storeSeq,HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		UserVo user = (UserVo)session.getAttribute("user");
+		String userId=user.getUserId();
+		storeService.insertStr(userId, storeSeq);
+		return "";
+	}
+	
+	/**
+	 * 상세 정보 조회
+	 * @param storeSeq
+	 * @param request
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value="/select-str-dtl",method=RequestMethod.GET)
+	public Map<String, Object> selectStrDtl(String storeSeq,HttpServletRequest request) {
+		StrMngVo store = storeService.storeDetail(Integer.parseInt(storeSeq));
+		Map<String, Object> map=new HashMap<String, Object>();
+		map.put("strObj", store);
+		return map;
+	}
 }

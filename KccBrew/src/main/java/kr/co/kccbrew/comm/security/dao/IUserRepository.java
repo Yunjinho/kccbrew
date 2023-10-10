@@ -23,7 +23,7 @@ public interface IUserRepository {
     public UserVo getUserById(String userId);
     
     /*점주ID로 지점정보 조회*/
-    public StrMngVo getStoreById(String userId);
+    public List<StrMngVo> getStoreById(String userId);
     
     /**
 	 * 운영중인 점포 리스트 조회
@@ -70,6 +70,7 @@ public interface IUserRepository {
 	 * 사용자 사진 파일 기본 정보 등록
 	 * @param vo : 사용자 사진 정보를 담고있는 vo
 	 */
+	/*public void insertFileInfo(RegisterVo vo);*/
 	public void insertFileInfo(UserVo vo);
 	
 	/**

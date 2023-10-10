@@ -9,7 +9,7 @@
 .comm-nav {
 	font-family: 'Noto Sans';
 	width: 100%;
-	z-index: 999;
+	z-index: 9;
 	font-size: 1.2em;
 	height: 100px;
 	line-height: 100px;
@@ -20,20 +20,155 @@
 /******** 최상단 바 ***********/
 .top-bar {
 	display: flex;
+	font-family: 'Noto Sans';
 	justify-content: flex-end;
-	padding: 0 200px;
-	font-size: 0.8em;
+	padding: 0;
+	font-size: 13.5px;
 	color: #ffffff;
 	height: 30px;
 	line-height: 30px;
 	text-align: right;
 	background-color: #0D406E;
 	margin-top: 0;
+	align-items: center;
 }
 
 .top-bar p {
 	height: 30px;
 }
+
+/****** 실시간 알림 *******/
+.alert.alert-primary {
+	width: 70%;
+	background-color: moccasin;
+	position: fixed;
+	z-index: 99;
+	border-radius: 10px;
+	margin: 10px 15%;
+	height: 50px;
+	line-height: 3;
+	padding: 0px !important;
+	opacity: 1;
+	transition: opacity 0.5s ease-in-out;
+}
+
+#alert-title {
+	width: 30%;
+	height: 100%;
+	float: left;
+	text-align: center;
+	font-weight: 600;
+	font-size: large;
+}
+
+#alert-content {
+	width: 70%;
+	height: 100%;
+	float: right;
+	text-align: center;
+}
+
+/****** 알림 *******/
+#notification-link {
+	display: flex;
+}
+
+#notification-list {
+	width: 400px;
+	position: relative;
+	max-height: 700px;
+	z-index: 99;
+	overflow-y: auto;
+	right:110px;
+	top:5px;
+}
+
+.top-bar>div {
+	width: 20px;
+	height: 20px;
+	margin-right: 5px;
+}
+
+.top-bar>a {
+	width: 100%;
+	display: block;
+	height: 100%;
+}
+
+.top-bar img {
+	width: 100% !important;
+}
+
+.list-group-item.d-flex.justify-content-between.align-items-start {
+	width: 380px;
+	height: 50px;
+	background-color: white;
+}
+
+.fw-bold.non-real-time.alarm-title {
+	width: 20%;
+	text-align: center;
+}
+
+.list-group {
+	list-style: none;
+	padding: 0;
+}
+
+.list-group-item {
+	display: flex !important;
+	justify-content: space-around !important;
+	align-items: center !important;
+	padding: 5px !important;
+	border: 1px solid #ccc !important;
+	border-radius: 5px !important;
+}
+
+/* .ms-2.me-auto>* {
+	margin-right: 5px;
+} */
+.list-group-item .fw-bold {
+	font-weight: bold;
+}
+
+.badge {
+	line-height: 2 !important;
+	background-color: #007bff !important;
+	border-radius: 50% !important;
+	width: 30px !important;
+	height: 30px !important;
+	text-align: center !important;
+	font-weight: 600 !important;
+	background-color: #007bff !important;
+}
+
+.list-group-numbered {
+	counter-reset: li;
+}
+
+.list-group-item::before {
+	content: counter(li);
+	counter-increment: li;
+	/* 	margin-right: 10px; */
+	font-weight: bold;
+	color: #007bff;
+	width: 10%;
+	text-align: center;
+}
+
+.ms-2.me-auto {
+	display: contents;
+	color: black !important;
+	width: 90%;
+	height: 100%;
+}
+
+.non-real-time.alarm-content {
+	width: 80%;
+	text-align: initial;
+	line-height: initial;
+}
+
 /****** 로그아웃 버튼 *******/
 .top-bar form {
 	margin: 0px;
@@ -69,8 +204,11 @@
 /********* nav 바 *************/
 .nav-bar {
 	position: relative;
-	padding-left: 7px;
-	padding-right: 25px;
+	font-family: 'Noto Sans';
+	font-weight:500;
+	font-size: 17px;
+	/* 	padding-left: 7px;
+	padding-right: 25px; */
 	height: 70px;
 	background-color: #ffffff;
 	display: flex;
@@ -84,6 +222,7 @@
 	flex: 0.15;
 	height: 60px;
 	line-height: 60px;
+	margin-left: 15px;
 }
 /** 로고 이미지 **/
 .nav-bar-brand img {

@@ -7,20 +7,22 @@ html {
 button {
 	font-family: "Noto Sans";
 }
-
-#notice {
-	padding: 20px 20px;
+#mypage-main-wrapper {
+	
 }
-.container2{
+#mypage-wrapper {
+	padding: 0 20px;
+}
+.arrowAndContents{
 	background-color: #ffffff;
 	min-height: 600px;
 }
-.header-icon {
+.right-arrow .header-icon {
 	width: 100%;
 	color: white;
 }
 
-.header-icon-background {
+.right-arrow .header-icon-background {
 	position:relative;
 	width: 20px;
 	height: 20px;
@@ -28,7 +30,7 @@ button {
 }
 
 .breadcrumb {
-	height:60.67px;
+	height:43.67px;
 	display: flex;
 	margin: 0px;
 	background-color: transparent;
@@ -43,26 +45,22 @@ button {
 
 .breadcrumb-home {
 	display:inline-block;
-	width:45.9px;
+	width:60px;
 }
 .right-arrow {
 	position: relative;
 }
 
-.container2 .page-content-navigation .breadcrumb li {
-	color: #666;
-	display: block;
-	white-space: nowrap;
-	text-overflow: ellipsis;
+.arrowAndContents .page-content-navigation .breadcrumb li {
 	padding: 6px 3px 3px 25px;
 	line-height: 35px
 }
-.container2 .page-content-navigation .breadcrumb li:first-child {
+.arrowAndContents .page-content-navigation .breadcrumb li:first-child {
 	background: none;
 	padding-left: 3px;
 }
 
-.container2 .page-content-navigation .breadcrumb li:last-child {
+.arrowAndContents .page-content-navigation .breadcrumb li:last-child {
 	color: #333;
 	font-weight: bold;
 }
@@ -71,14 +69,15 @@ button {
 	padding: 32px 40px;
 }
 
-.container2 .page-content-navigation .breadcrumb li {
+.breadcrumb-home {
+	height:44px;
 }
 
 .category{
 	font-weight: 500;
     line-height: 1.1;
     color: inherit;
-    font-size: 2.2em;
+    font-size: 30px;
     margin-top:20px;
 }
 
@@ -143,12 +142,15 @@ tr > th:nth-child(7) {
 }
 
 input[type="text"] {
-    width: 100%;
+    width: 90%;
     padding: 10px; 
     border: 1px solid #ccc;
     border-radius: 5px; 
 }
 
+#userAddress {
+	width:97%;
+}
 .modButtons {
 	width: 100%;
 	height:24px;
@@ -156,9 +158,9 @@ input[type="text"] {
 	text-align: center;
 	padding: 0 30px;
 	text-decoration: none;
-	
+	margin-top: 20px;
 }
-#changeImageBtn, #confirmImgChg {
+#changeImageBtn{
 	font-family: 'Noto Sans';
 	font-size:14px;
 	position:relative;
@@ -171,7 +173,6 @@ input[type="text"] {
 	border-radius: 4px;
 	display:inline-block;
 	text-decoration: none;
-	margin-right: 10px;
 }
 
 #changeImageBtn:hover {
@@ -179,8 +180,7 @@ input[type="text"] {
 	color: #111111;
 }
 
-.updateBtn, #confirmMod, .cancel {
-	margin-right:10px;
+.updateBtn, #confirmModBtn, .cancel ,#confirmModExceptImgBtn{
 	background-color: navy;
 	color: #ffffff;
 	border: none;
@@ -189,10 +189,15 @@ input[type="text"] {
 	display:inline-block;
 	align-items: center;
 	text-decoration: none;
+	position: relative;
+	margin-right: 20px;
 }
-.updateBtn:hover, #confirmMod:hover, .cancel:hover, #confirmImgChg:hover {
+.updateBtn:hover, #confirmModBtn:hover, .cancel:hover, #confirmImgChg:hover, #confirmModExceptImgBtn:hover {
 	background-color: #E6E6E6;
 	color: #111111;
+}
+#confirmModBtn {
+	display: none;
 }
 
 /*  비밀번호 수정 페이지 */

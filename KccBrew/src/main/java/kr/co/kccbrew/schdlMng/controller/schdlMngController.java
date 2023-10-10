@@ -1,7 +1,7 @@
 package kr.co.kccbrew.schdlMng.controller;
 
 
-import java.sql.Date;    
+import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -21,13 +21,15 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import kr.co.kccbrew.asMng.model.AsMngVo;
+import kr.co.kccbrew.asMng.service.IAsMngService;
 import kr.co.kccbrew.comm.security.model.UserVo;
 import kr.co.kccbrew.comm.security.service.UserService;
 import kr.co.kccbrew.comm.util.DateFormat;
@@ -36,6 +38,7 @@ import kr.co.kccbrew.schdlMng.model.AsResultVo;
 import kr.co.kccbrew.schdlMng.model.HolidayVo;
 import kr.co.kccbrew.schdlMng.model.SchdlMngVo;
 import kr.co.kccbrew.schdlMng.service.SchdlMngService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -49,6 +52,7 @@ import lombok.extern.slf4j.Slf4j;
  * 2023-09-12                       이세은               휴일기간 중복방지 유효성검사 메서드작성
  * 2023-09-17                       이세은               검색 기능 수정
  * 2023-09-23                       이세은               잔여 휴일 일수 수정
+ * 2023-10-06                       이세은               휴가 등록 시 유효성 검사 수정
  * 
  * @author LEESEEUN
  * @version 1.0
@@ -56,6 +60,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Controller
 @Slf4j
+@RequiredArgsConstructor
 public class schdlMngController {
 
 	@Autowired
@@ -64,7 +69,9 @@ public class schdlMngController {
 	private UserService userService;
 	@Autowired
 	private DateFormat dateFormat;
-
+	
+	private final IAsMngService asMngService;
+	
 	/**********************************************************휴가신청**********************************************************/
 
 	/*휴가신청 페이지*/
@@ -77,12 +84,35 @@ public class schdlMngController {
 		UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 		String userId = userDetails.getUsername();
 		userVo.setUserId(userId);
-
+		
 		/* 잔여일수 */
 		int usedHolidays = schdlMngService.getUsedHoliday(userVo);
 		model.addAttribute("usedHolidays", usedHolidays);
 		model.addAttribute("holidayVo", new HolidayVo());
+		
+		
+		String userTypeCd="";
+		List<GrantedAuthority> authorities = (List<GrantedAuthority>) authentication.getAuthorities();
+		for (GrantedAuthority authority : authorities) {
+			String role = authority.getAuthority();
+			System.out.println("Role: " + role);
 
+			/*점주인 경우*/
+			if ("ROLE_MANAGER".equals(role)) {
+				userTypeCd = "02";
+				/*수리기사인 경우*/
+			} else if ("ROLE_MECHA".equals(role)) {
+				userTypeCd = "03";
+			}
+		}
+		
+		/*점포*/
+		if(userTypeCd=="02") {
+			List<AsMngVo> vo=asMngService.selectStrInfo(userVo.getUserId());
+			model.addAttribute("strInfo", vo);
+			System.out.println(vo);
+		}
+		
 		return "schdl/hldyIns";
 	}
 
@@ -475,7 +505,7 @@ public class schdlMngController {
 	@ResponseBody
 	public List<Map<String, Object>>processSearchRequest(@RequestParam("startDate") String startDate,
 			@RequestParam("endDate") String endDate, 
-			@ModelAttribute UserVo userVo) {
+			@ModelAttribute UserVo userVo,Authentication authentication) {
 
 		/*데이터확인*/
 		System.out.println("startDate: " + startDate + ", endDate: " + endDate);
@@ -501,9 +531,24 @@ public class schdlMngController {
 		userVo.setUserTypeCd("03");
 
 		System.out.println("userVo: " + userVo);
+		
+		String userTypeCd="";
+		List<GrantedAuthority> authorities = (List<GrantedAuthority>) authentication.getAuthorities();
+		for (GrantedAuthority authority : authorities) {
+			String role = authority.getAuthority();
+			System.out.println("Role: " + role);
 
+			/*점주인 경우*/
+			if ("ROLE_MANAGER".equals(role)) {
+				userTypeCd = "02";
+				/*수리기사인 경우*/
+			} else if ("ROLE_MECHA".equals(role)) {
+				userTypeCd = "03";
+			}
+		}
+		
 		List<String> idList = schdlMngService.getIdList(userVo);
-		List<Map<String, Object>> allSchedules = schdlMngService.getAllSchedules(idList, year, month);
+		List<Map<String, Object>> allSchedules = schdlMngService.getAllSchedules(idList, year, month,userTypeCd);
 
 
 		return allSchedules;
@@ -538,18 +583,26 @@ public class schdlMngController {
 		List<String> ids = new ArrayList<>();
 
 		UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-		GrantedAuthority role = null;
+		String role = "";
+		String userTypeCd="";
 		for ( GrantedAuthority authority : userDetails.getAuthorities()) {
-			role = authority;
+			role = authority.getAuthority();
 		}
-		if(role.equals(new SimpleGrantedAuthority("ROLE_ADMIN"))) {
+		if(role.equals("ROLE_ADMIN")) {
 			ids = null;
 		} else {
+			/*점주인 경우*/
+			if ("ROLE_MANAGER".equals(role)) {
+				userTypeCd = "02";
+				/*수리기사인 경우*/
+			} else if ("ROLE_MECHA".equals(role)) {
+				userTypeCd = "03";
+			}
 			String userId = userDetails.getUsername();
 			ids.add(userId);
 		}
-
-		List<Map<String, Object>> schedules = schdlMngService.getAllSchedules(ids, stringYear, stringMonth);
+		
+		List<Map<String, Object>> schedules = schdlMngService.getAllSchedules(ids, stringYear, stringMonth,userTypeCd);
 
 		return schedules;
 	}

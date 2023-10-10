@@ -49,9 +49,9 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
 		UserVo user = userService.getUserById(userId);
 
 		// 파일정보 UserVo에 저장
-		UserMngVo userMngVo = userMngService.findByUserInfo(userId);
-		user.setFileServerNm(userMngVo.getImgNm());
-		user.setStorageLocation(userMngVo.getImgUrl());
+		List<UserMngVo> userMngVo = userMngService.findByUserInfo(userId);
+		user.setFileServerNm(userMngVo.get(0).getImgNm());
+		user.setStorageLocation(userMngVo.get(0).getImgUrl());
 
 		// 회원정보 세션에 저장
 		HttpSession session = request.getSession();
@@ -90,8 +90,9 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
 		
 		// 점주 프로필 정보 세션에 저장
 		else if(user.getUserTypeCd().equals("02")) {
-			StrMngVo store = userService.getStoreById(userId);
-			session.setAttribute("store", store);
+			List<StrMngVo> storeList = userService.getStoreById(userId);
+			StrMngVo vo=storeList.get(0);
+			session.setAttribute("store", vo);
 
 			List<AsMngVo> asAssignListById = userService.getAsAccepting(userId);          //a/s 배정 리스트
 			List<AsMngVo> asListById 	= userService.getAsSubmissionCompleted(userId);   //a/s 접수 리스트
@@ -117,6 +118,6 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
 
 			int usedHolidays = schdlMngService.getUsedHoliday(user);
 			session.setAttribute("usedHolidays", usedHolidays);
-		} 
+		}
 	}
 }

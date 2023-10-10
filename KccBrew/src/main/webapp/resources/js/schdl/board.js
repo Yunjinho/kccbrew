@@ -15,7 +15,6 @@ function onPageLoad() {
 
 
 /*페이징*/
-//페이지 이동
 function goPage(arg){
 	console.log("goPage()함수 실행!");
 	var fm = document.srhForm;
@@ -27,7 +26,6 @@ function goPage(arg){
 
 
 /*날짜검색*/
-//날짜 이동
 function goDate(startDate, endDate){
 	console.log("goDate함수실행!");
 	var fm = document.srhForm;
@@ -38,7 +36,6 @@ function goDate(startDate, endDate){
 
 
 /*캘린더 테이블*/
-//현재 날짜를 가져오는 함수
 function getCurrentDate() {
 	var today = new Date();
 	var year = today.getFullYear();

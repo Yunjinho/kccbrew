@@ -159,8 +159,8 @@
 								<div class="register-info">
 									<img
 										src="<c:url value="resources/img/register/register_location.png"/>"
-										class="register-icons"> 
-									<select name="location" onchange="changeLocationCd()">
+										class="register-icons"> <select name="location"
+										onchange="changeLocationCd()">
 										<option value="">지역 선택</option>
 										<c:forEach var="locationList" items="${locationList}">
 											<option value="${locationList.grpCdDtlId}">
@@ -171,8 +171,7 @@
 								<div class="register-info">
 									<img
 										src="<c:url value="resources/img/register/register_location.png"/>"
-										class="register-icons"> 
-									<select name="locationCd">
+										class="register-icons"> <select name="locationCd">
 										<option>지역 상세 선택</option>
 									</select>
 								</div>

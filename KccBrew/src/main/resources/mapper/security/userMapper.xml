@@ -299,7 +299,7 @@
 		<!-- userId 변수에 대한 추가 조건문 -->
 		<if test="userId != null and userId != ''">
 			AND (
-			s.store_seq = (
+			s.store_seq IN (
 			SELECT s.store_seq
 			FROM store s
 			INNER JOIN store_user_map su ON s.store_seq = su.store_seq
@@ -408,7 +408,7 @@
 		LIKE '%' || '03' || '%'
 		AND result_dttm IS NULL
 		AND (
-		s.store_seq = (
+		s.store_seq IN (
 		SELECT s.store_seq
 		FROM store s
 		INNER JOIN store_user_map su ON
@@ -517,7 +517,7 @@
 		LIKE '%' || '04' || '%'
 		AND visit_dttm IS NOT NULL
 		AND (
-		s.store_seq = (
+		s.store_seq IN (
 		SELECT s.store_seq
 		FROM store s
 		INNER JOIN store_user_map su ON

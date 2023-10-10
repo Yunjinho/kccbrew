@@ -38,7 +38,14 @@ public class MainService implements IMainService{
 		List<MainPageVo> waitingList = mainRepository.showWaitingMemberList();
 		return waitingList;
 	}
+	
 
+	//미승인 회원 리스트
+	@Override
+	public List<MainPageVo> showUnapprovedMemberList() {
+		List<MainPageVo> unapprovedMemberList = mainRepository.unapprovedMemberList();
+		return unapprovedMemberList;
+	}
 	// a/s 결과 리스트
 	@Override
 	public List<MainPageVo> showAsResultList() {
@@ -162,29 +169,29 @@ public class MainService implements IMainService{
 		try {
 			FileCopyUtils.copy(imgFile.getInputStream(), new FileOutputStream(targetPath));
 			FileCopyUtils.copy(imgFile.getInputStream(), new FileOutputStream(localPath));
-	}catch(Exception e) {
-		System.out.println(e.getMessage());
+		}catch(Exception e) {
+			System.out.println(e.getMessage());
+		}
+		return mainPageVo;
 	}
-	return mainPageVo;
-	}
-	
+		
 	//점포 정보 수정하기
 	@Override
 	public void updateMyStore(MainPageVo mainPageVo) {
 		mainRepository.updateMyStore(mainPageVo);
 	}
-
-	//지역 코드 조회
-	@Override
-	public List<MainPageVo> selectLocationCd() {
-		List<MainPageVo> list = mainRepository.selectLocationCd();
-		return list;
-	}
 	
-	//상세 지역 코드 조회
-	@Override
-	public List<MainPageVo> selectLocationDtlCd(String locCd) {
-		List<MainPageVo> list = mainRepository.selectLocationDtlCd(locCd);
-		return list;
-	}
+	//지역 코드 조회
+		@Override
+		public List<MainPageVo> selectLocationCd() {
+			List<MainPageVo> list = mainRepository.selectLocationCd();
+			return list;
+		}
+		
+		//상세 지역 코드 조회
+		@Override
+		public List<MainPageVo> selectLocationDtlCd(String locCd) {
+			List<MainPageVo> list = mainRepository.selectLocationDtlCd(locCd);
+			return list;
+		}
 }

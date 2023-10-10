@@ -4,6 +4,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="sql" uri="http://java.sun.com/jsp/jstl/sql" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="sec"	uri="http://www.springframework.org/security/tags"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -23,7 +24,7 @@
 					<li class="right-arrow">
 						<div class="header-icon-background">
 							<img
-								src="<c:url value='resources/img/asMng/free-icon-right-arrow-271228.png' />"
+								src="<c:url value='${path}/resources/img/asMng/free-icon-right-arrow-271228.png' />"
 								alt="Check List" class="header-icon" />
 						</div>
 					</li>
@@ -37,11 +38,16 @@
 						<c:out value="${noticeVo.noticeTitle}"/>	
 					</div>
 					<div id="noticeDtlInfo">
-						<span class="info-name">작성자</span> &nbsp;<c:out value="${noticeVo.writerName}"/>
+						<span class="info-name">작성자</span> &nbsp;관리자
 						&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
 						<span class="info-name">작성일</span> &nbsp; <fmt:formatDate value="${noticeVo.writeDate}"	pattern="yyyy-MM-dd" />
 						&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+						<span class="info-name">수정일</span> &nbsp; <fmt:formatDate value="${noticeVo.modDate}"	pattern="yyyy-MM-dd" />
+						&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
 						<span class="info-name">조회수</span> &nbsp;<c:out value="${noticeVo.views}"/>
+					</div>
+					<div id="noticeImgContent">
+						<p class="imgSection">첨부한 이미지 출력 영역</p>				
 					</div>
 					<div id="noticeDtlContent">
 						<c:out value="${noticeVo.noticeContent}"/>
@@ -51,14 +57,17 @@
 					<a href="${toList}" class="toListBtn">
 						목록
 					</a>
-					<c:url var="update" value="/update"/>
-					<a href="${update}" class="updateBtn">
-						수정
-					</a>
-					<c:url var="delete" value="/delete/${noticeVo.noticeSeq}"/>
-					<a href="${delete}" class="deleteBtn" onclick="return confirm('정말로 삭제하시겠습니까?');">
-						삭제
-					</a>
+					<sec:authorize access="hasRole('ROLE_ADMIN')">
+						<c:url var="update" value="/notice/update/${noticeVo.noticeSeq}"/>
+						<a href="${update}" class="updateBtn">
+							수정
+						</a>
+						
+						<c:url var="delete" value="/delete/${noticeVo.noticeSeq}"/>
+						<a href="${delete}" class="deleteBtn" onclick="return confirm('정말로 삭제하시겠습니까?');">
+							삭제
+						</a>
+					</sec:authorize>
 				</div>
 			</div>
 		</div>

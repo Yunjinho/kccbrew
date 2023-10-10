@@ -65,7 +65,7 @@ public class SchdlMngService implements ISchdlMngService {
 	/*휴일취소*/
 	@Override
 	public void cancelHoliday(Integer holidaySeq) {
-		schdlMngRepository.cancelHoliday(holidaySeq);		
+		schdlMngRepository.cancelHoliday(holidaySeq);
 	}
 
 
@@ -119,7 +119,7 @@ public class SchdlMngService implements ISchdlMngService {
 	@Override
 	public List<Date> getAssignDates(String userId) {
 		Map<String, String> map = new HashMap<>();
-		map.put("Id", userId);
+		map.put("id", userId);
 
 		return schdlMngRepository.selectAssignDates(map);
 	}
@@ -144,7 +144,7 @@ public class SchdlMngService implements ISchdlMngService {
 
 	/*회원아이디에 따른 스케줄맵 조회*/
 	@Override
-	public List<Map<String, Object>> getAllSchedules(List<String> IdList, String year, String month) {
+	public List<Map<String, Object>> getAllSchedules(List<String> IdList, String year, String month,String role) {
 		List<Map<String, Object>>  allSchedules = new ArrayList<>();
 
 		if (IdList == null) {
@@ -168,6 +168,7 @@ public class SchdlMngService implements ISchdlMngService {
 			parameterMap.put("id", id);
 			parameterMap.put("yr", year);
 			parameterMap.put("mn", month);
+			parameterMap.put("userTypeCd",role);
 
 			UserVo userVo = userRepository.getUserById(id);
 			// 실제사용이 Y인 휴가리스트 조회

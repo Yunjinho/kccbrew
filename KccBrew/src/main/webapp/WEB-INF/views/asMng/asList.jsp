@@ -55,11 +55,11 @@
 											<tr>
 												<th>조회 기간</th>
 												<td colspan="2">
-													<input type="date" name="wishingStartDate" value="${searchContent.wishingStartDate}">
+													<input type="date" name="wishingStartDate" value="${searchContent.wishingStartDate}" onchange="changeStartDate()">
 												</td>
 												<td>~</td>
 												<td colspan="3">
-													<input type="date" name="wishingEndDate" value="${searchContent.wishingEndDate}">
+													<input type="date" name="wishingEndDate" value="${searchContent.wishingEndDate}" onchange="changeEndDate()">
 												</td>
 
 												<!-- 종료 연도 선택 필드 -->
@@ -391,7 +391,16 @@
 															</c:choose>
 														</td>
 														</c:if>
-														<td><a href="#" onclick="selectAsDetail(${list.asInfoSeq},${list.asAssignSeq})"class="form-btn">조회</a></td>
+														<td>
+															<c:choose>
+																<c:when test="${list.asAssignSeq eq nul}">
+																	<a href="#" onclick="selectAsDetail(${list.asInfoSeq},-1,${list.storeSeq})"class="form-btn">조회</a>
+																</c:when>
+																<c:otherwise>
+																	<a href="#" onclick="selectAsDetail(${list.asInfoSeq},${list.asAssignSeq},${list.storeSeq})"class="form-btn">조회</a>
+																</c:otherwise>
+															</c:choose>
+														</td>
 													</tr>
 												</c:forEach>
 											</tbody>

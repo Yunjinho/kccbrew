@@ -16,8 +16,7 @@ html {
 }
 
 #main-content {
-	/* margin-bottom: 50px; */
-	margin: 50px 150px;
+	margin-top: 50px;
 	display: flex;
 }
 
@@ -37,7 +36,7 @@ html {
 
 #mainContents {
 	flex:0.86;
-	min-height: 907px;
+	min-height: 800px;
 }
 #mainFooter {
 }
