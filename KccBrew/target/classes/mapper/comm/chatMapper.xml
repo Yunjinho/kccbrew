@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.kccbrew.comm.chat.dao.IChatRepository">
+
+
+
+<insert id="userChatCreate" parameterType="kr.co.kccbrew.comm.chat.model.ChatDto">
+		insert into CHAT (USER_ID, SENDER, MSG, UUID, reg_dttm)
+		values ((select USER_ID from USERS where user_ID=#{id}), (select USER_ID from USERS where user_ID=#{id}), #{msg}, #{uuid}, SYSDATE)
+	</insert>
+	
+	<insert id="adminChatCreate" parameterType="kr.co.kccbrew.comm.chat.model.ChatDto">
+		insert into CHAT (USER_ID, SENDER, MSG, UUID, reg_dttm)
+		values ( (select C.USER_ID from CHAT C where C.UUID = #{uuid} and rownum = 1),
+				'admin', #{msg}, #{uuid}, SYSDATE)
+				
+	</insert>
+	
+	<delete id="chatDelete" parameterType="String">
+		delete from CHAT
+		 where USER_ID = (select USER_ID from USERS where USER_ID=#{id})
+	</delete>
+
+	<select id="getLog" resultType="kr.co.kccbrew.comm.chat.model.ChatDto" parameterType="String">
+		select C.USER_ID, C.SENDER, C.MSG, C.UUID, (select USER_ID from USERS where C.SENDER=USER_ID)
+		  from CHAT C, USERS U
+		 where C.USER_ID = U.USER_ID	
+		   and C.USER_ID = any(select USER_ID from USERS where USER_ID=#{id})
+	order by c.reg_dttm asc 
+	</select>
+	
+	<select id="getLogAdmin" resultType="kr.co.kccbrew.comm.chat.model.ChatDto" parameterType="String">
+		select C.USER_ID, C.SENDER, C.MSG, UUID, (select U.user_id from USERS U where C.SENDER=U.USER_ID) as ID
+		  from CHAT C
+		 where USER_ID = any(select USER_ID from CHAT where UUID=#{uuid})
+		 order by c.reg_dttm asc
+	</select>
+	
+
+
+
+
+</mapper>
