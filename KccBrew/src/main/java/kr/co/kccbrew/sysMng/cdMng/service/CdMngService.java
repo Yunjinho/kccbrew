@@ -35,22 +35,7 @@ public class CdMngService implements ICdMngService {
 	public List<CdMngVo> grcdDtlList(String cdId){
 		return cdMngRepository.grcdDtlList(cdId);
 	}
-	/* 조건검색가능한 코드리스트 */
-	@Override
-	public List<CdMngVo> filter(CdMngVo codeMng, int currentPage) {
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("CdMngVo", codeMng);
-		map.put("firstRowNum", currentPage*10-9);
-		map.put("lastRowNum", currentPage*10);
-		return cdMngRepository.filter(map);
-	}
 	
-	@Override
-	public int getCdFilterCount(CdMngVo codeMng) {
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("CdMngVo", codeMng);
-		return cdMngRepository.getCdFilterCount(map);
-	}
 	
 	/* 상세코드정보 */
 	/**

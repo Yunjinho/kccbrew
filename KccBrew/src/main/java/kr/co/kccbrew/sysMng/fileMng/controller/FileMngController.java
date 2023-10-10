@@ -37,6 +37,7 @@ public class FileMngController {
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 	private final IFileMngService fileMngService;
 
+	/* 파일 리스트 */
 	@GetMapping("/file")
 	public String fileAll(Model model, FileMngVo fileMngVo, HttpSession session) {
 		List<FileMngVo> fileList = fileMngService.fileList(fileMngVo, 1);
@@ -60,6 +61,7 @@ public class FileMngController {
 		return "adminFileManage";
 	}
 	
+	/* 파일 검색조건 */
 	@GetMapping("/file/search")
 	public String fileSearch(Model model, FileMngVo fileMngVo, HttpSession session) {
 		List<FileMngVo> fileList = fileMngService.fileList(fileMngVo, fileMngVo.getCurrentPage());
@@ -83,6 +85,7 @@ public class FileMngController {
 		return "adminFileManage";
 	}
 
+	/* 파일 상세조회 */
 	@GetMapping("/file/{fileDtlSeq}")
 	public String fileDtl(@PathVariable("fileDtlSeq") int fileDtlSeq, Model model) {
 		FileMngVo vo = fileMngService.fileDtl(fileDtlSeq);

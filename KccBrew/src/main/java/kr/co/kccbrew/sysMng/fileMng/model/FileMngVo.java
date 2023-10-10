@@ -7,7 +7,11 @@ import org.springframework.stereotype.Component;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
+/**
+ * 파일관리를 위한 Vo
+ * 
+ * @author BAESOOYEON
+ */
 @Component
 @Data
 @AllArgsConstructor

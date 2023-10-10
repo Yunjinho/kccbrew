@@ -15,8 +15,6 @@ import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
 
-//Dao DI를위해 사용. 원래 해당 애너테이션도 의존성주입 다른곳에 해주려고 쓰는데 왠지 모르겠는데 DAO null됨
-// -> Bean으로 등록되어 있어서 따로 스프링의 객체라고 주입시켜줘야함.
 @Component
 @RequestMapping("/echo")
 public class EchoHandle extends TextWebSocketHandler{
@@ -49,7 +47,6 @@ public class EchoHandle extends TextWebSocketHandler{
 	
 	@Override
 	public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {//연결 해제
-		// TODO Auto-generated method stub
 		logger.info("Socket 끊음");
 		//웹 소켓이 종료될 때마다 리스트에서 뺀다.
 		sessions.remove(session);
