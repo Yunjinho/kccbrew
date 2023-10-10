@@ -1,39 +1,32 @@
 package kr.co.kccbrew.notice.service;
 
-import java.io.File;
 import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.List;
-import java.util.UUID;
 
-import org.apache.commons.io.FileUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.google.gson.JsonObject;
-
 import kr.co.kccbrew.notice.dao.INoticeRepository;
+import kr.co.kccbrew.notice.model.NoticeVo;
 import kr.co.kccbrew.notice.model.PagingVo;
-import kr.co.kccbrew.notice.model.noticeVo;
 import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
-public class noticeService implements INoticeServie{
+public class NoticeService implements INoticeServie{
 	private final INoticeRepository noticeRepository;
 
 	//공지 전체 조회
 	@Override
-	public List<noticeVo> showAllNoticeList() {
-		List<noticeVo> noticeList = noticeRepository.showAllNoticeList();
+	public List<NoticeVo> showAllNoticeList() {
+		List<NoticeVo> noticeList = noticeRepository.showAllNoticeList();
 		return noticeList;
 	}
 	
 	//공지 상세 조회
 	@Override
-	public noticeVo readNotice(int noticeSeq) {
+	public NoticeVo readNotice(int noticeSeq) {
 		noticeRepository.updateReadCount(noticeSeq);
 		return noticeRepository.readNotice(noticeSeq);
 	}
@@ -45,7 +38,7 @@ public class noticeService implements INoticeServie{
 
 	//공지 등록
 	@Override
-	public void insertNotice(noticeVo noticeVo) {
+	public void insertNotice(NoticeVo noticeVo) {
 		if(noticeVo.getNoticeImg() == null) {
 			noticeRepository.insertNotice(noticeVo);
 		}else {
@@ -56,7 +49,7 @@ public class noticeService implements INoticeServie{
 
 	//공지 수정
 	@Override
-	public void updateNotice(noticeVo noticeVo) {
+	public void updateNotice(NoticeVo noticeVo) {
 		noticeRepository.updateNotice(noticeVo);
 	}
 
@@ -69,8 +62,8 @@ public class noticeService implements INoticeServie{
 	
 	//공지 이미지 등록
 	@Override
-	public noticeVo insertNoticeImg(noticeVo noticeVo) {
-		noticeVo vo = new noticeVo();
+	public NoticeVo insertNoticeImg(NoticeVo noticeVo) {
+		NoticeVo vo = new NoticeVo();
 		vo.setWriterId(noticeVo.getWriterId());
 		
 		//파일 기본 정보 등록
@@ -109,7 +102,12 @@ public class noticeService implements INoticeServie{
 
 	//공지사항 페이징 처리
 	@Override
-	public List<noticeVo> selectNotice(PagingVo vo) {
+	public List<NoticeVo> selectNotice(PagingVo vo) {
 		return noticeRepository.selectNotice(vo);
+	}
+	
+	@Override
+	public List<NoticeVo> noticeImageList(String fieleSeq) {
+		return noticeRepository.noticeImageList(fieleSeq);
 	}
 }

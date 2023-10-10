@@ -8,7 +8,7 @@ import org.springframework.web.multipart.MultipartFile;
 import lombok.Data;
 
 @Data
-public class noticeVo {
+public class NoticeVo {
 	/**
 	 *  공지사항 VO
 	 */
@@ -35,7 +35,7 @@ public class noticeVo {
 	String fileFmt;				//파일 형식
 	String localSavePath;		//로컬 저장 경로
 	String serverSavePath;		//서버 저장 경로
-	
+	String fileSeq;
 	/**
 	 * 그룹 코드 VO
 	 */

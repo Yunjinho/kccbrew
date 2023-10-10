@@ -28,7 +28,7 @@
 	onunload="" marginwidth="0" marginheight="0">
 	<!-- wrap -->
 	<div class="wrap">
-		<a href="/"><img src="<c:url value="resources/img/logo.png"/>"
+		<a href="/"><img src="<c:url value="resources/img/logo14.png"/>"
 			class="logo"></a>
 		<div class="registerbox">
 			<!-- 로그인 입력 -->

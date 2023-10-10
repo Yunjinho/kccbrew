@@ -47,7 +47,9 @@
 						<span class="info-name">조회수</span> &nbsp;<c:out value="${noticeVo.views}"/>
 					</div>
 					<div id="noticeImgContent">
-						<p class="imgSection">첨부한 이미지 출력 영역</p>				
+						<c:forEach var="imgList" items="${imgList}">
+							<div style="background-image:url('/${imgList.localSavePath}${imgList.fileDetailServerName}')" id="notice-img"></div>
+						</c:forEach>
 					</div>
 					<div id="noticeDtlContent">
 						<c:out value="${noticeVo.noticeContent}"/>

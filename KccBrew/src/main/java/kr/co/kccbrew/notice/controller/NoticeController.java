@@ -1,17 +1,10 @@
 package kr.co.kccbrew.notice.controller;
 
 import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Date;
 import java.util.List;
-import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletRequestWrapper;
-import javax.servlet.http.HttpSession;
 
-import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
@@ -24,21 +17,16 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartFile;
 
-import com.google.gson.JsonObject;
-
-import kr.co.kccbrew.comm.security.model.UserVo;
 import kr.co.kccbrew.notice.dao.INoticeRepository;
+import kr.co.kccbrew.notice.model.NoticeVo;
 import kr.co.kccbrew.notice.model.PagingVo;
-import kr.co.kccbrew.notice.model.noticeVo;
-import kr.co.kccbrew.notice.service.noticeService;
+import kr.co.kccbrew.notice.service.NoticeService;
 
 @Controller
-public class noticeController {
+public class NoticeController {
 	@Autowired
-	noticeService noticeService;
+	NoticeService noticeService;
 	INoticeRepository noticeRepository;
 	
 	/**
@@ -90,9 +78,9 @@ public class noticeController {
 	 */
 	@RequestMapping(value="/insertnoticeform", method=RequestMethod.POST)
 	public String insertNotice(Model model
-								,@ModelAttribute noticeVo noticeVo
+								,@ModelAttribute NoticeVo noticeVo
 					            ,@Value("#{serverImgPath['localPath']}")String localPath
-								,@Value("#{serverImgPath['userPath']}")String path
+								,@Value("#{serverImgPath['noticePath']}")String path
 								,HttpServletRequest request) {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
@@ -148,8 +136,10 @@ public class noticeController {
 				UserDetails userDetails = (UserDetails) principal;
 				String userId = userDetails.getUsername();
 				
-				noticeVo noticeVo = noticeService.readNotice(noticeSeq);
+				NoticeVo noticeVo = noticeService.readNotice(noticeSeq);
+				List<NoticeVo> noticeImg = noticeService.noticeImageList(noticeVo.getFileSeq());
 				model.addAttribute("noticeVo", noticeVo);
+				model.addAttribute("imgList", noticeImg);
 			}
 		}
 		return "noticeDetail";
@@ -192,7 +182,7 @@ public class noticeController {
 				UserDetails userDetails = (UserDetails) principal;
 				String userId = userDetails.getUsername();
 
-				noticeVo noticeVo = noticeService.readNotice(noticeSeq);
+				NoticeVo noticeVo = noticeService.readNotice(noticeSeq);
 				model.addAttribute("noticeVo", noticeVo);
 			}
 		}
@@ -212,9 +202,9 @@ public class noticeController {
 	@RequestMapping(value="/notice/update/{noticeSeq}", method=RequestMethod.POST)
 	public String updateNotice(Model model
 								,@PathVariable int noticeSeq
-								,@ModelAttribute noticeVo noticeVo
+								,@ModelAttribute NoticeVo noticeVo
 					            ,@Value("#{serverImgPath['localPath']}")String localPath
-								,@Value("#{serverImgPath['userPath']}")String path
+								,@Value("#{serverImgPath['noticePath']}")String path
 								,HttpServletRequest request) {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		
