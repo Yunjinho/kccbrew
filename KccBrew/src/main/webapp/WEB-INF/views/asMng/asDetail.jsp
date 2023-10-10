@@ -110,7 +110,7 @@ window.onload=function(){
 									</div>
 									<div class="as-receipt-info">
 										<!-- 기사 배정 및 반려 -->
-										<input type="hidden" name="storeSeq"
+										<input type="hidden" name="storeSeq" id="storeSeq"
 											value="${asDetailInfo.storeSeq}">
 
 
@@ -369,7 +369,7 @@ window.onload=function(){
 
 											<tr>
 												<th>점포명</th>
-												<td><input type="text" value="${asDetailInfo.storeNm}"
+												<td><input type="text" value="${asDetailInfo.storeNm}" 
 													id="storeNm" readonly></td>
 												<th>점포 번호</th>
 												<td><input type="text"
@@ -582,21 +582,21 @@ window.onload=function(){
 			</div>
 		</div>
 	</div>
+	
+	<!-- 수리기사 AS배정반려 등록 모달창 -->
 	<div class="modal-reject">
 		<div class="reject-content">
-			<form class="reject-form" method="post" action="/reject">
+			<form class="reject-form" method="post" action="/reject"  name="as-assign-reject-form">
 				<h1 class="modal-heading">반려 내용 작성</h1>
 				<hr>
-				<input type="hidden" name="asInfoSeq"
-					value="${asDetailInfo.asInfoSeq}"> <input type="hidden"
-					name="storeSeq" value="${asDetailInfo.storeSeq}">
+				<input type="hidden" name="asInfoSeq" id="as-assign-reject-asInfoSeq" value="${asDetailInfo.asInfoSeq}"> 
+				<input type="hidden"  name="storeSeq" value="${asDetailInfo.storeSeq}">
 				<textarea class="content-textarea" name="rejectRs"></textarea>
 				<c:if test="${sessionScope.user.userTypeCd =='03'}">
-					<input type="hidden" name="asAssignSeq"
-						value="${asDetailInfo.asAssignSeq}">
+				<input type="hidden" name="asAssignSeq"  value="${asDetailInfo.asAssignSeq}" id="as-assign-reject-asAssignSeq">
 				</c:if>
 				<div>
-					<button type="submit" class="form-btn"
+					<button type="button" class="form-btn" onclick="RejectAsAssign();"
 						style="margin: 0; float: right;">반려</button>
 					<div class="form-btn" onclick="cancelModal()"
 						style="margin: 0; float: right;">취소</div>
@@ -604,6 +604,9 @@ window.onload=function(){
 			</form>
 		</div>
 	</div>
+	<!-- 수리기사 AS배정반려 등록 모달창 -->
+	
+	
 	<!-- 접수반려내용 모달창 -->
 	<div class="modal-rejectContent">
 		<div class="reject-content">

@@ -182,28 +182,22 @@ function imgTypeCheck(fileName){
 	}
 }
 
-/*ajax로 AS배정*/
-function performSubmit() {
-	var form = document.getElementById("as-assign-form");
-	var formData = new FormData(form);
-
-	var asInfoSeq = document.getElementById("asInfoSeq");
-	var asAssignSeq = document.getElementById("asAssignSeq");
+/*ajax로 수리기사 AS배정반려*/
+function RejectAsAssign() {
+	console.log("RejectAsAssign함수실행!");
+	var form = document.forms["as-assign-reject-form"];
 
 	$.ajax({
 		url: form.action,
 		type: form.method,
-		data: formData,
-		processData: false, 
-		contentType: false, 
+		data: $(form).serialize(), 
 		success: function(data) {
-			sendAsAssignAlarm();
-			/*window.location.href = '/as-detail?asInfoSeq="+asInfoSeq+"&asAssignSeq="+asAssignSeq';*/
+			sendAsAssignRejectAlarm();
 			window.location.reload();
-			alert('AS배정이 등록되었습니다!');
+			alert('AS배정이 반려되었습니다!');
 		},
 		error: function(error) {
-			console.log('performSubmit()함수의 ajax 요청 실패:', error);
+			console.log('RejectAsAssign()함수의 ajax 요청 실패:', error);
 		}
 	});
 }
