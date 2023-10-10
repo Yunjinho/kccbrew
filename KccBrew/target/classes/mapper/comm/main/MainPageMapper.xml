@@ -174,17 +174,20 @@
             u.user_nm                 AS "managerName",
             a.mechanic_id             AS "mechanicId",
             u2.user_nm                AS "mechanicName",
-            a.visit_dttm              AS "visitDate"
+            a.visit_dttm              AS "visitDate",
+            s.store_nm                AS "storeNm"
         FROM as_information i
         INNER JOIN USERS u ON i.store_mng_id = u.user_id
         INNER JOIN as_assign a ON i.as_info_seq = a.as_info_seq
+        LEFT OUTER JOIN as_result ar ON a.as_assign_seq = ar.as_assign_seq 
         LEFT JOIN USERS u2 ON a.mechanic_id = u2.user_id
-        WHERE i.store_mng_id = #{userId}
+        INNER JOIN store s ON s.store_seq = i.store_seq
+        WHERE i.store_mng_id = #{userId} AND ar.reapply IS NULL
         ORDER BY a.visit_dttm ASC
 	    ]]>
 	</select>
 
-	<!-- 특정 점주 a/s 배정 리스트 -->
+	<!-- 기사 a/s 배정 리스트 -->
 	<select id="showAsAssignListbyMechaId"
 		parameterType="kr.co.kccbrew.comm.main.model.MainPageVo"
 		resultType="kr.co.kccbrew.comm.main.model.MainPageVo">
@@ -198,12 +201,15 @@
             u.user_nm                 AS "managerName",
             a.mechanic_id             AS "mechanicId",
             u2.user_nm                AS "mechanicName",
-            a.visit_dttm              AS "visitDate"
+            a.visit_dttm              AS "visitDate",
+            s.store_nm                AS "storeNm"
         FROM as_information i
         INNER JOIN USERS u ON i.store_mng_id = u.user_id
         INNER JOIN as_assign a ON i.as_info_seq = a.as_info_seq
+        INNER JOIN store s ON s.store_seq=i.store_seq
+        LEFT OUTER JOIN as_result ar ON a.as_assign_seq = ar.as_assign_seq 
         LEFT JOIN USERS u2 ON a.mechanic_id = u2.user_id
-        WHERE a.mechanic_id = #{userId}
+        WHERE a.mechanic_id = #{userId} AND ar.reapply IS NULL
         ORDER BY a.visit_dttm ASC
 	    ]]>
 	</select>
@@ -218,9 +224,15 @@
 				r.as_assign_seq					AS "asAssignNum",     
 				i.machine_cd					AS "machineCode",
 				i.as_status						AS "asStatus",
-				u.user_id						AS "managerId"
-			FROM as_result r, as_assign a, as_information i, users u
-			WHERE r.as_assign_seq = a.as_assign_seq AND a.as_info_seq = i.as_info_seq AND i.store_mng_id = u.user_id AND user_id=#{userId}
+				u.user_id						AS "managerId",
+                s.store_nm                      AS "storeNm",
+                r.reapply						AS "reapply"
+			FROM as_result r, as_assign a, as_information i, users u, store s
+			WHERE r.as_assign_seq = a.as_assign_seq 
+					AND a.as_info_seq = i.as_info_seq 
+					AND s.store_seq=i.store_seq 
+					AND i.store_mng_id = u.user_id 
+					AND user_id=#{userId}
 		]]>
 	</select>
 
@@ -233,9 +245,11 @@
 				r.as_assign_seq					AS "asAssignNum",     
 				i.machine_cd					AS "machineCode",
 				i.as_status						AS "asStatus",
-				u.user_id						AS "mechanicId"
-			FROM as_result r, as_assign a, as_information i, users u
-			WHERE r.as_assign_seq = a.as_assign_seq AND a.as_info_seq = i.as_info_seq AND a.mechanic_id = u.user_id AND user_id=#{userId}
+				u.user_id						AS "mechanicId",
+                r.reapply                       AS "reapply",
+                s.store_nm                      AS "storeNm"
+			FROM as_result r, as_assign a, as_information i, users u, store s
+			WHERE s.store_seq=i.store_seq AND r.as_assign_seq = a.as_assign_seq AND a.as_info_seq = i.as_info_seq AND a.mechanic_id = u.user_id  AND user_id=#{userId}
 		]]>
 	</select>
 

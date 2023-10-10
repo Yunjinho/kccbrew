@@ -68,9 +68,12 @@ public class MainPageVo {
 	String storeName;		//점포명
 	String storeTelNo;		//점포 전화번호
 	String storeSeq;		//점포 아이디
+	String storeNm;			//점포 이름
 	
 	String locationCode; 	//점포 지역 코드
 	String userType; 		//사용자 구분 코드
+	
+	String reapply;			//재접수
 	
 	LocalDate startOfWeek;	//A/S 일정 날짜 구분
 	LocalDate endOfWeek;	//A/S 일정 날짜 구분
