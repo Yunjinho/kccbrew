@@ -1,8 +1,9 @@
 #userChat {
-	position: fixed;
-	/* top : 65%; */
+	
 }
-
+.chatArea{
+	position: absolute;
+}
 #userChat .hidden {
 	visibility: hidden;
 }
@@ -12,8 +13,10 @@
 }
 
 #chatIcon {
+	    position: relative;
+    bottom: 2.5px;
 	cursor: pointer;
-	font-size: 50px;
+	font-size: 18px;
 	animation: colorChange 1s infinite;
 	will-change: transform;
 	/* 	font-weight:unset; */
@@ -26,6 +29,7 @@
 	to {
 	color: azure;}}
 .chatbox {
+	top:20px;
 	background: #fafafa;
 	min-height: 350px;
 	width: 300px;
@@ -37,6 +41,8 @@
 	flex-direction: column;
 	justify-content: space-between;
 	align-items: center;
+	    position: relative;
+    z-index: 1;
 }
 
 .chatbox_header {
@@ -77,6 +83,7 @@ svg: hover {
 	flex-direction: column;
 	overflow: auto;
 	padding: 10px 10px 20px;
+	color: b
 }
 
 .message {
@@ -90,7 +97,8 @@ svg: hover {
 }
 
 .receive {
-	padding-left: 30px; }
+	padding-left: 30px; 
+	color: black;}
 	
 .receive .message_text { 
 	position:relative;
@@ -160,6 +168,7 @@ svg: hover {
 	font-size: 100%;
 	line-height: 1.15;
 	margin: 0;
+	color: black;
 }
 
 .chatbox_input button {

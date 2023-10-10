@@ -9,7 +9,16 @@ import javax.websocket.server.ServerEndpoint;
 
 import kr.co.kccbrew.comm.util.UserSocket.User;
 
-
+/**
+ * @ClassNmae : AdminSocket
+ * @Decription : 실시간 문의 채팅을 위한 관리자소켓
+ * 
+ * @   수정일           			    수정자            		 수정내용
+ * ============      ==============     ==============
+ * 2023-10-02							배수연					   	최초생성
+ * @author BAESOOYEON
+ * @version 1.0
+ */
 @ServerEndpoint("/adminchat")
 public class AdminSocket {
 	//admin 한명 (둘 이상의 세션에서 접속을 하면 마지막 세션만 작동) -> 추가 가능

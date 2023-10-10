@@ -48,24 +48,10 @@ public class CdMngController {
 	public String selectAll(@RequestParam(defaultValue = "1") int currentPage,
 			@ModelAttribute("searchContent") CdMngVo searchContent, Model model, HttpSession session) {
 		List<CdMngVo> List = cdMngService.selectNm();
-		// List<CdMngVo> list = cdMngService.filter(searchContent, currentPage);
 		List<CdMngVo> list = cdMngService.grcdList();
-		/*
-		 * int totalPage = 0; int totalLogCount =
-		 * cdMngService.getCdFilterCount(searchContent); int sharePage = 0; if (list !=
-		 * null && !list.isEmpty()) { totalPage = (int) Math.ceil((double) totalLogCount
-		 * / 10); } else { }
-		 * 
-		 * if (currentPage == 1) { sharePage = 0; } else { sharePage = (currentPage - 1)
-		 * / 10; }
-		 */
+		
 		model.addAttribute("List", List);
-		/*
-		 * model.addAttribute("totalPage", totalPage); model.addAttribute("currentPage",
-		 * currentPage); model.addAttribute("sharePage", sharePage);
-		 * 
-		 * model.addAttribute("totalLog", totalLogCount);
-		 */
+		
 
 		model.addAttribute("list", list);
 		return "adminCodeManage";
@@ -73,7 +59,7 @@ public class CdMngController {
 
 	@RequestMapping(value = "/code/dtl/{cdId}", method = RequestMethod.GET, produces = "application/json")
 	@ResponseBody
-	public List<CdMngVo> electCd(@PathVariable("cdId") String cdId) {
+	public List<CdMngVo> selectCd(@PathVariable("cdId") String cdId) {
 		System.out.println(cdId);
 		List<CdMngVo> list = cdMngService.grcdDtlList(cdId);
 		return list;
@@ -104,10 +90,8 @@ public class CdMngController {
 	public String insert2(@RequestParam("cdId") String cdId, @RequestParam("cdDtlNm") String cdDtlNm,
 			@RequestParam("cdDtlId") String cdDtlId, Model model, RedirectAttributes redirect, Principal principal) {
 		String userId = principal.getName();
-		System.out.println("-----------------------");
-		System.out.println("---------------rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr--------");
 
-// CdMngVo 객체에 값을 설정
+		// CdMngVo 객체에 값을 설정
 		CdMngVo codeMng = new CdMngVo();
 		codeMng.setCdId(cdId);
 		codeMng.setCdDtlNm(cdDtlNm);
@@ -147,6 +131,8 @@ public class CdMngController {
 		String userId = principal.getName();
 		codeMng.setCdModUser(userId);
 		cdMngService.grpUpdate(codeMng);
+		System.out.println(codeMng);
+		System.out.println("+_+++++++++++++++++++++_+_+_+_+");
 		model.addAttribute("codeMng", codeMng);
 		return "sysMng/cdMng/cdMngDtl";
 	}
