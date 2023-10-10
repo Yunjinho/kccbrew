@@ -247,7 +247,8 @@ public class noticeController {
 				noticeService.updateNotice(noticeVo);
 			}
 		}
-		return "/noticedetail/" + noticeSeq;
+//		return "/noticedetail/" + noticeSeq;
+		return "notice";
 	}
 	
 }

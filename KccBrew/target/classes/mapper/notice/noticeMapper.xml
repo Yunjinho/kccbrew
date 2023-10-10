@@ -11,7 +11,7 @@
 		]]>
 	</select>
 	
-	<!-- 사용자 정보 가져오기 -->
+	<!-- 사용자 이름 가져오기 -->
 	<select id="selectUserName" parameterType="kr.co.kccbrew.notice.model.noticeVo" resultType="kr.co.kccbrew.notice.model.noticeVo">
 		<![CDATA[
 			SELECT user_nm
@@ -46,9 +46,9 @@
 					)
 		WHERE RN BETWEEN #{start} AND #{end}
 		]]>
-</select>
+	</select>
 	
-	<!-- 공지사항 목록 출력 -->
+	<!-- 공지사항 목록 출력 - 페이징 없음 -->
 	<select id="showAllNoticeList" parameterType="kr.co.kccbrew.notice.model.noticeVo" resultType="kr.co.kccbrew.notice.model.noticeVo">
 		<![CDATA[
 			SELECT
@@ -101,7 +101,7 @@
 	<!-- 공지 사진 기본 정보 등록 -->
 	<insert id="insertFileInfo" parameterType="kr.co.kccbrew.notice.model.noticeVo">
 		INSERT INTO file_info
-		VALUES(file_seq.NEXTVAL,'01',SYSDATE,#{writerId},SYSDATE,#{writerId})
+		VALUES(file_seq.NEXTVAL,'04',SYSDATE,#{writerId},SYSDATE,#{writerId})
 		<selectKey resultType="int" keyProperty="fileId" order="AFTER">
 			SELECT NVL(MAX(file_seq), 0) AS "fileId" FROM file_info
 		</selectKey> 
@@ -141,7 +141,7 @@
 		]]>
 	</insert>
 	
-	<!-- 파일 포함 공지사항 수정하기 -->
+	<!-- 공지사항 수정하기 -->
 	<update id="updateNotice"
 		parameterType="kr.co.kccbrew.notice.model.noticeVo">
 		<![CDATA[

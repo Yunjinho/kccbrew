@@ -75,25 +75,28 @@ public class noticeService implements INoticeServie{
 		
 		//파일 기본 정보 등록
 		noticeRepository.insertFileInfo(vo);
-		MultipartFile imgFile = noticeVo.getNoticeImg();
-		
-		vo.setFileOriginalName(imgFile.getOriginalFilename());
-		vo.setFileDetailServerName("notice_" + imgFile.getOriginalFilename());
-		vo.setFileFmt(imgFile.getContentType());
-		vo.setFileDetailLocation(noticeVo.getFileDetailLocation());
-		noticeVo.setFileId(vo.getFileId());
-		
-		//파일 상세 정보 등록
-		noticeRepository.insertFileDtlInfo(vo);
-		
-		//이미지 파일 저장
-		String targetPath = noticeVo.getServerSavePath()+"\\"+vo.getFileDetailServerName();
-		String localPath = noticeVo.getLocalSavePath()+vo.getFileDetailServerName();
-		try {
-			FileCopyUtils.copy(imgFile.getInputStream(), new FileOutputStream(targetPath));
-			FileCopyUtils.copy(imgFile.getInputStream(), new FileOutputStream(localPath));
-		}catch(Exception e) {
-			System.out.println(e.getMessage());
+		List<MultipartFile> imgFile = noticeVo.getNoticeImg();
+		for(MultipartFile m : imgFile) {
+			if(m.getOriginalFilename()!="") {
+				vo.setFileOriginalName(m.getOriginalFilename());
+				vo.setFileDetailServerName("notice_" + m.getOriginalFilename());
+				vo.setFileFmt(m.getContentType());
+				vo.setFileDetailLocation(noticeVo.getFileDetailLocation());
+				noticeVo.setFileId(vo.getFileId());
+				
+				//파일 상세 정보 등록
+				noticeRepository.insertFileDtlInfo(vo);
+				
+				//이미지 파일 저장
+				String targetPath = noticeVo.getServerSavePath()+"\\"+vo.getFileDetailServerName();
+				String localPath = noticeVo.getLocalSavePath()+vo.getFileDetailServerName();
+				try {
+					FileCopyUtils.copy(m.getInputStream(), new FileOutputStream(targetPath));
+					FileCopyUtils.copy(m.getInputStream(), new FileOutputStream(localPath));
+				}catch(Exception e) {
+					System.out.println(e.getMessage());
+				}
+			}
 		}
 		return noticeVo;
 	}

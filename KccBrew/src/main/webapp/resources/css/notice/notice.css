@@ -252,12 +252,20 @@ input[type="file"] {
 .filebox {
 	margin-bottom: 10px;
 }
+.img-list img {
+	width:100px;
+	height:100px;
+	overflow: hidden;
+	margin-right: 10px;
+	border: 1px solid #111111;
+}
 
 .modButtons {
 	margin-top:50px;
 	display: block;
 	text-align: center;
 }
+
 
 /******************* 공지 상세 페이지 CSS ****************************************/
 #noticeDtlTitle {

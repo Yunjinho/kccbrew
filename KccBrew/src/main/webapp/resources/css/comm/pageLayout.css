@@ -26,6 +26,7 @@ html {
 	margin: 0 auto; */
 	/* padding: 40px 0; */
 	width: 100%;
+	min-height:850px;
 }
 
 #mainHeader {
