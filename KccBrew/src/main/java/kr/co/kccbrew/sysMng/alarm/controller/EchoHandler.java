@@ -84,6 +84,9 @@ public class EchoHandler extends TextWebSocketHandler implements WebSocketHandle
 			case "as-assign" : 
 				asAssignMessage(messageMap);
 				break;
+			case "as-assign-reject" : 
+				asAssignRejectMessage(messageMap);
+				break;
 			}
 		}
 	}
@@ -306,6 +309,55 @@ public class EchoHandler extends TextWebSocketHandler implements WebSocketHandle
 			if(userIdSessions.containsKey(mechanicId)) {
 				try {
 					userIdSessions.get(mechanicId).sendMessage(new TextMessage(jsonStr));
+					alarmService.addAlarm(alarmVo);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	/*AS반려 시 관리자에게 알람메세지 전송 및 DB저장*/
+	public void asAssignRejectMessage(Map<String, Object> messageMap) {
+		System.out.println("EchoHandler.asAssignRejectMessage");
+
+		String userId = (String)messageMap.get("userId");
+		String userType = (String)messageMap.get("userType");
+		String storeName = (String) messageMap.get("storeNm");
+		String storeId = (String) messageMap.get("storeSeq");
+		String asInfoSeq = (String) messageMap.get("asInfoSeq");
+		String asAssignSeq = (String) messageMap.get("asAssignSeq");
+
+		String message = "수리기사(" + userId + ")가 " + storeName + "의 AS배정(배정번호: " + asAssignSeq + ")를 반려하였습니다.";
+
+		// JSON 객체 생성
+		Map<String, Object> jsonMessage = new HashMap<>();
+		jsonMessage.put("category", "alarm");
+		jsonMessage.put("title", "AS배정반려");
+		jsonMessage.put("content", message);
+
+		// AlarmVo객체에 값 대입
+		AlarmVo alarmVo = new AlarmVo();
+		alarmVo.setCauseAgent(userId);
+		alarmVo.setReceiverType("관리자");
+		//	alarmVo.setReceiverId(mechanicId);
+		alarmVo.setAlarmTitle("AS배정반려");
+		alarmVo.setAlarmContent(message);
+		java.util.Date utilDate = new java.util.Date();
+		java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
+		alarmVo.setCauseDate(sqlDate);
+
+		try {
+			ObjectMapper objectMapper = new ObjectMapper();
+			String jsonStr = objectMapper.writeValueAsString(jsonMessage);
+
+			// 관리자 웹소켓 세션에 전송
+			Collection<WebSocketSession> sessions = adminSessions.values();
+			for (WebSocketSession session : sessions) {
+				try {
+					session.sendMessage(new TextMessage(jsonStr));
 					alarmService.addAlarm(alarmVo);
 				} catch (IOException e) {
 					e.printStackTrace();

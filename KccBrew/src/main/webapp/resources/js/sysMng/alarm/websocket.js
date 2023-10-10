@@ -169,6 +169,32 @@ function sendAsAssignAlarm() {
 	}
 }
 
+/*수리기사가 AS배정반려 시 알람 발신(수리기사->관리자)*/
+function sendAsAssignRejectAlarm() {
+	console.log(" sendAsAssignRejectAlarm함수실행!");
+
+	var asInfoSeq = document.getElementById("as-assign-reject-asInfoSeq").value;
+	var asAssignSeq = document.getElementById("as-assign-reject-asAssignSeq").value;
+	var storeSeq = document.getElementById("storeSeq").value;
+	var storeNm = document.getElementById("storeNm").value;
+
+	if (typeof sockjs != 'undefined') {
+		var data = {
+				title: "as-assign-reject",
+				userId: userId,
+				userType: userType,
+				storeNm: storeNm,
+				storeSeq: storeSeq,
+				asInfoSeq: asInfoSeq,
+				asAssignSeq: asAssignSeq
+		};
+		var jsonStr = JSON.stringify(data);
+		sockjs.send(jsonStr);
+	} else {
+		console.log("연결되지 않음.");
+	}
+}
+
 
 /*실시간알람 수신*/
 function executeAlarmFunction(jsonMessage) {
