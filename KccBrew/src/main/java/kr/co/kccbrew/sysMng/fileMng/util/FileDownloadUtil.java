@@ -12,7 +12,16 @@ import javax.servlet.http.HttpServletResponse;
  
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.servlet.view.AbstractView;
-
+/**
+ * @ClassNmae : FileDownloadUtil
+ * @Decription : 파일다운로드를 위한 유틸
+ * 
+ * @   수정일           			    수정자            		 수정내용
+ * ============      ==============     ==============
+ * 2023-08-23							배수연					   	최초생성
+ * @author BAESOOYEON
+ * @version 1.0
+ */
 public class FileDownloadUtil extends AbstractView {
  
     public FileDownloadUtil() {        

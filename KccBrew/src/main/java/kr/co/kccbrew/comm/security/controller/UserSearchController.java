@@ -1,15 +1,12 @@
 package kr.co.kccbrew.comm.security.controller;
 
-import java.lang.ProcessBuilder.Redirect;
 import java.security.Principal;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -20,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import kr.co.kccbrew.comm.main.model.MainPageVo;
 import kr.co.kccbrew.comm.security.model.UserVo;
@@ -28,7 +24,16 @@ import kr.co.kccbrew.comm.security.service.IUserSearchService;
 import kr.co.kccbrew.comm.security.service.IUserService;
 import kr.co.kccbrew.comm.util.MailUtil;
 import lombok.RequiredArgsConstructor;
-
+/**
+ * @ClassNmae : UserSearchController
+ * @Decription : 아이디,비밀번호찾기
+ * 
+ * @   수정일           			    수정자            		 수정내용
+ * ============      ==============     ==============
+ * 2023-09-22						배수연					   	최초생성
+ * @author BAESOOYEON
+ * @version 1.0
+ */
 @Controller
 @RequiredArgsConstructor
 public class UserSearchController {
@@ -92,7 +97,11 @@ public class UserSearchController {
 		return "security/searchUser";
 	}
 
-	/******************* 비밀번호 변경 *********************/
+	
+	/**
+	 * 
+	 * 비밀번호변경
+	 */
 
 	@RequestMapping(value = "/mypage/chgpwd", method = RequestMethod.GET)
 	public String chgPassword(Model model, Principal principal) {
@@ -123,6 +132,10 @@ public class UserSearchController {
 		}
 	}
 
+	/**
+	 * 
+	 * 비밀번호 확인
+	 */
 	@RequestMapping(value = "/chgpwd")
 	@ResponseBody
 	public String pwdTest(@RequestBody UserVo user, Principal principal) {
