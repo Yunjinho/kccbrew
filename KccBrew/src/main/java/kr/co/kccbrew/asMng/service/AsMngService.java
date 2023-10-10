@@ -77,7 +77,7 @@ public class AsMngService implements IAsMngService{
 	 * 로그인한 사용자와 매핑 되어있는 점포 정보
 	 */
 	@Override
-	public AsMngVo selectStrInfo(String userId) {
+	public List<AsMngVo> selectStrInfo(String userId) {
 		return asRepository.selectStrInfo(userId);
 	}
 	
@@ -136,8 +136,8 @@ public class AsMngService implements IAsMngService{
 	}
 
 	@Override
-	public AsMngVo selectAsInfoDetail(String asInfoSeq,String asAssignSeq) {
-		return asRepository.selectAsInfoDetail(asInfoSeq,asAssignSeq);
+	public AsMngVo selectAsInfoDetail(String asInfoSeq,String asAssignSeq,String storeSeq) {
+		return asRepository.selectAsInfoDetail(asInfoSeq,asAssignSeq,storeSeq);
 	}
 
 	@Override
@@ -151,8 +151,8 @@ public class AsMngService implements IAsMngService{
 	}
 
 	@Override
-	public int checkStrSchedule(String date, String userId) {
-		return asRepository.checkStrSchedule(date, userId);
+	public int checkStrSchedule(String date, String storeSeq) {
+		return asRepository.checkStrSchedule(date, storeSeq);
 	}
 
 	@Override
@@ -325,6 +325,10 @@ public class AsMngService implements IAsMngService{
            e.printStackTrace();
        }
 		
+	}
+	@Override
+	public void deleteAs(String asInfoSeq) {
+		asRepository.deleteAs(asInfoSeq);
 	}
 
 

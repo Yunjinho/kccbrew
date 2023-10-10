@@ -35,7 +35,7 @@ public interface IAsMngService {
 	 * 점포 정보 조회
 	 * @return 로그인한 아이디로 매핑된 점포 정보 
 	 */
-	public AsMngVo selectStrInfo(String userId);
+	public List<AsMngVo> selectStrInfo(String userId);
 	
 	/**
 	 * AS 등록
@@ -47,7 +47,7 @@ public interface IAsMngService {
 	 * @param asInfoSeq : seq 번호
 	 * @return
 	 */
-	public AsMngVo selectAsInfoDetail(String asInfoSeq,String asAssignSeq);
+	public AsMngVo selectAsInfoDetail(String asInfoSeq,String asAssignSeq,String storeSeq);
 	
 	/**
 	 * AS건에 등록한 파일 정보 조회
@@ -69,7 +69,7 @@ public interface IAsMngService {
 	 * @param userId AS 신청인
 	 * @return
 	 */
-	public int checkStrSchedule(String date,String userId);
+	public int checkStrSchedule(String date,String storeSeq);
 	
 	/**
 	 * 
@@ -114,4 +114,10 @@ public interface IAsMngService {
 	
 	public void asMod(AsMngVo asMngVo);
 	public void deleteFile(AsMngVo asMngVo, String imgSeq);
+	
+	/**
+	 * AS 접수 취소
+	 * @param asInfoSeq
+	 */
+	public void deleteAs(@Param("asInfoSeq")String asInfoSeq);
 }

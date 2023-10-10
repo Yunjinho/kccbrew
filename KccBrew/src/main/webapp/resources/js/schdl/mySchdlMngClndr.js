@@ -27,10 +27,10 @@ function sendAjaxRequest(year, month) {
 				var map = data[i];
 
 				/*휴가일*/
-				console.log("**********holidayDates**********");
 				var holidayDates = map.holidayDates;
 				if (holidayDates !== null) {
 					console.log("holidayDates.length: " + holidayDates.length);
+					console.log("holidayDates.length: " + holidayDates[0]);
 					for (var j = 0; j < holidayDates.length; j++) {
 						var HLDY_STAR = holidayDates[j].HLDY_STAR;
 						var HLDY_END = holidayDates[j].HLDY_END;
@@ -47,7 +47,7 @@ function sendAjaxRequest(year, month) {
 
 
 						events.push({
-							title: '휴가',
+							title: '휴가 - '+holidayDates[j].STORE_NM,
 							start: formatStartDate, 
 							end: formatEndDate,    
 							backgroundColor: '#b8cff5', 
@@ -58,7 +58,6 @@ function sendAjaxRequest(year, month) {
 			}
 
 			/*배정일*/
-			console.log("**********assignDates**********");
 			var assignDates = map.assignDates;
 			console.log("assignDates: " + assignDates);
 			for (var j = 0; j < assignDates.length; j++) {
@@ -79,7 +78,6 @@ function sendAjaxRequest(year, month) {
 
 
 			/*결과일*/
-			console.log("**********resultDates**********");
 			var resultDates = map.resultDates;
 			console.log("resultDates: " + resultDates);
 			for (var j = 0; j < resultDates.length; j++) {

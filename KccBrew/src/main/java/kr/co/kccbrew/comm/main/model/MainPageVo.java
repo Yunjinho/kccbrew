@@ -34,27 +34,46 @@ public class MainPageVo {
 	
 	
 	
+	/**
+	 * 그룹 코드 VO
+	 */
+	String grpCdId;			//그룹 코드 아이디
+	String grpCdNm;			//그룹 코드명
+	String grpCdDtlId;		//그룹 코드 디테일 아이디
+	String grpCdDtlNm;		//그룹 코드 디테일명
+	
+	/**
+	 * A/S VO
+	 */
 	int asAssignNum; 		//배정 번호
 	int asInfoNum;  		//접수 번호
 	Date visitDate;  		//방문 예정일 
 	Date confirmDate; 		//접수일
 	String asStatus; 		//as 상태 코드
 	
+	/**
+	 * 수리기사 관련 VO
+	 */
+	String mechanicId; 			//수리기사 아이디
+	String mechanicName; 		//수리기사 이름
+	String machineCode; 		//장비 코드
+	String mechaLocationCode; 	//지역 상세 코드
+	String mechaLocation;  		//지역 코드
 	
-	String mechanicId; 		//수리기사 아이디
-	String mechanicName; 	//수리기사 이름
-	String machineCode; 	//장비 코드
-	String mechaLocationCode;	//활동 지역
-	
+	/**
+	 * 점주 관련 VO
+	 */
 	String managerId;  		//점주 아이디
 	String managerName; 	//점주 이름
 	String storeName;		//점포명
 	String storeTelNo;		//점포 전화번호
 	String storeSeq;		//점포 아이디
+	String storeNm;			//점포 이름
 	
 	String locationCode; 	//점포 지역 코드
 	String userType; 		//사용자 구분 코드
-	String groupCodeName;	//그룹 코드 이름
+	
+	String reapply;			//재접수
 	
 	LocalDate startOfWeek;	//A/S 일정 날짜 구분
 	LocalDate endOfWeek;	//A/S 일정 날짜 구분

@@ -6,6 +6,8 @@
 <%@ page import="java.time.LocalDateTime"%>
 <%@ page import="java.time.format.DateTimeFormatter"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+<%@ taglib prefix="sec"
+	uri="http://www.springframework.org/security/tags"%>
 
 <!DOCTYPE html>
 <html>
@@ -15,16 +17,35 @@
 </script>
 
 <head>
+
+<!-- 스프링 시큐리티사용 -->
+<sec:authentication property="principal.username" var="userId" />
+<sec:authentication property="authorities" var="roles" />
+
+<script>
+
+	/* 시큐리티 사용 */
+	var userId = '${userId}';
+	console.log(userId);
+
+	var userType = '${roles}';
+	console.log(userType);
+</script>
+
 <meta charset="UTF-8">
 
 <!-- css -->
 <link rel="stylesheet" href="/resources/css/schdl/schdl-common.css" />
 <link rel="stylesheet" href="/resources/css/schdl/myinsertform.css" />
 <link rel="stylesheet" href="/resources/css/log/mylogtest.css" />
-<link rel="stylesheet" href="/resources/css/log/content-template.css" />
 
 <!-- javascript -->
 <script src="<c:url value="/resources/js/schdl/myHldyIns.js"/>"></script>
+<script src="<c:url value="/resources/js/sysMng/alarm/websocket.js"/>"></script>
+
+<!-- socket -->
+<script
+	src="https://cdn.jsdelivr.net/npm/sockjs-client@1.6.1/dist/sockjs.min.js"></script>
 
 <!-- font -->
 <!-- notoSans -->
@@ -47,6 +68,9 @@
 </head>
 
 <body>
+
+
+
 	<%-- Import the necessary Java classes --%>
 	<%@ page import="java.util.Date"%>
 
@@ -73,18 +97,33 @@
 						<span id="maincontent"></span>
 						<div class="user-past">
 
-							<!-- ********** 세은 로그 관련 내용 시작 ********** -->
 							<div id="content">
 								<h2 class="heading">휴가신청</h2>
 								<form:form modelAttribute="holidayVo" method="post" id="addForm">
-								<form:input type="hidden" path="remainingDays"/> 
+									<form:input type="hidden" path="remainingDays" />
 									<table id="search-box">
 										<tr>
 											<th>휴가신청일</th>
 											<td colspan="4"><c:out
 													value="<%=new java.text.SimpleDateFormat(\"yyyy-MM-dd\").format(new java.util.Date())%>" /></td>
 										</tr>
-
+										<c:if test="${roles eq '[ROLE_MANAGER]'}">
+										<tr>
+											<th>휴무 점포</th>
+											<td colspan="3">
+												<form:select path="storeSeq" required="required" 
+														style="padding: 5px; border: 2px solid #ccc; border-radius: 5px; 
+																font-size: 14px; outline: none; width: 80%;">
+													<form:option value="">점포명</form:option>
+													<c:forEach var="list" items="${strInfo}">
+														<form:option value="${list.storeSeq}">
+															${list.storeNm}
+														</form:option>
+													</c:forEach>
+												</form:select>
+											</td>
+										</tr>										
+										</c:if>
 										<!-- 휴가시작일 -->
 										<tr>
 											<th>휴가시작일</th>
@@ -106,15 +145,18 @@
 											</td>
 										</tr>
 										<tr>
-											<td id="input-information" colspan="5" hidden="true" style="color: red; font-weight:bold;"></td>
+											<td id="input-information" colspan="5" hidden="true"
+												style="color: red; font-weight: bold;"></td>
 										</tr>
 
 										<tr>
 											<th>잔여일수/총 휴가일수</th>
-											<td id="holiday-days-info" colspan="4">
-											<span id="remainingDays-info" style="color: red; font-weight:bold;"><c:out
-															value="${ 15 - usedHolidays}" /></span> / 15</td>
-											<td id="holiday-days-notice" colspan="4"  hidden="true" style="color: red; font-weight: bold;"></td>
+											<td id="holiday-days-info" colspan="4"><span
+												id="remainingDays-info"
+												style="color: red; font-weight: bold;"><c:out
+														value="${ 15 - usedHolidays}" /></span> / 15</td>
+											<td id="holiday-days-notice" colspan="4" hidden="true"
+												style="color: red; font-weight: bold;"></td>
 										</tr>
 
 									</table>
@@ -150,7 +192,6 @@
 								</div>
 
 								<script>
-									// 폼 제출 이벤트 리스너
 									$("#addForm")
 											.submit(
 													function(event) {
@@ -172,15 +213,7 @@
 														var confirmModal = document
 																.getElementById("confirmModal");
 														confirmModal.style.display = "none";
-														
-												/* 		const remainingDaysElement = document.getElementById('remainingDays');
-														const remainingDaysValue = remainingDaysElement.textContent;
-														
-														console.log("remainingDaysValue: " + remainingDaysValue);
 
-														setInputElementValue('remainingDays', remainingDaysValue); */
-
-														// 폼 데이터를 직렬화
 														var formData = $(
 																"#addForm")
 																.serialize();
@@ -210,6 +243,7 @@
 																				window.opener.location
 																						.reload();
 																			};
+																			sendHolidayAdd();
 																		} else {
 																			var confirmButton = document
 																					.getElementById("modal-result-confirmButton");
@@ -217,6 +251,7 @@
 																				reoloadPopup();
 																			};
 																		}
+
 																	},
 																	error : function(
 																			errorMessage) {

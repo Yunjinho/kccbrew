@@ -1,3 +1,21 @@
+function deleteAs(){
+	if(confirm("접수를 취소하시겠습니까?")){
+		var asInfoSeq=$("input[name=asInfoSeq]").val();
+
+		$.ajax({
+			type : "POST",           // 타입 (get, post, put 등등)
+			url : "/delete-as",           // 요청할 서버url
+			dataType : "text",       // 데이터 타입 (html, xml, json, text 등등)
+			data : { 
+				'asInfoSeq' : asInfoSeq,
+			},
+			success : function(data) { // 결과 성공 콜백함수
+				location.href="/as-list";
+			}
+		});
+
+	}
+}
 function selectReceiptInfo(){
 	$("#view-receipt>div").css("background-color","#043763");
 	$("#view-receipt>div>span").css("color","white");
@@ -8,7 +26,7 @@ function selectReceiptInfo(){
 	$(".as-result-info").css("display","none");
 }
 function selectResultInfo(userTypeCd,asResultSeq){
-	
+
 	if(asResultSeq==null && ( userTypeCd=='01'|| userTypeCd=='02')){
 		alert("AS가 완료되지 않은 신청건입니다.");
 		return;
@@ -17,7 +35,7 @@ function selectResultInfo(userTypeCd,asResultSeq){
 	$("#view-receipt>div>span").css("color","#767676");
 	$("#view-result>div").css("background-color","#043763");
 	$("#view-result>div>span").css("color","white");
-	
+
 	$(".as-receipt-info").css("display","none");
 	$(".as-result-info").css("display","block");
 }
@@ -25,7 +43,7 @@ function selectResultInfo(userTypeCd,asResultSeq){
 function changeLosctionDtlCd(data){
 	var locOption=$("select[name=locationCd]");
 	var content='<option value="">지역 상세 선택</option>';
-	
+
 	for(var i=0;i<data.length;i++){
 		content +='<option value="'+data[i].grpCdDtlId+'" >'+data[i].grpCdDtlNm+'</option>'
 	}
@@ -35,15 +53,15 @@ function changeLosctionDtlCd(data){
 function changeLocationCd(){
 	var locCd = $("select[name=location] option:selected").val();
 	$.ajax({
-	    type : "POST",           // 타입 (get, post, put 등등)
-	    url : "/search-location-cd",           // 요청할 서버url
-	    dataType : "json",       // 데이터 타입 (html, xml, json, text 등등)
-	    data : { 
+		type : "POST",           // 타입 (get, post, put 등등)
+		url : "/search-location-cd",           // 요청할 서버url
+		dataType : "json",       // 데이터 타입 (html, xml, json, text 등등)
+		data : { 
 			'locCd' : locCd,
 		},
-	    success : function(data) { // 결과 성공 콜백함수
+		success : function(data) { // 결과 성공 콜백함수
 			changeLosctionDtlCd(data);
-	    }
+		}
 	});
 }
 //해당 일정에 근무 할 수 있는 수리기사 조회
@@ -53,16 +71,16 @@ function changeMach(){
 	var machineCd=$("input[name=machineCd]").val();
 	$.ajax({
 		type : "POST",           // 타입 (get, post, put 등등)
-	    url : "/search-mecha",           // 요청할 서버url
-	    dataType : "json",       // 데이터 타입 (html, xml, json, text 등등)
-	    data : {
+		url : "/search-mecha",           // 요청할 서버url
+		dataType : "json",       // 데이터 타입 (html, xml, json, text 등등)
+		data : {
 			'locationCd' : locationCd,
 			'visitDttm' : visitDttm,
 			'machineCd' : machineCd
 		},
-	    success : function(data) { // 결과 성공 콜백함수
-	    	insertMechaList(data)
-	    }
+		success : function(data) { // 결과 성공 콜백함수
+			insertMechaList(data)
+		}
 	})
 }
 
@@ -72,30 +90,31 @@ function insertMechaList(data){
 		html+="<option value="+data.mechaList[i].userId+">"+data.mechaList[i].userNm+"</option>";
 	}
 	html+="</select>"
-	$("select[name=mechanicId]").html(html);
+		$("select[name=mechanicId]").html(html);
 }
+
 function selectLocation(){changeMach()}
+
 function selectDate(){
-	var strMngId=$("input[name=strMngId]").val();
+	var storeSeq=$("input[name=storeSeq]").val();
 	var visitDttm=$("input[name=visitDttm]").val();
 	$.ajax({
 		type : "POST",           // 타입 (get, post, put 등등)
-	    url : "/check-str-schedule",           // 요청할 서버url
-	    dataType : "json",       // 데이터 타입 (html, xml, json, text 등등)
-	    data : {
-	    	'strMngId'	: strMngId,
+		url : "/check-str-schedule",           // 요청할 서버url
+		dataType : "json",       // 데이터 타입 (html, xml, json, text 등등)
+		data : {
+			'storeSeq'	: storeSeq,
 			'visitDttm' : visitDttm
 		},
-	    success : function(data) { // 결과 성공 콜백함수
-	    	if(data.count>0){
-	    		$("input[name=visitDttm]").val("");
-	    		alert("해당 날짜는 점포 휴무일입니다.");
-	    		return;
-	    	}
-	    }
+		success : function(data) { // 결과 성공 콜백함수
+			if(data.count>0){
+				$("input[name=visitDttm]").val("");
+				alert("해당 날짜는 점포 휴무일입니다.");
+				return;
+			}
+		}
 	})
 	changeMach()
-	
 }
 
 function rejectAs(userTypeCd){
@@ -125,21 +144,21 @@ function rejectConfirm(flag){
 	var mechanicId=$("select[name=mechanicId] option:selected").val();
 	var asAssignSeq=$("input[name=asAssignSeq]").val();
 	var asInfoSeq=$("input[name=asInfoSeq]").val();
-	
+
 	$.ajax({
 		type : "POST",           // 타입 (get, post, put 등등)
-	    url : "/reject-confirm",           // 요청할 서버url
-	    dataType : "text",       // 데이터 타입 (html, xml, json, text 등등)
-	    data : {
-	    	'mechanicId': mechanicId,
+		url : "/reject-confirm",           // 요청할 서버url
+		dataType : "text",       // 데이터 타입 (html, xml, json, text 등등)
+		data : {
+			'mechanicId': mechanicId,
 			'visitDttm' : visitDttm,
 			'asAssignSeq' : asAssignSeq,
 			'asInfoSeq'	: asInfoSeq,
 			'flag'		: flag
 		},
-	    success : function(data) { // 결과 성공 콜백함수
-	    	location.replace("/as-list");
-	    }
+		success : function(data) { // 결과 성공 콜백함수
+			location.replace("/as-list");
+		}
 	})
 }
 function addFile(){
@@ -152,15 +171,41 @@ function removeFile(){
 function imgTypeCheck(fileName){
 	var imgFile=fileName.files[0];
 	//파일 확장자 추출	
-    var fileLen = imgFile.name.length;
-    var lastDot = imgFile.name.lastIndexOf('.');
-    var fileType = imgFile.name.substring(lastDot, fileLen).toLowerCase();
+	var fileLen = imgFile.name.length;
+	var lastDot = imgFile.name.lastIndexOf('.');
+	var fileType = imgFile.name.substring(lastDot, fileLen).toLowerCase();
 	//확장자 비교
 	if(fileType == ".jpeg" || fileType == ".jpg" || fileType == ".png"){
 	}else{
 		alert("사진 : jpeg, jpg, png 확장자를 가진 파일만 사용하실 수 있습니다.");
 		$("input[name=imgFile]").val("")
 	}
+}
+
+/*ajax로 AS배정*/
+function performSubmit() {
+	var form = document.getElementById("as-assign-form");
+	var formData = new FormData(form);
+
+	var asInfoSeq = document.getElementById("asInfoSeq");
+	var asAssignSeq = document.getElementById("asAssignSeq");
+
+	$.ajax({
+		url: form.action,
+		type: form.method,
+		data: formData,
+		processData: false, 
+		contentType: false, 
+		success: function(data) {
+			sendAsAssignAlarm();
+			/*window.location.href = '/as-detail?asInfoSeq="+asInfoSeq+"&asAssignSeq="+asAssignSeq';*/
+			window.location.reload();
+			alert('AS배정이 등록되었습니다!');
+		},
+		error: function(error) {
+			console.log('performSubmit()함수의 ajax 요청 실패:', error);
+		}
+	});
 }
 
 $(document).ready(function(){

@@ -217,28 +217,27 @@
         return false;
     }
 </script>
-	 <script type="text/javascript"
-        src="//dapi.kakao.com/v2/maps/sdk.js?appkey=8ebfc94bdd15e21c9b4d64159a004634"></script>
-    <script type="text/javascript">
-        function initializeKakaoMap() {
-            kakao.maps.load(function () {
-                // Kakao 지도 초기화 코드
-                var markerPosition = new kakao.maps.LatLng(${store.latitude}, ${store.longitude});
-                var marker = {
-                    position: markerPosition
-                };
-                var staticMapContainer = document.getElementById('staticMap');
-                var staticMapOption = {
-                    center: new kakao.maps.LatLng(${store.latitude}, ${store.longitude}),
-                    level: 3,
-                    marker: marker
-                };
-                var staticMap = new kakao.maps.StaticMap(staticMapContainer, staticMapOption);
-            });
-        }
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=8ebfc94bdd15e21c9b4d64159a004634"></script>
+<script type="text/javascript">
+     function initializeKakaoMap() {
+         kakao.maps.load(function () {
+             // Kakao 지도 초기화 코드
+             var markerPosition = new kakao.maps.LatLng(${store.latitude}, ${store.longitude});
+             var marker = {
+                 position: markerPosition
+             };
+             var staticMapContainer = document.getElementById('staticMap');
+             var staticMapOption = {
+                 center: new kakao.maps.LatLng(${store.latitude}, ${store.longitude}),
+                 level: 3,
+                 marker: marker
+             };
+             var staticMap = new kakao.maps.StaticMap(staticMapContainer, staticMapOption);
+         });
+     }
 
-        // Kakao 지도 스크립트 로드 후 호출되도록 이벤트 핸들러 추가
-        window.addEventListener('load', initializeKakaoMap);
-    </script>
+     // Kakao 지도 스크립트 로드 후 호출되도록 이벤트 핸들러 추가
+     window.addEventListener('load', initializeKakaoMap);
+</script>
 </body>
 </html>

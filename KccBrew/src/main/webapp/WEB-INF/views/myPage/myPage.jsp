@@ -9,31 +9,24 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link rel="stylesheet" href="${path}/resources/css/comm/myPage2.css" />
-<link rel="stylesheet" href="/resources/css/asMng/content-template.css" />
+<link rel="stylesheet" href="${path}/resources/css/comm/myPage.css"/>
 </head>
 <body>
-	<div id="page-container" class="">
-		<div id="page-content" class="clearfix">
-			<div id="page-content-wrap">
-
-				<section id="notice" class="notice">
-					<div class="container2">
-						<!-- ********** 페이지 네비게이션 시작 ********** -->
-						<div class="page-content-navigation">
-							<ol class="breadcrumb">
-								<li class="breadcrumb-home">마이페이지</li>
-								<li class="right-arrow">
-									<div class="header-icon-background">
-										<img
-											src="<c:url value='resources/img/asMng/free-icon-right-arrow-271228.png' />"
-											alt="Check List" class="header-icon" />
-									</div>
-								</li>
-								<li>내 정보</li>
-							</ol>
+	<section id="mypage-wrapper" class="mypage-wrapper">
+		<div class="arrowAndContents">
+			<!-- ********** 페이지 네비게이션 시작 ********** -->
+			<div class="page-content-navigation">
+				<ol class="breadcrumb">
+					<li class="breadcrumb-home">마이페이지</li>
+					<li class="right-arrow">
+						<div class="header-icon-background">
+							<img
+								src="<c:url value='resources/img/asMng/free-icon-right-arrow-271228.png' />"
+								alt="Check List" class="header-icon" />
 						</div>
-
+					</li>
+					<li>내 정보</li>
+				</ol>
 			</div>
 			<!-- ********** 페이지 네비게이션 끝 ********** -->
 			<div class="myInfo-wrapper">
@@ -154,12 +147,8 @@
 						</a>
 					</div>
 				</form>
-
-					</div>
-				</section>
-
 			</div>
 		</div>
-	</div>
+	</section>
 </body>
 </html>

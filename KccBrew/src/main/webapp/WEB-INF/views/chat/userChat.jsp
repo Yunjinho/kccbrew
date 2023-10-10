@@ -51,4 +51,5 @@
 	</div>
 	<script src="/resources/js/chat/userChat.js"></script>
 </body>
+
 </html>

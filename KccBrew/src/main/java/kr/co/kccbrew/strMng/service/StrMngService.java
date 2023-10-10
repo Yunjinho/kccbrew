@@ -88,4 +88,14 @@ public class StrMngService implements IStrMngService {
 	public List<StrMngVo> search(String keyword) {
 		return storeRepository.search(keyword);
 	}
+
+	@Override
+	public List<StrMngVo> selectMyStr(String userId) {
+		return storeRepository.selectMyStr(userId);
+	}
+
+	@Override
+	public void insertStr(String userId, String storeSeq) {
+		storeRepository.insertStr(userId, storeSeq);
+	}
 }

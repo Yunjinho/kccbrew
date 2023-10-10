@@ -40,6 +40,8 @@
 			access="permitAll" />
 		<intercept-url pattern="/login-failure"
 			access="permitAll" />
+		<intercept-url pattern="/chat/**"
+			access="permitAll" />
 
 
 		<!-- 비회원만 접근가능 -->

@@ -55,13 +55,13 @@
 		class="org.springframework.web.servlet.view.UrlBasedViewResolver">
 		<beans:property name="viewClass"
 			value="org.springframework.web.servlet.view.tiles3.TilesView" />
-		<beans:property name="order" value="1" />
+		<beans:property name="order" value="0" />
 	</beans:bean>
 
 	<!-- BeanNameViewResolver 설정 -->
 	<beans:bean
 		class="org.springframework.web.servlet.view.BeanNameViewResolver">
-		<beans:property name="order" value="0" />
+		<beans:property name="order" value="1" />
 	</beans:bean>
 
 	<!-- 파일 다운로드를 처리할 클래스를 빈(bean)으로 등록 -->
@@ -77,6 +77,9 @@
 		base-package="kr.co.kccbrew.comm.main.controller" />
 	<!-- <context:component-scan base-package="kr.co.kccbrew.comm.register.controller" 
 		/> -->
+	<context:component-scan
+		base-package="kr.co.kccbrew.notice.controller" />
+	
 	<context:component-scan
 		base-package="kr.co.kccbrew.strMng.controller" />
 	<context:component-scan
@@ -100,6 +103,8 @@
 		base-package="kr.co.kccbrew.sysMng.statistics.controller" />
 	<context:component-scan
 		base-package="kr.co.kccbrew.comm.chat.controller" />
+			<context:component-scan
+		base-package="kr.co.kccbrew.sysMng.alarm.controller" />
 	<!-- Controller -->
 
 
@@ -180,6 +185,17 @@
 
 	<beans:bean id="echoHandler"
 		class="kr.co.kccbrew.sysMng.alarm.controller.EchoHandler" />
+ 
+<!-- 웹소켓 -->
+	<beans:bean id="echoHandle" class="kr.co.kccbrew.comm.util.EchoHandle" />        
+	
+	<websocket:handlers>
+		<websocket:mapping handler="echoHandle" path="/echo"/>
+		<websocket:handshake-interceptors>
+			<beans:bean class="org.springframework.web.socket.server.support.HttpSessionHandshakeInterceptor"/>
+		</websocket:handshake-interceptors>
+		<websocket:sockjs />
+	</websocket:handlers>   
 
 	<!-- 웹소켓 -->
 	<beans:bean id="echoHandle"

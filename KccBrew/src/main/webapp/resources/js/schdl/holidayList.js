@@ -148,13 +148,50 @@ function displaySchedules(schedules) {
 				cancelButton.textContent = "취소";
 				cancelButton.className = "form-btn";
 				cancelButton.onclick = function () {
-					openCancelModal(schedule.scheduleId);
+					openCancelModal(schedule.scheduleId, schedule.startDate, schedule.endDate);
 				};
 				cell8.appendChild(cancelButton);
 			} 
 			cell9.innerHTML = schedule.actualUse;
 		} 
-		/*사용자가 점주 또는 수리기사인 경우*/
+
+		/*사용자가 점주인 경우*/
+		else if (userTypeCd === "02") {
+			var cell1 = row.insertCell(0);
+			/*var cell2 = row.insertCell(1);*/
+			var cell2 = row.insertCell(1);
+			var cell3 = row.insertCell(2);
+			var cell4 = row.insertCell(3);
+			var cell5 = row.insertCell(4);
+			var cell6 = row.insertCell(5);
+			var cell7 = row.insertCell(6);
+
+			cell1.innerHTML = schedule.rowNumber;
+			/*cell2.innerHTML = schedule.scheduleId;*/
+			cell2.innerHTML = schedule.storeName;
+			cell2.setAttribute('data-store-id', schedule.storeId);
+			cell3.innerHTML = formatDate(new Date(schedule.appDate));
+			cell4.innerHTML = formatDate(new Date(schedule.startDate));
+			cell5.innerHTML = formatDate(new Date(schedule.endDate));
+
+			if(schedule.actualUse === "N") {
+				cell6.innerHTML = "취소완료";
+			}
+			else if (new Date(schedule.startDate) <= new Date()) {
+				cell6.innerHTML = "이미 사용된 휴가";
+			} else  {
+				var cancelButton = document.createElement("button");
+				cancelButton.textContent = "취소";
+				cancelButton.className = "form-btn";
+				cancelButton.onclick = function () {
+					openCancelModal(schedule.scheduleId, schedule.startDate, schedule.endDate);
+				};
+				cell6.appendChild(cancelButton);
+			} 
+			cell7.innerHTML = schedule.actualUse;
+		} 
+
+		/*사용자가 수리기사인 경우*/
 		else {
 			var cell1 = row.insertCell(0);
 			/*var cell2 = row.insertCell(1);*/
@@ -180,14 +217,12 @@ function displaySchedules(schedules) {
 				cancelButton.textContent = "취소";
 				cancelButton.className = "form-btn";
 				cancelButton.onclick = function () {
-					openCancelModal(schedule.scheduleId);
+					openCancelModal(schedule.scheduleId, schedule.startDate, schedule.endDate);
 				};
 				cell5.appendChild(cancelButton);
 			} 
 			cell6.innerHTML = schedule.actualUse;
 		}
-
-
 	});
 }
 
@@ -237,14 +272,14 @@ function formatDate(date) {
 }
 
 /*취소확인 모달창 오픈*/
-function openCancelModal(scheduleId) {
+function openCancelModal(scheduleId, startDate, endDate) {
 
 	var modal = document.getElementById("cancelModal");
 	modal.style.display = "block";
 
 	var cancelYesButton = document.getElementById("cancelYes");
 	cancelYesButton.onclick = function () {
-		cancelSchedule(scheduleId);
+		cancelSchedule(scheduleId, startDate, endDate);
 
 		modal.style.display = "none";
 	};
@@ -256,14 +291,14 @@ function openCancelModal(scheduleId) {
 }
 
 /*휴가취소*/
-function cancelSchedule(scheduleId) {
+function cancelSchedule(scheduleId, startDate, endDate) {
 	console.log("cancelSchedule함수실행!");
 
 	$.ajax({
 		url: "/holiday/delete",
 		type: "get",
 		data : {
-			'scheduleId' : scheduleId,
+			'scheduleId' : scheduleId
 		},
 		success: function(message) {
 			console.log('Ajax 요청 성공:', message);
@@ -280,12 +315,15 @@ function cancelSchedule(scheduleId) {
 			confirmButton.onclick = function() {
 				reoload();
 			};
+			sendHolidayCancel(startDate, endDate);
+
 		},
 		error: function(error) {
 			console.log('Ajax 요청 실패:', error);
 		}
 	});
 }
+
 
 /* 팝업창 리로드 함수 */
 function reoload() {

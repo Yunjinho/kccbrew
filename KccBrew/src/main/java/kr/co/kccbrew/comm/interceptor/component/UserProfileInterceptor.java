@@ -22,7 +22,6 @@ public class UserProfileInterceptor extends Interceptor{
 
 			/*사용자 프로필 업데이트*/
 			successHandler.SaveTasksInSessions(session, user);
-
 		}
 		return true;
 	}

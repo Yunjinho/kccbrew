@@ -52,8 +52,8 @@
 			FROM users
 		]]>
 	</select>
-
-
+	
+	<!-- 미승인 회원 리스트 -->
 	<select id="unapprovedMemberList"
 		parameterType="kr.co.kccbrew.comm.main.model.MainPageVo"
 		resultType="kr.co.kccbrew.comm.main.model.MainPageVo">
@@ -68,7 +68,6 @@
 			WHERE APPROVE_YN = 'N' OR APPROVE_YN IS NULL
 		]]>
 	</select>
-
 	<!-- 전체 a/s 결과 리스트 -->
 	<select id="showAsResultList"
 		parameterType="kr.co.kccbrew.comm.main.model.MainPageVo"
@@ -175,17 +174,20 @@
             u.user_nm                 AS "managerName",
             a.mechanic_id             AS "mechanicId",
             u2.user_nm                AS "mechanicName",
-            a.visit_dttm              AS "visitDate"
+            a.visit_dttm              AS "visitDate",
+            s.store_nm                AS "storeNm"
         FROM as_information i
         INNER JOIN USERS u ON i.store_mng_id = u.user_id
         INNER JOIN as_assign a ON i.as_info_seq = a.as_info_seq
+        LEFT OUTER JOIN as_result ar ON a.as_assign_seq = ar.as_assign_seq 
         LEFT JOIN USERS u2 ON a.mechanic_id = u2.user_id
-        WHERE i.store_mng_id = #{userId}
+        INNER JOIN store s ON s.store_seq = i.store_seq
+        WHERE i.store_mng_id = #{userId} AND ar.reapply IS NULL
         ORDER BY a.visit_dttm ASC
 	    ]]>
 	</select>
 
-	<!-- 특정 점주 a/s 배정 리스트 -->
+	<!-- 기사 a/s 배정 리스트 -->
 	<select id="showAsAssignListbyMechaId"
 		parameterType="kr.co.kccbrew.comm.main.model.MainPageVo"
 		resultType="kr.co.kccbrew.comm.main.model.MainPageVo">
@@ -199,12 +201,15 @@
             u.user_nm                 AS "managerName",
             a.mechanic_id             AS "mechanicId",
             u2.user_nm                AS "mechanicName",
-            a.visit_dttm              AS "visitDate"
+            a.visit_dttm              AS "visitDate",
+            s.store_nm                AS "storeNm"
         FROM as_information i
         INNER JOIN USERS u ON i.store_mng_id = u.user_id
         INNER JOIN as_assign a ON i.as_info_seq = a.as_info_seq
+        INNER JOIN store s ON s.store_seq=i.store_seq
+        LEFT OUTER JOIN as_result ar ON a.as_assign_seq = ar.as_assign_seq 
         LEFT JOIN USERS u2 ON a.mechanic_id = u2.user_id
-        WHERE a.mechanic_id = #{userId}
+        WHERE a.mechanic_id = #{userId} AND ar.reapply IS NULL
         ORDER BY a.visit_dttm ASC
 	    ]]>
 	</select>
@@ -219,9 +224,15 @@
 				r.as_assign_seq					AS "asAssignNum",     
 				i.machine_cd					AS "machineCode",
 				i.as_status						AS "asStatus",
-				u.user_id						AS "managerId"
-			FROM as_result r, as_assign a, as_information i, users u
-			WHERE r.as_assign_seq = a.as_assign_seq AND a.as_info_seq = i.as_info_seq AND i.store_mng_id = u.user_id AND user_id=#{userId}
+				u.user_id						AS "managerId",
+                s.store_nm                      AS "storeNm",
+                r.reapply						AS "reapply"
+			FROM as_result r, as_assign a, as_information i, users u, store s
+			WHERE r.as_assign_seq = a.as_assign_seq 
+					AND a.as_info_seq = i.as_info_seq 
+					AND s.store_seq=i.store_seq 
+					AND i.store_mng_id = u.user_id 
+					AND user_id=#{userId}
 		]]>
 	</select>
 
@@ -234,16 +245,16 @@
 				r.as_assign_seq					AS "asAssignNum",     
 				i.machine_cd					AS "machineCode",
 				i.as_status						AS "asStatus",
-				u.user_id						AS "mechanicId"
-			FROM as_result r, as_assign a, as_information i, users u
-			WHERE r.as_assign_seq = a.as_assign_seq AND a.as_info_seq = i.as_info_seq AND a.mechanic_id = u.user_id AND user_id=#{userId}
+				u.user_id						AS "mechanicId",
+                r.reapply                       AS "reapply",
+                s.store_nm                      AS "storeNm"
+			FROM as_result r, as_assign a, as_information i, users u, store s
+			WHERE s.store_seq=i.store_seq AND r.as_assign_seq = a.as_assign_seq AND a.as_info_seq = i.as_info_seq AND a.mechanic_id = u.user_id  AND user_id=#{userId}
 		]]>
 	</select>
 
 	<!-- 이미지를 포함한 사용자 정보 불러오기 -->
-	<select id="showUserInfoListById"
-		parameterType="kr.co.kccbrew.comm.main.model.MainPageVo"
-		resultType="kr.co.kccbrew.comm.main.model.MainPageVo">
+	<select id="showUserInfoListById" parameterType="kr.co.kccbrew.comm.main.model.MainPageVo" resultType="kr.co.kccbrew.comm.main.model.MainPageVo">
 		<![CDATA[
 			SELECT
 				u.user_id				AS "userId"
@@ -306,11 +317,25 @@
 				#{userId})
 	]]>
 	</insert>
-
-
+	
 	<!-- 마이페이지 정보 수정하기 -->
-	<update id="updateMyProfile"
-		parameterType="kr.co.kccbrew.comm.main.model.MainPageVo">
+	<update id="updateMyProfile" parameterType="kr.co.kccbrew.comm.main.model.MainPageVo">
+		<![CDATA[
+			UPDATE users
+			SET user_nm				= #{userName}
+				,user_email  		= #{userEmail}
+				,user_telno  		= #{userTelNo}
+				,user_addr			= #{userAddress}
+				,eqpmn_cd 			= #{machineCode, jdbcType=VARCHAR}
+				,location_cd 		= #{mechaLocationCode, jdbcType=VARCHAR}
+				,mod_dttm			= SYSTIMESTAMP 
+				,file_seq			= #{fileId}
+			WHERE user_id = #{userId}
+		]]>
+	</update>
+	
+	<!-- 사진을 제외한 마이페이지 정보 수정하기 -->
+	<update id="updateMyProfileExceptImg" parameterType="kr.co.kccbrew.comm.main.model.MainPageVo">
 		<![CDATA[
 			UPDATE users
 			SET user_nm				= #{userName}
@@ -323,15 +348,7 @@
 			WHERE user_id = #{userId}
 		]]>
 	</update>
-	
-	<!-- 마이페이지 사용자 프로필 사진 수정하기 -->
-	<update id="updateMyProfileImg" parameterType="kr.co.kccbrew.comm.main.model.MainPageVo">
-		<![CDATA[
-			UPDATE file_detail_info
-			SET file_server_nm	= #{fileDetailServerName, jdbcType=VARCHAR}
-			WHERE reg_user = #{userId}
-		]]>
-	</update>
+
 
 	<!-- 마이페이지 점포 정보 수정 -->
 	<update id="updateMyStore"
@@ -361,5 +378,28 @@
 		]]>
 	</select>
 	
+	<!-- 지역 코드 조회 -->
+	<select id="selectLocationCd" resultType="kr.co.kccbrew.comm.main.model.MainPageVo">
+		<![CDATA[
+			SELECT grp_cd_dtl_id 	AS "grpCdDtlId",
+				   grp_cd_id 		AS "grpCdId",
+				   grp_cd_dtl_nm 	AS "grpCdDtlNm"
+			FROM group_code_detail
+			WHERE grp_cd_id='L'
+		]]>
+	</select>
+		
+	<!-- 지역 상세 코드 조회 -->
+	<select id="selectLocationDtlCd" parameterType="string" resultType="kr.co.kccbrew.comm.main.model.MainPageVo">
+		<![CDATA[
+			SELECT grp_cd_dtl_id 	AS "grpCdDtlId",
+				   grp_cd_id 		AS "grpCdId",
+				   grp_cd_dtl_nm 	AS "grpCdDtlNm"
+			FROM group_code_detail
+			WHERE grp_cd_id='LL' 
+			AND grp_cd_dtl_id 
+			LIKE #{mechaLocationCode}||'%'
+		]]>
+	</select>
 	
 </mapper>
