@@ -447,8 +447,9 @@ div.modalBackground {
 					// 받아온 데이터를 모달 내부에 삽입
 					$(".modal-body1").html(data);
 				},
-				error : function() {
-					alert('사용자 정보를 불러오는데 실패하였습니다.');
+				error : function(request, status, error){
+
+					alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
 				}
 			});
 		}

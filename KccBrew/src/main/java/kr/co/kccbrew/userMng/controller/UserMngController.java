@@ -113,10 +113,13 @@ public class UserMngController {
 
 	@RequestMapping(value = "/user/info/{userId}", method = RequestMethod.GET)
 	public String findByUserInfo(@PathVariable("userId") String userId, Model model) {
+		System.out.println("컨트롤러러ㅓㅓㅓㅓㅓㅓㅓㅓㅓㅓㅓㅓㅓㅓㅓㅓㅓㅓㅓㅓㅓㅓㅓ");
 		UserMngVo userMngVo = userMngService.findByUserId(userId);
-		List<UserMngVo> userDtl = userMngService.findByUserInfo(userId);
+		UserMngVo userDtl = userMngService.findByUserInfo(userId);
 		model.addAttribute("userMngVo", userMngVo);
 		model.addAttribute("userDtl", userDtl);
+		System.out.println("여기봐여기여기이ㅕ기여기여긱여ㅣㅇ겨ㅣㅇ겨이겨"+userDtl);
+		System.out.println(userMngVo);
 		return "userMng/userMngDtl";
 
 	}
@@ -124,7 +127,7 @@ public class UserMngController {
 	@RequestMapping(value = "/user/mod/{userId}", method = RequestMethod.GET)
 	public String userMod(@PathVariable("userId") String userId, Model model) {
 		UserMngVo userMngVo = userMngService.findByUserId(userId);
-		List<UserMngVo> userDtl = userMngService.findByUserInfo(userId);
+		UserMngVo userDtl = userMngService.findByUserInfo(userId);
 		model.addAttribute("userMngVo", userMngVo);
 		model.addAttribute("userDtl", userDtl);
 		return "userMng/userMngMod";

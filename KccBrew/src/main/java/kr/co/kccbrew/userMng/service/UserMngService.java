@@ -59,6 +59,14 @@ public class UserMngService implements IUserMngService {
 	  return userMngRepository.findByUserId(userId); 
 }
 	  @Override
-	  public List<UserMngVo> findByUserInfo(String userId) {
+	  public UserMngVo findByUserInfo(String userId) {
+		  System.out.println("서비스ㅡㅡㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ");
 	  return userMngRepository.findByUserInfo(userId); 
-}}
+}
+	  
+	  @Override
+	  public List<UserMngVo> findByUserInfo2(String userId) {
+	  return userMngRepository.findByUserInfo2(userId); 
+}
+
+}
