@@ -108,7 +108,7 @@ function subBtn() {
 			}
 		});
 	}
-}
+} 
 
 $("#test").click(function() {
 
