@@ -36,8 +36,9 @@
 
 <!-- css -->
 <link rel="stylesheet" href="/resources/css/schdl/schdl-common.css" />
-<link rel="stylesheet" href="/resources/css/schdl/myinsertform.css" />
 <link rel="stylesheet" href="/resources/css/log/mylogtest.css" />
+<link rel="stylesheet" href="/resources/css/asMng/content-template.css" />
+<link rel="stylesheet" href="/resources/css/schdl/myinsertform.css" />
 
 <!-- javascript -->
 <script src="<c:url value="/resources/js/schdl/myHldyIns.js"/>"></script>
@@ -130,14 +131,14 @@
 											<td><form:input type="date" id="selectedStartDate"
 													path="startDate" value="" required="true"
 													onchange="calculateDays(new Date(this.value), new Date(document.getElementById('selectedEndDate').value))" />
-												<p>
+												
 													<form:errors path="startDate" /></td>
 
 											<th>휴가종료일</th>
 											<td><form:input type="date" id="selectedEndDate"
 													path="endDate" value="" required="true"
 													onchange="calculateDays(new Date(document.getElementById('selectedStartDate').value), new Date(this.value))" />
-												<p>
+										
 													<form:errors path="endDate" /></td>
 
 											<td><span id="usedDays" contenteditable="true"
@@ -168,7 +169,7 @@
 										</ul>
 									</div>
 									<div class="center-button">
-										<button type="submit" id="applyButton">휴가신청</button>
+										<button type="submit" id="applyButton" class="form-btn">휴가신청</button>
 									</div>
 								</form:form>
 
