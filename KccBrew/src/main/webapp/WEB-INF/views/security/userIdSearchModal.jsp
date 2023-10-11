@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -20,7 +21,7 @@
 }
 .reject-content{
 	background-color: #fefefe;
-	margin: 10% auto; /* 모달을 수직, 수평 가운데로 위치시킴 */
+	margin: 20% auto; /* 모달을 수직, 수평 가운데로 위치시킴 */
 	padding: 20px;
 	border: 1px solid #888;
 	width: 30%;
@@ -28,26 +29,76 @@
 	display: flex;
 	flex-direction: column;
 }
+#strTable {
+	width: 100%;
+	margin: auto;
+	height: 80%;
+}
+
+#strTable table {
+	border-collapse: collapse;
+	margin: auto;
+	width: 100%;
+	height: 80%;
+}
+#strTable table thead{
+	font-weight: bolder;
+}
+
+#strTable th, td {
+	text-align: left !important;
+	padding: 8px !important;
+	text-align: center !important;
+}
 </style>
+<script>
+$(document).ready(function(){
+	$("#pwSearch_btn").click(function(){
+		$(".modal_contents").css("display", "none");
+		$("#searchP").css("display", "");
+		$("#searchI").css("display", "none");
+		$("#search_1").prop("checked",false);
+		$("#search_2").prop("checked",true);
+	})	
+})
+</script>
 </head>
 <body>
 
 	<div class="modal_contents" style="display: none;">
 		<div class="reject-content">
-			<h4>
-				<b>손님 아이디는?</b><span class="close"></span>
+		<div>
+			<h4 style="border-bottom:1px solid black; padding: 0px 0px 10px 0px;">
+				<b>고객님의 정보와 일치하는 아이디 입니다.</b><span class="close"></span>
 			</h4>
+		</div>
 			<br>
-			<h2 id="id_value"></h2>
+				<div id="strTable">
+				<table class="table">
+					<thead>
+						<tr>
+							<th>아이디</th>
+							<th>가입일</th>
+						</tr>
+					</thead> 
+					<tbody>
+							<tr>
+								<td id="inputId"></td>
+								<td id="inputReg"></td>
+							</tr>
+					</tbody>
+				</table>
+			</div>
+				<h2 id="id_value"></h2>
 			<br>
-			<button type="button" id="pwSearch_btn"
-				class="btn peach-gradient btn-rounded waves-effect">
-				비밀번호 찾기
-			</button>
-			<button type="button" 
-				id="close">
-				닫기
-			</button>
+			<div>
+				<button type="button" id="pwSearch_btn" class="btn btn-danger btn-block">
+					비밀번호 찾기
+				</button>
+				<button type="button" id="close" class="btn btn-danger btn-block">
+					닫기
+				</button>
+			</div>
 		</div>
 	</div>
 </body>

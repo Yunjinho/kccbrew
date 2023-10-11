@@ -78,7 +78,7 @@ button:disabled {
 							님의 비밀번호 변경 페이지 입니다.
 						</div>
 						<div  style="text-align: center;     color: gray;">본인이라면 비밀번호를 입력하세요.</div>
-						<form action='<c:url value= '/mypage/chgpwd'/>' method="post"
+						<form action="/mypage/chgpwd" method="post"
 							name="chgPwd" onsubmit="return subBtn()">
 							<div class="container2">
 								<div

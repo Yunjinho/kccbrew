@@ -8,8 +8,10 @@ import org.springframework.stereotype.Service;
 
 import kr.co.kccbrew.comm.security.dao.IUserSearchRepository;
 import kr.co.kccbrew.comm.security.model.UserVo;
+import lombok.RequiredArgsConstructor;
 
 @Service
+@RequiredArgsConstructor
 public class UserSearchService implements IUserSearchService {
 	
 	@Autowired
@@ -20,8 +22,8 @@ public class UserSearchService implements IUserSearchService {
 	 * @return 아이디찾기
 	 */
 	@Override
-	public String searchId(String userNm, String userTelNo) {
-		String result = "";
+	public UserVo searchId(String userNm, String userTelNo) {
+		UserVo result = new UserVo();
 		try {
 			result = userSearchRepository.searchId(userNm, userTelNo);
 		} catch (Exception e) {

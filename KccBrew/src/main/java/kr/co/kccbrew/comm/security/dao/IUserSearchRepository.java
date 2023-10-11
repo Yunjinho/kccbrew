@@ -9,7 +9,7 @@ public interface IUserSearchRepository {
 	 * @return 사용자 채팅작성
 	 * @Param userNm: 사용자이름, userTelNo: 사용자전화번호
 	 */
-	String searchId(@Param("userNm")String userNm, @Param("userTelNo")String userTelNo);
+	UserVo searchId(@Param("userNm")String userNm, @Param("userTelNo")String userTelNo);
 	
 	/**
 	 * @return 비밀번호찾기

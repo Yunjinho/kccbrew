@@ -1,17 +1,20 @@
 package kr.co.kccbrew.comm.security.controller;
 
 import java.security.Principal;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -54,12 +57,24 @@ public class UserSearchController {
 	// 아이디 찾기
 	@ResponseBody
 	@RequestMapping(value = "/userSearch", method = RequestMethod.POST)
-	public String userIdSearch(@RequestParam Map<String, Object> user) {
+	public Map<String, Object> userIdSearch(@RequestParam Map<String, Object> user) {
 		String userNm = (String) user.get("userNm");
 		String userTelNo = (String) user.get("userTelNo");
-		String result = searchService.searchId(userNm, userTelNo);
-		return result;
+		UserVo result = searchService.searchId(userNm, userTelNo);
+		Map<String, Object> map=new HashMap<String, Object>();
+		if(result==null) {
+			map.put("id", "");
+			map.put("regDate", "");
+
+		}else {
+			map.put("id", result.getUserId());
+			map.put("regDate", result.getRegDttm());
+		}
+		return map;
 	}
+	
+	
+
 
 	// 비밀번호 찾기
 	@RequestMapping(value = "/searchPassword", method = RequestMethod.POST)
@@ -113,24 +128,33 @@ public class UserSearchController {
 		return "myPage/chgPwd";
 	}
 
-	@RequestMapping(value = "/mypage/chgpwd", method = RequestMethod.POST)
-	public String confirmChange(@ModelAttribute UserVo Vo, HttpServletRequest request, Model model,
-			@ModelAttribute MainPageVo mainPageVo, Principal principal) {
+	@ResponseBody
+	@PostMapping(value = "/mypage/chgpwd")
+	public String confirmChange(@RequestParam(defaultValue = "")String currentPassword,
+			@RequestParam(defaultValue = "")String newPassword,
+			HttpServletRequest request, Model model,
+			 Principal principal) {
 
 		String userId = principal.getName();
 		UserVo user = userService.getUserById(userId);
 		String loginPwd = user.getUserPwd();
-		boolean j = passwordEncoder.matches(Vo.getCurrentPassword(), loginPwd);
+		boolean j = passwordEncoder.matches(currentPassword, loginPwd);
+		String result = null;
 		if (j) {
-			String newPassword = passwordEncoder.encode(Vo.getCheckNewPassword());
-			user.setUserPwd(newPassword);
+			System.out.println(newPassword);
+			System.out.println("실행해어ㅑㄴ허ㅑㅣㅇㅎ넝니헣ㅇ니ㅑ");
+			String password = passwordEncoder.encode(newPassword);
+			user.setUserPwd(password);
 			searchService.updatePwd(user);
-			return "redirect:/mypage";
+			result="true";
 		}
 		else {
-		return "myPage/chgPwd";
+		result = "false";
 		}
+		return result;
 	}
+
+
 
 	/**
 	 * 
@@ -154,3 +178,4 @@ public class UserSearchController {
 		return result;
 	}
 }
+

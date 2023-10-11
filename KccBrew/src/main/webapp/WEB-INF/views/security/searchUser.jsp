@@ -52,7 +52,7 @@
 </style>
 <body class="login" marginwidth="0" marginheight="0">
 	<div class="wrap">
-		<a href="/"><img src="<c:url value="/resources/img/logo.png"/>"
+		<a href="/"><img src="<c:url value="/resources/img/logo13.png"/>"
 			class="logo"></a>
 		<!-- 로그인 영역 -->
 		<div class="loginbox">
@@ -215,10 +215,11 @@
 				url : "/userSearch",
 				success : function(result) {
 					console.log(result);
-					if (result == 0) {
+					if (result.id == '') {
 						$('#id_value').text("회원 정보를 확인해주세요!");
 					} else {
-						$('#id_value').text(result);
+						$('#inputId').text(result.id);
+						$('#inputReg').text(result.regDate);
 
 						idV = result;
 					}
@@ -241,9 +242,12 @@
 		        url: '/searchPassword', // 서버 엔드포인트 URL을 실제로 사용하는 URL로 업데이트합니다.
 		        data: formData,
 		        success: function(result) {
-		            console.log(result);
+		        	if(result="false"){
+		        		alert("가입하신 아이디와 이메일이 일치하지 않습니다.")
+		        	}else{
 		                alert("이메일로 임시 비밀번호를 발신했습니다.");
 		                location.href = "/login";
+		        	}
 		        },
 		        error: function(xhr, status, error) {
 		            console.error(error);
