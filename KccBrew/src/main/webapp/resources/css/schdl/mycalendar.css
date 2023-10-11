@@ -131,3 +131,12 @@
 .fc-event {
 	padding: 3px;
 }
+
+/* 모달창 */
+#modalContent {
+	margin: 0px;
+}
+
+#listContainer {
+	margin: 10px;
+}

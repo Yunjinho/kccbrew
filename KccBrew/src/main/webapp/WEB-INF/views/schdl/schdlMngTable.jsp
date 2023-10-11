@@ -120,7 +120,8 @@
 																		<c:forEach var="year" begin="2020" end="2030">
 																			<option value="${year}">${year}년</option>
 																		</c:forEach>
-																	</select> <select id="monthSelect" name="selectedMonth" required
+																	</select> 
+																	<select id="monthSelect" name="selectedMonth" required
 																		onChange="getPeriod();">
 																		<c:forEach var="month" begin="1" end="12">
 																			<option value="${month}">${month}월</option>
@@ -172,7 +173,7 @@
 														<fieldset>
 															<button type="button" class="form-btn" id="searchButton"
 																onclick="performSearch(); getLastDayAndPopulateTable();">검색</button>
-															<button type="reset" class="form-btn">초기화</button>
+															<button type="button" class="form-btn" onclick="resetForm();">초기화</button>
 														</fieldset>
 													</div>
 												</fieldset>
