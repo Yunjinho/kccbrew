@@ -45,14 +45,23 @@ function sendAjaxRequest(year, month) {
 						console.log("formatStartDate: " + formatStartDate);
 						console.log("formatEndDate: " + formatEndDate);
 
-
-						events.push({
-							title: '휴가 - '+holidayDates[j].STORE_NM,
-							start: formatStartDate, 
-							end: formatEndDate,    
-							backgroundColor: '#b8cff5', 
-							borderColor: 'transparent', 
-						});
+						if (typeof holidayDates[j].STORE_NM !== 'undefined') {
+							  events.push({
+							    title: '휴가 - ' + holidayDates[j].STORE_NM,
+							    start: formatStartDate,
+							    end: formatEndDate,
+							    backgroundColor: '#b8cff5',
+							    borderColor: 'transparent',
+							  });
+							} else {
+								  events.push({
+									    title: '휴가',
+									    start: formatStartDate,
+									    end: formatEndDate,
+									    backgroundColor: '#b8cff5',
+									    borderColor: 'transparent',
+									  });
+							}
 					}
 				}
 			}
