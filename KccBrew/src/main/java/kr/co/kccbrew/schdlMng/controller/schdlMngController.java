@@ -69,9 +69,9 @@ public class schdlMngController {
 	private UserService userService;
 	@Autowired
 	private DateFormat dateFormat;
-	
+
 	private final IAsMngService asMngService;
-	
+
 	/**********************************************************휴가신청**********************************************************/
 
 	/*휴가신청 페이지*/
@@ -84,13 +84,13 @@ public class schdlMngController {
 		UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 		String userId = userDetails.getUsername();
 		userVo.setUserId(userId);
-		
+
 		/* 잔여일수 */
 		int usedHolidays = schdlMngService.getUsedHoliday(userVo);
 		model.addAttribute("usedHolidays", usedHolidays);
 		model.addAttribute("holidayVo", new HolidayVo());
-		
-		
+
+
 		String userTypeCd="";
 		List<GrantedAuthority> authorities = (List<GrantedAuthority>) authentication.getAuthorities();
 		for (GrantedAuthority authority : authorities) {
@@ -105,14 +105,14 @@ public class schdlMngController {
 				userTypeCd = "03";
 			}
 		}
-		
+
 		/*점포*/
 		if(userTypeCd=="02") {
 			List<AsMngVo> vo=asMngService.selectStrInfo(userVo.getUserId());
 			model.addAttribute("strInfo", vo);
 			System.out.println(vo);
 		}
-		
+
 		return "schdl/hldyIns";
 	}
 
@@ -341,23 +341,42 @@ public class schdlMngController {
 		return "holiday";
 	}
 
-	/*관리자용 검색한 휴가 조회*/
+	/**
+	 * (관리자)휴가검색 - 관리자가 검색한 조건에 따른 휴가리스트를 보여준다.
+	 * 
+	 * @param int currentPage - 현재 페이지 
+	 * @param String startDate - 기간검색 중 시작일
+	 * @param String endDate - 기간검색 중 종료일
+	 * @param UserVo userVo - 사용자 관련 검색조건
+	 * 
+	 * @return Map<String, Object> getSearchedHolidaysForAdmin - 페이징과 검색결과에 따른 휴가리스트
+	 * @throws 
+	 */
 	@PostMapping(value="/admin/holiday/search", produces = "application/json; charset=utf-8")
 	@ResponseBody
 	public Map<String, Object> getSearchedHolidaysForAdmin(
-			@RequestParam("currentPage") int currentPage,
-			@RequestParam("startDate") String startDate,
-			@RequestParam("endDate") String endDate,
-			@ModelAttribute UserVo userVo,
-			Model model,
-			HttpSession session,
-			Authentication authentication
+			@RequestParam(name="currentPage", defaultValue="1") int currentPage,
+			@RequestParam(name="startDate", required = false) String startDate,
+			@RequestParam(name="endDate", required = false) String endDate,
+			@ModelAttribute UserVo userVo
 			) {
 		System.out.println("schdlMngController.getSearchedHolidays");
 
 		/*string -> sql.date 형변환*/
-		Date startSqlDate = dateFormat.stringToSqlDate(startDate);
-		Date endSqlDate = dateFormat.stringToSqlDate(endDate);
+		Date startSqlDate = null;
+		Date endSqlDate = null;
+		
+		if (startDate == null || startDate.equals("")) {
+			startSqlDate = dateFormat.getFirstDayOfYear();
+		} else {
+			startSqlDate = dateFormat.stringToSqlDate(startDate);	
+		}
+
+		if(endDate == null || endDate.equals("")) {
+			endSqlDate = dateFormat.getLastDayOfYear();
+		} else {
+			endSqlDate = dateFormat.stringToSqlDate(endDate);	
+		}
 
 		if(userVo.getLocationCd() == null || userVo.getLocationCd().equals("")) {
 			userVo.setLocationCd(userVo.getLocation());
@@ -404,22 +423,42 @@ public class schdlMngController {
 
 
 
-	/*회원용 휴가 검색 조회*/
+	/**
+	 * (회원)휴가검색 - 회원(점주, 수리기사)이 검색한 조건에 따른 휴가리스트를 보여준다.
+	 * 
+	 * @param int currentPage - 현재 페이지 
+	 * @param String startDate - 기간검색 중 시작일
+	 * @param String endDate - 기간검색 중 종료일
+	 * @param Authentication authentication - 스프링시큐리티의 인가를 통해서 회원확인
+	 * 
+	 * @return Map<String, Object> getSearchedHolidays - 페이징과 검색결과에 따른 휴가리스트
+	 * @throws 
+	 */
 	@PostMapping(value="/holiday/search", produces = "application/json; charset=utf-8")
 	@ResponseBody
 	public Map<String, Object> getSearchedHolidays(
-			@RequestParam("currentPage") int currentPage,
-			@RequestParam() String startDate,
-			@RequestParam() String endDate,
-			Model model,
-			HttpSession session,
+			@RequestParam(name="currentPage", defaultValue="1") int currentPage,
+			@RequestParam(name="startDate", required = false) String startDate,
+			@RequestParam(name="endDate", required = false) String endDate,
 			Authentication authentication
 			) {
 		System.out.println("schdlMngController.getSearchedHolidays");
 
 		/*string -> sql.date 형변환*/
-		Date startSqlDate = dateFormat.stringToSqlDate(startDate);
-		Date endSqlDate = dateFormat.stringToSqlDate(endDate);
+		Date startSqlDate = null;
+		Date endSqlDate = null;
+		
+		if (startDate == null || startDate.equals("")) {
+			startSqlDate = dateFormat.getFirstDayOfYear();
+		} else {
+			startSqlDate = dateFormat.stringToSqlDate(startDate);	
+		}
+
+		if(endDate == null || endDate.equals("")) {
+			endSqlDate = dateFormat.getLastDayOfYear();
+		} else {
+			endSqlDate = dateFormat.stringToSqlDate(endDate);	
+		}
 
 		/*ID에 따른 데이터 조회*/
 		UserDetails userDetails = (UserDetails) authentication.getPrincipal();
@@ -531,7 +570,7 @@ public class schdlMngController {
 		userVo.setUserTypeCd("03");
 
 		System.out.println("userVo: " + userVo);
-		
+
 		String userTypeCd="";
 		List<GrantedAuthority> authorities = (List<GrantedAuthority>) authentication.getAuthorities();
 		for (GrantedAuthority authority : authorities) {
@@ -546,7 +585,7 @@ public class schdlMngController {
 				userTypeCd = "03";
 			}
 		}
-		
+
 		List<String> idList = schdlMngService.getIdList(userVo);
 		List<Map<String, Object>> allSchedules = schdlMngService.getAllSchedules(idList, year, month,userTypeCd);
 
@@ -601,7 +640,7 @@ public class schdlMngController {
 			String userId = userDetails.getUsername();
 			ids.add(userId);
 		}
-		
+
 		List<Map<String, Object>> schedules = schdlMngService.getAllSchedules(ids, stringYear, stringMonth,userTypeCd);
 
 		return schedules;
