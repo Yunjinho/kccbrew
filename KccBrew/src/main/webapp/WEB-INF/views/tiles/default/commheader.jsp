@@ -161,7 +161,7 @@
 <sec:authorize access="hasRole('ROLE_MANAGER')">
 	<header class="comm-nav">
 		<div class="top-bar">
-
+			<%@ include file="/WEB-INF/views/chat/userChat.jsp"%>
 			<div class="header-icon-background">
 				<a href="#" id="notification-link" onclick="handleClick(event);">
 					<img id="notification-image"
@@ -243,7 +243,7 @@
 <sec:authorize access="hasRole('ROLE_MECHA')">
 	<header class="comm-nav">
 		<div class="top-bar">
-
+			<%@ include file="/WEB-INF/views/chat/userChat.jsp"%>
 			<div class="header-icon-background">
 				<a href="#" id="notification-link" onclick="handleClick(event);">
 					<img id="notification-image"

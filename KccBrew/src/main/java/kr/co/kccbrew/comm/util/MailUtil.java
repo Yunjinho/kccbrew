@@ -7,7 +7,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import kr.co.kccbrew.comm.security.model.UserVo;
 import kr.co.kccbrew.comm.security.service.IUserSearchService;
-
+/**
+ * @ClassNmae : MailUtil
+ * @Decription : 메일보내기
+ * 
+ * @   수정일           			    수정자            		 수정내용
+ * ============      ==============     ==============
+ * 2023-09-22						배수연					   	최초생성
+ * @author BAESOOYEON
+ * @version 1.0
+ */
 public class MailUtil {
 
 	@Autowired

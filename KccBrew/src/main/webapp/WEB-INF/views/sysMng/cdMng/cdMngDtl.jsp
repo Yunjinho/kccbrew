@@ -78,13 +78,13 @@
 			var form = document.getElementById("updateCd");
 
 			// AJAX 요청 보내기
-			$
-					.ajax({
+			$.ajax({
 						type : "POST",
 						url : "<c:url value='/code/update' />",
 						data : $(form).serialize(),
 						contentType : "application/x-www-form-urlencoded; charset=UTF-8",
 						success : function(response) {
+							console.log(response);
 							var Close = confirm("저장이 완료되었습니다");
 							if (Close) {
 								location.replace(location.href);

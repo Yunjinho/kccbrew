@@ -1,10 +1,13 @@
 package kr.co.kccbrew.comm.chat.model;
 
 import java.util.Date;
-
+/**
+ * 채팅 관련 vo
+ */
 public class ChatDto {
-	//sender - 보내는사람의 pk
+	//sender - 작성자, user_id - 채팅방 유저
 	private String user_id, sender;
+	//msg-메세지, uuid-채팅방 번호
 	private String msg, id, uuid;
 	private Date create_time;
 	

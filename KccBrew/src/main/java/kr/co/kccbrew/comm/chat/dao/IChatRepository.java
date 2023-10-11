@@ -12,14 +12,26 @@ import lombok.RequiredArgsConstructor;
 
 @Repository
 public interface IChatRepository {
-    
+	/**
+	 * @return 사용자 채팅작성
+	 */
     void userChatCreate(ChatDto chatDto);
-
+	/**
+	 * @return 관리자 채팅 작성
+	 */
     void adminChatCreate(ChatDto chatDto);
-
+	/**
+	 * @return 채팅방 나가기
+	 */
     void chatDelete(String id);
-    
+	/**
+	 * @return 관리자 채팅 로그
+	 */
     List<ChatDto> getLogAdmin(String getUuid);
+	
+    /**
+	 * @return 사용자 채팅로그
+	 */
     List<ChatDto> getLog(String getId);
 
 

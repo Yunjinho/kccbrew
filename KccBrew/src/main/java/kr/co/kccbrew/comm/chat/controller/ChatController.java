@@ -14,7 +14,16 @@ import org.springframework.web.servlet.ModelAndView;
 
 import kr.co.kccbrew.comm.chat.model.ChatDto;
 import kr.co.kccbrew.comm.chat.service.IChatService;
-
+/**
+ * @ClassNmae : ChatController
+ * @Decription : 실시간 문의 채팅
+ * 
+ * @   수정일           			    수정자            		 수정내용
+ * ============      ==============     ==============
+ * 2023-10-02							배수연					   	최초생성
+ * @author BAESOOYEON
+ * @version 1.0
+ */
 
 @Controller
 public class ChatController {
@@ -22,13 +31,20 @@ public class ChatController {
 	@Autowired
 	IChatService chatService;
 
+	/**
+	 * 
+	 * 수리기사, 점주 채팅방
+	 */
 	@RequestMapping("/chat")
 	public ModelAndView chat() {
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("chat/userChat");
 		return mv;
 	}
-	
+	/**
+	 * 
+	 * 관리자 채팅방
+	 */
 	@RequestMapping("/admin/chat")
 	public ModelAndView adminChat(ModelAndView mv, HttpServletRequest request) {
 		System.out.println(request.getHeader("REFERER"));
@@ -41,31 +57,34 @@ public class ChatController {
 		return mv;
 	}
 	
+	
+	/*관리자 채팅작성*/
 	@ResponseBody
 	@RequestMapping(value="/adminChatCreate", method=RequestMethod.POST)
 	public void adminChatCreate(ChatDto chatDto) {
 		chatService.adminChatCreate(chatDto);
 	}
 	
+	/*사용자 채팅작성*/
 	@ResponseBody
 	@RequestMapping(value="/chatCreate", method=RequestMethod.POST)
 	public void chatCreate(ChatDto chatDto) {
 		chatService.userChatCreate(chatDto);
 	}
 	
+	/*채팅끄기*/
 	@ResponseBody
 	@RequestMapping(value="/chatDelete", method=RequestMethod.POST)
 	public void chatDelete(String id) {
 		chatService.chatDelete(id);
 	}
 	
+	/*채팅로그가져오기*/
 	@ResponseBody
 	@RequestMapping(value="/getChatLog", method=RequestMethod.POST)
 	public List<ChatDto> getChatLog(ChatDto chatDto){
 		List<ChatDto> list = chatService.getChatLog(chatDto);
 		if(list != null) {
-			System.out.println("====================+++");
-			System.out.println(list);
 		return list;
 		}
 		else return null;

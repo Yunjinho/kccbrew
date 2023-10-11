@@ -14,7 +14,16 @@ import javax.websocket.OnOpen;
 import javax.websocket.Session;
 import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
-
+/**
+ * @ClassNmae : UserSocket
+ * @Decription : 실시간 문의 채팅을 위한 사용자소켓
+ * 
+ * @   수정일           			    수정자            		 수정내용
+ * ============      ==============     ==============
+ * 2023-10-02							배수연					   	최초생성
+ * @author BAESOOYEON
+ * @version 1.0
+ */
 @ServerEndpoint("/userchat/{user_id}")
 public class UserSocket {
 	
@@ -81,8 +90,6 @@ public class UserSocket {
 		User user = getUser(key);
 		if (user != null) {
 			try {
-				System.out.println("0000000000000000000000000000000000000000");
-				System.out.println(message);
 				//메세지 받음(기존 usersession = 웹소켓세션)
 				user.session.getBasicRemote().sendText(message);
 			} catch (IOException e) {
