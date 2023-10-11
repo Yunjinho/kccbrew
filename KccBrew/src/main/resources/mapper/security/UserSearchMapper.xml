@@ -3,9 +3,9 @@
 <mapper
 	namespace="kr.co.kccbrew.comm.security.dao.IUserSearchRepository">
 
-	<select id="searchId" resultType="String" parameterType="String">
+	<select id="searchId" resultType="kr.co.kccbrew.comm.security.model.UserVo" parameterType="String">
 		select
-		nvl(user_id, 0) from users
+		nvl(user_id, '') AS userId,TO_CHAR(reg_dttm,'YYYY-MM-DD') AS regDttm from users
 		where user_nm = #{userNm} and user_telno = #{userTelNo}
 	</select>
 	

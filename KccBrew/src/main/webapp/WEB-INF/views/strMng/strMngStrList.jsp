@@ -71,6 +71,7 @@
 														</c:choose>
 														<td>
 															<div style="display:flex;">
+																<input type="hidden" class="storeList" value="${list.storeSeq}">
 																<div onclick="selectStrDetail(${list.storeSeq})"class="form-btn">조회</div>
 																<div onclick="deleteStrDetail(${list.storeSeq})"class="form-btn">삭제</div>
 															</div>
@@ -179,7 +180,7 @@
 						<c:forEach var="list" items="${storeList}">
 							<tr>
 								<td scope="row"><input type="radio" name="select-store" onclick="selectStore(${list.storeSeq})">
-									<input type="hidden" value="${list.storeSeq}"></td>
+									<input type="hidden" name="storeSeq" value="${list.storeSeq}"></td>
 								<td>${list.storeNm}</td>
 								<td>${list.storeAddr}</td>
 							</tr>

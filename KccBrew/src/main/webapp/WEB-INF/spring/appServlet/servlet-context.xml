@@ -148,7 +148,15 @@
 
 		<!-- 로그수집 및 저장 -->
 		<interceptor>
-			<mapping path="/admin/log" />
+			<mapping path="/login" />
+			<mapping path="/register" />
+			<mapping path="/holiday/add" />
+			<mapping path="/holiday/delete" />
+			<mapping path="/receipt" />
+			<mapping path="/as-assign" />
+			<mapping path="/reject" />
+			<mapping path="/insertResult" />
+			<mapping path="/as-result-mng" />
 			<exclude-mapping path="/resources/**/" />
 			<beans:bean
 				class="kr.co.kccbrew.comm.interceptor.component.LogInterceptor" />

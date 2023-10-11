@@ -52,7 +52,7 @@
 </style>
 <body class="login" marginwidth="0" marginheight="0">
 	<div class="wrap">
-		<a href="/"><img src="<c:url value="/resources/img/logo.png"/>"
+		<a href="/"><img src="<c:url value="/resources/img/logo13.png"/>"
 			class="logo"></a>
 		<!-- 로그인 영역 -->
 		<div class="loginbox">
@@ -215,10 +215,11 @@
 				url : "/userSearch",
 				success : function(result) {
 					console.log(result);
-					if (result == 0) {
+					if (result.id == '') {
 						$('#id_value').text("회원 정보를 확인해주세요!");
 					} else {
-						$('#id_value').text(result);
+						$('#inputId').text(result.id);
+						$('#inputReg').text(result.regDate);
 
 						idV = result;
 					}

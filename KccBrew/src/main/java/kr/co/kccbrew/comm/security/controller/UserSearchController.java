@@ -57,12 +57,24 @@ public class UserSearchController {
 	// 아이디 찾기
 	@ResponseBody
 	@RequestMapping(value = "/userSearch", method = RequestMethod.POST)
-	public String userIdSearch(@RequestParam Map<String, Object> user) {
+	public Map<String, Object> userIdSearch(@RequestParam Map<String, Object> user) {
 		String userNm = (String) user.get("userNm");
 		String userTelNo = (String) user.get("userTelNo");
-		String result = searchService.searchId(userNm, userTelNo);
-		return result;
+		UserVo result = searchService.searchId(userNm, userTelNo);
+		Map<String, Object> map=new HashMap<String, Object>();
+		if(result==null) {
+			map.put("id", "");
+			map.put("regDate", "");
+
+		}else {
+			map.put("id", result.getUserId());
+			map.put("regDate", result.getRegDttm());
+		}
+		return map;
 	}
+	
+	
+
 
 	// 비밀번호 찾기
 	@RequestMapping(value = "/searchPassword", method = RequestMethod.POST)
@@ -166,3 +178,4 @@ public class UserSearchController {
 		return result;
 	}
 }
+

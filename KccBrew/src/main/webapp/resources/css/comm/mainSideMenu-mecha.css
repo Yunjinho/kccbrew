@@ -285,3 +285,9 @@ width: 20px;
 	margin-right: 5px;
 	color: #a2c3f5;
 }
+.notice:hover{
+	cursor: pointer;
+}
+.notice>a{
+	text-decoration: none;
+}

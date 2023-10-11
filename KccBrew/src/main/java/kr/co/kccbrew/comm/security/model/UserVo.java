@@ -79,4 +79,6 @@ public class UserVo {
 	private String currentPassword;
 	private String newPassword;
 	private String checkNewPassword;
+	
+	private String regDttm;
 }

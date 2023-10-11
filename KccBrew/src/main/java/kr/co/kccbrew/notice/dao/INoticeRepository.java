@@ -33,5 +33,6 @@ public interface INoticeRepository {
 	void insertFileInfo(NoticeVo noticeVo); 		// 공지사항에 넣을 이미지 정보 등록
 	void insertFileDtlInfo(NoticeVo noticeVo); 		// 공지사항 이미지 상세 정보 등록
 	List<NoticeVo> noticeImageList(String fieleSeq);
+	List<NoticeVo> selectMainNotice();
 	
 }

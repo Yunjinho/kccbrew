@@ -79,9 +79,14 @@ public class LogInterceptor extends Interceptor {
 
 		//세션에서 로그인 회원 정보 반환
 		HttpSession session = request.getSession();
-		UserVo user = (UserVo) session.getAttribute("user");
-		String userId = user.getUserId();
-		String userType = objectUtilService.getUserTypeName(user.getUserTypeCd());
+		String userId = "non-member";
+		String userType = "non-member";
+
+		if (session.getAttribute("user") != null) {
+			UserVo user = (UserVo) session.getAttribute("user");
+			userId = user.getUserId();
+			userType = objectUtilService.getUserTypeName(user.getUserTypeCd());
+		}
 		String ip = getClientIp(request); // ip
 
 

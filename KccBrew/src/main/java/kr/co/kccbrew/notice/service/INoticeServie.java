@@ -19,4 +19,5 @@ public interface INoticeServie {
 	
 	NoticeVo insertNoticeImg(NoticeVo noticeVo); 	// 공지사항에 넣을 이미지 등록
 	public List<NoticeVo> noticeImageList(String fieleSeq);
+	List<NoticeVo> selectMainNotice();
 }

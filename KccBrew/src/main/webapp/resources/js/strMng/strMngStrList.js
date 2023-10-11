@@ -15,6 +15,12 @@ function deleteStrDetail(storeSeq){
 	  }
 }
 function selectStore(storeSeq){
+	 $('.storeList').each(function(i){
+		 if(storeSeq==$(this).val()){
+			 alert("등록된 점포 입니다.");
+			 return;
+		 }
+	  });
 	 if (!confirm("해당 점포를 내 점포에 등록 하시겠습니까?")) {
 	 } else {
 	    	$.ajax({
@@ -202,13 +208,13 @@ window.onload = function(){
 	    const storeNmHidden = document.querySelector("#storeNmHidden"); // 숨겨진 필드
 	    const submitBtn = document.querySelector("#submitBtn"); // 폼 제출 버튼
 
-	    storeNm.addEventListener("input", function() {
+	    /*storeNm.addEventListener("input", function() {
 	        if (storeNm.value === storeNmHidden.value) {
 	            submitBtn.disabled = false; // 저장 버튼 활성화
 	        } else {
 	            submitBtn.disabled = true; // 저장 버튼 비활성화
 	        }
-	    });
+	    });*/
 
 	    const nameCheckBtn = document.querySelector("#name-check-btn");
 

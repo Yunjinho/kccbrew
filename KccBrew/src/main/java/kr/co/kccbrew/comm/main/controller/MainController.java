@@ -26,12 +26,17 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import kr.co.kccbrew.comm.main.model.MainPageVo;
 import kr.co.kccbrew.comm.main.service.MainService;
 import kr.co.kccbrew.comm.security.model.UserVo;
+import kr.co.kccbrew.notice.model.NoticeVo;
+import kr.co.kccbrew.notice.service.INoticeServie;
+import lombok.RequiredArgsConstructor;
 
 @Controller
+@RequiredArgsConstructor
 public class MainController {
 	@Autowired
 	MainService mainServiceImple;
 	
+	private final INoticeServie noticeService;
 
 	/**
 	 * 마이 페이지로 이동
@@ -303,10 +308,15 @@ public class MainController {
 		List<MainPageVo> mechaDailyData = mainServiceImple.getMechaDataInRangeById(userId, startOfDay, endOfDay);
 		List<MainPageVo> mechaWeeklyData = mainServiceImple.getMechaDataInRangeById(userId, startOfWeek, endOfWeek);
 		List<MainPageVo> mechaMonthlyData = mainServiceImple.getMechaDataInRangeById(userId, startOfMonth, endOfMonth);
+		
+		List<NoticeVo> noticeVo = noticeService.selectMainNotice();
+		
+		
 
 		model.addAttribute("mechaDailyData", mechaDailyData);
 		model.addAttribute("mechaWeeklyData", mechaWeeklyData);
 		model.addAttribute("mechaMonthlyData", mechaMonthlyData);
+		model.addAttribute("noticeVo", noticeVo);
 
 		return "mechanicPage";
 	}

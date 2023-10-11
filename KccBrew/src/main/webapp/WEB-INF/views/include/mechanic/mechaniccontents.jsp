@@ -399,10 +399,9 @@
 			<div class="notice btm">
 				<div class="tablecap">공지사항</div>
 				<ul>
-					<li>최근 지역별 지점 확대 안내</li>
-					<li>재구축 홈페이지 오픈 안내</li>
-					<li>서울권 수리기사 오프라인 교육 안내</li>
-					<li>동대문점 지점 신설</li>
+					<c:forEach var="noticeVo" items="${noticeVo}">
+						<li class="notice"><a href="/noticedetail/${noticeVo.noticeId}">${noticeVo.noticeTitle}</a></li>
+					</c:forEach>
 				</ul>
 			</div>
 
