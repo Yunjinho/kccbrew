@@ -72,7 +72,7 @@ public class NoticeService implements INoticeServie{
 		for(MultipartFile m : imgFile) {
 			if(m.getOriginalFilename()!="") {
 				vo.setFileOriginalName(m.getOriginalFilename());
-				vo.setFileDetailServerName("notice_" + m.getOriginalFilename());
+				vo.setFileDetailServerName("/notice_" + m.getOriginalFilename());
 				vo.setFileFmt(m.getContentType());
 				vo.setFileDetailLocation(noticeVo.getFileDetailLocation());
 				noticeVo.setFileId(vo.getFileId());

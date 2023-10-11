@@ -1,4 +1,16 @@
 @charset "UTF-8";
+
+#page {
+min-width: auto;
+min-height: auto;
+
+}
+
+#region-main {
+	padding: 0px;
+	min-height: auto;
+}
+
 /* 모달 스타일 */
 .modal {
 	display: none; /* 모달 숨김 상태 */
@@ -60,8 +72,26 @@ button {
 	margin: 0px auto !important;
 }
 
+#page-content {
+	margin: 30px !important;
+}
+
 .subtitle {
 	font-size: 16px; /* 원하는 크기로 조정 */
 	font-weight: bold; /* 원하는 글꼴 두껍게 설정 */
 	margin-bottom: 10px; /* 아래 여백 추가 */
+}
+
+#selectedStartDate {
+	font-family: 'Noto Sans', 'Noto Sans KR', sans-serif !important;
+}
+
+#selectedEndDate {
+	font-family: 'Noto Sans', 'Noto Sans KR', sans-serif !important;
+}
+
+button, html input[type="button"], input[type="reset"], input[type="submit"]
+	{
+	-webkit-appearance: button;
+	cursor: pointer
 }
