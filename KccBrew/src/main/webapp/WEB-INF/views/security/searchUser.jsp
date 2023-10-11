@@ -242,9 +242,12 @@
 		        url: '/searchPassword', // 서버 엔드포인트 URL을 실제로 사용하는 URL로 업데이트합니다.
 		        data: formData,
 		        success: function(result) {
-		            console.log(result);
+		        	if(result="false"){
+		        		alert("가입하신 아이디와 이메일이 일치하지 않습니다.")
+		        	}else{
 		                alert("이메일로 임시 비밀번호를 발신했습니다.");
 		                location.href = "/login";
+		        	}
 		        },
 		        error: function(xhr, status, error) {
 		            console.error(error);
