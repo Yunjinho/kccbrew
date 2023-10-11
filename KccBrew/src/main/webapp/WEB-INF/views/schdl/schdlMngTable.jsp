@@ -120,7 +120,8 @@
 																		<c:forEach var="year" begin="2020" end="2030">
 																			<option value="${year}">${year}년</option>
 																		</c:forEach>
-																	</select> <select id="monthSelect" name="selectedMonth" required
+																	</select> 
+																	<select id="monthSelect" name="selectedMonth" required
 																		onChange="getPeriod();">
 																		<c:forEach var="month" begin="1" end="12">
 																			<option value="${month}">${month}월</option>
@@ -172,7 +173,7 @@
 														<fieldset>
 															<button type="button" class="form-btn" id="searchButton"
 																onclick="performSearch(); getLastDayAndPopulateTable();">검색</button>
-															<button type="reset" class="form-btn">초기화</button>
+															<button type="button" class="form-btn" onclick="resetForm();">초기화</button>
 														</fieldset>
 													</div>
 												</fieldset>
@@ -208,8 +209,8 @@
 											<div class="board-info index"
 												style="background-color: #f2f0e4;">
 												<div
-													style="background-color: black; width: 1em; height: 1em;"></div>
-												에 마우스오버나 클릭 시 상세내용이 보입니다.
+													style="background-color: black; width: 1em; height: 1em;"> </div>
+												를 클릭 시 상세내용이 보입니다.
 
 												<div id="holiday-index"
 													style="background-color: #b8cff5; width: 1em; height: 1em;"></div>

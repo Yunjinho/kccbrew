@@ -31,6 +31,12 @@
 	color: black !important;
 }
 
+/* 검색 */
+#search-word {
+	width: 300px !important;
+	max-width: none;
+}
+
 /* 월근태현황 테이블 */
 #cal-table {
 	border: 1px solid !important;
@@ -38,12 +44,11 @@
 	margin: 0px auto;
 }
 
-#cal-table>th, #cal-table>td {
-	border: 1px solid;
+#cal-table td {
+	border: 1px solid black;
 }
 
-#cal-table>thead {
-	border-top: 5px solid darkgray;
+#cal-table thead {
 	border: 2.5px solid #043763;
 	border-top: 5px solid darkgray;
 	background: #043763;
@@ -125,4 +130,13 @@
 
 .fc-event {
 	padding: 3px;
+}
+
+/* 모달창 */
+#modalContent {
+	margin: 0px;
+}
+
+#listContainer {
+	margin: 10px;
 }

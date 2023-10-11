@@ -535,3 +535,16 @@ function formatDate(date) {
 	return `${year}-${month}-${day}`;
 }
 
+/*폼 초기화(날짜는 해당년월로 초기화)*/
+function resetForm() {
+	console.log("resetForm함수실행!");
+	const form = document.querySelector('form[name="srhForm"]');
+	if (form) {
+		form.reset(); 
+		var currentDate = getCurrentYearAndMonth();
+		var yearSelect = document.getElementById('yearSelect');
+		var monthSelect = document.getElementById('monthSelect');
+	}
+}
+
+

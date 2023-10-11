@@ -11,3 +11,19 @@ input[type="date"] {
 	display: flex;
 	justify-content: space-around;
 }
+
+select[name="locationCd"] {
+	width: 300px;
+}
+
+#selectUserType {
+}
+
+#selectKeyword {
+	width: 20%;
+}
+
+#search-word {
+	max-width: none !important;
+	width: 70% !important;
+}
