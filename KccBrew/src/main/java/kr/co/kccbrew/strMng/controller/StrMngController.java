@@ -301,7 +301,7 @@ public class StrMngController {
 	 * @return
 	 */
 	@ResponseBody
-	@RequestMapping(value="/delete-my-store",method=RequestMethod.GET)
+	@RequestMapping(value="/delete-my-store",method=RequestMethod.POST)
 	public String deleteStr(String storeSeq,HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		UserVo user = (UserVo)session.getAttribute("user");
