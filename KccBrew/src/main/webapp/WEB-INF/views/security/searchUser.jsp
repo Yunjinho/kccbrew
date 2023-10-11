@@ -224,7 +224,7 @@
 						idV = result;
 					}
 				}
-			});
+			}); 
 		}
 		
 		$('#searchBtn2').on('click', function(event) {
