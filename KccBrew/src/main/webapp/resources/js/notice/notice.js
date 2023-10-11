@@ -37,7 +37,7 @@ var filesArr = new Array();
 
 /* 첨부 파일 추가 */
 function addFile(obj){
-	var maxFileCnt = 3;  //파일 최대 개수
+	var maxFileCnt = 3;  	//파일 최대 개수
 	var attFileCnt = document.querySelectorAll('.filebox').length; //기존 첨부 파일 개수
 	var remainFileCnt = maxFileCnt - attFileCnt;  //추가로 첨부 가능한 파일의 수
 	var curFileCnt = obj.files.length; //input 요소에서 지금 몇개의 파일을 선택했는지에 대한 값
@@ -51,6 +51,7 @@ function addFile(obj){
 	
 	for(var i=0; i<Math.min(curFileCnt, remainFileCnt); i++){
 		const file = obj.files[i];
+		file.is_delete = true;
 		console.log(file);
 		// 첨부파일 검증
         if (validation(file)) {
