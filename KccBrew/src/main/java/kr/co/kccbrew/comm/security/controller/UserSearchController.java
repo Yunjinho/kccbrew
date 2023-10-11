@@ -77,6 +77,7 @@ public class UserSearchController {
 
 
 	// 비밀번호 찾기
+	@ResponseBody
 	@RequestMapping(value = "/searchPassword", method = RequestMethod.POST)
 	public String findPw(@ModelAttribute UserVo vo, Model model) throws Exception {
 		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
@@ -100,7 +101,7 @@ public class UserSearchController {
 
 				String securePw = encoder.encode(vo1.getUserPwd());// 회원 비밀번호를 암호화하면 vo객체에 다시 저장
 				vo1.setUserPwd(securePw);
-
+System.out.println("성공!");
 			} else {
 				result = "false";
 			}
@@ -108,8 +109,10 @@ public class UserSearchController {
 			System.out.println(result);
 		} catch (NullPointerException e) {
 			result = "false";
+			System.out.println("오류ㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠ");
 		}
-		return "security/searchUser";
+		System.out.println(result);
+		return result;
 	}
 
 	
