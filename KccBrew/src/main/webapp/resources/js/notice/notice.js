@@ -1,5 +1,4 @@
 $(document).ready(function() {
-	
 	//입력한 텍스트 수 계산
 	$('#notice-content').on('keyup', function() {
 		var textCount = $(this).val().length;
@@ -31,43 +30,7 @@ $(document).ready(function() {
             reader.readAsDataURL(fileInput.files[0]);
         }
     });
-	
-//	//공지 등록 버튼 클릭
-//	$('#insertNoticeBtn').click(function(){
-////		var formData = new FormData();
-////		var fileInput = document.querySelector('input[name="noticeFile"]');
-////		// 여러 개의 파일을 선택한 경우 모든 파일을 FormData에 추가
-////	    for (var i = 0; i < fileInput.files.length; i++) {
-////	        var file = fileInput.files[i];
-////	        formData.append('noticeFile_', + i, file);
-////	    }
-////	    
-////	    formData.append('noticeTitle', $('input[name="noticeTitle"]').val());
-////	    formData.append('noticeContent', $('#notice-content').val());
-////	    
-////	    // FormData 내용을 콘솔에 출력
-////	    formData.forEach(function(value, key) {
-////	        console.log(key, value);
-////	    });
-//	    
-//        $("#insertNoticeForm").submit();
-//	    alert("공지 등록 완료");
-//		
-////	    $.ajax({
-////	        url: '/insertnoticeform',
-////	        type: 'POST',
-////	        data: formData,
-////	        processData: false,
-////	        contentType: false,
-////	        success: function(response){
-////	            alert("공지가 등록되었습니다.")
-////	        },
-////	        error: function(error){
-////	            alert("공지 등록을 실패했습니다.")
-////	        }
-////	    });
-//	});
-	});
+});
 
 var fileNo = 0;
 var filesArr = new Array();
@@ -118,8 +81,9 @@ function addFile(obj){
         }
 	}
 	$(".file-label").css("display","none");
-	var test='<div class="file-label"><label for="fileInput'+fileNo+'" id="fileUploadBtn">파일 선택 </label>'+
-		'<input style="display:none;"type="file" id="fileInput'+fileNo+'" name="noticeImg" onchange="addFile(this);" multiple accept=".jpg, .jpeg, .png"></div>'
+	var test=
+		'<div class="file-label"><label for="fileInput'+fileNo+'" id="fileUploadBtn">파일 선택 </label>'
+		+ '<input style="display:none;"type="file" id="fileInput'+fileNo+'" name="noticeImg" onchange="addFile(this);" multiple accept=".jpg, .jpeg, .png"></div>'
 	$(".file-box").append(test);
 	fileNo++;
 }
@@ -165,45 +129,6 @@ function validation(obj){
     }
 }
 
-//공지 등록하기
-//function insertForm(){
-//	
-//	var formData = new FormData();
-//	var noticeTitle = $('input[name="noticeTitle"]').val();
-//	var noticeContent = $('#notice-content').val();
-//	formData.append('noticeTitle', noticeTitle);
-//	formData.append('noticeContent', noticeContent);
-//
-//	var fileInput = document.querySelector('input[name="noticeFile"]');
-//	for(var i=0; i < fileInput.files.length; i++){
-//		formData.append('noticeFile', fileInput.files[i]);
-//	}
-//	
-//	$.ajax({
-//		url: '/insertnoticeform',
-//		type: 'POST',
-//		data: formData,
-//		processData: false,
-//		contentType: false,
-//		success:function(response){
-//			alert("공지가 등록되었습니다.")
-//		},
-//		error: function(error){
-//			alert("공지 등록을 실패했습니다.")
-//		}
-//	});
-//}
-
-//공지 등록
-//function insertForm(){
-//    var formData = new FormData();
-//    formData.append('noticeFile', $('#file')[0].files[0]);
-//  
-//    alert("공지 등록 완료");
-//    $("#insertNoticeForm").attr("action","/insertnoticeform");
-//    $("#insertNoticeForm").submit();
-//}
-
 //공지 수정하기
 function updateForm(){
 	var formData = new FormData();
@@ -232,34 +157,3 @@ function updateForm(){
 		}
 	});
 }
-	
-/* 폼 전송 */
-//function submitForm() {
-//    // 폼데이터 담기
-//    var form = document.querySelector("#insertNoticeForm");
-//    var formData = new FormData(form);
-//    for (var i = 0; i < filesArr.length; i++) {
-//        // 삭제되지 않은 파일만 폼데이터에 담기
-//        if (!filesArr[i].is_delete) {
-//            formData.append("attach_file", filesArr[i]);
-//        }
-//    }
-//
-//    $.ajax({
-//        method: 'POST',
-//        url: '/insertnoticeform',
-//        dataType: 'json',
-//        data: formData,
-//        async: true,
-//        timeout: 30000,
-//        cache: false,
-//        headers: {'cache-control': 'no-cache', 'pragma': 'no-cache'},
-//        success: function () {
-//            alert("파일업로드 성공");
-//        },
-//        error: function (xhr, desc, err) {
-//            alert('에러가 발생 하였습니다.');
-//            return;
-//        }
-//    });
-//}

@@ -1,6 +1,14 @@
 @charset "UTF-8";
 
 /***************** 공지사항 페이지 공통 **************************************/
+@font-face {
+	font-family: 'Noto Sans';
+	font-style: normal;
+	src: url("../../fonts/NotoSansKR-Regular.ttf")
+}
+body {
+	font-family: 'Noto Sans', 'Noto Sans KR', sans-serif !important;
+}
 .body-wrapper {
 	width:100%;
 	height:100%;
@@ -85,11 +93,61 @@ h2 {
 	min-height:700px;
 }
 
+/* 검색 폼 */
+.searchBox {
+	height:60px;
+	padding: 20px 100px;
+	background-color: #eeeeee;
+}
+.searchForm {
+	height:40px;
+	display: flex;
+	justify-content: space-between;
+}
+
+.searchForm .select-list {
+	width:120px;
+}
+.searchForm .select-list #list-search{
+	width:120px;
+	height:40px;
+}
+
+.searchForm .search-input .search-notice-box {
+	border: 1px solid black;
+	width: 600px;
+	height:19px;
+}
+.searchForm .search-notice-btn button{
+	width:80px;
+	height:40px;
+	color:white;
+	background-color: navy;
+	cursor: pointer;
+	border:none;
+}
+/* 리스트 출력 개수 select 박스 */
+#cntPerPage{
+    width: 100px;
+    height: 45px;
+    border-radius: 5px;
+    padding: 5px;
+}
+
+/* #cntPerPage option{
+	width: 70px;
+    height: 30px;
+    border-radius: 5px;
+    padding: 5px;
+    text-align: center;
+} */
+
 
 .notice-table {
 	width:100%;
 	border:none;
 	border-collapse: collapse;
+	margin-bottom: 10px;
 }
 
 .notice-table tbody td:nth-child(1) {
@@ -131,7 +189,7 @@ h2 {
 }
 
 .btn-wrapper {
-	margin-top: 50px;
+	margin-top: 30px;
 	display: block;
 	height:24px;
 	text-align: center;
@@ -163,6 +221,50 @@ h2 {
 	color: #111111;
 	text-decoration: none;
 }
+
+.cellPerPage {
+	display: block;
+	text-align: right;
+}
+
+/*** 페이징 부분 ****/
+.pagingSection {
+	margin-top:30px;
+}
+
+.pageBtns {
+	display: inline-block;
+	padding:0 15px;
+}
+
+.pagingSection a {
+	text-decoration: none;
+	color:inherit;
+}
+
+.pagingSection b {
+	display:inline-block;
+	background-color: navy;
+	color:white;
+	width:35px;
+	height:35px;
+	line-height:36px;
+	border-radius: 50%;
+	font-weight: bold;
+}
+
+.pagingSection .otherPage {
+	display:inline-block;
+	border-radius:50%;
+	width:35px;
+	height:35px;
+	line-height: 36px;
+}
+.pagingSection img {
+	width:15px;
+	height:15px;
+}
+
 /************************ 공지 작성 페이지 **************************************************/
 .insert-notice-table {
 	border:none;
@@ -311,24 +413,4 @@ input[type="file"] {
 .note-editor.note-airframe, .note-editor.note-frame {
 	width:1000px;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
