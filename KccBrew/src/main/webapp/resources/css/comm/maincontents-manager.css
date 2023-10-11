@@ -369,6 +369,10 @@ button {
 	height: 100%;
 }
 
+.fc-event-title-container {
+	text-align: center;
+}
+
 /* 캘린더 위의 해더 스타일(날짜가 있는 부분) */
 .fc-header-toolbar {
 	padding-top: 1em;
