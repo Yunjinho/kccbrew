@@ -105,10 +105,6 @@
 
 												<input type="hidden" name="currentPage" value="1">
 
-												<div>
-													<span> 사용자검색 </span>
-												</div>
-
 												<div class="search-info">
 													<fieldset>
 														<legend class="blind">사용자검색</legend>
@@ -141,19 +137,18 @@
 
 
 															<tr>
-																<th>유형</th>
+																<th>검색어</th>
 																<td><select class="tx2" name="userType"
 																	id="selectUserType"
 																	onchange="updateUserType(); inputDisableSetting('selectUserType', 'selectKeyword');">
 																		<option value="">사용자 유형</option>
-																		<option value="기사"
+																		<option value="03"
 																			${param.userType == '기사' ? 'selected' : ''}>기사</option>
-																		<option value="점주"
+																		<option value="02"
 																			${param.userType == '점주' ? 'selected' : ''}>점주</option>
 																</select></td>
 
-																<th>검색어</th>
-																<td><select class="tx2" name="searchKeword"
+																<td colspan="4"><select class="tx2" name="searchKeword"
 																	id="selectKeyword" onchange="chgName(this)" disabled>
 																		<option value="">검색어</option>
 																		<option value="userId"
@@ -164,10 +159,9 @@
 																			${param.searchKeword == '지점ID' ? 'selected' : ''}>지점ID</option>
 																		<option value="storeName"
 																			${param.searchKeword == '지점명' ? 'selected' : ''}>지점명</option>
-																</select></td>
-																<td><input type="text" id="search-word"
-																	name="searchKeword" placeholder="키워드 선택 후 입력해주세요"
-																	required disabled></td>
+																</select> <input type="text" id="search-word" name="searchKeword"
+																	placeholder="사용자유형 및 검색어를 선택 후 입력해주세요." required
+																	disabled></td>
 															</tr>
 
 														</table>

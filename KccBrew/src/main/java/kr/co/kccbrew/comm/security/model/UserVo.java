@@ -20,6 +20,11 @@ import lombok.NoArgsConstructor;
 public class UserVo {
 	//공통 데이터
 	private String userTypeCd;
+	private String userType;
+	public void setUserType(String userType) {
+		this.userType = userType;
+		this.userTypeCd = userType;
+	}
 	private String userId;
 	private String userPwd;
 	private String userPwdConfirm;
@@ -42,7 +47,7 @@ public class UserVo {
 	private String eqpmnCd;
 	private String locationCd;
 	private String location;
-	
+
 	/**
 	 * 회원가입시 등록된  장비군,지역코드를 조회하기 위한 Vo
 	 * @author YUNJINHO
@@ -52,7 +57,7 @@ public class UserVo {
 	private String grpCdId;
 	private String grpCdNm;
 	private String grpCdDtlNm;
-	
+
 	/**
 	 * 회원가입시 점포 리스트를 조회하기 위한 Vo
 	 * @author YUNJINHO
@@ -70,12 +75,12 @@ public class UserVo {
 	private String fileOriginalNm;
 	private String fileServerNm;
 	private String fileFmt;
-	
+
 	private String storageLocation;
 	//멤버 로컬 저장 위치
 	private String localSavePath;
 	private String serverSavePath;
-	
+
 	private String currentPassword;
 	private String newPassword;
 	private String checkNewPassword;
