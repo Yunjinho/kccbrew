@@ -15,12 +15,16 @@ function deleteStrDetail(storeSeq){
 	  }
 }
 function selectStore(storeSeq){
+	var flag=false;
 	 $('.storeList').each(function(i){
 		 if(storeSeq==$(this).val()){
 			 alert("등록된 점포 입니다.");
-			 return;
+			 flag=true;
 		 }
 	  });
+	 if(flag){
+		 return;
+	 }
 	 if (!confirm("해당 점포를 내 점포에 등록 하시겠습니까?")) {
 	 } else {
 	    	$.ajax({

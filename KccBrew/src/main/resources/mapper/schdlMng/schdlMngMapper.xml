@@ -596,12 +596,13 @@ EXTRACT(YEAR FROM SCHEDULE_DATE) = 2023 AND EXTRACT(MONTH FROM SCHEDULE_DATE) = 
 
 	<!-- 아이디에 따른 배정일 조회(배정일이 정해졌으며 수리기사가 반려하지 않은 건) -->
 	<select id="selectAssignDates" parameterType="string"
-		resultType="java.sql.Date">
-		SELECT as_assign.visit_dttm
+		resultType="kr.co.kccbrew.schdlMng.model.SchdlMngVo">
+		SELECT as_assign.visit_dttm AS visitDate, s.store_nm AS storeName
 		FROM as_information
 		LEFT OUTER JOIN
 		as_assign
 		ON as_information.AS_INFO_SEQ = as_assign.AS_INFO_SEQ
+		INNER JOIN store s ON s.store_seq=as_information.store_seq
 		WHERE
 		1=1
 		<if test="id != null and id != ''">
