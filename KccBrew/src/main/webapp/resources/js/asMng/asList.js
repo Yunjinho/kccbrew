@@ -45,18 +45,17 @@ function changeEndDate(){
 }
 function downExcel(flag){
 	
-	var currentPage=$("#search-form>input[name=currentPage]").val();
-	var startYr=$("#search-form>input[name=startYr]").val();
-	var startMn=$("#search-form>input[name=startMn]").val();
-	var endYr=$("#search-form>input[name=endYr]").val();
-	var endMn=$("#search-form>input[name=endMn]").val();
-	var asInfoSeq=$("#search-form>input[name=asInfoSeq]").val(); 
-	var storeNm=$("#search-form>input[name=storeNm]").val();
-	var storeAddr=$("#search-form>input[name=storeAddr]").val();
-	var searchId=$("#search-form>input[name=searchId]").val();
-	var machineCd=$("#search-form>input[name=machineCd]").val();
-	var asStatusCd=$("#search-form>input[name=asStatusCd]").val();
-	
+	var currentPage=$("input[name=currentPage]").val();
+	var wishingStartDate=$("input[name=wishingStartDate]").val();
+	var wishingEndDate=$("input[name=wishingEndDate]").val();
+	var asInfoSeq=$("input[name=asInfoSeq]").val(); 
+	var storeNm=$("input[name=storeNm]").val();
+	var storeAddr=$("input[name=storeAddr]").val();
+	var searchId=$("input[name=searchId]").val();
+	var machineCd=$("select[name=machineCd] option:selected").val();
+	var asStatusCd=$("select[name=asStatusCd] option:selected").val();
+	console.log(currentPage+","+wishingEndDate+","+wishingStartDate+","+asInfoSeq+","+storeNm+","+storeAddr
+			+","+searchId+","+machineCd+","+asStatusCd)
 	$.ajax({
 		type : "POST",           // 타입 (get, post, put 등등)
 	    url : "/download-list",           // 요청할 서버url
@@ -64,10 +63,8 @@ function downExcel(flag){
 	    data : {
 	    	'flag': flag,
 	    	'currentPage':currentPage,
-	    	'startYr': startYr,
-	    	'startMn': startMn,
-	    	'endYr': endYr,
-	    	'endMn': endMn,
+	    	'wishingStartDate': wishingStartDate,
+	    	'wishingEndDate' : wishingEndDate,
 	    	'asInfoSeq': asInfoSeq,
 	    	'storeNm': storeNm,
 	    	'storeAddr': storeAddr,
@@ -84,9 +81,11 @@ window.onload=function(){
 	history.replaceState({}, null, location.pathname);
 	
 	$("#search-submit").click(function(){
-		console.log("1")
+		if(isNaN($("input[name=asInfoSeq]").val())){
+			alert("AS 번호는 숫자만 입력 가능합니다.")
+			return;
+		}
 		if(changeStartDate() && changeEndDate()){
-			console.log("1")
 			$("#search-form").submit();
 		}
 	})

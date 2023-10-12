@@ -204,25 +204,38 @@
 	LEFT OUTER JOIN as_assign ass ON a.as_info_seq=ass.as_info_seq
 	LEFT OUTER JOIN as_result ar ON ass.as_assign_seq=ar.as_assign_seq
 	WHERE s.store_nm LIKE '%'||#{storeNm}||'%' AND
-	 	status.as_status LIKE '%'||#{asStatusCd}||'%' AND
-	 	machine.machine_cd LIKE '%'||#{machineCd}||'%' AND 
-	 	s.store_addr LIKE '%'||#{storeAddr}||'%'
-		<choose><when test="asInfoSeq != ''">AND a.as_info_seq = #{asInfoSeq} </when></choose>
-		<if test="wishingEndDate !=''">
-			<![CDATA[ AND a.reg_dttm < ]]>TO_DATE(#{wishingEndDate},'YYYY-MM-DD')+1
-		</if>
-		<if test="wishingStartDate !=''">
-			<![CDATA[ AND a.reg_dttm >= #{wishingStartDate}]]>
-		</if>
-		<if test="userTypeCd == '02'">
-			AND s.store_seq IN (SELECT s.store_seq FROM store s INNER JOIN store_user_map su ON s.store_seq=su.store_seq WHERE su.user_id=#{userId})
-		</if>
-		<if test='userTypeCd == "03"'>
-			AND ass.mechanic_id=#{userId}
-		</if>
-		<if test="searchId !=''">
-			<![CDATA[AND (ass.mechanic_id=#{searchId} OR a.store_mng_id = #{searchId} )]]>
-		</if>
+		 		machine.machine_cd LIKE '%'||#{machineCd}||'%' AND 
+		 		s.store_addr LIKE '%'||#{storeAddr}||'%' 
+	 		<choose>
+				<when test='asStatusCd == "Y"'>
+					<![CDATA[
+						AND ar.reapply='Y'
+					]]>
+				</when>
+				<otherwise>
+					<![CDATA[
+						AND status.as_status LIKE '%'||#{asStatusCd}||'%'
+					]]>
+				</otherwise>
+			</choose>
+	 		<if test="asInfoSeq != ''">AND a.as_info_seq = #{asInfoSeq} </if>
+	 		<if test="wishingEndDate !=''">
+				<![CDATA[ AND a.reg_dttm < ]]>TO_DATE(#{wishingEndDate},'YYYY-MM-DD')+1
+			</if>
+			<if test="wishingStartDate !=''">
+				<![CDATA[ AND a.reg_dttm >= #{wishingStartDate}]]>
+			</if>
+	 		<choose>
+				<when test="userTypeCd == '02'">
+					AND s.store_seq IN (SELECT s.store_seq FROM store s INNER JOIN store_user_map su ON s.store_seq=su.store_seq WHERE su.user_id=#{userId})
+				</when>
+				<when test="userTypeCd == '03'">
+					AND ass.mechanic_id=#{asVo.userId}
+				</when>
+			</choose>
+			<if test="searchId !=''">
+				<![CDATA[AND (ass.mechanic_id=#{searchId} OR a.store_mng_id = #{searchId} )]]>
+			</if>
 </select>
 
 

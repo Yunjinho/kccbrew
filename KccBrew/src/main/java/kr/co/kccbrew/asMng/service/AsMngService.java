@@ -246,6 +246,9 @@ public class AsMngService implements IAsMngService{
 			//현재 페이지 저장
 			list=selectASList(asMngVo, Integer.parseInt(currentPage));
 	        for(int i=0;i<list.size();i++) {
+	        	if(list.get(i).getResultReapply()=="Y") {
+	        		list.get(i).setAsStatusNm("재접수");
+	        	}
 	        	data.put(i+2, 
 	        			new Object[]{list.get(i).getAsInfoSeq()
 	        					,list.get(i).getRegDttm()
