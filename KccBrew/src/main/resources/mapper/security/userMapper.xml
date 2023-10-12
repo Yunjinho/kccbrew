@@ -475,12 +475,8 @@
 		ass.visit_dttm,
 		ar.result_dttm
 		FROM as_information a
-		INNER
-		JOIN store_user_map su ON a.store_mng_id = su.user_id
-		INNER JOIN users
-		u ON su.user_id = u.user_id
 		INNER JOIN store s ON s.store_seq =
-		su.store_seq
+		a.store_seq
 		INNER JOIN (
 		SELECT grp_cd_dtl_nm AS as_status_nm,
 		grp_cd_dtl_id AS as_status_cd

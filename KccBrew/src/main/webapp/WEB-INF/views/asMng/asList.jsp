@@ -146,7 +146,7 @@
 												</td>
 												<td style="text-align: center; border-bottom: 0px;float:right;">
 													<div>
-														<button type="submit" class="form-btn">검색</button>
+														<div id="search-submit" class="form-btn">검색</div>
 													</div>
 												</td>
 											</tr>											
@@ -233,7 +233,7 @@
 												</td>
 												<td style="text-align: center; border-bottom: 0px;">
 													<div>
-														<button type="submit" class="form-btn">검색</button>
+														<div id="search-submit" class="form-btn">검색</div>
 													</div>
 												</td>
 											</tr>											
@@ -326,7 +326,7 @@
 												<td colspan="6" style="border-bottom:none;"></td>
 												<td style="text-align: center; border-bottom: 0px;">
 													<div>
-														<button type="submit" class="form-btn">검색</button>
+														<div id="search-submit" class="form-btn">검색</div>
 													</div>
 												</td>
 											</tr>											
