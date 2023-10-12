@@ -130,7 +130,7 @@
 			,result_dttm
 			,result_dtl
 			, as_content
-		 FROM (select a.as_info_seq
+		 FROM (SELECT a.as_info_seq
 		 		, s.store_seq
 		 		, s.store_nm
 		 		, s.store_addr
@@ -156,7 +156,7 @@
 		 INNER JOIN (SELECT grp_cd_dtl_nm AS machine_cd_nm ,grp_cd_dtl_id as machine_cd from group_code_detail WHERE grp_cd_id like 'M') machine on machine.machine_cd=a.machine_cd
          LEFT OUTER JOIN (SELECT * FROM as_assign ss JOIN users u ON ss.mechanic_id=u.user_id) ass ON a.as_info_seq=ass.as_info_seq
          LEFT OUTER JOIN as_result ar ON ass.as_assign_seq=ar.as_assign_seq
-	 	 WHERE 1=1
+	 	 WHERE 1=1 AND
 	 	 s.store_nm LIKE '%'||#{asVo.storeNm}||'%' AND
 		 		machine.machine_cd LIKE '%'||#{asVo.machineCd}||'%' AND 
 		 		s.store_addr LIKE '%'||#{asVo.storeAddr}||'%' 
