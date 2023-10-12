@@ -231,7 +231,7 @@
 					AND s.store_seq IN (SELECT s.store_seq FROM store s INNER JOIN store_user_map su ON s.store_seq=su.store_seq WHERE su.user_id=#{userId})
 				</when>
 				<when test="userTypeCd == '03'">
-					AND ass.mechanic_id=#{asVo.userId}
+					AND ass.mechanic_id=#{userId}
 				</when>
 			</choose>
 			<if test="searchId !=''">
