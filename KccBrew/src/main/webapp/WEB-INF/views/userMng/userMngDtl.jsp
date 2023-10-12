@@ -22,7 +22,7 @@
 				<tr>
 					<th rowspan="4" colspan="2"
 						style="position:relative; height:140px; width: 120px;">
-							 <img src="/${userDtl.imgUrl}${userDtl.imgNm}" border="0"
+							 <img src="/${userDtl.get(0).imgUrl}${userDtl.get(0).imgNm}" border="0"
 								style="position:relative; width:120px; top: calc(  50% - 70px ); height:140px; "> 
 					</th>
 
@@ -70,10 +70,12 @@
 						<th>점포명</th>
 						<th>점포전화번호</th>
 					</tr>
-					<tr>
-						<td>${userDtl.storeNm}</td>
-						<td>${userDtl.storeTelNo}</td>
-					</tr>
+					<c:forEach var="userDtl" items="${userDtl}">
+						<tr>
+							<td>${userDtl.storeNm}</td>
+							<td>${userDtl.storeTelNo}</td>
+						</tr>
+					</c:forEach>
 				</table>
 			</c:if>
 			<c:if test="${userMngVo.userTypeCd eq '03' }">
@@ -84,10 +86,12 @@
 						<th>장비코드</th>
 						<th>활동지역</th>
 					</tr>
-					<tr>
-						<td>${userDtl.eqpmnNm}</td>
-						<td>${userDtl.locationNm}</td>
-					</tr>
+					<c:forEach var="userDtl" items="${userDtl}">
+						<tr>
+							<td>${userDtl.eqpmnNm}</td>
+							<td>${userDtl.locationNm}</td>
+						</tr>
+					</c:forEach>
 				</table>
 			</c:if>
 			<div class="modal-footer"

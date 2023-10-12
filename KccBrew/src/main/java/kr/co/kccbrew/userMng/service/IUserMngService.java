@@ -12,6 +12,6 @@ public interface IUserMngService {
 	void userMod(UserMngVo userMngVo);
 	 int getNewCount();
 	 UserMngVo findByUserId(String userId);
-	 UserMngVo findByUserInfo(String userId);
+	 List<UserMngVo> findByUserInfo(String userId);
 	 List<UserMngVo> findByUserInfo2(String userId);
 }
