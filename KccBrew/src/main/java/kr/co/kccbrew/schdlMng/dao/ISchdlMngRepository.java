@@ -46,13 +46,13 @@ public interface ISchdlMngRepository {
 	public List<Map<String, Object>> selectHolidayDates(Map map);
 
 	/*아이디와 날짜에 따른 배정날짜리스트 조회*/
-	public List<Date> selectAssignDates(Map map);
+	public List<SchdlMngVo> selectAssignDates(Map map);
 
 	/*아이디와 날짜에 따른 근무날짜리스트 조회*/
-	public List<Date> selectResultDates(Map map);
+	public List<SchdlMngVo> selectResultDates(Map map);
 	
 	/*관리자가 처리해야 할 AS신청 날짜리스트 조회*/
-	public List<Date> selectAsRegDates(Map map);
+	public List<SchdlMngVo> selectAsRegDates(Map map);
 	
 	/*휴일 정보 조회*/
 	public List<HolidayVo> selectHoliday(Map map);
