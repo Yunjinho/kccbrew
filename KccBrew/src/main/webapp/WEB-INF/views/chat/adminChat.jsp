@@ -32,10 +32,10 @@
 											<!-- 리스트 -->
 											<section class="discussions">
 												<div class="discussion search">
-													<div class="searchbar">
+													<!-- <div class="searchbar">
 														<i class="fa fa-search" aria-hidden="true"></i> <input
 															type="text" placeholder="Search..."></input>
-													</div>
+													</div> -->
 												</div>
 											</section>
 

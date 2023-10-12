@@ -52,7 +52,8 @@ public class CdMngController {
 		
 		model.addAttribute("List", List);
 		
-
+System.out.println(List);
+System.out.println(list);
 		model.addAttribute("list", list);
 		return "adminCodeManage";
 	}
