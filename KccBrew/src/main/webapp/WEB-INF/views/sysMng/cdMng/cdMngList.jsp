@@ -60,6 +60,7 @@
 													<tr>
 														<th scope="col">그룹코드ID</th>
 														<th scope="col">그룹코드이름</th>
+														<th scope="col">사용여부</th>
 
 													</tr>
 												</thead>
@@ -70,6 +71,7 @@
 															<td><a href="javascript:void(0);"
 																data-cdId="${no.cdId}"
 																onclick="cdSearch(this.getAttribute('data-cdId'));">${no.cdNm}</a></td>
+															<td>${no.cdUseYn}</td>	
 
 														</tr>
 													</c:forEach>
@@ -87,6 +89,7 @@
 													<tr>
 														<th scope="col">상세코드ID</th>
 														<th scope="col">상세코드이름</th>
+														<th scope="col">사용여부</th>
 													
 														<!-- <th scope="col">상세보기</th> -->
 													</tr>
@@ -155,6 +158,7 @@
 						var cdId = item.cdId;
 						var cdDtlId = item.cdDtlId;
 						var cdDtlNm = item.cdDtlNm;
+						var cdUseYn = item.cdDtlUseYn;
 
 						var newRow = "<tr>";
 						newRow += "<td>" + cdDtlId + "</td>";
@@ -164,6 +168,7 @@
 								+ cdDtlId
 								+ '" onclick="searchDtl(this.getAttribute(\'data-cdId\'), this.getAttribute(\'data-cdDtlId\'));">'
 								+ cdDtlNm + '</a></td>';
+						newRow += "<td>" + cdUseYn + "</td>";
 						newRow += "</tr>";
 
 						$("#ajaxList").append(newRow);

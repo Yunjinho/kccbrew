@@ -242,4 +242,60 @@ WHERE ROW_NUM BETWEEN #{start} AND #{end}
 	and a.user_id = d.user_id(+)
 	and a.user_id = e.user_id(+)
 	</select>
+	
+	<select id="findByUserInfo2" resultType="kr.co.kccbrew.userMng.model.UserMngVo" parameterType="String">
+	select DISTINCT
+		a.user_nm 			AS "userNm",
+		b.grp_cd_dtl_nm 	AS "eqpmnNm", 
+		c.grp_cd_dtl_nm		AS "locationNm",
+		a.user_type_cd		AS "userTypeCd",
+		d.store_nm			AS "storeNm",
+		d.store_telno		AS "storeTelNo",
+		e.file_server_nm	AS  "imgNm",
+		e.storage_location	AS	"imgUrl"
+	from 
+		users a, (
+			select 
+				grp_cd_dtl_id, grp_cd_dtl_nm
+			from 
+        	 	group_code_detail
+			where 
+				grp_cd_id = 'M') b,
+				(
+			select 
+				grp_cd_dtl_id, grp_cd_dtl_nm
+			from 
+        		group_code_detail
+			where 
+				grp_cd_id = 'L'
+    		or 
+    			grp_cd_id='LL')  c,
+    			(
+    		select
+             	b.user_id, a.store_nm, a.store_telno
+       		from 
+				store a, store_user_map b 
+        	where 
+    			b.store_seq = a.store_seq(+)
+    			) d,
+    			(
+    		select 
+    		    b.file_server_nm, c.user_id, b.storage_location
+    		from 
+    			file_info a, file_detail_info b, users c
+    		where 
+    			c.file_seq = a.file_seq
+    		and 
+    			b.file_seq=c.file_seq
+    		and 
+    			a.grp_cd_dtl_id='01'
+    			  ) e
+
+	where 
+		a.user_id = #{userId}
+	and a.eqpmn_cd = b.grp_cd_dtl_id(+)
+	and a.location_cd = c.grp_cd_dtl_id(+)
+	and a.user_id = d.user_id(+)
+	and a.user_id = e.user_id(+)
+	</select>
 </mapper>
