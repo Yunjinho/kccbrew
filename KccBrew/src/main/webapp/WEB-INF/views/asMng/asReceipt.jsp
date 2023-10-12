@@ -53,13 +53,11 @@
 										</h6>
 										<div>
 											<div>
-												<input type="date" value="" name="wishingStartDate"
-													onchange="changeStartDate()" Id="wishingStartDate">
+												<input type="date" value="" name="wishingStartDate" id="wishingStartDate">
 											</div>
 											<div style="font-size: 2em; text-align: center;">~</div>
 											<div>
-												<input type="date" value="" name="wishingEndDate"
-													onchange="changeEndDate()" id="wishingEndDate">
+												<input type="date" value="" name="wishingEndDate" id="wishingEndDate">
 											</div>
 										</div>
 

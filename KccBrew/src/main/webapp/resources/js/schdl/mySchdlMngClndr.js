@@ -77,7 +77,7 @@ function sendAjaxRequest(year, month) {
 				console.log("formatAssignDate: " + formatAssignDate);
 
 				events.push({
-					title: 'AS배정',
+					title: 'AS배정-'+assignDates[j].storeName,
 					date: formatAssignDate, 
 					backgroundColor: 'rgb(247, 212, 116)',
 					borderColor: 'transparent', 
@@ -97,7 +97,7 @@ function sendAjaxRequest(year, month) {
 				console.log("formatResultDate: " + formatResultDate);
 
 				events.push({
-					title: 'AS처리',
+					title: 'AS처리-'+assignDates[j].storeName,
 					date: formatResultDate, 
 					backgroundColor: '#e8a9ac', 
 					borderColor: 'transparent', 

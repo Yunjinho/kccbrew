@@ -32,6 +32,7 @@ function changeStartDate(){
 	if(start>end){
 		alert("시작일은 마지막일보다 이전이여야합니다.");
 		$("input[name=wishingStartDate]").val("");
+		$("input[name=wishingEndDate]").val("");
 	}
 }
 function changeEndDate(){
@@ -40,6 +41,7 @@ function changeEndDate(){
 	if(start=='') return;
 	if(start>end){
 		alert("마지막일은 시작일보다 이후이여야합니다.");
+		$("input[name=wishingStartDate]").val("");
 		$("input[name=wishingEndDate]").val("");
 	}
 }
@@ -52,23 +54,24 @@ window.onload=function(){
 function performSubmit() {
 	var form = document.getElementById("receipt-form");
 	var formData = new FormData(form);
-
-	$.ajax({
-		url: form.action,
-		type: form.method,
-		data: formData,
-		processData: false, 
-		contentType: false, 
-		success: function(data) {
-			sendAsReceiptAlarm();
-			
-			window.location.href = '/as-list';
-			alert('AS접수가 등록되었습니다!');
-		},
-		error: function(error) {
-			console.log('performSubmit()함수의 ajax 요청 실패:', error);
-		}
-	});
+	if(changeEndDate()&&changeStartDate()){
+		$.ajax({
+			url: form.action,
+			type: form.method,
+			data: formData,
+			processData: false, 
+			contentType: false, 
+			success: function(data) {
+				sendAsReceiptAlarm();
+				
+				window.location.href = '/as-list';
+				alert('AS접수가 등록되었습니다!');
+			},
+			error: function(error) {
+				console.log('performSubmit()함수의 ajax 요청 실패:', error);
+			}
+		});
+	}
 }
 
 

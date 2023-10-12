@@ -236,17 +236,18 @@ public class schdlMngController {
 	public boolean isAsAssignDate(Date startDate, Date endDate, String userId) {
 
 		/*수리배정일 리스트 조회*/
-		List<Date> asAssignDates = schdlMngService.getAssignDates(userId);
+		List<SchdlMngVo> asAssignDates = schdlMngService.getAssignDates(userId);
 
 		boolean isOverlap = false;
 
-		/* 휴가일 중복 검사*/
+		/* 휴가일 중복 검사
 		for (Date date : asAssignDates) {
 			if (date.compareTo(startDate) >= 0 && date.compareTo(endDate) <= 0) {
 				isOverlap = true;
 				break;
 			}
 		}
+		 * */
 		return isOverlap;
 	}
 

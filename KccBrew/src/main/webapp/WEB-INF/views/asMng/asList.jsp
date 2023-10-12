@@ -91,7 +91,7 @@
 												<th>장비 구분</th>
 												<td>
 													<select class="tx2" name="machineCd">
-															<option value="">장비 구분</option>
+															<option value="">전체</option>
 															<c:forEach var="empCd" items="${machineCd}">
 																<c:choose>
 																	<c:when test="${searchContent.machineCd == empCd.grpCdDtlId}">
@@ -111,7 +111,7 @@
 												<th>AS 상태</th>
 												<td colspan="2">
 													<select class="tx2" name="asStatusCd" >
-															<option value="">AS 상태</option>
+															<option value="">전체</option>
 															<c:choose>
 																<c:when test='${searchContent.asStatusCd eq "Y"}'>
 																	<option value="Y" selected>재접수</option>
@@ -146,7 +146,7 @@
 												</td>
 												<td style="text-align: center; border-bottom: 0px;float:right;">
 													<div>
-														<button type="submit" class="form-btn">검색</button>
+														<div id="search-submit" class="form-btn">검색</div>
 													</div>
 												</td>
 											</tr>											
@@ -233,7 +233,7 @@
 												</td>
 												<td style="text-align: center; border-bottom: 0px;">
 													<div>
-														<button type="submit" class="form-btn">검색</button>
+														<div id="search-submit" class="form-btn">검색</div>
 													</div>
 												</td>
 											</tr>											
@@ -326,7 +326,7 @@
 												<td colspan="6" style="border-bottom:none;"></td>
 												<td style="text-align: center; border-bottom: 0px;">
 													<div>
-														<button type="submit" class="form-btn">검색</button>
+														<div id="search-submit" class="form-btn">검색</div>
 													</div>
 												</td>
 											</tr>											
@@ -339,8 +339,13 @@
 											<p class="data-info">
 												전체<b><span><c:out value="${totalCount}" /></span></b>건<span
 													id="text-separator"> | </span><b><span><c:out
-															value="${currentPage}" /></span></b>/<b><span><c:out
-															value="${totalPage}" /></span></b>쪽
+															value="${currentPage}" /></span></b>/<b>
+															<span>
+															<c:choose>
+																<c:when test="${totalPage eq 0}">1</c:when>
+																<c:otherwise>${totalPage}</c:otherwise>
+															</c:choose>
+															</span></b>쪽
 											</p>
 											<div>
 												<p class="download-excel" onclick="downExcel(1)">현재 페이지 다운로드</p>
@@ -442,18 +447,20 @@
 										</div>
 
 										<!-- 뒤로 가는 버튼 -->
-										<c:if test="${currentPage < totalPage}">
-											<a href="#" onclick="movePage(${currentPage+1})"> <img
-												src="/resources/img/asMng/free-icon-right-arrow-271228.png"
-												alt="다" />
-											</a>
-										</c:if>
-										<c:if test="${currentPage == totalPage}">
-											<a href="javascript:void(0);" class="disabled-link"> <img
-												src="/resources/img/asMng/free-icon-right-arrow-271228.png"
-												alt="다" />
-											</a>
-										</c:if>
+										<c:choose>
+											<c:when test="${currentPage < totalPage}">
+												<a href="#" onclick="movePage(${currentPage+1})"> <img
+													src="/resources/img/asMng/free-icon-right-arrow-271228.png"
+													alt="다" />
+												</a>
+											</c:when>
+											<c:otherwise>
+												<a href="javascript:void(0);" class="disabled-link"> <img
+													src="/resources/img/asMng/free-icon-right-arrow-271228.png"
+													alt="다" />
+												</a>
+											</c:otherwise>
+										</c:choose>
 
 										<a href="#" onclick="movePage(${totalPage})" ><img
 											src="/resources/img/asMng/free-icon-fast-forward-double-right-arrows-symbol-54366.png"
