@@ -24,19 +24,23 @@ function selectAsDetail(asInfoSeq,asAssignSeq,storeSeq){
 function changeStartDate(){
 	var start=$("input[name=wishingStartDate]").val();
 	var end=$("input[name=wishingEndDate]").val();
-	if(end=='') return;
+	if(end==''){ return true;}
 	if(start>end){
 		alert("시작일은 마지막일보다 이전이여야합니다.");
 		$("input[name=wishingStartDate]").val("");
+		$("input[name=wishingEndDate]").val("");
+		return false;
 	}
 }
 function changeEndDate(){
 	var start=$("input[name=wishingStartDate]").val();
 	var end=$("input[name=wishingEndDate]").val();
-	if(start=='') return;
+	if(start==''){ return true;}
 	if(start>end){
 		alert("마지막일은 시작일보다 이후이여야합니다.");
+		$("input[name=wishingStartDate]").val("");
 		$("input[name=wishingEndDate]").val("");
+		return false;
 	}
 }
 function downExcel(flag){
@@ -78,6 +82,15 @@ function downExcel(flag){
 }
 window.onload=function(){
 	history.replaceState({}, null, location.pathname);
+	
+	$("#search-submit").click(function(){
+		console.log("1")
+		if(changeStartDate() && changeEndDate()){
+			console.log("1")
+			$("#search-form").submit();
+		}
+	})
+		
 	
 	$("#receipt-as").click(function(){
 		location.href="/as-receipt"
