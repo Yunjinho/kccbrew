@@ -89,30 +89,15 @@ public class schdlMngController {
 		int usedHolidays = schdlMngService.getUsedHoliday(userVo);
 		model.addAttribute("usedHolidays", usedHolidays);
 		model.addAttribute("holidayVo", new HolidayVo());
-
-
-		String userTypeCd="";
+		
 		List<GrantedAuthority> authorities = (List<GrantedAuthority>) authentication.getAuthorities();
 		for (GrantedAuthority authority : authorities) {
 			String role = authority.getAuthority();
-			System.out.println("Role: " + role);
-
-			/*점주인 경우*/
 			if ("ROLE_MANAGER".equals(role)) {
-				userTypeCd = "02";
-				/*수리기사인 경우*/
-			} else if ("ROLE_MECHA".equals(role)) {
-				userTypeCd = "03";
+				List<AsMngVo> vo=asMngService.selectStrInfo(userVo.getUserId());
+				model.addAttribute("strInfo", vo);
 			}
 		}
-
-		/*점포*/
-		if(userTypeCd=="02") {
-			List<AsMngVo> vo=asMngService.selectStrInfo(userVo.getUserId());
-			model.addAttribute("strInfo", vo);
-			System.out.println(vo);
-		}
-
 		return "schdl/hldyIns";
 	}
 
@@ -365,7 +350,7 @@ public class schdlMngController {
 		/*string -> sql.date 형변환*/
 		Date startSqlDate = null;
 		Date endSqlDate = null;
-		
+
 		if (startDate == null || startDate.equals("")) {
 			startSqlDate = dateFormat.getFirstDayOfYear();
 		} else {
@@ -447,7 +432,7 @@ public class schdlMngController {
 		/*string -> sql.date 형변환*/
 		Date startSqlDate = null;
 		Date endSqlDate = null;
-		
+
 		if (startDate == null || startDate.equals("")) {
 			startSqlDate = dateFormat.getFirstDayOfYear();
 		} else {
