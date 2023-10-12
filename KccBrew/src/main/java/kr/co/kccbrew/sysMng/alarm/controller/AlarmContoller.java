@@ -47,9 +47,7 @@ public class AlarmContoller {
 	@ResponseBody
 	public List<AlarmVo> getAlarms(@RequestParam(value = "userId", required = false) String userId, 
 			@RequestParam(value="userType", required = false) String userType) {
-		System.out.println("AlarmContoller.getAlarms");
-		System.out.println("userId: " + userId);
-		System.out.println("userType: " + userType);
+		
 		Map<String, Object> map = new HashMap<>();
 		map.put("receiverId", userId);
 		map.put("receiverType", userType);
