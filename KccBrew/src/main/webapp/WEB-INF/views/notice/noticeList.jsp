@@ -40,21 +40,22 @@
 				<h2>공지사항</h2>
 				<div class="searchBox">
 					<div class="searchForm">
-						<div class="select-list">
-							<select id="list-search">
-								<option value="">제목 + 내용</option>
-								<option value="">제목</option>
-								<option value="">내용</option>
-								<option value="">작성자</option>
-							</select>
-						</div>
-						<div class="search-input">
-							<input type="text" class="search-notice-box"/>
-						</div>
-						<div class="search-notice-btn">
-							<button type="submit">검색</button>
-						</div>
-						
+						<form action="/noticelistwithcon" method="GET" id="searchListForm" name="searchListForm">
+							<div class="select-list">
+								<select id="list-search" name="searchOption">
+									<option value="all">제목 + 내용</option>
+									<option value="title">제목</option>
+									<option value="content">내용</option>
+									<option value="writer">작성자</option>
+								</select>
+							</div>
+							<div class="search-input">
+								<input type="text" class="search-notice-box" name="searchText"/>
+							</div>
+							<div class="search-notice-btn">
+								<button type="submit" id="searchBtn">검색</button>
+							</div>
+						</form>
 					</div>
 				</div>
 				
@@ -151,8 +152,6 @@
 		var sel = document.getElementById('cntPerPage').value;
 		location.href="noticelist?nowPage=${paging.nowPage}&cntPerPage="+sel;
 	}
-	
-	
 </script>
 </body>
 </html>

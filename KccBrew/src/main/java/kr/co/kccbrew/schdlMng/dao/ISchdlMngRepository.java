@@ -65,4 +65,6 @@ public interface ISchdlMngRepository {
 	
 	/*휴가 정보 조회*/
 	public List<AsResultVo> selectResult(Map map);
+	
+	public List<SchdlMngVo> selectAllHolidays(Map<String, Object> map);
 }
