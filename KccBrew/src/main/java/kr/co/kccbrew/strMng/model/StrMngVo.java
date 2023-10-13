@@ -43,4 +43,5 @@ public class StrMngVo {
 	String keyword;
 	
 	String rowNumber;
+	String flag;
 }
