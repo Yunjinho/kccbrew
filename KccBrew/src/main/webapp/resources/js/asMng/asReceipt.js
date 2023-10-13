@@ -15,7 +15,7 @@ function imgTypeCheck(fileName){
 	if(fileType == ".jpeg" || fileType == ".jpg" || fileType == ".png"){
 	}else{
 		alert("사진 : jpeg, jpg, png 확장자를 가진 파일만 사용하실 수 있습니다.");
-		$("input[name=imgFile]").val("")
+		$(fileName).val("")
 	}
 }
 function changeStr(){
