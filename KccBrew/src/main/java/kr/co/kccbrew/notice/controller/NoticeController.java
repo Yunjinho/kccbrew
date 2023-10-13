@@ -38,7 +38,7 @@ public class NoticeController {
 	 * @return
 	 */
 	@RequestMapping(value = "/noticelist", method = RequestMethod.GET)
-	public String boardList(PagingVo vo, Model model
+	public String noticeList(PagingVo vo, Model model
 							,@RequestParam(value="nowPage", required=false)String nowPage
 							,@RequestParam(value="cntPerPage", required=false)String cntPerPage) {
 		
@@ -54,6 +54,39 @@ public class NoticeController {
 		vo = new PagingVo(total, Integer.parseInt(nowPage), Integer.parseInt(cntPerPage));
 		model.addAttribute("paging", vo);
 		model.addAttribute("viewAll", noticeService.selectNotice(vo));
+		return "notice";
+	}
+	
+	/**
+	 * 검색 조건 설정한 공지 목록 출력
+	 * @param vo
+	 * @param searchOption
+	 * @param searchText
+	 * @param model
+	 * @param nowPage
+	 * @param cntPerPage
+	 * @return
+	 */
+	@RequestMapping(value = "/noticelistwithcon", method = RequestMethod.GET)
+	public String noticeListWithCon(PagingVo vo
+									,Model model	
+									,@RequestParam(value="searchOption", required=false)String searchOption
+									,@RequestParam(value="searchText", required=false)String searchText
+									,@RequestParam(value="nowPage", required=false)String nowPage
+									,@RequestParam(value="cntPerPage", required=false)String cntPerPage) {
+		
+		int total = noticeService.countNotice();
+		if (nowPage == null && cntPerPage == null) {
+			nowPage = "1";
+			cntPerPage = "10";
+		} else if (nowPage == null) {
+			nowPage = "1";
+		} else if (cntPerPage == null) { 
+			cntPerPage = "10";
+		}
+		vo = new PagingVo(total, Integer.parseInt(nowPage), Integer.parseInt(cntPerPage));
+		model.addAttribute("paging", vo);
+		model.addAttribute("viewAll", noticeService.selectNoticeWithCon(vo.getStartPage(),vo.getEndPage(),searchOption,searchText));
 		return "notice";
 	}
 	
@@ -90,7 +123,7 @@ public class NoticeController {
 				UserDetails userDetails = (UserDetails) principal;
 				
 				String writerId = userDetails.getUsername();
-				String writerName = userDetails.getUsername();
+				String writerName = noticeVo.getWriterName();
 				
 				noticeVo.setWriterId(writerId);
 				noticeVo.setModUser(writerId);
@@ -128,20 +161,11 @@ public class NoticeController {
 	 */
 	@RequestMapping(value="/noticedetail/{noticeSeq}", method=RequestMethod.GET)
 	public String noticeDetail(Model model, @PathVariable int noticeSeq) {
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		
-		if(authentication != null) {
-			Object principal = authentication.getPrincipal();
-			if(principal instanceof UserDetails) {
-				UserDetails userDetails = (UserDetails) principal;
-				String userId = userDetails.getUsername();
-				
-				NoticeVo noticeVo = noticeService.readNotice(noticeSeq);
-				List<NoticeVo> noticeImg = noticeService.noticeImageList(noticeVo.getFileSeq());
-				model.addAttribute("noticeVo", noticeVo);
-				model.addAttribute("imgList", noticeImg);
-			}
-		}
+		NoticeVo noticeVo = noticeService.readNotice(noticeSeq);
+		List<NoticeVo> noticeImg = noticeService.noticeImageList(noticeVo.getFileSeq());
+		model.addAttribute("noticeVo", noticeVo);
+		model.addAttribute("imgList", noticeImg);
+
 		return "noticeDetail";
 	}
 	
@@ -153,17 +177,8 @@ public class NoticeController {
 	 */
 	@RequestMapping(value="/delete/{noticeSeq}", method=RequestMethod.GET)
 	public String deleteNotice(Model model, @PathVariable int noticeSeq) {
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		
-		if(authentication != null) {
-			Object principal = authentication.getPrincipal();
-			if(principal instanceof UserDetails) {
-				UserDetails userDetails = (UserDetails) principal;
-				String userId = userDetails.getUsername();
-				
-				noticeService.deleteNotice(noticeSeq);
-			}
-		}
+		noticeService.deleteNotice(noticeSeq);
+
 		return "redirect:/noticelist";
 	}
 	
@@ -174,18 +189,9 @@ public class NoticeController {
 	@RequestMapping(value="/notice/update/{noticeSeq}", method=RequestMethod.GET)
 	public String toUpdateNotice(Model model, 
 								@PathVariable int noticeSeq) {
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		
-		if(authentication != null) {
-			Object principal = authentication.getPrincipal();
-			if(principal instanceof UserDetails) {
-				UserDetails userDetails = (UserDetails) principal;
-				String userId = userDetails.getUsername();
+		NoticeVo noticeVo = noticeService.readNotice(noticeSeq);
+		model.addAttribute("noticeVo", noticeVo);
 
-				NoticeVo noticeVo = noticeService.readNotice(noticeSeq);
-				model.addAttribute("noticeVo", noticeVo);
-			}
-		}
 		return "adminNoticeUpdate";
 	}
 	

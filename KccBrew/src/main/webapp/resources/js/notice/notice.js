@@ -32,7 +32,7 @@ $(document).ready(function() {
     });
 });
 
-var fileNo = 0;
+var fileNo = 1;
 var filesArr = new Array();
 
 /* 첨부 파일 추가 */
@@ -100,6 +100,9 @@ function deleteFile(num) {
     var filebox = document.querySelector("#file" + num);
     filebox.remove();
     filesArr[num].is_delete = true;
+    
+    var fileInput = document.querySelector("#fileInput" + num);
+    fileInput.value("");
     
     // 미리보기 이미지 삭제
     var previewImage = document.querySelector("#file" + num );

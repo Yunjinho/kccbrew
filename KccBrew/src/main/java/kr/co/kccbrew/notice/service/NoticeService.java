@@ -30,11 +30,6 @@ public class NoticeService implements INoticeServie{
 		noticeRepository.updateReadCount(noticeSeq);
 		return noticeRepository.readNotice(noticeSeq);
 	}
-	
-//	@Override
-//	public noticeVo readNoticeById(String writerId) {
-//		return noticeRepository.readNoticeById(writerId);
-//	}
 
 	//공지 등록
 	@Override
@@ -106,13 +101,20 @@ public class NoticeService implements INoticeServie{
 		return noticeRepository.selectNotice(vo);
 	}
 	
+	//공지사항 첨부 이미지 리스트
 	@Override
 	public List<NoticeVo> noticeImageList(String fieleSeq) {
 		return noticeRepository.noticeImageList(fieleSeq);
 	}
-
+	//메인 페이지에 보여질 공지 목록
 	@Override
 	public List<NoticeVo> selectMainNotice() {
 		return noticeRepository.selectMainNotice();
+	}
+
+	//검색 조건을 설정한 공지 사항
+	@Override
+	public List<NoticeVo> selectNoticeWithCon(int start, int end, String searchOption, String searchText) {
+		return noticeRepository.selectNoticeWithCon(start, end, searchOption,searchText);
 	}
 }

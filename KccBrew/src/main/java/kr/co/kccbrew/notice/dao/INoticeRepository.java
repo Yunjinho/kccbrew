@@ -3,6 +3,7 @@ package kr.co.kccbrew.notice.dao;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import kr.co.kccbrew.notice.model.PagingVo;
@@ -19,11 +20,10 @@ public interface INoticeRepository {
 	 */
 	public int countNotice(); 						//공지사항 총 개수
 	public List<NoticeVo> selectNotice(PagingVo vo);// 페이징 처리 공지사항 조회
-	
-	
-	List<NoticeVo> showAllNoticeList();				// 공지사항 목록 조회
+	List<NoticeVo> showAllNoticeList();				// 공지사항 목록 조회, 페이징 없음
+	List<NoticeVo> selectNoticeWithCon(@Param("start") int start, @Param("end") int end, @Param("searchOption") String searchOption, @Param("searchText") String searchText);// 검색 조건을 설정한 공지 목록 조회, 페이징 포함
 	NoticeVo readNotice(int noticeSeq);				// 공지사항 상세 조회
-	NoticeVo readNoticeById(String writerId);		// 사용자 아이디로 공지 상세 조회
+	
 	void insertNotice(NoticeVo noticeVo); 			// 공지사항 등록
 	void updateNotice(NoticeVo noticeVo);			// 공지사항 수정
 	void deleteNotice(int noticeSeq);				// 공지사항 삭제
@@ -32,7 +32,6 @@ public interface INoticeRepository {
 	
 	void insertFileInfo(NoticeVo noticeVo); 		// 공지사항에 넣을 이미지 정보 등록
 	void insertFileDtlInfo(NoticeVo noticeVo); 		// 공지사항 이미지 상세 정보 등록
-	List<NoticeVo> noticeImageList(String fieleSeq);
-	List<NoticeVo> selectMainNotice();
-	
+	List<NoticeVo> noticeImageList(String fieleSeq);// 공지사항 첨부 이미지 목
+	List<NoticeVo> selectMainNotice();				// 메인 페이지에 보여질 공지 리스트	
 }

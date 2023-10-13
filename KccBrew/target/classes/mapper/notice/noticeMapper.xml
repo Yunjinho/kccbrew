@@ -1,24 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.co.kccbrew.notice.dao.INoticeRepository">
-
-	<!-- 사용자 정보 가져오기 -->
-	<select id="selectUserInfo" parameterType="kr.co.kccbrew.notice.model.NoticeVo" resultType="kr.co.kccbrew.notice.model.NoticeVo">
-		<![CDATA[
-			SELECT * 
-			FROM users
-			WHERE user_id = #{writetId}
-		]]>
-	</select>
-	
-	<!-- 사용자 이름 가져오기 -->
-	<select id="selectUserName" parameterType="kr.co.kccbrew.notice.model.NoticeVo" resultType="kr.co.kccbrew.notice.model.NoticeVo">
-		<![CDATA[
-			SELECT user_nm
-			FROM users
-			WHERE user_id = #{writetId}
-		]]>
-	</select>
 	
 	<!-- 공지사항 총 개수 -->
 	<select id="countNotice" resultType="int">
@@ -27,7 +9,7 @@
 		]]>
 	</select>
 	
-	<!-- 페이징 처리 후 공지사항 조회 -->
+	<!-- 페이징 처리 후 공지사항 조회, 검색 조건을 설정하지 않았을 경우 -->
 	<select id="selectNotice" resultType="kr.co.kccbrew.notice.model.NoticeVo">
 		<![CDATA[
 		SELECT * 
@@ -43,13 +25,47 @@
 							FROM notification
 							ORDER BY notice_seq DESC
 							) A
-					)
+				)
 		WHERE RN BETWEEN #{start} AND #{end}
 		]]>
 	</select>
 	
+	<!-- 검색 조건을 설정했을 때 불러오는 공지 목록 -->
+	<select id="selectNoticeWithCon" parameterType="hashmap" resultType="kr.co.kccbrew.notice.model.NoticeVo">
+		SELECT * 
+			FROM (
+				SELECT ROWNUM RN, A.* 
+					FROM (
+							SELECT
+								notice_seq		AS "noticeSeq"
+								,writer_name	AS "writerName"
+								,write_dttm		AS "writeDate"
+								,notice_title	AS "noticeTitle"
+								,views			AS "views"
+							FROM notification
+                            WHERE 
+                            	<choose>
+                            		<when test="searchOption == 'all'">
+	                               		#{searchOption} = 'all' 	AND notice_title 	LIKE '%' || #{searchText} || '%'  OR  notice_content LIKE '%' || #{searchText} || '%' 
+	                               	</when>
+	                               	<when test="searchOption == 'title'">
+					            		#{searchOption} = 'title' 	AND notice_title 	LIKE '%' || #{searchText} || '%'
+					            	</when>
+					            	<when test="searchOption == 'content'">
+					            		#{searchOption} = 'content' AND notice_content 	LIKE '%' || #{searchText} || '%'
+					            	</when>
+					            	<when test="searchOption == 'writer'">
+					            		#{searchOption} = 'writer' 	AND writer_name 	LIKE '%' || #{searchText} || '%'
+					            	</when>
+					            </choose>
+							ORDER BY notice_seq DESC
+							) A
+					)
+		WHERE RN BETWEEN #{start} AND #{end}
+	</select>
+	
 	<!-- 공지사항 목록 출력 - 페이징 없음 -->
-	<select id="showAllNoticeList" parameterType="kr.co.kccbrew.notice.model.NoticeVo" resultType="kr.co.kccbrew.notice.model.NoticeVo">
+	<select id="showAllNoticeList" resultType="kr.co.kccbrew.notice.model.NoticeVo">
 		<![CDATA[
 			SELECT
 				notice_seq		AS "noticeSeq"

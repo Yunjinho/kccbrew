@@ -9,6 +9,12 @@
 body {
 	font-family: 'Noto Sans', 'Noto Sans KR', sans-serif !important;
 }
+button {
+	font-family: 'Noto Sans', 'Noto Sans KR', sans-serif !important;
+}
+select {
+	font-family: 'Noto Sans', 'Noto Sans KR', sans-serif !important;
+}
 .body-wrapper {
 	width:100%;
 	height:100%;
@@ -95,30 +101,31 @@ h2 {
 
 /* 검색 폼 */
 .searchBox {
-	height:60px;
 	padding: 20px 100px;
 	background-color: #eeeeee;
 }
 .searchForm {
 	height:40px;
+}
+
+#searchListForm {
 	display: flex;
 	justify-content: space-between;
 }
 
-.searchForm .select-list {
+#searchListForm .select-list {
 	width:120px;
 }
-.searchForm .select-list #list-search{
+#searchListForm .select-list #list-search{
 	width:120px;
 	height:40px;
 }
-
-.searchForm .search-input .search-notice-box {
+#searchListForm .search-input .search-notice-box {
 	border: 1px solid black;
 	width: 600px;
-	height:19px;
+	height:18px;
 }
-.searchForm .search-notice-btn button{
+#searchListForm .search-notice-btn button{
 	width:80px;
 	height:40px;
 	color:white;
@@ -402,15 +409,5 @@ input[type="file"] {
     background-repeat: no-repeat;
     background-position: center;
 }
-/******************** summernote cdn css 덮어씌우기 *********************************/
 
-.note-frame {
-	font-family: 'Noto Sans';
-}
-.note-editable p {
-	text-align: left;
-}
-.note-editor.note-airframe, .note-editor.note-frame {
-	width:1000px;
-}
 
