@@ -14,14 +14,31 @@ import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
-public class NoticeService implements INoticeServie{
+public class NoticeService implements INoticeService{
 	private final INoticeRepository noticeRepository;
-
-	//공지 전체 조회
+	
+	//공지사항 페이징 처리
 	@Override
-	public List<NoticeVo> showAllNoticeList() {
-		List<NoticeVo> noticeList = noticeRepository.showAllNoticeList();
-		return noticeList;
+	public List<NoticeVo> selectNotice(PagingVo vo) {
+		return noticeRepository.selectNotice(vo);
+	}
+	
+	//검색 조건을 설정한 공지 사항
+	@Override
+	public List<NoticeVo> selectNoticeWithCon(int start, int end, String searchOption, String searchText) {
+		return noticeRepository.selectNoticeWithCon(start, end, searchOption,searchText);
+	}
+	
+	// 공지사항 총 개수 조회
+	@Override
+	public int countNotice() {
+		return noticeRepository.countNotice();
+	}
+
+	// 공지사항 총 개수 조회 - 검색 조건 필터링 이후
+	@Override
+	public int countNoticeWithCon(String searchOption, String searchText) {
+		return noticeRepository.countNoticeWithCon(searchOption, searchText);
 	}
 	
 	//공지 상세 조회
@@ -30,11 +47,6 @@ public class NoticeService implements INoticeServie{
 		noticeRepository.updateReadCount(noticeSeq);
 		return noticeRepository.readNotice(noticeSeq);
 	}
-	
-//	@Override
-//	public noticeVo readNoticeById(String writerId) {
-//		return noticeRepository.readNoticeById(writerId);
-//	}
 
 	//공지 등록
 	@Override
@@ -94,25 +106,19 @@ public class NoticeService implements INoticeServie{
 		return noticeVo;
 	}
 
-	// 공지사항 총 개수 조회
-	@Override
-	public int countNotice() {
-		return noticeRepository.countNotice();
-	}
-
-	//공지사항 페이징 처리
-	@Override
-	public List<NoticeVo> selectNotice(PagingVo vo) {
-		return noticeRepository.selectNotice(vo);
-	}
 	
+	
+	
+	//공지사항 첨부 이미지 리스트
 	@Override
 	public List<NoticeVo> noticeImageList(String fieleSeq) {
 		return noticeRepository.noticeImageList(fieleSeq);
 	}
-
+	//메인 페이지에 보여질 공지 목록
 	@Override
 	public List<NoticeVo> selectMainNotice() {
 		return noticeRepository.selectMainNotice();
 	}
+
+	
 }
