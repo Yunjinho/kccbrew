@@ -78,13 +78,13 @@
 				</tr>
 				<tr>
 					<th colspan="1">지역분류</th>
-					<td colspan="3"><select id="location" name="locationCd" size="3">
+					<td colspan="3"><select id="location" name="locationCd" size="3" onchange="javascript:chg();">
 							<option value="">지역선택</option>
 							<c:forEach var="list" items="${list}">
 								<option value="${list.locationCd}"
 									${store.locationCd == list.locationCd ? 'selected' : ''}>${list.locationNm}</option>
 							</c:forEach>
-					</select> <select id="locationSeoul" name="locationCdSeoul" size="3"
+					</select> <select id="locationSeoul" name="locationCdSeoul" size="3" onchange="javascript:chg();"
 						disabled>
 							<option value="">지역선택 상세</option>
 							<c:forEach var="list" items="${seoullist}">
