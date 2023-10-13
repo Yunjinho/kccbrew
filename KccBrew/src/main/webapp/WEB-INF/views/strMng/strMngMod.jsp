@@ -6,11 +6,36 @@
 <head>
 <link rel="stylesheet"
     href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-<link rel="stylesheet" href="/resources/css/code/cdMngDtl.css" />
+<link rel="stylesheet" href="/resources/css/userMng/userMngList.css" />
+<!-- notoSans -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link
+	href="https://fonts.googleapis.com/css2?family=Noto+Sans&display=swap"
+	rel="stylesheet">
+<link
+	href="https://fonts.googleapis.com/css2?family=Noto+Sans&family=Noto+Sans+KR&display=swap"
+	rel="stylesheet">
 <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 <meta charset="UTF-8">
 <title>점포수정</title>
 </head>
+<style>
+	input{
+	width: auto;
+	}
+   #notice{
+    margin: 40px;}
+    
+   
+    .form-btn {
+     display: unset;}
+     
+     .category{
+     font-size: 1.2em;
+     }
+</style>
+
 <body>
 	<section id="notice" class="notice">
 		 <div class="container2">
@@ -47,7 +72,7 @@
 				<tr>
 					<th colspan="1">주소</th>
 					<td colspan="3"><input type="text" id="address_kakao" name="storeAddr"
-						placeholder="클릭해주세요" value="${store.storeAddr}"  size="50" readonly />, <input
+						placeholder="클릭해주세요" value="${store.storeAddr}"  size="40" readonly />, <input
 						type="text" name="storeAddrDtl" id="storeAddrDtl"
 						value="${store.storeAddrDtl}" required /></td>
 				</tr>
@@ -70,7 +95,7 @@
 				</tr>
 			</table>
 			
-		  <div id="staticMap" style="width: 550px; height: 300px; margin: auto;"></div>
+		  <div id="staticMap" style="width: 700px; height: 400px; margin: 20px auto;"></div>
 			 <div class="updatecancle" style="text-align: center;">
 				<input type="hidden" name="storeSeq" value="${store.storeSeq}" style="">
 				<button type="submit" name="save"  class="form-btn" value="저장"
