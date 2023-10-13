@@ -30,6 +30,7 @@ $(document).ready(function() {
             reader.readAsDataURL(fileInput.files[0]);
         }
     });
+	
 });
 
 var fileNo = 0;
@@ -42,16 +43,19 @@ function addFile(obj){
 	var remainFileCnt = maxFileCnt - attFileCnt;  //추가로 첨부 가능한 파일의 수
 	var curFileCnt = obj.files.length; //input 요소에서 지금 몇개의 파일을 선택했는지에 대한 값
 	var totalFileCnt = 0;	//현재까지 첨부한 이미지 개수
-
+	var size=$(".file-box").children().length;
 	//첨부 파일 개수 확인
-	if(curFileCnt > remainFileCnt){
+	if((size-1) == maxFileCnt){
 		alert("첨부 파일은 최대 " + maxFileCnt + "개 까지 첨부 가능합니다.");
 		return;
 	}
-	
+	$(".file-label").css("display","none");
+	var test=
+		'<div class="file-label"><label for="fileInput '+fileNo+'" id="fileUploadBtn">파일 선택 </label>'
+		+ '<input style="display:none;"type="file" id="fileInput '+fileNo+'" name="noticeImg" onchange="addFile(this);" multiple accept=".jpg, .jpeg, .png"></div>'
+	$(".file-box").append(test);
 	for(var i=0; i<Math.min(curFileCnt, remainFileCnt); i++){
 		const file = obj.files[i];
-		console.log(file);
 		// 첨부파일 검증
         if (validation(file)) {
             // 파일 배열에 담기
@@ -64,15 +68,15 @@ function addFile(obj){
 				imgElement.className = "preview-img";
                 filesArr.push(file);
 				$('.img-list').append(imgElement);
-                updateFileCount();  
 
             // 목록 추가
             let htmlData = '';
-            htmlData += '<div id=' + fileId + ' class="filebox">';
+            htmlData += '<div class="filebox">';
             htmlData += '   <p class="name">' + file.name + '</p>';
-            htmlData += '   <a class="delete" onclick="deleteFile(' + fileNo + ');"><i class="far fa-minus-square"></i></a>';
+            htmlData += '   <a id="delete-image" onclick="deleteFile(this)"><i class="far fa-minus-square"></i></a>';
             htmlData += '</div>';
             $('.file-list').append(htmlData);
+            fileNo++;
             
             };
             reader.readAsDataURL(file)
@@ -80,32 +84,36 @@ function addFile(obj){
             continue;
         }
 	}
-	$(".file-label").css("display","none");
-	var test=
-		'<div class="file-label"><label for="fileInput'+fileNo+'" id="fileUploadBtn">파일 선택 </label>'
-		+ '<input style="display:none;"type="file" id="fileInput'+fileNo+'" name="noticeImg" onchange="addFile(this);" multiple accept=".jpg, .jpeg, .png"></div>'
-	$(".file-box").append(test);
-	fileNo++;
+	updateFileCount();  
+	
 }
 
 //파일 개수 업데이트
 function updateFileCount() {
-    var curFileCnt = filesArr.filter(file => !file.is_delete).length; // 현재 선택된 첨부 파일 개수
-    $('#fileCount').html(curFileCnt + " 파일이 선택되었습니다.");
+    var size=$(".file-box").children().length;
+    $('#fileCount').html((size-1) + " 파일이 선택되었습니다.");
 }
 
 /* 첨부파일 삭제 */
 function deleteFile(num) {
-    var filebox = document.querySelector("#file" + num);
-    filebox.remove();
-    filesArr[num].is_delete = true;
+	 var index= $(num).parent().parent().find(".filebox").index($(num).parent());
+
+	 
+	 $(".file-list").children().eq(index).remove();
+	 $(".img-list").children().eq(index).remove();
+	 $(".file-box").children().eq(index).remove();
+//    var filebox = document.querySelector("#file" + index);
+//    filebox.remove();
+    //filesArr[num].is_delete = true;
+    
+//    var a=$("#fileInput "+index).val();
     
     // 미리보기 이미지 삭제
-    var previewImage = document.querySelector("#file" + num );
-    if (previewImage) {
-        previewImage.remove();
-    }
-    curFileCnt = filesArr.filter(file => !file.is_delete).length;
+//    var previewImage = document.querySelector("#file" + index );
+//    if (previewImage) {
+//        previewImage.remove();
+//    }
+//    curFileCnt = filesArr.filter(file => !file.is_delete).length;
     updateFileCount();
 }
 
