@@ -67,12 +67,14 @@ public class SessionInterceptor extends Interceptor {
 
 		UserVo user = userService.getUserById(userId);
 		List<UserMngVo> userMngVo = userMngService.findByUserInfo2(userId);
-/*		if(userMngVo != null) {
+		log.info("userMngVo: " + userMngVo) ;
+
+		if (userMngVo != null && !userMngVo.isEmpty()) {
 			if(userMngVo.get(0).getImgNm() != null && userMngVo.get(0).getImgUrl() != null) {
 				user.setFileServerNm(userMngVo.get(0).getImgNm());
 				user.setStorageLocation(userMngVo.get(0).getImgUrl());
 			}
-		}*/
+		}
 
 		HttpSession session = request.getSession();
 		session.setAttribute("user", user);
