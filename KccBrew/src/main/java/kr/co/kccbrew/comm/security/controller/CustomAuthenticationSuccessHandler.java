@@ -49,7 +49,7 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
 		UserVo user = userService.getUserById(userId);
 
 		// 파일정보 UserVo에 저장
-		List<UserMngVo> userMngVo = userMngService.findByUserInfo(userId);
+		List<UserMngVo> userMngVo = userMngService.findByUserInfo2(userId);
 		user.setFileServerNm(userMngVo.get(0).getImgNm());
 		user.setStorageLocation(userMngVo.get(0).getImgUrl());
 

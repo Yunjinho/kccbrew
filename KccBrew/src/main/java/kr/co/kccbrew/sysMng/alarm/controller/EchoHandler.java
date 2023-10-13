@@ -21,7 +21,7 @@ import kr.co.kccbrew.sysMng.alarm.service.IAlarmService;
 
 /**
  * @ClassNmae : EchoHandler
- * @Decription : AS절차에 따른 사용자 알람수신
+ * @Decription : 주요활동에 따른 알람기능구현
  * 
  * @   수정일               			수정자             					수정내용
  * ============      ==============     ================================================

@@ -81,7 +81,7 @@ public class SchdlMngService implements ISchdlMngService {
 		calendar.add(Calendar.DATE, -1);
 		java.util.Date lastDayOfYear = calendar.getTime();
 
-		// 이번 년도의 첫 일 생성
+		// 이번년도의 첫날
 		calendar.set(Calendar.MONTH, Calendar.JANUARY);
 		calendar.set(Calendar.DAY_OF_MONTH, 1);
 		java.util.Date firstDayOfYear = calendar.getTime();
@@ -117,7 +117,7 @@ public class SchdlMngService implements ISchdlMngService {
 
 	/*AS배정일 조회*/
 	@Override
-	public List<Date> getAssignDates(String userId) {
+	public List<SchdlMngVo> getAssignDates(String userId) {
 		Map<String, String> map = new HashMap<>();
 		map.put("id", userId);
 
@@ -152,8 +152,8 @@ public class SchdlMngService implements ISchdlMngService {
 			parameterMap.put("yr", year);
 			parameterMap.put("mn", month);
 
-			List<Date> asRegDates = schdlMngRepository.selectAsRegDates(parameterMap);
-			List<Date> resultDates = schdlMngRepository.selectResultDates(parameterMap);
+			List<SchdlMngVo> asRegDates = schdlMngRepository.selectAsRegDates(parameterMap);
+			List<SchdlMngVo> resultDates = schdlMngRepository.selectResultDates(parameterMap);
 			Map<String, Object> scheduleMap = new HashMap<>();
 
 			scheduleMap.put("asRegDates", asRegDates);
@@ -173,8 +173,8 @@ public class SchdlMngService implements ISchdlMngService {
 			UserVo userVo = userRepository.getUserById(id);
 			// 실제사용이 Y인 휴가리스트 조회
 			List<Map<String, Object>> holidayDates = schdlMngRepository.selectHolidayDates(parameterMap);
-			List<Date> assignDates = schdlMngRepository.selectAssignDates(parameterMap);
-			List<Date> resultDates = schdlMngRepository.selectResultDates(parameterMap);
+			List<SchdlMngVo> assignDates = schdlMngRepository.selectAssignDates(parameterMap);
+			List<SchdlMngVo> resultDates = schdlMngRepository.selectResultDates(parameterMap);
 
 			Map<String, Object> scheduleMap = new HashMap<>();
 			scheduleMap.put("userId", id);

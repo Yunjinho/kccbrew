@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -308,6 +309,30 @@ public class StrMngController {
 		String userId=user.getUserId();
 		
 		storeService.deleteStr(userId, storeSeq);
+		return "";
+	}
+	
+	
+	@ResponseBody
+	@RequestMapping(value="/download-str-list",method=RequestMethod.POST)
+	public String downloadStrList(String flag,@RequestParam(defaultValue = "1")String currentPage,@RequestParam(defaultValue = "")String startDate,@RequestParam(defaultValue = "")String endDate,
+									@RequestParam(defaultValue = "")String regUser,@RequestParam(defaultValue = "")String useYn,
+									@RequestParam(defaultValue = "")String locationCd,@RequestParam(defaultValue = "")String locationCdSeoul,
+									@RequestParam(defaultValue = "")String keyword,HttpServletRequest request,HttpServletResponse response) {
+		HttpSession session = request.getSession();
+		UserVo user = (UserVo)session.getAttribute("user");
+		String userId=user.getUserId();
+		
+		StrMngVo vo=new StrMngVo();
+		vo.setCurrentPage(Integer.parseInt(currentPage));
+		vo.setStartDate(startDate);
+		vo.setEndDate(endDate);
+		vo.setUseYn(useYn);
+		vo.setLocationCdSeoul(locationCdSeoul);
+		vo.setLocationCd(locationCd);
+		vo.setKeyword(keyword);
+		vo.setFlag(flag);
+		storeService.downloadStrList(vo);
 		return "";
 	}
 }

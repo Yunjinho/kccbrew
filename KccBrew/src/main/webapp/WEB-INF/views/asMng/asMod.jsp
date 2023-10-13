@@ -44,7 +44,7 @@
 							<span id="maincontent"></span>
 							<div class="user-past">
 								<div id="content">
-									<h2 class="heading">AS 접수</h2>
+									<h2 class="heading">AS 수정</h2>
 									<hr>
 
 									<!-- AS 접수-->
@@ -61,7 +61,7 @@
 												<fmt:formatDate value="${wishingStartDate}"
 													pattern="yyyy-MM-dd" var="formattedStartDate" />
 												<input type="date" value="${formattedStartDate}"
-													name="wishingStartDate" onchange="changeStartDate()">
+													name="wishingStartDate">
 											</div>
 											<div style="font-size: 2em; text-align: center;">~</div>
 											<div>
@@ -70,7 +70,7 @@
 												<fmt:formatDate value="${wishingEndDate}"
 													pattern="yyyy-MM-dd" var="formattedEndDate" />
 												<input type="date" value="${formattedEndDate}"
-													name="wishingEndDate" onchange="changeEndDate()">
+													name="wishingEndDate">
 											</div>
 										</div>
 
@@ -104,8 +104,15 @@
 												<select name="machineCd" required="required">
 													<option value="">장비 코드</option>
 													<c:forEach var="list" items="${machineCd}">
-														<option value="${list.grpCdDtlId}">
-															${list.grpCdDtlNm}</option>
+														<c:choose>
+															<c:when test="${list.grpCdDtlNm eq asDetailInfo.machineCdNm}">
+																<option value="${list.grpCdDtlId}" selected> ${list.grpCdDtlNm}</option>
+															</c:when>
+															<c:otherwise>
+																<option value="${list.grpCdDtlId}"> ${list.grpCdDtlNm}</option>
+															</c:otherwise>
+														</c:choose>
+														
 													</c:forEach>
 												</select>
 											</div>
@@ -143,7 +150,7 @@
 
 										<div>
 											<div>
-												<button type="submit" class="form-btn">접수</button>
+												<div id="receipt-submit" class="form-btn">접수</div>
 											</div>
 											<div>
 												<a href="/as-list" class="form-btn">취소</a>
@@ -181,6 +188,11 @@ function changeEndDate(){
 	}
 }
 $(document).ready(function() {
+	if(changeStartDate()&&changeEndDate()){
+		$("#receipt-submit").click(function(){
+			$("#receipt-form").submit();
+		})
+	}
     var asInfoSeq = "${asInfoSeq}"; // 수정 필요한 부분
     var asAssignSeq = "${asAssignSeq}"; // 수정 필요한 부분
     var storeSeq = "${storeSeq}"; // 수정 필요한 부분

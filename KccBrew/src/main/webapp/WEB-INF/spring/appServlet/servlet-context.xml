@@ -79,7 +79,7 @@
 		/> -->
 	<context:component-scan
 		base-package="kr.co.kccbrew.notice.controller" />
-	
+
 	<context:component-scan
 		base-package="kr.co.kccbrew.strMng.controller" />
 	<context:component-scan
@@ -103,7 +103,7 @@
 		base-package="kr.co.kccbrew.sysMng.statistics.controller" />
 	<context:component-scan
 		base-package="kr.co.kccbrew.comm.chat.controller" />
-			<context:component-scan
+	<context:component-scan
 		base-package="kr.co.kccbrew.sysMng.alarm.controller" />
 	<!-- Controller -->
 
@@ -170,6 +170,14 @@
 				class="kr.co.kccbrew.comm.interceptor.component.UserProfileInterceptor" />
 		</interceptor>
 
+		<!-- 사용자 정보가 담긴 세션 지속적으로 업데이트 -->
+		<interceptor>
+			<mapping path="/**" />
+			<exclude-mapping path="/resources/**/" />
+			<beans:bean
+				class="kr.co.kccbrew.comm.interceptor.component.SessionInterceptor" />
+		</interceptor>
+
 	</interceptors>
 
 	<!-- 유효성검사 -->
@@ -193,7 +201,7 @@
 
 	<beans:bean id="echoHandler"
 		class="kr.co.kccbrew.sysMng.alarm.controller.EchoHandler" />
- 
+
 
 	<!-- 웹소켓 -->
 	<beans:bean id="echoHandle"

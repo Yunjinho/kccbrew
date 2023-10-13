@@ -33,7 +33,7 @@ public interface ISchdlMngService {
 	public void addHoliday(HolidayVo holiday);
 	
 	/*AS배정일리스트 조회*/
-	public List<Date> getAssignDates(String userId);
+	public List<SchdlMngVo> getAssignDates(String userId);
 	
 	/*지역목록 조회*/
 	public List<UserVo> getLocations();

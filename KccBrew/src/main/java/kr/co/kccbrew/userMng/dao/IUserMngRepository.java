@@ -13,6 +13,7 @@ public interface IUserMngRepository {
 	List<UserMngVo> newList();
 	 UserMngVo findByUserId(String userId);
 	 List<UserMngVo> findByUserInfo(@Param("userId") String userId);
+	 List<UserMngVo> findByUserInfo2(@Param("userId") String userId);
 	 void save(UserMngVo userMngVo);
 	 void userMod(UserMngVo userMngVo);
 	 int getNewCount();

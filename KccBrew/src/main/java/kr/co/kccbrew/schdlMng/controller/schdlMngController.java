@@ -89,30 +89,15 @@ public class schdlMngController {
 		int usedHolidays = schdlMngService.getUsedHoliday(userVo);
 		model.addAttribute("usedHolidays", usedHolidays);
 		model.addAttribute("holidayVo", new HolidayVo());
-
-
-		String userTypeCd="";
+		
 		List<GrantedAuthority> authorities = (List<GrantedAuthority>) authentication.getAuthorities();
 		for (GrantedAuthority authority : authorities) {
 			String role = authority.getAuthority();
-			System.out.println("Role: " + role);
-
-			/*점주인 경우*/
 			if ("ROLE_MANAGER".equals(role)) {
-				userTypeCd = "02";
-				/*수리기사인 경우*/
-			} else if ("ROLE_MECHA".equals(role)) {
-				userTypeCd = "03";
+				List<AsMngVo> vo=asMngService.selectStrInfo(userVo.getUserId());
+				model.addAttribute("strInfo", vo);
 			}
 		}
-
-		/*점포*/
-		if(userTypeCd=="02") {
-			List<AsMngVo> vo=asMngService.selectStrInfo(userVo.getUserId());
-			model.addAttribute("strInfo", vo);
-			System.out.println(vo);
-		}
-
 		return "schdl/hldyIns";
 	}
 
@@ -251,17 +236,18 @@ public class schdlMngController {
 	public boolean isAsAssignDate(Date startDate, Date endDate, String userId) {
 
 		/*수리배정일 리스트 조회*/
-		List<Date> asAssignDates = schdlMngService.getAssignDates(userId);
+		List<SchdlMngVo> asAssignDates = schdlMngService.getAssignDates(userId);
 
 		boolean isOverlap = false;
 
-		/* 휴가일 중복 검사*/
+		/* 휴가일 중복 검사
 		for (Date date : asAssignDates) {
 			if (date.compareTo(startDate) >= 0 && date.compareTo(endDate) <= 0) {
 				isOverlap = true;
 				break;
 			}
 		}
+		 * */
 		return isOverlap;
 	}
 
@@ -365,7 +351,7 @@ public class schdlMngController {
 		/*string -> sql.date 형변환*/
 		Date startSqlDate = null;
 		Date endSqlDate = null;
-		
+
 		if (startDate == null || startDate.equals("")) {
 			startSqlDate = dateFormat.getFirstDayOfYear();
 		} else {
@@ -447,7 +433,7 @@ public class schdlMngController {
 		/*string -> sql.date 형변환*/
 		Date startSqlDate = null;
 		Date endSqlDate = null;
-		
+
 		if (startDate == null || startDate.equals("")) {
 			startSqlDate = dateFormat.getFirstDayOfYear();
 		} else {

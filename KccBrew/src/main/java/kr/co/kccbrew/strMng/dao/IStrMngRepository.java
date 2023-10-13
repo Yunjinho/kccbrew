@@ -42,4 +42,5 @@ public interface IStrMngRepository {
 	 * @param storeSeq
 	 */
 	void deleteStr(@Param("userId")String userId,@Param("storeSeq")String storeSeq);
+	List<StrMngVo> strAllFilter(StrMngVo strMngVo);
 }

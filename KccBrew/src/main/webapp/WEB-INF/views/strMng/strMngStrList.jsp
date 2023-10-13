@@ -94,50 +94,27 @@
 										<tr>
 											<th>지점명</th>
 											<td><input type="text" id="storeNm" name="storeNm"
-												value="${store.storeNm}" required> <input type="hidden"
-												id="storeNmHidden" name="storeNm"></input> <!-- 숨겨진 필드 추가 --> <input
-												type="button" name="strnm" value="중복확인" class="check"
-												id="name-check-btn" required></td>
+												value="${store.storeNm}" readonly></td>
 											<th>점포연락처</th>
 											<td><input type="text" id="storeTelNo" name="storeTelNo"
-												oninput="hypenTel(this)" maxlength="13"
+												oninput="hypenTel(this)" maxlength="13" readonly
 												value="${store.storeTelNo}" placeholder="하이픈(-)은 자동입력 됩니다.."></td>
 										</tr>
 										<tr>
 											<th>좌표</th>
-											<td><input class="field" id="lat" name="latitude"
+											<td><input class="field" id="lat" name="latitude" readonly
 												value="${store.latitude}" size="12" />, <input class="field" id="lng"
-												name="longitude" value="${store.longitude}" size="12"></td>
+												name="longitude" value="${store.longitude}" size="12" readonly></td>
 						
 											<th>사용여부</th>
-											<td><select name="useYn">
-													<option value="Y">Y</option>
-													<option value="N">N</option>
-											</select></td>
+											<td><input type="text" value="${store.useYn}"readonly></td>
 										</tr>
 										<tr>
 											<th colspan="1">주소</th>
 											<td colspan="3"><input type="text" id="address_kakao" name="storeAddr"
 												placeholder="클릭해주세요" value="${store.storeAddr}"  size="50" readonly />, <input
 												type="text" name="storeAddrDtl" id="storeAddrDtl"
-												value="${store.storeAddrDtl}" required /></td>
-										</tr>
-										<tr>
-											<th colspan="1">지역분류</th>
-											<td colspan="3"><select id="location" name="locationCd" size="3">
-													<option value="">지역선택</option>
-													<c:forEach var="list" items="${list}">
-														<option value="${list.locationCd}"
-															${store.locationCd == list.locationCd ? 'selected' : ''}>${list.locationNm}</option>
-													</c:forEach>
-											</select> <select id="locationSeoul" name="locationCdSeoul" size="3"
-												disabled>
-													<option value="">지역선택 상세</option>
-													<c:forEach var="list" items="${seoullist}">
-														<option value="${list.locationCd}"
-															${store.locationCd == list.locationCd ? 'selected' : ''}>${list.locationNm}</option>
-													</c:forEach>
-											</select></td>
+												value="${store.storeAddrDtl}" readonly /></td>
 										</tr>
 									</table>
 									
