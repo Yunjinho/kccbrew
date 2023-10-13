@@ -87,7 +87,7 @@ public class UserMngController {
 				model.addAttribute("currentPage", userMngVo.getCurrentPage());
 				model.addAttribute("startPage", startPage);
 				model.addAttribute("endPage", endPage);
-
+				model.addAttribute("searchContent", userMngVo);
 				model.addAttribute("totalCount", totalCount);
 				
 				model.addAttribute("newTotal", newTotal);
