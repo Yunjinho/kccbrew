@@ -81,7 +81,7 @@ public class SchdlMngService implements ISchdlMngService {
 		calendar.add(Calendar.DATE, -1);
 		java.util.Date lastDayOfYear = calendar.getTime();
 
-		// 이번 년도의 첫 일 생성
+		// 이번년도의 첫날
 		calendar.set(Calendar.MONTH, Calendar.JANUARY);
 		calendar.set(Calendar.DAY_OF_MONTH, 1);
 		java.util.Date firstDayOfYear = calendar.getTime();

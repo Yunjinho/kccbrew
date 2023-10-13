@@ -23,7 +23,54 @@
 			store_seq
         ]]>
 	</select>
-	
+	<select id="strAllFilter" resultType="kr.co.kccbrew.strMng.model.StrMngVo" parameterType="kr.co.kccbrew.strMng.model.StrMngVo">
+	SELECT 
+        a.store_nm AS "storeNm", 
+        a.grp_cd_dtl_nm AS "locationNm",
+        a.store_telno AS "storeTelNo",
+        a.store_seq AS "storeSeq"
+    FROM (
+        SELECT
+            ROW_NUMBER() OVER(ORDER BY a.store_seq) AS ROW_NUM,
+            a.store_nm,
+            b.grp_cd_dtl_nm, a.store_telno,  a.store_seq
+        FROM store a
+        JOIN group_code_detail b ON a.location_cd = b.grp_cd_dtl_id
+        WHERE
+            (b.grp_cd_id='L' OR b.grp_cd_id='LL')
+            <if test="startDate != '' and startDate != null">
+                 <![CDATA[
+               AND a.reg_dttm >= #{startDate}]]>
+            </if>
+            <if test="endDate!= '' and endDate!= null">
+                  <![CDATA[
+                AND a.reg_dttm < TO_DATE(#{endDate},'YYYY-MM-DD')+1
+                  ]]>
+            </if>
+           
+            <if test="regUser != null and regUser != ''">
+                AND a.REG_USER = #{regUser}
+            </if>
+            <if test="keyword != null and keyword != ''">
+                AND a.store_nm LIKE '%' || #{keyword} || '%'
+            </if>
+			<if test="locationCdSeoul != null and locationCdSeoul != ''">
+			AND a.location_cd = #{locationCdSeoul}
+			</if>
+			 <if test="locationCd != '02'.toString() and locationCd != null and locationCd != '' and locationCd != '02'.toString()">
+                AND a.location_cd = #{locationCd}
+            </if>
+            <if  test="locationCd == '02'.toString() and locationCdSeoul == '' ">
+            <![CDATA[
+            And a.location_cd LIKE '02-%'
+            ]]>
+            </if>
+            <if test="useYn != null and useYn != ''">
+                AND a.use_yn = #{useYn}
+            </if>
+            
+    ) a
+	</select>
 	<select id="strFilter" resultType="kr.co.kccbrew.strMng.model.StrMngVo" parameterType="java.util.Map">
     SELECT 
         a.store_nm AS "storeNm", 

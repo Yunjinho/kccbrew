@@ -14,6 +14,7 @@
 <head>
 <meta charset="UTF-8">
 <title><tiles:insertAttribute name="title"/></title>
+<link rel="icon" type="image/png" href="${path}/resources/img/main/kccbrw-representative-logo.png">
 <style>
 	@font-face {
 		font-family: 'Noto Sans';

@@ -60,7 +60,7 @@ input {
 									<h2 class="heading">점포조회</h2>
 									<!-- 점포 검색 -->
 									<form action="/store/search" method="get" id="search-form">
-										<input type='hidden' name='currentPage' value="1">
+										<input type='hidden' name='currentPage' value="${currentPage}">
 										<table id="search-box">
 											<!-- 1행 -->
 											<c:set var="today" value="<%=new java.util.Date()%>" />
@@ -141,7 +141,10 @@ input {
 															value="${currentPage}" /></span></b>/<b><span><c:out
 															value="${totalPage}" /></span></b>쪽
 											</p>
-										
+											<div style="display:flex">
+													<p class="download-excel" onclick="downExcel(1)">현재 페이지 다운로드</p>
+													<p class="download-excel" onclick="downExcel(2)">전체 페이지 다운로드</p>
+											</div>
 										</div>
 										<table>
 											<thead>
@@ -290,6 +293,35 @@ input {
         	$("input[name=currentPage]").val(pageNumber);
         	
         	$("#search-form").submit();
+        }
+        function downExcel(flag){
+        	var currentPage=$("input[name=currentPage]").val();
+        	var startDate=$("input[name=startDate]").val();
+        	var endDate=$("input[name=endDate]").val();
+        	var regUser=$("input[name=regUser]").val(); 
+        	var useYn=$("select[name=useYn] option:selected").val();
+        	var locationCd=$("select[name=locationCd] option:selected").val();
+        	var locationCdSeoul=$("select[name=locationCdSeoul] option:selected").val();
+        	var keyword=$("input[name=keyword]").val();
+        	$.ajax({
+        		type : "POST",           // 타입 (get, post, put 등등)
+        	    url : "/download-str-list",           // 요청할 서버url
+        	    dataType : "text",       // 데이터 타입 (html, xml, json, text 등등)
+        	    data : {
+        	    	'flag': flag,
+        	    	'currentPage':currentPage,
+        	    	'startDate': startDate,
+        	    	'endDate' : endDate,
+        	    	'regUser': regUser,
+        	    	'useYn': useYn,
+        	    	'locationCd': locationCd,
+        	    	'locationCdSeoul': locationCdSeoul,
+        	    	'keyword': keyword
+        		},
+        	    success : function(data) { // 결과 성공 콜백함수
+        	    	alert("다운로드가 완료되었습니다.")
+        	    }
+        	})
         }
         window.onload=function(){
         	history.replaceState({}, null, location.pathname);
