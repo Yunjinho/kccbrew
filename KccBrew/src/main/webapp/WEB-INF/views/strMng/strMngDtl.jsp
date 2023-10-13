@@ -64,7 +64,7 @@
                 <hr style="border: solid 1.2px; width: 97%;">
                 <table id="search-box">
                     <thead>
-                        <tr>
+                        <tr> 
                             <th scope="col">NO</th>
                             <th scope="col">점주이름</th>
                             <th scope="col">점주연락처</th>
