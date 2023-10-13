@@ -156,7 +156,7 @@ input {
 											<tbody>
 												<c:forEach items="${list}" var="no" varStatus="stat">
 													<tr>
-														<td><c:out value="${stat.count}" /></td>
+														<td><c:out value="${no.storeSeq}" /></td>
 														<td>${no.storeNm}</td>
 														<td>${no.locationNm}</td>
 														<td>${no.storeTelNo}</td>
