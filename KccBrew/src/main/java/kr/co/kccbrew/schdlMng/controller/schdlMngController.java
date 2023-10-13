@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
@@ -691,5 +692,71 @@ public class schdlMngController {
 		String message = "휴가 취소되었습니다.";
 
 		return message;
+	}
+
+	@PostMapping(value="/download-holiday-list")
+	@ResponseBody
+	public String downloadHolidayList(String flag,@RequestParam(defaultValue = "1")String page,@RequestParam(defaultValue = "")String location,@RequestParam(defaultValue = "")String locationCd,
+			@RequestParam(defaultValue = "")String startDate,@RequestParam(defaultValue = "")String endDate,
+			@RequestParam(defaultValue = "")String userType,@RequestParam(defaultValue = "")String userId,
+			@RequestParam(defaultValue = "")String userName,@RequestParam(defaultValue = "")String storeId,
+			@RequestParam(defaultValue = "")String storeName,@RequestParam(defaultValue = "")String selectedEndDate,
+			@RequestParam(defaultValue = "")String selectedStartDate,Authentication authentication) {
+		UserVo userVo=new UserVo();
+		userVo.setStoreNm(storeName);
+		userVo.setFlag(flag);
+		userVo.setLocation(location);
+		userVo.setLocationCd(locationCd);
+		userVo.setUserType(userType);
+		userVo.setUserNm(userName);
+		if(storeId!=null && !storeId.equals("")) {
+			userVo.setStoreId(Integer.parseInt(storeId));
+		}
+		userVo.setStoreNm(storeName);
+		
+		/*시큐리티로 사용자 역할(role) 확인*/
+		List<GrantedAuthority> authorities = (List<GrantedAuthority>) authentication.getAuthorities();
+		for (GrantedAuthority authority : authorities) {
+			String role = authority.getAuthority();
+			System.out.println("Role: " + role);
+			/*string -> sql.date 형변환*/
+			Date startSqlDate = null;
+			Date endSqlDate = null;
+
+			if ((startDate == null || startDate.equals("")) && (selectedStartDate == null || selectedStartDate.equals(""))) {
+				startSqlDate = dateFormat.getFirstDayOfYear();
+			} else if(selectedStartDate == null || selectedStartDate.equals("")){
+				startSqlDate = dateFormat.stringToSqlDate(startDate);	
+			}else {
+				startSqlDate = dateFormat.stringToSqlDate(selectedStartDate);	
+			}
+
+			if((endDate == null || endDate.equals("")) && (selectedEndDate == null || selectedEndDate.equals("")) ) {
+				endSqlDate = dateFormat.getLastDayOfYear();
+			}else if(selectedEndDate == null || selectedEndDate.equals("")) {
+				endSqlDate = dateFormat.stringToSqlDate(endDate);	
+			}else {
+				endSqlDate = dateFormat.stringToSqlDate(selectedEndDate);	
+			}
+
+			if(locationCd == null || locationCd.equals("")) {
+				userVo.setLocationCd(location);
+			}
+
+			if ("ROLE_ADMIN".equals(role)) {
+				schdlMngService.downloadHoliday(Integer.parseInt(page),1,userVo,startSqlDate,endSqlDate);
+			} else if("ROLE_MANAGER".equals(role)) {
+				UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+				userId = userDetails.getUsername();
+				userVo.setUserId(userId);
+				schdlMngService.downloadHoliday(Integer.parseInt(page),2,userVo,startSqlDate,endSqlDate);
+			}else {
+				UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+				userId = userDetails.getUsername();
+				userVo.setUserId(userId);
+				schdlMngService.downloadHoliday(Integer.parseInt(page),3,userVo,startSqlDate,endSqlDate);
+			}
+		}
+		return "";
 	}
 }

@@ -88,7 +88,6 @@ function subBtn() {
 				json.newPassword = $("input[name=newPassword]").val();
 		
 		let data = JSON.stringify(json);
-		alert(data);
 		$.ajax({
 			url: "/mypage/chgpwd", 
 			type : 'POST',

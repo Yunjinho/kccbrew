@@ -86,4 +86,7 @@ public class UserVo {
 	private String checkNewPassword;
 	
 	private String regDttm;
+	
+	
+	private String flag;
 }

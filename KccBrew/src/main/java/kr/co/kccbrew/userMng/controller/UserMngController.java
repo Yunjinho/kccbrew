@@ -28,6 +28,7 @@ import lombok.RequiredArgsConstructor;
  * @Decription : 회원 관리하기 위한 controller
  * 
  * @ 수정일 수정자 수정내용 ============ ============== ============== 2023-09-11 배수연 최초생성
+ * @ 수정일 수정자 수정내용 ============ ============== ============== 2023-10-13 배수연 검색조건 유지
  * @author BAESOOYEON
  * @version 1.0
  */
@@ -87,7 +88,7 @@ public class UserMngController {
 				model.addAttribute("currentPage", userMngVo.getCurrentPage());
 				model.addAttribute("startPage", startPage);
 				model.addAttribute("endPage", endPage);
-
+				model.addAttribute("searchContent", userMngVo);
 				model.addAttribute("totalCount", totalCount);
 				
 				model.addAttribute("newTotal", newTotal);

@@ -57,4 +57,5 @@ public interface ISchdlMngService {
 	/*ID, 날짜에 따른 결과리스트 조회*/
 	public List<AsResultVo> getResults(String userId, Date date);
 	
+	public void downloadHoliday(int page,int role,UserVo userVo, Date startSqlDate, Date endSqlDate);
 }
