@@ -9,8 +9,44 @@ document.addEventListener("DOMContentLoaded", function() {
 	setInputElementValue('endDate', getLastDayOfCurrentYear());
 
 });
-
-
+function downExcel(flag){
+	
+	var location=$("select[name=location] option:selected").val();
+	var locationCd=$("select[name=locationCd] option:selected").val();
+	var startDate=$("input[name=startDate]").val();
+	var endDate=$("input[name=endDate]").val();
+	var userType=$("select[name=userType] option:selected").val();
+	var userId=$("input[name=userId]").val();
+	var userName=$("input[name=userName]").val();
+	var storeId=$("input[name=storeId]").val();
+	var storeName=$("input[name=storeName]").val();
+	var selectedEndDate=$("input[name=selectedEndDate]").val();
+	var selectedStartDate=$("input[name=selectedStartDate]").val();
+	var page=$("input[name=page]").val();
+	$.ajax({
+		type : "POST",           // 타입 (get, post, put 등등)
+	    url : "/download-holiday-list",           // 요청할 서버url
+	    dataType : "text",       // 데이터 타입 (html, xml, json, text 등등)
+	    data : {
+	    	'flag': flag,
+	    	'location':location,
+	    	'locationCd': locationCd,
+	    	'startDate' : startDate,
+	    	'endDate': endDate,
+	    	'userType': userType,
+	    	'userId': userId,
+	    	'userName': userName,
+	    	'storeId': storeId,
+	    	'storeName': storeName,
+	    	'selectedEndDate': selectedEndDate,
+	    	'selectedStartDate': selectedStartDate,
+	    	'page': page
+		},
+	    success : function(data) { // 결과 성공 콜백함수
+	    	alert("다운로드가 완료되었습니다.")
+	    }
+	})
+}
 /*검색조건 ajax로 전송*/
 function performSearch() {
 	// 폼 요소 가져오기
@@ -48,6 +84,7 @@ function performSearch() {
 
 /*페이징처리*/
 function updatePageButtons(currentPage, totalPage, sharePage) {
+	$("input[name=page]").val(currentPage);
 	/*페이지 표시*/
 	document.getElementById("currentPage").textContent = currentPage;
 	document.getElementById("totalPage").textContent = totalPage;

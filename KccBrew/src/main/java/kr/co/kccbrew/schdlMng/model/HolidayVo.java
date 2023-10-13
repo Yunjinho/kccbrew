@@ -32,7 +32,7 @@ public class HolidayVo {
 	private Date appDate;
 	private String actualUse;
 	private String storeSeq;
-
+	
 	/***유효성검증***/
 	@PositiveOrZero
 	private int remainingDays;
@@ -84,8 +84,5 @@ public class HolidayVo {
 	public void setStoreSeq(String storeSeq) {
 		this.storeSeq = storeSeq;
 	}
-
-
-
 
 }

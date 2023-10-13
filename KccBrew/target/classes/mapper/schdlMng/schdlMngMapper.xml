@@ -153,7 +153,78 @@
 		</if>
 	</select>
 
+	<!-- 휴가사용전체현황 조회 -->
+	<select id="selectAllHolidays" parameterType="map"
+		resultMap="scheduleResult">
+		SELECT *
+		FROM (SELECT ROWNUM AS ROW_NUMBER, subquery.*
+		FROM ( SELECT
+		gc.GRP_CD_DTL_NM AS USER_TYPE
+		, users.USER_ID
+		, users.USER_NM
+		,
+		users.user_type_cd
+		, users.USER_TELNO
+		, store.STORE_SEQ
+		, STORE.STORE_NM
+		, STORE.STORE_TELNO
+		, CASE WHEN gc.GRP_CD_DTL_NM = '기사' THEN
+		users.LOCATION_CD
+		WHEN gc.GRP_CD_DTL_NM = '점주' THEN STORE.LOCATION_CD
+		ELSE NULL
+		END AS LOCATION_CD
+		, holiday.HOLIDAY_SEQ AS SCHEDULE_ID
+		,
+		holiday.HLDY_APP
+		, holiday.HLDY_STAR AS START_DATE
+		, holiday.HLDY_END AS
+		END_DATE
+		, holiday.ACTL_USE
+		FROM holiday
+		LEFT OUTER JOIN users ON
+		holiday.USER_ID = users.USER_ID
+		LEFT OUTER JOIN (SELECT
+		grp_cd_dtl_id,grp_cd_dtl_nm FROM GROUP_CODE_DETAIL
+		WHERE grp_cd_id='U')
+		gc ON users.USER_TYPE_CD = gc.GRP_CD_DTL_ID
+		LEFT OUTER JOIN STORE ON
+		holiday.STORE_SEQ = STORE.STORE_SEQ
+		ORDER BY HOLIDAY_SEQ DESC )
+		subquery
+		WHERE 1=1
+		<!-- 날짜검색 -->
+    <![CDATA[AND (TRUNC(START_DATE) <= #{endDate} AND TRUNC(END_DATE) >= #{startDate})]]>
 
+		<!-- 사용자 검색 -->
+		<if test="userVo.userId != null and userVo.userId != ''">
+			AND USER_ID = #{userVo.userId}
+		</if>
+		<if test="userVo.userTypeCd != null and userVo.userTypeCd != ''">
+			AND user_type_cd = #{userVo.userTypeCd}
+		</if>
+		<if test="userVo.userNm != null and userVo.userNm != ''">
+			AND USER_NM = #{userVo.userNm}
+		</if>
+		<if
+			test="userVo.userTypeCd != '02' and userVo.locationCd != null and userVo.locationCd != ''">
+			AND LOCATION_CD LIKE '%' || #{userVo.locationCd,
+			jdbcType=VARCHAR}|| '%'
+		</if>
+
+		<!-- 지점 검색 -->
+		<if test="userVo.storeSeq != null and userVo.storeSeq != ''">
+			AND STORE_SEQ = #{userVo.storeSeq}
+		</if>
+		<if test="userVo.storeNm != null and userVo.storeNm != ''">
+			AND STORE_NM = #{userVo.storeNm}
+		</if>
+
+		<!-- 실제 사용 여부 -->
+		<if test="actualUse != null and actualUse != ''">
+			AND ACTL_USE = #{actualUse}
+		</if>
+		)
+	</select>
 
 
 
