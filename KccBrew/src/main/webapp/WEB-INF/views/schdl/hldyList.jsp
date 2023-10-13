@@ -208,7 +208,7 @@
 												const searchSelect = document
 														.getElementsByName('searchKeword')[0]; 
 
-												if (userTypeSelect.value === '기사') {
+												if (userTypeSelect.value === '03') {
 													removeAllOptions(searchSelect);
 													addOption(searchSelect,
 															'검색어', '');
