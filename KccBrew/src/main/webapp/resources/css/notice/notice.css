@@ -374,6 +374,9 @@ input[type="file"] {
 	display: block;
 	text-align: center;
 }
+.filebox a {
+	color:red;
+}
 
 
 /******************* 공지 상세 페이지 CSS ****************************************/
@@ -408,6 +411,15 @@ input[type="file"] {
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
+}
+
+.modNoticeImg {
+	width:100px;
+	height:100px;
+	background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    border:1px solid black;
 }
 
 

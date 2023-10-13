@@ -27,7 +27,7 @@ import kr.co.kccbrew.comm.main.model.MainPageVo;
 import kr.co.kccbrew.comm.main.service.MainService;
 import kr.co.kccbrew.comm.security.model.UserVo;
 import kr.co.kccbrew.notice.model.NoticeVo;
-import kr.co.kccbrew.notice.service.INoticeServie;
+import kr.co.kccbrew.notice.service.INoticeService;
 import lombok.RequiredArgsConstructor;
 
 @Controller
@@ -36,7 +36,7 @@ public class MainController {
 	@Autowired
 	MainService mainServiceImple;
 	
-	private final INoticeServie noticeService;
+	private final INoticeService noticeService;
 
 	/**
 	 * 마이 페이지로 이동

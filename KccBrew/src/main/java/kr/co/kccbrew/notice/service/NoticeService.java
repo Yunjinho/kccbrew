@@ -14,15 +14,21 @@ import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
-public class NoticeService implements INoticeServie{
+public class NoticeService implements INoticeService{
 	private final INoticeRepository noticeRepository;
-
-	//공지 전체 조회
+	
+	//공지사항 페이징 처리
 	@Override
-	public List<NoticeVo> showAllNoticeList() {
-		List<NoticeVo> noticeList = noticeRepository.showAllNoticeList();
-		return noticeList;
+	public List<NoticeVo> selectNotice(PagingVo vo) {
+		return noticeRepository.selectNotice(vo);
 	}
+	
+	//검색 조건을 설정한 공지 사항
+	@Override
+	public List<NoticeVo> selectNoticeWithCon(int start, int end, String searchOption, String searchText) {
+		return noticeRepository.selectNoticeWithCon(start, end, searchOption,searchText);
+	}
+	
 	
 	//공지 상세 조회
 	@Override
@@ -95,11 +101,12 @@ public class NoticeService implements INoticeServie{
 		return noticeRepository.countNotice();
 	}
 
-	//공지사항 페이징 처리
+	// 공지사항 총 개수 조회 - 검색 조건 필터링 이후
 	@Override
-	public List<NoticeVo> selectNotice(PagingVo vo) {
-		return noticeRepository.selectNotice(vo);
+	public int countNoticeWithCon(String searchOption, String searchText) {
+		return noticeRepository.countNoticeWithCon(searchOption, searchText);
 	}
+	
 	
 	//공지사항 첨부 이미지 리스트
 	@Override
@@ -112,9 +119,5 @@ public class NoticeService implements INoticeServie{
 		return noticeRepository.selectMainNotice();
 	}
 
-	//검색 조건을 설정한 공지 사항
-	@Override
-	public List<NoticeVo> selectNoticeWithCon(int start, int end, String searchOption, String searchText) {
-		return noticeRepository.selectNoticeWithCon(start, end, searchOption,searchText);
-	}
+	
 }

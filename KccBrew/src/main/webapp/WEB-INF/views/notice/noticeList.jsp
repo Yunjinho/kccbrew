@@ -152,8 +152,6 @@
 		var sel = document.getElementById('cntPerPage').value;
 		location.href="noticelist?nowPage=${paging.nowPage}&cntPerPage="+sel;
 	}
-	
-	
 </script>
 </body>
 </html>

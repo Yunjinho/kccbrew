@@ -15,13 +15,17 @@ public interface INoticeRepository {
 	List<NoticeVo> selectUserInfo();				//사용자 정보 받아오기
 	String selectUserName(String writerId);			//사용자 이름 받아오기
 
-	/*
-	 * 페이징 처리
-	 */
-	public int countNotice(); 						//공지사항 총 개수
+	
+	//공지사항 총 개수
+	public int countNotice(); 						
+	
+	//검색 조건 포함 공지사항 개수
+	public int countNoticeWithCon(@Param("searchOption") String searchOption, @Param("searchText") String searchText);
+	
 	public List<NoticeVo> selectNotice(PagingVo vo);// 페이징 처리 공지사항 조회
-	List<NoticeVo> showAllNoticeList();				// 공지사항 목록 조회, 페이징 없음
-	List<NoticeVo> selectNoticeWithCon(@Param("start") int start, @Param("end") int end, @Param("searchOption") String searchOption, @Param("searchText") String searchText);// 검색 조건을 설정한 공지 목록 조회, 페이징 포함
+	
+	// 검색 조건을 설정한 공지 목록 조회, 페이징 포함
+	List<NoticeVo> selectNoticeWithCon(@Param("start") int start, @Param("end") int end, @Param("searchOption") String searchOption, @Param("searchText") String searchText);
 	NoticeVo readNotice(int noticeSeq);				// 공지사항 상세 조회
 	
 	void insertNotice(NoticeVo noticeVo); 			// 공지사항 등록

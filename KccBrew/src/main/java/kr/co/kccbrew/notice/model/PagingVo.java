@@ -5,9 +5,18 @@ import lombok.Data;
 @Data
 public class PagingVo {
 
-	private int nowPage, startPage, endPage, total, cntPerPage, lastPage, start, end;
-	private int cntPage = 5;
+	private int nowPage;		//현재 페이지 번호
+	private int startPage;		//현재 페이지 목록의 시작 페이지
+	private int endPage;		//현재 페이지 목록의 끝 페이지
+	private int total;			//전체 글의 수
+	private int totalWithCon;	//검색 조건을 적용한 총 글의 수
+	private int cntPerPage;		//한 페이지 당 보여질 글의 수
+	private int lastPage;		//마지막 페이지
+	private int start;			//현재 페이지 범위의 시작 항목 번호
+	private int end;			//현재 페이지 범위의 끝 항목 번호
+	private int cntPage = 5;	//한 번에 표시할 페이지 목록의 수
 	
+	//검색 사용할 시 total 값이 검색한 조건에 따라 바뀌어야함
 	public PagingVo() {
 	}
 	public PagingVo(int total, int nowPage, int cntPerPage) {
@@ -18,7 +27,7 @@ public class PagingVo {
 		calcStartEndPage(getNowPage(), cntPage);
 		calcStartEnd(getNowPage(), getCntPerPage());
 	}
-	// 제일 마지막 페이지 계산
+	// 제일 마지막 페이지 계산 - 글의 총 개수 / 한 페이지 당 보여줄 글의 수
 	public void calcLastPage(int total, int cntPerPage) {
 		setLastPage((int) Math.ceil((double)total / (double)cntPerPage));
 	}

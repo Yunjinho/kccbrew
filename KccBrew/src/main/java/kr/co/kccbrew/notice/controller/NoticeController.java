@@ -38,7 +38,8 @@ public class NoticeController {
 	 * @return
 	 */
 	@RequestMapping(value = "/noticelist", method = RequestMethod.GET)
-	public String noticeList(PagingVo vo, Model model
+	public String noticeList(PagingVo vo
+							,Model model
 							,@RequestParam(value="nowPage", required=false)String nowPage
 							,@RequestParam(value="cntPerPage", required=false)String cntPerPage) {
 		
@@ -75,7 +76,7 @@ public class NoticeController {
 									,@RequestParam(value="nowPage", required=false)String nowPage
 									,@RequestParam(value="cntPerPage", required=false)String cntPerPage) {
 		
-		int total = noticeService.countNotice();
+		int total = noticeService.countNoticeWithCon(searchOption,searchText);
 		if (nowPage == null && cntPerPage == null) {
 			nowPage = "1";
 			cntPerPage = "10";
@@ -84,9 +85,11 @@ public class NoticeController {
 		} else if (cntPerPage == null) { 
 			cntPerPage = "10";
 		}
-		vo = new PagingVo(total, Integer.parseInt(nowPage), Integer.parseInt(cntPerPage));
+//		vo = new PagingVo(total, Integer.parseInt(nowPage), Integer.parseInt(cntPerPage));
+		List<NoticeVo> list=noticeService.selectNoticeWithCon(1,10,searchOption,searchText);
+//		List<NoticeVo> list=noticeService.selectNoticeWithCon(vo.getStartPage(),vo.getEndPage(),searchOption,searchText);
 		model.addAttribute("paging", vo);
-		model.addAttribute("viewAll", noticeService.selectNoticeWithCon(vo.getStartPage(),vo.getEndPage(),searchOption,searchText));
+		model.addAttribute("viewAll", list);
 		return "notice";
 	}
 	
@@ -123,7 +126,7 @@ public class NoticeController {
 				UserDetails userDetails = (UserDetails) principal;
 				
 				String writerId = userDetails.getUsername();
-				String writerName = noticeVo.getWriterName();
+				String writerName = userDetails.getUsername();
 				
 				noticeVo.setWriterId(writerId);
 				noticeVo.setModUser(writerId);
@@ -222,6 +225,8 @@ public class NoticeController {
 				String writerId = userDetails.getUsername();
 				noticeVo.setModUser(writerId);
 				
+				List<NoticeVo> noticeImg = noticeService.noticeImageList(noticeVo.getFileSeq());
+				
 				String folderPath=request.getServletContext().getRealPath("")+path;
 				File folder = new File(folderPath);
 				// 폴더가 존재하지 않으면 폴더를 생성합니다.
@@ -235,10 +240,12 @@ public class NoticeController {
 				if (!folder2.exists()) {
 					boolean success = folder2.mkdirs(); // 폴더 생성 메소드
 				}
-			
+				
+				
 				noticeVo.setFileDetailLocation(path);
 				noticeVo.setServerSavePath(folderPath);
 				noticeVo.setLocalSavePath(localPath+path);
+				model.addAttribute("imgList",noticeImg);
 				
 				noticeService.updateNotice(noticeVo);
 			}

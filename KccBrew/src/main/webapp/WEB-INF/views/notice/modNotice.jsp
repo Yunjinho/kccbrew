@@ -75,15 +75,21 @@
 							<tr>
 								<th>파일 목록</th>
 								<td>
-									<div class="file-list">
-										
-									</div>
+									<c:forEach var="imgTitle" items="${imgList}">
+										<div class="file-list">
+											<c:out value="${imgTitle.fileOriginalName}"/>								
+										</div>
+									</c:forEach>
 								</td>
 							</tr>
 							<tr>
 								<th>파일 <br>미리보기</th>
 								<td>
-									<div class="img-list"></div>
+									<div class="img-list">
+										<c:forEach var="imgList" items="${imgList}">
+											<div style="background-image:url('/${imgList.localSavePath}${imgList.fileDetailServerName}')" class="modNoticeImg"></div>
+										</c:forEach>
+									</div>
 								</td>
 							</tr>
 						</tbody>
