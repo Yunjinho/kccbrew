@@ -40,7 +40,7 @@ public class SessionInterceptor extends Interceptor {
 	private UserService userService;
 	@Autowired
 	private UserMngService userMngService;
-	
+
 	/**
 	 * 클라이언트 요청을 컨트롤러에 전달 전
 	 * 세션 값, 계정 권한 체크
@@ -64,17 +64,21 @@ public class SessionInterceptor extends Interceptor {
 			userType = authority;
 			log.info("userType: " + userType);
 		}
-		
+
 		UserVo user = userService.getUserById(userId);
 		List<UserMngVo> userMngVo = userMngService.findByUserInfo2(userId);
-		user.setFileServerNm(userMngVo.get(0).getImgNm());
-		user.setStorageLocation(userMngVo.get(0).getImgUrl());
-		
+/*		if(userMngVo != null) {
+			if(userMngVo.get(0).getImgNm() != null && userMngVo.get(0).getImgUrl() != null) {
+				user.setFileServerNm(userMngVo.get(0).getImgNm());
+				user.setStorageLocation(userMngVo.get(0).getImgUrl());
+			}
+		}*/
+
 		HttpSession session = request.getSession();
 		session.setAttribute("user", user);
 
 
-/*		HttpSession session = request.getSession();
+		/*		HttpSession session = request.getSession();
 		Enumeration<String> attributeNames = session.getAttributeNames();
 
 		while (attributeNames.hasMoreElements()) {
