@@ -62,7 +62,7 @@
 		]]>
 	</select>
 	
-	<!-- 검색 조건을 설정했을 때 불러오는 공지 목록 -->
+	<!-- 페이징 처리 후 공지사항 조회, 검색 조건을 설정했을 경우 -->
 	<select id="selectNoticeWithCon" parameterType="hashmap" resultType="kr.co.kccbrew.notice.model.NoticeVo">
 		SELECT * 
 			FROM (
@@ -204,7 +204,7 @@
 	<select id="selectMainNotice" resultType="kr.co.kccbrew.notice.model.NoticeVo">
 	<![CDATA[
 		SELECT notice_seq AS noticeId
-				,notice_title AS noticeTitle
+			   ,notice_title AS noticeTitle
 		FROM notification
 		WHERE ROWNUM BETWEEN 1 AND 5 
 		ORDER BY notice_seq DESC

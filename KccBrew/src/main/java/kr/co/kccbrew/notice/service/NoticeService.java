@@ -29,6 +29,17 @@ public class NoticeService implements INoticeService{
 		return noticeRepository.selectNoticeWithCon(start, end, searchOption,searchText);
 	}
 	
+	// 공지사항 총 개수 조회
+	@Override
+	public int countNotice() {
+		return noticeRepository.countNotice();
+	}
+
+	// 공지사항 총 개수 조회 - 검색 조건 필터링 이후
+	@Override
+	public int countNoticeWithCon(String searchOption, String searchText) {
+		return noticeRepository.countNoticeWithCon(searchOption, searchText);
+	}
 	
 	//공지 상세 조회
 	@Override
@@ -95,17 +106,7 @@ public class NoticeService implements INoticeService{
 		return noticeVo;
 	}
 
-	// 공지사항 총 개수 조회
-	@Override
-	public int countNotice() {
-		return noticeRepository.countNotice();
-	}
-
-	// 공지사항 총 개수 조회 - 검색 조건 필터링 이후
-	@Override
-	public int countNoticeWithCon(String searchOption, String searchText) {
-		return noticeRepository.countNoticeWithCon(searchOption, searchText);
-	}
+	
 	
 	
 	//공지사항 첨부 이미지 리스트

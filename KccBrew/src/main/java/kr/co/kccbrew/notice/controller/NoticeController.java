@@ -30,7 +30,7 @@ public class NoticeController {
 	INoticeRepository noticeRepository;
 	
 	/**
-	 * 공지 목록 조회 - 페이징 처리
+	 * 공지 목록 조회 - 페이징 처리, 검색 조건 없음
 	 * @param vo
 	 * @param model
 	 * @param nowPage
@@ -86,8 +86,8 @@ public class NoticeController {
 			cntPerPage = "10";
 		}
 //		vo = new PagingVo(total, Integer.parseInt(nowPage), Integer.parseInt(cntPerPage));
-		List<NoticeVo> list=noticeService.selectNoticeWithCon(1,10,searchOption,searchText);
 //		List<NoticeVo> list=noticeService.selectNoticeWithCon(vo.getStartPage(),vo.getEndPage(),searchOption,searchText);
+		List<NoticeVo> list=noticeService.selectNoticeWithCon(1,10,searchOption,searchText);
 		model.addAttribute("paging", vo);
 		model.addAttribute("viewAll", list);
 		return "notice";

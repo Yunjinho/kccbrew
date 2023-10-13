@@ -16,7 +16,7 @@ public class PagingVo {
 	private int end;			//현재 페이지 범위의 끝 항목 번호
 	private int cntPage = 5;	//한 번에 표시할 페이지 목록의 수
 	
-	//검색 사용할 시 total 값이 검색한 조건에 따라 바뀌어야함
+	
 	public PagingVo() {
 	}
 	public PagingVo(int total, int nowPage, int cntPerPage) {
