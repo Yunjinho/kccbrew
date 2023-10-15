@@ -1,5 +1,6 @@
 #userChat {
-
+color:black;
+box-sizing: unset;
 }
 .row{
 	display: flex;
@@ -217,6 +218,7 @@
 
 .chat {
   width: 75%;
+  height:700px;
 }
 
 .header-chat {
@@ -251,7 +253,7 @@
 }
 .messages-chat{
 	overflow: auto;
-    height: 450px;
+    height: 500px;
     margin: 10px;
 	
 }
@@ -278,6 +280,7 @@
   background-color: #f6f6f6;
   padding: 15px;
   border-radius: 12px;
+  box-sizing: unset;
 }
 
 .text-only {
@@ -307,7 +310,7 @@
 }
 
 .footer-chat {
-  width: 70%;
+  width: 75%;
   height: 80px;
   display:flex;
   align-items: center;
