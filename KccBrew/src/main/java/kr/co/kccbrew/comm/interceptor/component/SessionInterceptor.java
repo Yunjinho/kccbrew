@@ -48,7 +48,6 @@ public class SessionInterceptor extends Interceptor {
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) 
 			throws Exception {
-		log.info("SessionInterceptor.preHandle");
 
 		SecurityContext securityContext = SecurityContextHolder.getContext();
 		Authentication authentication = securityContext.getAuthentication();
