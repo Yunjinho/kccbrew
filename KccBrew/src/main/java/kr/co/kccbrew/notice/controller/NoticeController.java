@@ -59,7 +59,7 @@ public class NoticeController {
 	}
 	
 	/**
-	 * 검색 조건 설정한 공지 목록 출력
+	 * 공지 목록 조회 - 페이징 처리, 검색 조건 설정한 결과만 출력
 	 * @param vo
 	 * @param searchOption
 	 * @param searchText
@@ -85,8 +85,10 @@ public class NoticeController {
 		} else if (cntPerPage == null) { 
 			cntPerPage = "10";
 		}
-//		vo = new PagingVo(total, Integer.parseInt(nowPage), Integer.parseInt(cntPerPage));
 //		List<NoticeVo> list=noticeService.selectNoticeWithCon(vo.getStartPage(),vo.getEndPage(),searchOption,searchText);
+		
+		vo = new PagingVo(total, Integer.parseInt(nowPage), Integer.parseInt(cntPerPage));
+		
 		List<NoticeVo> list=noticeService.selectNoticeWithCon(1,10,searchOption,searchText);
 		model.addAttribute("paging", vo);
 		model.addAttribute("viewAll", list);
