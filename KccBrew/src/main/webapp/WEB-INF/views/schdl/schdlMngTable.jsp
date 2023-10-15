@@ -60,12 +60,29 @@
 
 						<!-- ********** 페이지 네비게이션 시작 ********** -->
 						<div class="page-content-navigation">
+						<h2 class="heading">월근태현황</h2>
 							<ol class="breadcrumb">
+								<li>
+								<div class="header-icon-background">
+								<a href="/">
+									<img
+											src="<c:url value='/img/common/free-icon-house.png' />"
+											alt="Check List" class="header-icon" />
+										</a>
+								</div>
+							</li>
+							<li>
+									<div class="header-icon-background">
+										<img
+											src="<c:url value='/img/common/free-icon-arrow-right.png' />"
+											alt="Check List" class="header-icon" />
+									</div>
+								</li>
 								<li class="breadcrumb-home"><a href="">스케줄관리</a></li>
 								<li>
 									<div class="header-icon-background">
 										<img
-											src="<c:url value='/img/log/free-icon-right-arrow-271228.png' />"
+											src="<c:url value='/img/common/free-icon-arrow-right.png' />"
 											alt="Check List" class="header-icon" />
 									</div>
 								</li>
@@ -82,16 +99,13 @@
 									<!-- ********** 세은 컨텐츠 ********** -->
 
 									<div id="content">
-
-										<h2 class="heading">월근태현황</h2>
-
 										<!-- 탭메뉴 -->
-										<div class="tabNav">
+				<!-- 						<div class="tabNav">
 											<ul class="tab-ul">
 												<li class="last"><a href="/holiday"><span>휴가사용현황</span></a></li>
 												<li class="active"><a href="/schedule"><span>월근태현황</span></a></li>
 											</ul>
-										</div>
+										</div> -->
 
 										<!-- 회원 검색 -->
 										<form name="srhForm" action="admin/schedule" method="post">
@@ -99,10 +113,6 @@
 											<input type="hidden" name="startDate" value=""> <input
 												type="hidden" name="endDate" value=""> <input
 												type="hidden" name="userTypeCd" value="03">
-
-											<div>
-												<span> 사용자검색 </span>
-											</div>
 
 											<div class="search-info">
 												<fieldset>

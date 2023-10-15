@@ -132,12 +132,30 @@ div.modalBackground {
 				<div id="page-content-wrap">
 					<!-- ********** 페이지 네비게이션 시작 ********** -->
 					<div class="page-content-navigation">
+					<h2 class="heading">회원조회</h2>
 						<ol class="breadcrumb">
+						<li>
+								<div class="header-icon-background">
+								<a href="/">
+									<img
+										src="<c:url value='resources/img/common/free-icon-house.png' />"
+										alt="Check List" class="header-icon" />
+										</a>
+								</div>
+							</li>
+							<li>
+								<div class="header-icon-background">
+									<img
+										src="<c:url value='resources/img/common/free-icon-arrow-right.png' />"
+										alt="Check List" class="header-icon" />
+								</div>
+							</li>
+							
 							<li class="breadcrumb-home"><a href="#">회원 관리</a></li>
 							<li>
 								<div class="header-icon-background">
 									<img
-										src="<c:url value='/resources/img/asMng/free-icon-right-arrow-271228.png' />"
+										src="<c:url value='resources/img/common/free-icon-arrow-right.png' />"
 										alt="Check List" class="header-icon" />
 								</div>
 							</li>
@@ -152,7 +170,7 @@ div.modalBackground {
 
 								<!-- ********** 회원 리스트 조회 ********** -->
 								<div id="content">
-									<h2 class="heading">회원조회</h2>
+									
 									<!-- 점포 검색 -->
 									<form action="/user/search" method="get" id="search-form"
 										style="margin-bottom: 10px;">

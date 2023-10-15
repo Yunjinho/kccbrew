@@ -16,7 +16,8 @@
 <head>
 <meta charset="UTF-8">
 <title><tiles:insertAttribute name="title" /></title>
-<link rel="icon" type="image/png" href="${path}/resources/img/main/kccbrw-representative-logo.png">
+<link rel="icon" type="image/png"
+	href="${path}/resources/img/main/kccbrw-representative-logo.png">
 <style>
 @font-face {
 	font-family: 'Noto Sans';
@@ -49,6 +50,7 @@ html {
 <link rel="stylesheet" href="${path}/resources/css/comm/reset.css">
 <link rel="stylesheet" href="${path}/resources/css/comm/reset.css">
 <link rel="stylesheet" href="${path}/resources/css/comm/footer.css" />
+<link rel="stylesheet" href="${path}/resources/css/asMng/content-template.css" />
 
 
 <sec:authorize access="hasRole('ROLE_ADMIN')">
@@ -103,17 +105,16 @@ html {
 		<div id="mainHeader">
 			<tiles:insertAttribute name="header" />
 		</div>
+		
 		<div id="main-content">
+			<tiles:insertAttribute name="sidemenu" />
 			<div class="contents_warp">
-				<tiles:insertAttribute name="sidemenu" />
-
 				<div id="mainContents">
-	
-						<tiles:insertAttribute name="contents" />
-			
+					<tiles:insertAttribute name="contents" />
 				</div>
 			</div>
 		</div>
+		
 		<div id="mainFooter">
 			<tiles:insertAttribute name="footer" />
 		</div>

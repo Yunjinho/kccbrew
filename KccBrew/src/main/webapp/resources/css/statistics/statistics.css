@@ -30,7 +30,7 @@ input{
     width: 100%;
     color: white;
 }
-#page-content-wrap .page-content-navigation
+/* #page-content-wrap .page-content-navigation
 .breadcrumb {
 	margin: 0px;
 	background-color: transparent;
@@ -41,14 +41,10 @@ input{
 	border-bottom: 1px solid #d9dbdb;
 	padding: 8px 0;
 	font-size: 12px
-}
+} */
 
-#page-content-wrap .page-content-navigation .breadcrumb
-li {
-	background: url('/theme/coursemosv2/pix/layout/breadcrumb.png')
-		no-repeat 5px center;
-	padding: 6px 3px 3px 25px;
-	line-height: 35px
+.heading {
+	margin-bottom: 50px;
 }
 
 #page-content-wrap .page-content-navigation .breadcrumb li:first-child {
@@ -67,14 +63,6 @@ a {
 }
 .breadcrumb>li{
 	display: inline-block;
-}
-#page-content-wrap .page-content-navigation .breadcrumb li
-a {
-	color: #666;
-	display: block;
-	overflow: hidden;
-	white-space: nowrap;
-	text-overflow: ellipsis
 }
 
 #page-content-wrap .page-content-navigation .breadcrumb li a.btn,
@@ -114,9 +102,8 @@ a, a:hover, a:visited{
 .download-excel{
 	color:#ccc;
 	cursor:pointer;
-	padding:0px 10px;
-    margin-left: 1300px;
     font-size: 20px;
+        text-align: right;
 }
 .list-info-div>div{
 	display:flex;

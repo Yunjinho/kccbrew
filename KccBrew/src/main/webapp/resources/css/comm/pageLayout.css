@@ -13,20 +13,16 @@ html {
 
 #mainHeader, #content, #mainFooter {
 	width: 100%;
+	position: static;
 }
 
 #main-content {
-	/* margin-bottom: 50px; */
-/* 	margin: 50px 150px; */
-	display: flex;
+	position: relative;
+	min-height: 750px;
 }
 
 .contents_warp {
-/* 	width: 1400px;
-	margin: 0 auto; */
-	/* padding: 40px 0; */
 	width: 100%;
-	min-height:850px;
 }
 
 #mainHeader {
@@ -46,8 +42,9 @@ html {
 }
 
 #page-content {
-	    padding: 0px 15px 50px 15px;
 	background-color: white;
+	width: 1200px;
+    margin: auto;
 }
 
 #page-content-wrap {

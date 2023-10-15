@@ -33,12 +33,31 @@
 
 						<!-- ********** 페이지 네비게이션 시작 ********** -->
 						<div class="page-content-navigation">
+											<h2 class="heading">로그조회</h2>
 							<ol class="breadcrumb">
+							
+									<li>
+								<div class="header-icon-background">
+								<a href="/">
+									<img
+											src="<c:url value='/img/common/free-icon-house.png' />"
+											alt="Check List" class="header-icon" />
+										</a>
+								</div>
+							</li>
+							<li>
+									<div class="header-icon-background">
+										<img
+											src="<c:url value='/img/common/free-icon-arrow-right.png' />"
+											alt="Check List" class="header-icon" />
+									</div>
+								</li>
+							
 								<li class="breadcrumb-home"><a href="">시스템관리</a></li>
 								<li>
 									<div class="header-icon-background">
 										<img
-											src="<c:url value='/img/log/free-icon-right-arrow-271228.png' />"
+											src="<c:url value='/img/common/free-icon-arrow-right.png' />"
 											alt="Check List" class="header-icon" />
 									</div>
 								</li>
@@ -54,7 +73,6 @@
 
 									<!-- ********** 세은 로그 관련 내용 시작 ********** -->
 									<div id="content">
-										<h2 class="heading">로그조회</h2>
 										<!-- 로그 검색 -->
 										<form name="srhForm" action="/admin/log" method="post">
 											<input type="hidden" name="currentPage" value="1">

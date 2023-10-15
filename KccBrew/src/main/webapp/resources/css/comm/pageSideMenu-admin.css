@@ -19,6 +19,7 @@ margin-left: 200px;
 	/* 추가 / 2023-09-26 이세은  */
 	float: left;
 	width: 200px;
+	    position: absolute;
 }
 
 .user-profile {
