@@ -98,7 +98,7 @@
 	width: 20px;
 }
 
-.header-icon-background {
+.alarm-icon-background {
 	width: 30px;
 	height: 30px;
 	margin-right: 5px;
@@ -112,8 +112,7 @@
 }
 
 .top-bar img {
-width: 100%;
-    margin: 0 auto;
+    margin: auto;
 }
 
 .list-group-item.d-flex.justify-content-between.align-items-start {
@@ -221,7 +220,7 @@ width: 100%;
 }
 /********* nav 바 *************/
 .nav-bar {
-width: 1200px;
+width: 100%;
     position: relative;
     font-family: 'Noto Sans';
     font-weight: 500;
@@ -247,7 +246,9 @@ width: 1200px;
 .nav-bar-brand>a {
 width: 100%;
     height: 100%;
-    display: block;
+    display: flex;
+    align-items: center;
+        justify-content: center;
 }
 /** 로고 이미지 **/
 .nav-bar-brand img {

@@ -206,6 +206,15 @@ button {
 	font-size: 12px;
 }
 
+.notice:hover{
+	cursor: pointer;
+}
+
+.notice>a{
+	text-decoration: none;
+	color: black;
+}
+
 /************ A/S 일정 **************/
 .todoAndetc {
 	float: left;
@@ -298,6 +307,7 @@ button {
 	width: calc(100%/ 3);
 	border-top-right-radius: 10px;
 	background-color: navy;
+	color: black;
 }
 
 .tabnav li a:before {
