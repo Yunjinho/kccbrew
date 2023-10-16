@@ -60,15 +60,33 @@
 					<div id="page-content-wrap">
 
 						<div class="page-content-navigation">
+						<h2 class="heading">휴가사용현황</h2>
 							<ol class="breadcrumb">
+							<li>
+								<div class="header-icon-background">
+								<a href="/">
+									<img
+										src="<c:url value='resources/img/common/free-icon-house.png' />"
+										alt="Check List" class="header-icon" />
+										</a>
+								</div>
+							</li>
+							<li>
+								<div class="header-icon-background">
+									<img
+										src="<c:url value='resources/img/common/free-icon-arrow-right.png' />"
+										alt="Check List" class="header-icon" />
+								</div>
+							</li>
+							
 								<li class="breadcrumb-home"><a href="">스케줄관리</a></li>
-								<li>
-									<div class="header-icon-background">
-										<img
-											src="<c:url value='/img/log/free-icon-right-arrow-271228.png' />"
-											alt="Check List" class="header-icon" />
-									</div>
-								</li>
+										<li>
+								<div class="header-icon-background">
+									<img
+										src="<c:url value='resources/img/common/free-icon-arrow-right.png' />"
+										alt="Check List" class="header-icon" />
+								</div>
+							</li>
 								<li><a href="<c:url value='/holiday' />">휴가사용현황</a></li>
 							</ol>
 						</div>
@@ -83,9 +101,7 @@
 									<!-- ********** 세은 로그 관련 내용 시작 ********** -->
 									<div id="content">
 
-										<h2 class="heading">휴가사용현황</h2>
-
-										<div class="tabNav">
+										<%-- <div class="tabNav">
 											<ul class="tab-ul">
 												<li class="active"><a href=""><span>휴가사용현황</span></a></li>
 												<sec:authorize
@@ -96,7 +112,7 @@
 													<li class="last"><a href="/admin/schedule"><span>근태현황</span></a></li>
 												</sec:authorize>
 											</ul>
-										</div>
+										</div> --%>
 
 										<!-- 사용자 검색 -->
 										<sec:authorize access="hasRole('ROLE_ADMIN')">

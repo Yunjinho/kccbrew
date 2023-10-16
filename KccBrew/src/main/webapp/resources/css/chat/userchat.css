@@ -1,8 +1,9 @@
 #userChat {
-	
+	float: right;
 }
 .chatArea{
 	position: absolute;
+	margin-top: 10px;
 }
 #userChat .hidden {
 	visibility: hidden;
@@ -13,14 +14,16 @@
 }
 
 #chatIcon {
-	    position: relative;
-    bottom: 2.5px;
-	cursor: pointer;
-	font-size: 18px;
-	animation: colorChange 1s infinite;
-	will-change: transform;
-	/* 	font-weight:unset; */
+    position: relative;
+    cursor: pointer;
+    font-size: 18px;
+    animation: colorChange 1s infinite;
+    will-change: transform;
+    float: right;
+    line-height: inherit;
+    margin-right: 5px;
 }
+
 
 @keyframes colorChange {
 	from { 

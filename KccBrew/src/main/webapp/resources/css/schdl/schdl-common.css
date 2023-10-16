@@ -43,10 +43,6 @@
 	align-content: space-around;
 }
 
-.info-box {
-	margin-bottom: 5em;
-}
-
 /* 버튼 영역 */
 .center-button {
 	display: flex;

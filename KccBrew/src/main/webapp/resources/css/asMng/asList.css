@@ -11,14 +11,14 @@ p{
 
 
 .header-icon {
-	width: 100%;
+	width: 20px;
 	color: white;
 }
 
-.header-icon-background {
+/* .header-icon-background {
 	width: 20px;
 	height: 20px; 
-}
+} */
 
 /* 페이지 네비게이션 */
 .breadcrumb {

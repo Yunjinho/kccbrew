@@ -33,15 +33,33 @@ width: 70%;
 				<div id="page-content-wrap">
 					<!-- ********** 페이지 네비게이션 시작 ********** -->
 					<div class="page-content-navigation">
+						<h2 class="heading">파일조회</h2>
 						<ol class="breadcrumb">
-							<li class="breadcrumb-home"><a href="#">파일 관리</a></li>
-							<li>
+									<li>
 								<div class="header-icon-background">
+								<a href="/">
 									<img
-										src="<c:url value='/resources/img/asMng/free-icon-right-arrow-271228.png' />"
-										alt="Check List" class="header-icon" />
+											src="<c:url value='/img/common/free-icon-house.png' />"
+											alt="Check List" class="header-icon" />
+										</a>
 								</div>
 							</li>
+							<li>
+									<div class="header-icon-background">
+										<img
+											src="<c:url value='/img/common/free-icon-arrow-right.png' />"
+											alt="Check List" class="header-icon" />
+									</div>
+								</li>
+								
+							<li class="breadcrumb-home"><a href="#">파일 관리</a></li>
+							<li>
+									<div class="header-icon-background">
+										<img
+											src="<c:url value='/img/common/free-icon-arrow-right.png' />"
+											alt="Check List" class="header-icon" />
+									</div>
+								</li>
 							<li><a href="<c:url value='/file' />">파일 조회</a></li>
 						</ol>
 					</div>
@@ -53,7 +71,6 @@ width: 70%;
 
 								<!-- ********** 파일 리스트 조회 ********** -->
 								<div id="content">
-									<h2 class="heading">파일조회</h2>
 									<!-- 점포 검색 -->
 									<form action="/file/search" method="get" id="search-form">
 										<input type='hidden' name='currentPage' value="1">

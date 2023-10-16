@@ -19,27 +19,47 @@
 </head>
 
 <body>
-	<div class="body-wrapper">
-		<div class="table-wrapper">
+	<div id="page-mask">
+		<div id="page-container" class="">
+			<div id="page-content" class="clearfix">
+				<div id="page-content-wrap">
 			<!-- ********** 페이지 네비게이션 시작 ********** -->
 			<div class="page-content-navigation">
+							<h2 class="heading">공지사항</h2>
 				<ol class="breadcrumb">
+								<li>
+								<div class="header-icon-background">
+								<a href="/">
+									<img
+										src="<c:url value='resources/img/common/free-icon-house.png' />"
+										alt="Check List" class="header-icon" />
+										</a>
+								</div>
+							</li>
+							<li>
+								<div class="header-icon-background">
+									<img
+										src="<c:url value='resources/img/common/free-icon-arrow-right.png' />"
+										alt="Check List" class="header-icon" />
+								</div>
+							</li>
+							
 					<li class="breadcrumb-home">공지사항</li>
-					<li class="right-arrow">
-						<div class="header-icon-background2">
-							<img
-								src="<c:url value='resources/img/asMng/free-icon-right-arrow-271228.png' />"
-								alt="Check List" class="header-icon" />
-						</div>
-					</li>
+							<li>
+								<div class="header-icon-background">
+									<img
+										src="<c:url value='resources/img/common/free-icon-arrow-right.png' />"
+										alt="Check List" class="header-icon" />
+								</div>
+							</li>
 					<li>공지사항</li>
 				</ol>
 			</div>
 			<!-- ********** 페이지 네비게이션 끝 ********** -->
 			<div class="content-wrapper">
-				<h2>공지사항</h2>
 				<div class="searchBox">
 					<div class="searchForm">
+
 						<form action="/noticelistwithcon" method="GET" id="searchListForm" name="searchListForm">
 							<div class="select-list">
 								<select id="list-search" name="searchOption">
@@ -53,7 +73,7 @@
 								<input type="text" class="search-notice-box" name="searchText" value="<c:out value='${searchText}'/>"/>
 							</div>
 							<div class="search-notice-btn">
-								<button type="submit" id="searchBtn">검색</button>
+								<button type="submit" id="searchBtn" class="writeBtn">검색</button>
 							</div>
 						</form>
 					</div>
@@ -147,7 +167,10 @@
     				</c:if>
 				</div>
 			</div>
-		</div>
+
+	</div>
+	</div>
+	</div>
 	</div>
 	<script>
 	function selChange() {

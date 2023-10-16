@@ -3,7 +3,6 @@
 .profileAndguide {
     font-family: 'Noto-Sans';
     display: flex;
-    height: 100%;
     flex-direction: column;
     min-height: 700px;
     background-color: #eef4ff;
@@ -11,6 +10,7 @@
     box-sizing: border-box;
     float: left;
     width: 20%;
+    margin-bottom: 50px;
 }
 
 .user-profile {
