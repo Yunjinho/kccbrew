@@ -218,6 +218,9 @@
 #header-logout {
 	margin: 0px;
 }
+
+/********* 메인메뉴 *************/
+
 /********* nav 바 *************/
 .nav-bar {
 width: 100%;
@@ -227,10 +230,11 @@ width: 100%;
     font-size: 17px;
     height: 70px;
     background-color: #ffffff;
-    /* display: flex; */
-    /* justify-content: space-around; */
+    display: flex;
+    justify-content: space-around;
     align-items: flex-end;
         margin: 0 auto;
+        border-bottom: 1px solid black;
 }
 
 /********** 로고 *****/
