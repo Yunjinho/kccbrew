@@ -37,7 +37,9 @@ box-sizing: unset;
 
 #chatIcon {
 	    position: relative;
-    bottom: 2.5px;
+   float: right;
+    right: 540px;
+    top: 6px;
 	cursor: pointer;
 	font-size: 18px;
 	animation: colorChange 1s infinite;

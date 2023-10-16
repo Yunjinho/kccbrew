@@ -85,11 +85,12 @@ public class NoticeController {
 		} else if (cntPerPage == null) { 
 			cntPerPage = "10";
 		}
-//		List<NoticeVo> list=noticeService.selectNoticeWithCon(vo.getStartPage(),vo.getEndPage(),searchOption,searchText);
 		
 		vo = new PagingVo(total, Integer.parseInt(nowPage), Integer.parseInt(cntPerPage));
 		
-		List<NoticeVo> list=noticeService.selectNoticeWithCon(1,10,searchOption,searchText);
+		List<NoticeVo> list2=noticeService.selectNoticeWithCon(vo.getStart(),vo.getEnd(),searchOption,searchText);
+		List<NoticeVo> list=noticeService.selectNoticeWithCon(vo.getNowPage(),vo.getCntPerPage(),searchOption,searchText);
+		
 		model.addAttribute("paging", vo);
 		model.addAttribute("viewAll", list);
 		return "notice";

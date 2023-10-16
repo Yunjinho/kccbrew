@@ -53,6 +53,7 @@
 <sec:authorize access="hasRole('ROLE_ADMIN')">
 	<header class="comm-nav">
 		<div class="top-bar">
+		<%@ include file="/WEB-INF/views/chat/adminChat.jsp"%>
 			<div class="wrap">
 
 				<form action="/logout" method="POST">
