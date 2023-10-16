@@ -112,8 +112,8 @@ public class NoticeService implements INoticeService{
 	
 	//공지사항 첨부 이미지 리스트
 	@Override
-	public List<NoticeVo> noticeImageList(String fieleSeq) {
-		return noticeRepository.noticeImageList(fieleSeq);
+	public List<NoticeVo> noticeImageList(String fileSeq) {
+		return noticeRepository.noticeImageList(fileSeq);
 	}
 	//메인 페이지에 보여질 공지 목록
 	@Override

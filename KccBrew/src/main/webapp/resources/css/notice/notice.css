@@ -39,7 +39,6 @@ select {
 }
 
 .breadcrumb {
-	height:60.67px;
 	display: flex;
 	margin: 0px;
 	background-color: transparent;
@@ -83,13 +82,13 @@ select {
 	padding: 32px 40px;	
 }
 
-h2 {
+.noti-head {
 	text-align:left;
 	height:100px;
-	line-height:100px;
-	font-size: 2em;
+	line-height:75px;
+	font-size: 30px;
 	font-weight: 500;
-	border-bottom: 2px solid #111111;
+	border-bottom: 1px solid #111111;
 }
 
 /****************** 공지 목록 페이지  *****************************************************/
@@ -100,8 +99,12 @@ h2 {
 
 /* 검색 폼 */
 .searchBox {
-	padding: 20px 380px;
+	padding: 20px 250px;
 	background-color: #eeeeee;
+	border-bottom: 1px solid #111111;
+}
+.margin-for-searchbox {
+	margin-bottom: 60px;
 }
 .searchForm {
 	height:40px;
@@ -151,6 +154,28 @@ form {
     text-align: center;
 } */
 
+.page-info {
+	height:20px;
+	margin-bottom:5px;
+	font-size:0.9em;
+	color:#4c4c4c;
+	display: flex;
+	justify-content: space-between;
+}
+
+.down-excel button {
+	cursor:pointer;
+	font-size:1em;
+	border: none;
+	background-color: #ffffff;
+	color:#aeaeae;
+}
+.down-excel button:hover {
+	color:black;
+}
+.pagenum {
+	font-weight: bold;
+}
 
 .notice-table {
 	width:100%;
