@@ -168,9 +168,11 @@ public class NoticeController {
 	@RequestMapping(value="/noticedetail/{noticeSeq}", method=RequestMethod.GET)
 	public String noticeDetail(Model model, @PathVariable int noticeSeq) {
 		NoticeVo noticeVo = noticeService.readNotice(noticeSeq);
-		List<NoticeVo> noticeImg = noticeService.noticeImageList(noticeVo.getFileSeq());
+		if(noticeVo.getFileSeq()!=null) {
+			List<NoticeVo> noticeImg = noticeService.noticeImageList(noticeVo.getFileSeq());
+			model.addAttribute("imgList", noticeImg);
+		}
 		model.addAttribute("noticeVo", noticeVo);
-		model.addAttribute("imgList", noticeImg);
 
 		return "noticeDetail";
 	}
@@ -196,8 +198,11 @@ public class NoticeController {
 	public String toUpdateNotice(Model model, 
 								@PathVariable int noticeSeq) {
 		NoticeVo noticeVo = noticeService.readNotice(noticeSeq);
+		if(noticeVo.getFileSeq()!=null) {
+			List<NoticeVo> imgList=noticeService.noticeImageList(noticeVo.getFileSeq());
+			model.addAttribute("imgList",imgList);
+		}
 		model.addAttribute("noticeVo", noticeVo);
-
 		return "adminNoticeUpdate";
 	}
 	
@@ -211,9 +216,8 @@ public class NoticeController {
 	 * @param request
 	 * @return
 	 */
-	@RequestMapping(value="/notice/update/{noticeSeq}", method=RequestMethod.POST)
+	@RequestMapping(value="/notice-update", method=RequestMethod.POST)
 	public String updateNotice(Model model
-								,@PathVariable int noticeSeq
 								,@ModelAttribute NoticeVo noticeVo
 					            ,@Value("#{serverImgPath['localPath']}")String localPath
 								,@Value("#{serverImgPath['noticePath']}")String path
@@ -244,7 +248,7 @@ public class NoticeController {
 					boolean success = folder2.mkdirs(); // 폴더 생성 메소드
 				}
 				
-				
+				 
 				noticeVo.setFileDetailLocation(path);
 				noticeVo.setServerSavePath(folderPath);
 				noticeVo.setLocalSavePath(localPath+path);
@@ -254,7 +258,7 @@ public class NoticeController {
 			}
 		}
 //		return "/noticedetail/" + noticeSeq;
-		return "notice";
+		return "redirect:/noticelist";
 	}
 	
 }

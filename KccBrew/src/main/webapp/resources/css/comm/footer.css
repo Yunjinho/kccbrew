@@ -1,48 +1,66 @@
 @charset "UTF-8";
+
 footer {
-    position: relative;
-    width: 100%;
-    height: 110px;
+    position: static;
+	width: 100%;
+	height: 110px;
 }
+
 #footer {
-	height:110px;
-	width:100%;
-    color: #ffffff;
+	height: 110px;
+	width: 100%;
+	color: #ffffff;
 }
+
+#footer>div:nth-child(1) {
+	background-color: #636363;
+}
+
+#footer>div:nth-child(2) {
+	background-color: #4a4a4a;
+}
+
 .f-top {
 	background-color: #636363;
-	display:flex;
-	justify-content:space-between;
-    height:45px;
-    line-height: 45px;
-    padding-left: 20px;
+	display: flex;
+	justify-content: space-between;
+	height: 45px;
+	line-height: 45px;
+	width: 1200px;
+    margin: auto;
 }
+
 .f-btn {
 	font-style: normal;
 	background-color: #00006f;
 	border: 1px solid #00006f;
-	font-size:0.9em;
-	padding:0 5px;
-	cursor:pointer;
+	font-size: 0.9em;
+	padding: 0 5px;
+	cursor: pointer;
 }
+
 .f-btn:hover {
 	text-decoration: underline;
 }
+
 .num {
-	font-size:1em;
+	font-size: 1em;
 	font-style: normal;
 }
+
 .f-bottom {
-	background-color:#4a4a4a;
-    height:70px;
-    line-height:35px;
-    font-size: 0.8em;
-    padding: 0 10px;
+	background-color: #4a4a4a;
+	height: 70px;
+	line-height: 35px;
+	font-size: 0.8em;
+	width: 1200px;
+    margin: auto;
 }
 
-.f-info, .f-info2 {	
-	float:left;
+.f-info, .f-info2 {
+	float: left;
 }
+
 .f-info2 {
-	clear:both;
+	clear: both;
 }

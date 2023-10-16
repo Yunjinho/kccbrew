@@ -75,6 +75,7 @@
 			<tiles:insertAttribute name="contents"/>
 		</div>
 		
+		
 		<div id="mainFooter">
 			<tiles:insertAttribute name="footer"/>
 		</div>

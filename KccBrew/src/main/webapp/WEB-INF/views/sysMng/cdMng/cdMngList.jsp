@@ -25,15 +25,32 @@
 				<div id="page-content-wrap">
 					<!-- ********** 페이지 네비게이션 시작 ********** -->
 					<div class="page-content-navigation">
+						<h2 class="heading">코드조회</h2>
 						<ol class="breadcrumb">
-							<li class="breadcrumb-home"><a href="#">코드 관리</a></li>
-							<li>
+									<li>
 								<div class="header-icon-background">
+								<a href="/">
 									<img
-										src="<c:url value='resources/img/asMng/free-icon-right-arrow-271228.png' />"
-										alt="Check List" class="header-icon" />
+											src="<c:url value='/img/common/free-icon-house.png' />"
+											alt="Check List" class="header-icon" />
+										</a>
 								</div>
 							</li>
+							<li>
+									<div class="header-icon-background">
+										<img
+											src="<c:url value='/img/common/free-icon-arrow-right.png' />"
+											alt="Check List" class="header-icon" />
+									</div>
+								</li>
+							<li class="breadcrumb-home"><a href="#">코드 관리</a></li>
+							<li>
+									<div class="header-icon-background">
+										<img
+											src="<c:url value='/img/common/free-icon-arrow-right.png' />"
+											alt="Check List" class="header-icon" />
+									</div>
+								</li>
 							<li><a href="<c:url value='/code' />">코드 조회</a></li>
 						</ol>
 					</div>
@@ -45,10 +62,9 @@
 
 								<!-- ********** 점포 리스트 조회 ********** -->
 								<div id="content">
-									<h2 class="heading" style="margin-bottom: 0px;">코드조회</h2>
 									<!-- 점포 검색 -->
 
-									<div id="logTable" style="margin-buttom: 50px;">
+									<div id="logTable" style="margin-top: 50px;">
 
 										<div style="width: 48%; float: left;">
 											<h3>그룹코드</h3>
@@ -79,7 +95,7 @@
 											</table>
 										</div>
 										<hr
-											style="display: inline-block; height: 60vh; width: .05vw; border-width: 0; color: #D3D3D3; background-color: #D3D3D3; margin-left: 20px;">
+											style="display: inline-block; height: 700px; width: .05vw; border-width: 0; color: #D3D3D3; background-color: #D3D3D3; margin-left: 20px;">
 										<div style="width: 48%; float: right;">
 											<h3>상세코드</h3>
 											<div id="cd">

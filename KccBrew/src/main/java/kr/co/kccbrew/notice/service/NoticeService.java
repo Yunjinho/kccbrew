@@ -2,6 +2,7 @@ package kr.co.kccbrew.notice.service;
 
 import java.io.FileOutputStream;
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.stereotype.Service;
 import org.springframework.util.FileCopyUtils;
@@ -63,7 +64,16 @@ public class NoticeService implements INoticeService{
 	//공지 수정
 	@Override
 	public void updateNotice(NoticeVo noticeVo) {
-		noticeRepository.updateNotice(noticeVo);
+		if(noticeVo.getFileSeq()!=null) {
+			noticeRepository.deleteImgFIle(noticeVo.getFileSeq());
+		}
+		if(noticeVo.getNoticeImg() == null) {
+			noticeRepository.updateNotice(noticeVo);
+		}else {
+			noticeVo.setFileId(Integer.parseInt(noticeVo.getFileSeq()));
+			insertNoticeImg(noticeVo);
+			noticeRepository.updateNotice(noticeVo);
+		}
 	}
 
 	//공지 삭제
@@ -77,15 +87,21 @@ public class NoticeService implements INoticeService{
 	@Override
 	public NoticeVo insertNoticeImg(NoticeVo noticeVo) {
 		NoticeVo vo = new NoticeVo();
-		vo.setWriterId(noticeVo.getWriterId());
+		vo.setWriterId(noticeVo.getModUser());
 		
 		//파일 기본 정보 등록
-		noticeRepository.insertFileInfo(vo);
+		if(noticeVo.getFileSeq()==null) {
+			noticeRepository.insertFileInfo(vo);
+		}else {
+			vo.setFileId(noticeVo.getFileId());
+		}
+		
 		List<MultipartFile> imgFile = noticeVo.getNoticeImg();
 		for(MultipartFile m : imgFile) {
 			if(m.getOriginalFilename()!="") {
+				String uuid = UUID.randomUUID().toString();
 				vo.setFileOriginalName(m.getOriginalFilename());
-				vo.setFileDetailServerName("/notice_" + m.getOriginalFilename());
+				vo.setFileDetailServerName("/notice_"+uuid+"_"+ m.getOriginalFilename());
 				vo.setFileFmt(m.getContentType());
 				vo.setFileDetailLocation(noticeVo.getFileDetailLocation());
 				noticeVo.setFileId(vo.getFileId());
@@ -120,6 +136,7 @@ public class NoticeService implements INoticeService{
 	public List<NoticeVo> selectMainNotice() {
 		return noticeRepository.selectMainNotice();
 	}
+
 
 	
 }

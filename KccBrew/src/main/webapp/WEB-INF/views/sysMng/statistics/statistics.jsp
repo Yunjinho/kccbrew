@@ -15,19 +15,39 @@
 	<div id="page-container" class="">
 		<div id="page-content" class="clearfix">
 			<div id="page-content-wrap">
+			
 				<div class="page-content-navigation">
+				<h2 class="heading">통계</h2>
 					<ol class="breadcrumb">
+								<li>
+								<div class="header-icon-background">
+								<a href="/">
+									<img
+											src="<c:url value='/img/common/free-icon-house.png' />"
+											alt="Check List" class="header-icon" />
+										</a>
+								</div>
+							</li>
+							<li>
+									<div class="header-icon-background">
+										<img
+											src="<c:url value='/img/common/free-icon-arrow-right.png' />"
+											alt="Check List" class="header-icon" />
+									</div>
+								</li>
+								
 						<li class="breadcrumb-home"><a href="#">시스템 관리</a></li>
-						<li>
-							<div class="header-icon-background">
-								<img
-									src="<c:url value='resources/img/asMng/free-icon-right-arrow-271228.png' />"
-									alt="Check List" class="header-icon" />
-							</div>
-						</li>
+							<li>
+									<div class="header-icon-background">
+										<img
+											src="<c:url value='/img/common/free-icon-arrow-right.png' />"
+											alt="Check List" class="header-icon" />
+									</div>
+								</li>
 						<li><a href="<c:url value='/statistics' />">통계</a></li>
 					</ol>
 				</div>
+				
 				<div class="navi">
 					<img src="/resources/img/asMng/free-icon-left-arrow-271220.png" alt="left" onclick="moveBeforeYear()" class="navi-img"/>
 					<input type="text" value="${year}" name="year" readonly>

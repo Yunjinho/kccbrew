@@ -30,7 +30,6 @@ $(document).ready(function() {
             reader.readAsDataURL(fileInput.files[0]);
         }
     });
-	
 });
 
 var fileNo = 0;
@@ -139,7 +138,7 @@ function updateForm(){
 	for(var i=0; i < fileInput.files.length; i++){
 		formData.append('noticeFile', fileInput.files[i]);
 	}
-	
+	/*
 	$.ajax({
 		url: '/notice/update/' + noticeSeq,
 		type: 'POST',
@@ -152,5 +151,5 @@ function updateForm(){
 		error: function(error){
 			alert("공지 수정을 실패했습니다.")
 		}
-	});
+	});*/
 }

@@ -53,97 +53,116 @@
 <sec:authorize access="hasRole('ROLE_ADMIN')">
 	<header class="comm-nav">
 		<div class="top-bar">
-<%@ include file="/WEB-INF/views/chat/adminChat.jsp"%>
-			<!-- 비실시간 알람메세지 -->
-			<div class="header-icon-background">
-				<a href="#" id="notification-link" onclick="handleClick(event);">
+			<div class="wrap">
 
-					<img id="notification-image"
-					src="<c:url value='/img/main/icon-notification-bell.png' />"
-					alt="Check List" class="header-icon" /> <img
-					id="new-notification-image"
-					src="<c:url value='/img/main/icon-notification.png' />"
-					alt="Check List" class="header-icon" hidden="true" />
-				</a>
+				<form action="/logout" method="POST">
+					<button type="submit" class="logout-btn">로그아웃</button>
+					<input name="${_csrf.parameterName}" type="hidden"
+						value="${_csrf.token}" />
+				</form>
 
-				<ol class="list-group list-group-numbered" id="notification-list"
-					style="display: none;">
-				</ol>
-			</div>
+				<p>
+					<c:out value="${user.userNm}" />
+					(관리자)님 환영합니다
+				</p>
 
-			<p>
-				<c:out value="${user.userNm}" />
-				(관리자)님 환영합니다
-			</p>
+				<!-- 비실시간 알람메세지 -->
+				<div class="alarm-icon-background">
+					<a href="#" id="notification-link" onclick="handleClick(event);">
 
-			<form action="/logout" method="POST">
-				<button type="submit" class="logout-btn">로그아웃</button>
-				<input name="${_csrf.parameterName}" type="hidden"
-					value="${_csrf.token}" />
-			</form>
-		</div>
-		<div>
-			<!-- 실시간 알림 -->
-			<div class="alert alert-primary" role="alert" hidden="true">
-				<div id="alert-title"></div>
-				<div id="alert-content"></div>
-			</div>
-
-			<nav class="nav-bar" id="nav-bar">
-				<div class="nav-bar-brand">
-					<c:url var="toMain" value="/admin/main" />
-					<a href="${toMain}"> <img alt="logo"
-						src="${path}/resources/img/logo14.png">
+						<img id="notification-image"
+						src="<c:url value='/img/main/icon-notification-bell.png' />"
+						alt="Check List" class="header-icon" /> <img
+						id="new-notification-image"
+						src="<c:url value='/img/main/icon-notification.png' />"
+						alt="Check List" class="header-icon" hidden="true" />
 					</a>
-				</div>
-				<div class="nav-box">
-					<ul class="nav-list">
-						<li class="nav-item"><a class="nav-links" href="#">A/S 관리</a>
-							<ul class="comm-nav-dropdown">
-								<c:url var="toAsList" value="/as-list" />
-								<!-- 여기에  매핑 url 선언 -->
-								<li><a href="${toAsList}">A/S 내역 조회</a></li>
-								<!-- 매핑 url 변수 링크로 걸기 -->
-							</ul></li>
-						<li class="nav-item"><a class="nav-links" href="#">점포 관리</a>
-							<ul class="comm-nav-dropdown">
-								<c:url var="toStoreListPage" value="/store" />
-								<li><a href="${toStoreListPage}">점포 조회</a></li>
-							</ul></li>
-						<li class="nav-item"><a class="nav-links" href="#">회원 관리</a>
-							<ul class="comm-nav-dropdown">
-								<c:url var="toMemberMngPage" value="/user" />
-								<li><a href="${toMemberMngPage}">회원 조회</a></li>
-							</ul></li>
-						<li class="nav-item"><a class="nav-links" href="#">스케줄 관리</a>
-							<ul class="comm-nav-dropdown">
-								<c:url var="toHldyList" value="/holiday" />
-								<li><a href="${toHldyList}">휴가 관리</a></li>
-								<c:url var="toSchdlList" value="/admin/schedule" />
-								<li><a href="${toSchdlList}">스케줄 조회</a></li>
-							</ul></li>
-						<li class="nav-item"><a class="nav-links" href="#">시스템 관리</a>
-							<ul class="comm-nav-dropdown">
-								<c:url var="toAdminLogPage" value="/admin/log" />
-								<li><a href="${toAdminLogPage}">로그 조회</a></li>
-								<c:url var="toAdminFilePage" value="/file" />
-								<li><a href="${toAdminFilePage}">파일 조회</a></li>
-								<c:url var="toAdminCodePage" value="/code" />
-								<li><a href="${toAdminCodePage}">공통 코드 조회</a></li>
-								<c:url var="toStatistics" value="/statistics" />
-								<li><a href="${toStatistics}">통계</a></li>
-							</ul></li>
-						<li class="nav-item"><a class="nav-links" href="#">마이페이지</a>
-							<ul class="comm-nav-dropdown">
-								<c:url var="toMyPage" value="/mypage" />
-								<li><a href="${toMyPage}">내 정보</a></li>
-								<c:url var="toNotification" value="/noticelist" />
-								<li><a href="${toNotification}">공지사항</a></li>
-							</ul></li>
-					</ul>
+
+					<ol class="list-group list-group-numbered" id="notification-list"
+						style="display: none;">
+					</ol>
 				</div>
 
-			</nav>
+			</div>
+
+			<div class="mainmenu">
+
+				<!-- 실시간 알림 -->
+				<div class="alert alert-primary" role="alert" hidden="true">
+					<div id="alert-title"></div>
+					<div id="alert-content"></div>
+				</div>
+
+				<div>
+					<nav class="nav-bar" id="nav-bar">
+						<div class="nav-bar-brand">
+							<c:url var="toMain" value="/admin/main" />
+							<a href="${toMain}"> <img alt="logo"
+								src="${path}/resources/img/logo14.png">
+							</a>
+							<ul class="comm-nav-dropdown">
+								<li></li>
+							</ul>
+						</div>
+						<div class="nav-box">
+							<ul class="nav-list">
+								<li class="nav-item"><a class="nav-links" href="#">A/S
+										관리</a>
+									<ul class="comm-nav-dropdown">
+										<c:url var="toAsList" value="/as-list" />
+										<!-- 여기에  매핑 url 선언 -->
+										<li><a href="${toAsList}">A/S 내역 조회</a></li>
+										<!-- 매핑 url 변수 링크로 걸기 -->
+									</ul></li>
+								<li class="nav-item"><a class="nav-links" href="#">점포
+										관리</a>
+									<ul class="comm-nav-dropdown">
+										<c:url var="toStoreListPage" value="/store" />
+										<li><a href="${toStoreListPage}">점포 조회</a></li>
+									</ul></li>
+								<li class="nav-item"><a class="nav-links" href="#">회원
+										관리</a>
+									<ul class="comm-nav-dropdown">
+										<c:url var="toMemberMngPage" value="/user" />
+										<li><a href="${toMemberMngPage}">회원 조회</a></li>
+									</ul></li>
+								<li class="nav-item"><a class="nav-links" href="#">스케줄
+										관리</a>
+									<ul class="comm-nav-dropdown">
+										<c:url var="toHldyList" value="/holiday" />
+										<li><a href="${toHldyList}">휴가 관리</a></li>
+										<c:url var="toSchdlList" value="/admin/schedule" />
+										<li><a href="${toSchdlList}">스케줄 조회</a></li>
+									</ul></li>
+								<li class="nav-item"><a class="nav-links" href="#">시스템
+										관리</a>
+									<ul class="comm-nav-dropdown">
+										<c:url var="toAdminLogPage" value="/admin/log" />
+										<li><a href="${toAdminLogPage}">로그 조회</a></li>
+										<c:url var="toAdminFilePage" value="/file" />
+										<li><a href="${toAdminFilePage}">파일 조회</a></li>
+										<c:url var="toAdminCodePage" value="/code" />
+										<li><a href="${toAdminCodePage}">공통 코드 조회</a></li>
+										<c:url var="toStatistics" value="/statistics" />
+										<li><a href="${toStatistics}">통계</a></li>
+									</ul></li>
+								<li class="nav-item"><a class="nav-links" href="#">마이페이지</a>
+									<ul class="comm-nav-dropdown">
+										<c:url var="toMyPage" value="/mypage" />
+										<li><a href="${toMyPage}">내 정보</a></li>
+										<c:url var="toNotification" value="/noticelist" />
+										<li><a href="${toNotification}">공지사항</a></li>
+									</ul></li>
+							</ul>
+						</div>
+
+					</nav>
+				</div>
+
+				<ul class="comm-nav-dropdown">
+					<li></li>
+				</ul>
+			</div>
 		</div>
 
 
@@ -161,36 +180,38 @@
 <sec:authorize access="hasRole('ROLE_MANAGER')">
 	<header class="comm-nav">
 		<div class="top-bar">
-			<%@ include file="/WEB-INF/views/chat/userChat.jsp"%>
-			<div class="header-icon-background">
-				<a href="#" id="notification-link" onclick="handleClick(event);">
-					<img id="notification-image"
-					src="<c:url value='/img/main/icon-notification-bell.png' />"
-					alt="Check List" class="header-icon" /> <img
-					id="new-notification-image"
-					src="<c:url value='/img/main/icon-notification.png' />"
-					alt="Check List" class="header-icon" hidden="true" />
-				</a>
+			<div class="wrap">
 
+				<form action="/logout" method="POST">
+					<button type="submit" class="logout-btn">로그아웃</button>
+					<input name="${_csrf.parameterName}" type="hidden"
+						value="${_csrf.token}" />
+				</form>
 
-				<ol class="list-group list-group-numbered" id="notification-list"
-					style="display: none;">
-				</ol>
+				<p>
+					<c:out value="${user.userNm}" />
+					(점주)님 환영합니다
+				</p>
+
+				<div class="alarm-icon-background">
+					<a href="#" id="notification-link" onclick="handleClick(event);">
+						<img id="notification-image"
+						src="<c:url value='/img/main/icon-notification-bell.png' />"
+						alt="Check List" class="header-icon" /> <img
+						id="new-notification-image"
+						src="<c:url value='/img/main/icon-notification.png' />"
+						alt="Check List" class="header-icon" hidden="true" />
+					</a>
+					<ol class="list-group list-group-numbered" id="notification-list"
+						style="display: none;">
+					</ol>
+				</div>
+
+				<%@ include file="/WEB-INF/views/chat/userChat.jsp"%>
 			</div>
-
-			<p>
-				<c:out value="${user.userNm}" />
-				(점주)님 환영합니다
-			</p>
-
-			<form action="/logout" method="POST">
-				<button type="submit" class="logout-btn">로그아웃</button>
-				<input name="${_csrf.parameterName}" type="hidden"
-					value="${_csrf.token}" />
-			</form>
 		</div>
 
-		<div>
+		<div class="mainmenu">
 			<!-- 실시간 알림 -->
 			<div class="alert alert-primary" role="alert" hidden="true">
 				<div id="alert-title"></div>
@@ -217,8 +238,7 @@
 							<ul class="comm-nav-dropdown">
 								<c:url var="toStoreMngListPage" value="/store-list" />
 								<li><a href="${toStoreMngListPage}">점포 조회</a></li>
-							</ul>
-						</li>
+							</ul></li>
 						<li class="nav-item"><a class="nav-links" href="#">스케줄 관리</a>
 							<ul class="comm-nav-dropdown">
 								<c:url var="toHldyList" value="/holiday" />
@@ -236,6 +256,11 @@
 					</ul>
 				</div>
 			</nav>
+
+			<ul class="comm-nav-dropdown">
+				<li></li>
+			</ul>
+
 		</div>
 	</header>
 </sec:authorize>
@@ -243,46 +268,38 @@
 <sec:authorize access="hasRole('ROLE_MECHA')">
 	<header class="comm-nav">
 		<div class="top-bar">
-			<%@ include file="/WEB-INF/views/chat/userChat.jsp"%>
-			<div class="header-icon-background">
-				<a href="#" id="notification-link" onclick="handleClick(event);">
-					<img id="notification-image"
-					src="<c:url value='/img/main/icon-notification-bell.png' />"
-					alt="Check List" class="header-icon" /> <img
-					id="new-notification-image"
-					src="<c:url value='/img/main/icon-notification.png' />"
-					alt="Check List" class="header-icon" hidden="true" />
-				</a>
+			<div class="wrap">
 
+				<form action="/logout" method="POST">
+					<button type="submit" class="logout-btn">로그아웃</button>
+					<input name="${_csrf.parameterName}" type="hidden"
+						value="${_csrf.token}" />
+				</form>
 
-				<ol class="list-group list-group-numbered" id="notification-list"
-					style="display: none;">
-					<!-- 		<li
-						class="list-group-item d-flex justify-content-between align-items-start">
-						<div class="ms-2 me-auto">
-							<div class="fw-bold non-real-time alarm-title ">휴가신청</div>
-							<div class="non-real-time alarm-content">수리기사(mechanic2)님이
-								휴가(2023-01-01~2023-12-31)을 취소하였습니다.</div>
-							<div class="non-real-time alarm-date">10-04</div>
-						</div>
-						 <span class="badge bg-primary rounded-pill">N</span>
-					</li> -->
-				</ol>
+				<p>
+					<c:out value="${user.userNm}" />
+					(수리기사)님 환영합니다
+				</p>
+
+				<div class="alarm-icon-background">
+					<a href="#" id="notification-link" onclick="handleClick(event);">
+						<img id="notification-image"
+						src="<c:url value='/img/main/icon-notification-bell.png' />"
+						alt="Check List" class="header-icon" /> <img
+						id="new-notification-image"
+						src="<c:url value='/img/main/icon-notification.png' />"
+						alt="Check List" class="header-icon" hidden="true" />
+					</a>
+					<ol class="list-group list-group-numbered" id="notification-list"
+						style="display: none;">
+					</ol>
+				</div>
+
+				<%@ include file="/WEB-INF/views/chat/userChat.jsp"%>
 			</div>
-
-			<p>
-				<c:out value="${user.userNm}" />
-				(수리기사)님 환영합니다
-			</p>
-
-			<form action="/logout" method="POST">
-				<button type="submit" class="logout-btn">로그아웃</button>
-				<input name="${_csrf.parameterName}" type="hidden"
-					value="${_csrf.token}" />
-			</form>
 		</div>
 
-		<div>
+		<div class="mainmenu">
 			<!-- 실시간 알림 -->
 			<div class="alert alert-primary" role="alert" hidden="true">
 				<div id="alert-title"></div>
@@ -307,7 +324,7 @@
 							<ul class="comm-nav-dropdown">
 								<c:url var="toHldyList" value="/holiday" />
 								<li><a href="${toHldyList}">휴가 관리</a></li>
-								<c:url var="toSchdlList" value="/schedule/calendar"/>
+								<c:url var="toSchdlList" value="/schedule/calendar" />
 								<li><a href="${toSchdlList}">스케줄 조회</a></li>
 							</ul></li>
 						<li class="nav-item"><a class="nav-links" href="#">마이페이지</a>
@@ -320,6 +337,11 @@
 					</ul>
 				</div>
 			</nav>
+
+			<ul class="comm-nav-dropdown">
+				<li></li>
+			</ul>
+
 		</div>
 	</header>
 </sec:authorize>

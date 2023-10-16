@@ -41,8 +41,10 @@
 			<!-- ********** 페이지 네비게이션 끝 ********** -->
 			
 			<div class="content-wrapper">
+
 				<h2 class="noti-head">공지사항 수정</h2>
 				<form method="POST" action="/notice/update" id="updateNoticeForm" name="updateNoticeForm"  enctype="multipart/form-data">
+
 					<table class="insert-notice-table">
 						<tbody>
 							<tr>
@@ -62,7 +64,7 @@
 								<th>첨부 파일</th>
 								<td>
 									<div style="display:flex;">
-										<div id="fileCount" style="margin: 0px 5px 0px 0px;">업로드할 파일을 선택해주세요.(최대 3개)</div>
+										<div id="fileCount" style="margin: 0px 5px 0px 0px;">업로드할 파일을 선택해주세요.(최대 3개,기존 이미지도 재등록)</div>
 										<div class="file-box">
 											<div class="file-label">
 												<label for="fileInput" id="fileUploadBtn">파일 선택 </label>
@@ -75,20 +77,15 @@
 							<tr>
 								<th>파일 목록</th>
 								<td>
-									<c:forEach var="imgTitle" items="${imgList}">
-										<div class="file-list">
-											<c:out value="${imgTitle.fileOriginalName}"/>								
-										</div>
-									</c:forEach>
+									<div class="file-list">
+										<c:out value="${imgTitle.fileOriginalName}"/>								
+									</div>
 								</td>
 							</tr>
 							<tr>
 								<th>파일 <br>미리보기</th>
 								<td>
 									<div class="img-list">
-										<c:forEach var="imgList" items="${imgList}">
-											<div style="background-image:url('/${imgList.localSavePath}${imgList.fileDetailServerName}')" class="modNoticeImg"></div>
-										</c:forEach>
 									</div>
 								</td>
 							</tr>
@@ -96,9 +93,9 @@
 					</table>
 					<input type="hidden" id="writerName" name="writerName" value="<c:out value="${noticeVo.writerName}"/>">
 					<input type="hidden" id="noticeSeq" name="noticeSeq" value="<c:out value="${noticeVo.noticeSeq}"/>">
-					<input type="hidden" id="modDate" name="modDate" value="<c:out value="${noticeVo.modDate}"/>">
+					<input type="hidden" id="fileSeq" name="fileSeq" value="<c:out value="${noticeVo.fileSeq}"/>">
 					<div class="modButtons">
-						<button type="button" id="updateNoticeBtn">수정</button>
+						<button type="submit" id="updateNoticeBtn">수정</button>
 						<button type="button" class="cancel" onclick="history.back()">취소</button>
 					</div>
 				</form>
