@@ -53,7 +53,7 @@
 <sec:authorize access="hasRole('ROLE_ADMIN')">
 	<header class="comm-nav">
 		<div class="top-bar">
-
+<%@ include file="/WEB-INF/views/chat/adminChat.jsp"%>
 			<!-- 비실시간 알람메세지 -->
 			<div class="header-icon-background">
 				<a href="#" id="notification-link" onclick="handleClick(event);">

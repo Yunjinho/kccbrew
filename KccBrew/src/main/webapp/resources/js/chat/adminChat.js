@@ -2,6 +2,10 @@ const webSocket = new WebSocket("ws://localhost:8080/adminchat");
 let userUuid = null;
 let name = null;
 
+var chatIcon = document.querySelector('#chatIcon');
+var chatArea = document.querySelector(".chatArea");
+chatIcon.addEventListener('click', function(){
+	chatArea.classList.toggle("hidden");});
 webSocket.onopen = handleWebSocketOpen;
 webSocket.onclose = handleWebSocketClose;
 webSocket.onerror = handleWebSocketError;

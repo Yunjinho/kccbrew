@@ -16,7 +16,7 @@
 		
 	FROM (
 		SELECT
-		ROW_NUMBER() OVER(ORDER BY a.file_seq) AS ROW_NUM,
+		ROW_NUMBER() OVER(ORDER BY a.file_seq desc) AS ROW_NUM,
 		a.file_seq ,
 		b.file_dtl_seq,
 		b.file_original_nm,
