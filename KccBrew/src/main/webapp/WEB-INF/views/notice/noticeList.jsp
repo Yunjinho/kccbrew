@@ -15,70 +15,59 @@
 <c:set var="pageSize" value="${pageSize}" />
 <c:set var="totalPages" value="${totalPages}" />
 <c:set var="currentPage" value="${currentPage}" />
-
+<c:set var="notices" value="${viewAllWithCon}" />
 </head>
 
 <body>
-	<div id="page-mask">
-		<div id="page-container" class="">
-			<div id="page-content" class="clearfix">
-				<div id="page-content-wrap">
+	<div class="body-wrapper">
+		<div class="table-wrapper">
 			<!-- ********** 페이지 네비게이션 시작 ********** -->
 			<div class="page-content-navigation">
-							<h2 class="heading">공지사항</h2>
 				<ol class="breadcrumb">
-								<li>
-								<div class="header-icon-background">
-								<a href="/">
-									<img
-										src="<c:url value='resources/img/common/free-icon-house.png' />"
-										alt="Check List" class="header-icon" />
-										</a>
-								</div>
-							</li>
-							<li>
-								<div class="header-icon-background">
-									<img
-										src="<c:url value='resources/img/common/free-icon-arrow-right.png' />"
-										alt="Check List" class="header-icon" />
-								</div>
-							</li>
-							
 					<li class="breadcrumb-home">공지사항</li>
-							<li>
-								<div class="header-icon-background">
-									<img
-										src="<c:url value='resources/img/common/free-icon-arrow-right.png' />"
-										alt="Check List" class="header-icon" />
-								</div>
-							</li>
+					<li class="right-arrow">
+						<div class="header-icon-background2">
+							<img
+								src="<c:url value='resources/img/asMng/free-icon-right-arrow-271228.png' />"
+								alt="Check List" class="header-icon" />
+						</div>
+					</li>
 					<li>공지사항</li>
 				</ol>
 			</div>
 			<!-- ********** 페이지 네비게이션 끝 ********** -->
 			<div class="content-wrapper">
-				<div class="searchBox">
-					<div class="searchForm">
-
-						<form action="/noticelistwithcon" method="GET" id="searchListForm" name="searchListForm">
-							<div class="select-list">
-								<select id="list-search" name="searchOption">
-									<option value="all">제목 + 내용</option>
-									<option value="title">제목</option>
-									<option value="content">내용</option>
-									<option value="writer">작성자</option>
-								</select>
-							</div>
-							<div class="search-input">
-								<input type="text" class="search-notice-box" name="searchText" value="<c:out value='${searchText}'/>"/>
-							</div>
-							<div class="search-notice-btn">
-								<button type="submit" id="searchBtn" class="writeBtn">검색</button>
-							</div>
-						</form>
+				<h2 class="noti-head">공지사항</h2>
+				<div class="margin-for-searchbox">
+					<div class="searchBox">
+						<div class="searchForm">
+							<form action="/noticelistwithcon" method="GET" id="searchListForm" name="searchListForm">
+								<div class="select-list">
+									<select id="list-search" name="searchOption">
+										<option value="all">제목 + 내용</option>
+										<option value="title">제목</option>
+										<option value="content">내용</option>
+										<option value="writer">작성자</option>
+									</select>
+								</div>
+								<div class="search-input">
+									<input type="text" class="search-notice-box" name="searchText" value="${searchText}" placeholder="검색어를 입력하세요."/>
+								</div>
+								<div class="search-notice-btn">
+									<button type="submit" id="searchBtn">검색</button>
+								</div>
+							</form>
+						</div>
 					</div>
 				</div>
-				
+				<div class="page-info">
+					<p class="pageInfo">전체 <span class="pagenum">${paging.total}</span>개 | <span class="pagenum">${paging.nowPage}</span> / <span class="pagenum">${paging.lastPage}</span> 쪽</p>
+					
+					<div class="down-excel">
+						<button class="nowpage-down">현재 페이지 다운로드</button>
+						<button class="allpage-down">전체 페이지 다운로드</button>
+					</div>
+				</div>
 				<table class="notice-table">	
 					<thead>
 						<tr>
@@ -89,30 +78,30 @@
 							<th>조회수</th>
 						</tr>
 					</thead>
-					<c:forEach var="noti" items="${viewAll}">
 					<tbody>
-						<tr>
-							<td>
-								<c:out value="${noti.noticeSeq}"/>
-							</td>
-							<td class="noticeTitle">
-								<c:url var="toNoticeDetail" value="/noticedetail/${noti.noticeSeq}"/>
-								<a href="${toNoticeDetail}">
-									<c:out value="${noti.noticeTitle}"/>
-								</a>
-							</td>
-							<td>
-								관리자
-							</td>
-							<td>
-								<fmt:formatDate value="${noti.writeDate}" pattern="yyyy-MM-dd"/>
-							</td>
-							<td>
-								<c:out value="${noti.views}"/>
-							</td>
-						</tr>
+						<c:forEach var="noti" items="${viewAll}">
+							<tr>
+								<td>
+									<c:out value="${noti.noticeSeq}"/>
+								</td>
+								<td class="noticeTitle">
+									<c:url var="toNoticeDetail" value="/noticedetail/${noti.noticeSeq}"/>
+									<a href="${toNoticeDetail}">
+										<c:out value="${noti.noticeTitle}"/>
+									</a>
+								</td>
+								<td>
+									관리자
+								</td>
+								<td>
+									<fmt:formatDate value="${noti.writeDate}" pattern="yyyy-MM-dd"/>
+								</td>
+								<td>
+									<c:out value="${noti.views}"/>
+								</td>
+							</tr>
+						</c:forEach>
 					</tbody>
-					</c:forEach>
 				</table>
 				<!-- 목록 개수 조절 -->
 				<div class="cellPerPage">
@@ -136,11 +125,21 @@
 				
 				<!-- 페이징 -->
 				<div class="pagingSection" style="display: block; text-align: center;">	
-					<c:if test="${paging.startPage > 1}">
+					<c:if test="${paging.nowPage > 1}">
 				        <a href="/noticelist?nowPage=1&cntPerPage=${paging.cntPerPage}">
+				        <%-- <a href="/noticelistwithcon?nowPage=1&cntPerPage=${paging.cntPerPage}&searchOption=${notices.searchOption}&searchText=${notices.searchText}"> --%>
 				        	<img src="/resources/img/asMng/free-icon-left-chevron-6015759.png" alt="첫 페이지로"/>
 				        </a>
-				        <a href="/noticelist?nowPage=${paging.startPage - 1}&cntPerPage=${paging.cntPerPage}">
+				        <a href="/noticelist?nowPage=${paging.nowPage - 1}&cntPerPage=${paging.cntPerPage}">
+				        <%-- <a href="/noticelistwithcon?nowPage=${paging.startPage - 1}&cntPerPage=${paging.cntPerPage}&searchOption=${viewAll.searchOption}&searchText=${viewAll.searchText}"> --%>
+				        	<img src="/resources/img/asMng/free-icon-left-arrow-271220.png"	alt="이전 페이지로" />
+				        </a>
+				    </c:if>
+				    <c:if test="${paging.nowPage == 1}">
+				    	<a style="cursor:pointer">
+				        	<img src="/resources/img/asMng/free-icon-left-chevron-6015759.png" alt="첫 페이지로"/>
+				        </a>
+				        <a style="cursor:pointer">
 				        	<img src="/resources/img/asMng/free-icon-left-arrow-271220.png"	alt="이전 페이지로" />
 				        </a>
 				    </c:if>
@@ -157,20 +156,27 @@
 							</c:choose>
 						</c:forEach>
 				    </div>
-				    <c:if test="${paging.endPage < paging.lastPage}">
-				        <a href="/noticelist?nowPage=${paging.endPage + 1}&cntPerPage=${paging.cntPerPage}">
+				    <c:if test="${paging.nowPage < paging.lastPage}">
+				        <a href="/noticelist?nowPage=${paging.nowPage + 1}&cntPerPage=${paging.cntPerPage}">
+				        <%-- <a href="/noticelistwithcon?nowPage=${paging.nowPage + 1}&cntPerPage=${paging.cntPerPage}&searchOption=${paging.searchOption}&searchText=${paging.searchText}"> --%>
 				        	<img src="/resources/img/asMng/free-icon-right-arrow-271228.png" alt="다음 페이지로" />
 				        </a>
 				        <a href="/noticelist?nowPage=${paging.lastPage}&cntPerPage=${paging.cntPerPage}">
+				        <%-- <a href="/noticelistwithcon?nowPage=${paging.lastPage}&cntPerPage=${paging.cntPerPage}&searchOption=${viewAll.searchOption}&searchText=${viewAll.searchText}"> --%>
 				        	<img src="/resources/img/asMng/free-icon-fast-forward-double-right-arrows-symbol-54366.png" alt="마지막 페이지로"/>
 				        </a>
     				</c:if>
+    				<c:if test="${paging.nowPage == paging.lastPage}">
+				    	<a style="cursor:pointer">
+				        	<img src="/resources/img/asMng/free-icon-right-arrow-271228.png" alt="다음 페이지로" />
+				        </a>
+				        <a style="cursor:pointer">
+				        	<img src="/resources/img/asMng/free-icon-fast-forward-double-right-arrows-symbol-54366.png" alt="마지막 페이지로"/>
+				        </a>
+				    </c:if>
 				</div>
 			</div>
-
-	</div>
-	</div>
-	</div>
+		</div>
 	</div>
 	<script>
 	function selChange() {

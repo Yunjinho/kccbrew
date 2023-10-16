@@ -41,7 +41,7 @@
 			<!-- ********** 페이지 네비게이션 끝 ********** -->
 			
 			<div class="content-wrapper">
-				<h2>공지사항 작성</h2>
+				<h2 class="noti-head">공지사항 작성</h2>
 				<form method="POST" id="insertNoticeForm" action="/insertnoticeform" name="insertNoticeForm" enctype="multipart/form-data">
 					<table class="insert-notice-table">
 						<tbody>

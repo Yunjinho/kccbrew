@@ -33,7 +33,7 @@
 			</div>
 			<!-- ********** 페이지 네비게이션 끝 ********** -->
 			<div class="content-wrapper">
-				<h2>공지사항</h2>
+				<h2 class="noti-head">공지사항</h2>
 					<div id="noticeDtlTitle">
 						<c:out value="${noticeVo.noticeTitle}"/>	
 					</div>
