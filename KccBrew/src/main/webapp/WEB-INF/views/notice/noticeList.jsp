@@ -50,7 +50,7 @@
 								</select>
 							</div>
 							<div class="search-input">
-								<input type="text" class="search-notice-box" name="searchText"/>
+								<input type="text" class="search-notice-box" name="searchText" value="<c:out value='${searchText}'/>"/>
 							</div>
 							<div class="search-notice-btn">
 								<button type="submit" id="searchBtn">검색</button>
@@ -94,6 +94,7 @@
 					</tbody>
 					</c:forEach>
 				</table>
+				<!-- 목록 개수 조절 -->
 				<div class="cellPerPage">
 					<select id="cntPerPage" name="sel" onchange="selChange()">
 						<option value="10"
@@ -131,6 +132,7 @@
 								</c:when>
 								<c:when test="${p != paging.nowPage}">
 									<a class="otherPage" href="/noticelist?nowPage=${p}&cntPerPage=${paging.cntPerPage}">${p}</a>
+									<%-- <a class="otherPage" href="/noticelistwithcon?nowPage=${p}&searchOption=${viewAll.searchOption}&searchText=${viewAll.searchText}">${p}</a> --%>
 								</c:when>
 							</c:choose>
 						</c:forEach>

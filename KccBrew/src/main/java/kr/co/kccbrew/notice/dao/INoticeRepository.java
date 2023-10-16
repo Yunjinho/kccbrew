@@ -14,20 +14,20 @@ import kr.co.kccbrew.notice.model.NoticeVo;
 public interface INoticeRepository {
 	List<NoticeVo> selectUserInfo();				//사용자 정보 받아오기
 	String selectUserName(String writerId);			//사용자 이름 받아오기
-
 	
 	//공지사항 총 개수
 	public int countNotice(); 						
 	
-	//검색 조건 포함 공지사항 개수
+	//검색 조건 설정한 공지사항 개수
 	public int countNoticeWithCon(@Param("searchOption") String searchOption, @Param("searchText") String searchText);
 	
-	public List<NoticeVo> selectNotice(PagingVo vo);// 페이징 처리 공지사항 조회
+	// 검색 조건 없이 공지사항 조회, 페이징 됨
+	public List<NoticeVo> selectNotice(PagingVo vo);
 	
 	// 검색 조건을 설정한 공지 목록 조회, 페이징 포함
 	List<NoticeVo> selectNoticeWithCon(@Param("start") int start, @Param("end") int end, @Param("searchOption") String searchOption, @Param("searchText") String searchText);
-	NoticeVo readNotice(int noticeSeq);				// 공지사항 상세 조회
 	
+	NoticeVo readNotice(int noticeSeq);				// 공지사항 상세 조회
 	void insertNotice(NoticeVo noticeVo); 			// 공지사항 등록
 	void updateNotice(NoticeVo noticeVo);			// 공지사항 수정
 	void deleteNotice(int noticeSeq);				// 공지사항 삭제
