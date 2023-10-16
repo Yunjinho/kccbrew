@@ -59,21 +59,23 @@
 			<div class="content-wrapper">
 				<div class="searchBox">
 					<div class="searchForm">
-						<div class="select-list">
-							<select id="list-search">
-								<option value="">제목 + 내용</option>
-								<option value="">제목</option>
-								<option value="">내용</option>
-								<option value="">작성자</option>
-							</select>
-						</div>
-						<div class="search-input">
-							<input type="text" class="search-notice-box"/>
-						</div>
-						<div class="search-notice-btn">
-							<button type="submit" class="writeBtn" style="height: 40px;">검색</button>
-						</div>
-						
+
+						<form action="/noticelistwithcon" method="GET" id="searchListForm" name="searchListForm">
+							<div class="select-list">
+								<select id="list-search" name="searchOption">
+									<option value="all">제목 + 내용</option>
+									<option value="title">제목</option>
+									<option value="content">내용</option>
+									<option value="writer">작성자</option>
+								</select>
+							</div>
+							<div class="search-input">
+								<input type="text" class="search-notice-box" name="searchText" value="<c:out value='${searchText}'/>"/>
+							</div>
+							<div class="search-notice-btn">
+								<button type="submit" id="searchBtn" class="writeBtn">검색</button>
+							</div>
+						</form>
 					</div>
 				</div>
 				
@@ -112,6 +114,7 @@
 					</tbody>
 					</c:forEach>
 				</table>
+				<!-- 목록 개수 조절 -->
 				<div class="cellPerPage">
 					<select id="cntPerPage" name="sel" onchange="selChange()">
 						<option value="10"
@@ -149,6 +152,7 @@
 								</c:when>
 								<c:when test="${p != paging.nowPage}">
 									<a class="otherPage" href="/noticelist?nowPage=${p}&cntPerPage=${paging.cntPerPage}">${p}</a>
+									<%-- <a class="otherPage" href="/noticelistwithcon?nowPage=${p}&searchOption=${viewAll.searchOption}&searchText=${viewAll.searchText}">${p}</a> --%>
 								</c:when>
 							</c:choose>
 						</c:forEach>
@@ -173,8 +177,6 @@
 		var sel = document.getElementById('cntPerPage').value;
 		location.href="noticelist?nowPage=${paging.nowPage}&cntPerPage="+sel;
 	}
-	
-	
 </script>
 </body>
 </html>

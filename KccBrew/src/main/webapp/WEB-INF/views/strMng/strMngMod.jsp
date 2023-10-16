@@ -6,11 +6,36 @@
 <head>
 <link rel="stylesheet"
     href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-<link rel="stylesheet" href="/resources/css/code/cdMngDtl.css" />
+<link rel="stylesheet" href="/resources/css/userMng/userMngList.css" />
+<!-- notoSans -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link
+	href="https://fonts.googleapis.com/css2?family=Noto+Sans&display=swap"
+	rel="stylesheet">
+<link
+	href="https://fonts.googleapis.com/css2?family=Noto+Sans&family=Noto+Sans+KR&display=swap"
+	rel="stylesheet">
 <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 <meta charset="UTF-8">
 <title>점포수정</title>
 </head>
+<style>
+	input{
+	width: auto;
+	}
+   #notice{
+    margin: 40px;}
+    
+   
+    .form-btn {
+     display: unset;}
+     
+     .category{
+     font-size: 1.2em;
+     }
+</style>
+
 <body>
 	<section id="notice" class="notice">
 		 <div class="container2">
@@ -47,30 +72,26 @@
 				<tr>
 					<th colspan="1">주소</th>
 					<td colspan="3"><input type="text" id="address_kakao" name="storeAddr"
-						placeholder="클릭해주세요" value="${store.storeAddr}"  size="50" readonly />, <input
+						placeholder="클릭해주세요" value="${store.storeAddr}"  size="40" readonly />, <input
 						type="text" name="storeAddrDtl" id="storeAddrDtl"
 						value="${store.storeAddrDtl}" required /></td>
 				</tr>
 				<tr>
 					<th colspan="1">지역분류</th>
-					<td colspan="3"><select id="location" name="locationCd" size="3">
+					<td colspan="3"><input type="hidden" id="dtl" value="${store.locationCd}"><select id="location" name="locationCd" size="1" onchange="changeLocationCd()">
 							<option value="">지역선택</option>
 							<c:forEach var="list" items="${list}">
 								<option value="${list.locationCd}"
 									${store.locationCd == list.locationCd ? 'selected' : ''}>${list.locationNm}</option>
 							</c:forEach>
-					</select> <select id="locationSeoul" name="locationCdSeoul" size="3"
-						disabled>
+					</select> <select id="locationSeoul" name="locationCdSeoul" size="1" >
 							<option value="">지역선택 상세</option>
-							<c:forEach var="list" items="${seoullist}">
-								<option value="${list.locationCd}"
-									${store.locationCd == list.locationCd ? 'selected' : ''}>${list.locationNm}</option>
-							</c:forEach>
+						
 					</select></td>
 				</tr>
 			</table>
 			
-		  <div id="staticMap" style="width: 550px; height: 300px; margin: auto;"></div>
+		  <div id="staticMap" style="width: 700px; height: 400px; margin: 20px auto;"></div>
 			 <div class="updatecancle" style="text-align: center;">
 				<input type="hidden" name="storeSeq" value="${store.storeSeq}" style="">
 				<button type="submit" name="save"  class="form-btn" value="저장"
@@ -100,30 +121,36 @@
                 }
             }).open();
         });
+        changeLocationCd();
     }
 
-    var mallsEnabled = false;
+    function changeLosctionDtlCd(data){
+    	var dtlLocation= $("#dtl").val();
+      	var locOption=$("select[name=locationCdSeoul]");
+      	var content='<option value="">지역 상세 선택</option>';
 
-    function update_selected() {
-        var selectedValue = $("#location").val();
-        mallsEnabled = (selectedValue === "02");
-        if (mallsEnabled) {
-            $("#locationSeoul").prop('disabled', false);
-        } else {
-            $("#locationSeoul").prop('disabled', true);
-        }
-  
-    }
+      	for(var i=0;i<data.length;i++){
+      		content +='<option value="' + data[i].grpCdDtlId + '" ' + (dtlLocation == data[i].grpCdDtlId ? 'selected' : '') + '>' + data[i].grpCdDtlNm + '</option>';
+      	}
+      	locOption.html(content);
+      }
 
-    $(function() {
-        update_selected();
-
-        $("#location").change(function() {
-            update_selected();
-
-          
-        });
-    });
+      //대분류 지역 선택한 값에 맞춰서 소분류 지역 값 조회
+      function changeLocationCd(){
+      	var locCd = $("#location").val();
+      	console.log(locCd);
+      	$.ajax({
+      		type : "GET",           // 타입 (get, post, put 등등)
+      		url : "/search-location-code",           // 요청할 서버url
+      		dataType : "json",       // 데이터 타입 (html, xml, json, text 등등)
+      		data : {
+      			'locCd' : locCd,
+      		},
+      		success : function(data) { // 결과 성공 콜백함수
+      			changeLosctionDtlCd(data);
+      		}
+      	});
+      }
 
     function updateLatLng() {
         var address = document.getElementById("address_kakao").value;

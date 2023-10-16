@@ -111,7 +111,7 @@ input {
 
 											<tr>
 												<th>지역</th>
-												<td colspan="2"><select class="tx2" name="locationCd"
+												<td colspan="2"><select class="tx2" name="locationCd" id="location"
 													onchange="chg()">
 														<option value="">지역 대분류</option>
 														<c:forEach var="list" items="${List}">
@@ -119,13 +119,12 @@ input {
 																${searchContent.locationCd == list.locationCd ? 'selected' : ''}>${list.locationNm}</option>
 														</c:forEach>
 												</select></td>
-												<td colspan="2"><select class="tx2"
-													name="locationCdSeoul" disabled>
+												<td colspan="2">
+												<input type="hidden" id="dtl" value="${searchContent.locationCdSeoul}">
+												<select class="tx2"
+													name="locationCdSeoul">
 														<option value="">지역 소분류</option>
-														<c:forEach var="list" items="${seoulList}">
-															<option value="${list.locationCd}"
-																${searchContent.locationCdSeoul == list.locationCd ? 'selected'  : ''}>${list.locationNm}</option>
-														</c:forEach>
+														
 												</select></td>
 												<th>점포명</th>
 												<!-- Input field for URI -->
@@ -168,7 +167,7 @@ input {
 										<table>
 											<thead>
 												<tr>
-													<th scope="col">NO</th>
+													<th scope="col">점포번호</th>
 													<th scope="col">스토어이름</th>
 													<th scope="col">지역구분</th>
 													<th scope="col">점포연락처</th>
@@ -260,16 +259,7 @@ input {
 		</div>
 	</div>
 	<script>
-		$(document).ready(function(){
-			 var locationSelect = document.querySelector("select[name='locationCd']");
-      	 	 var subLocationSelect = document.querySelector("select[name='locationCdSeoul']");
-			 if (locationSelect.value === '02') {
-				 
-	               subLocationSelect.disabled = false; // 서브 로케이션 활성화
-	            } else {
-	               subLocationSelect.disabled = true; // 서브 로케이션 비활성화
-	            }
-			});
+	
         window.name = 'viewPage';
         function popup(storeSeq) {
             var url = "/store/view/" + storeSeq;
@@ -286,17 +276,32 @@ input {
             window.open(url, name, option);
             window.close();
         }
+        
+      //대분류 지역 조건 변경 시 소분류 지역값들 변경 함수
+        function changeLosctionDtlCd(data){
+        	var dtlLocation= $("#dtl").val();
+        	var locOption=$("select[name=locationCdSeoul]");
+        	var content='<option value="">지역 소분류</option>';
+				for (var i = 0; i < data.length; i++) {
+				    content += '<option value="' + data[i].grpCdDtlId + '" ' + (dtlLocation == data[i].grpCdDtlId ? 'selected' : '') + '>' + data[i].grpCdDtlNm + '</option>';
+				}
+        	locOption.html(content);
+        }
+        
         function chg() {
-            var locationSelect = document
-                  .querySelector("select[name='locationCd']");
-            var subLocationSelect = document
-                  .querySelector("select[name='locationCdSeoul']");
-
-            if (locationSelect.value === '02') {
-               subLocationSelect.disabled = false; // 서브 로케이션 활성화
-            } else {
-               subLocationSelect.disabled = true; // 서브 로케이션 비활성화
-            }
+        	var locCd = $("#location").val();
+          	console.log(locCd);
+          	$.ajax({
+          		type : "GET",           // 타입 (get, post, put 등등)
+          		url : "/search-location-code",           // 요청할 서버url
+          		dataType : "json",       // 데이터 타입 (html, xml, json, text 등등)
+          		data : {
+          			'locCd' : locCd,
+          		},
+          		success : function(data) { // 결과 성공 콜백함수
+          			changeLosctionDtlCd(data);
+          		}
+          	});
          } 
         function resetSearch(){
         	$("input[name=startDate]").val("");
@@ -344,6 +349,7 @@ input {
         }
         window.onload=function(){
         	history.replaceState({}, null, location.pathname);
+        	chg();
         }
         </script>
 </body>

@@ -22,7 +22,8 @@ public class NoticeVo {
 	String noticeContent;	//공지사항 내용
 	int views;				//조회수
 	int page;				//페이지
-	
+	String searchOption;	//검색 조건
+	String searchText;		//검색창
 	String noticeId;
 	
 	/**
@@ -37,6 +38,8 @@ public class NoticeVo {
 	String localSavePath;		//로컬 저장 경로
 	String serverSavePath;		//서버 저장 경로
 	String fileSeq;
+	String fileDtlSeq;
+	String storageLocation;
 	/**
 	 * 그룹 코드 VO
 	 */
@@ -45,11 +48,4 @@ public class NoticeVo {
 	String grpCdDtlId;		//그룹 코드 디테일 아이디
 	String grpCdDtlNm;		//그룹 코드 디테일명
 	
-	/**
-	 * 페이징 변수 
-	 */
-    int currentPage;
-    int pageSize;
-    int totalPages;
-    int totalCount;
 }

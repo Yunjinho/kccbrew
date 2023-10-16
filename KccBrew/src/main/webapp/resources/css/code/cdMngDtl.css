@@ -23185,13 +23185,6 @@ html {
 	-webkit-tap-highlight-color: rgba(0, 0, 0, 0)
 }
 
-body {
-	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-	font-size: 14px;
-	line-height: 1.42857143;
-	color: #333;
-	background-color: #fff
-}
 
 input, button, select, textarea {
 	font-family: inherit;
@@ -43789,13 +43782,6 @@ html {
 	-webkit-tap-highlight-color: rgba(0, 0, 0, 0)
 }
 
-body {
-	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-	font-size: 14px;
-	line-height: 1.42857143;
-	color: #333;
-	background-color: #fff
-}
 
 input, button, select, textarea {
 	font-family: inherit;
@@ -50223,13 +50209,6 @@ html {
 	margin: 0px
 }
 
-body {
-	font-family: 'NanumGothic', "나눔고딕", NanumGothic, '돋움', dotum, Helvetica,
-		sans-serif, AppleGothic;;
-	position: relative;
-	margin: 0px;
-	background-color: #f7f9fa
-}
 
 a {
 	color: #44a3bd

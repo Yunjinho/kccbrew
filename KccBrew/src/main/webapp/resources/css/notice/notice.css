@@ -86,7 +86,7 @@ body {
     align-items: center;
 }
 
-.searchForm > * {
+#searchListForm > * {
 	margin-left:10px;
 }
 
@@ -106,11 +106,25 @@ body {
 	height: 40px;
 }
 
-.searchForm .search-notice-btn button {
-	width: 80px;
-	cursor: pointer;
-	border: none;
+#searchListForm {
+	display: flex;
+	justify-content: space-between;
 }
+
+#searchListForm .select-list {
+	width:120px;
+}
+#searchListForm .select-list #list-search{
+	width:120px;
+	height:40px;
+}
+#searchListForm .search-notice-btn button{
+	width:80px;
+	height:40px;
+	cursor: pointer;
+	border:none;
+}
+
 /* 리스트 출력 개수 select 박스 */
 #cntPerPage {
     width: 120px;

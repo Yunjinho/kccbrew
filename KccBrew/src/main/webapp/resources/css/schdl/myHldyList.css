@@ -27,3 +27,11 @@ select[name="locationCd"] {
 	max-width: none !important;
 	width: 70% !important;
 }
+.download-excel{
+	color:#ccc;
+	cursor:pointer;
+	padding:0px 10px
+}
+.download-excel:hover{
+	color:black;
+}

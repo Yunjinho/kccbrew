@@ -78,7 +78,7 @@ public class FileMngController {
 		model.addAttribute("currentPage", fileMngVo.getCurrentPage());
 		model.addAttribute("startPage", startPage);
 		model.addAttribute("endPage", endPage);
-
+		model.addAttribute("searchContent", fileMngVo);
 		model.addAttribute("totalCount", totalCount);
 		model.addAttribute("typeList", fileTypeList);
 		model.addAttribute("list", fileList);

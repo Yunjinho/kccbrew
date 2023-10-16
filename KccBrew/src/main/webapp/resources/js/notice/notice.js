@@ -30,7 +30,6 @@ $(document).ready(function() {
             reader.readAsDataURL(fileInput.files[0]);
         }
     });
-	
 });
 
 var fileNo = 0;
@@ -102,18 +101,7 @@ function deleteFile(num) {
 	 $(".file-list").children().eq(index).remove();
 	 $(".img-list").children().eq(index).remove();
 	 $(".file-box").children().eq(index).remove();
-//    var filebox = document.querySelector("#file" + index);
-//    filebox.remove();
-    //filesArr[num].is_delete = true;
-    
-//    var a=$("#fileInput "+index).val();
-    
-    // 미리보기 이미지 삭제
-//    var previewImage = document.querySelector("#file" + index );
-//    if (previewImage) {
-//        previewImage.remove();
-//    }
-//    curFileCnt = filesArr.filter(file => !file.is_delete).length;
+
     updateFileCount();
 }
 
@@ -150,7 +138,7 @@ function updateForm(){
 	for(var i=0; i < fileInput.files.length; i++){
 		formData.append('noticeFile', fileInput.files[i]);
 	}
-	
+	/*
 	$.ajax({
 		url: '/notice/update/' + noticeSeq,
 		type: 'POST',
@@ -163,5 +151,5 @@ function updateForm(){
 		error: function(error){
 			alert("공지 수정을 실패했습니다.")
 		}
-	});
+	});*/
 }

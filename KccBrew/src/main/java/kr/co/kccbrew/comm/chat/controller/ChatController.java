@@ -21,6 +21,7 @@ import kr.co.kccbrew.comm.chat.service.IChatService;
  * @   수정일           			    수정자            		 수정내용
  * ============      ==============     ==============
  * 2023-10-02							배수연					   	최초생성
+ * 2023-10-14							배수연					   	jsp 리턴 수정
  * @author BAESOOYEON
  * @version 1.0
  */
@@ -47,13 +48,13 @@ public class ChatController {
 	 */
 	@RequestMapping("/admin/chat")
 	public ModelAndView adminChat(ModelAndView mv, HttpServletRequest request) {
-		System.out.println(request.getHeader("REFERER"));
-		if(request.getHeader("REFERER") == null) {
-			mv.addObject("error", "잘못된 접근입니다");
-			mv.setViewName("redirect:/");
-			return mv;
-		}
-		mv.setViewName("chatList");
+//		System.out.println(request.getHeader("REFERER"));
+//		if(request.getHeader("REFERER") == null) {
+//			mv.addObject("error", "잘못된 접근입니다");
+//			mv.setViewName("redirect:/");
+//			return mv;
+//		}
+		mv.setViewName("chat/adminChat");
 		return mv;
 	}
 	

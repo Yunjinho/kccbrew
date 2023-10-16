@@ -372,18 +372,20 @@
 																value="${totalPage}" /></span></b>쪽
 												</span>
 
-												<sec:authorize
-													access="hasAnyRole('ROLE_MANAGER', 'ROLE_MECHA')">
-													<fieldset>
-														<legend class="blind">날짜 검색</legend>
-														<label>휴가일</label> <input type="date"
-															id="selectedStartDate" name="selectedStartDate" value=""
-															required> <input type="date" id="selectedEndDate"
-															name="selectedEndDate" value="" required> <input
-															type="button" value="검색"
-															onclick="goDate(); return false;">
-													</fieldset>
-												</sec:authorize>
+												<div>
+													<sec:authorize
+														access="hasAnyRole('ROLE_MANAGER', 'ROLE_MECHA')">
+														<fieldset>
+															<legend class="blind">날짜 검색</legend>
+															<label>휴가일</label> <input type="date"
+																id="selectedStartDate" name="selectedStartDate" value=""
+																required> <input type="date" id="selectedEndDate"
+																name="selectedEndDate" value="" required> <input
+																type="button" value="검색"
+																onclick="goDate(); return false;">
+														</fieldset>
+													</sec:authorize>
+												</div>
 											</div>
 
 											<table id="holiday-info-table">
@@ -457,7 +459,11 @@
 												</tbody>
 											</table>
 										</div>
-
+										<div style="display:flex; float:right">
+											<input type="hidden" value="${currentPage}" name="page">
+											<p class="download-excel" onclick="downExcel(1)">현재 페이지 다운로드</p>
+											<p class="download-excel" onclick="downExcel(2)">전체 페이지 다운로드</p>
+										</div>
 										<!-- 페이징 -->
 										<div class="paging pagination">
 

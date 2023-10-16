@@ -2,6 +2,7 @@ package kr.co.kccbrew.notice.service;
 
 import java.io.FileOutputStream;
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.stereotype.Service;
 import org.springframework.util.FileCopyUtils;
@@ -14,15 +15,33 @@ import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
-public class NoticeService implements INoticeServie{
+public class NoticeService implements INoticeService{
 	private final INoticeRepository noticeRepository;
-
-	//공지 전체 조회
+	
+	// 공지사항 총 개수 조회
 	@Override
-	public List<NoticeVo> showAllNoticeList() {
-		List<NoticeVo> noticeList = noticeRepository.showAllNoticeList();
-		return noticeList;
+	public int countNotice() {
+		return noticeRepository.countNotice();
 	}
+	
+	//공지사항 목록 조회, 페이징 처리
+	@Override
+	public List<NoticeVo> selectNotice(PagingVo vo) {
+		return noticeRepository.selectNotice(vo);
+	}
+
+	// 공지사항 총 개수 조회 - 검색 조건 필터링한 결과만
+	@Override
+	public int countNoticeWithCon(String searchOption, String searchText) {
+		return noticeRepository.countNoticeWithCon(searchOption, searchText);
+	}
+	
+	//검색 조건을 설정한 공지 사항
+	@Override
+	public List<NoticeVo> selectNoticeWithCon(int start, int end, String searchOption, String searchText) {
+		return noticeRepository.selectNoticeWithCon(start, end, searchOption,searchText);
+	}
+	
 	
 	//공지 상세 조회
 	@Override
@@ -30,11 +49,6 @@ public class NoticeService implements INoticeServie{
 		noticeRepository.updateReadCount(noticeSeq);
 		return noticeRepository.readNotice(noticeSeq);
 	}
-	
-//	@Override
-//	public noticeVo readNoticeById(String writerId) {
-//		return noticeRepository.readNoticeById(writerId);
-//	}
 
 	//공지 등록
 	@Override
@@ -50,7 +64,16 @@ public class NoticeService implements INoticeServie{
 	//공지 수정
 	@Override
 	public void updateNotice(NoticeVo noticeVo) {
-		noticeRepository.updateNotice(noticeVo);
+		if(noticeVo.getFileSeq()!=null) {
+			noticeRepository.deleteImgFIle(noticeVo.getFileSeq());
+		}
+		if(noticeVo.getNoticeImg() == null) {
+			noticeRepository.updateNotice(noticeVo);
+		}else {
+			noticeVo.setFileId(Integer.parseInt(noticeVo.getFileSeq()));
+			insertNoticeImg(noticeVo);
+			noticeRepository.updateNotice(noticeVo);
+		}
 	}
 
 	//공지 삭제
@@ -64,15 +87,21 @@ public class NoticeService implements INoticeServie{
 	@Override
 	public NoticeVo insertNoticeImg(NoticeVo noticeVo) {
 		NoticeVo vo = new NoticeVo();
-		vo.setWriterId(noticeVo.getWriterId());
+		vo.setWriterId(noticeVo.getModUser());
 		
 		//파일 기본 정보 등록
-		noticeRepository.insertFileInfo(vo);
+		if(noticeVo.getFileSeq()==null) {
+			noticeRepository.insertFileInfo(vo);
+		}else {
+			vo.setFileId(noticeVo.getFileId());
+		}
+		
 		List<MultipartFile> imgFile = noticeVo.getNoticeImg();
 		for(MultipartFile m : imgFile) {
 			if(m.getOriginalFilename()!="") {
+				String uuid = UUID.randomUUID().toString();
 				vo.setFileOriginalName(m.getOriginalFilename());
-				vo.setFileDetailServerName("/notice_" + m.getOriginalFilename());
+				vo.setFileDetailServerName("/notice_"+uuid+"_"+ m.getOriginalFilename());
 				vo.setFileFmt(m.getContentType());
 				vo.setFileDetailLocation(noticeVo.getFileDetailLocation());
 				noticeVo.setFileId(vo.getFileId());
@@ -94,25 +123,20 @@ public class NoticeService implements INoticeServie{
 		return noticeVo;
 	}
 
-	// 공지사항 총 개수 조회
-	@Override
-	public int countNotice() {
-		return noticeRepository.countNotice();
-	}
-
-	//공지사항 페이징 처리
-	@Override
-	public List<NoticeVo> selectNotice(PagingVo vo) {
-		return noticeRepository.selectNotice(vo);
-	}
 	
+	
+	
+	//공지사항 첨부 이미지 리스트
 	@Override
 	public List<NoticeVo> noticeImageList(String fieleSeq) {
 		return noticeRepository.noticeImageList(fieleSeq);
 	}
-
+	//메인 페이지에 보여질 공지 목록
 	@Override
 	public List<NoticeVo> selectMainNotice() {
 		return noticeRepository.selectMainNotice();
 	}
+
+
+	
 }
