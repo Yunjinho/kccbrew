@@ -6,44 +6,67 @@
 	font-style: normal;
 	src: url("../../fonts/NotoSansKR-Regular.ttf")
 }
-
 body {
 	font-family: 'Noto Sans', 'Noto Sans KR', sans-serif !important;
 }
-
-.body-wrapper {
-	width: 100%;
-	height: 100%;
-	background-color: #eef4ff;
-	padding: 20px 20px;
+button {
+	font-family: 'Noto Sans', 'Noto Sans KR', sans-serif !important;
 }
-
+select {
+	font-family: 'Noto Sans', 'Noto Sans KR', sans-serif !important;
+}
+.body-wrapper {
+	width:100%;
+	height:100%;
+	background-color: #ffffff;
+	padding: 0 15px 50px;
+}
 .header-icon {
 	width: 100%;
 	color: white;
 }
 
 .header-icon-background {
-	position: relative;
+	position:relative;
 	width: 20px;
 	height: 20px;
 }
-
 .header-icon-background2 {
-	position: relative;
+	position:relative;
 	width: 20px;
 	height: 20px;
-	top: 6.5px;
+	top:6.5px;
 }
 
 .breadcrumb {
 	display: flex;
+	margin: 0px;
+	background-color: transparent;
+	border: 0px;
+	border-radius: 0px;
+	margin: 0px 40px;
+	color: #666;
+	border-bottom: 1px solid #d9dbdb;
+	padding: 8px 0;
+	font-size: 12px
 }
 
+.breadcrumb-home {
+	display:inline-block;
+	width:45.9px;
+}
 .right-arrow {
 	position: relative;
 }
 
+.breadcrumb li {
+	color: #666;
+	display: block;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	padding: 6px 3px 3px 25px;
+	line-height: 35px
+}
 .breadcrumb li:first-child {
 	background: none;
 	padding-left: 3px;
@@ -55,55 +78,39 @@ body {
 }
 
 .content-wrapper {
-	height: auto;
+	height:auto;
+	padding: 32px 40px;	
 }
 
-/****************** 네비게이션  *****************************************************/
-.page-content-navigation {
-	margin-bottom: 50px;
+.noti-head {
+	text-align:left;
+	height:100px;
+	line-height:75px;
+	font-size: 30px;
+	font-weight: 500;
+	border-bottom: 1px solid #111111;
 }
 
 /****************** 공지 목록 페이지  *****************************************************/
 .table-wrapper {
 	background-color: #ffffff;
-	min-height: 700px;
+	min-height:700px;
 }
 
 /* 검색 폼 */
 .searchBox {
-	height: 60px;
+	padding: 20px 250px;
 	background-color: #eeeeee;
-	margin-bottom: 20px;
-	display: flex;
-	align-items: center;
-	justify-content: space-around;
+	border-bottom: 1px solid #111111;
 }
-
+.margin-for-searchbox {
+	margin-bottom: 60px;
+}
 .searchForm {
-    height: 40px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+	height:40px;
 }
-
-#searchListForm > * {
-	margin-left:10px;
-}
-
-.searchForm .select-list {
-	width: 120px;
-}
-
-.searchForm .select-list #list-search {
-	width: 120px;
-	height: 40px;
-}
-
-.searchForm .search-input .search-notice-box {
-	border: 1px solid black;
-	width: 600px;
-	height: 19px;
-	height: 40px;
+form {
+	margin:0;
 }
 
 #searchListForm {
@@ -118,20 +125,25 @@ body {
 	width:120px;
 	height:40px;
 }
+#searchListForm .search-input .search-notice-box {
+	border: 1px solid black;
+	width: 600px;
+	height:18px;
+}
 #searchListForm .search-notice-btn button{
 	width:80px;
 	height:40px;
+	color:white;
+	background-color: navy;
 	cursor: pointer;
 	border:none;
 }
-
 /* 리스트 출력 개수 select 박스 */
-#cntPerPage {
-    width: 120px;
-    height: 30px;
+#cntPerPage{
+    width: 100px;
+    height: 45px;
     border-radius: 5px;
     padding: 5px;
-    text-align: center;
 }
 
 /* #cntPerPage option{
@@ -141,153 +153,168 @@ body {
     padding: 5px;
     text-align: center;
 } */
-.notice-table {
-	width: 100%;
+
+.page-info {
+	height:20px;
+	margin-bottom:5px;
+	font-size:0.9em;
+	color:#4c4c4c;
+	display: flex;
+	justify-content: space-between;
+}
+
+.down-excel button {
+	cursor:pointer;
+	font-size:1em;
 	border: none;
+	background-color: #ffffff;
+	color:#aeaeae;
+}
+.down-excel button:hover {
+	color:black;
+}
+.pagenum {
+	font-weight: bold;
+}
+
+.notice-table {
+	width:100%;
+	border:none;
 	border-collapse: collapse;
 	margin-bottom: 10px;
 }
 
+
 .notice-table tbody td:nth-child(1) {
-	width: 10%;
+	width:10%;
 }
-
 .notice-table tbody td:nth-child(2) {
-	width: 60%;
-	text-align: left;
+	width:60%;
+	text-align:left;
 }
-
 .notice-table tbody td:nth-child(3) {
-	width: 10%;
+	width:10%;
 }
-
 .notice-table tbody td:nth-child(4) {
-	width: 10%;
+	width:10%;
 }
-
 .notice-table tbody td:nth-child(5) {
-	width: 10%;
+	width:10%;
 }
 
 .notice-table th, .notice-table td {
-	border: none;
+	border:none;
 }
 
 .notice-table th {
-	height: 60px;
-	border-bottom: 1px solid #111111;
+	background-color: #ffffff;
+	height:60px;
+	border-bottom:1px solid #111111;
+	border-top:2px solid #111111;
 	border-collapse: collapse;
 	text-align: center;
 	font-weight: bold;
 }
-
 .notice-table td {
-	height: 55px;
-	border-bottom: 1px solid #111111;
+	height:55px;
+	border-bottom:1px solid #111111;
 	border-collapse: collapse;
 	text-align: center;
 }
-
 .notice-table tbody tr:hover {
 	background-color: #eeeeee;
 }
 
 .btn-wrapper {
-    display: inline-table;
-    height: 24px;
-    text-align: center;
-        vertical-align: top;
-        float: right;
+	margin-top: 30px;
+	display: block;
+	height:24px;
+	text-align: center;
 }
 
 .noticeTitle a {
 	text-decoration: none;
-	color: #111111;
+	color:#111111;
 }
 
 .noticeTitle a:hover {
 	text-decoration: underline;
 }
 
-.writeBtn, #insertNoticeBtn, .cancel, .toListBtn, .deleteBtn, .updateBtn,
-	#updateNoticeBtn {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: navy;
-    color: white;
-    border: none;
-    padding: 5px 10px;
-    border-radius: 4px;
-    margin: auto;
-    width: 80px;
+.writeBtn, #insertNoticeBtn, .cancel, .toListBtn, .deleteBtn, .updateBtn, #updateNoticeBtn{
+	background-color: navy;
+	color: #ffffff;
+	border: none;
+	padding:5px 10px;
+	border-radius: 4px;
+	display:inline-block;
+	align-items: center;
+	text-decoration: none;
+	margin-right:30px;
 }
 
-.writeBtn:hover, #insertNoticeBtn:hover, .cancel:hover, .toListBtn:hover,
-	.deleteBtn:hover, .updateBtn:hover, #updateNoticeBtn:hover {
+.writeBtn:hover, #insertNoticeBtn:hover, .cancel:hover, .toListBtn:hover, .deleteBtn:hover, .updateBtn:hover, #updateNoticeBtn:hover{
 	background-color: #E6E6E6;
 	color: #111111;
 	text-decoration: none;
 }
 
 .cellPerPage {
-    display: inline-table;
-    float: left;
+	display: block;
+	text-align: right;
 }
 
 /*** 페이징 부분 ****/
 .pagingSection {
-	margin: 30px 0;
+	margin-top:30px;
 }
 
 .pageBtns {
 	display: inline-block;
-	padding: 0 15px;
+	padding:0 15px;
 }
 
 .pagingSection a {
 	text-decoration: none;
-	color: inherit;
+	color:inherit;
 }
 
 .pagingSection b {
-	display: inline-block;
+	display:inline-block;
 	background-color: navy;
-	color: white;
-	width: 35px;
-	height: 35px;
-	line-height: 36px;
+	color:white;
+	width:35px;
+	height:35px;
+	line-height:36px;
 	border-radius: 50%;
 	font-weight: bold;
 }
 
 .pagingSection .otherPage {
-	display: inline-block;
-	border-radius: 50%;
-	width: 35px;
-	height: 35px;
+	display:inline-block;
+	border-radius:50%;
+	width:35px;
+	height:35px;
 	line-height: 36px;
 }
-
 .pagingSection img {
-	width: 15px;
-	height: 15px;
+	width:15px;
+	height:15px;
 }
 
 /************************ 공지 작성 페이지 **************************************************/
 .insert-notice-table {
-	border: none;
-	width: 1032px;
+	border:none;
+	width:1032px;
 	height: 100%;
 }
-
 .insert-notice-table tr {
-	height: 60px;
+	height:60px;
 	border-bottom: 1px solid #c0c0c0;
 }
 
-.insert-notice-table tr:nth-child(2) {
-	height: 200px;
+.insert-notice-table tr:nth-child(2){
+	height:200px;
 }
 
 .insert-notice-table th {
@@ -301,115 +328,107 @@ body {
 }
 
 input[type="text"] {
-	width: 900px;
-	padding: 10px;
-	border: 1px solid #ccc;
+    width: 900px;
+    padding: 10px; 
+    border: 1px solid #ccc;
 }
 
 input[type="file"] {
-	width: 860px;
-	padding: 10px;
-	border: 1px solid #ccc;
+    width: 860px;
+    padding: 10px; 
+    border: 1px solid #ccc;
 }
 
 #notice-content {
-	height: 250px;
-	width: 100%;
-	resize: none;
+	height:250px;
+	width:100%;
+	resize:none;
 }
-
 #count-text {
 	text-align: right;
 }
-
 #count {
-	color: red;
+	color:red;
 }
-
 #fileCount {
 	display: inline-block;
-	width: 810px;
-	border: 1px solid #cecece;
-	padding: 10px;
-	color: #a4a4a4;
+	width:810px;
+	border:1px solid #cecece;
+	padding:10px;
+	color:#a4a4a4;
 	font-size: 0.9em;
 }
-
 .file-label>label {
 	background-color: navy;
-	height: 37px;
-	line-height: 37px;
+	height:37px;
+	line-height:37px;
 	color: #ffffff;
 	border: none;
 	padding: 0 10px;
-	display: inline-block;
+	display:inline-block;
 	align-items: center;
 	text-decoration: none;
 }
-
 .file-label>label:hover {
 	background-color: #E6E6E6;
 	color: #111111;
 	text-decoration: none;
 }
-
 #fileInput {
-	display: none;
+	display:none;
 }
-
 .file-list {
-	height: auto;
+	height:auto;
 }
 
 .file-list .filebox p {
 	display: inline-block;
 }
-
 .delete {
-	color: red;
-	margin-left: 5px;
+	color:red;
+	margin-left:5px;
 }
-
 .filebox {
 	margin-bottom: 10px;
 }
-
 .img-list img {
-	width: 100px;
-	height: 100px;
+	width:100px;
+	height:100px;
 	overflow: hidden;
 	margin-right: 10px;
 	border: 1px solid #111111;
 }
 
 .modButtons {
-	margin-top: 50px;
+	margin-top:50px;
 	display: block;
 	text-align: center;
 }
+.filebox a {
+	color:red;
+}
+
 
 /******************* 공지 상세 페이지 CSS ****************************************/
 #noticeDtlTitle {
-	height: 70px;
+	height:70px;
 	line-height: 70px;
 	text-align: center;
 	font-size: 1.3em;
 	font-weight: normal;
 	border-bottom: 1px solid #111111;
 }
-
 #noticeDtlInfo {
-	font-size: 1.1em;
-	height: 50px;
+	font-size:1.1em;
+	height:50px;
 	line-height: 50px;
 	text-align: center;
 	background-color: #f2f2f2;
 	border-bottom: 1px solid #c0c0c0;
 	margin-bottom: 50px;
 }
-
 .info-name {
-	font-weight: 600;
+	font-weight:600;
 }
 
 #noticeImgContent {
@@ -417,22 +436,20 @@ input[type="file"] {
 	line-height: 300px;
 	margin-bottom: 50px;
 }
-
-#notice-img {
+#notice-img{
 	height: 300px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.modNoticeImg {
+	width:100px;
+	height:100px;
 	background-size: contain;
-	background-repeat: no-repeat;
-	background-position: center;
-}
-/******************** summernote cdn css 덮어씌우기 *********************************/
-.note-frame {
-	font-family: 'Noto Sans';
+    background-repeat: no-repeat;
+    background-position: center;
+    border:1px solid black;
 }
 
-.note-editable p {
-	text-align: left;
-}
 
-.note-editor.note-airframe, .note-editor.note-frame {
-	width: 1000px;
-}
