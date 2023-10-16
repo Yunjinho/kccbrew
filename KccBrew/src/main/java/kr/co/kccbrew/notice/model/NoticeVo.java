@@ -38,6 +38,8 @@ public class NoticeVo {
 	String localSavePath;		//로컬 저장 경로
 	String serverSavePath;		//서버 저장 경로
 	String fileSeq;
+	String fileDtlSeq;
+	String storageLocation;
 	/**
 	 * 그룹 코드 VO
 	 */

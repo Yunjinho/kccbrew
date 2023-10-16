@@ -210,4 +210,9 @@
 		ORDER BY notice_seq DESC
 	]]>
 	</select>
+	
+	<delete id="deleteImgFIle" parameterType="string">
+		DELETE FROM file_detail_info WHERE file_seq=#{fileSeq}
+	</delete>
+	
 </mapper>
