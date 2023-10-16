@@ -247,7 +247,7 @@ public class NoticeController {
 					boolean success = folder2.mkdirs(); // 폴더 생성 메소드
 				}
 				
-				
+				 
 				noticeVo.setFileDetailLocation(path);
 				noticeVo.setServerSavePath(folderPath);
 				noticeVo.setLocalSavePath(localPath+path);
