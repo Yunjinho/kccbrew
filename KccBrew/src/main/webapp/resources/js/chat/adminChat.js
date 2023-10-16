@@ -159,6 +159,7 @@ function handleUserBye(node) {
 // .discussion 클릭 이벤트를 추가합니다.
 $(document).on("click", ".discussion", function() {
   const uuid = $(this).attr("data-key"); // 클릭한 .discussion의 data-key 값을 가져옵니다.
+  console.log(uuid);
   const name = $(this).find(".name").text();
   // .template의 내용을 업데이트합니다.
   const $template = $(".template");
@@ -171,9 +172,12 @@ $(document).on("click", ".discussion", function() {
   $(this).addClass('message-active');
   // .messages-chat 내용을 비웁니다.
   $template.find(".messages-chat").empty();
+  if(uuid==null){
+	  
+  }else{
   // 여기에서 채팅 내용을 업데이트하는 코드를 작성하세요.
   loadChatLog(uuid);
-  
+  }
  
 });
 
@@ -213,4 +217,9 @@ $(document).on("keydown", ".message", function(event) {
 function scrollToBottom() {
     let chatboxBody = document.querySelector('.messages-chat');
     chatboxBody.scrollTop = chatboxBody.scrollHeight;
+}
+
+function closeChat(){
+	chatArea.classList.add("hidden");
+
 }

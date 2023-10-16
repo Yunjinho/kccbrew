@@ -13,10 +13,21 @@
 <body>
 <div id="userChat">
 	<div class="chatArea hidden" id="container">
-		<div class="row">
+		<div class="row" style="  margin-right: 0px;
+     margin-left: 0px;">
 			<!-- 리스트 -->
 			<section class="discussions">
 				<div class="discussion search">
+				<button type="button" onclick="closeChat()" style="    all: unset;
+    position: absolute;
+    left: 20px;
+    transition: 0.3s ease-in-out;">
+						<svg height='18' viewbox='0 0 18 18' width='18'
+							xmlns='http://www.w3.org/2000/svg'>
+      <path
+								d='M15 8.25H5.87l4.19-4.19L9 3 3 9l6 6 1.06-1.06-4.19-4.19H15v-1.5z'></path>
+    </svg>
+					</button>
 					<!-- <div class="searchbar">
 														<i class="fa fa-search" aria-hidden="true"></i> <input
 															type="text" placeholder="Search..."></input>

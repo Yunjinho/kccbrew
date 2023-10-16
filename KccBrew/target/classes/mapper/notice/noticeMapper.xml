@@ -2,13 +2,13 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.co.kccbrew.notice.dao.INoticeRepository">
 	
-	<!-- 공지사항 총 개수 -->
+	<!-- 공지사항 총 개수 구하기 -->
 	<select id="countNotice" resultType="int">
 		<![CDATA[
 			SELECT COUNT(*) FROM notification
 		]]>
 	</select>
-	<!-- 검색 조건으로 필터링한 공지사항 총 개수 -->
+	<!-- 검색 조건으로 필터링한 공지사항 결과 총 개수 구하기 -->
 	<select id="countNoticeWithCon" parameterType="hashmap" resultType="java.lang.Integer">
 		SELECT COUNT(*) 
 			FROM (

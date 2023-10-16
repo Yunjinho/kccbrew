@@ -18,10 +18,22 @@ import lombok.RequiredArgsConstructor;
 public class NoticeService implements INoticeService{
 	private final INoticeRepository noticeRepository;
 	
-	//공지사항 페이징 처리
+	// 공지사항 총 개수 조회
+	@Override
+	public int countNotice() {
+		return noticeRepository.countNotice();
+	}
+	
+	//공지사항 목록 조회, 페이징 처리
 	@Override
 	public List<NoticeVo> selectNotice(PagingVo vo) {
 		return noticeRepository.selectNotice(vo);
+	}
+
+	// 공지사항 총 개수 조회 - 검색 조건 필터링한 결과만
+	@Override
+	public int countNoticeWithCon(String searchOption, String searchText) {
+		return noticeRepository.countNoticeWithCon(searchOption, searchText);
 	}
 	
 	//검색 조건을 설정한 공지 사항
@@ -30,17 +42,6 @@ public class NoticeService implements INoticeService{
 		return noticeRepository.selectNoticeWithCon(start, end, searchOption,searchText);
 	}
 	
-	// 공지사항 총 개수 조회
-	@Override
-	public int countNotice() {
-		return noticeRepository.countNotice();
-	}
-
-	// 공지사항 총 개수 조회 - 검색 조건 필터링 이후
-	@Override
-	public int countNoticeWithCon(String searchOption, String searchText) {
-		return noticeRepository.countNoticeWithCon(searchOption, searchText);
-	}
 	
 	//공지 상세 조회
 	@Override
