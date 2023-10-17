@@ -229,40 +229,41 @@ function getAlarmData() {
 			userType: getUserType(userType)
 		},
 		success: function(data) {
-		    var notificationList = document.getElementById("notification-list");
+			var notificationList = document.getElementById("notification-list");
 
-		    notificationList.innerHTML = "";
+			notificationList.innerHTML = "";
 
-		    if (data !== null && !data === '') {
-		        for (var i = 0; i < data.length; i++) {
-		            var item = data[i];
-		            var listItem = document.createElement("li");
-		            listItem.className =
-		                "list-group-item d-flex justify-content-between align-items-start";
+			if(data.length === 0) {
+				var listItem = document.createElement("li");
+				listItem.className =
+					"list-group-item d-flex justify-content-between align-items-start";
 
-		            listItem.innerHTML = `
-		                <div class="ms-2 me-auto">
-		                <div class="fw-bold non-real-time alarm-title">${item.alarmTitle}</div>
-		                <div class="non-real-time alarm-content">${item.alarmContent}</div>
-		                </div>
-		                `;
+				listItem.innerHTML = `
+					<div class="ms-2 me-auto">
+					<div class="fw-bold non-real-time alarm-title"></div>
+					<div class="non-real-time alarm-content">최근3일간의 알림이 없습니다.</div>
+					</div>
+					`;
 
-		            notificationList.appendChild(listItem);
-		        }
-		    } else {
-		    	var listItem = document.createElement("li");
-	            listItem.className =
-	                "list-group-item d-flex justify-content-between align-items-start";
-	            
-	            listItem.innerHTML = `
-	                <div class="ms-2 me-auto">
-	                <div class="fw-bold non-real-time alarm-title"></div>
-	                <div class="non-real-time alarm-content">최근3일간의 알림이 없습니다.</div>
-	                </div>
-	                `;
-	            
-	            notificationList.appendChild(listItem);
-		    }
+				notificationList.appendChild(listItem);
+			}
+			else  {
+				for (var i = 0; i < data.length; i++) {
+					var item = data[i];
+					var listItem = document.createElement("li");
+					listItem.className =
+						"list-group-item d-flex justify-content-between align-items-start";
+
+					listItem.innerHTML = `
+						<div class="ms-2 me-auto">
+						<div class="fw-bold non-real-time alarm-title">${item.alarmTitle}</div>
+						<div class="non-real-time alarm-content">${item.alarmContent}</div>
+						</div>
+						`;
+
+					notificationList.appendChild(listItem);
+				}
+			}
 		},
 
 		error: function() {

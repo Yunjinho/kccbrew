@@ -16,7 +16,6 @@ function onPageLoad() {
 
 /*페이징*/
 function goPage(arg){
-	console.log("goPage()함수 실행!");
 	var fm = document.srhForm;
 	fm.currentPage.value = arg;
 	performSearch();
@@ -27,7 +26,6 @@ function goPage(arg){
 
 /*날짜검색*/
 function goDate(startDate, endDate){
-	console.log("goDate함수실행!");
 	var fm = document.srhForm;
 	fm.startDate.value = startDate;
 	fm.endDate.value = endDate;
@@ -70,7 +68,6 @@ function getCurrentYearAndMonth() {
 
 //이동 버튼 클릭 시 이벤트 처리
 function getPeriod() {
-	console.log("getPeriod함수실행!");
 	var selectedYear = document.getElementById('yearSelect').value;
 	var selectedMonth = document.getElementById('monthSelect').value;
 	var startDate = selectedYear + '-' + selectedMonth + '-01';

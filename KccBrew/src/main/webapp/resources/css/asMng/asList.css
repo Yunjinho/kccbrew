@@ -9,7 +9,9 @@ p{
 }
 /* 헤더 */
 
-
+#search-submit{
+	cursor: pointer;
+}
 .header-icon {
 	width: 20px;
 	color: white;

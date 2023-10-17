@@ -15,6 +15,7 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.stereotype.Service;
 
+import kr.co.kccbrew.asMng.model.AsMngVo;
 import kr.co.kccbrew.strMng.dao.IStrMngRepository;
 import kr.co.kccbrew.strMng.model.StrMngVo;
 import lombok.RequiredArgsConstructor;
@@ -114,6 +115,21 @@ public class StrMngService implements IStrMngService {
 
 	@Override
 	public void deleteStr(String userId, String storeSeq) {
+		List<AsMngVo> asList = storeRepository.selectDeleteAsList(userId,storeSeq);
+		for(AsMngVo list:asList) {
+			if(list.getAsResultSeq()!=null) {
+				storeRepository.deleteASresult(list.getAsResultSeq());
+			}
+			if(list.getAsAssignSeq()!=null) {
+				storeRepository.deleteASAssign(list.getAsAssignSeq());
+			}
+		}
+		for(AsMngVo list:asList) {
+			if(list.getAsInfoSeq()!=null) {
+				storeRepository.deleteASinfo(list.getAsInfoSeq());
+			}
+		}
+		storeRepository.deleteholiday(userId, storeSeq);
 		storeRepository.deleteStr(userId, storeSeq);
 	}
 

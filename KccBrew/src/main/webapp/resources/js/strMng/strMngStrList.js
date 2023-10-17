@@ -1,5 +1,5 @@
 function deleteStrDetail(storeSeq){
-	 if (!confirm("해당 점포를 내 점포에서 삭제 하시겠습니까?")) {
+	 if (!confirm("해당 계정으로 활동한 모든 내역이 삭제됩니다.\n내 점포에서 삭제 하시겠습니까?")) {
 	 } else {
 	    	$.ajax({
 	    		type : "POST",           // 타입 (get, post, put 등등)
@@ -220,63 +220,7 @@ window.onload = function(){
 	        }
 	    });*/
 
-	    const nameCheckBtn = document.querySelector("#name-check-btn");
-
-	    nameCheckBtn.addEventListener("click", function() {
-	        const storeNm = document.getElementById("storeNm").value;
-	        if (!storeNm) {
-	            alert("점포명을 입력해주세요.");
-	            return;
-	        }
-	        $.ajax({
-	            async: true,
-	            type: 'POST',
-	            url: "${pageContext.request.contextPath}/user/namecheck", // 경로 수정
-	            data: JSON.stringify(storeNm), // JSON으로 데이터 전송
-	            dataType: "json", // 서버가 JSON 응답을 반환하는 것으로 예상
-	            contentType: "application/json; charset=UTF-8",
-	            success: function (check) {
-	                if (check == "1") {
-	                    alert("사용 가능한 점포명입니다.");
-	                    // 이후 원하는 동작 수행
-	                    document.getElementById("submitBtn").disabled = false;
-	                    document.getElementById("storeNm").disabled = true;
-	                    document.getElementById("storeNmHidden").value = storeNm;
-	                } else {
-	                    alert("이미 존재하는 점포명입니다.");
-	                    document.getElementById("submitBtn").disabled = true;
-	                }
-	            },
-	            error: function (error) {
-	                console.error("에러 발생:", error);
-	                alert("서버와의 통신 중 오류가 발생했습니다.");
-	            }
-	        });
-	    });
 	    
-	    function submitForm() {
-	        var form = document.getElementById("storeForm");
-	        storeNm.value = storeNm.value.replace(/,/g, ''); 
-	        $.ajax({
-	            type: "POST",
-	            url: form.getAttribute("action"),
-	            data: $(form).serialize(),
-	            contentType: "application/x-www-form-urlencoded; charset=UTF-8",
-	            success: function (response) {
-	                var Close = confirm("저장이 완료되었습니다. 창을 닫으시겠습니까?");
-	                if (Close) {
-	                    window.opener.location.href = "/store";
-	                    window.close();
-	                }
-	            },
-	            error: function (error) {
-	                console.error("AJAX 요청 실패:", error);
-	                alert("빈칸을 모두 입력해주세요.");
-	            }
-	        });
-
-	        return false;
-	    }
 	document.getElementById("address_kakao").addEventListener("click", function() {
         new daum.Postcode({
             oncomplete: function(data) {
@@ -288,6 +232,7 @@ window.onload = function(){
 	});
 	
 	$("#add-store").click(function(){
+		alert("이걸안타?ㄴ")
 		$(".search-store").css("display","block");
 	})
 	// 모달창 밖에 영역 클릭시 삭제

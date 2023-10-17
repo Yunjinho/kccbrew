@@ -117,7 +117,7 @@ window.onload=function(){
 
 										<!-- 기사 배정 및 반려 -->
 										<c:if
-											test="${(asDetailInfo.asStatusCd eq '01' and sessionScope.user.userTypeCd eq '01' and asDetailInfo.asAssignSeq == null) or (sessionScope.user.userTypeCd eq '01' and asDetailInfo.reassign eq'Y')}">
+											test="${(asDetailInfo.asStatusCd eq '01' and sessionScope.user.userTypeCd eq '01' and asDetailInfo.asAssignSeq == null) or (sessionScope.user.userTypeCd eq '01' and asDetailInfo.reassign eq'Y' and asDetailInfo.resultReapply eq 'N' )}">
 											<div>
 												<div class="heading-div">
 													<h1 class="heading">기사 배정</h1>
@@ -211,7 +211,7 @@ window.onload=function(){
 												<div class="heading-div">
 													<h1 class="heading">기사 재배정</h1>
 												</div>
-												<form action="/as-assign" method="post">
+												<form action="/as-assign" method="post" id="as-assign-form"">
 													<table id="search-box">
 														<tr>
 															<td colspan="9"></td>
@@ -279,16 +279,15 @@ window.onload=function(){
 												test="${sessionScope.user.userTypeCd eq '02' and (asDetailInfo.asStatusCd eq '02' or asDetailInfo.asStatusCd eq '01') and sessionScope.user.userId eq asDetailInfo.storeMngId}">
 												<tr>
 													<td colspan="7"></td>
-													<td>
-														<div>
-															<a onclick="deleteAs()" class="form-btn"
-																style="margin: 0px 5px;">취소</a>
-														</div>
+													<td style="display:flex;">
 														<div>
 															<a
 																href="/as-mod?asInfoSeq=${asDetailInfo.asInfoSeq}&asAssignSeq=${asDetailInfo.asAssignSeq}&storeSeq=${asDetailInfo.storeSeq}"
 																class="form-btn" style="margin: 0px 5px;">수정</a>
-
+														</div>
+														<div>
+															<a onclick="deleteAs()" class="form-btn"
+																style="margin: 0px 5px;">취소</a>
 														</div>
 													</td>
 												</tr>
@@ -443,7 +442,7 @@ window.onload=function(){
 													<table id="search-box">
 														<tr>
 															<th>처리 일자</th>
-															<td><input type="date" name="resultDttm" required>
+															<td><input type="date" name="resultDttm" readonly required>
 															</td>
 															<th>청구 비용 입력</th>
 															<td><input type="number" name="asPrice" required>
