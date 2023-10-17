@@ -17,10 +17,24 @@ public interface IAlarmService {
 	public void addAlarm(AlarmVo alarmVo);
 	
 	/**
-	 * 회원ID에 따른 알람 정보 조회
+	 * 회원정보(id, type)에 따른 알람 정보 조회
 	 * @param Map<String, Object> map : 검색 조건
 	 *  @return  List<AlarmVo>: 알람정보 리스트
 	 */
 	public List<AlarmVo> getAlarmsByConditions(Map<String, Object> map);
+	
+	/**
+	 * 회원ID에 따른 알람 정보 조회
+	 * @param String userId : 사용자ID
+	 *  @return  List<AlarmVo>: 알람정보 리스트
+	 */
+	public List<AlarmVo> getAlarmsByUserId(String userId);
+	
+	/**
+	 * 회원의 유형에 따른 알람 정보 조회
+	 * @param String userType : 사용자타입
+	 *  @return  List<AlarmVo>: 알람정보 리스트
+	 */
+	public List<AlarmVo> getAlarmsByUserType(String userType);
 
 }

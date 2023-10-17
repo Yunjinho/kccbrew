@@ -46,7 +46,7 @@
 											<button type="button" id="changeImageBtn" >이미지 변경</button>
 										</sec:authorize>
 										<sec:authorize access="hasRole('ROLE_MANAGER')">
-											<c:set var="imagePath" value="${path}/resources/img/kcc.png" />
+											<c:set var="imagePath" value="${path}/resources/img/baristar.png" />
 											<img src="<c:out value='${imagePath}'/>" id="profileImg">
 										</sec:authorize>
 									</td>

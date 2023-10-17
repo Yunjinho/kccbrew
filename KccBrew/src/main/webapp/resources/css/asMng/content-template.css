@@ -21797,7 +21797,6 @@ code, kbd, pre, samp {
 
 button, input, optgroup, select, textarea {
 	margin: 0;
-	font: inherit;
 	color: inherit
 }
 
@@ -23046,12 +23045,6 @@ body {
 	line-height: 1.42857143;
 	color: #333;
 	background-color: #fff
-}
-
-input, button, select, textarea {
-	font-family: inherit;
-	font-size: inherit;
-	line-height: inherit
 }
 
 a {
@@ -42593,12 +42586,6 @@ code, kbd, pre, samp {
 	font-size: 1em
 }
 
-button, input, optgroup, select, textarea {
-	margin: 0;
-	font: inherit;
-	color: inherit
-}
-
 button {
 	overflow: visible
 }
@@ -43827,12 +43814,6 @@ body {
 	line-height: 1.42857143;
 	color: #333;
 	background-color: #fff
-}
-
-input, button, select, textarea {
-	font-family: 'Noto Sans', inherit;
-	font-size: inherit;
-	line-height: inherit
 }
 
 a {

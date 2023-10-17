@@ -30,6 +30,20 @@ $(document).ready(function() {
             reader.readAsDataURL(fileInput.files[0]);
         }
     });
+
+	//검색 텍스트 하이라이트 설정
+    var searchText = $('#searchText').data('searchtext');
+    
+    function highlightSearchText(searchText) {
+        $('.noti-title').each(function() {
+            var text = $(this).text();
+            var highlightedText = text.replace(new RegExp(searchText, 'gi'), function(match) {
+                return '<span class="highlighted">' + match + '</span>';
+            });
+            $(this).html(highlightedText);
+        });
+    }
+    highlightSearchText(searchText);
 });
 
 var fileNo = 0;
@@ -138,18 +152,23 @@ function updateForm(){
 	for(var i=0; i < fileInput.files.length; i++){
 		formData.append('noticeFile', fileInput.files[i]);
 	}
-	/*
-	$.ajax({
-		url: '/notice/update/' + noticeSeq,
-		type: 'POST',
-		data: formData,
-		processData: false,
-		contentType: false,
-		success:function(response){
-			alert("공지가 수정되었습니다.")
-		},
-		error: function(error){
-			alert("공지 수정을 실패했습니다.")
-		}
-	});*/
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

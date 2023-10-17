@@ -50,12 +50,16 @@
 	<!-- 여러 조건에 따른 알람리스트 조회(현재날짜를 기준으로 3일 이내의 데이터만 조회) -->
 	<select id="selectAlarmsByConditions" resultMap="alarmResult"
 		parameterType="map">
-		SELECT * FROM alarm
+		SELECT DISTINCT * FROM alarm
 		WHERE 1=1
-		<if
-			test="(receiverId != null and receiverId != '') or (receiverType != null and receiverType != '')">
+		<if test="receiverId != null and receiverId != ''">
         <![CDATA[
-        AND ((RECEIVER_ID = #{receiverId}) OR (RECEIVER_TYPE = #{receiverType}))
+        AND RECEIVER_ID = #{receiverId}
+        ]]>
+		</if>
+		<if test="receiverType != null and receiverType != ''">
+        <![CDATA[
+        AND RECEIVER_TYPE = #{receiverType}
         ]]>
 		</if>
     <![CDATA[
@@ -63,6 +67,7 @@
     ORDER BY CAUSE_DTTM DESC
     ]]>
 	</select>
+
 
 
 
