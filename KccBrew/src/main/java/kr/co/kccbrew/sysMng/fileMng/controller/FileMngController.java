@@ -50,6 +50,10 @@ public class FileMngController {
 		} 
 		int startPage=((int)Math.ceil(fileMngVo.getCurrentPage()/10) * 10) + 1;
 		int endPage=((int)Math.ceil(fileMngVo.getCurrentPage()/10) + 1) * 10;
+		System.out.println(startPage+"ggggggggggggggggggggggggggggggggg"+endPage);
+		System.out.println("==========================================");
+		System.out.println(fileMngVo.getCurrentPage());
+		System.out.println(Math.ceil(fileMngVo.getCurrentPage()/10));
 		model.addAttribute("totalPage", totalPage);
 		model.addAttribute("currentPage", 1);
 		model.addAttribute("startPage", startPage);
@@ -74,6 +78,10 @@ public class FileMngController {
 		} 
 		int startPage=((int)Math.ceil(fileMngVo.getCurrentPage()/10) * 10) + 1;
 		int endPage=((int)Math.ceil(fileMngVo.getCurrentPage()/10) + 1) * 10;
+		System.out.println(startPage+"ggggggggggggggggggggggggggggggggg"+endPage);
+		System.out.println("==========================================");
+		System.out.println(fileMngVo.getCurrentPage());
+		System.out.println(Math.ceil(fileMngVo.getCurrentPage()/10));
 		model.addAttribute("totalPage", totalPage);
 		model.addAttribute("currentPage", fileMngVo.getCurrentPage());
 		model.addAttribute("startPage", startPage);

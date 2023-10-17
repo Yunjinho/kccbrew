@@ -25,25 +25,17 @@ function changeStr(){
 	var addr=$("select[name=storeAddr]");
 	addr.prop("selectedIndex", index);
 };
-function changeStartDate(){
+function checkDate(){
 	var start=$("input[name=wishingStartDate]").val();
 	var end=$("input[name=wishingEndDate]").val();
-	if(end=='') return;
-	if(start>end){
-		alert("시작일은 마지막일보다 이전이여야합니다.");
-		$("input[name=wishingStartDate]").val("");
-		$("input[name=wishingEndDate]").val("");
-	}
-}
-function changeEndDate(){
-	var start=$("input[name=wishingStartDate]").val();
-	var end=$("input[name=wishingEndDate]").val();
-	if(start=='') return;
+	if(start==''||end=='') 	return true;
 	if(start>end){
 		alert("마지막일은 시작일보다 이후이여야합니다.");
 		$("input[name=wishingStartDate]").val("");
 		$("input[name=wishingEndDate]").val("");
+		return false;
 	}
+	return true;
 }
 window.onload=function(){
 
@@ -54,7 +46,7 @@ window.onload=function(){
 function performSubmit() {
 	var form = document.getElementById("receipt-form");
 	var formData = new FormData(form);
-	if(changeEndDate()&&changeStartDate()){
+	if(checkDate()){
 		$.ajax({
 			url: form.action,
 			type: form.method,
@@ -62,6 +54,7 @@ function performSubmit() {
 			processData: false, 
 			contentType: false, 
 			success: function(data) {
+				alert(data)
 				sendAsReceiptAlarm();
 				
 				window.location.href = '/as-list';

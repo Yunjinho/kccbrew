@@ -269,4 +269,33 @@ INSERT INTO store_user_map VALUES(#{storeSeq},#{userId})
 DELETE FROM store_user_map WHERE store_seq=#{storeSeq} AND user_id=#{userId}
 ]]>
 </delete>
+<select id="selectDeleteAsList" parameterType="string" resultType="kr.co.kccbrew.asMng.model.AsMngVo">
+<![CDATA[
+	SELECT a.as_info_seq AS "asInfoSeq"
+			, aa.as_assign_seq AS "asAssignSeq"
+			, ar.as_result_seq AS "asResultSeq"
+	FROM as_information a 
+	LEFT OUTER JOIN as_assign aa ON a.as_info_seq=aa.as_info_seq 
+	LEFT OUTER JOIN as_result ar ON ar.as_assign_seq=aa.as_assign_seq 
+	WHERE a.store_seq=#{storeSeq} AND a.store_mng_id=#{userId} 
+]]>
+</select>
+<delete id="deleteASresult" parameterType="string">
+<![CDATA[
+	DELETE FROM as_result WHERE as_result_seq=#{asResultSeq}
+]]>
+</delete>
+<delete id="deleteASAssign" parameterType="string">
+<![CDATA[
+	DELETE FROM as_assign WHERE as_assign_seq=#{asAssignSeq}
+]]>
+</delete>
+<delete id="deleteASinfo" parameterType="string">
+	DELETE FROM as_information WHERE as_info_seq=#{asInfoSeq}
+<![CDATA[
+]]>
+</delete>
+<delete id="deleteholiday">
+	DELETE FROM holiday WHERE user_id=#{userId} AND store_seq=#{storeSeq}
+</delete>
 </mapper>

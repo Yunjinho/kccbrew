@@ -110,9 +110,9 @@
 										<!-- 회원 검색 -->
 										<form name="srhForm" action="admin/schedule" method="post">
 
-											<input type="hidden" name="startDate" value=""> <input
-												type="hidden" name="endDate" value=""> <input
-												type="hidden" name="userTypeCd" value="03">
+											<input type="hidden" name="startDate" id="startDate" value=""> 
+											<input type="hidden" name="endDate" id="endDate" value=""> 
+											<input type="hidden" name="userTypeCd" value="03">
 
 											<div class="search-info">
 												<fieldset>
@@ -126,13 +126,12 @@
 															<!-- 시작 연도 선택 필드 -->
 															<td colspan="4">
 																<div id="dateSelect">
-																	<select id="yearSelect" name="selectedYear" required>
+																	<select id="yearSelect" name="selectedYear" required onchange="getPeriod();">
 																		<c:forEach var="year" begin="2020" end="2030">
 																			<option value="${year}">${year}년</option>
 																		</c:forEach>
 																	</select> 
-																	<select id="monthSelect" name="selectedMonth" required
-																		onChange="getPeriod();">
+																	<select id="monthSelect" name="selectedMonth" required onchange="getPeriod();">
 																		<c:forEach var="month" begin="1" end="12">
 																			<option value="${month}">${month}월</option>
 																		</c:forEach>

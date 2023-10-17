@@ -2,6 +2,8 @@
 package kr.co.kccbrew.comm.security.service;
 
 
+import java.util.List;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,8 +24,8 @@ public class UserSearchService implements IUserSearchService {
 	 * @return 아이디찾기
 	 */
 	@Override
-	public UserVo searchId(String userNm, String userTelNo) {
-		UserVo result = new UserVo();
+	public List<UserVo> searchId(String userNm, String userTelNo) {
+		List<UserVo> result = null;
 		try {
 			result = userSearchRepository.searchId(userNm, userTelNo);
 		} catch (Exception e) {

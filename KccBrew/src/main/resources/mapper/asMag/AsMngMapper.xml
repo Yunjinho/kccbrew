@@ -215,7 +215,7 @@
 				</when>
 				<otherwise>
 					<![CDATA[
-						AND status.as_status LIKE '%'||#{asStatusCd}||'%'
+						AND a.as_status LIKE '%'||#{asStatusCd}||'%'
 					]]>
 				</otherwise>
 			</choose>
