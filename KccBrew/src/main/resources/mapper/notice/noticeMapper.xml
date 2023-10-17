@@ -8,9 +8,31 @@
 			SELECT COUNT(*) FROM notification
 		]]>
 	</select>
+	
+	<!-- 페이징 처리 후 공지사항 조회, 검색 조건을 설정하지 않았을 경우 -->
+	<select id="selectNotice" resultType="kr.co.kccbrew.notice.model.NoticeVo">
+		<![CDATA[
+		SELECT * 
+			FROM (
+				SELECT ROWNUM RN, A.* 
+					FROM (
+							SELECT
+								notice_seq		AS "noticeSeq"
+								,writer_name	AS "writerName"
+								,write_dttm		AS "writeDate"
+								,notice_title	AS "noticeTitle"
+								,views			AS "views"
+							FROM notification
+							ORDER BY notice_seq DESC
+							) A
+				)
+		WHERE RN BETWEEN #{start} AND #{end}
+		]]>
+	</select>
+	
 	<!-- 검색 조건으로 필터링한 공지사항 결과 총 개수 구하기 -->
 	<select id="countNoticeWithCon" parameterType="hashmap" resultType="java.lang.Integer">
-		SELECT COUNT(*) 
+		SELECT COUNT(*)
 			FROM (
 				SELECT ROWNUM RN, A.* 
 					FROM (
@@ -39,27 +61,6 @@
 							ORDER BY notice_seq DESC
 							) A
 					)
-	</select>
-	
-	<!-- 페이징 처리 후 공지사항 조회, 검색 조건을 설정하지 않았을 경우 -->
-	<select id="selectNotice" resultType="kr.co.kccbrew.notice.model.NoticeVo">
-		<![CDATA[
-		SELECT * 
-			FROM (
-				SELECT ROWNUM RN, A.* 
-					FROM (
-							SELECT
-								notice_seq		AS "noticeSeq"
-								,writer_name	AS "writerName"
-								,write_dttm		AS "writeDate"
-								,notice_title	AS "noticeTitle"
-								,views			AS "views"
-							FROM notification
-							ORDER BY notice_seq DESC
-							) A
-				)
-		WHERE RN BETWEEN #{start} AND #{end}
-		]]>
 	</select>
 	
 	<!-- 페이징 처리 후 공지사항 조회, 검색 조건을 설정했을 경우 -->
@@ -143,7 +144,7 @@
 	
 	<!-- 공지사항 등록하기 -->
 	<insert id="insertNotice" parameterType="kr.co.kccbrew.notice.model.NoticeVo">
-		<![CDATA[
+		<!-- <![CDATA[
 			INSERT INTO notification VALUES (
 				notice_seq.NEXTVAL
 				,#{writerId}
@@ -155,6 +156,24 @@
 				,#{noticeContent}
 				,#{fileId}
 				,0)
+		]]> -->
+		
+		<![CDATA[
+			INSERT INTO notification VALUES (
+	            notice_seq.NEXTVAL
+	            ,#{writerId}
+	            ,(
+	                SELECT user_nm
+	                FROM users
+	                WHERE user_id = #{writerId}
+	             )
+	            ,SYSDATE
+	            ,SYSDATE
+	            ,#{writerId}
+	            ,#{noticeTitle}
+	            ,#{noticeContent}
+	            ,#{fileId}
+	            ,0)
 		]]>
 	</insert>
 	
