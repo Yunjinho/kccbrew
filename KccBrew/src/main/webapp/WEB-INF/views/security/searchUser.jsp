@@ -42,25 +42,24 @@
 <link rel="stylesheet" href="${path}/resources/css/comm/reset.css" />
 </head>
 <style>
-/* #searchBtn2 {
-	cursor: pointer;
-	text-decoration: underline;
-	display: inline-block;
-	float: right;
-	width: 92px;
-	height: 92px;
-	margin-left: 10px;
-	border-radius: 100px;
-	-moz-border-radius: 100px;
-	-webkit-border-radius: 100px;
-	background-color: #094a9a;
-	font-size: 18px;
-	font-weight: 400;
-	color: #fff;
-	line-height: 92px;
+#loading-spinner{
+position: fixed; /* 화면에 고정 */
+	z-index: 1; /* 다른 요소보다 위에 표시되도록 설정 */
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0, 0, 0, 0.5); /* 반투명한 배경 색상 */
 	text-align: center;
 }
- */
+#loadingIcon{
+	margin: 20% auto; /* 모달을 수직, 수평 가운데로 위치시킴 */
+	padding: 20px;
+	width: 15%;
+	border-radius: 20px;
+	display: flex;
+	flex-direction: column;
+}
 </style>
 <body class="login" marginwidth="0" marginheight="0">
 <div class="wrap">
@@ -124,7 +123,9 @@
 										name="userEmail" placeholder="ex) kccbrew@gmail.com">
 
 								</div>
-							
+							<div id="loading-spinner" style="display: none;">
+  <img src="/resources/img/loading.gif" alt="로딩 중..." id="loadingIcon"/>
+</div>
 									<button id="searchBtn2" type="submit" class="loginbtn" style="    margin-top: -80px;">확인</button>
 							
 							</form>
@@ -136,8 +137,7 @@
 					<p id="login-msg"></p> -->
 				</div>
 			</div>
-			<!-- 로그인 입력 //-->
-		
+			
 		<!-- 로그인 영역 //-->
 		<!-- 서비스 영역 -->
 		<div class="servicezone">
@@ -256,7 +256,7 @@
 }
 		$('#searchBtn2').on('click', function(event) {
 		    event.preventDefault(); // 기본 폼 제출 동작을 막습니다.
-
+		    $('#loading-spinner').show();
 		    // 폼 데이터를 가져옵니다.
 		    var formData = {
 		        userId: $('#userId').val(), // 아이디 입력 필드의 값을 가져옵니다.
@@ -269,17 +269,21 @@
 		        url: '/searchPassword', // 서버 엔드포인트 URL을 실제로 사용하는 URL로 업데이트합니다.
 		        data: formData,
 		        success: function(result) {
+		        	
 		        	if(result==="true"){
 		        		console.log(result);
+		        		 $('#loading-spinner').hide();
 		                alert("이메일로 임시 비밀번호를 발신했습니다.");
 		                location.href = "/login";
 		        	}else if(result==="false"){
 		                console.log(result);
-		        		alert("가입하신 아이디와 이메일이 일치하지 않습니다.")
+		                $('#loading-spinner').hide();
+		        		alert("가입하신 아이디와 이메일이 일치하지 않습니다.");
 		        	}
 		        },
 		        error: function(xhr, status, error) {
 		            console.error(error);
+		            $('#loading-spinner').hide();
 		            alert("정보를 확인해 주세요.");
 	                location.href = "/searchUser";
 		            // 에러가 발생한 경우에 대한 처리를 추가합니다.
