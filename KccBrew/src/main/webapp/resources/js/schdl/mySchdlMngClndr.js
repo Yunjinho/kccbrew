@@ -71,7 +71,7 @@ function sendAjaxRequest(year, month) {
 			console.log("assignDates: " + assignDates);
 			for (var j = 0; j < assignDates.length; j++) {
 
-				var assignDate = new Date(assignDates[j]);
+				var assignDate = new Date(assignDates[j].visitDate);
 				var formatAssignDate = formatDateToYYYYMMDD(assignDate);
 
 				console.log("formatAssignDate: " + formatAssignDate);
