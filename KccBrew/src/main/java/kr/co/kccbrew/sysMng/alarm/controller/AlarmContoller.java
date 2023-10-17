@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.co.kccbrew.sysMng.alarm.model.AlarmVo;
 import kr.co.kccbrew.sysMng.alarm.service.IAlarmService;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * @ClassNmae : AlarmContoller
@@ -24,6 +25,7 @@ import kr.co.kccbrew.sysMng.alarm.service.IAlarmService;
  * @version 1.0
  */
 
+@Slf4j
 @Controller
 public class AlarmContoller {
 	@Autowired
@@ -46,7 +48,11 @@ public class AlarmContoller {
 	@GetMapping("/getAlarmData")
 	@ResponseBody
 	public List<AlarmVo> getAlarms(@RequestParam(value = "userId", required = false) String userId, 
-			@RequestParam(value="userType", required = false) String userType) {
+																		@RequestParam(value="userType", required = false) String userType) {
+		
+		log.info("AlarmContoller.getAlarms");
+		log.info("userId : " + userId);
+		log.info("userType: " + userType);
 		
 		Map<String, Object> map = new HashMap<>();
 		map.put("receiverId", userId);
