@@ -50,7 +50,7 @@ html {
 <link rel="stylesheet" href="${path}/resources/css/comm/reset.css">
 <link rel="stylesheet" href="${path}/resources/css/comm/reset.css">
 <link rel="stylesheet" href="${path}/resources/css/comm/footer.css" />
-<link rel="stylesheet" href="${path}/resources/css/asMng/content-template.css" />
+<link rel="stylesheet" href="${path}/resources/css/notice/content-template.css" />
 
 
 <sec:authorize access="hasRole('ROLE_ADMIN')">
