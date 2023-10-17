@@ -340,12 +340,6 @@ div.modalBackground {
 											</tbody>
 										</table>
 									</div>
-<li class="nav-item">
-<c:url var="chatList"  value="/admin/chat"></c:url>
-<a id="dropdownLI" class="nav-link collapsed"
-		aria-expanded="true" aria-controls="collapseTwo"
-		href="${chatList}"> <i class="fas fa-fw fa-cog"></i> <span>Chat</span>
-	</a></li>
 									<!-- 페이징 -->
 									<div class="paging pagination">
 
