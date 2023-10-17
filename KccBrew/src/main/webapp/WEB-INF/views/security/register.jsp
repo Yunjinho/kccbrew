@@ -172,12 +172,14 @@
 									<img
 										src="<c:url value="resources/img/register/register_location.png"/>"
 										class="register-icons"> <select name="locationCd">
-										<option>지역 상세 선택</option>
+										<option value="">지역 상세 선택</option>
 									</select>
 								</div>
 							</div>
 							<ul class="register-msg">
-								<li id="mechaAddMsg">기사: 필수 정보입니다.</li>
+								<li id="mechaAddMsg">장비: 필수 정보입니다.</li>
+								<li id="locationMsg">지역: 필수 정보입니다.</li>
+								<li id="locationCdMsg">상세 지역: 필수 정보입니다.</li>
 							</ul>
 							<br>
 							<div class="register-button">
