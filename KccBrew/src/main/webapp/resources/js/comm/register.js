@@ -302,7 +302,7 @@ function checkStoreAddr(){
 
 //사용자 장비코드 조건 확인
 function checkEqpmnCd(){
-	if($("select[name=eqpmnCd] option:selected").val()=="장비 선택"){
+	if($("select[name=eqpmnCd] option:selected").val()==""){
 		$("select[name=eqpmnCd]").parent().css("border","1px solid red");
 		$("#mechaAddMsg").css("display","block");
 		return false;
@@ -311,9 +311,26 @@ function checkEqpmnCd(){
 		$("#mechaAddMsg").css("display","none");
 		return true;
 	}
-
 }
-
+function checklocationCd(){
+	if($("select[name=location] option:selected").val()==""){
+		$("select[name=location]").parent().css("border","1px solid red");
+		$("#locationMsg").css("display","block");
+		return false;
+	}else{
+		$("select[name=location]").parent().css("border","none");
+		$("#locationMsg").css("display","none");
+	}
+	if($("select[name=locationCd] option:selected").val()==""){
+		$("select[name=locationCd]").parent().css("border","1px solid red");
+		$("#locationCdMsg").css("display","block");
+		return false;
+	}else{
+		$("select[name=locationCd]").parent().css("border","none");
+		$("#locationCdMsg").css("display","none");
+	}
+	return true;
+}
 //사진 등록했는지 확인
 function checkUploadImg(){
 	if($("input[name=imgFile]").val()==""){
@@ -321,7 +338,7 @@ function checkUploadImg(){
 		$("#imgFileMsg").css("display","block")
 		return false;
 	}else{
-		$("#insert-img-box").parent().css("border","none");
+		$("#insert-img-box").css("border","none");
 		$("#imgFileMsg").css("display","none")
 		return true;
 	}
@@ -330,7 +347,7 @@ function checkUploadImg(){
 //대분류 지역 조건 변경 시 소분류 지역값들 변경 함수
 function changeLosctionDtlCd(data){
 	var locOption=$("select[name=locationCd]");
-	var content='<option>지역 상세 선택</option>';
+	var content='<option value="">지역 상세 선택</option>';
 
 	for(var i=0;i<data.length;i++){
 		content +='<option value="'+data[i].grpCdDtlId+'" >'+data[i].grpCdDtlNm+'</option>'
@@ -523,6 +540,7 @@ window.onload = function(){
 
 		if(userTypeCd=="03"){
 			if(!checkEqpmnCd())return;
+			if(!checklocationCd())return;
 		}
 		$("#registerForm").submit();
 	})
