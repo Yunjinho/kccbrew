@@ -19,21 +19,31 @@
 			<div class="arrowAndContents">
 				<!-- ********** 페이지 네비게이션 시작 ********** -->
 				<div class="page-content-navigation">
+				<h2 class="noti-head">내 정보</h2>
 					<ol class="breadcrumb">
-						<li class="breadcrumb-home">마이페이지</li>
-						<li class="right-arrow">
+						<li>
 							<div class="header-icon-background">
-								<img
-									src="<c:url value='${path}/resources/img/asMng/free-icon-right-arrow-271228.png' />"
-									alt="Check List" class="header-icon" />
+								<a href="/">
+									<img src="<c:url value='${path}/resources/img/common/free-icon-house.png' />" alt="Check List" class="header-icon" />
+								</a>
 							</div>
 						</li>
-						<li>내 정보</li>
+						<li>
+							<div class="header-icon-background">
+								<img src="<c:url value='${path}/resources/img/common/free-icon-arrow-right.png' />" alt="Check List" class="header-icon" />
+							</div>
+						</li>
+						<li class="breadcrumb-home">마이페이지</li>
+						<li>
+							<div class="header-icon-background">
+								<img src="<c:url value='${path}/resources/img/common/free-icon-arrow-right.png' />" alt="Check List" class="header-icon" />
+							</div>
+						</li>
+						<li class="curPage">내 정보 수정</li>
 					</ol>
 				</div>
 				<!-- ********** 페이지 네비게이션 끝 ********** -->
 				<div class="myInfo-wrapper">
-					<div class="category">내 정보</div>
 						<form method="post" id="updateProfileForm" name="updateProfileForm" enctype="multipart/form-data">
 						<table id="search-box">
 							<c:forEach var="user" items="${userInfoList}" >

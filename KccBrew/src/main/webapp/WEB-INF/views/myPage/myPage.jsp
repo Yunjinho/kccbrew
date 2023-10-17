@@ -46,7 +46,7 @@
 										alt="Check List" class="header-icon" />
 								</div>
 							</li>
-									<li>내 정보</li>
+									<li class="curPage">내 정보</li>
 								</ol>
 							</div>
 							<!-- ********** 페이지 네비게이션 끝 ********** -->
