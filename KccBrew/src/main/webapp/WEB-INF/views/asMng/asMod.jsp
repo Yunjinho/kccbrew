@@ -169,30 +169,24 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> 
 <%-- 	<script src="<c:url value="/resources/js/asMng/asReceipt.js"/>"></script> --%>
 <script type="text/javascript">
-function changeStartDate(){
+function checkDate(){
 	var start=$("input[name=wishingStartDate]").val();
 	var end=$("input[name=wishingEndDate]").val();
-	if(end=='') return;
-	if(start>end){
-		alert("시작일은 마지막일보다 이전이여야합니다.");
-		$("input[name=wishingStartDate]").val("");
-	}
-}
-function changeEndDate(){
-	var start=$("input[name=wishingStartDate]").val();
-	var end=$("input[name=wishingEndDate]").val();
-	if(start=='') return;
+	if(start==''||end=='') return true;
 	if(start>end){
 		alert("마지막일은 시작일보다 이후이여야합니다.");
 		$("input[name=wishingEndDate]").val("");
+		$("input[name=wishingStartDate]").val("");
+		return false;
 	}
+	return true;
 }
 $(document).ready(function() {
-	if(changeStartDate()&&changeEndDate()){
-		$("#receipt-submit").click(function(){
+	$("#receipt-submit").click(function(){
+		if(checkDate()){
 			$("#receipt-form").submit();
-		})
-	}
+		}
+	})
     var asInfoSeq = "${asInfoSeq}"; // 수정 필요한 부분
     var asAssignSeq = "${asAssignSeq}"; // 수정 필요한 부분
     var storeSeq = "${storeSeq}"; // 수정 필요한 부분

@@ -63,7 +63,7 @@
 															value="${path}/${user.fileDetailLocation}${user.fileDetailServerName}" />
 														<img src="<c:out value='${imagePath}'/>" id="profileImg">
 													</sec:authorize> <sec:authorize access="hasRole('ROLE_MANAGER')">
-														<c:set var="imagePath" value="resources/img/kcc.png" />
+														<c:set var="imagePath" value="resources/img/baristar.png" />
 														<img src="<c:out value='${imagePath}'/>" id="profileImg">
 													</sec:authorize></td>
 												<th>ID</th>

@@ -21,27 +21,17 @@ function selectAsDetail(asInfoSeq,asAssignSeq,storeSeq){
 	}
 	location.href="/as-detail?asInfoSeq="+asInfoSeq+"&asAssignSeq="+asAssignSeq+"&storeSeq="+storeSeq;
 }
-function changeStartDate(){
+function checkDate(){
 	var start=$("input[name=wishingStartDate]").val();
 	var end=$("input[name=wishingEndDate]").val();
-	if(end==''){ return true;}
+	if(end==''||start==''){ return true;}
 	if(start>end){
 		alert("시작일은 마지막일보다 이전이여야합니다.");
 		$("input[name=wishingStartDate]").val("");
 		$("input[name=wishingEndDate]").val("");
 		return false;
 	}
-}
-function changeEndDate(){
-	var start=$("input[name=wishingStartDate]").val();
-	var end=$("input[name=wishingEndDate]").val();
-	if(start==''){ return true;}
-	if(start>end){
-		alert("마지막일은 시작일보다 이후이여야합니다.");
-		$("input[name=wishingStartDate]").val("");
-		$("input[name=wishingEndDate]").val("");
-		return false;
-	}
+	return true;
 }
 function downExcel(flag){
 	
@@ -81,11 +71,13 @@ window.onload=function(){
 	history.replaceState({}, null, location.pathname);
 	
 	$("#search-submit").click(function(){
-		if(isNaN($("input[name=asInfoSeq]").val())){
-			alert("AS 번호는 숫자만 입력 가능합니다.")
-			return;
+		if(($("input[name=asInfoSeq]").val()=="")){
+			if(isNaN($("input[name=asInfoSeq]").val())){
+				alert("AS 번호는 숫자만 입력 가능합니다.")
+				return;
+			}
 		}
-		if(changeStartDate() && changeEndDate()){
+		if(checkDate()){
 			$("#search-form").submit();
 		}
 	})
