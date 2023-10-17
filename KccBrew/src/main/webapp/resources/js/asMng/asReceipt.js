@@ -54,7 +54,6 @@ function performSubmit() {
 			processData: false, 
 			contentType: false, 
 			success: function(data) {
-				alert(data)
 				sendAsReceiptAlarm();
 				
 				window.location.href = '/as-list';

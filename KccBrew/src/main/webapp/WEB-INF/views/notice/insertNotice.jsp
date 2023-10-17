@@ -25,37 +25,30 @@
 	<div id="page-mask">
 		<div id="page-container" class="">
 			<div id="page-content" class="clearfix">
-				<div id="page-content-wrap">
+				<div id="main-content-wrap">
 			<!-- ********** 페이지 네비게이션 시작 ********** -->
 			<div class="page-content-navigation">
-			<h2 class="heading">공지사항 작성</h2>
+				<h2 class="noti-head">공지사항</h2>
 				<ol class="breadcrumb">
 				<li>
-								<div class="header-icon-background">
-								<a href="/">
-									<img
-										src="<c:url value='resources/img/common/free-icon-house.png' />"
-										alt="Check List" class="header-icon" />
-										</a>
-								</div>
-							</li>
-							<li>
-								<div class="header-icon-background">
-									<img
-										src="<c:url value='resources/img/common/free-icon-arrow-right.png' />"
-										alt="Check List" class="header-icon" />
-								</div>
-							</li>
-							
-					<li class="breadcrumb-home">공지사항</li>
-						<li>
-								<div class="header-icon-background">
-									<img
-										src="<c:url value='resources/img/common/free-icon-arrow-right.png' />"
-										alt="Check List" class="header-icon" />
-								</div>
-							</li>
-					<li>공지사항</li>
+					<div class="header-icon-background">
+						<a href="/">
+							<img src="<c:url value='resources/img/common/free-icon-house.png' />" alt="Check List" class="header-icon" />
+						</a>
+					</div>
+				</li>
+				<li>
+					<div class="header-icon-background">
+						<img src="<c:url value='resources/img/common/free-icon-arrow-right.png' />" alt="Check List" class="header-icon" />
+					</div>
+				</li>
+				<li class="breadcrumb-home">마이페이지</li>
+				<li>
+					<div class="header-icon-background">
+						<img src="<c:url value='resources/img/common/free-icon-arrow-right.png' />" alt="Check List" class="header-icon" />
+					</div>
+				</li>
+				<li class="curPage">공지사항</li>
 				</ol>
 			</div>
 			<!-- ********** 페이지 네비게이션 끝 ********** -->
@@ -81,7 +74,7 @@
 								<th>첨부 파일</th>
 								<td>
 									<div style="display:flex;">
-										<div id="fileCount" style="margin: 0px 5px 0px 0px;">업로드할 파일을 선택해주세요.(최대 3개)</div>
+										<div id="fileCount" style="margin: 0px 5px 0px 0px;">업로드할 파일을 선택해주세요.(최대 3개, 허용 확장자: jpg, jpeg, png)</div>
 										<div class="file-box">
 											<div class="file-label">
 												<label for="fileInput" id="fileUploadBtn">파일 선택 </label>
