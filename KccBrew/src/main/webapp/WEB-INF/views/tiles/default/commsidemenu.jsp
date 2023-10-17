@@ -101,7 +101,7 @@
 				<div class="photo-wrapper">
 					<c:set var="imagePath"
 						value="${user.storageLocation}${user.fileServerNm}" />
-					<img src="<c:out value='/${imagePath}'/>">
+					<img src="${path}/resources/img/baristar.png">	
 				</div>
 
 				<h2 class="user-info-wrapper">

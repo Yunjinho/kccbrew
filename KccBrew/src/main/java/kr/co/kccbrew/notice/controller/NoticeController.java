@@ -90,6 +90,12 @@ public class NoticeController {
 		
 		List<NoticeVo> list2=noticeService.selectNoticeWithCon(vo.getStart(),vo.getEnd(),searchOption,searchText);
 		List<NoticeVo> list=noticeService.selectNoticeWithCon(vo.getNowPage(),vo.getCntPerPage(),searchOption,searchText);
+//		List<NoticeVo> list;
+//		if(searchText != null && !searchText.isEmpty()) {
+//			list = noticeService.selectNoticeWithCon(vo.getNowPage(), vo.getCntPerPage(), searchOption, searchText);
+//		}else {
+//			list = noticeService.selectNoticeWithCon(vo.getNowPage(), vo.getCntPerPage(), searchOption, null);
+//		}
 		
 		model.addAttribute("paging", vo);
 		model.addAttribute("viewAll", list);
