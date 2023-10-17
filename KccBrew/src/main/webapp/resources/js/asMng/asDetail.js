@@ -144,7 +144,14 @@ function rejectConfirm(flag){
 	var mechanicId=$("select[name=mechanicId] option:selected").val();
 	var asAssignSeq=$("input[name=asAssignSeq]").val();
 	var asInfoSeq=$("input[name=asInfoSeq]").val();
-
+	alert(visitDttm)
+	alert(mechanicId)
+	alert(asAssignSeq)
+	alert(asInfoSeq)
+	if(visitDttm=='' || mechanicId=='' || asAssignSeq=='' || asInfoSeq==''){
+		alert("모든 값을 입력해주세요")
+	}
+	
 	$.ajax({
 		type : "POST",           // 타입 (get, post, put 등등)
 		url : "/reject-confirm",           // 요청할 서버url
@@ -189,7 +196,29 @@ function performSubmit() {
 
 	var asInfoSeq = document.getElementById("asInfoSeq");
 	var asAssignSeq = document.getElementById("asAssignSeq");
+	
+	let today = new Date();   
+	
+	let year = today.getFullYear(); // 년도
+	let month = today.getMonth() + 1;  // 월
+	let date = today.getDate();  // 날짜
+	
+	var dttm=year + '-' + month + '-' + date;
+	
+	var visitDttm=$("input[name=visitDttm]").val();
+	var mechanicId=$("select[name=mechanicId] option:selected").val();
+	var asAssignSeq=$("input[name=asAssignSeq]").val();
 
+	if(dttm>visitDttm){
+		alert("배정일은 금일 이후로 지정해주세요")
+	}
+	
+	if(visitDttm=='' || mechanicId=='' || asAssignSeq=='' || asInfoSeq==''){
+		alert("모든 값을 입력해주세요")
+		return;
+	}
+	
+	
 	$.ajax({
 		url: form.action,
 		type: form.method,
@@ -198,7 +227,7 @@ function performSubmit() {
 		contentType: false, 
 		success: function(data) {
 			sendAsAssignAlarm();
-			/*window.location.href = '/as-detail?asInfoSeq="+asInfoSeq+"&asAssignSeq="+asAssignSeq';*/
+			window.location.href = '/as-detail?asInfoSeq="+asInfoSeq+"&asAssignSeq="+asAssignSeq';
 			window.location.reload();
 			alert('AS배정이 등록되었습니다!');
 		},

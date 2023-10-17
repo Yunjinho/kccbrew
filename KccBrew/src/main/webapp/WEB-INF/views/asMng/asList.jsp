@@ -151,10 +151,10 @@
 													</select></td>
 												</tr>
 												<tr>
-													<td colspan="7" style="border-bottom: none;"></td>
-													<td style="text-align: center; border-bottom: 0px;display: flex; float: right;">
-														<div style="margin:0px 10px;">
-															<button type="button" onclick="resetSearch()" class="form-btn">초기화</button>
+													<td colspan="6" style="border-bottom: none;"></td>
+													<td style="border-bottom: none;">
+														<div style="text-align: center; border-bottom: 0px; display: flex; float: right;">
+															<button style="margin:0px 10px;" type="button" onclick="resetSearch()" class="form-btn">초기화</button>
 															<div id="search-submit" class="form-btn">검색</div>
 														</div>
 													</td>
@@ -322,9 +322,9 @@
 												</tr>
 												<tr>
 													<td colspan="6" style="border-bottom: none;"></td>
-													<td style="text-align: center; border-bottom: 0px;display: flex; float: right;">
-														<div style="margin:0px 10px;">
-															<button type="button" onclick="resetSearch()" class="form-btn">초기화</button>
+													<td style="border-bottom: none;">
+														<div style="text-align: center; border-bottom: 0px; display: flex; float: right;">
+															<button style="margin:0px 10px;" type="button" onclick="resetSearch()" class="form-btn">초기화</button>
 															<div id="search-submit" class="form-btn">검색</div>
 														</div>
 													</td>
