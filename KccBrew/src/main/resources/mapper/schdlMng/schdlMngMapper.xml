@@ -682,8 +682,8 @@ EXTRACT(YEAR FROM SCHEDULE_DATE) = 2023 AND EXTRACT(MONTH FROM SCHEDULE_DATE) = 
 			#{id})
 		</if>
 		AND as_assign.visit_dttm IS NOT NULL
-		AND as_assign.reject_content_mcha
-		IS NULL
+		<!-- AND as_assign.reject_content_mcha
+		IS NULL -->
 		<if test="yr != null and yr != '' and mn != null and mn != ''">
 			AND
 			(EXTRACT(YEAR FROM as_assign.VISIT_DTTM) = #{yr} AND
