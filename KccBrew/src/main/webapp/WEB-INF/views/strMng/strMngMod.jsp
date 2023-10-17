@@ -48,7 +48,7 @@
 				<tr>
 					<th>지점명</th>
 					<td><input type="text" id="storeNm" name="storeNm"
-						value="${store.storeNm}" required> <input type="hidden"
+						value="${store.storeNm}" required> <input type="hidden" value="${store.storeNm}"
 						id="storeNmHidden" name="storeNm"></input> <!-- 숨겨진 필드 추가 --> <input
 						type="button" name="strnm" value="중복확인" class="check"
 						id="name-check-btn" required></td>
@@ -177,6 +177,8 @@
     const submitBtn = document.querySelector("#submitBtn"); // 폼 제출 버튼
 
     storeNm.addEventListener("input", function() {
+    	console.log("바꾼거"+storeNm.value);
+    	console.log("원래"+storeNmHidden.value);
         if (storeNm.value === storeNmHidden.value) {
             submitBtn.disabled = false; // 저장 버튼 활성화
         } else {
