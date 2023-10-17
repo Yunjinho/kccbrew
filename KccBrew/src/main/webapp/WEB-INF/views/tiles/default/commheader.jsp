@@ -36,7 +36,6 @@
 	var isClicked = false;
 	function handleClick(event) {
 		event.preventDefault();
-
 		var olElement = document.getElementById("notification-list");
 		if (isClicked) {
 			olElement.style.display = "none";

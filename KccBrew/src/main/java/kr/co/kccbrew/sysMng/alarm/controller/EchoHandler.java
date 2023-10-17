@@ -148,6 +148,7 @@ public class EchoHandler extends TextWebSocketHandler implements WebSocketHandle
 		AlarmVo alarmVo = new AlarmVo();
 		alarmVo.setCauseAgent(userId);
 		alarmVo.setReceiverType("관리자");
+		alarmVo.setReceiverId("all");
 		alarmVo.setAlarmTitle("휴가신청");
 		alarmVo.setAlarmContent(message);
 		java.util.Date utilDate = new java.util.Date();
@@ -199,6 +200,7 @@ public class EchoHandler extends TextWebSocketHandler implements WebSocketHandle
 		AlarmVo alarmVo = new AlarmVo();
 		alarmVo.setCauseAgent(userId);
 		alarmVo.setReceiverType("관리자");
+		alarmVo.setReceiverId("all");
 		alarmVo.setAlarmTitle("휴가취소");
 		alarmVo.setAlarmContent(message);
 		java.util.Date utilDate = new java.util.Date();
@@ -246,6 +248,7 @@ public class EchoHandler extends TextWebSocketHandler implements WebSocketHandle
 		AlarmVo alarmVo = new AlarmVo();
 		alarmVo.setCauseAgent(storeId);
 		alarmVo.setReceiverType("관리자");
+		alarmVo.setReceiverId("all");
 		alarmVo.setAlarmTitle("AS접수");
 		alarmVo.setAlarmContent(message);
 		java.util.Date utilDate = new java.util.Date();
@@ -342,6 +345,7 @@ public class EchoHandler extends TextWebSocketHandler implements WebSocketHandle
 		AlarmVo alarmVo = new AlarmVo();
 		alarmVo.setCauseAgent(userId);
 		alarmVo.setReceiverType("관리자");
+		alarmVo.setReceiverId("all");
 		//	alarmVo.setReceiverId(mechanicId);
 		alarmVo.setAlarmTitle("AS배정반려");
 		alarmVo.setAlarmContent(message);
