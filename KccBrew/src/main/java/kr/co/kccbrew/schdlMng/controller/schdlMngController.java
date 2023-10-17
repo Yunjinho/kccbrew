@@ -529,12 +529,11 @@ public class schdlMngController {
 	/*관리자 월근태현황 검색*/
 	@PostMapping(value="admin/schedule", produces = "application/json; charset=utf-8")
 	@ResponseBody
-	public List<Map<String, Object>>processSearchRequest(@RequestParam("startDate") String startDate,
+	public List<Map<String, Object>>processSearchRequest(
+			@RequestParam("startDate") String startDate,
 			@RequestParam("endDate") String endDate, 
-			@ModelAttribute UserVo userVo,Authentication authentication) {
-
-		/*데이터확인*/
-		System.out.println("startDate: " + startDate + ", endDate: " + endDate);
+			@ModelAttribute UserVo userVo,
+			Authentication authentication) {
 
 		String year = null;
 		String month = null;

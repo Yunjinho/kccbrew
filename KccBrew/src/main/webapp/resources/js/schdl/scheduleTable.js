@@ -25,7 +25,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
 //AJAX 요청을 보내는 함수
 function performSearch() {
-	console.log("performSearch()함수 실행!");
+	
 	var formData = $("form[name='srhForm']").serialize();
 
 	$.ajax({

@@ -250,7 +250,6 @@ function getAlarmData() {
 			else  {
 				for (var i = 0; i < data.length; i++) {
 					var item = data[i];
-					console.log("item: " + item);
 					var listItem = document.createElement("li");
 					listItem.className =
 						"list-group-item d-flex justify-content-between align-items-start";
