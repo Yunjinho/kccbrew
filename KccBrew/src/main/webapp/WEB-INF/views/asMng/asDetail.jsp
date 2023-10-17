@@ -279,16 +279,15 @@ window.onload=function(){
 												test="${sessionScope.user.userTypeCd eq '02' and (asDetailInfo.asStatusCd eq '02' or asDetailInfo.asStatusCd eq '01') and sessionScope.user.userId eq asDetailInfo.storeMngId}">
 												<tr>
 													<td colspan="7"></td>
-													<td>
-														<div>
-															<a onclick="deleteAs()" class="form-btn"
-																style="margin: 0px 5px;">취소</a>
-														</div>
+													<td style="display:flex;">
 														<div>
 															<a
 																href="/as-mod?asInfoSeq=${asDetailInfo.asInfoSeq}&asAssignSeq=${asDetailInfo.asAssignSeq}&storeSeq=${asDetailInfo.storeSeq}"
 																class="form-btn" style="margin: 0px 5px;">수정</a>
-
+														</div>
+														<div>
+															<a onclick="deleteAs()" class="form-btn"
+																style="margin: 0px 5px;">취소</a>
 														</div>
 													</td>
 												</tr>

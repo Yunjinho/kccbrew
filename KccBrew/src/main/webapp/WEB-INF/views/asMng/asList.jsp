@@ -151,17 +151,10 @@
 													</select></td>
 												</tr>
 												<tr>
-													<td colspan="6" style="border-bottom: none;"></td>
-													<td
-														style="text-align: center; border-bottom: 0px; float: right;">
-														<div>
-															<button type="button" onclick="resetSearch()"
-																class="form-btn">초기화</button>
-														</div>
-													</td>
-													<td
-														style="text-align: center; border-bottom: 0px; float: right;">
-														<div>
+													<td colspan="7" style="border-bottom: none;"></td>
+													<td style="text-align: center; border-bottom: 0px;display: flex; float: right;">
+														<div style="margin:0px 10px;">
+															<button type="button" onclick="resetSearch()" class="form-btn">초기화</button>
 															<div id="search-submit" class="form-btn">검색</div>
 														</div>
 													</td>
@@ -236,13 +229,11 @@
 													</select></td>
 												</tr>
 												<tr>
-													<td colspan="5" style="border-bottom: none;"></td>
-													<td style="text-align: center; border-bottom: 0px;">
-														<div>
-															<a href="/as-receipt" class="form-btn">AS 접수</a>
+													<td colspan="6" style="border-bottom: none;"></td>
+													<td style="text-align: center; border-bottom: 0px;display: flex; float: right;">
+														<div style="margin:0px 10px;">
+															<button type="button" onclick="resetSearch()" class="form-btn">초기화</button>
 														</div>
-													</td>
-													<td style="text-align: center; border-bottom: 0px;">
 														<div>
 															<div id="search-submit" class="form-btn">검색</div>
 														</div>
@@ -331,8 +322,9 @@
 												</tr>
 												<tr>
 													<td colspan="6" style="border-bottom: none;"></td>
-													<td style="text-align: center; border-bottom: 0px;">
-														<div>
+													<td style="text-align: center; border-bottom: 0px;display: flex; float: right;">
+														<div style="margin:0px 10px;">
+															<button type="button" onclick="resetSearch()" class="form-btn">초기화</button>
 															<div id="search-submit" class="form-btn">검색</div>
 														</div>
 													</td>
