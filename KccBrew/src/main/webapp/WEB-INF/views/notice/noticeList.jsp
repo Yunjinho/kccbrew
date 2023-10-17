@@ -62,8 +62,9 @@
 									</select>
 								</div>
 									<div class="search-input">
-										<input type="text" class="search-notice-box" name="searchText" value="${param.searchText}" placeholder="검색어를 입력하세요."/>
+										<input type="text" id="search-text-input" class="search-notice-box" name="searchText" value="${param.searchText}" placeholder="검색어를 입력하세요."/>
 										<div id="searchText" data-searchtext="${param.searchText}"></div>
+										<button type="button" id="resetBtn" onclick=resetInput()><i class="fa-solid fa-xmark"></i></button>
 									</div>
 								<div class="search-notice-btn">
 									<button type="submit" id="searchBtn">검색</button>

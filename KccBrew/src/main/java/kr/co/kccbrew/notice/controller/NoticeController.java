@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import kr.co.kccbrew.comm.security.model.UserVo;
 import kr.co.kccbrew.notice.dao.INoticeRepository;
 import kr.co.kccbrew.notice.model.NoticeVo;
 import kr.co.kccbrew.notice.model.PagingVo;
@@ -135,11 +137,9 @@ public class NoticeController {
 				UserDetails userDetails = (UserDetails) principal;
 				
 				String writerId = userDetails.getUsername();
-				String writerName = userDetails.getUsername();
 				
 				noticeVo.setWriterId(writerId);
 				noticeVo.setModUser(writerId);
-				noticeVo.setWriterName(writerName);
 				
 				String folderPath=request.getServletContext().getRealPath("")+path;
 				File folder = new File(folderPath);
