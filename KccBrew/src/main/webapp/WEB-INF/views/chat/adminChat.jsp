@@ -6,7 +6,6 @@
 <link rel="stylesheet" href="/resources/css/chat/adminchat.css">
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" />
-<link rel="stylesheet" href="/resources/css/asMng/asList.css" />
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>

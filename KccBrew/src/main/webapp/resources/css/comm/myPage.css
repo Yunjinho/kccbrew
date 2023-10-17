@@ -3,6 +3,9 @@
 html {
 	overflow-y: scroll;
 }
+body {
+	font-family: 'Noto Sans';
+}
 
 button {
 	font-family: "Noto Sans";
@@ -16,6 +19,20 @@ button {
 .arrowAndContents{
 	background-color: #ffffff;
 	min-height: 600px;
+	padding: 30px 145px;
+}
+.breadcrumb {
+	display:inline-block;
+	background-color: transparent;
+	height:35px;
+	margin-top: 5px;
+	font-size: 12px;
+}
+.noti-head {
+	display: inline-block;
+}
+label {
+	font-weight: normal;
 }
 .right-arrow .header-icon {
 	width: 100%;
@@ -41,21 +58,19 @@ button {
 	position: relative;
 }
 
-.arrowAndContents .page-content-navigation .breadcrumb li {
-	padding: 6px 3px 3px 25px;
-	line-height: 35px
-}
-.arrowAndContents .page-content-navigation .breadcrumb li:first-child {
-	background: none;
-	padding-left: 3px;
+.page-content-navigation {
+	margin-bottom: 50px;
+	height:33px;
+	display: flex;
+	justify-content: space-between;
 }
 
-.arrowAndContents .page-content-navigation .breadcrumb li:last-child {
-	color: #333;
-	font-weight: bold;
-}
 .myInfo-wrapper {
 	height:auto;
+}
+
+.curPage {
+	font-weight: bold
 }
 
 .category{
@@ -68,6 +83,7 @@ button {
 
 
 #search-box {
+	
 	width: 100%;
 	border-collapse: collapse;
 	border-top: 1px solid #ccc;
@@ -110,7 +126,7 @@ button {
 	padding: 0 10px;
 	border: 0px;
 	border-bottom: 1px solid #ccc;
-	text-align: center;
+	text-align: left;
 	vertical-align: top;
 }
 tr > th:nth-child(7) {
@@ -132,7 +148,7 @@ input[type="text"] {
 }
 
 #userAddress {
-	width:97%;
+	width:100%;
 }
 .modButtons {
 	width: 100%;
