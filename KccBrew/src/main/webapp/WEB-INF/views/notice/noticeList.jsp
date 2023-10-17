@@ -11,6 +11,7 @@
 <meta charset="UTF-8">
 <title>공지사항</title>
 <link rel="stylesheet" href="${path}/resources/css/notice/notice.css"/>
+<script src="${path}/resources/js/notice/notice.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <c:set var="pageSize" value="${pageSize}" />
 <c:set var="totalPages" value="${totalPages}" />
@@ -44,15 +45,16 @@
 							<form action="/noticelistwithcon" method="GET" id="searchListForm" name="searchListForm">
 								<div class="select-list">
 									<select id="list-search" name="searchOption">
-										<option value="all">제목 + 내용</option>
-										<option value="title">제목</option>
-										<option value="content">내용</option>
-										<option value="writer">작성자</option>
+										<option value="all" ${param.searchOption == 'all' ? 'selected' : ''}>제목 + 내용</option>
+										<option value="title" ${param.searchOption == 'title' ? 'selected' : ''}>제목</option>
+										<option value="content" ${param.searchOption == 'content' ? 'selected' : ''}>내용</option>
+										<option value="writer" ${param.searchOption == 'writer' ? 'selected' : ''}>작성자</option>
 									</select>
 								</div>
-								<div class="search-input">
-									<input type="text" class="search-notice-box" name="searchText" value="${searchText}" placeholder="검색어를 입력하세요."/>
-								</div>
+									<div class="search-input">
+										<input type="text" class="search-notice-box" name="searchText" value="${param.searchText}" placeholder="검색어를 입력하세요."/>
+										<div id="searchText" data-searchtext="${param.searchText}"></div>
+									</div>
 								<div class="search-notice-btn">
 									<button type="submit" id="searchBtn">검색</button>
 								</div>
@@ -79,28 +81,42 @@
 						</tr>
 					</thead>
 					<tbody>
-						<c:forEach var="noti" items="${viewAll}">
-							<tr>
-								<td>
-									<c:out value="${noti.noticeSeq}"/>
-								</td>
-								<td class="noticeTitle">
-									<c:url var="toNoticeDetail" value="/noticedetail/${noti.noticeSeq}"/>
-									<a href="${toNoticeDetail}">
-										<c:out value="${noti.noticeTitle}"/>
-									</a>
-								</td>
-								<td>
-									관리자
-								</td>
-								<td>
-									<fmt:formatDate value="${noti.writeDate}" pattern="yyyy-MM-dd"/>
-								</td>
-								<td>
-									<c:out value="${noti.views}"/>
-								</td>
-							</tr>
-						</c:forEach>
+						<c:choose>
+							<c:when test="${empty viewAll}">
+								<tr>
+									<td colspan="5">
+										검색어 [<strong>${param.searchText}</strong>]에 해당하는 글이 없습니다.
+									</td>
+								</tr>
+							</c:when>
+							<c:otherwise>
+								<c:forEach var="noti" items="${viewAll}">
+									<tr>
+										<td>
+											<c:out value="${noti.noticeSeq}"/>
+										</td>
+										<td class="noticeTitle">
+											
+											<c:url var="toNoticeDetail" value="/noticedetail/${noti.noticeSeq}"/>
+											<a href="${toNoticeDetail}">
+												<span class="noti-title">
+													<span class="highlighted"><c:out value="${noti.noticeTitle}"/></span>
+												</span>
+											</a>
+										</td>
+										<td>
+											관리자
+										</td>
+										<td>
+											<fmt:formatDate value="${noti.writeDate}" pattern="yyyy-MM-dd"/>
+										</td>
+										<td>
+											<c:out value="${noti.views}"/>
+										</td>
+									</tr>
+								</c:forEach>
+							</c:otherwise>
+						</c:choose>
 					</tbody>
 				</table>
 				<!-- 목록 개수 조절 -->
