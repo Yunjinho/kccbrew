@@ -54,6 +54,7 @@ import lombok.extern.slf4j.Slf4j;
  * 2023-09-17                       이세은               검색 기능 수정
  * 2023-09-23                       이세은               잔여 휴일 일수 수정
  * 2023-10-06                       이세은               휴가 등록 시 유효성 검사 수정
+ * 2023-10-17						  이세은					 월근태현황 날짜 조회 오류 수정
  * 
  * @author LEESEEUN
  * @version 1.0
@@ -90,7 +91,7 @@ public class schdlMngController {
 		int usedHolidays = schdlMngService.getUsedHoliday(userVo);
 		model.addAttribute("usedHolidays", usedHolidays);
 		model.addAttribute("holidayVo", new HolidayVo());
-		
+
 		List<GrantedAuthority> authorities = (List<GrantedAuthority>) authentication.getAuthorities();
 		for (GrantedAuthority authority : authorities) {
 			String role = authority.getAuthority();
@@ -234,21 +235,26 @@ public class schdlMngController {
 
 
 	/*수리 배정일 중복검사*/
-	public boolean isAsAssignDate(Date startDate, Date endDate, String userId) {
+	public boolean isAsAssignDate(
+			Date startDate, 
+			Date endDate, 
+			String userId) {
+		
+		log.info("schdelMngController.isAsAssignDate");
+		log.info("startDate: " + startDate);
+		log.info("endDate: " + endDate);
 
-		/*수리배정일 리스트 조회*/
 		List<SchdlMngVo> asAssignDates = schdlMngService.getAssignDates(userId);
 
 		boolean isOverlap = false;
 
-		/* 휴가일 중복 검사
-		for (Date date : asAssignDates) {
-			if (date.compareTo(startDate) >= 0 && date.compareTo(endDate) <= 0) {
+		for (SchdlMngVo schdlMngVo : asAssignDates) {
+			log.info("배정일: " + schdlMngVo.getVisitDate());
+			if (schdlMngVo.getVisitDate().compareTo(startDate) >= 0 && schdlMngVo.getVisitDate().compareTo(endDate) <= 0) {
 				isOverlap = true;
 				break;
 			}
 		}
-		 * */
 		return isOverlap;
 	}
 
@@ -529,12 +535,11 @@ public class schdlMngController {
 	/*관리자 월근태현황 검색*/
 	@PostMapping(value="admin/schedule", produces = "application/json; charset=utf-8")
 	@ResponseBody
-	public List<Map<String, Object>>processSearchRequest(@RequestParam("startDate") String startDate,
+	public List<Map<String, Object>>processSearchRequest(
+			@RequestParam("startDate") String startDate,
 			@RequestParam("endDate") String endDate, 
-			@ModelAttribute UserVo userVo,Authentication authentication) {
-
-		/*데이터확인*/
-		System.out.println("startDate: " + startDate + ", endDate: " + endDate);
+			@ModelAttribute UserVo userVo,
+			Authentication authentication) {
 
 		String year = null;
 		String month = null;
@@ -713,7 +718,7 @@ public class schdlMngController {
 			userVo.setStoreId(Integer.parseInt(storeId));
 		}
 		userVo.setStoreNm(storeName);
-		
+
 		/*시큐리티로 사용자 역할(role) 확인*/
 		List<GrantedAuthority> authorities = (List<GrantedAuthority>) authentication.getAuthorities();
 		for (GrantedAuthority authority : authorities) {
