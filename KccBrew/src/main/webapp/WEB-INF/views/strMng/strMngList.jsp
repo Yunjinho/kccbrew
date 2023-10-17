@@ -44,7 +44,7 @@ input {
 								<div class="header-icon-background">
 								<a href="/">
 									<img
-										src="<c:url value='resources/img/common/free-icon-house.png' />"
+										src="<c:url value='/resources/img/common/free-icon-house.png' />"
 										alt="Check List" class="header-icon" />
 										</a>
 								</div>
@@ -52,7 +52,7 @@ input {
 							<li>
 								<div class="header-icon-background">
 									<img
-										src="<c:url value='resources/img/common/free-icon-arrow-right.png' />"
+										src="<c:url value='/resources/img/common/free-icon-arrow-right.png' />"
 										alt="Check List" class="header-icon" />
 								</div>
 							</li>
@@ -61,7 +61,7 @@ input {
 								<li>
 								<div class="header-icon-background">
 									<img
-										src="<c:url value='resources/img/common/free-icon-arrow-right.png' />"
+										src="<c:url value='/resources/img/common/free-icon-arrow-right.png' />"
 										alt="Check List" class="header-icon" />
 								</div>
 							</li>
