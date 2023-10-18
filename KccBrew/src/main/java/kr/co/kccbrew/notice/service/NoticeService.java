@@ -151,7 +151,7 @@ public class NoticeService implements INoticeService{
 
 	// 공지 목록 엑셀로 다운 
 	@Override
-	public void downloadExcel(HttpServletResponse response, NoticeVo noticeVo, PagingVo pagingVo, String flag, int nowPage) {
+	public void downloadExcel(HttpServletResponse response, NoticeVo noticeVo, PagingVo pagingVo, String flag, String nowPage) {
 		List<NoticeVo> list;
 		Map<Integer, Object[]> data = new HashMap();
 		data.put(1, new Object[]{"순번", "제목", "작성자","작성일","조회수"});
@@ -160,8 +160,8 @@ public class NoticeService implements INoticeService{
 			list=selectNoticeWithCon(pagingVo.getStart(), pagingVo.getEnd(), noticeVo.getSearchOption(), noticeVo.getSearchText());
 	        for(int i=0;i<list.size();i++) {
 	        	data.put(i+2, 
-	        			new Object[]
-	        					{list.get(i).getNoticeSeq()
+	        			new Object[] {
+	        					list.get(i).getNoticeSeq()
 	        					,list.get(i).getNoticeTitle()
 	        					,list.get(i).getWriterName()
 	        					,list.get(i).getWriteDate()

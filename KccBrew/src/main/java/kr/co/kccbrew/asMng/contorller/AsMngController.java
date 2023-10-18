@@ -342,11 +342,18 @@ public class AsMngController {
 	 */
 	@ResponseBody
 	@RequestMapping(value="/download-list" , method=RequestMethod.POST)
-	public void downloadList(String flag,@RequestParam(defaultValue = "1")String currentPage
-			,@RequestParam(defaultValue = "")String wishingStartDate,@RequestParam(defaultValue = "")String wishingEndDate,
-			@RequestParam(defaultValue = "")String asInfoSeq,@RequestParam(defaultValue = "")String storeNm,
-			@RequestParam(defaultValue = "")String storeAddr,@RequestParam(defaultValue = "")String searchId,
-			@RequestParam(defaultValue = "")String machineCd,@RequestParam(defaultValue = "")String asStatusCd,HttpServletRequest request,HttpServletResponse response) {
+	public void downloadList(String flag
+							,@RequestParam(defaultValue = "1")String currentPage
+							,@RequestParam(defaultValue = "")String wishingStartDate
+							,@RequestParam(defaultValue = "")String wishingEndDate
+							,@RequestParam(defaultValue = "")String asInfoSeq
+							,@RequestParam(defaultValue = "")String storeNm
+							,@RequestParam(defaultValue = "")String storeAddr
+							,@RequestParam(defaultValue = "")String searchId
+							,@RequestParam(defaultValue = "")String machineCd
+							,@RequestParam(defaultValue = "")String asStatusCd
+							,HttpServletRequest request
+							,HttpServletResponse response) {
 		//세션값 받기
 		HttpSession session=request.getSession();
 		UserVo user=(UserVo)session.getAttribute("user");

@@ -201,9 +201,10 @@
 
 				<div class="user-info">
 					<div>
-						<span class="user-info-index">지역 </span> <span id="locationCd"
-							hidden="true" hidden="true"> <c:out
-								value="${user.locationCd}" /></span>
+						<span class="user-info-index">지역 </span> 
+						<span id="locationCd" hidden="true" hidden="true"> 
+							<c:out value="${user.locationCd}"/>
+						</span>
 					</div>
 					<div>
 						<span class="user-info-index">장비 </span> <span id="mecha-eqpmnCd"

@@ -180,7 +180,7 @@ public class NoticeController {
 	@ResponseBody
 	@RequestMapping(value ="/download-notice-list", method=RequestMethod.POST)
 	public void downloadList(String flag
-							,@RequestParam(defaultValue = "1")int nowPage
+							,@RequestParam(defaultValue = "1")String nowPage
 							,@RequestParam(defaultValue= "")int noticeSeq
 							,@RequestParam(defaultValue= "")String noticeTitle
 							,@RequestParam(defaultValue= "")String writerId
@@ -194,7 +194,6 @@ public class NoticeController {
 		NoticeVo noticeVo =new NoticeVo();
 		PagingVo pagingVo = new PagingVo();
 		
-		pagingVo.setNowPage(nowPage);
 		noticeVo.setNoticeSeq(noticeSeq);
 		noticeVo.setNoticeTitle(noticeTitle);
 		noticeVo.setWriterId(user.getUserId());
