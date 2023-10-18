@@ -30,5 +30,5 @@ public interface INoticeService {
 	List<NoticeVo> selectMainNotice();				// 메인 화면에 보일 공지 목록
 	
 	//공지 목록 엑셀로 저장
-	public void downloadExcel(HttpServletResponse response, NoticeVo noticeVo, PagingVo pagingVo, String flag, int nowPage);
+	public void downloadExcel(HttpServletResponse response, NoticeVo noticeVo, PagingVo pagingVo, String flag, String nowPage);
 }

@@ -1,4 +1,8 @@
 $(document).ready(function(){
+	
+	var locationCd = document.getElementById("locationCd").textContent;
+	getLocationName2(locationCd);
+	
 		// 파일 업로드 input 변경 시 미리보기 처리
     	$('#file').on('change', function (e) {
 	        var fileInput = e.target;
@@ -107,3 +111,19 @@ $(document).ready(function(){
     	});
     }
    
+    /*지역코드로 지역명 조회*/
+    function getLocationName2(locationCodeValue) {
+    	$.ajax({
+    		url: '/getLocationName', // Ajax 요청을 처리할 URL
+    		type: 'GET',
+    		dataType: 'text', // 반환되는 데이터 형식을 text로 설정
+    		data: { "mechaLocationCode": locationCodeValue },
+    		success: function(data) {
+    			$('#locationCd').removeAttr('hidden');
+    			$('#locationCd').text(data);
+    		},
+    		error: function(error) {
+    			console.log('Ajax 요청 실패:', error);
+    		}
+    	});
+    }

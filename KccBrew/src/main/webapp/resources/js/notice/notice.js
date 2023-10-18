@@ -163,18 +163,19 @@ function updateForm(){
 //공지 목록 엑셀로 다운 받기
 function downExcel(flag){
 	
-	var currentPage = $("paging.nowPage").val();
-	var noticeSeq = '<c:out value="${noti.noticeSeq}"/>';
-	var noticeTitle	= '<c:out value="${noti.noticeTitle}"/>';
+	var currentPage = "${paging.nowPage}";
+	var noticeSeq = "${noti.noticeSeq}";
+	var noticeTitle	= "${noti.noticeTitle}"
 	var noticeWriter = '관리자'
-	var noticeRegDate = '<fmt:formatDate value="${noti.writeDate}" pattern="yyyy-MM-dd"/>';
-	var views = '<c:out value="${noti.views}"/>';
+	var noticeRegDate = "${noti.writeDate}";
+	var views = "${noti.views}";
 	$.ajax({
 		type : "POST",          
 	    url : "/download-notice-list",   
 	    dataType : "text",      
 	    data : {
 	    	'flag': flag,
+	    	'nowPage': currentPage,
 	    	'noticeSeq':noticeSeq,
 	    	'noticeTitle': noticeTitle,
 	    	'noticeWriter' : noticeWriter,

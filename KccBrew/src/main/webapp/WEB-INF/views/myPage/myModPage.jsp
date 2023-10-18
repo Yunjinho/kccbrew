@@ -13,6 +13,7 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="${path}/resources/js/comm/myPage.js"></script>
 </head>
+<c:set var="user" value="${sessionScope.user}" />
 <body>
 	<div id="mypage-main-wrapper">
 		<section id="mypage-wrapper" class="mypage-wrapper">

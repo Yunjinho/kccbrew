@@ -11,6 +11,7 @@
 <title>Insert title here</title>
 <link rel="stylesheet" href="${path}/resources/css/comm/myPage.css" />
 </head>
+<c:set var="user" value="${sessionScope.user}" />
 <body>
 	<div id="page-mask">
 		<div id="page-container" class="">
@@ -138,7 +139,8 @@
 															<c:when test="${mecha.machineCode == '04'}">에어컨</c:when>
 															<c:when test="${mecha.machineCode == '05'}">온수기</c:when>
 														</c:choose></td>
-													<td><c:choose>
+													<td>
+														<c:choose>
 															<c:when test="${mecha.mechaLocationCode == '02-200'}">양천</c:when>
 															<c:when test="${mecha.mechaLocationCode == '02-300'}">은평,마포,서대문,강서</c:when>
 															<c:when test="${mecha.mechaLocationCode == '02-400'}">송파,강동,중랑,광진,성동</c:when>
@@ -146,7 +148,11 @@
 															<c:when test="${mecha.mechaLocationCode == '02-700'}">마포,용산,종로</c:when>
 															<c:when test="${mecha.mechaLocationCode == '02-800'}">영등포,동작,구로,금천,양서,관악,광명시</c:when>
 															<c:when test="${mecha.mechaLocationCode == '02-900'}">노원,동대문,도봉,강북,성북</c:when>
-														</c:choose></td>
+														</c:choose>
+														<%-- <span id="locationCd" hidden="true">
+															<c:out value="${user.locatioCd}"/>
+														</span> --%>
+													</td>
 												</tr>
 											</c:forEach>
 										</table>
