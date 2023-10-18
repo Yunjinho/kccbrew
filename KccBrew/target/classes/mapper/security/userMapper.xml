@@ -183,7 +183,7 @@
 		SYSDATE,
 		'Y',
 		null,
-		'N'
+		null
 		)
 	</insert>
 
