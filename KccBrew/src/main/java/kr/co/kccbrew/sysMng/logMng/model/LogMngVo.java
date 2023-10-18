@@ -1,6 +1,7 @@
 package kr.co.kccbrew.sysMng.logMng.model;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -15,7 +16,7 @@ public class LogMngVo {
 
 
 	private Integer logSeq;
-	private Date date; 
+	private Timestamp date; 
 	private String uri;
 	private String view;
 	private String userId;

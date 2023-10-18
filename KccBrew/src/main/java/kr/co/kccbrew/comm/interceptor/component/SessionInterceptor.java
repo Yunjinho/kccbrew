@@ -66,7 +66,6 @@ public class SessionInterceptor extends Interceptor {
 
 		UserVo user = userService.getUserById(userId);
 		List<UserMngVo> userMngVo = userMngService.findByUserInfo2(userId);
-		log.info("userMngVo: " + userMngVo) ;
 
 		if (userMngVo != null && !userMngVo.isEmpty()) {
 			if(userMngVo.get(0).getImgNm() != null && userMngVo.get(0).getImgUrl() != null) {

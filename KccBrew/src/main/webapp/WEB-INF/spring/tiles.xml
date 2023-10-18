@@ -50,7 +50,7 @@
 	<!-- 로그인 페이지 -->
 	<definition name="loginPage" extends="mainLayout">
 		<!-- 속성 따로 명시하지 않으면 extends 레이아웃 뼈대 자동 상속 -->
-		<put-attribute name="title" value="로그인 페이지" />
+		<put-attribute name="title" value="로그인" />
 		<put-attribute name="header" value="" /> <!-- 빈 헤더 -->
 		<put-attribute name="contents"
 			value="/WEB-INF/views/comm/login/login.jsp" />
@@ -58,7 +58,7 @@
 
 	<!-- 회원가입 페이지 -->
 	<definition name="registerPage" extends="mainLayout">
-		<put-attribute name="title" value="회원가입 페이지" />
+		<put-attribute name="title" value="회원가입" />
 		<put-attribute name="header" value="" /> <!-- 빈 헤더 -->
 		<put-attribute name="contents"
 			value="/WEB-INF/views/comm/register/register.jsp" />
@@ -66,12 +66,14 @@
 
 	<!-- 마이페이지 -->
 	<definition name="MyPageP1" extends="pageLayout">
+		<put-attribute name="title" value="내 정보" />
 		<put-attribute name="contents"
 			value="/WEB-INF/views/myPage/myPage.jsp" />
 	</definition>
 
 	<!-- 마이페이지 수정 -->
 	<definition name="MyPageP2" extends="pageLayout">
+		<put-attribute name="title" value="내 정보 수정" />
 		<put-attribute name="contents"
 			value="/WEB-INF/views/myPage/myModPage.jsp" />
 	</definition>
@@ -82,6 +84,7 @@
 	</definition> -->
 
 	<definition name="MyPageP3" extends="pageLayout">
+		<put-attribute name="title" value="비밀번호 변경" />
 		<put-attribute name="contents"
 			value="/WEB-INF/views/myPage/chgPwd.jsp" />
 	</definition>
@@ -108,6 +111,7 @@
 
 	<!-- 점포 조회 페이지 -->
 	<definition name="storeList" extends="pageLayout">
+		<put-attribute name="title" value="점포 조회" />
 		<put-attribute name="contents"
 			value="/WEB-INF/views/strMng/strMngList.jsp" />
 	</definition>
@@ -121,12 +125,14 @@
 
 	<!-- 점포 검색 페이지 -->
 	<definition name="storeSearch" extends="pageLayout">
+		<put-attribute name="title" value="점포 조회" />
 		<put-attribute name="contents"
 			value="/WEB-INF/views/strMng/strMngList.jsp" />
 	</definition>
 
 	<!-- 휴가 관리 페이지 -->
 	<definition name="holiday" extends="pageLayout">
+		<put-attribute name="title" value="휴가 조회" />
 		<put-attribute name="contents"
 			value="/WEB-INF/views/schdl/hldyList.jsp" />
 	</definition>
@@ -140,11 +146,13 @@
 
 	<!-- 공지사항 목록 페이지 -->
 	<definition name="notice" extends="pageLayout">
+		<put-attribute name="title" value="공지사항" />
 		<put-attribute name="contents" value="/WEB-INF/views/notice/noticeList.jsp" />
 	</definition>
 	
 	<!-- 공지사항 상세 페이지 -->
 	<definition name="noticeDetail" extends="pageLayout">
+		<put-attribute name="title" value="공지사항" />
 		<put-attribute name="contents" value="/WEB-INF/views/notice/noticeDetail.jsp" />
 	</definition>
 
@@ -152,6 +160,7 @@
 
 	<!-- !!!!!!!!!!!!!!!!!!!!!! 점주, 수리기사 공통 페이지 - 근태 현황 테이블 !!!!!!!!!!!!!!!!!!!!! -->
 	<definition name="schdlTable" extends="pageLayout">
+		<put-attribute name="title" value="일정" />
 		<put-attribute name="contents"
 			value="/WEB-INF/views/schdl/schdlMngClndr.jsp" />
 	</definition>
@@ -185,41 +194,48 @@
 
 	<!-- 관리자 회원 관리 페이지 -->
 	<definition name="adminUserMng" extends="pageLayout">
+		<put-attribute name="title" value="회원 관리" />
 		<put-attribute name="contents"
 			value="/WEB-INF/views/userMng/userMngList.jsp" />
 	</definition>
 
 	<!-- 관리자 로그 관리 페이지 -->
 	<definition name="adminLogManage" extends="pageLayout">
+	<put-attribute name="title" value="로그 관리" />
 		<put-attribute name="contents"
 			value="/WEB-INF/views/log/logMngList.jsp" />
 	</definition>
 
 	<!-- 관리자 파일 관리 페이지 -->
 	<definition name="adminFileManage" extends="pageLayout">
+		<put-attribute name="title" value="파일 관리" />
 		<put-attribute name="contents"
 			value="/WEB-INF/views/sysMng/fileMng/fileMngList.jsp" />
 	</definition>
 
 	<!-- 관리자 코드 관리 페이지 -->
 	<definition name="adminCodeManage" extends="pageLayout">
+	<put-attribute name="title" value="코드 관리" />
 		<put-attribute name="contents"
 			value="/WEB-INF/views/sysMng/cdMng/cdMngList.jsp" />
 	</definition>
 
 	<!-- 관리자 스케줄 조회 페이지 -->
 	<definition name="adminSchdlList" extends="pageLayout">
+		<put-attribute name="title" value="일정 조회" />
 		<put-attribute name="contents"
 			value="/WEB-INF/views/schdl/schdlMngTable.jsp" />
 	</definition>
 	
 	<!-- 관리자 공지 등록 페이지 -->
 	<definition name="adminNoticeInsert" extends="pageLayout">
+		<put-attribute name="title" value="공지사항 등록" />
 		<put-attribute name="contents" value="/WEB-INF/views/notice/insertNotice.jsp" />
 	</definition>
 	
 	<!-- 관리자 공지 수정 페이지 -->
 	<definition name="adminNoticeUpdate" extends="pageLayout">
+		<put-attribute name="title" value="공지사항 수정" />
 		<put-attribute name="contents" value="/WEB-INF/views/notice/modNotice.jsp" />
 	</definition>
 
@@ -228,6 +244,7 @@
 
 	<!-- 점주 점포 수정 페이지 -->
 	<definition name="modStoreInfo" extends="pageLayout">
+		<put-attribute name="title" value="점포 정보 수정" />
 		<put-attribute name="contents"
 			value="/WEB-INF/views/strMng/strMngMod.jsp" />
 	</definition>
