@@ -40,19 +40,20 @@
 			access="permitAll" />
 		<intercept-url pattern="/login-failure"
 			access="permitAll" />
-		<intercept-url pattern="/chat/**"
-			access="permitAll" />
+		<intercept-url pattern="/chat/**" access="permitAll" />
 
-
-		<!-- 비회원만 접근가능 -->
-		<intercept-url pattern="/login" access="isAnonymous()" />
-		<intercept-url pattern="/signup" access="isAnonymous()" />
+		<!-- 비로그인회원만 접근가능 -->
+		<intercept-url pattern="/login"
+			access="hasAnyRole('ROLE_NOTAPPROVED' , 'ROLE_ANONYMOUS')" />
+		<intercept-url pattern="/signup"
+			access="hasAnyRole('ROLE_NOTAPPROVED' , 'ROLE_ANONYMOUS')" />
 		<intercept-url pattern="/register"
-			access="isAnonymous()" />
+			access="hasAnyRole('ROLE_NOTAPPROVED' , 'ROLE_ANONYMOUS')" />
 		<intercept-url pattern="/userSearch/**"
-			access="isAnonymous()" />
+			access="hasAnyRole('ROLE_NOTAPPROVED' , 'ROLE_ANONYMOUS')" />
 		<intercept-url pattern="/searchPassword/**"
-			access="isAnonymous()" />
+			access="hasAnyRole('ROLE_NOTAPPROVED' , 'ROLE_ANONYMOUS')" />
+
 
 		<!-- 관리자 접근가능 -->
 		<intercept-url pattern="/admin/**"
@@ -78,8 +79,9 @@
 			access="hasRole('ROLE_MECHA')" />
 
 		<intercept-url pattern="/**" access="isAuthenticated()" />
-		<intercept-url pattern="/chat/**" access="hasAnyRole('ROLE_MECHA' , 'ROLE_MANAGER')" />
-		
+		<intercept-url pattern="/chat/**"
+			access="hasAnyRole('ROLE_MECHA' , 'ROLE_MANAGER')" />
+
 		<!-- 로그인 설정 -->
 		<form-login login-page="/login"
 			login-processing-url="/login" username-parameter="username"
