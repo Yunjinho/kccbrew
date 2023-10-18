@@ -58,7 +58,6 @@
 										<option value="all" ${param.searchOption == 'all' ? 'selected' : ''}>제목 + 내용</option>
 										<option value="title" ${param.searchOption == 'title' ? 'selected' : ''}>제목</option>
 										<option value="content" ${param.searchOption == 'content' ? 'selected' : ''}>내용</option>
-										<option value="writer" ${param.searchOption == 'writer' ? 'selected' : ''}>작성자</option>
 									</select>
 								</div>
 									<div class="search-input">
@@ -77,8 +76,8 @@
 					<p class="pageInfo">전체 <span class="pagenum">${paging.total}</span>개 | <span class="pagenum">${paging.nowPage}</span> / <span class="pagenum">${paging.lastPage}</span> 쪽</p>
 					
 					<div class="down-excel">
-						<button class="nowpage-down">현재 페이지 다운로드</button>
-						<button class="allpage-down">전체 페이지 다운로드</button>
+						<button class="nowpage-down" onclick="downExcel(1)">현재 페이지 다운로드</button>
+						<button class="allpage-down" onclick="downExcel(2)">전체 페이지 다운로드</button>
 					</div>
 				</div>
 				<table class="notice-table">	
@@ -107,7 +106,6 @@
 											<c:out value="${noti.noticeSeq}"/>
 										</td>
 										<td class="noticeTitle">
-											
 											<c:url var="toNoticeDetail" value="/noticedetail/${noti.noticeSeq}"/>
 											<a href="${toNoticeDetail}">
 												<span class="noti-title">
@@ -153,16 +151,16 @@
 				<!-- 페이징 -->
 				<div class="pagingSection" style="display: block; text-align: center;">	
 					<c:if test="${paging.nowPage > 1}">
-				        <a href="/noticelist?nowPage=1&cntPerPage=${paging.cntPerPage}">
-				        <%-- <a href="/noticelistwithcon?nowPage=1&cntPerPage=${paging.cntPerPage}&searchOption=${notices.searchOption}&searchText=${notices.searchText}"> --%>
+				        <%-- <a href="/noticelist?nowPage=1&cntPerPage=${paging.cntPerPage}"> --%>
+				        <a href="/noticelistwithcon?nowPage=1&cntPerPage=${paging.cntPerPage}&searchOption=${searchOption}&searchText=${searchText}">
 				        	<img src="/resources/img/asMng/free-icon-left-chevron-6015759.png" alt="첫 페이지로"/>
 				        </a>
-				        <a href="/noticelist?nowPage=${paging.nowPage - 1}&cntPerPage=${paging.cntPerPage}">
-				        <%-- <a href="/noticelistwithcon?nowPage=${paging.startPage - 1}&cntPerPage=${paging.cntPerPage}&searchOption=${viewAll.searchOption}&searchText=${viewAll.searchText}"> --%>
+				        <%-- <a href="/noticelist?nowPage=${paging.nowPage - 1}&cntPerPage=${paging.cntPerPage}"> --%>
+				        <a href="/noticelistwithcon?nowPage=${paging.nowPage - 1}&cntPerPage=${paging.cntPerPage}&searchOption=${searchOption}&searchText=${searchText}"> 
 				        	<img src="/resources/img/asMng/free-icon-left-arrow-271220.png"	alt="이전 페이지로" />
 				        </a>
 				    </c:if>
-				    <c:if test="${paging.nowPage == 1}">
+				    <c:if test="${paging.nowPage == 1 && paging.total != 0}">
 				    	<a style="cursor:pointer">
 				        	<img src="/resources/img/asMng/free-icon-left-chevron-6015759.png" alt="첫 페이지로"/>
 				        </a>
@@ -177,19 +175,19 @@
 									<b>${p}</b>
 								</c:when>
 								<c:when test="${p != paging.nowPage}">
-									<a class="otherPage" href="/noticelist?nowPage=${p}&cntPerPage=${paging.cntPerPage}">${p}</a>
-									<%-- <a class="otherPage" href="/noticelistwithcon?nowPage=${p}&searchOption=${viewAll.searchOption}&searchText=${viewAll.searchText}">${p}</a> --%>
+									<%-- <a class="otherPage" href="/noticelist?nowPage=${p}&cntPerPage=${paging.cntPerPage}">${p}</a> --%>
+									<a class="otherPage" href="/noticelistwithcon?nowPage=${p}&cntPerPage=${paging.cntPerPage}&searchOption=${searchOption}&searchText=${searchText}">${p}</a>
 								</c:when>
 							</c:choose>
 						</c:forEach>
 				    </div>
 				    <c:if test="${paging.nowPage < paging.lastPage}">
-				        <a href="/noticelist?nowPage=${paging.nowPage + 1}&cntPerPage=${paging.cntPerPage}">
-				        <%-- <a href="/noticelistwithcon?nowPage=${paging.nowPage + 1}&cntPerPage=${paging.cntPerPage}&searchOption=${paging.searchOption}&searchText=${paging.searchText}"> --%>
+				        <%-- <a href="/noticelist?nowPage=${paging.nowPage + 1}&cntPerPage=${paging.cntPerPage}"> --%>
+				        <a href="/noticelistwithcon?nowPage=${paging.nowPage + 1}&cntPerPage=${paging.cntPerPage}&searchOption=${searchOption}&searchText=${searchText}">
 				        	<img src="/resources/img/asMng/free-icon-right-arrow-271228.png" alt="다음 페이지로" />
 				        </a>
-				        <a href="/noticelist?nowPage=${paging.lastPage}&cntPerPage=${paging.cntPerPage}">
-				        <%-- <a href="/noticelistwithcon?nowPage=${paging.lastPage}&cntPerPage=${paging.cntPerPage}&searchOption=${viewAll.searchOption}&searchText=${viewAll.searchText}"> --%>
+				        <%-- <a href="/noticelist?nowPage=${paging.lastPage}&cntPerPage=${paging.cntPerPage}"> --%>
+				        <a href="/noticelistwithcon?nowPage=${paging.lastPage}&cntPerPage=${paging.cntPerPage}&searchOption=${searchOption}&searchText=${searchText}">
 				        	<img src="/resources/img/asMng/free-icon-fast-forward-double-right-arrows-symbol-54366.png" alt="마지막 페이지로"/>
 				        </a>
     				</c:if>
@@ -208,7 +206,7 @@
 	<script>
 	function selChange() {
 		var sel = document.getElementById('cntPerPage').value;
-		location.href="noticelist?nowPage=${paging.nowPage}&cntPerPage="+sel;
+		location.href="/noticelistwithcon?nowPage=${paging.nowPage}&cntPerPage=" + sel + "&searchOption=${searchOption}&searchText=${searchText}";
 	}
 </script>
 </body>

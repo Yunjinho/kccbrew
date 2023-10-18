@@ -225,7 +225,7 @@
 						</thead>
 						<tbody>
 							<c:forEach var="main" items="${waitingList}">
-								<c:if test="${main.approveStatus == 'N' || main.approveStatus == null}">
+								<c:if test="${main.approveStatus == null}">
 									<tr>
 										<td><c:out value="${main.userId}" /></td>
 										<td><c:out value="${main.userName}" /></td>

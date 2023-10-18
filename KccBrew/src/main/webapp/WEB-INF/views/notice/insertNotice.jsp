@@ -64,7 +64,7 @@
 							<tr>
 								<th>글 내용</th>
 								<td>
-									<textarea id="notice-content" name="noticeContent" maxlength="1000" placeholder="최대 1000자까지 입력 가능합니다."required></textarea>
+									<textarea id="notice-content" name="noticeContent" maxlength="1000" placeholder="최대 1000자까지 입력 가능합니다." required></textarea>
 									<div id="count-text">
 										<span id="count">0</span>/1000
 									</div>
