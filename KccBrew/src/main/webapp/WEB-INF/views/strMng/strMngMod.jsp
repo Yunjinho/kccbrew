@@ -62,7 +62,6 @@
 					<th>지점명</th>
 					<td><input type="text" id="storeNm" name="storeNm"
 						value="${store.storeNm}" required> 
-				
 										<input type="hidden" value="${store.storeNm}"
 						id="storeNmHidden"></input> <!-- 숨겨진 필드 추가 --> <input
 						type="button" name="strnm" value="중복확인" class="check"
@@ -93,7 +92,8 @@
 				</tr>
 				<tr>
 					<th colspan="1">지역분류</th>
-					<td colspan="3"><input type="hidden" id="dtl" value="${store.locationCd}"><select id="location" name="locationCd" size="1" onchange="changeLocationCd()">
+					<td colspan="3">
+					<input type="hidden" id="dtl" value="${store.locationCd}"><select id="location" name="locationCd" size="1" onchange="changeLocationCd()">
 							<option value="">지역선택</option>
 							<c:forEach var="list" items="${list}">
 								<option value="${list.locationCd}"
@@ -139,7 +139,55 @@
                 }
             }).open();
         });
-        changeLocationCd();
+    	var dtlCd = $("#dtl").val();
+		console.log(dtlCd);
+    	// 정규 표현식 패턴
+    	var pattern = /\d+/;
+
+    	// 정규 표현식과 일치하는 부분 찾기
+    	var matches = dtlCd.match(pattern);
+
+    	if (matches) {
+    	    // 정규 표현식과 일치하는 첫 번째 숫자 얻기
+    	    var locCd = matches[0];
+    	   /*  $("#dtl").val()=locCd; */
+    	    console.log(locCd);
+    	
+    	    var selectElement = document.getElementById('location');
+
+    	    // select 요소의 option 요소를 모두 가져옵니다.
+    	    var options = selectElement.getElementsByTagName('option');
+
+    	    // 각 option 요소를 확인하며 선택 여부를 결정합니다.
+    	    for (var i = 0; i < options.length; i++) {
+    	        var option = options[i];
+    	        var locationCd = option.value;
+
+    	        // store.locationCd와 hiddenValue를 비교하여 선택 여부를 결정합니다.
+    	        if (locationCd == locCd) {
+    	            option.selected = true;
+    	        } else {
+    	            option.selected = false;
+    	        }
+    	    
+    	    
+    	    
+    	    
+    	    }} else{
+    	    	
+    	    	var locCd = $("#location").val(); 
+    	    }
+    	$.ajax({
+      		type : "GET",           // 타입 (get, post, put 등등)
+      		url : "/search-location-code",           // 요청할 서버url
+      		dataType : "json",       // 데이터 타입 (html, xml, json, text 등등)
+      		data : {
+      			'locCd' : locCd,
+      		},
+      		success : function(data) { // 결과 성공 콜백함수
+      			changeLosctionDtlCd(data);
+      		}
+      	});
     }
 
     function changeLosctionDtlCd(data){
@@ -155,7 +203,7 @@
 
       //대분류 지역 선택한 값에 맞춰서 소분류 지역 값 조회
       function changeLocationCd(){
-      	var locCd = $("#location").val();
+      	var locCd = $("#location").val(); 
       	console.log(locCd);
       	$.ajax({
       		type : "GET",           // 타입 (get, post, put 등등)
