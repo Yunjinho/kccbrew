@@ -138,7 +138,7 @@ div.modalBackground {
 								<div class="header-icon-background">
 								<a href="/">
 									<img
-										src="<c:url value='resources/img/common/free-icon-house.png' />"
+										src="<c:url value='/resources/img/common/free-icon-house.png' />"
 										alt="Check List" class="header-icon" />
 										</a>
 								</div>
@@ -146,7 +146,7 @@ div.modalBackground {
 							<li>
 								<div class="header-icon-background">
 									<img
-										src="<c:url value='resources/img/common/free-icon-arrow-right.png' />"
+										src="<c:url value='/resources/img/common/free-icon-arrow-right.png' />"
 										alt="Check List" class="header-icon" />
 								</div>
 							</li>
@@ -155,7 +155,7 @@ div.modalBackground {
 							<li>
 								<div class="header-icon-background">
 									<img
-										src="<c:url value='resources/img/common/free-icon-arrow-right.png' />"
+										src="<c:url value='/resources/img/common/free-icon-arrow-right.png' />"
 										alt="Check List" class="header-icon" />
 								</div>
 							</li>
@@ -340,12 +340,6 @@ div.modalBackground {
 											</tbody>
 										</table>
 									</div>
-<li class="nav-item">
-<c:url var="chatList"  value="/admin/chat"></c:url>
-<a id="dropdownLI" class="nav-link collapsed"
-		aria-expanded="true" aria-controls="collapseTwo"
-		href="${chatList}"> <i class="fas fa-fw fa-cog"></i> <span>Chat</span>
-	</a></li>
 									<!-- 페이징 -->
 									<div class="paging pagination">
 

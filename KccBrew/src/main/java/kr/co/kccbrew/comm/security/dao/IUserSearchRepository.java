@@ -1,5 +1,7 @@
 package kr.co.kccbrew.comm.security.dao;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Param;
 
 import kr.co.kccbrew.comm.security.model.UserVo;
@@ -9,7 +11,7 @@ public interface IUserSearchRepository {
 	 * @return 사용자 채팅작성
 	 * @Param userNm: 사용자이름, userTelNo: 사용자전화번호
 	 */
-	UserVo searchId(@Param("userNm")String userNm, @Param("userTelNo")String userTelNo);
+	List<UserVo> searchId(@Param("userNm")String userNm, @Param("userTelNo")String userTelNo);
 	
 	/**
 	 * @return 비밀번호찾기

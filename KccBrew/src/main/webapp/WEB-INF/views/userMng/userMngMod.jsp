@@ -50,15 +50,15 @@
 					<td>
 						<select id="useYn">
 							<option value="">선택</option>
-							<option value="Y">활성화</option>
-							<option value="N">비활성화</option>
+							<option value="Y" ${userMngVo.useYn == "Y" ? 'selected' : ''}>사용</option>
+							<option value="N" ${userMngVo.useYn == "N" ? 'selected' : ''}>탈퇴</option>
 					</select></td>
 					<th>승인여부</th>
 					<td>
 						<select id="approveYn">
-							<option value="">미정</option>
-							<option value="Y">수락</option>
-							<option value="N">거절</option>
+							<option value="" ${userMngVo.approveYn == "" ? 'selected' : ''}>연기</option>
+							<option value="Y" ${userMngVo.approveYn == "Y" ? 'selected' : ''}>승인</option>
+							<option value="N" ${userMngVo.approveYn == "N" ? 'selected' : ''}>반려</option>
 					</select></td>
 					<th>승인자</th>
 					<td>${userMngVo.approveAdmin}</td>

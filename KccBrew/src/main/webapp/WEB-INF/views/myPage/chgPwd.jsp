@@ -113,7 +113,7 @@ button:disabled {
 										style=" width: 100%; border-radius: 0;" disabled>확인</button>
 									<c:url var="cancel" value="/mypage"></c:url>
 									<div style="display: block; margin-top: 150px;">
-										<a href="#" onclick="window.close();"> 돌아가기 </a>
+										<a href="#" onclick="window.close();"> 닫기 </a>
 									</div>
 								</div>
 							</div>

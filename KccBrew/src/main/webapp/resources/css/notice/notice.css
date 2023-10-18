@@ -14,8 +14,8 @@ body {
 .body-wrapper {
 	width: 100%;
 	height: 100%;
-	background-color: #eef4ff;
-	padding: 20px 20px;
+	background-color: #ffffff;
+	padding: 30px 145px;
 }
 
 .header-icon {
@@ -36,8 +36,19 @@ body {
 	top: 6.5px;
 }
 
+.noti-head {
+	display: inline-block;
+}
+
 .breadcrumb {
-	display: flex;
+	display:inline-block;
+	background-color: transparent;
+	height:35px;
+	margin-top: 5px;
+	font-size: 12px;
+}
+.breadcrumb li {
+	padding-left:3px;
 }
 
 .right-arrow {
@@ -46,12 +57,11 @@ body {
 
 .breadcrumb li:first-child {
 	background: none;
-	padding-left: 3px;
+	padding-left: 7px;
 }
 
 .breadcrumb li:last-child {
 	color: #333;
-	font-weight: bold;
 }
 
 .content-wrapper {
@@ -61,6 +71,12 @@ body {
 /****************** 네비게이션  *****************************************************/
 .page-content-navigation {
 	margin-bottom: 50px;
+	height:33px;
+	display: flex;
+	justify-content: space-between;
+}
+.curPage {
+	font-weight: bold;
 }
 
 /****************** 공지 목록 페이지  *****************************************************/
@@ -79,7 +95,8 @@ body {
 .searchBox {
 	padding: 20px 250px;
 	background-color: #eeeeee;
-	border-bottom: 1px solid #111111;
+	border-bottom: 1px solid #c0c0c0;
+	border-top: 1px solid #c0c0c0;
 }
 .margin-for-searchbox {
 	margin-bottom: 60px;
@@ -117,6 +134,14 @@ form {
 	background-color: navy;
 	cursor: pointer;
 	border:none;
+	border-radius: 4px;
+}
+#resetBtn {
+	position:relative;
+	border:none;
+	background-color: transparent;
+	bottom: 30px;
+	left: 475px;
 }
 /* 리스트 출력 개수 select 박스 */
 #cntPerPage{
@@ -221,7 +246,7 @@ form {
 	text-decoration: underline;
 }
 
-.writeBtn, #insertNoticeBtn, .cancel, .toListBtn, .deleteBtn, .updateBtn, #updateNoticeBtn{
+#insertNoticeBtn, .cancel, .toListBtn, .deleteBtn, .updateBtn, #updateNoticeBtn{
 	background-color: navy;
 	color: #ffffff;
 	border: none;
@@ -231,6 +256,16 @@ form {
 	align-items: center;
 	text-decoration: none;
 	margin-right:30px;
+}
+.writeBtn {
+	background-color: navy;
+	color: #ffffff;
+	border: none;
+	padding:5px 10px;
+	border-radius: 4px;
+	display:inline-block;
+	align-items: center;
+	text-decoration: none;
 }
 
 .writeBtn:hover, #insertNoticeBtn:hover, .cancel:hover, .toListBtn:hover, .deleteBtn:hover, .updateBtn:hover, #updateNoticeBtn:hover{
@@ -314,8 +349,9 @@ border: none;
 	border-right: none;
 }
 
-input[type="text"] {
-	width: 900px;
+form input[type="text"] {
+	width: 100%;
+	max-width:100%;
 	padding: 10px;
 	border: 1px solid #ccc;
 }
@@ -342,7 +378,7 @@ input[type="file"] {
 
 #fileCount {
 	display: inline-block;
-	width: 810px;
+	width: 1020px;
 	border: 1px solid #cecece;
 	padding: 10px;
 	color: #a4a4a4;
@@ -351,14 +387,15 @@ input[type="file"] {
 
 .file-label>label {
 	background-color: navy;
-	height: 37px;
-	line-height: 37px;
+	height: 39px;
+	line-height: 39px;
 	color: #ffffff;
 	border: none;
 	padding: 0 10px;
 	display: inline-block;
 	align-items: center;
 	text-decoration: none;
+	margin: 0;
 }
 
 .file-label>label:hover {
@@ -387,6 +424,9 @@ input[type="file"] {
 .filebox {
 	margin-bottom: 10px;
 }
+.filebox a {
+	color:red;
+}
 
 .img-list img {
 	width: 100px;
@@ -414,7 +454,7 @@ input[type="file"] {
 	text-align: center;
 	font-size: 1.3em;
 	font-weight: normal;
-	border-bottom: 1px solid #111111;
+	border-bottom: 1px solid #c0c0c0;
 }
 
 #noticeDtlInfo {
@@ -442,16 +482,4 @@ input[type="file"] {
 	background-size: contain;
 	background-repeat: no-repeat;
 	background-position: center;
-}
-/******************** summernote cdn css 덮어씌우기 *********************************/
-.note-frame {
-	font-family: 'Noto Sans';
-}
-
-.note-editable p {
-	text-align: left;
-}
-
-.note-editor.note-airframe, .note-editor.note-frame {
-	width: 1000px;
 }

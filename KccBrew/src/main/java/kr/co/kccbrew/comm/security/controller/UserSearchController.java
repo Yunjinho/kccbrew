@@ -1,7 +1,9 @@
 package kr.co.kccbrew.comm.security.controller;
 
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -54,25 +56,30 @@ public class UserSearchController {
 		return "security/searchUser";
 	}
 
-	// 아이디 찾기
 	@ResponseBody
 	@RequestMapping(value = "/userSearch", method = RequestMethod.POST)
-	public Map<String, Object> userIdSearch(@RequestParam Map<String, Object> user) {
-		String userNm = (String) user.get("userNm");
-		String userTelNo = (String) user.get("userTelNo");
-		UserVo result = searchService.searchId(userNm, userTelNo);
-		Map<String, Object> map=new HashMap<String, Object>();
-		if(result==null) {
-			map.put("id", "");
-			map.put("regDate", "");
+	public Map<String, Object> userIdSearch(@RequestParam Map<String, Object> userParams) {
+	    String userNm = (String) userParams.get("userNm");
+	    String userTelNo = (String) userParams.get("userTelNo");
+	    List<UserVo> result = searchService.searchId(userNm, userTelNo);
 
-		}else {
-			map.put("id", result.getUserId());
-			map.put("regDate", result.getRegDttm());
-		}
-		return map;
+	    Map<String, Object> map = new HashMap<String, Object>();
+	    if (result != null && !result.isEmpty()) {
+	        List<Map<String, Object>> userList = new ArrayList<>();
+	        for (UserVo user : result) {
+	            Map<String, Object> userData = new HashMap<>();
+	            userData.put("id", user.getUserId());
+	            userData.put("useYn", user.getUseYn());
+	            userData.put("regDate", user.getRegDttm());
+	            userList.add(userData);
+	        }
+	        map.put("users", userList);
+	    } else {
+	    	map.put("users", new ArrayList<Map<String, Object>>());
+	    }
+
+	    return map;
 	}
-	
 	
 
 

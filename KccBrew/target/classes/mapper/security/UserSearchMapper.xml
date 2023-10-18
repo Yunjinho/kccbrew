@@ -5,7 +5,7 @@
 
 	<select id="searchId" resultType="kr.co.kccbrew.comm.security.model.UserVo" parameterType="String">
 		select
-		nvl(user_id, '') AS userId,TO_CHAR(reg_dttm,'YYYY-MM-DD') AS regDttm from users
+		nvl(user_id, '') AS userId,TO_CHAR(reg_dttm,'YYYY-MM-DD') AS regDttm, use_yn AS "useYn" from users
 		where user_nm = #{userNm} and user_telno = #{userTelNo}
 	</select>
 	

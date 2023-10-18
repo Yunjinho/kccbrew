@@ -179,7 +179,7 @@ function closeChat(){
 			type : 'post'
 		});
 		chatArea.classList.add("hidden");
-		
+		webSocket.send(sessionUserId+","+uuid + "님이 퇴장합니다.");
 		webSocket.close();
 		location.reload();
 		

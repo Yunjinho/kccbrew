@@ -232,7 +232,6 @@ window.onload = function(){
 	});
 	
 	$("#add-store").click(function(){
-		alert("이걸안타?ㄴ")
 		$(".search-store").css("display","block");
 	})
 	// 모달창 밖에 영역 클릭시 삭제

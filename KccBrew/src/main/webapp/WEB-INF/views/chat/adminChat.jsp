@@ -6,7 +6,6 @@
 <link rel="stylesheet" href="/resources/css/chat/adminchat.css">
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" />
-<link rel="stylesheet" href="/resources/css/asMng/asList.css" />
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
@@ -17,21 +16,16 @@
      margin-left: 0px;">
 			<!-- 리스트 -->
 			<section class="discussions">
-				<div class="discussion search">
+				<div class="discussion">
+				 <!-- <div class="photo" style="background-image: url(test);"> -->
 				<button type="button" onclick="closeChat()" style="    all: unset;
-    position: absolute;
-    left: 20px;
+    position: relative;
+        width: 100%;
+    height: 100%;
     transition: 0.3s ease-in-out;">
-						<svg height='18' viewbox='0 0 18 18' width='18'
-							xmlns='http://www.w3.org/2000/svg'>
-      <path
-								d='M15 8.25H5.87l4.19-4.19L9 3 3 9l6 6 1.06-1.06-4.19-4.19H15v-1.5z'></path>
-    </svg>
+						<img src="/resources/img/backIcon.png" style="width: 25%; float: left;
+    margin-left: 30px;" alt="로딩 중..." />
 					</button>
-					<!-- <div class="searchbar">
-														<i class="fa fa-search" aria-hidden="true"></i> <input
-															type="text" placeholder="Search..."></input>
-													</div> -->
 				</div>
 			</section>
 

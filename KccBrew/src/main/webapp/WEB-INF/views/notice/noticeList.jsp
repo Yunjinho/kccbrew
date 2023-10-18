@@ -24,21 +24,31 @@
 		<div class="table-wrapper">
 			<!-- ********** 페이지 네비게이션 시작 ********** -->
 			<div class="page-content-navigation">
+				<h2 class="noti-head">공지사항</h2>
 				<ol class="breadcrumb">
-					<li class="breadcrumb-home">공지사항</li>
-					<li class="right-arrow">
-						<div class="header-icon-background2">
-							<img
-								src="<c:url value='resources/img/asMng/free-icon-right-arrow-271228.png' />"
-								alt="Check List" class="header-icon" />
-						</div>
-					</li>
-					<li>공지사항</li>
+				<li>
+					<div class="header-icon-background">
+						<a href="/">
+							<img src="<c:url value='resources/img/common/free-icon-house.png' />" alt="Check List" class="header-icon" />
+						</a>
+					</div>
+				</li>
+				<li>
+					<div class="header-icon-background">
+						<img src="<c:url value='resources/img/common/free-icon-arrow-right.png' />" alt="Check List" class="header-icon" />
+					</div>
+				</li>
+				<li class="breadcrumb-home">마이페이지</li>
+				<li>
+					<div class="header-icon-background">
+						<img src="<c:url value='resources/img/common/free-icon-arrow-right.png' />" alt="Check List" class="header-icon" />
+					</div>
+				</li>
+				<li class="curPage">공지사항</li>
 				</ol>
 			</div>
 			<!-- ********** 페이지 네비게이션 끝 ********** -->
 			<div class="content-wrapper">
-				<h2 class="noti-head">공지사항</h2>
 				<div class="margin-for-searchbox">
 					<div class="searchBox">
 						<div class="searchForm">
@@ -52,8 +62,9 @@
 									</select>
 								</div>
 									<div class="search-input">
-										<input type="text" class="search-notice-box" name="searchText" value="${param.searchText}" placeholder="검색어를 입력하세요."/>
+										<input type="text" id="search-text-input" class="search-notice-box" name="searchText" value="${param.searchText}" placeholder="검색어를 입력하세요."/>
 										<div id="searchText" data-searchtext="${param.searchText}"></div>
+										<button type="button" id="resetBtn" onclick=resetInput()><i class="fa-solid fa-xmark"></i></button>
 									</div>
 								<div class="search-notice-btn">
 									<button type="submit" id="searchBtn">검색</button>

@@ -46,6 +46,11 @@ $(document).ready(function() {
     highlightSearchText(searchText);
 });
 
+//검색창 초기화
+function resetInput() {
+	$('#search-text-input').val('');
+}
+
 var fileNo = 0;
 var filesArr = new Array();
 

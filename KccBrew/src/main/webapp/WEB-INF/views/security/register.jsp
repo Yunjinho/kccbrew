@@ -5,7 +5,8 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>회원 가입</title>
+<link rel="icon" type="image/png" href="${path}/resources/img/main/kccbrw-representative-logo.png">
 <link rel="stylesheet" href="resources/css/comm/register.css">
 <link rel="stylesheet" href="resources/css/comm/common.css">
 <link rel="stylesheet" href="${path}/resources/css/comm/reset.css" />
@@ -172,12 +173,14 @@
 									<img
 										src="<c:url value="resources/img/register/register_location.png"/>"
 										class="register-icons"> <select name="locationCd">
-										<option>지역 상세 선택</option>
+										<option value="">지역 상세 선택</option>
 									</select>
 								</div>
 							</div>
 							<ul class="register-msg">
-								<li id="mechaAddMsg">기사: 필수 정보입니다.</li>
+								<li id="mechaAddMsg">장비: 필수 정보입니다.</li>
+								<li id="locationMsg">지역: 필수 정보입니다.</li>
+								<li id="locationCdMsg">상세 지역: 필수 정보입니다.</li>
 							</ul>
 							<br>
 							<div class="register-button">
