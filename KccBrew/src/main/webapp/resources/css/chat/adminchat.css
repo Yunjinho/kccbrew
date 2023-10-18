@@ -1,6 +1,7 @@
 #userChat {
 color:black;
 box-sizing: unset;
+font-size: 1.2em;
 }
 .row{
 	display: flex;
@@ -23,10 +24,10 @@ box-sizing: unset;
   padding:0;
   background-color: #FFF; 
   box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
-  height: 700px;
-  width: 80%;
-  top:20px;
-  left:10%;
+  height: 500px;
+  width: 60%;
+  top:30px;
+  left:20%;
   
   margin:  auto;
 }
@@ -38,7 +39,7 @@ box-sizing: unset;
 #chatIcon {
 	    position: relative;
    float: right;
-    right: 540px;
+    right: 560px;
     top: 6px;
 	cursor: pointer;
 	font-size: 18px;
@@ -196,7 +197,7 @@ box-sizing: unset;
 .discussions .discussion .name {
   margin: 0 0 0 20px;
   font-family:'Montserrat', sans-serif;
-  font-size: 11pt;
+  font-size: 14pt;
   color:#515151;
 }
 
@@ -354,9 +355,9 @@ box-sizing: unset;
 }
 
 .write-message {
-	
+	font-size:20px;
   border:none !important;
-  width:60%;
+  width:80%;
   height: 50px;
   margin-left: 20px;
   padding: 10px;

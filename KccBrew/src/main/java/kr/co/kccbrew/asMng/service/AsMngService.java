@@ -212,8 +212,12 @@ public class AsMngService implements IAsMngService{
 	 */
 	@Transactional
 	public void asMod(AsMngVo asMngVo) {
-
-		asMngVo = insertImg(asMngVo);
+System.out.println(asMngVo);
+	if(asMngVo.getImgFile()!=null) {
+		asMngVo = insertImg(asMngVo);}
+	else {
+			asMngVo.setFileSeq("");
+		}
 		asRepository.asMod(asMngVo);
 	}
 

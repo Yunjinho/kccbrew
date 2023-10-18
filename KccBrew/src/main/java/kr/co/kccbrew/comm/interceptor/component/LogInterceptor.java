@@ -1,6 +1,7 @@
 package kr.co.kccbrew.comm.interceptor.component;
 
-import java.sql.Date; 
+import java.sql.Date;
+import java.sql.Timestamp;
 import java.time.LocalDateTime; 
 
 import javax.servlet.http.HttpServletRequest;
@@ -56,7 +57,6 @@ public class LogInterceptor extends Interceptor {
 	@Override
 	public void postHandle(HttpServletRequest request, HttpServletResponse 
 			response, Object handler, ModelAndView modelAndView) throws Exception {
-		log.info("컨트롤러 호출후 로깅테스트");
 
 		String view = null;
 		if( modelAndView != null && modelAndView.getViewName() != null && !modelAndView.getViewName().equals("")) {
@@ -72,8 +72,8 @@ public class LogInterceptor extends Interceptor {
 	public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
 		log.info("컨트롤러 호출완료 이후 로깅테스트");
 
-		LocalDateTime currentDateTime = LocalDateTime.now();
-		Date date = Date.valueOf(currentDateTime.toLocalDate());
+		Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+		log.info("timestamp: " + timestamp) ;
 		String requestURI = request.getRequestURI(); 
 		/*String logId = (String)request.getAttribute(LOG_ID); */
 
@@ -112,19 +112,16 @@ public class LogInterceptor extends Interceptor {
 			break;
 		}
 
-		log.info("status={}", status);
-
 		String view = (String) session.getAttribute("view");
 		LogMngVo logMngVo = new LogMngVo();
 		logMngVo.setView(view);
 
-		log.info("REQUEST  date=[{}], uri=[{}], view=[{}], handler=[{}], userId=[{}], userType=[{}], ip=[{}], status=[{}]");
 		if (ex != null) {
 			log.error("afterCompletion error!!", ex);
 		} 
 
 		/* log객체에 값 주입 */
-		logMngVo.setDate(date);
+		logMngVo.setDate(timestamp);
 		logMngVo.setIp(ip);
 		logMngVo.setUserId(userId);
 		logMngVo.setUri(requestURI);

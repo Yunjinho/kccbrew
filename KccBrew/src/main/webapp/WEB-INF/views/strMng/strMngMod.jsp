@@ -34,6 +34,19 @@
      .category{
      font-size: 1.2em;
      }
+     .register-msg>li {
+	height: 10px;
+	width: 283px;
+	    margin: auto;
+}
+
+.register-msg {
+	margin: 0px;
+	height: 8px;
+	padding: 0;
+	  list-style:none;
+	      color: red;
+}
 </style>
 
 <body>
@@ -48,8 +61,9 @@
 				<tr>
 					<th>지점명</th>
 					<td><input type="text" id="storeNm" name="storeNm"
-						value="${store.storeNm}" required> <input type="hidden"
-						id="storeNmHidden" name="storeNm"></input> <!-- 숨겨진 필드 추가 --> <input
+						value="${store.storeNm}" required> 
+										<input type="hidden" value="${store.storeNm}"
+						id="storeNmHidden"></input> <!-- 숨겨진 필드 추가 --> <input
 						type="button" name="strnm" value="중복확인" class="check"
 						id="name-check-btn" required></td>
 					<th>점포연락처</th>
@@ -78,7 +92,8 @@
 				</tr>
 				<tr>
 					<th colspan="1">지역분류</th>
-					<td colspan="3"><input type="hidden" id="dtl" value="${store.locationCd}"><select id="location" name="locationCd" size="1" onchange="changeLocationCd()">
+					<td colspan="3">
+					<input type="hidden" id="dtl" value="${store.locationCd}"><select id="location" name="locationCd" size="1" onchange="changeLocationCd()">
 							<option value="">지역선택</option>
 							<c:forEach var="list" items="${list}">
 								<option value="${list.locationCd}"
@@ -93,11 +108,14 @@
 			
 		  <div id="staticMap" style="width: 700px; height: 400px; margin: 20px auto;"></div>
 			 <div class="updatecancle" style="text-align: center;">
+			 <ul class="register-msg" id="msg" style="display:none;">
+											<li id="userPwdConfirmMsg">중복확인이 필요합니다.</li>
+										</ul>
 				<input type="hidden" name="storeSeq" value="${store.storeSeq}" style="">
 				<button type="submit" name="save"  class="form-btn" value="저장"
-					id="submitBtn" style="display: inline-block;  margin-left: 5px;  margin-right: 5px;">저장</button> 
+					id="submitBtn" style="display: inline-block;  margin-left: 5px;  margin-right: 5px; margin-top:20px">저장</button> 
 					<button type="button"  class="form-btn"
-					value="취소" onclick="history.back()" style="display: inline-block;  margin-left: 5px;  margin-right: 5px;">취소</button>
+					value="취소" onclick="history.back()" style="display: inline-block;  margin-left: 5px;  margin-right: 5px; margin-top:20px">취소</button>
 			</div>
 		</form>
 		</div>
@@ -121,7 +139,55 @@
                 }
             }).open();
         });
-        changeLocationCd();
+    	var dtlCd = $("#dtl").val();
+		console.log(dtlCd);
+    	// 정규 표현식 패턴
+    	var pattern = /\d+/;
+
+    	// 정규 표현식과 일치하는 부분 찾기
+    	var matches = dtlCd.match(pattern);
+
+    	if (matches) {
+    	    // 정규 표현식과 일치하는 첫 번째 숫자 얻기
+    	    var locCd = matches[0];
+    	   /*  $("#dtl").val()=locCd; */
+    	    console.log(locCd);
+    	
+    	    var selectElement = document.getElementById('location');
+
+    	    // select 요소의 option 요소를 모두 가져옵니다.
+    	    var options = selectElement.getElementsByTagName('option');
+
+    	    // 각 option 요소를 확인하며 선택 여부를 결정합니다.
+    	    for (var i = 0; i < options.length; i++) {
+    	        var option = options[i];
+    	        var locationCd = option.value;
+
+    	        // store.locationCd와 hiddenValue를 비교하여 선택 여부를 결정합니다.
+    	        if (locationCd == locCd) {
+    	            option.selected = true;
+    	        } else {
+    	            option.selected = false;
+    	        }
+    	    
+    	    
+    	    
+    	    
+    	    }} else{
+    	    	
+    	    	var locCd = $("#location").val(); 
+    	    }
+    	$.ajax({
+      		type : "GET",           // 타입 (get, post, put 등등)
+      		url : "/search-location-code",           // 요청할 서버url
+      		dataType : "json",       // 데이터 타입 (html, xml, json, text 등등)
+      		data : {
+      			'locCd' : locCd,
+      		},
+      		success : function(data) { // 결과 성공 콜백함수
+      			changeLosctionDtlCd(data);
+      		}
+      	});
     }
 
     function changeLosctionDtlCd(data){
@@ -137,7 +203,7 @@
 
       //대분류 지역 선택한 값에 맞춰서 소분류 지역 값 조회
       function changeLocationCd(){
-      	var locCd = $("#location").val();
+      	var locCd = $("#location").val(); 
       	console.log(locCd);
       	$.ajax({
       		type : "GET",           // 타입 (get, post, put 등등)
@@ -169,18 +235,88 @@
         });
     }
 
-    const hypenTel = function(target){
-        target.value = target.value.replace(/[^0-9]/g, '').replace(/^(\d{2,3})(\d{3,4})(\d{4})$/, `$1-$2-$3`);
-    }
+	const hypenTel = function(target) {
+	    if (!target) {
+	        return "";
+	    }
+	    const value = target.value.replace(/[^0-9]/g, ""); // 숫자 이외의 모든 문자를 제거
+	    let result = [];
+	    let restNumber = "";
 
-    const storeNmHidden = document.querySelector("#storeNmHidden"); // 숨겨진 필드
-    const submitBtn = document.querySelector("#submitBtn"); // 폼 제출 버튼
+	    // 지역번호와 나머지 번호로 나누기
+	    if (value.startsWith("02")) {
+	        // 서울 02 지역번호
+	        result.push(value.substr(0, 2));
+	        restNumber = value.substring(2);
+	        if (restNumber.length == 8) {
+		        // 4자리 이상인 경우
+		        result.push(restNumber.substring(0, 4));
+		        result.push(restNumber.substring(4));
+		    } else if (7 >= restNumber.length) {
+		        // 4자리 이상인 경우
+		        result.push(restNumber.substring(0, 3));
+		        result.push(restNumber.substring(3));
+		    } else {
+		        // 4자리 미만인 경우
+		    	 result.push(restNumber.substring(0, 4));
+			        result.push(restNumber.substring(4));
+		    }
+
+	        
+	    } else if (value.startsWith("1")) {
+	        // 지역 번호가 없는 경우
+	        // 1xxx-yyyy
+	        restNumber = value;
+	        if (restNumber.length >= 4) {
+		        // 4자리 이상인 경우
+		        result.push(restNumber.substring(0, 4));
+		        result.push(restNumber.substring(4));
+		    } else {
+		        // 4자리 미만인 경우
+		        result.push(restNumber);
+		    }
+	    } else {
+	        // 나머지 3자리 지역번호
+	        // 0xx-yyyy-zzzz
+	        result.push(value.substr(0, 3));
+	        restNumber = value.substring(3);
+	        if (restNumber.length == 8) {
+		        // 4자리 이상인 경우
+		        result.push(restNumber.substring(0, 4));
+		        result.push(restNumber.substring(4));
+		    } else if (7 >= restNumber.length) {
+		        // 4자리 이상인 경우
+		        result.push(restNumber.substring(0, 3));
+		        result.push(restNumber.substring(3));
+		    } else {
+		        // 4자리 미만인 경우
+		    	 result.push(restNumber.substring(0, 4));
+			        result.push(restNumber.substring(4));
+		    }
+	    }
+
+	  
+
+	    const hyphenatedValue = result.filter(function(val) {
+	        return val;
+	    }).join("-");
+
+	    // 입력 필드에 결과 설정
+	    target.value = hyphenatedValue;
+	}
+
+    var con = document.getElementById("msg"); 
+    const storeNmHidden = document.querySelector("#storeNmHidden");
+    const storeNm = document.querySelector("#storeNm");
+    const submitBtn = document.querySelector("#submitBtn");
 
     storeNm.addEventListener("input", function() {
         if (storeNm.value === storeNmHidden.value) {
-            submitBtn.disabled = false; // 저장 버튼 활성화
+            submitBtn.disabled = false; // Enable the submit button
+            msg.style.display="none";
         } else {
-            submitBtn.disabled = true; // 저장 버튼 비활성화
+            submitBtn.disabled = true; // Disable the submit button
+            msg.style.display="block";
         }
     });
 
@@ -195,25 +331,40 @@
         $.ajax({
             async: true,
             type: 'POST',
-            url: "${pageContext.request.contextPath}/user/namecheck", // 경로 수정
-            data: JSON.stringify(storeNm), // JSON으로 데이터 전송
-            dataType: "json", // 서버가 JSON 응답을 반환하는 것으로 예상
+            url: "${pageContext.request.contextPath}/user/namecheck",
+            data: JSON.stringify(storeNm),
+            dataType: "json",
             contentType: "application/json; charset=UTF-8",
             success: function (check) {
                 if (check == "1") {
                     alert("사용 가능한 점포명입니다.");
-                    // 이후 원하는 동작 수행
-                    document.getElementById("submitBtn").disabled = false;
-                    document.getElementById("storeNm").disabled = true;
+                    // Update the hidden field value
                     document.getElementById("storeNmHidden").value = storeNm;
+                    // Check if storeNm and storeNmHidden are equal
+                    if (storeNm === storeNmHidden.value) {
+                        submitBtn.disabled = false; 
+                        msg.style.display="none";// Enable the submit button
+                    } else {
+                        submitBtn.disabled = true; // Disable the submit button
+                        msg.style.display="block";
+                    }
                 } else {
                     alert("이미 존재하는 점포명입니다.");
-                    document.getElementById("submitBtn").disabled = true;
+                    document.getElementById("storeNmHidden").value = storeNm;
+                    // Check if storeNm and storeNmHidden are equal
+                    if (storeNm === storeNmHidden.value) {
+                        submitBtn.disabled = false; 
+                        msg.style.display="none";// Enable the submit button
+                    } else {
+                        submitBtn.disabled = true; // Disable the submit button
+                        msg.style.display="block";
+                    }
                 }
             },
             error: function (error) {
                 console.error("에러 발생:", error);
                 alert("서버와의 통신 중 오류가 발생했습니다.");
+                msg.style.display="block";
             }
         });
     });
