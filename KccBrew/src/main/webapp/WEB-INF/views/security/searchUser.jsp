@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>아이디/비밀번호 찾기</title>
 <link rel="icon" type="image/png" href="${path}/resources/img/main/kccbrw-representative-logo.png">
 
 <!-- ------------------ FONTS --------------------------->
