@@ -44,6 +44,7 @@ $(document).ready(function() {
         });
     }
     highlightSearchText(searchText);
+    
 });
 
 //검색창 초기화
@@ -159,7 +160,32 @@ function updateForm(){
 	}
 }
 
-
+//공지 목록 엑셀로 다운 받기
+function downExcel(flag){
+	
+	var currentPage = $("paging.nowPage").val();
+	var noticeSeq = '<c:out value="${noti.noticeSeq}"/>';
+	var noticeTitle	= '<c:out value="${noti.noticeTitle}"/>';
+	var noticeWriter = '관리자'
+	var noticeRegDate = '<fmt:formatDate value="${noti.writeDate}" pattern="yyyy-MM-dd"/>';
+	var views = '<c:out value="${noti.views}"/>';
+	$.ajax({
+		type : "POST",          
+	    url : "/download-notice-list",   
+	    dataType : "text",      
+	    data : {
+	    	'flag': flag,
+	    	'noticeSeq':noticeSeq,
+	    	'noticeTitle': noticeTitle,
+	    	'noticeWriter' : noticeWriter,
+	    	'noticeRegDate': noticeRegDate,
+	    	'views': views
+		},
+	    success : function(data) { // 결과 성공 콜백함수
+	    	alert("다운로드가 완료되었습니다.")
+	    }
+	})
+}
 
 
 

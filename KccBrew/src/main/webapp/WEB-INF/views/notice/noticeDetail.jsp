@@ -61,9 +61,7 @@
 							<div style="background-image:url('/${imgList.localSavePath}${imgList.fileDetailServerName}')" id="notice-img"></div>
 						</c:forEach>
 					</div>
-					<div id="noticeDtlContent">
-						<c:out value="${noticeVo.noticeContent}"/>
-					</div>
+					<pre id="noticeDtlContent"><c:out value="${noticeVo.noticeContent}"/></pre>
 				<div class="btn-wrapper">
 					<c:url var="toList" value="/noticelist"/>
 					<a href="${toList}" class="toListBtn">

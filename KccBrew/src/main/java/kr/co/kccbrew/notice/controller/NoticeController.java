@@ -1,9 +1,11 @@
 package kr.co.kccbrew.notice.controller;
 
 import java.io.File;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +20,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-
+import org.springframework.web.bind.annotation.ResponseBody;
 import kr.co.kccbrew.comm.security.model.UserVo;
 import kr.co.kccbrew.notice.dao.INoticeRepository;
 import kr.co.kccbrew.notice.model.NoticeVo;
@@ -72,11 +74,12 @@ public class NoticeController {
 	 */
 	@RequestMapping(value = "/noticelistwithcon", method = RequestMethod.GET)
 	public String noticeListWithCon(PagingVo vo
-									,Model model	
-									,@RequestParam(value="searchOption", required=false)String searchOption
-									,@RequestParam(value="searchText", required=false)String searchText
+									,NoticeVo noticeVo
+									,Model model
 									,@RequestParam(value="nowPage", required=false)String nowPage
-									,@RequestParam(value="cntPerPage", required=false)String cntPerPage) {
+									,@RequestParam(value="cntPerPage", required=false)String cntPerPage
+									,@RequestParam(value="searchOption", required=false)String searchOption
+									,@RequestParam(value="searchText", required=false)String searchText) {
 		
 		int total = noticeService.countNoticeWithCon(searchOption,searchText);
 		if (nowPage == null && cntPerPage == null) {
@@ -89,18 +92,16 @@ public class NoticeController {
 		}
 		
 		vo = new PagingVo(total, Integer.parseInt(nowPage), Integer.parseInt(cntPerPage));
+
+//		List<NoticeVo> list=noticeService.selectNoticeWithCon(vo.getNowPage(),vo.getCntPerPage(),searchOption,searchText);
+//		List<NoticeVo> list3=noticeService.selectNoticeWithCon(vo.getNowPage(),vo.getCntPerPage(),searchOption,searchText);
+		List<NoticeVo> list=noticeService.selectNoticeWithCon(vo.getStart(),vo.getEnd(),searchOption,searchText);
 		
-		List<NoticeVo> list2=noticeService.selectNoticeWithCon(vo.getStart(),vo.getEnd(),searchOption,searchText);
-		List<NoticeVo> list=noticeService.selectNoticeWithCon(vo.getNowPage(),vo.getCntPerPage(),searchOption,searchText);
-//		List<NoticeVo> list;
-//		if(searchText != null && !searchText.isEmpty()) {
-//			list = noticeService.selectNoticeWithCon(vo.getNowPage(), vo.getCntPerPage(), searchOption, searchText);
-//		}else {
-//			list = noticeService.selectNoticeWithCon(vo.getNowPage(), vo.getCntPerPage(), searchOption, null);
-//		}
 		
 		model.addAttribute("paging", vo);
 		model.addAttribute("viewAll", list);
+		model.addAttribute("searchOption", searchOption);
+		model.addAttribute("searchText", searchText);
 		return "notice";
 	}
 	
@@ -163,6 +164,43 @@ public class NoticeController {
 			}
 		}
 		return "redirect:/noticelist";
+	}
+	/**
+	 * 공지 목록 엑셀로 다운 받기
+	 * @param flag
+	 * @param nowPage
+	 * @param noticeSeq
+	 * @param noticeTitle
+	 * @param writerId
+	 * @param writeDate
+	 * @param views
+	 * @param request
+	 * @param response
+	 */
+	@ResponseBody
+	@RequestMapping(value ="/download-notice-list", method=RequestMethod.POST)
+	public void downloadList(String flag
+							,@RequestParam(defaultValue = "1")int nowPage
+							,@RequestParam(defaultValue= "")int noticeSeq
+							,@RequestParam(defaultValue= "")String noticeTitle
+							,@RequestParam(defaultValue= "")String writerId
+							,@RequestParam(defaultValue= "")Date writeDate
+							,@RequestParam(defaultValue= "")int views
+							,HttpServletRequest request
+							,HttpServletResponse response
+							) {
+		HttpSession session=request.getSession();
+		UserVo user=(UserVo)session.getAttribute("user");
+		NoticeVo noticeVo =new NoticeVo();
+		PagingVo pagingVo = new PagingVo();
+		
+		pagingVo.setNowPage(nowPage);
+		noticeVo.setNoticeSeq(noticeSeq);
+		noticeVo.setNoticeTitle(noticeTitle);
+		noticeVo.setWriterId(user.getUserId());
+		noticeVo.setWriteDate(writeDate);
+		noticeVo.setViews(views);
+		noticeService.downloadExcel(response, noticeVo, pagingVo, flag, nowPage);
 	}
 	
 	/**
@@ -229,15 +267,14 @@ public class NoticeController {
 								,@Value("#{serverImgPath['noticePath']}")String path
 								,HttpServletRequest request) {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		
-		if(authentication != null) {
+		int noticeSeq = noticeVo.getNoticeSeq();
+			if(authentication != null) {
 			Object principal = authentication.getPrincipal();
 			if(principal instanceof UserDetails) {
 				UserDetails userDetails = (UserDetails) principal;
 				
 				String writerId = userDetails.getUsername();
 				noticeVo.setModUser(writerId);
-				
 				List<NoticeVo> noticeImg = noticeService.noticeImageList(noticeVo.getFileSeq());
 				
 				String folderPath=request.getServletContext().getRealPath("")+path;
@@ -263,8 +300,7 @@ public class NoticeController {
 				noticeService.updateNotice(noticeVo);
 			}
 		}
-//		return "/noticedetail/" + noticeSeq;
-		return "redirect:/noticelist";
+		return "redirect:/noticedetail/" + noticeSeq;
 	}
 	
 }

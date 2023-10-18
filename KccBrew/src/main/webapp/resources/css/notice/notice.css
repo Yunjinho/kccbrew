@@ -124,8 +124,9 @@ form {
 #searchListForm .search-input .search-notice-box {
 	border: 1px solid black;
 	width: 500px;
-	max-width:500px;
+	max-width: 500px;
 	height: 40px;
+	padding-right: 30px;
 }
 #searchListForm .search-notice-btn button{
 	width:80px;
@@ -466,7 +467,9 @@ input[type="file"] {
 	border-bottom: 1px solid #c0c0c0;
 	margin-bottom: 50px;
 }
-
+#noticeDtlContent {
+	background-color: transparent;
+}
 .info-name {
 	font-weight: 600;
 }
