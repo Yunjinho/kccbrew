@@ -5,7 +5,8 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>회원 가입</title>
+<link rel="icon" type="image/png" href="${path}/resources/img/main/kccbrw-representative-logo.png">
 <link rel="stylesheet" href="resources/css/comm/register.css">
 <link rel="stylesheet" href="resources/css/comm/common.css">
 <link rel="stylesheet" href="${path}/resources/css/comm/reset.css" />

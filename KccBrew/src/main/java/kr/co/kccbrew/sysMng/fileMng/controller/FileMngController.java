@@ -48,12 +48,18 @@ public class FileMngController {
 		if (fileList != null && !fileList.isEmpty()) {
 			totalPage = (int) Math.ceil(totalCountDouble / 10.0);
 		} 
-		int startPage=((int)Math.ceil(fileMngVo.getCurrentPage()/10) * 10) + 1;
-		int endPage=((int)Math.ceil(fileMngVo.getCurrentPage()/10) + 1) * 10;
+		int startPage = ((fileMngVo.getCurrentPage() - 1) / 10) * 10 + 1;
+		    int endPage = startPage + 9;
+		    if (endPage > totalPage) {
+		        endPage = totalPage;
+		    }
+
 		System.out.println(startPage+"ggggggggggggggggggggggggggggggggg"+endPage);
 		System.out.println("==========================================");
+		System.out.println(startPage+"테스트으으으ㅡ~~~~~~~~"+endPage);
 		System.out.println(fileMngVo.getCurrentPage());
-		System.out.println(Math.ceil(fileMngVo.getCurrentPage()/10));
+		System.out.println((int)Math.ceil(fileMngVo.getCurrentPage()/10));
+		System.out.println((int)Math.ceil(fileMngVo.getCurrentPage()/10) * 10);
 		model.addAttribute("totalPage", totalPage);
 		model.addAttribute("currentPage", 1);
 		model.addAttribute("startPage", startPage);
@@ -76,12 +82,18 @@ public class FileMngController {
 		if (fileList != null && !fileList.isEmpty()) {
 			totalPage = (int) Math.ceil(totalCountDouble / 10.0);
 		} 
-		int startPage=((int)Math.ceil(fileMngVo.getCurrentPage()/10) * 10) + 1;
-		int endPage=((int)Math.ceil(fileMngVo.getCurrentPage()/10) + 1) * 10;
+
+		int startPage = ((fileMngVo.getCurrentPage() - 1) / 10) * 10 + 1;
+	    int endPage = startPage + 9;
+	    if (endPage > totalPage) {
+	        endPage = totalPage;
+	    }
+
 		System.out.println(startPage+"ggggggggggggggggggggggggggggggggg"+endPage);
 		System.out.println("==========================================");
+		System.out.println(startPage+"테스트으으으ㅡ~~~~~~~~"+endPage);
 		System.out.println(fileMngVo.getCurrentPage());
-		System.out.println(Math.ceil(fileMngVo.getCurrentPage()/10));
+		System.out.println( Math.ceil(fileMngVo.getCurrentPage() / 10));
 		model.addAttribute("totalPage", totalPage);
 		model.addAttribute("currentPage", fileMngVo.getCurrentPage());
 		model.addAttribute("startPage", startPage);

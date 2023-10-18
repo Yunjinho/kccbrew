@@ -136,16 +136,21 @@ function createMessageElementAdmin(msg) {
 
 function handleUserMessage(node) {
   const $div = $("[data-key='" + node.key + "']");
-  let log = $div.find(".messages-chat").html();
   let user_id = node.message.split(",")[0];
   let msg = node.message.split(",")[1];
+  
+  if(msg.includes(node.key + "님이 퇴장합니다.")){
+	  alert(user_id + "님이 퇴장합니다.");
+  }
+  let log = $div.find(".messages-chat").html();
   const message1 = createMessageElementUser(msg);
   $div.find(".messages-chat").append(message1);
   scrollToBottom();
+  
 }
 
 function handleUserBye(node) {
-  
+	console.log(node);
  const $template = $(".template");
  $("[data-key='" + node.key + "']").remove();
  $template.attr("data-key", ""); // data-key 초기화

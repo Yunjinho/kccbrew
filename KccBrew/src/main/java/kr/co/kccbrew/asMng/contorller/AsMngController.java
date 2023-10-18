@@ -394,7 +394,6 @@ public class AsMngController {
 	public String asMod(@Value("#{serverImgPath['localPath']}") String localPath,
 			@Value("#{serverImgPath['asReceiptPath']}") String path, AsMngVo asMngVo, HttpServletRequest request,
 			Principal principal) {
-
 		String folderPath = request.getServletContext().getRealPath("") + path;
 		String userId = principal.getName();
 
@@ -408,11 +407,12 @@ public class AsMngController {
 		asMngVo.setUserId(userId);
 		asMngVo.setStorageLocation(path);
 		asMngVo.setServerSavePath(folderPath);
-		System.out.println("=============================================================");
 		System.out.println(folderPath);
 		System.out.println(path);
+		System.out.println(asMngVo);
 		asMngVo.setLocalSavePath(localPath + path);
-		asMngService.deleteFile(asMngVo, imgSeq);
+		if(imgSeq!=null) {
+		asMngService.deleteFile(asMngVo, imgSeq);}
 		asMngService.asMod(asMngVo);
 
 
@@ -428,8 +428,12 @@ public class AsMngController {
 		// 이미지 정보를 가져와서 List<AsMngVo> 형태로 반환\
 		AsMngVo vo = asMngService.selectAsInfoDetail(asInfoSeq, asAssignSeq,storeSeq);
 		System.out.println(vo.getFileSeq());
-		System.out.println("============================");
-		List<AsMngVo> imageList = asMngService.selectAsImg(vo.getFileSeq());
+		List<AsMngVo> imageList = null;
+		if(vo.getFileSeq()!=null) {
+		imageList = asMngService.selectAsImg(vo.getFileSeq());}
+		else {
+			imageList=null;
+		}
 		return imageList;
 	}
 

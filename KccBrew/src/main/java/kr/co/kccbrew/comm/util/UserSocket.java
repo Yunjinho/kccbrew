@@ -69,6 +69,7 @@ public class UserSocket {
 	    user.user_id = user_id; // 전달된 user_id 사용
 	    user.session = userSession;
 	    System.out.println(userSession);
+	    System.out.println("================++=================");
 	    sessionUsers.add(user);
 	    // key와 user_id 모두 전송
 	    user.session.getBasicRemote().sendText("uuid:" + user.key + ",user_id:" + user.user_id);
@@ -79,6 +80,8 @@ public class UserSocket {
 	@OnMessage
 	public void handleMessage(String message, Session userSession) throws IOException {
 		User user = getUser(userSession);
+		System.out.println(user);
+	    System.out.println("==========dddd======++=================");
 		if (user != null) {
 			System.out.println(message);
 			//어떤 유저가 메세지를 보냈는지 admin에게 전달
@@ -102,6 +105,8 @@ public class UserSocket {
 	@OnClose
 	public void handleClose(Session userSession) {
 		User user = getUser(userSession);
+		System.out.println(user);
+		System.out.println("++++++++++++++++++++++++++++++++++++++++++++++");
 		if (user != null) {
 			//admin에 종료 전송 -> 방 닫힘
 			AdminSocket.bye(user.key);

@@ -2,6 +2,8 @@ package kr.co.kccbrew.notice.service;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletResponse;
+
 import kr.co.kccbrew.notice.model.PagingVo;
 import kr.co.kccbrew.notice.model.NoticeVo;
 
@@ -27,5 +29,6 @@ public interface INoticeService {
 	public List<NoticeVo> noticeImageList(String fileSeq);	//공지 사항 첨부 이미지 리스트
 	List<NoticeVo> selectMainNotice();				// 메인 화면에 보일 공지 목록
 	
-//	String selectName(NoticeVo noticeVo);
+	//공지 목록 엑셀로 저장
+	public void downloadExcel(HttpServletResponse response, NoticeVo noticeVo, PagingVo pagingVo, String flag, int nowPage);
 }
