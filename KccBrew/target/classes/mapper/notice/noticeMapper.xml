@@ -43,19 +43,16 @@
 								,notice_title	AS "noticeTitle"
 								,views			AS "views"
 							FROM notification
-                            WHERE 
+                            WHERE 1=1
                             	<choose>
                             		<when test="searchOption == 'all'">
-	                               		#{searchOption} = 'all' 	AND notice_title 	LIKE '%' || #{searchText} || '%'  OR  notice_content LIKE '%' || #{searchText} || '%' 
+	                               		AND #{searchOption} = 'all' 	AND notice_title 	LIKE '%' || #{searchText} || '%'  OR  notice_content LIKE '%' || #{searchText} || '%' 
 	                               	</when>
 	                               	<when test="searchOption == 'title'">
-					            		#{searchOption} = 'title' 	AND notice_title 	LIKE '%' || #{searchText} || '%'
+					            		AND #{searchOption} = 'title' 	AND notice_title 	LIKE '%' || #{searchText} || '%'
 					            	</when>
 					            	<when test="searchOption == 'content'">
-					            		#{searchOption} = 'content' AND notice_content 	LIKE '%' || #{searchText} || '%'
-					            	</when>
-					            	<when test="searchOption == 'writer'">
-					            		#{searchOption} = 'writer' 	AND writer_name 	LIKE '%' || #{searchText} || '%'
+					            		AND #{searchOption} = 'content' AND notice_content 	LIKE '%' || #{searchText} || '%'
 					            	</when>
 					            </choose>
 							ORDER BY notice_seq DESC
@@ -76,19 +73,16 @@
 								,notice_title	AS "noticeTitle"
 								,views			AS "views"
 							FROM notification
-                            WHERE
+                            WHERE 1=1
                             	<choose>
                             		<when test="searchOption == 'all'">
-	                               		#{searchOption} = 'all' 	AND notice_title 	LIKE '%' || #{searchText} || '%'  OR  notice_content LIKE '%' || #{searchText} || '%' 
+	                               		AND #{searchOption} = 'all' 	AND notice_title 	LIKE '%' || #{searchText} || '%'  OR  notice_content LIKE '%' || #{searchText} || '%' 
 	                               	</when>
 	                               	<when test="searchOption == 'title'">
-					            		#{searchOption} = 'title' 	AND notice_title 	LIKE '%' || #{searchText} || '%'
+					            		AND #{searchOption} = 'title' 	AND notice_title 	LIKE '%' || #{searchText} || '%'
 					            	</when>
 					            	<when test="searchOption == 'content'">
-					            		#{searchOption} = 'content' AND notice_content 	LIKE '%' || #{searchText} || '%'
-					            	</when>
-					            	<when test="searchOption == 'writer'">
-					            		#{searchOption} = 'writer' 	AND writer_name 	LIKE '%' || #{searchText} || '%'
+					            		AND #{searchOption} = 'content' AND notice_content 	LIKE '%' || #{searchText} || '%'
 					            	</when>
 					            </choose>
 							ORDER BY notice_seq DESC
@@ -143,21 +137,7 @@
 	</insert>
 	
 	<!-- 공지사항 등록하기 -->
-	<insert id="insertNotice" parameterType="kr.co.kccbrew.notice.model.NoticeVo">
-		<!-- <![CDATA[
-			INSERT INTO notification VALUES (
-				notice_seq.NEXTVAL
-				,#{writerId}
-				,#{writerName}
-				,SYSDATE
-				,SYSDATE
-				,#{writerId}
-				,#{noticeTitle}
-				,#{noticeContent}
-				,#{fileId}
-				,0)
-		]]> -->
-		
+	<insert id="insertNotice" parameterType="kr.co.kccbrew.notice.model.NoticeVo">		
 		<![CDATA[
 			INSERT INTO notification VALUES (
 	            notice_seq.NEXTVAL
