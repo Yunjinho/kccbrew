@@ -39,8 +39,8 @@ public class NoticeService implements INoticeService{
 	
 	//공지사항 목록 조회, 페이징 처리
 	@Override
-	public List<NoticeVo> selectNotice(PagingVo vo, NoticeVo noticeVo) {
-		return noticeRepository.selectNotice(vo, noticeVo);
+	public List<NoticeVo> selectNotice(PagingVo vo) {
+		return noticeRepository.selectNotice(vo);
 	}
 
 	// 공지사항 총 개수 조회 - 검색 조건 필터링한 결과만
@@ -51,8 +51,8 @@ public class NoticeService implements INoticeService{
 	
 	//검색 조건을 설정한 공지 사항
 	@Override
-	public List<NoticeVo> selectNoticeWithCon(NoticeVo noticeVo, int start, int end, String searchOption, String searchText) {
-		return noticeRepository.selectNoticeWithCon(noticeVo, start, end, searchOption,searchText);
+	public List<NoticeVo> selectNoticeWithCon(int start, int end, String searchOption, String searchText) {
+		return noticeRepository.selectNoticeWithCon(start, end, searchOption,searchText);
 	}
 	
 	
@@ -135,9 +135,6 @@ public class NoticeService implements INoticeService{
 		}
 		return noticeVo;
 	}
-
-	
-	
 	
 	//공지사항 첨부 이미지 리스트
 	@Override
@@ -148,88 +145,6 @@ public class NoticeService implements INoticeService{
 	@Override
 	public List<NoticeVo> selectMainNotice() {
 		return noticeRepository.selectMainNotice();
-	}
-
-	// 공지 목록 엑셀로 다운 
-	@Override
-	public void downloadExcel(HttpServletResponse response, NoticeVo noticeVo, PagingVo pagingVo, String flag, String nowPage) {
-		List<NoticeVo> list;
-		Map<Integer, Object[]> data = new HashMap();
-		data.put(1, new Object[]{"순번", "제목", "작성자","작성일","조회수"});
-		if(flag.equals("1")) {
-			//현재 페이지 저장
-			list=selectNoticeWithCon(noticeVo, pagingVo.getStart(), pagingVo.getEnd(), noticeVo.getSearchOption(), noticeVo.getSearchText());
-			System.out.println(list.size());
-	        for(int i=0; i<list.size(); i++) {
-	        	data.put(i+2, 
-	        			new Object[] {
-	        					 list.get(i).getNoticeSeq()
-	        					,list.get(i).getNoticeTitle()
-	        					,list.get(i).getWriterName()
-	        					,list.get(i).getWriteDate()
-	        					,list.get(i).getViews()
-	        					});
-	        }
-		}else {
-			//전체 페이지 저장
-			list=selectNotice(pagingVo, noticeVo);
-	        for(int i=0; i<list.size(); i++) {
-	        	data.put(i+2, 
-	        			new Object[] {
-	        					 list.get(i).getNoticeSeq()
-	        					,list.get(i).getNoticeTitle()
-	        					,list.get(i).getWriterName()
-	        					,list.get(i).getWriteDate()
-	        					,list.get(i).getViews()
-	        					});
-	        }
-		}
-		XSSFWorkbook workbook = new XSSFWorkbook();
-       // 빈 Sheet를 생성
-       XSSFSheet sheet = workbook.createSheet("공지사항 목록");
-
-       // Sheet를 채우기 위한 데이터들을 Map에 저장
-
-       // data에서 keySet를 가져온다. 이 Set 값들을 조회하면서 데이터들을 sheet에 입력한다.
-       Set<Integer> keyset = data.keySet();
-       int rownum = 0;
-       	
-       for (Integer key : keyset) {
-           Row row = sheet.createRow(rownum++);
-           Object[] objArr = data.get(key);
-           int cellnum = 0;
-           for (Object obj : objArr) {
-               Cell cell = row.createCell(cellnum++);
-               if (obj instanceof String) {
-                   cell.setCellValue((String)obj);
-               } else if (obj instanceof Integer) {
-                   cell.setCellValue((Integer)obj);
-               }
-           }
-       }
-
-       try {
-       	String folderPath="C:\\kccbrew";
-   		File folder = new File(folderPath);
-           // 폴더가 존재하지 않으면 폴더를 생성합니다.
-           if (!folder.exists()) {
-               folder.mkdirs(); // 폴더 생성 메소드
-           }
-           // 현재 날짜 구하기
-           LocalDateTime now = LocalDateTime.now();
-           // 포맷 정의
-           DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
-           // 포맷 적용
-           String formatedNow = now.format(formatter);
-    
-           FileOutputStream out = new FileOutputStream(new File(System.getProperty("user.home") + "\\Downloads\\" , noticeVo.getWriterId()+"_"+formatedNow+"_notice_list.xlsx"));
-           workbook.write(out);
-           
-           out.close();
-       } catch (Exception e) {
-           e.printStackTrace();
-       }
-		
 	}
 }
 

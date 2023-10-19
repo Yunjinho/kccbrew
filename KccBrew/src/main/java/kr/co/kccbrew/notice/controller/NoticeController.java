@@ -59,7 +59,7 @@ public class NoticeController {
 		}
 		vo = new PagingVo(total, Integer.parseInt(nowPage), Integer.parseInt(cntPerPage));
 		model.addAttribute("paging", vo);
-		model.addAttribute("viewAll", noticeService.selectNotice(vo, noticeVo));
+		model.addAttribute("viewAll", noticeService.selectNotice(vo));
 		return "notice";
 	}
 	
@@ -94,7 +94,7 @@ public class NoticeController {
 		
 		vo = new PagingVo(total, Integer.parseInt(nowPage), Integer.parseInt(cntPerPage));
 
-		List<NoticeVo> list=noticeService.selectNoticeWithCon(noticeVo, vo.getStart(),vo.getEnd(),searchOption,searchText);
+		List<NoticeVo> list=noticeService.selectNoticeWithCon(vo.getStart(),vo.getEnd(),searchOption,searchText);
 		
 		model.addAttribute("paging", vo);
 		model.addAttribute("viewAll", list);
@@ -175,25 +175,25 @@ public class NoticeController {
 	 * @param request
 	 * @param response
 	 */
-	@ResponseBody
-	@RequestMapping(value ="/download-notice-list", method=RequestMethod.POST)
-	public void downloadList(String flag
-							,@RequestParam(defaultValue = "1")String nowPage
-							,@RequestParam(defaultValue = "")String searchOption
-							,@RequestParam(defaultValue = "")String searchText
-							,HttpServletRequest request
-							,HttpServletResponse response
-							) {
-		HttpSession session=request.getSession();
-		UserVo user=(UserVo)session.getAttribute("user");
-		NoticeVo noticeVo =new NoticeVo();
-		PagingVo pagingVo = new PagingVo();
-		noticeVo.setSearchOption(searchOption);
-		noticeVo.setSearchText(searchText);
-		noticeVo.setWriterId(user.getUserId());
-		
-		noticeService.downloadExcel(response, noticeVo, pagingVo, flag, nowPage);
-	}
+//	@ResponseBody
+//	@RequestMapping(value ="/download-notice-list", method=RequestMethod.POST)
+//	public void downloadList(String flag
+//							,@RequestParam(defaultValue = "1")String nowPage
+//							,@RequestParam(defaultValue = "")String searchOption
+//							,@RequestParam(defaultValue = "")String searchText
+//							,HttpServletRequest request
+//							,HttpServletResponse response
+//							) {
+//		HttpSession session=request.getSession();
+//		UserVo user=(UserVo)session.getAttribute("user");
+//		NoticeVo noticeVo =new NoticeVo();
+//		PagingVo pagingVo = new PagingVo();
+//		noticeVo.setSearchOption(searchOption);
+//		noticeVo.setSearchText(searchText);
+//		noticeVo.setWriterId(user.getUserId());
+//		
+//		noticeService.downloadExcel(response, noticeVo, pagingVo, flag, nowPage);
+//	}
 	
 	/**
 	 * 공지 상세 조회
