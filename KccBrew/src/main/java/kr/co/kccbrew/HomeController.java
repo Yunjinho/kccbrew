@@ -51,10 +51,11 @@ public class HomeController {
 			return "redirect:/admin/main";
 		} else if (role.equals(new SimpleGrantedAuthority("ROLE_MANAGER"))) {
 			return "redirect:/manager/main";
-		} else {
+		} else if(role.equals(new SimpleGrantedAuthority("ROLE_MECHA")))  {
 			return "redirect:/mechanic/main";
-		} 
-
+		} else {
+			return "redirect:/logout";
+		}
 	}
 }
 

@@ -2,7 +2,53 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.co.kccbrew.strMng.dao.IStrMngRepository">
 
-	
+	<select id="strAllFilter" resultType="kr.co.kccbrew.strMng.model.StrMngVo" parameterType="kr.co.kccbrew.strMng.model.StrMngVo">
+	 SELECT 
+        a.store_nm AS "storeNm", 
+        a.grp_cd_dtl_nm AS "locationNm",
+        a.store_telno AS "storeTelNo",
+        a.store_seq AS "storeSeq"
+    FROM (
+        SELECT
+            ROW_NUMBER() OVER(ORDER BY a.store_seq desc) AS ROW_NUM,
+            a.store_nm,
+            b.grp_cd_dtl_nm, a.store_telno,  a.store_seq
+        FROM store a
+        JOIN group_code_detail b ON a.location_cd = b.grp_cd_dtl_id
+        WHERE
+            (b.grp_cd_id='L' OR b.grp_cd_id='LL')
+            <if test="startDate != '' and startDate != null">
+                 <![CDATA[
+               AND a.reg_dttm >= #{startDate}]]>
+            </if>
+            <if test="endDate!= '' and endDate!= null">
+                  <![CDATA[
+                AND a.reg_dttm < TO_DATE(#{endDate},'YYYY-MM-DD')+1
+                  ]]>
+            </if>
+           
+            <if test="regUser != null and regUser != ''">
+                AND a.REG_USER = #{regUser}
+            </if>
+            <if test="keyword != null and keyword != ''">
+                AND a.store_nm LIKE '%' || #{keyword} || '%'
+            </if>
+			<choose>
+			<when test="locationCdSeoul != null and locationCdSeoul != ''">
+			AND a.location_cd = #{locationCdSeoul}
+			</when>
+			<when test="locationCd != null and locationCd != '' and locationCdSeoul == ''">
+                <![CDATA[
+            And a.location_cd LIKE #{locationCd}||'-%'
+            ]]>
+            </when>
+            </choose>
+            <if test="useYn != null and useYn != ''">
+                AND a.use_yn = #{useYn}
+            </if>
+            
+    ) a
+	</select>
 	<select id="strFilter" resultType="kr.co.kccbrew.strMng.model.StrMngVo" parameterType="java.util.Map">
     SELECT 
         a.store_nm AS "storeNm", 
@@ -298,4 +344,5 @@ DELETE FROM store_user_map WHERE store_seq=#{storeSeq} AND user_id=#{userId}
 <delete id="deleteholiday">
 	DELETE FROM holiday WHERE user_id=#{userId} AND store_seq=#{storeSeq}
 </delete>
+
 </mapper>

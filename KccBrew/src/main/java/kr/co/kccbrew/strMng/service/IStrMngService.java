@@ -38,11 +38,5 @@ public interface IStrMngService {
 	 */
 	void deleteStr(String userId, String storeSeq);
 	
-	/**
-	 * 점포 정보 다운로드
-	 * @param vo
-	 */
-	void downloadStrList(StrMngVo vo);
-	
 	public List<StrMngVo> strAllFilter(StrMngVo strMngVo);
 }

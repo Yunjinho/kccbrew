@@ -106,11 +106,6 @@ public interface IAsMngService {
 	public void updateResultMng(AsMngVo asMngVo);
 	
 	
-	/**
-	 * 엑셀로 저장
-	 * @param asMngVo
-	 */
-	public void downloadExcel(HttpServletResponse response,AsMngVo asMngVo,String flag,String currentPage);
 	
 	public void asMod(AsMngVo asMngVo);
 	public void deleteFile(AsMngVo asMngVo, String imgSeq);
