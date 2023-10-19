@@ -51,146 +51,8 @@ public class SchdlMngService implements ISchdlMngService {
 		return schdlMngRepository.selectHolidays(map);
 	}
 	
-	/* 휴가 리스트 다운로드*/
-	@Override
-	public void downloadHoliday(int page,int role,UserVo userVo, Date startSqlDate, Date endSqlDate) {
-		List<SchdlMngVo> list;
-		Map<Integer, Object[]> data = new HashMap();
-		
-		if(role==1) {
-			data.put(1, new Object[]{"사용자분류", "ID", "휴가번호", "신청일", "시작일", "종료일", "휴가상태", "사용여부"});
-		}else if(role==2){
-			data.put(1, new Object[]{"지점명", "신청일", "시작일", "종료일", "휴가상태", "사용여부"});
-		}else {
-			data.put(1, new Object[]{"신청일", "시작일", "종료일", "휴가상태", "사용여부"});
-		}
-		
-		if(userVo.getFlag().equals("1")) {
-			//현재 페이지 저장
-			list=getHolidays(page, startSqlDate, endSqlDate, userVo);
-	        for(int i=0;i<list.size();i++) {
-	        	String useHoliday="";
-	        	LocalDate currentDate = LocalDate.now();
-	            LocalDate comparisonDate = list.get(i).getStartDate().toLocalDate();
-	            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-	            
-	            if(list.get(i).getActualUse().equals("N")) {
-	        		useHoliday="취소완료";
-	        	}else if(currentDate.isAfter(comparisonDate)) {
-	        		useHoliday="이미 사용된 휴가";
-	        	}else {
-	        		useHoliday="사용 예정";
-	        	}
-	            if(role==1) {
-	            	data.put(i+2,new Object[]{list.get(i).getUserType(),list.get(i).getUserId(),list.get(i).getScheduleId()
-	            			,dateFormat.format(list.get(i).getAppDate())
-	            			,dateFormat.format(list.get(i).getStartDate())
-	            			,dateFormat.format(list.get(i).getEndDate())
-	            			,useHoliday
-	            			,list.get(i).getActualUse()});
-	            }else if(role==2) {
-	            	data.put(i+2,new Object[]{list.get(i).getStoreName()
-	            			,dateFormat.format(list.get(i).getAppDate())
-	            			,dateFormat.format(list.get(i).getStartDate())
-	            			,dateFormat.format(list.get(i).getEndDate())
-	            			,useHoliday
-	            			,list.get(i).getActualUse()});
-	            }else {
-	            	data.put(i+2,new Object[]{ dateFormat.format(list.get(i).getAppDate())
-	            			,dateFormat.format(list.get(i).getStartDate())
-	            			,dateFormat.format(list.get(i).getEndDate())
-	            			,useHoliday
-	            			,list.get(i).getActualUse()});
-	            }
-	        }
-		}else {
-			//전체 페이지 저장
-			list=getAllHolidays(page, startSqlDate, endSqlDate, userVo);
-			
-			 for(int i=0;i<list.size();i++) {
-		        	String useHoliday="";
-		        	LocalDate currentDate = LocalDate.now();
-		            LocalDate comparisonDate = list.get(i).getStartDate().toLocalDate();
-		            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-		            
-		            if(list.get(i).getActualUse().equals("N")) {
-		        		useHoliday="취소완료";
-		        	}else if(currentDate.isAfter(comparisonDate)) {
-		        		useHoliday="이미 사용된 휴가";
-		        	}else {
-		        		useHoliday="사용 예정";
-		        	}
-		            if(role==1) {
-		            	data.put(i+2,new Object[]{list.get(i).getUserType(),list.get(i).getUserId(),list.get(i).getScheduleId()
-		            			,dateFormat.format(list.get(i).getAppDate())
-		            			,dateFormat.format(list.get(i).getStartDate())
-		            			,dateFormat.format(list.get(i).getEndDate())
-		            			,useHoliday
-		            			,list.get(i).getActualUse()});
-		            }else if(role==2) {
-		            	data.put(i+2,new Object[]{list.get(i).getStoreName()
-		            			,dateFormat.format(list.get(i).getAppDate())
-		            			,dateFormat.format(list.get(i).getStartDate())
-		            			,dateFormat.format(list.get(i).getEndDate())
-		            			,useHoliday
-		            			,list.get(i).getActualUse()});
-		            }else {
-		            	data.put(i+2,new Object[]{ dateFormat.format(list.get(i).getAppDate())
-		            			,dateFormat.format(list.get(i).getStartDate())
-		            			,dateFormat.format(list.get(i).getEndDate())
-		            			,useHoliday
-		            			,list.get(i).getActualUse()});
-		            }
-		        }
-		}
-		XSSFWorkbook workbook = new XSSFWorkbook();
-       // 빈 Sheet를 생성
-       XSSFSheet sheet = workbook.createSheet("조회한 휴가 목록");
-
-       // Sheet를 채우기 위한 데이터들을 Map에 저장
-
-       // data에서 keySet를 가져온다. 이 Set 값들을 조회하면서 데이터들을 sheet에 입력한다.
-       Set<Integer> keyset = data.keySet();
-       int rownum = 0;
-       	
-       for (Integer key : keyset) {
-           Row row = sheet.createRow(rownum++);
-           Object[] objArr = data.get(key);
-           int cellnum = 0;
-           for (Object obj : objArr) {
-               Cell cell = row.createCell(cellnum++);
-               if (obj instanceof String) {
-                   cell.setCellValue((String)obj);
-               } else if (obj instanceof Integer) {
-                   cell.setCellValue((Integer)obj);
-               }
-           }
-       }
-
-       try {
-       	String folderPath="C:\\kccbrew";
-   		File folder = new File(folderPath);
-           // 폴더가 존재하지 않으면 폴더를 생성합니다.
-           if (!folder.exists()) {
-               folder.mkdirs(); // 폴더 생성 메소드
-           }
-           // 현재 날짜 구하기
-           LocalDateTime now = LocalDateTime.now();
-           // 포맷 정의
-           DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
-           // 포맷 적용
-           String formatedNow = now.format(formatter);
-    
-           FileOutputStream out = new FileOutputStream(new File(System.getProperty("user.home") + "\\Downloads\\" ,formatedNow+"_holiday_list.xlsx"));
-           workbook.write(out);
-           
-           out.close();
-       } catch (Exception e) {
-           e.printStackTrace();
-       }
-	}
 	
-	private List<SchdlMngVo> getAllHolidays(int page, Date startSqlDate, Date endSqlDate, UserVo userVo) {
+	public List<SchdlMngVo> getAllHolidays(int page, Date startSqlDate, Date endSqlDate, UserVo userVo) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("firstRowNum", page*10-9);
 		map.put("lastRowNum", page*10);
@@ -395,5 +257,7 @@ public class SchdlMngService implements ISchdlMngService {
 		parameterMap.put("date", date);
 		return schdlMngRepository.selectResult(parameterMap);
 	}
+
+
 
 }

@@ -1,14 +1,24 @@
 package kr.co.kccbrew.asMng.contorller;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.security.Principal;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.sound.midi.MidiDevice.Info;
 
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Value;
@@ -368,7 +378,91 @@ public class AsMngController {
 		vo.setAsStatusCd(asStatusCd);
 		vo.setUserId(user.getUserId());
 		vo.setUserTypeCd(user.getUserTypeCd());
-		asMngService.downloadExcel(response,vo, flag,currentPage);
+		
+		List<AsMngVo> list;
+		Map<Integer, Object[]> data = new HashMap();
+		data.put(1, new Object[]{"AS 번호", "신청일", "AS 상태","점포명","점포 주소","신청 장비","배정 기사","방문 예정일","AS 처리일","접수 내용","처리 결과 내용"});
+		if(flag.equals("1")) {
+			//현재 페이지 저장
+			list=asMngService.selectASList(vo, Integer.parseInt(currentPage));
+	        for(int i=0;i<list.size();i++) {
+	        	if(list.get(i).getResultReapply()=="Y") {
+	        		list.get(i).setAsStatusNm("재접수");
+	        	}
+	        	data.put(i+2, 
+	        			new Object[]{list.get(i).getAsInfoSeq()
+	        					,list.get(i).getRegDttm()
+	        					,list.get(i).getAsStatusNm()
+	        					,list.get(i).getStoreNm()
+	        					,list.get(i).getStoreAddr()+","+list.get(i).getStoreAddrDtl()
+	        					,list.get(i).getMachineCdNm()
+	        					,list.get(i).getMechanicNm()
+	        					,list.get(i).getVisitDttm()
+	        					,list.get(i).getResultDttm()
+	        					,list.get(i).getAsContent()
+	        					,list.get(i).getResultDtl()
+	        					});
+	        }
+		}else {
+			//전체 페이지 저장
+			list=asMngService.selectAllASList(vo);
+	        for(int i=0;i<list.size();i++) {
+	        	data.put(i+2, 
+	        			new Object[]{list.get(i).getAsInfoSeq()
+	        					,list.get(i).getRegDttm()
+	        					,list.get(i).getAsStatusNm()
+	        					,list.get(i).getStoreNm()
+	        					,list.get(i).getStoreAddr()+","+list.get(i).getStoreAddrDtl()
+	        					,list.get(i).getMachineCdNm()
+	        					,list.get(i).getMechanicNm()
+	        					,list.get(i).getVisitDttm()
+	        					,list.get(i).getResultDttm()
+	        					,list.get(i).getAsContent()
+	        					,list.get(i).getResultDtl()
+	        					});
+	        }
+		}
+		XSSFWorkbook workbook = new XSSFWorkbook();
+       // 빈 Sheet를 생성
+       XSSFSheet sheet = workbook.createSheet("조회한 AS 목록");
+
+       // Sheet를 채우기 위한 데이터들을 Map에 저장
+
+       // data에서 keySet를 가져온다. 이 Set 값들을 조회하면서 데이터들을 sheet에 입력한다.
+       Set<Integer> keyset = data.keySet();
+       int rownum = 0;
+       	
+       for (Integer key : keyset) {
+           Row row = sheet.createRow(rownum++);
+           Object[] objArr = data.get(key);
+           int cellnum = 0;
+           for (Object obj : objArr) {
+               Cell cell = row.createCell(cellnum++);
+               if (obj instanceof String) {
+                   cell.setCellValue((String)obj);
+               } else if (obj instanceof Integer) {
+                   cell.setCellValue((Integer)obj);
+               }
+           }
+       }
+
+       try {
+           // 현재 날짜 구하기
+           LocalDateTime now = LocalDateTime.now();
+           // 포맷 정의
+           DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
+           // 포맷 적용
+           String formatedNow = now.format(formatter);
+    
+           FileOutputStream out = new FileOutputStream(new File(System.getProperty("user.home") + "\\Downloads\\" , vo.getUserId()+"_"+formatedNow+"_as_list.xlsx"));
+           workbook.write(out);
+           
+           out.close();
+       } catch (Exception e) {
+           e.printStackTrace();
+       }
+		
+		//asMngService.downloadExcel(response,vo, flag,currentPage);
 	}
 
 	@RequestMapping(value = "/as-mod", method = RequestMethod.GET)

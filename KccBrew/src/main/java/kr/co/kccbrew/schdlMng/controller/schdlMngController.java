@@ -1,20 +1,30 @@
 package kr.co.kccbrew.schdlMng.controller;
 
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -722,8 +732,7 @@ public class schdlMngController {
 		/*시큐리티로 사용자 역할(role) 확인*/
 		List<GrantedAuthority> authorities = (List<GrantedAuthority>) authentication.getAuthorities();
 		for (GrantedAuthority authority : authorities) {
-			String role = authority.getAuthority();
-			System.out.println("Role: " + role);
+			String userRole = authority.getAuthority();
 			/*string -> sql.date 형변환*/
 			Date startSqlDate = null;
 			Date endSqlDate = null;
@@ -744,23 +753,150 @@ public class schdlMngController {
 				endSqlDate = dateFormat.stringToSqlDate(selectedEndDate);	
 			}
 
+			
+			
+			List<SchdlMngVo> list;
+			Map<Integer, Object[]> data = new HashMap();
+			
 			if(locationCd == null || locationCd.equals("")) {
 				userVo.setLocationCd(location);
 			}
-
-			if ("ROLE_ADMIN".equals(role)) {
-				schdlMngService.downloadHoliday(Integer.parseInt(page),1,userVo,startSqlDate,endSqlDate);
-			} else if("ROLE_MANAGER".equals(role)) {
+			int role;
+			if ("ROLE_ADMIN".equals(userRole)) {
+				role=1;
+				data.put(1, new Object[]{"사용자분류", "ID", "휴가번호", "신청일", "시작일", "종료일", "휴가상태", "사용여부"});
+			} else if("ROLE_MANAGER".equals(userRole)) {
 				UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 				userId = userDetails.getUsername();
 				userVo.setUserId(userId);
-				schdlMngService.downloadHoliday(Integer.parseInt(page),2,userVo,startSqlDate,endSqlDate);
+				data.put(1, new Object[]{"지점명", "신청일", "시작일", "종료일", "휴가상태", "사용여부"});
+				role=2;
 			}else {
 				UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 				userId = userDetails.getUsername();
 				userVo.setUserId(userId);
-				schdlMngService.downloadHoliday(Integer.parseInt(page),3,userVo,startSqlDate,endSqlDate);
+				data.put(1, new Object[]{"신청일", "시작일", "종료일", "휴가상태", "사용여부"});
+				role=3;
 			}
+			
+			
+			if(userVo.getFlag().equals("1")) {
+				//현재 페이지 저장
+				list=schdlMngService.getHolidays(Integer.parseInt(page), startSqlDate, endSqlDate, userVo);
+		        for(int i=0;i<list.size();i++) {
+		        	String useHoliday="";
+		        	LocalDate currentDate = LocalDate.now();
+		            LocalDate comparisonDate = list.get(i).getStartDate().toLocalDate();
+		            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		            
+		            if(list.get(i).getActualUse().equals("N")) {
+		        		useHoliday="취소완료";
+		        	}else if(currentDate.isAfter(comparisonDate)) {
+		        		useHoliday="이미 사용된 휴가";
+		        	}else {
+		        		useHoliday="사용 예정";
+		        	}
+		            if(role==1) {
+		            	data.put(i+2,new Object[]{list.get(i).getUserType(),list.get(i).getUserId(),list.get(i).getScheduleId()
+		            			,dateFormat.format(list.get(i).getAppDate())
+		            			,dateFormat.format(list.get(i).getStartDate())
+		            			,dateFormat.format(list.get(i).getEndDate())
+		            			,useHoliday
+		            			,list.get(i).getActualUse()});
+		            }else if(role==2) {
+		            	data.put(i+2,new Object[]{list.get(i).getStoreName()
+		            			,dateFormat.format(list.get(i).getAppDate())
+		            			,dateFormat.format(list.get(i).getStartDate())
+		            			,dateFormat.format(list.get(i).getEndDate())
+		            			,useHoliday
+		            			,list.get(i).getActualUse()});
+		            }else {
+		            	data.put(i+2,new Object[]{ dateFormat.format(list.get(i).getAppDate())
+		            			,dateFormat.format(list.get(i).getStartDate())
+		            			,dateFormat.format(list.get(i).getEndDate())
+		            			,useHoliday
+		            			,list.get(i).getActualUse()});
+		            }
+		        }
+			}else {
+				//전체 페이지 저장
+				list=schdlMngService.getAllHolidays(Integer.parseInt(page), startSqlDate, endSqlDate, userVo);
+				
+				 for(int i=0;i<list.size();i++) {
+			        	String useHoliday="";
+			        	LocalDate currentDate = LocalDate.now();
+			            LocalDate comparisonDate = list.get(i).getStartDate().toLocalDate();
+			            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+			            
+			            if(list.get(i).getActualUse().equals("N")) {
+			        		useHoliday="취소완료";
+			        	}else if(currentDate.isAfter(comparisonDate)) {
+			        		useHoliday="이미 사용된 휴가";
+			        	}else {
+			        		useHoliday="사용 예정";
+			        	}
+			            if(role==1) {
+			            	data.put(i+2,new Object[]{list.get(i).getUserType(),list.get(i).getUserId(),list.get(i).getScheduleId()
+			            			,dateFormat.format(list.get(i).getAppDate())
+			            			,dateFormat.format(list.get(i).getStartDate())
+			            			,dateFormat.format(list.get(i).getEndDate())
+			            			,useHoliday
+			            			,list.get(i).getActualUse()});
+			            }else if(role==2) {
+			            	data.put(i+2,new Object[]{list.get(i).getStoreName()
+			            			,dateFormat.format(list.get(i).getAppDate())
+			            			,dateFormat.format(list.get(i).getStartDate())
+			            			,dateFormat.format(list.get(i).getEndDate())
+			            			,useHoliday
+			            			,list.get(i).getActualUse()});
+			            }else {
+			            	data.put(i+2,new Object[]{ dateFormat.format(list.get(i).getAppDate())
+			            			,dateFormat.format(list.get(i).getStartDate())
+			            			,dateFormat.format(list.get(i).getEndDate())
+			            			,useHoliday
+			            			,list.get(i).getActualUse()});
+			            }
+			        }
+			}
+			XSSFWorkbook workbook = new XSSFWorkbook();
+	       // 빈 Sheet를 생성
+	       XSSFSheet sheet = workbook.createSheet("조회한 휴가 목록");
+
+	       // Sheet를 채우기 위한 데이터들을 Map에 저장
+
+	       // data에서 keySet를 가져온다. 이 Set 값들을 조회하면서 데이터들을 sheet에 입력한다.
+	       Set<Integer> keyset = data.keySet();
+	       int rownum = 0;
+	       	
+	       for (Integer key : keyset) {
+	           Row row = sheet.createRow(rownum++);
+	           Object[] objArr = data.get(key);
+	           int cellnum = 0;
+	           for (Object obj : objArr) {
+	               Cell cell = row.createCell(cellnum++);
+	               if (obj instanceof String) {
+	                   cell.setCellValue((String)obj);
+	               } else if (obj instanceof Integer) {
+	                   cell.setCellValue((Integer)obj);
+	               }
+	           }
+	       }
+
+	       try {
+	           // 현재 날짜 구하기
+	           LocalDateTime now = LocalDateTime.now();
+	           // 포맷 정의
+	           DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
+	           // 포맷 적용
+	           String formatedNow = now.format(formatter);
+	    
+	           FileOutputStream out = new FileOutputStream(new File(System.getProperty("user.home") + "\\Downloads\\" ,formatedNow+"_holiday_list.xlsx"));
+	           workbook.write(out);
+	           
+	           out.close();
+	       } catch (Exception e) {
+	           e.printStackTrace();
+	       }
 		}
 		return "";
 	}
