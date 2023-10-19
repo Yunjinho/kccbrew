@@ -39,4 +39,5 @@ public interface INoticeRepository {
 	void deleteImgFIle(@Param("fileSeq") String fileSeq);
 	
 	String selectName(NoticeVo noticeVo);
+	
 }

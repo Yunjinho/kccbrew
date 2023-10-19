@@ -46,6 +46,7 @@ function downExcel(flag){
 	var asStatusCd=$("select[name=asStatusCd] option:selected").val();
 	console.log(currentPage+","+wishingEndDate+","+wishingStartDate+","+asInfoSeq+","+storeNm+","+storeAddr
 			+","+searchId+","+machineCd+","+asStatusCd)
+	console.log("상태는 " + asStatusCd);
 	$.ajax({
 		type : "POST",           // 타입 (get, post, put 등등)
 	    url : "/download-list",           // 요청할 서버url
