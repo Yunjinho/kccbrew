@@ -385,6 +385,7 @@ public class AsMngController {
 		if(flag.equals("1")) {
 			//현재 페이지 저장
 			list=asMngService.selectASList(vo, Integer.parseInt(currentPage));
+			System.out.println(list.size());
 	        for(int i=0;i<list.size();i++) {
 	        	if(list.get(i).getResultReapply()=="Y") {
 	        		list.get(i).setAsStatusNm("재접수");

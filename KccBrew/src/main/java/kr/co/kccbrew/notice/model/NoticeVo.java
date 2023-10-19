@@ -25,6 +25,7 @@ public class NoticeVo {
 	String searchOption;	//검색 조건
 	String searchText;		//검색창
 	String noticeId;
+	String flag;
 	
 	/**
 	 * 파일 저장 VO

@@ -199,6 +199,7 @@
 		</div>
 	</div>
 	<div id="nowPage" data-notice-nowpage = "${paging.nowPage}"></div>
+	<div id="totalPage" data-notice-totalpage = "${paging.total}"></div>
 	<input type="hidden" name="nowPage" value="1">
 	<script>
 	function selChange() {

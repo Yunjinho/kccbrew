@@ -164,11 +164,17 @@ function updateForm(){
 function downExcel(flag){
 	
 	var nowPage  = document.getElementById('nowPage').getAttribute('data-notice-nowpage');
-	var searchOption = $("select[name=selectOption] option:selected").val();
+	var searchOption = $("select[name=searchOption] option:selected").val();
 	var searchText	 = $("input[name=searchText]").val();
+	var cntPerPage   = $("select[name=sel] option:selected").val();
+	var total 		 = document.getElementById('totalPage').getAttribute('data-notice-totalpage');
+	
 	console.log("현재 페이지는 " + nowPage);
 	console.log("검색 조건은 " + searchOption);
 	console.log("검색 값은 " + searchText);
+	console.log("보여줄 개수는 "  +cntPerPage);
+	console.log("전체 글 수는 " + total);
+	
 	$.ajax({
 		type : "POST",          
 	    url : "/download-notice-list",   
@@ -178,6 +184,8 @@ function downExcel(flag){
 	    	,'nowPage': nowPage
 	    	,'searchOption' : searchOption
 	    	,'searchText' : searchText
+	    	,'cntPerPage' : cntPerPage
+	    	,'total'      : total
 		},
 	    success : function(data) { // 결과 성공 콜백함수
 	    	alert("다운로드가 완료되었습니다.")

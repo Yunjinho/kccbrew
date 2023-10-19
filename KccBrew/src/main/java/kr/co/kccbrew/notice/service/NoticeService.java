@@ -1,26 +1,13 @@
 package kr.co.kccbrew.notice.service;
 
-import java.io.File;
 import java.io.FileOutputStream;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 import java.util.UUID;
 
-import javax.servlet.http.HttpServletResponse;
-
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.xssf.usermodel.XSSFSheet;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.stereotype.Service;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.multipart.MultipartFile;
 
-import jdk.jfr.internal.Logger;
 import kr.co.kccbrew.notice.dao.INoticeRepository;
 import kr.co.kccbrew.notice.model.NoticeVo;
 import kr.co.kccbrew.notice.model.PagingVo;
@@ -135,6 +122,9 @@ public class NoticeService implements INoticeService{
 		}
 		return noticeVo;
 	}
+
+	
+	
 	
 	//공지사항 첨부 이미지 리스트
 	@Override
