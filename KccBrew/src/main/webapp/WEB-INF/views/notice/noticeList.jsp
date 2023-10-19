@@ -151,11 +151,9 @@
 				<!-- 페이징 -->
 				<div class="pagingSection" style="display: block; text-align: center;">	
 					<c:if test="${paging.nowPage > 1}">
-				        <%-- <a href="/noticelist?nowPage=1&cntPerPage=${paging.cntPerPage}"> --%>
 				        <a href="/noticelistwithcon?nowPage=1&cntPerPage=${paging.cntPerPage}&searchOption=${searchOption}&searchText=${searchText}">
 				        	<img src="/resources/img/asMng/free-icon-left-chevron-6015759.png" alt="첫 페이지로"/>
 				        </a>
-				        <%-- <a href="/noticelist?nowPage=${paging.nowPage - 1}&cntPerPage=${paging.cntPerPage}"> --%>
 				        <a href="/noticelistwithcon?nowPage=${paging.nowPage - 1}&cntPerPage=${paging.cntPerPage}&searchOption=${searchOption}&searchText=${searchText}"> 
 				        	<img src="/resources/img/asMng/free-icon-left-arrow-271220.png"	alt="이전 페이지로" />
 				        </a>
@@ -175,18 +173,15 @@
 									<b>${p}</b>
 								</c:when>
 								<c:when test="${p != paging.nowPage}">
-									<%-- <a class="otherPage" href="/noticelist?nowPage=${p}&cntPerPage=${paging.cntPerPage}">${p}</a> --%>
 									<a class="otherPage" href="/noticelistwithcon?nowPage=${p}&cntPerPage=${paging.cntPerPage}&searchOption=${searchOption}&searchText=${searchText}">${p}</a>
 								</c:when>
 							</c:choose>
 						</c:forEach>
 				    </div>
 				    <c:if test="${paging.nowPage < paging.lastPage}">
-				        <%-- <a href="/noticelist?nowPage=${paging.nowPage + 1}&cntPerPage=${paging.cntPerPage}"> --%>
 				        <a href="/noticelistwithcon?nowPage=${paging.nowPage + 1}&cntPerPage=${paging.cntPerPage}&searchOption=${searchOption}&searchText=${searchText}">
 				        	<img src="/resources/img/asMng/free-icon-right-arrow-271228.png" alt="다음 페이지로" />
 				        </a>
-				        <%-- <a href="/noticelist?nowPage=${paging.lastPage}&cntPerPage=${paging.cntPerPage}"> --%>
 				        <a href="/noticelistwithcon?nowPage=${paging.lastPage}&cntPerPage=${paging.cntPerPage}&searchOption=${searchOption}&searchText=${searchText}">
 				        	<img src="/resources/img/asMng/free-icon-fast-forward-double-right-arrows-symbol-54366.png" alt="마지막 페이지로"/>
 				        </a>
@@ -203,6 +198,8 @@
 			</div>
 		</div>
 	</div>
+	<div id="nowPage" data-notice-nowpage = "${paging.nowPage}"></div>
+	<input type="hidden" name="nowPage" value="1">
 	<script>
 	function selChange() {
 		var sel = document.getElementById('cntPerPage').value;

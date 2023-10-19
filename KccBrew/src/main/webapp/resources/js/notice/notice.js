@@ -163,29 +163,33 @@ function updateForm(){
 //공지 목록 엑셀로 다운 받기
 function downExcel(flag){
 	
-	var currentPage = "${paging.nowPage}";
-	var noticeSeq = "${noti.noticeSeq}";
-	var noticeTitle	= "${noti.noticeTitle}"
-	var noticeWriter = '관리자'
-	var noticeRegDate = "${noti.writeDate}";
-	var views = "${noti.views}";
+	var nowPage  = document.getElementById('nowPage').getAttribute('data-notice-nowpage');
+	var searchOption = $("select[name=selectOption] option:selected").val();
+	var searchText	 = $("input[name=searchText]").val();
+	console.log("현재 페이지는 " + nowPage);
+	console.log("검색 조건은 " + searchOption);
+	console.log("검색 값은 " + searchText);
 	$.ajax({
 		type : "POST",          
 	    url : "/download-notice-list",   
 	    dataType : "text",      
 	    data : {
-	    	'flag': flag,
-	    	'nowPage': currentPage,
-	    	'noticeSeq':noticeSeq,
-	    	'noticeTitle': noticeTitle,
-	    	'noticeWriter' : noticeWriter,
-	    	'noticeRegDate': noticeRegDate,
-	    	'views': views
+	    	'flag': flag
+	    	,'nowPage': nowPage
+	    	,'searchOption' : searchOption
+	    	,'searchText' : searchText
 		},
 	    success : function(data) { // 결과 성공 콜백함수
 	    	alert("다운로드가 완료되었습니다.")
+	    },
+	    
+	    error : function(xhr, ajaxSettings, thrownError){
+	    	console.log(xhr);
+	    	console.log(ajaxSettings);
+	    	console.log(thrownError);
 	    }
-	})
+		
+	});
 }
 
 

@@ -254,7 +254,8 @@ System.out.println(asMngVo);
 	        		list.get(i).setAsStatusNm("재접수");
 	        	}
 	        	data.put(i+2, 
-	        			new Object[]{list.get(i).getAsInfoSeq()
+	        			new Object[]{
+	        					 list.get(i).getAsInfoSeq()
 	        					,list.get(i).getRegDttm()
 	        					,list.get(i).getAsStatusNm()
 	        					,list.get(i).getStoreNm()

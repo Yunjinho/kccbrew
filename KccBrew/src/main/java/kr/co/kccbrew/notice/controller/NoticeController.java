@@ -43,6 +43,7 @@ public class NoticeController {
 	 */
 	@RequestMapping(value = "/noticelist", method = RequestMethod.GET)
 	public String noticeList(PagingVo vo
+							,NoticeVo noticeVo
 							,Model model
 							,@RequestParam(value="nowPage", required=false)String nowPage
 							,@RequestParam(value="cntPerPage", required=false)String cntPerPage) {
@@ -58,7 +59,7 @@ public class NoticeController {
 		}
 		vo = new PagingVo(total, Integer.parseInt(nowPage), Integer.parseInt(cntPerPage));
 		model.addAttribute("paging", vo);
-		model.addAttribute("viewAll", noticeService.selectNotice(vo));
+		model.addAttribute("viewAll", noticeService.selectNotice(vo, noticeVo));
 		return "notice";
 	}
 	
@@ -93,10 +94,7 @@ public class NoticeController {
 		
 		vo = new PagingVo(total, Integer.parseInt(nowPage), Integer.parseInt(cntPerPage));
 
-//		List<NoticeVo> list=noticeService.selectNoticeWithCon(vo.getNowPage(),vo.getCntPerPage(),searchOption,searchText);
-//		List<NoticeVo> list3=noticeService.selectNoticeWithCon(vo.getNowPage(),vo.getCntPerPage(),searchOption,searchText);
-		List<NoticeVo> list=noticeService.selectNoticeWithCon(vo.getStart(),vo.getEnd(),searchOption,searchText);
-		
+		List<NoticeVo> list=noticeService.selectNoticeWithCon(noticeVo, vo.getStart(),vo.getEnd(),searchOption,searchText);
 		
 		model.addAttribute("paging", vo);
 		model.addAttribute("viewAll", list);
@@ -181,11 +179,8 @@ public class NoticeController {
 	@RequestMapping(value ="/download-notice-list", method=RequestMethod.POST)
 	public void downloadList(String flag
 							,@RequestParam(defaultValue = "1")String nowPage
-							,@RequestParam(defaultValue= "")int noticeSeq
-							,@RequestParam(defaultValue= "")String noticeTitle
-							,@RequestParam(defaultValue= "")String writerId
-							,@RequestParam(defaultValue= "")Date writeDate
-							,@RequestParam(defaultValue= "")int views
+							,@RequestParam(defaultValue = "")String searchOption
+							,@RequestParam(defaultValue = "")String searchText
 							,HttpServletRequest request
 							,HttpServletResponse response
 							) {
@@ -193,12 +188,10 @@ public class NoticeController {
 		UserVo user=(UserVo)session.getAttribute("user");
 		NoticeVo noticeVo =new NoticeVo();
 		PagingVo pagingVo = new PagingVo();
-		
-		noticeVo.setNoticeSeq(noticeSeq);
-		noticeVo.setNoticeTitle(noticeTitle);
+		noticeVo.setSearchOption(searchOption);
+		noticeVo.setSearchText(searchText);
 		noticeVo.setWriterId(user.getUserId());
-		noticeVo.setWriteDate(writeDate);
-		noticeVo.setViews(views);
+		
 		noticeService.downloadExcel(response, noticeVo, pagingVo, flag, nowPage);
 	}
 	

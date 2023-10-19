@@ -12,12 +12,12 @@ public interface INoticeService {
 	//검색 조건 결과에 해당하는 공지사항 개수
 	public int countNoticeWithCon(String searchOption, String searchText);	
 	// 검색 조건을 설정한 공지 목록 조회, 페이징 포함
-	List<NoticeVo> selectNoticeWithCon(int start, int end, String searchOption, String searchText);
+	List<NoticeVo> selectNoticeWithCon(NoticeVo noticeVo, int start, int end, String searchOption, String searchText);
 	
 	// 공지사항 총 개수, 검색 조건 없음
 	public int countNotice(); 						
 	// 검색 조건 없이 공지사항 목록 조회
-	public List<NoticeVo> selectNotice(PagingVo vo);
+	public List<NoticeVo> selectNotice(PagingVo vo, NoticeVo noticeVo);
 
 	NoticeVo readNotice(int noticeSeq);				// 공지사항 상세 조회
 	void insertNotice(NoticeVo noticeVo); 			// 공지사항 등록

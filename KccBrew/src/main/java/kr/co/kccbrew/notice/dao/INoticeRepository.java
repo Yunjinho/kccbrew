@@ -2,6 +2,8 @@ package kr.co.kccbrew.notice.dao;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletResponse;
+
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
@@ -20,10 +22,10 @@ public interface INoticeRepository {
 	public int countNoticeWithCon(@Param("searchOption") String searchOption, @Param("searchText") String searchText);
 	
 	// 검색 조건 없이 공지사항 조회, 페이징 됨
-	public List<NoticeVo> selectNotice(PagingVo vo);
+	public List<NoticeVo> selectNotice(PagingVo vo, NoticeVo noticeVo);
 	
 	// 검색 조건을 설정한 공지 목록 조회, 페이징 포함
-	List<NoticeVo> selectNoticeWithCon(@Param("start") int start, @Param("end") int end, @Param("searchOption") String searchOption, @Param("searchText") String searchText);
+	List<NoticeVo> selectNoticeWithCon(NoticeVo noticeVo, @Param("start") int start, @Param("end") int end, @Param("searchOption") String searchOption, @Param("searchText") String searchText);
 	
 	NoticeVo readNotice(int noticeSeq);				// 공지사항 상세 조회
 	void insertNotice(NoticeVo noticeVo); 			// 공지사항 등록
@@ -39,4 +41,7 @@ public interface INoticeRepository {
 	void deleteImgFIle(@Param("fileSeq") String fileSeq);
 	
 	String selectName(NoticeVo noticeVo);
+	
+	//공지 목록 엑셀로 저장
+	public void downloadExcel(HttpServletResponse response, NoticeVo noticeVo, PagingVo pagingVo, String flag, String nowPage);
 }

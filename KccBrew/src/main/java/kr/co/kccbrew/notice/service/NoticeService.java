@@ -20,6 +20,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.multipart.MultipartFile;
 
+import jdk.jfr.internal.Logger;
 import kr.co.kccbrew.notice.dao.INoticeRepository;
 import kr.co.kccbrew.notice.model.NoticeVo;
 import kr.co.kccbrew.notice.model.PagingVo;
@@ -38,8 +39,8 @@ public class NoticeService implements INoticeService{
 	
 	//공지사항 목록 조회, 페이징 처리
 	@Override
-	public List<NoticeVo> selectNotice(PagingVo vo) {
-		return noticeRepository.selectNotice(vo);
+	public List<NoticeVo> selectNotice(PagingVo vo, NoticeVo noticeVo) {
+		return noticeRepository.selectNotice(vo, noticeVo);
 	}
 
 	// 공지사항 총 개수 조회 - 검색 조건 필터링한 결과만
@@ -50,8 +51,8 @@ public class NoticeService implements INoticeService{
 	
 	//검색 조건을 설정한 공지 사항
 	@Override
-	public List<NoticeVo> selectNoticeWithCon(int start, int end, String searchOption, String searchText) {
-		return noticeRepository.selectNoticeWithCon(start, end, searchOption,searchText);
+	public List<NoticeVo> selectNoticeWithCon(NoticeVo noticeVo, int start, int end, String searchOption, String searchText) {
+		return noticeRepository.selectNoticeWithCon(noticeVo, start, end, searchOption,searchText);
 	}
 	
 	
@@ -157,11 +158,12 @@ public class NoticeService implements INoticeService{
 		data.put(1, new Object[]{"순번", "제목", "작성자","작성일","조회수"});
 		if(flag.equals("1")) {
 			//현재 페이지 저장
-			list=selectNoticeWithCon(pagingVo.getStart(), pagingVo.getEnd(), noticeVo.getSearchOption(), noticeVo.getSearchText());
-	        for(int i=0;i<list.size();i++) {
+			list=selectNoticeWithCon(noticeVo, pagingVo.getStart(), pagingVo.getEnd(), noticeVo.getSearchOption(), noticeVo.getSearchText());
+			System.out.println(list.size());
+	        for(int i=0; i<list.size(); i++) {
 	        	data.put(i+2, 
 	        			new Object[] {
-	        					list.get(i).getNoticeSeq()
+	        					 list.get(i).getNoticeSeq()
 	        					,list.get(i).getNoticeTitle()
 	        					,list.get(i).getWriterName()
 	        					,list.get(i).getWriteDate()
@@ -170,11 +172,11 @@ public class NoticeService implements INoticeService{
 	        }
 		}else {
 			//전체 페이지 저장
-			list=selectNotice(pagingVo);
-	        for(int i=0;i<list.size();i++) {
+			list=selectNotice(pagingVo, noticeVo);
+	        for(int i=0; i<list.size(); i++) {
 	        	data.put(i+2, 
-	        			new Object[]
-	        					{list.get(i).getNoticeSeq()
+	        			new Object[] {
+	        					 list.get(i).getNoticeSeq()
 	        					,list.get(i).getNoticeTitle()
 	        					,list.get(i).getWriterName()
 	        					,list.get(i).getWriteDate()
@@ -220,7 +222,7 @@ public class NoticeService implements INoticeService{
            // 포맷 적용
            String formatedNow = now.format(formatter);
     
-           FileOutputStream out = new FileOutputStream(new File(System.getProperty("user.home") + "\\Downloads\\" , noticeVo.getWriterId()+"_"+formatedNow+"_as_list.xlsx"));
+           FileOutputStream out = new FileOutputStream(new File(System.getProperty("user.home") + "\\Downloads\\" , noticeVo.getWriterId()+"_"+formatedNow+"_notice_list.xlsx"));
            workbook.write(out);
            
            out.close();
