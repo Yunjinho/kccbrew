@@ -466,7 +466,7 @@
 
 
 <update id="asMod" parameterType="kr.co.kccbrew.asMng.model.AsMngVo">
-
+<![CDATA[
 	UPDATE as_information 
 	set
 		wishing_start_date 	=	#{wishingStartDate},
@@ -477,15 +477,15 @@
 		mod_dttm			=	SYSDATE,
 		resubmission		=	'N',
 		reject_content_str	=	'',
-		file_seq			=	#{fileSeq}
+		file_seq			=	#{fileSeq},
+		as_status			=	'01'
 	WHERE	
 			 as_info_seq=#{asInfoSeq}
 	AND
 			store_mng_id=#{userId}
 	AND
-			as_status	='01'
-
-
+		( as_status	='01' OR as_status='02')
+]]>
 </update>
 
 <delete id="deleteFile" parameterType="String">

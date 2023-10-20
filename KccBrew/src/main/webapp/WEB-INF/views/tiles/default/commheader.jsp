@@ -220,7 +220,7 @@
 
 			<nav class="nav-bar">
 				<div class="nav-bar-brand">
-					<c:url var="toMain" value="/manager/main" />
+					<c:url var="toMain" value="/store-mng/main" />
 					<a href="${toMain}"> <img alt="logo"
 						src="${path}/resources/img/logo14.png">
 					</a>

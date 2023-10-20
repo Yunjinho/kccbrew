@@ -241,7 +241,7 @@ public class MainController {
 	}
 
 	/************************** 점주 메인 ***************************/
-	@RequestMapping(value = "/manager/main", method = RequestMethod.GET)
+	@RequestMapping(value = "/store-mng/main", method = RequestMethod.GET)
 	public String mngMain(Model model, HttpSession session, RedirectAttributes redirectAttributes) {
 
 		UserVo userVo = (UserVo) session.getAttribute("user");
