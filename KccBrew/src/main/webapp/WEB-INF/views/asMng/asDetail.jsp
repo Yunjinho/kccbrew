@@ -117,7 +117,7 @@ window.onload=function(){
 
 										<!-- 기사 배정 및 반려 -->
 										<c:if
-											test="${(asDetailInfo.asStatusCd eq '01' and sessionScope.user.userTypeCd eq '01' and asDetailInfo.asAssignSeq == null) or (sessionScope.user.userTypeCd eq '01' and asDetailInfo.reassign eq'Y' and asDetailInfo.resultReapply eq 'N' )}">
+											test="${(asDetailInfo.asStatusCd eq '01' and sessionScope.user.userTypeCd eq '01' and empty asDetailInfo.asAssignSeq) or (sessionScope.user.userTypeCd eq '01' and asDetailInfo.reassign eq'Y' and (asDetailInfo.resultReapply eq 'N' or empty asDetailInfo.resultReapply ))}">
 											<div>
 												<div class="heading-div">
 													<h1 class="heading">기사 배정</h1>
@@ -592,7 +592,10 @@ window.onload=function(){
 				<input type="hidden"  name="storeSeq" value="${asDetailInfo.storeSeq}">
 				<textarea class="content-textarea" name="rejectRs"></textarea>
 				<c:if test="${sessionScope.user.userTypeCd =='03'}">
-				<input type="hidden" name="asAssignSeq"  value="${asDetailInfo.asAssignSeq}" id="as-assign-reject-asAssignSeq">
+					<input type="hidden" name="asAssignSeq"  value="${asDetailInfo.asAssignSeq}" id="as-assign-reject-asAssignSeq">
+				</c:if>
+				<c:if test="${sessionScope.user.userTypeCd =='01'}">
+					<input type="hidden" name="asAssignSeq"  value="" id="as-assign-reject-asAssignSeq">
 				</c:if>
 				<div>
 					<button type="button" class="form-btn" onclick="RejectAsAssign();"

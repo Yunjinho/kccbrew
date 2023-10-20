@@ -144,12 +144,11 @@ function rejectConfirm(flag){
 	var mechanicId=$("select[name=mechanicId] option:selected").val();
 	var asAssignSeq=$("input[name=asAssignSeq]").val();
 	var asInfoSeq=$("input[name=asInfoSeq]").val();
-	alert(visitDttm)
-	alert(mechanicId)
-	alert(asAssignSeq)
-	alert(asInfoSeq)
-	if(visitDttm=='' || mechanicId=='' || asAssignSeq=='' || asInfoSeq==''){
-		alert("모든 값을 입력해주세요")
+	if(flag='Y'){
+		if(visitDttm=='' || mechanicId=='' || asAssignSeq=='' || asInfoSeq==''){
+			alert("모든 값을 입력해주세요")
+			return;
+		}
 	}
 	
 	$.ajax({
@@ -249,7 +248,7 @@ function RejectAsAssign() {
 		success: function(data) {
 			sendAsAssignRejectAlarm();
 			window.location.reload();
-			alert('AS배정이 반려되었습니다!');
+			alert('반려되었습니다!');
 		},
 		error: function(error) {
 			console.log('RejectAsAssign()함수의 ajax 요청 실패:', error);
