@@ -134,7 +134,7 @@ window.onload=function(){
 																			<input type="hidden" name="storeSeq"
 																				value="${asDetailInfo.storeSeq}">
 																			<button type="button" class="form-btn"
-																				onclick="performSubmit();">기사 배정</button>
+																				onclick="performSubmit(1);">기사 배정</button>
 
 																		</div>
 																	</td>
@@ -217,7 +217,7 @@ window.onload=function(){
 															<td colspan="9"></td>
 															<td>
 																<div>
-																	<button type="button" class="form-btn" onclick="performSubmit();">기사 배정</button>
+																	<button type="button" class="form-btn" onclick="performSubmit(2);">기사 배정</button>
 																</div>
 															</td>
 														</tr>

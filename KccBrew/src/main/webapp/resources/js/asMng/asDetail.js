@@ -189,7 +189,7 @@ function imgTypeCheck(fileName){
 }
 
 /*ajax로 AS배정*/
-function performSubmit() {
+function performSubmit(flag) {
 	var form = document.getElementById("as-assign-form");
 	var formData = new FormData(form);
 
@@ -210,9 +210,10 @@ function performSubmit() {
 
 	if(dttm>visitDttm){
 		alert("배정일은 금일 이후로 지정해주세요")
+		return;
 	}
 	
-	if(visitDttm=='' || mechanicId=='' || asAssignSeq=='' || asInfoSeq==''){
+	if(visitDttm=='' || mechanicId=='' || (asAssignSeq==''&& flag == 2) || asInfoSeq==''){
 		alert("모든 값을 입력해주세요")
 		return;
 	}
