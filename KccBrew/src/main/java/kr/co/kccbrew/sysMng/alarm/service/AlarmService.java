@@ -55,6 +55,14 @@ public class AlarmService implements IAlarmService{
 		map.put("receiverType", userType);
 		return alarmRepository.selectAlarmsByConditions(map);
 	}
+
+	@Override
+	public void schedulerTest() {
+		log.info("AlarmService.schedulerTest");
+		
+	}
+	
+	
 	
 	
 	

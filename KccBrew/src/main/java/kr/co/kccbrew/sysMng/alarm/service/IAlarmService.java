@@ -36,5 +36,7 @@ public interface IAlarmService {
 	 *  @return  List<AlarmVo>: 알람정보 리스트
 	 */
 	public List<AlarmVo> getAlarmsByUserType(String userType);
+	
+	public void schedulerTest();
 
 }
