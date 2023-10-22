@@ -17,8 +17,7 @@
     position: relative;
     cursor: pointer;
     font-size: 18px;
-    animation: colorChange 1s infinite;
-    will-change: transform;
+    color:white;
     float: right;
     line-height: inherit;
     margin-right: 5px;

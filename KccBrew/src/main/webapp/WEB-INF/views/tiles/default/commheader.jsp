@@ -52,9 +52,9 @@
 <sec:authorize access="hasRole('ROLE_ADMIN')">
 	<header class="comm-nav">
 		<div class="top-bar">
-		<%@ include file="/WEB-INF/views/chat/adminChat.jsp"%>
+		
 			<div class="wrap">
-
+<%@ include file="/WEB-INF/views/chat/adminChat.jsp"%>
 				<form action="/logout" method="POST">
 					<button type="submit" class="logout-btn">로그아웃</button>
 					<input name="${_csrf.parameterName}" type="hidden"
