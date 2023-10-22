@@ -48,12 +48,14 @@ public class ChatController {
 	 */
 	@RequestMapping("/admin/chat")
 	public ModelAndView adminChat(ModelAndView mv, HttpServletRequest request) {
-//		System.out.println(request.getHeader("REFERER"));
-//		if(request.getHeader("REFERER") == null) {
-//			mv.addObject("error", "잘못된 접근입니다");
-//			mv.setViewName("redirect:/");
-//			return mv;
-//		}
+		System.out.println("---ddddddddddddddddddddddddddddddddddddddddddddddddddddddddd");
+		System.out.println(request.getHeader("REFERER"));
+		System.out.println("리퍼러 확인");
+		if(request.getHeader("REFERER") == null) {
+		mv.addObject("error", "잘못된 접근입니다");
+		mv.setViewName("redirect:/");
+			return mv;
+		}
 		mv.setViewName("chat/adminChat");
 		return mv;
 	}
