@@ -19,14 +19,15 @@ public interface IAlarmService {
 	/**
 	 * 스케줄러 테스트
 	 */
-	public List<AlarmVo> getAlarms();
+/*	public List<AlarmVo> getAlarms();*/
 	
 	/**
 	 * 회원정보(id, type)에 따른 알람 정보 조회
 	 * @param Map<String, Object> map : 검색 조건
 	 *  @return  List<AlarmVo>: 알람정보 리스트
 	 */
-	public List<AlarmVo> getAlarmsByConditions(Map<String, Object> map);
+/*	public List<AlarmVo> getAlarmsByConditions(Map<String, Object> map);*/
+	public void getAlarmsByConditions();
 	
 	/**
 	 * 회원ID에 따른 알람 정보 조회

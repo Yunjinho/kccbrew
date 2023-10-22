@@ -13,8 +13,8 @@
 	<task:scheduled-tasks
 		scheduler="asProgressScheduler">
 		<task:scheduled ref="alarmService"
-			method="getAlarms" fixed-delay="1000" />
-		<!-- <task:scheduled ref="carService" method="updateCarAgeJob" cron="0 
+			method="getAlarmsByConditions" fixed-delay="1000" />
+<!-- 		<task:scheduled ref="carService" method="updateCarAgeJob" cron="0 
 			* * * * *"/> -->
 	</task:scheduled-tasks>
 </beans>

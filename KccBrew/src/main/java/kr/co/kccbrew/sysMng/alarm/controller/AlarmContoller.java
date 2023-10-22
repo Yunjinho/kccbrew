@@ -45,7 +45,7 @@ public class AlarmContoller {
 	 * @param String userId : 사용자ID | String userType: 사용자 권한
 	 * @return List<AlarmVo> getAlarms: 사용자에 따른 알람리스트
 	 */
-	@GetMapping("/getAlarmData")
+/*	@GetMapping("/getAlarmData")
 	@ResponseBody
 	public List<AlarmVo> getAlarms(@RequestParam(value = "userId", required = false) String userId, 
 																		@RequestParam(value="userType", required = false) String userType) {
@@ -59,5 +59,5 @@ public class AlarmContoller {
 		map.put("receiverType", userType);
 
 		return alarmService.getAlarmsByConditions(map);
-	}
+	}*/
 }
