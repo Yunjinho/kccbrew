@@ -77,16 +77,6 @@ public class SessionInterceptor extends Interceptor {
 		HttpSession session = request.getSession();
 		session.setAttribute("user", user);
 
-
-		/*		HttpSession session = request.getSession();
-		Enumeration<String> attributeNames = session.getAttributeNames();
-
-		while (attributeNames.hasMoreElements()) {
-			String attributeName = attributeNames.nextElement();
-			Object attributeValue = session.getAttribute(attributeName);
-			System.out.println(attributeName + ": " + attributeValue);
-		}*/
-
 		return true;
 	}
 	/**

@@ -100,7 +100,7 @@ html {
 </head>
 
 
-<body>
+<body class="stu main_warp">
 	<div id="mainContainer">
 		<div id="mainHeader">
 			<tiles:insertAttribute name="header" />

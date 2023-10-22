@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:task="http://www.springframework.org/schema/task"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/task
+        http://www.springframework.org/schema/task/spring-task.xsd">
+
+	<!-- 스케줄러 -->
+
+	<task:scheduler id="asProgressScheduler" pool-size="10" />
+	<task:scheduled-tasks
+		scheduler="asProgressScheduler">
+		<task:scheduled ref="alarmService"
+			method="getAlarms" fixed-delay="1000" />
+		<!-- <task:scheduled ref="carService" method="updateCarAgeJob" cron="0 
+			* * * * *"/> -->
+	</task:scheduled-tasks>
+</beans>

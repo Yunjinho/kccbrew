@@ -17,10 +17,13 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import lombok.extern.slf4j.Slf4j;
+
 /**
  * Handles requests for the application home page.
  */
 @Controller
+@Slf4j
 public class HomeController {
 
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
@@ -48,12 +51,16 @@ public class HomeController {
 		}
 
 		if(role.equals(new SimpleGrantedAuthority("ROLE_ADMIN"))) {
+			log.info("ROLE_ADMIN입니다!");
 			return "redirect:/admin/main";
 		} else if (role.equals(new SimpleGrantedAuthority("ROLE_MANAGER"))) {
+			log.info("ROLE_MANAGER입니다!");
 			return "redirect:/store-mng/main";
 		} else if(role.equals(new SimpleGrantedAuthority("ROLE_MECHA")))  {
+			log.info("ROLE_MECHA입니다!");
 			return "redirect:/mechanic/main";
 		} else {
+			log.info("권한이 없는 사용자입니다!");
 			return "redirect:/logout";
 		}
 	}

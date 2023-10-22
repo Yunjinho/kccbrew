@@ -68,6 +68,10 @@
     ]]>
 	</select>
 
+	<select id="selectAlarms" resultMap="alarmResult">
+		SELECT * FROM alarm
+	</select>
+
 
 
 

@@ -13,7 +13,7 @@ import kr.co.kccbrew.sysMng.alarm.model.AlarmVo;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-@Service
+@Service("alarmService")
 public class AlarmService implements IAlarmService{
 
 	@Autowired
@@ -25,19 +25,25 @@ public class AlarmService implements IAlarmService{
 	}
 
 	@Override
+	public List<AlarmVo> getAlarms() {
+		log.info("alarmList: " + alarmRepository.selectAlarms());
+		return alarmRepository.selectAlarms();
+	}
+
+	@Override
 	public List<AlarmVo> getAlarmsByConditions(Map<String, Object> map) {
 		String userId = (String) map.get("receiverId");
 		String userType =  (String) map.get("receiverType");
 		List<AlarmVo> alarmsByUserId = getAlarmsByUserId(userId);
 		List<AlarmVo> alarmsByUserType = getAlarmsByUserType(userType);
-		
+
 		List<AlarmVo> alarms = new ArrayList<>();
 		alarms.addAll(alarmsByUserId);
 		alarms.addAll(alarmsByUserType);
-		
+
 		log.info("AlarmService.getAlarmsByConditions");
 		log.info("alarms: " + alarms) ;
-		
+
 		return alarms;
 	}
 
@@ -55,9 +61,9 @@ public class AlarmService implements IAlarmService{
 		map.put("receiverType", userType);
 		return alarmRepository.selectAlarmsByConditions(map);
 	}
-	
-	
-	
+
+
+
 
 
 

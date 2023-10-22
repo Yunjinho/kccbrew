@@ -13,5 +13,6 @@ import kr.co.kccbrew.sysMng.alarm.model.AlarmVo;
 public interface IAlarmRepository {
 	public void insertAlarm(AlarmVo alarmVo);
 	public List<AlarmVo> selectAlarmsByConditions(Map<String, Object> map);
+	public List<AlarmVo> selectAlarms();
 	
 }

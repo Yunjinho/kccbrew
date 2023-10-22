@@ -17,6 +17,11 @@ public interface IAlarmService {
 	public void addAlarm(AlarmVo alarmVo);
 	
 	/**
+	 * 스케줄러 테스트
+	 */
+	public List<AlarmVo> getAlarms();
+	
+	/**
 	 * 회원정보(id, type)에 따른 알람 정보 조회
 	 * @param Map<String, Object> map : 검색 조건
 	 *  @return  List<AlarmVo>: 알람정보 리스트
