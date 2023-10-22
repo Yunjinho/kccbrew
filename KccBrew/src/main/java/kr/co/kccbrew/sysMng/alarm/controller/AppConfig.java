@@ -1,4 +1,4 @@
-package kr.co.kccbrew.sysMng.alarm.controller;
+/*package kr.co.kccbrew.sysMng.alarm.controller;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.ImportResource;
 
@@ -6,3 +6,4 @@ import org.springframework.context.annotation.ImportResource;
 @ImportResource("classpath:config/task-namespace-app-context.xml")
 public class AppConfig {
 }
+*/

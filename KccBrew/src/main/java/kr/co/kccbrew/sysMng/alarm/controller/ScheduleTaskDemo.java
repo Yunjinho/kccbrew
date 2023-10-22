@@ -1,4 +1,4 @@
-package kr.co.kccbrew.sysMng.alarm.controller;
+/*package kr.co.kccbrew.sysMng.alarm.controller;
 
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.support.GenericApplicationContext;
@@ -18,3 +18,4 @@ public class ScheduleTaskDemo {
 		ctx.close();
 	}
 }
+*/
