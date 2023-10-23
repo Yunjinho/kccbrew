@@ -84,13 +84,10 @@ public class MainController {
 				UserDetails userDetails = (UserDetails) principal;
 				String userId = userDetails.getUsername();
 				
-				MainPageVo mainPageVo = new MainPageVo();
-				String userAddressDtl = mainPageVo.getUserAddressDtl();
 				List<MainPageVo> userInfoList = mainServiceImple.showUserInfoListById(userId);
 				List<MainPageVo> storeInfoList = mainServiceImple.showStoreInfoListById(userId);
 				List<MainPageVo> locationList = mainServiceImple.selectLocationCd();
 				
-				model.addAttribute("userAddressDtl", userAddressDtl);
 				model.addAttribute("userInfoList", userInfoList);
 				model.addAttribute("storeInfoList",storeInfoList);
 				model.addAttribute("locationList", locationList);

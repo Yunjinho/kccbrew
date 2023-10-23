@@ -330,7 +330,7 @@
 			SET user_nm				= #{userName}
 				,user_email  		= #{userEmail}
 				,user_telno  		= #{userTelNo}
-				,user_addr			= CONCAT(#{userAddress}, ', ', #{userAddressDtl})
+				,user_addr			= #{userAddress}
 				,eqpmn_cd 			= #{machineCode, jdbcType=VARCHAR}
 				,location_cd 		= #{mechaLocationCode, jdbcType=VARCHAR}
 				,mod_dttm			= SYSTIMESTAMP 
