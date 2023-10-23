@@ -39,12 +39,11 @@ font-size: 1.2em;
 #chatIcon {
 	    position: relative;
    float: right;
-    right: 560px;
+        right: 320px;
     top: 6px;
 	cursor: pointer;
 	font-size: 18px;
-	animation: colorChange 1s infinite;
-	will-change: transform;
+	    color: white;
 	/* 	font-weight:unset; */
 }
 @keyframes colorChange {

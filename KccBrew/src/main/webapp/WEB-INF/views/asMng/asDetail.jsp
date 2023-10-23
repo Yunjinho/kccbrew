@@ -252,7 +252,9 @@ window.onload=function(){
 														type="hidden" name="asResultSeq"
 														value="${asDetailInfo.asResultSeq}"> <input
 														type="hidden" name="storeSeq"
-														value="${asDetailInfo.storeSeq}">
+														value="${asDetailInfo.storeSeq}"><input
+														type="hidden" name="asAssignSeq"
+														value="${asDetailInfo.asAssignSeq}">
 												</form>
 											</div>
 										</c:if>

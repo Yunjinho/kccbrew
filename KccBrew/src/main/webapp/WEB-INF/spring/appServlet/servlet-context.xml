@@ -67,7 +67,8 @@
 	<!-- 파일 다운로드를 처리할 클래스를 빈(bean)으로 등록 -->
 	<beans:bean id="fileDownloadUtil"
 		class="kr.co.kccbrew.sysMng.fileMng.util.FileDownloadUtil" />
-
+	
+	
 	<!-- Controller -->
 	<context:component-scan
 		base-package="kr.co.kccbrew" />
@@ -215,6 +216,6 @@
 		</websocket:handshake-interceptors>
 		<websocket:sockjs />
 	</websocket:handlers>
-
-
+	<beans:bean id="amazonS3Client" class="com.amazonaws.services.s3.AmazonS3Client">
+	</beans:bean>
 </beans:beans>
