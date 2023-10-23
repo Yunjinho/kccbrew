@@ -28,6 +28,16 @@
 
 
 	<http auto-config="true" use-expressions="true">
+
+
+		<session-management invalid-session-url="/login">
+
+			<concurrency-control max-sessions="1" expired-url="/login"></concurrency-control>
+
+		</session-management>
+
+
+
 		<intercept-url pattern="/resources/**"
 			access="permitAll" />
 		<intercept-url pattern="/search-store-list"
