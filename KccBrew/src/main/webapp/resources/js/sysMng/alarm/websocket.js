@@ -29,17 +29,86 @@ document.addEventListener("DOMContentLoaded", function() {
 		console.log("socket연결해제");
 	};
 
+
+
 	// 메세지 수신 시
 	sockjs.onmessage = function(evt) {
-		console.log("onmessage실행!");
-		console.log("evt: " + evt);
+		var jsonMessages = JSON.parse(evt.data);
+		console.log("jsonMessages.length: " + jsonMessages.length);
 
-		var jsonMessage = JSON.parse(evt.data);
-		var category = jsonMessage.category;
-		executeAlarmFunction(jsonMessage);
+		if (Array.isArray(jsonMessages)) {
+			var index = 0;
 
-		console.log("onmessage실행완료!");
+			var intervalId = setInterval(function() {
+				if (index < jsonMessages.length) {
+					executeAlarmFunction(jsonMessages[index]);
+					index++;
+				} else {
+					clearInterval(intervalId); 
+				}
+			}, 3000);
+		} else {
+			console.log("Received data is not an array.");
+		}
 	};
+
+
+
+	/*	var messageQueue = [];
+
+	sockjs.onmessage = function (evt) {
+	    if (evt !== null && evt !== "") {
+	        var jsonMessage = JSON.parse(evt.data);
+	        messageQueue.push(jsonMessage);
+	        displayNextMessage(); // 다음 메시지를 표시합니다.
+	    }
+	};*/
+
+	/*	function displayNextMessage() {
+	    if (messageQueue.length > 0) {
+	        setTimeout(function() {
+	            var jsonMessage = messageQueue.shift(); // 큐에서 다음 메시지를 가져옵니다.
+	            executeAlarmFunction(jsonMessage);
+	        }, 5000); // 5초 딜레이를 추가합니다.
+	    }
+	}*/
+
+
+	/*	function executeAlarmFunction(jsonMessage) {
+		console.log("executeAlarmFunction 함수 실행!");
+		var title = jsonMessage.alarmTitle;
+		console.log("title: " + title);
+		var content = jsonMessage.alarmContent;
+		console.log("content: " + content);
+
+		var alertElement = document.querySelector('.alert');
+		alertElement.removeAttribute('hidden');
+
+		var titleElement = document.getElementById('alert-title');
+		titleElement.textContent = title;
+		var contentElement = document.getElementById('alert-content');
+		contentElement.textContent = content;
+
+		// 3초 후에 메시지를 숨깁니다.
+		setTimeout(function () {
+			alertElement.setAttribute('hidden', 'true');
+			alertElement.style.opacity = '1';
+			displayNextMessage(); // 다음 메시지를 표시합니다.
+		}, 3000);
+	}*/
+
+	/*	sockjs.onmessage = function(evt) {
+		if (evt !== null && evt !== "") {
+			var jsonMessage = JSON.parse(evt.data);
+			executeAlarmFunction(jsonMessage);
+		}
+	};*/
+
+
+
+
+
+
 
 	sockjs.onerror = function(evt) {
 		alert('에러:' + evt.data);
@@ -50,6 +119,26 @@ document.addEventListener("DOMContentLoaded", function() {
 function getStoreData(storeId, storeName) {
 	storeSeq = storeId;
 	storeNm = storeName;
+}
+
+/*실시간알람 수신*/
+function executeAlarmFunction(jsonMessage) {
+	console.log("executeAlarmFunction함수실행!")
+	var title = jsonMessage.alarmTitle;
+	var content = jsonMessage.alarmContent;
+
+	var alertElement = document.querySelector('.alert');
+	alertElement.removeAttribute('hidden');
+
+	var titleElement = document.getElementById('alert-title');
+	titleElement.textContent = title;
+	var contentElement = document.getElementById('alert-content');
+	contentElement.textContent = content;
+
+	setTimeout(function () {
+		alertElement.setAttribute('hidden', 'true');
+		alertElement.style.opacity = '1'; 
+	}, 2000); 
 }
 
 /*휴가 신청 시 알람 발신(기사,점주->관리자)*/
@@ -193,33 +282,6 @@ function sendAsAssignRejectAlarm() {
 	} else {
 		console.log("연결되지 않음.");
 	}
-}
-
-
-/*실시간알람 수신*/
-function executeAlarmFunction(jsonMessage) {
-	console.log("executeAlarmFunction실행!");
-	var title = jsonMessage.title;
-	console.log("title: " + title);
-	var content = jsonMessage.content;
-	console.log("content: " + content);
-
-	var alertElement = document.querySelector('.alert');
-	alertElement.removeAttribute('hidden');
-
-	var titleElement = document.getElementById('alert-title');
-	titleElement.textContent = title;
-	var contentElement = document.getElementById('alert-content');
-	contentElement.textContent = content;
-
-	console.log("executeAlarmFunction.1");
-
-	// 3초후 알림 삭제
-	setTimeout(function () {
-		console.log("========================setTimeout함수 실행!================");
-		alertElement.setAttribute('hidden', 'true');
-		alertElement.style.opacity = '1'; 
-	}, 5000); 
 }
 
 /*function executeAlarmFunction(jsonMessage) {

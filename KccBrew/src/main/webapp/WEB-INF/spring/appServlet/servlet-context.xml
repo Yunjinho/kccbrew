@@ -178,6 +178,14 @@
 				class="kr.co.kccbrew.comm.interceptor.component.SessionInterceptor" />
 		</interceptor>
 
+		<!-- 로그아웃 시 웹소켓세션 제거 -->
+		<!-- <interceptor>
+			<mapping path="/logout" />
+			<mapping path="/login-success" />
+			<beans:bean
+				class="kr.co.kccbrew.comm.interceptor.component.LogoutInterceptor" />
+		</interceptor> -->
+
 	</interceptors>
 
 	<!-- 유효성검사 -->

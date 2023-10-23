@@ -6,6 +6,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.servlet.http.HttpSession;
 
@@ -70,35 +71,106 @@ public class AlarmService implements IAlarmService{
 	}
 
 	@Override
-	public void schedulerTest() {
+	public void sendRealTimeNotifications() {
 		log.info("AlarmService.schedulerTest");
-		
-		// JSON 객체 생성
-		Map<String, Object> jsonMessage = new HashMap<>();
-		jsonMessage.put("category", "as_progress");
-		jsonMessage.put("title", "만족도평가");
-		jsonMessage.put("content", "manager08님이 만족도평가(AS접수번호: 105)을(를) 하였습니다.");
+		List<AlarmVo> newAlarms = getNewAlarms();
 
 		Map<String, WebSocketSession> adminIdSessions = EchoHandler.adminSessions;
 		Map<String, WebSocketSession> userIdSessions = EchoHandler.userIdSessions;
-		try {
-			ObjectMapper objectMapper = new ObjectMapper();
-			String jsonStr = objectMapper.writeValueAsString(jsonMessage);
 
-			// 관리자 웹소켓 세션에 전송
-			Collection<WebSocketSession> adminSessions = adminIdSessions.values();
-			Collection<WebSocketSession> userSessions = userIdSessions.values();
-			for (WebSocketSession session : userSessions) {
-				try {
-					session.sendMessage(new TextMessage(jsonStr));
-				} catch (IOException e) {
-					e.printStackTrace();
+		Map<String, List<AlarmVo>> alarmsByUserId = new HashMap<>();
+		List<AlarmVo> alarmsForAdmin = new ArrayList<>();
+		ObjectMapper objectMapper = new ObjectMapper();
+		String jsonStr = null;
+
+		List<Integer> alarmSeqs = new ArrayList<>();
+
+		try {
+			Set<String> userIds = userIdSessions.keySet();
+			for (String userId : userIds) {
+				alarmsByUserId.put(userId, new ArrayList<AlarmVo>());
+			}
+
+			for(AlarmVo newAlarm : newAlarms) {
+				alarmSeqs.add(newAlarm.getAlarmSeq());
+
+				// 받는사용자id에 따른 알람리스트 생성
+				if (userIdSessions.size() != 0 && !userIdSessions.isEmpty()) {
+					if (newAlarm.getReceiverId() != null && !newAlarm.getReceiverId().isEmpty()) {
+						String[] receiverIdArray = newAlarm.getReceiverId().split(",");
+						for (int i = 0; i < receiverIdArray.length; i++) {
+							String receiverId = receiverIdArray[i];
+							if(userIdSessions.containsKey(receiverId) == true) {
+								List<AlarmVo> alarms = alarmsByUserId.get(receiverId);
+								alarms.add(newAlarm);
+							}
+						}
+					}
+
+				}
+				// 권한에 따라 알림생성
+				if (newAlarm.getReceiverType() != null && !newAlarm.getReceiverType().isEmpty()) {
+					String[] receiverTypeArray = newAlarm.getReceiverType().split(",");
+					for (int i = 0; i < receiverTypeArray.length; i++) {
+						String receiverType = receiverTypeArray[i];
+						// 관리자인 경우의 알림리스트 생성
+						if(receiverType.equals("관리자")) {
+							alarmsForAdmin.add(newAlarm);
+						}
+					}
 				}
 			}
+
+			// 받는사용자id에 따른 알람리스트 발송
+			for (String userId : userIds) {
+				if (alarmsByUserId.size() != 0 && !alarmsByUserId.isEmpty()) {
+					List<AlarmVo> alarms = alarmsByUserId.get(userId);
+					jsonStr = objectMapper.writeValueAsString(alarms);
+					userIdSessions.get(userId).sendMessage(new TextMessage(jsonStr));
+				}
+			}
+
+			// 관리자권한 알림전송
+			if (adminIdSessions.size() != 0 && !adminIdSessions.isEmpty()) {
+				Collection<WebSocketSession> sessions = adminIdSessions.values();
+				for (WebSocketSession session : sessions) {
+					try {
+						if (alarmsForAdmin.size() != 0 && !alarmsForAdmin.isEmpty()) {
+							jsonStr = objectMapper.writeValueAsString(alarmsForAdmin);
+							session.sendMessage(new TextMessage(jsonStr));
+						}
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				}
+			}
+
+
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
+		if (alarmSeqs.size() !=0 && !alarmSeqs.isEmpty()) {
+			checkPosted(alarmSeqs);
+		}
 	}
-	
+
+
+	@Override
+	public List<AlarmVo> getNewAlarms() {
+		return alarmRepository.selectNewAlarms();
+	}
+
+
+	@Override
+	public void checkPosted(List<Integer> alarmSeqs) {
+		alarmRepository.updatePosted(alarmSeqs);
+	}
+
+
+
+
+
+
+
+
 }

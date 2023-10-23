@@ -3,10 +3,9 @@
 	xmlns="http://www.springframework.org/schema/security"
 	xmlns:beans="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans
- http://www.springframework.org/schema/beans/spring-beans.xsd
- http://www.springframework.org/schema/security
- http://www.springframework.org/schema/security/spring-security.xsd">
+	xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd
+		http://www.springframework.org/schema/cloud/aws/context http://www.springframework.org/schema/cloud/aws/context/spring-cloud-aws-context-1.2.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 	<!-- Root Context: defines shared resources visible to all other web components -->
 
 	<!-- 회원정보 -->
@@ -28,8 +27,23 @@
 	<beans:bean id="customAuthenticationFailureHandler"
 		class="kr.co.kccbrew.comm.security.controller.CustomAuthenticationFailureHandler" />
 
+	<!-- 로그아웃 성공시 수행 -->
+	<beans:bean id="customLogoutSuccessHandler"
+		class="kr.co.kccbrew.comm.security.controller.CustomLogoutSuccessHandler" />
+
 
 	<http auto-config="true" use-expressions="true">
+
+
+		<session-management invalid-session-url="/login">
+
+			<concurrency-control max-sessions="1"
+				expired-url="/login"></concurrency-control>
+
+		</session-management>
+
+
+
 		<intercept-url pattern="/resources/**"
 			access="permitAll" />
 		<intercept-url pattern="/search-store-list"
@@ -92,7 +106,9 @@
 		<csrf disabled="true" />
 
 		<!-- 로그아웃 설정 -->
-		<logout logout-url="/logout" logout-success-url="/login" />
+		<logout logout-url="/logout"
+			success-handler-ref="customLogoutSuccessHandler"
+			invalidate-session="true" />
 	</http>
 
 
@@ -103,6 +119,5 @@
 			<password-encoder ref="passwordEncoder" />
 		</authentication-provider>
 	</authentication-manager>
-
 
 </beans:beans>

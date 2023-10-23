@@ -37,6 +37,21 @@ public interface IAlarmService {
 	 */
 	public List<AlarmVo> getAlarmsByUserType(String userType);
 	
-	public void schedulerTest();
+	/**
+	 * 1분단위로 신규메세지 실시간알림기능
+	 */
+	public void sendRealTimeNotifications();
+	
+	/**
+	 * 모든 신규 메세지리스트 조회
+	 *  @return  List<AlarmVo>: 알람정보 리스트
+	 */
+	public List<AlarmVo> getNewAlarms();
+	
+	/**
+	 * 실시간 알림 띄워주고 난 뒤 더이상 새로운 메세지가 아님을 표시
+	 *  @return  List<AlarmVo>: 알람정보 리스트
+	 */
+	public void checkPosted(List<Integer> alarmSeqs);
 
 }

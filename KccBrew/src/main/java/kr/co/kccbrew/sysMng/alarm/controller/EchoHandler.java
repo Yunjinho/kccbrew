@@ -61,16 +61,11 @@ public class EchoHandler extends TextWebSocketHandler implements WebSocketHandle
 
 		// JSON타입 메세지 파싱
 		System.out.println("Received JSON: " + textMessage.getPayload());
-		System.out.println("userIdSessions: " + userIdSessions);
 
 		String messageJson = textMessage.getPayload();
 		ObjectMapper objectMapper = new ObjectMapper();
 		Map<String, Object> messageMap = objectMapper.readValue(messageJson, Map.class);
 
-		userIdSessions = new HashMap<>();
-		adminSessions = new HashMap<>();
-		managerSessions = new HashMap<>();
-		mechaSessions = new HashMap<>();
 		// 사용자 정보 저장
 		setUserInfo(session, messageMap);
 
