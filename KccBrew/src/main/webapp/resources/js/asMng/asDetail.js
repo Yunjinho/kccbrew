@@ -193,8 +193,6 @@ function performSubmit(flag) {
 	var form = document.getElementById("as-assign-form");
 	var formData = new FormData(form);
 
-	var asInfoSeq = document.getElementById("asInfoSeq");
-	var asAssignSeq = document.getElementById("asAssignSeq");
 	
 	let today = new Date();   
 	
@@ -207,12 +205,12 @@ function performSubmit(flag) {
 	var visitDttm=$("input[name=visitDttm]").val();
 	var mechanicId=$("select[name=mechanicId] option:selected").val();
 	var asAssignSeq=$("input[name=asAssignSeq]").val();
+	var asInfoSeq=$("input[name=asInfoSeq]").val();
 
 	if(dttm>visitDttm){
 		alert("배정일은 금일 이후로 지정해주세요")
 		return;
 	}
-	
 	if(visitDttm=='' || mechanicId=='' || (asAssignSeq==''&& flag == 2) || asInfoSeq==''){
 		alert("모든 값을 입력해주세요")
 		return;

@@ -36,9 +36,10 @@
 		<div class="user-profile">
 			<div class="inner-box">
 				<div class="photo-wrapper">
+						<!-- value="${user.storageLocation}${user.fileServerNm}" /> -->
 					<c:set var="imagePath"
-						value="${user.storageLocation}${user.fileServerNm}" />
-					<img src="<c:out value='/${imagePath}'/>">
+						value="${user.storageLocation}" />
+					<img src="<c:out value='${imagePath}'/>">
 				</div>
 
 				<h2 class="user-info-wrapper">
@@ -99,8 +100,9 @@
 			<div class="inner-box">
 
 				<div class="photo-wrapper">
+						<!-- value="${user.storageLocation}${user.fileServerNm}" /> -->
 					<c:set var="imagePath"
-						value="${user.storageLocation}${user.fileServerNm}" />
+						value="${user.storageLocation}" />
 					<img src="${path}/resources/img/baristar.png">	
 				</div>
 
@@ -189,8 +191,8 @@
 			<div class="inner-box">
 				<div class="photo-wrapper">
 					<c:set var="imagePath"
-						value="${user.storageLocation}${user.fileServerNm}" />
-					<img src="<c:out value='/${imagePath}'/>">
+						value="${user.storageLocation}" />
+					<img src="<c:out value='${imagePath}'/>">
 				</div>
 
 				<h2 class="user-info-wrapper">

@@ -1,7 +1,9 @@
 package kr.co.kccbrew.comm.security.service;
 
-import java.io.FileOutputStream;  
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -13,15 +15,19 @@ import org.springframework.web.multipart.MultipartFile;
 import kr.co.kccbrew.asMng.model.AsMngVo;
 import kr.co.kccbrew.comm.security.dao.IUserRepository;
 import kr.co.kccbrew.comm.security.model.UserVo;
+import kr.co.kccbrew.comm.util.S3Service;
 import kr.co.kccbrew.strMng.model.StrMngVo;
+import lombok.RequiredArgsConstructor;
 
+@RequiredArgsConstructor
 @Service
 public class UserService implements IUserService{
 	@Autowired
 	private IUserRepository userRepository;
 	@Autowired
 	private PasswordEncoder passwordEncoder;
-
+	
+	private final S3Service s3Service;
 	/**
 	 * 검색한 키워드를 통해 운영하고 있는 점포 리스트를 조회한다.
 	 * @return 운영중인 점포 리스트
@@ -117,22 +123,25 @@ public class UserService implements IUserService{
 
 	@Override
 	public UserVo insertUserImg(UserVo user) {
+		try {
 		UserVo vo=new UserVo();
 		vo.setUserId(user.getUserId());
+		UUID uuid= UUID.randomUUID();
 		//기본 파일정보 등록
 		userRepository.insertFileInfo(vo);
 		MultipartFile imgFile = user.getImgFile();
 		vo.setFileOriginalNm(imgFile.getOriginalFilename());
-		vo.setFileServerNm(user.getUserId()+"_"+imgFile.getOriginalFilename());
+		
+		vo.setFileServerNm(uuid+"_"+imgFile.getOriginalFilename());
 		vo.setFileFmt(imgFile.getContentType());
-		vo.setStorageLocation(user.getStorageLocation());
+//		vo.setStorageLocation(user.getStorageLocation());
+		vo.setStorageLocation(s3Service.upload(imgFile, "register"));
 		user.setFileSeq(vo.getFileSeq());
 		//파일 상세 정보 등록
 		userRepository.insertFileDtlInfo(vo);
 		//이미지 파일 저장
 		String targetPath=user.getServerSavePath()+"\\"+vo.getFileServerNm();
 		String localPath=user.getLocalSavePath()+"\\"+vo.getFileServerNm();
-		try {
 			//imgFile.transferTo(targetPath);
 			FileCopyUtils.copy(imgFile.getInputStream(), new FileOutputStream(targetPath));
 			FileCopyUtils.copy(imgFile.getInputStream(), new FileOutputStream(localPath));
@@ -183,8 +192,4 @@ public class UserService implements IUserService{
 	public List<AsMngVo> getAsProcessingCompleted(String userId) {
 		return userRepository.selectAsProcessingCompleted(userId);
 	}
-	
-	
-
-
 }

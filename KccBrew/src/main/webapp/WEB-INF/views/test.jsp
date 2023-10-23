@@ -40,28 +40,12 @@
 	}
 </style>
 <body>
-	<div class="sticky_wrap">
-	  <div>Not Sticky1</div>
-	  <div>Not Sticky2</div>
-	  <div class="sticky">Sticky!!</div>
-	  <div>Not Sticky3</div>
-	  <div>Not Sticky4</div>
-	  <div>Not Sticky5</div>
-	</div>
-	
-	<div class="other_block">
-	  <h4>Other block</h4>
-	  <p>
-	    text<br />
-	    text<br />
-	    text<br />
-	    text<br />
-	    text<br />
-	    text<br />
-	    text<br />
-	    text<br />
-	    text<br />
-	  </p>
+	<form action="/s3" method="post" enctype="multipart/form-data">
+		<input type="file" name="img">
+		<input type="submit" value="test">
+	</form>
+	<div style="width: 300px; height: 300px">
+		<img src="https://kccbrewbucket.s3.ap-northeast-2.amazonaws.com/register/3c3d0d9f-5a0a-4f03-9326-42ad11941ca6_%EC%BB%A4%ED%94%BC%EB%A8%B8%EC%8B%A0+(2).jpg">
 	</div>
 </body>
 </html>

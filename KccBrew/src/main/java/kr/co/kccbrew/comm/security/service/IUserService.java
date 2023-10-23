@@ -3,6 +3,7 @@ package kr.co.kccbrew.comm.security.service;
 import java.util.List; 
 
 import org.apache.ibatis.annotations.Param;
+import org.springframework.web.multipart.MultipartFile;
 
 import kr.co.kccbrew.asMng.model.AsMngVo;
 import kr.co.kccbrew.comm.security.model.UserVo;
@@ -73,4 +74,6 @@ public interface IUserService {
 	 * @return List<AsMngVo>:  AS처리완료 리스트
 	 */
 	public List<AsMngVo>getAsProcessingCompleted(String userId);
+	
+	
 }
