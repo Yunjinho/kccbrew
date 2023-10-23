@@ -8,13 +8,9 @@
         http://www.springframework.org/schema/task/spring-task.xsd">
 
 	<!-- 스케줄러 -->
-
 	<task:scheduler id="asProgressScheduler" pool-size="10" />
 	<task:scheduled-tasks
 		scheduler="asProgressScheduler">
-		<task:scheduled ref="alarmService"
-			method="schedulerTest" fixed-delay="1000" />
-<!-- 		<task:scheduled ref="carService" method="updateCarAgeJob" cron="0 
-			* * * * *"/> -->
+		<task:scheduled ref="alarmService" method="schedulerTest" fixed-delay="10000" />
 	</task:scheduled-tasks>
 </beans>

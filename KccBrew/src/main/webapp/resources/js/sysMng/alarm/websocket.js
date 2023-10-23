@@ -32,13 +32,13 @@ document.addEventListener("DOMContentLoaded", function() {
 	// 메세지 수신 시
 	sockjs.onmessage = function(evt) {
 		console.log("onmessage실행!");
+		console.log("evt: " + evt);
 
 		var jsonMessage = JSON.parse(evt.data);
 		var category = jsonMessage.category;
+		executeAlarmFunction(jsonMessage);
 
-		if (category === "alarm") {
-			executeAlarmFunction(jsonMessage);
-		}
+		console.log("onmessage실행완료!");
 	};
 
 	sockjs.onerror = function(evt) {
@@ -198,8 +198,11 @@ function sendAsAssignRejectAlarm() {
 
 /*실시간알람 수신*/
 function executeAlarmFunction(jsonMessage) {
+	console.log("executeAlarmFunction실행!");
 	var title = jsonMessage.title;
+	console.log("title: " + title);
 	var content = jsonMessage.content;
+	console.log("content: " + content);
 
 	var alertElement = document.querySelector('.alert');
 	alertElement.removeAttribute('hidden');
@@ -209,15 +212,48 @@ function executeAlarmFunction(jsonMessage) {
 	var contentElement = document.getElementById('alert-content');
 	contentElement.textContent = content;
 
+	console.log("executeAlarmFunction.1");
+
 	// 3초후 알림 삭제
 	setTimeout(function () {
-		alertElement.style.opacity = '0';
-		setTimeout(function () {
-			alertElement.setAttribute('hidden', 'true');
-			alertElement.style.opacity = '1'; 
-		}, 500); 
-	}, 10000); 
+		console.log("========================setTimeout함수 실행!================");
+		alertElement.setAttribute('hidden', 'true');
+		alertElement.style.opacity = '1'; 
+	}, 5000); 
 }
+
+/*function executeAlarmFunction(jsonMessage) {
+    console.log("executeAlarmFunction 실행!");
+    var title = jsonMessage.title;
+    console.log("title: " + title);
+    var content = jsonMessage.content;
+    console.log("content: " + content);
+
+    var alertElement = document.querySelector('.alert');
+    alertElement.removeAttribute('hidden');
+
+    var titleElement = document.getElementById('alert-title');
+    titleElement.textContent = title;
+    var contentElement = document.getElementById('alert-content');
+    contentElement.textContent = content;
+
+    console.log("executeAlarmFunction.1");
+
+    // 3초 후에 알림 삭제 함수 호출
+    removeAlert(alertElement);
+}*/
+
+//알림 삭제 함수
+/*function removeAlert(alertElement) {
+    setTimeout(function () {
+        console.log("========================setTimeout 함수 실행!================");
+        alertElement.style.opacity = '0';
+        setTimeout(function () {
+            alertElement.setAttribute('hidden', 'true');
+            alertElement.style.opacity = '1';
+        }, 5000);
+    }, 5000);
+}*/
 
 /*비실시간 알림 받기*/
 function getAlarmData() {
