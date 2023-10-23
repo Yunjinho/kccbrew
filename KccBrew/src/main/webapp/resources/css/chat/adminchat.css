@@ -37,13 +37,13 @@ font-size: 1.2em;
 }
 
 #chatIcon {
-	    position: relative;
-   float: right;
-        right: 320px;
+	position: absolute;
+   	float: right;
+    right: 300px;
     top: 6px;
 	cursor: pointer;
 	font-size: 18px;
-	    color: white;
+	color: white;
 	/* 	font-weight:unset; */
 }
 @keyframes colorChange {

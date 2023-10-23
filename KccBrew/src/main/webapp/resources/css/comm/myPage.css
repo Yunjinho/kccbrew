@@ -19,7 +19,7 @@ button {
 .arrowAndContents{
 	background-color: #ffffff;
 	min-height: 600px;
-	padding: 30px 145px;
+	padding: 30px 125px;
 }
 .breadcrumb {
 	display:inline-block;
@@ -81,9 +81,22 @@ label {
     margin-top:20px;
 }
 
+#profileImg {
+	position:relative;
+	top:30px;
+	line-height:30px;
+	border: none;
+	height: 130px;
+	width: 130px;
+}
+
+#imgFileMsg {
+	color:red;
+	display: none;
+}
 
 #search-box {
-	
+	table-layout:fixed;
 	width: 100%;
 	border-collapse: collapse;
 	border-top: 1px solid #ccc;
@@ -91,22 +104,9 @@ label {
 }
 
 #search-box td:first-child{
-	width: 100px; 
+	width: 150px; 
 	height: 130px; 
 	text-align: center;
-}
-
-#profileImg {
-	position:relative;
-	top:30px;
-	line-height:30px;
-	border: none;
-	height: 150px;
-}
-
-#imgFileMsg {
-	color:red;
-	display: none;
 }
 
 #search-box tr {
@@ -129,6 +129,19 @@ label {
 	text-align: left;
 	vertical-align: top;
 }
+
+#search-box th {
+	background-color: #f2f2f2;
+}
+
+.mechaTd {
+	text-align: center !important;
+}
+
+.locationTd {
+	text-align: center !important;
+}
+
 tr > th:nth-child(7) {
 	text-align: left;
 }
@@ -136,9 +149,6 @@ tr > th:nth-child(7) {
 	text-align: left !important;
 }
 
-#search-box th {
-	background-color: #f2f2f2;
-}
 
 input[type="text"] {
     width: 90%;
@@ -160,7 +170,7 @@ input[type="text"] {
 	margin-top: 40px;
 }
 #changeImageBtn{
-
+	margin-top:40px;
 	position:relative;
 	height:24px;
 	top:2px;

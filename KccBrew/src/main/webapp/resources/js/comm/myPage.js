@@ -27,7 +27,7 @@ $(document).ready(function(){
 	//수정 확인 버튼
 	$("#confirmModBtn").click(function(){
 		var selectedMachineCode = $("#chooseMachineCode").val();
-		var selectedLocationCode = $("#chooseLocationCode").val();
+		var selectedLocationCode = $("#chooseDetailLocationCode").val();
 		var formData = new FormData();
 		formData.append('userImg', $('#file')[0].files[0]);
 
@@ -42,7 +42,7 @@ $(document).ready(function(){
 	//이미지를 제외한 수정 확인 버튼
 	$("#confirmModExceptImgBtn").click(function(){
 		var selectedMachineCode = $("#chooseMachineCode").val();
-		var selectedLocationCode = $("#chooseLocationCode").val();
+		var selectedLocationCode = $("#chooseDetailLocationCode").val();
 		var formData = new FormData();
 
 		$("#machineCodeHidden").val(selectedMachineCode);
@@ -107,23 +107,6 @@ function changeLocationCd(){
 		},
 		success : function(data) { // 결과 성공 콜백함수
 			changeLocationDtlCd(data);
-		}
-	});
-}
-
-/*지역코드로 지역명 조회*/
-function getLocationName2(locationCodeValue) {
-	$.ajax({
-		url: '/getLocationName', // Ajax 요청을 처리할 URL
-		type: 'GET',
-		dataType: 'text', // 반환되는 데이터 형식을 text로 설정
-		data: { "mechaLocationCode": locationCodeValue },
-		success: function(data) {
-			$('#locationCd').removeAttr('hidden');
-			$('#locationCd').text(data);
-		},
-		error: function(error) {
-			console.log('Ajax 요청 실패:', error);
 		}
 	});
 }
