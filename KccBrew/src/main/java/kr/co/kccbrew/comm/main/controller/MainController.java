@@ -83,10 +83,14 @@ public class MainController {
 			if(principal instanceof UserDetails) {
 				UserDetails userDetails = (UserDetails) principal;
 				String userId = userDetails.getUsername();
+				
+				MainPageVo mainPageVo = new MainPageVo();
+				String userAddressDtl = mainPageVo.getUserAddressDtl();
 				List<MainPageVo> userInfoList = mainServiceImple.showUserInfoListById(userId);
 				List<MainPageVo> storeInfoList = mainServiceImple.showStoreInfoListById(userId);
 				List<MainPageVo> locationList = mainServiceImple.selectLocationCd();
-
+				
+				model.addAttribute("userAddressDtl", userAddressDtl);
 				model.addAttribute("userInfoList", userInfoList);
 				model.addAttribute("storeInfoList",storeInfoList);
 				model.addAttribute("locationList", locationList);
@@ -106,8 +110,8 @@ public class MainController {
 	@RequestMapping(value= "/confirmmodexceptimg", method = RequestMethod.POST)
 	public String confirmModProfile(Model model,
 									@ModelAttribute MainPageVo mainPageVo,
-						            @RequestParam("machineCode") String machineCode,
-						            @RequestParam("mechaLocationCode") String mechaLocationCode) {
+						            @RequestParam(value = "machineCode", required=false) String machineCode,
+						            @RequestParam(value = "mechaLocationCode", required=false) String mechaLocationCode) {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		
 		if(authentication != null) {

@@ -2,8 +2,8 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib prefix="sec"
+	uri="http://www.springframework.org/security/tags"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -61,13 +61,13 @@
 										<td>
 											<c:out value="${user.userId}" />
 										</td>
-										<th><label for="userEmail">이메일</label></th>
-										<td class="wide-td">
-											<input type="text" name="userEmail" id="userEmail" value="${user.userEmail}" required>
-										</td>
 										<th><label for="userName">이름</label></th>
 										<td>
 											<input type="text" name="userName" id="userName" value="${user.userName}" required>
+										</td>
+										<th><label for="userEmail">이메일</label></th>
+										<td>
+											<input type="text" name="userEmail" id="userEmail" value="${user.userEmail}" required>
 										</td>
 									</tr>
 									<tr>
@@ -76,17 +76,9 @@
 											<input type="text" name="userTelNo" id="userTelNo" value="${user.userTelNo}" required>
 										</td>
 										<th><label for="userAddress">주소</label></th>
-										<td class="modAddress wide-td">
-											<c:set var="addressSubs" value="${fn:split(user.userAddress, ',')}" />
-											<input type="text" name="userAddress" id="address_kakao" placeholder="주소" value="${addressSubs[0]}" required readonly>
-										</td>
-										<th>상세주소</th>
-										<td>
-											<c:set var="addressParts" value="${fn:split(user.userAddress, ',')}" />
-										    <c:if test="${fn:length(addressParts) > 1}">
-										        <c:set var="addressPart" value="${fn:trim(fn:substringAfter(user.userAddress, ','))}" />
-										    </c:if>
-											<input type="text" name="userAddressDtl" id="userAddressDtl" placeholder="상세주소" value="${addressPart}">
+										<td colspan="3" class="modAddress">
+											<%-- <input type="text" name="userAddress" id="userAddress" value="${user.userAddress}" required> --%>
+											<input type="text" name="userAddress" id="address_kakao" placeholder="주소" value="${user.userAddress}" required readonly>
 										</td>
 									</tr>
 									<tr>
@@ -97,7 +89,7 @@
 											<c:if test="${user.userType eq '03' }">기사</c:if>
 										</td>
 										<th>가입일자</th>
-										<td class="wide-td">
+										<td>
 											<fmt:formatDate value="${user.userRegDate}" pattern="yyyy-MM-dd" />
 										</td>
 										<th>수정일자</th>
@@ -109,7 +101,7 @@
 										<th>사용여부</th>
 										<td><c:out value="${user.userInUse}" /></td>
 										<th>승인여부</th>
-										<td class="wide-td"><c:out value="${user.approveStatus}" /></td>
+										<td><c:out value="${user.approveStatus}" /></td>
 										<th>승인자</th>
 										<td><c:out value="${user.admWhoAcp}" /></td>
 									</tr>
@@ -146,13 +138,13 @@
 										<td>
 											<c:out value="${user.userId}" />
 										</td>
-										<th><label for="userEmail">이메일</label></th>
-										<td class="wide-td">
-											<input type="text" name="userEmail" id="userEmail" value="${user.userEmail}" required>
-										</td>
 										<th><label for="userName">이름</label></th>
 										<td>
 											<input type="text" name="userName" id="userName" value="${user.userName}" required>
+										</td>
+										<th><label for="userEmail">이메일</label></th>
+										<td>
+											<input type="text" name="userEmail" id="userEmail" value="${user.userEmail}" required>
 										</td>
 									</tr>
 									<tr>
@@ -161,17 +153,8 @@
 											<input type="text" name="userTelNo" id="userTelNo" value="${user.userTelNo}" required>
 										</td>
 										<th><label for="userAddress">주소</label></th>
-										<td class="modAddress wide-td">
-											<c:set var="addressSubs" value="${fn:split(user.userAddress, ',')}" />
-											<input type="text" name="userAddress" id="address_kakao" placeholder="주소" value="${addressSubs[0]}" required readonly>
-										</td>
-										<th>상세주소</th>
-										<td>
-											<c:set var="addressParts" value="${fn:split(user.userAddress, ',')}" />
-										    <c:if test="${fn:length(addressParts) > 1}">
-										        <c:set var="addressPart" value="${fn:trim(fn:substringAfter(user.userAddress, ','))}" />
-										    </c:if>
-											<input type="text" name="userAddressDtl" id="userAddressDtl" placeholder="상세주소" value="${addressPart}">
+										<td colspan="3" class="modAddress">
+											<input type="text" name="userAddress" id="address_kakao" placeholder="주소" value="${user.userAddress}" required readonly>
 										</td>
 									</tr>
 									<tr>
@@ -182,7 +165,7 @@
 											<c:if test="${user.userType eq '03' }">기사</c:if>
 										</td>
 										<th>가입일자</th>
-										<td class="wide-td">
+										<td>
 											<fmt:formatDate value="${user.userRegDate}" pattern="yyyy-MM-dd" />
 										</td>
 										<th>수정일자</th>
@@ -194,7 +177,7 @@
 										<th>사용여부</th>
 										<td><c:out value="${user.userInUse}" /></td>
 										<th>승인여부</th>
-										<td class="wide-td"><c:out value="${user.approveStatus}" /></td>
+										<td><c:out value="${user.approveStatus}" /></td>
 										<th>승인자</th>
 										<td><c:out value="${user.admWhoAcp}" /></td>
 									</tr>
@@ -214,7 +197,7 @@
 										<td>
 											${store.storeName}
 										</td>
-										<td class="storeTd">
+										<td>
 											${store.storeTelNo}
 										</td>
 									</tr>
@@ -251,13 +234,13 @@
 										<td>
 											<c:out value="${user.userId}" />
 										</td>
-										<th><label for="userEmail">이메일</label></th>
-										<td class="wide-td">
-											<input type="text" name="userEmail" id="userEmail" value="${user.userEmail}" required>
-										</td>
 										<th><label for="userName">이름</label></th>
 										<td>
 											<input type="text" name="userName" id="userName" value="${user.userName}" required>
+										</td>
+										<th><label for="userEmail">이메일</label></th>
+										<td>
+											<input type="text" name="userEmail" id="userEmail" value="${user.userEmail}" required>
 										</td>
 									</tr>
 									<tr>
@@ -266,17 +249,8 @@
 											<input type="text" name="userTelNo" id="userTelNo" value="${user.userTelNo}" required>
 										</td>
 										<th><label for="userAddress">주소</label></th>
-										<td class="modAddress wide-td">
-											<c:set var="addressSubs" value="${fn:split(user.userAddress, ',')}" />
-											<input type="text" name="userAddress" id="address_kakao" placeholder="주소" value="${addressSubs[0]}" required readonly>
-										</td>
-										<th>상세주소</th>
-										<td>
-											<c:set var="addressParts" value="${fn:split(user.userAddress, ',')}" />
-										    <c:if test="${fn:length(addressParts) > 1}">
-										        <c:set var="addressPart" value="${fn:trim(fn:substringAfter(user.userAddress, ','))}" />
-										    </c:if>
-											<input type="text" name="userAddressDtl" id="userAddressDtl" placeholder="상세주소" value="${addressPart}">
+										<td colspan="3" class="modAddress">
+											<input type="text" name="userAddress" id="address_kakao" placeholder="주소" value="${user.userAddress}" required readonly>
 										</td>
 									</tr>
 									<tr>
@@ -287,7 +261,7 @@
 											<c:if test="${user.userType eq '03' }">기사</c:if>
 										</td>
 										<th>가입일자</th>
-										<td class="wide-td">
+										<td>
 											<fmt:formatDate value="${user.userRegDate}" pattern="yyyy-MM-dd" />
 										</td>
 										<th>수정일자</th>
@@ -299,7 +273,7 @@
 										<th>사용여부</th>
 										<td><c:out value="${user.userInUse}" /></td>
 										<th>승인여부</th>
-										<td class="wide-td"><c:out value="${user.approveStatus}" /></td>
+										<td><c:out value="${user.approveStatus}" /></td>
 										<th>승인자</th>
 										<td><c:out value="${user.admWhoAcp}" /></td>
 									</tr>

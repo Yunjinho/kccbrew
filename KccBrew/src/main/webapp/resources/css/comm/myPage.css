@@ -134,12 +134,15 @@ label {
 	background-color: #f2f2f2;
 }
 
-.mechaTd {
+.mechaTd, .locationTd, .storeTd{
 	text-align: center !important;
 }
 
-.locationTd {
-	text-align: center !important;
+#address_kakao {
+	background-color: #ffffff;
+}
+.wide-td {
+	width:280px;
 }
 
 tr > th:nth-child(7) {
