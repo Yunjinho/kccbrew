@@ -143,7 +143,7 @@
 										<th>활동 지역 상세</th>
 									</tr>
 									<tr>
-										<td>
+										<td class="mechaTd">
 											<select id="chooseMachineCode">
 												<option value="" disabled>== 선택 ==</option>
 												<option value="01">커피머신</option>
@@ -153,9 +153,9 @@
 												<option value="05">온수기</option>
 											</select>	
 										</td>
-										<td>
+										<td class="mechaTd">
 											<select id="chooseLocationCode" name="mechaLocation" onchange="changeLocationCd()">
-												<option value="">== 선택 ==</option>
+												<option value="" >== 선택 ==</option>
 												<c:forEach var="locationList" items="${locationList}">
 													<option value="${locationList.grpCdDtlId}">
 														${locationList.grpCdDtlNm}
@@ -163,7 +163,7 @@
 												</c:forEach>
 											</select>
 										</td>
-										<td>
+										<td class="mechaTd">
 											<select id="chooseDetailLocationCode" name="mechaLocationCode">
 												<option>== 선택 ==</option>
 											</select>
@@ -181,7 +181,7 @@
 							</a>
 						</div>
 						<input type="hidden" id="machineCodeHidden" name="machineCode" value="" required>
-						<input type="hidden" id="locationCodeHidden" name="mechaLocationCode" value="" required>
+						<!-- <input type="hidden" id="locationCodeHidden" name="mechaLocationCode" value="" required> -->
 					</form>
 				</div>
 			</div>
