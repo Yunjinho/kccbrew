@@ -52,6 +52,17 @@ $(document).ready(function(){
 		$("#updateProfileForm").attr("action","/confirmmodexceptimg");
 		$("#updateProfileForm").submit();
 	});
+	
+	//카카오 주소 API
+	$("#address_kakao").click(function(){
+		new daum.Postcode({
+			oncomplete: function(data) { //선택시 입력값 세팅
+				document.getElementById("address_kakao").value = data.address; // 주소 넣기
+				document.querySelector("input[name=userAddressDtl]").focus(); //상세입력 포커싱
+			}
+		}).open();
+	})
+	
 });
 
 //사진 확장자 체크-> 이미지 사진만 올리게 

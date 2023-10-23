@@ -57,28 +57,30 @@
 							<table id="search-box">
 								<c:forEach var="user" items="${userInfoList}">
 									<tr>
-										<td rowspan="4"><sec:authorize
-												access="hasAnyRole('ROLE_ADMIN', 'ROLE_MECHA')">
-												<c:set var="imagePath"
-													value="${path}/${user.fileDetailLocation}${user.fileDetailServerName}" />
-												<img src="<c:out value='${imagePath}'/>" id="profileImg">
-											</sec:authorize> <sec:authorize access="hasRole('ROLE_MANAGER')">
+										<td rowspan="4">
+											<sec:authorize access="hasAnyRole('ROLE_ADMIN', 'ROLE_MECHA')">
+												<c:set var="imagePath" value="${path}/${user.fileDetailLocation}${user.fileDetailServerName}" />
+													<img src="<c:out value='${imagePath}'/>" id="profileImg">
+											</sec:authorize>
+											<sec:authorize access="hasRole('ROLE_MANAGER')">
 												<c:set var="imagePath" value="resources/img/baristar.png" />
-												<img src="<c:out value='${imagePath}'/>" id="profileImg">
-											</sec:authorize></td>
+													<img src="<c:out value='${imagePath}'/>" id="profileImg">
+											</sec:authorize>
+										</td>
 										<th>ID</th>
 										<td><c:out value="${user.userId}" /></td>
+										<th>이메일</th>
+										<td class="wide-td"><c:out value="${user.userEmail}" /></td>
 										<th>이름</th>
 										<td><c:out value="${user.userName}" /></td>
-										<th>이메일</th>
-										<td><c:out value="${user.userEmail}" /></td>
 									</tr>
 									<tr>
 										<th>전화번호</th>
 										<td><c:out value="${user.userTelNo}" /></td>
 										<th>주소</th>
-										<td colspan="3" class="addr"><c:out
-												value="${user.userAddress}" /></td>
+										<td colspan="3" class="addr">
+											<c:out value="${user.userAddress}" />
+										</td>
 									</tr>
 									<tr>
 										<th>사용자구분</th>
@@ -117,7 +119,7 @@
 										</tr>
 										<tr>
 											<td>${store.storeName}</td>
-											<td>${store.storeTelNo}</td>
+											<td class="storeTd">${store.storeTelNo}</td>
 										</tr>
 									</c:forEach>
 								</table>
@@ -130,28 +132,6 @@
 											<th>담당 장비</th>
 											<th>활동지역</th>
 										</tr>
-										<%-- <tr>
-											<td>
-												<c:choose>
-													<c:when test="${mecha.machineCode == '01'}">커피머신</c:when>
-													<c:when test="${mecha.machineCode == '02'}">냉장고</c:when>
-													<c:when test="${mecha.machineCode == '03'}">제빙기</c:when>
-													<c:when test="${mecha.machineCode == '04'}">에어컨</c:when>
-													<c:when test="${mecha.machineCode == '05'}">온수기</c:when>
-												</c:choose>
-											</td>
-											<td>
-												<c:choose>
-													<c:when test="${mecha.mechaLocationCode == '02-200'}">양천</c:when>
-													<c:when test="${mecha.mechaLocationCode == '02-300'}">은평,마포,서대문,강서</c:when>
-													<c:when test="${mecha.mechaLocationCode == '02-400'}">송파,강동,중랑,광진,성동</c:when>
-													<c:when test="${mecha.mechaLocationCode == '02-500'}">서초, 광명시, 과천시</c:when>
-													<c:when test="${mecha.mechaLocationCode == '02-700'}">마포,용산,종로</c:when>
-													<c:when test="${mecha.mechaLocationCode == '02-800'}">영등포,동작,구로,금천,양서,관악,광명시</c:when>
-													<c:when test="${mecha.mechaLocationCode == '02-900'}">노원,동대문,도봉,강북,성북</c:when>
-												</c:choose>
-											</td>
-										</tr> --%>
 										<c:forEach var="userDtl" items="${userDtl}">
 											<tr>
 												<td>${userDtl.eqpmnNm}</td>
