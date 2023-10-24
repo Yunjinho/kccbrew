@@ -118,6 +118,12 @@
 								</table>
 								<ul class="register-msg">
 									<li id="imgFileMsg">사용자 사진: 필수 정보입니다.</li>
+									<li id="emailMsg">이메일을 입력해주세요.</li>
+									<li id="userNameMsg">이름을 입력해주세요.</li>
+									<li id="userCallNumberMsg">전화번호를 입력해주세요.</li>
+									<li id="userAddrMsg">주소를 입력해주세요.</li>
+									<li id="locationCdMsg">활동 지역을 설정해주세요.</li>
+									<li id="locationDtlCdMsg">상세 활동 지역을 설정해주세요.</li>
 								</ul>
 								<div class="modButtons">
 									<button type="button" id="confirmModBtn">확인</button>
@@ -255,6 +261,9 @@
 											<th><label for="userEmail">이메일</label></th>
 											<td class="wide-td">
 												<input type="text" name="userEmail" id="userEmail" value="${user.userEmail}" required>
+												<!-- <ul class="register-msg">
+													<li id="emailMsg">이메일을 입력해주세요.</li>
+												</ul> -->
 											</td>
 											<th><label for="userName">이름</label></th>
 											<td>
@@ -308,6 +317,10 @@
 								</table>
 								<ul class="register-msg">
 									<li id="imgFileMsg">사용자 사진: 필수 정보입니다.</li>
+									<li id="emailMsg">이메일을 입력해주세요.</li>
+									<li id="userNameMsg">이름을 입력해주세요.</li>
+									<li id="userCallNumberMsg">전화번호를 입력해주세요.</li>
+									<li id="userAddrMsg">주소를 입력해주세요.</li>
 								</ul>
 									<h2 class="noti-head">상세정보</h2>
 									<table id="search-box">
@@ -330,7 +343,7 @@
 												</td>
 												<td class="mechaTd">
 													<select id="chooseLocationCode" name="mechaLocation" onchange="changeLocationCd()">
-														<option value="" >== 선택 ==</option>
+														<option>== 선택 ==</option>
 														<c:forEach var="locationList" items="${locationList}">
 															<option value="${locationList.grpCdDtlId}">	${locationList.grpCdDtlNm} </option>
 														</c:forEach>
@@ -344,6 +357,11 @@
 											</tr>
 										</c:forEach>
 									</table>
+									<ul class="register-msg">
+										<li id="machineCdMsg">장비 코드를 설정해주세요</li>
+										<li id="locationCdMsg">활동 지역을 설정해주세요.</li>
+										<li id="locationDtlCdMsg">상세 활동 지역을 설정해주세요.</li>
+									</ul>
 								<div class="modButtons">
 									<button type="button" id="confirmModBtn">확인</button>
 									<button type="button" id="confirmModExceptImgBtn">확인</button>
