@@ -40,4 +40,7 @@ public interface IMainRepository {
 	List<MainPageVo> getMechaDataInRangeById(@Param("userId") String userId, @Param("startOfWeek") LocalDate startOfWeek, @Param("endOfWeek") LocalDate endOfWeek); //특정 수리기사의 a/s 일정 날짜 별로 보기
 	List<MainPageVo> getDataInRangeById(@Param("userId") String userId, @Param("startOfWeek") LocalDate startOfWeek, @Param("endOfWeek") LocalDate endOfWeek); //특정 사용자의 a/s 일정 날짜 별로 보기
     String getUserName(String userId);
+    
+    String getLocationCd(String userId);
+    String getMachineCd(String userId);
 }

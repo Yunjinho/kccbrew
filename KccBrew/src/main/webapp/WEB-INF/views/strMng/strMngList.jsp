@@ -130,7 +130,7 @@ input {
 												<!-- Input field for URI -->
 												<td colspan="3"><input type="search" name="keyword"
 													placeholder="점포명 입력하세요" value="${searchContent.keyword}"
-													size="30" style="width: 95%;"></td>
+													size="30" style="width: 98%;"></td>
 
 
 											</tr>

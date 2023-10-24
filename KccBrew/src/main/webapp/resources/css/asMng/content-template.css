@@ -39127,8 +39127,8 @@ form select, form input[type="text"], form input[type="password"], form.atto_for
 	display: block;
 	display: inline;
 	width: 100%;
-	width: auto;
-	max-width: 300px;
+	/* width: auto; */
+	/* max-width: 300px; */
 	height: 34px;
 	padding: 6px 12px;
 	margin: 0 0 5px 0;
@@ -45363,7 +45363,8 @@ textarea.form-control {
 }
 
 input[type="search"] {
-	-webkit-appearance: none
+	-webkit-appearance: none;
+	width:95%;
 }
 
 @media screen and (-webkit-min-device-pixel-ratio: 0) {
