@@ -23,7 +23,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import kr.co.kccbrew.comm.main.dao.IMainRepository;
 import kr.co.kccbrew.comm.main.model.MainPageVo;
 import kr.co.kccbrew.comm.main.service.MainService;
 import kr.co.kccbrew.comm.security.model.UserVo;
@@ -83,8 +82,6 @@ public class MainController {
 			if(principal instanceof UserDetails) {
 				UserDetails userDetails = (UserDetails) principal;
 				String userId = userDetails.getUsername();
-//				String locationCd = mainRepository.getLocationCd(userId);
-//				String machineCd = mainServiceImple.getMachineCd(userId);
 				
 				List<MainPageVo> userInfoList = mainServiceImple.showUserInfoListById(userId);
 				List<MainPageVo> storeInfoList = mainServiceImple.showStoreInfoListById(userId);
@@ -93,7 +90,6 @@ public class MainController {
 				model.addAttribute("userInfoList", userInfoList);
 				model.addAttribute("storeInfoList",storeInfoList);
 				model.addAttribute("locationList", locationList);
-//				model.addAttribute("machineCd",machineCd);
 			}
 		}
 		return "MyPageP2";

@@ -319,22 +319,20 @@
 											</tr>
 											<tr>
 												<td class="mechaTd">
-													<select id="chooseMachineCode" name="chooseMachineCode" value="${mecha.machineCode}">
+													<select id="chooseMachineCode" name="chooseMachineCode">
 														<option value="" disabled>== 선택 ==</option>
-														<option value="01" ${machineCd == '01' ? 'selected' : ''}>커피머신</option>
-														<option value="02" ${machineCd == '02' ? 'selected' : ''}>냉장고</option>
-														<option value="03" ${machineCd == '03' ? 'selected' : ''}>제빙기</option>
-														<option value="04" ${machineCd == '04' ? 'selected' : ''}>에어컨</option>
-														<option value="05" ${machineCd == '05' ? 'selected' : ''}>온수기</option>
+														<option value="01" ${mecha.machineCode == '01' ? 'selected' : ''}>커피머신</option>
+														<option value="02" ${mecha.machineCode == '02' ? 'selected' : ''}>냉장고</option>
+														<option value="03" ${mecha.machineCode == '03' ? 'selected' : ''}>제빙기</option>
+														<option value="04" ${mecha.machineCode == '04' ? 'selected' : ''}>에어컨</option>
+														<option value="05" ${mecha.machineCode == '05' ? 'selected' : ''}>온수기</option>
 													</select>	
 												</td>
 												<td class="mechaTd">
 													<select id="chooseLocationCode" name="mechaLocation" onchange="changeLocationCd()">
 														<option value="" >== 선택 ==</option>
 														<c:forEach var="locationList" items="${locationList}">
-															<option value="${locationList.grpCdDtlId}">
-																${locationList.grpCdDtlNm}
-															</option>
+															<option value="${locationList.grpCdDtlId}">	${locationList.grpCdDtlNm} </option>
 														</c:forEach>
 													</select>
 												</td>

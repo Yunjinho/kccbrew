@@ -406,12 +406,4 @@
 			LIKE #{mechaLocationCode}||'%'
 		]]>
 	</select>
-	
-	<select id="getMachineCd" parameterType="kr.co.kccbrew.comm.main.model.MainPageVo" resultType="kr.co.kccbrew.comm.main.model.MainPageVo">
-		<![CDATA[
-			SELECT eqpmn_cd AS "machineCode"
-			FROM users
-			WHERE user_id = #{userId}
-		]]>
-	</select>
 </mapper>

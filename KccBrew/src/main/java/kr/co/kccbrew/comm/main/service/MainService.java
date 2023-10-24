@@ -196,14 +196,4 @@ public class MainService implements IMainService{
 		List<MainPageVo> list = mainRepository.selectLocationDtlCd(locCd);
 		return list;
 	}
-
-	@Override
-	public String getLocationCd(String userId) {
-		return mainRepository.getLocationCd(userId);
-	}
-
-	@Override
-	public String getMachineCd(String userId) {
-		return mainRepository.getMachineCd(userId);
-	}
 }
