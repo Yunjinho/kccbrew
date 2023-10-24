@@ -94,7 +94,7 @@ function createDiscussionElement(uuid, name, storageLocation, fileServerNm) {
   discussion.appendChild(descContact);
   return discussion;
 }
-
+ 
 function loadChatLog(uuid) {
   $.ajax({
     url: '/getChatLog',
