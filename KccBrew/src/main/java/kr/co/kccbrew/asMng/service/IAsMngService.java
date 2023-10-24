@@ -115,4 +115,6 @@ public interface IAsMngService {
 	 * @param asInfoSeq
 	 */
 	public void deleteAs(@Param("asInfoSeq")String asInfoSeq);
+
+	public List<AsMngVo> getAsHistory(String asInfo, String userTypeCd);
 }

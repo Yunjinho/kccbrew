@@ -1,3 +1,11 @@
+function viewHistory(){
+	var asInfo=$("input[name=asInfoSeq]").val();
+	var url = "/view-as-history?asInfo="+asInfo;
+    var name = "popup test";
+    var option = "width=600, height=550, top=130, left=450, scrollbars=yes, directories=no, location=no";
+    window.open(url, name, option);
+    window.close();
+}
 function deleteAs(){
 	if(confirm("접수를 취소하시겠습니까?")){
 		var asInfoSeq=$("input[name=asInfoSeq]").val();
