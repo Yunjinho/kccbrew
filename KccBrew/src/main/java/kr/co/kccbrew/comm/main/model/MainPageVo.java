@@ -14,6 +14,7 @@ public class MainPageVo {
 	String userTelNo; 			//사용자 전화번호
 	String userEmail;			//사용자 이메일
 	String userAddress;			//사용자 주소
+	String userAddressDtl;		//사용자 상세 주소
 	Date userRegDate;			//사용자 정보 등록일
 	Date userModDate;			//사용자 정보 수정일
 	String userInUse;			//사용자 정보 사용 여부
