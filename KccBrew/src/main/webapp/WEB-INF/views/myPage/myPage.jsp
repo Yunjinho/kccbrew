@@ -110,13 +110,13 @@
 							</ul>
 
 							<sec:authorize access="hasRole('ROLE_MANAGER')">
-								<div class="category">상세정보</div>
-								<table id="search-box">
+								<h2 class="noti-head">점포 정보</h2>
+								<table id="store-list">
+									<tr>
+										<th>점포명</th>
+										<th>점포전화번호</th>
+									</tr>
 									<c:forEach var="store" items="${storeInfoList}">
-										<tr>
-											<th>점포명</th>
-											<th>점포전화번호</th>
-										</tr>
 										<tr>
 											<td>${store.storeName}</td>
 											<td class="storeTd">${store.storeTelNo}</td>
@@ -125,7 +125,7 @@
 								</table>
 							</sec:authorize>
 							<sec:authorize access="hasRole('ROLE_MECHA')">
-								<div class="category">상세정보</div>
+								<h2 class="noti-head">상세정보</h2>
 								<table id="search-box">
 									<c:forEach var="mecha" items="${userInfoList}">
 										<tr>

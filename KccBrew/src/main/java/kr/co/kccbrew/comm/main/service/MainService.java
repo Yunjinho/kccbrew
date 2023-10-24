@@ -184,16 +184,26 @@ public class MainService implements IMainService{
 	}
 	
 	//지역 코드 조회
-		@Override
-		public List<MainPageVo> selectLocationCd() {
-			List<MainPageVo> list = mainRepository.selectLocationCd();
-			return list;
-		}
-		
-		//상세 지역 코드 조회
-		@Override
-		public List<MainPageVo> selectLocationDtlCd(String locCd) {
-			List<MainPageVo> list = mainRepository.selectLocationDtlCd(locCd);
-			return list;
-		}
+	@Override
+	public List<MainPageVo> selectLocationCd() {
+		List<MainPageVo> list = mainRepository.selectLocationCd();
+		return list;
+	}
+	
+	//상세 지역 코드 조회
+	@Override
+	public List<MainPageVo> selectLocationDtlCd(String locCd) {
+		List<MainPageVo> list = mainRepository.selectLocationDtlCd(locCd);
+		return list;
+	}
+
+	@Override
+	public String getLocationCd(String userId) {
+		return mainRepository.getLocationCd(userId);
+	}
+
+	@Override
+	public String getMachineCd(String userId) {
+		return mainRepository.getMachineCd(userId);
+	}
 }

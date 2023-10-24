@@ -35,4 +35,7 @@ public interface IMainService {
 	List<MainPageVo> getMechaDataInRangeById(@Param("userId") String userId, @Param("startOfWeek") LocalDate startOfWeek, @Param("endOfWeek") LocalDate endOfWeek);
 	List<MainPageVo> getDataInRangeById(@Param("userId") String userId, @Param("startOfWeek") LocalDate startOfWeek, @Param("endOfWeek") LocalDate endOfWeek);
 	String getUserName(String userId);
+	
+	String getLocationCd(String userId);
+    String getMachineCd(String userId);
 }

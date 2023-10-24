@@ -30,6 +30,7 @@ button {
 }
 .noti-head {
 	display: inline-block;
+	font-size: 30px;
 }
 label {
 	font-weight: normal;
@@ -95,7 +96,7 @@ label {
 	display: none;
 }
 
-#search-box {
+#search-box, #store-list{
 	table-layout:fixed;
 	width: 100%;
 	border-collapse: collapse;
@@ -109,10 +110,10 @@ label {
 	text-align: center;
 }
 
-#search-box tr {
-	height:57px;
+#search-box tr, #store-list tr{
+	height:57px !important;
 }
-#search-box th {
+#search-box th, #store-list th {
 	line-height:57px;
 	width:132px;
 	padding: 0 10px;
@@ -129,8 +130,16 @@ label {
 	text-align: left;
 	vertical-align: top;
 }
+#store-list td{
+	line-height:57px;
+	padding: 0 10px;
+	border: 0px;
+	border-bottom: 1px solid #ccc;
+	text-align: center;	
+	vertical-align: top;
+}
 
-#search-box th {
+#search-box th, #store-list th {
 	background-color: #f2f2f2;
 }
 
