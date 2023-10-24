@@ -10,7 +10,8 @@ public class ChatDto {
 	//msg-메세지, uuid-채팅방 번호
 	private String msg, id, uuid;
 	private Date create_time;
-	
+	String fileServerNm;
+	String storageLocation;
 	
 	public String getId() {
 		return id;
@@ -59,7 +60,20 @@ public class ChatDto {
 	public void setUuid(String uuid) {
 		this.uuid = uuid;
 	}
-	
+	public String getFileServerNm() {
+		return fileServerNm;
+	}
+
+	public void setFileServerNm(String fileServerNm) {
+		this.fileServerNm = fileServerNm;
+	}
+	public String getStorageLocation() {
+		return storageLocation;
+	}
+
+	public void setStorageLocation(String storageLocation) {
+		this.storageLocation = storageLocation;
+	}
 	@Override
 	public String toString() {
 		return "ChatDto:[user_id="+user_id+", sender="+sender+", msg="+msg+ ", id="+id+", create_time="

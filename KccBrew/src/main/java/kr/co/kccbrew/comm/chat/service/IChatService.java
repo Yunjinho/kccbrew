@@ -21,4 +21,6 @@ public interface IChatService {
 	 * @return 채팅로그
 	 */
 	List<ChatDto> getChatLog(ChatDto chatDto);
+	
+	 ChatDto getUser(String uuid);
 }
