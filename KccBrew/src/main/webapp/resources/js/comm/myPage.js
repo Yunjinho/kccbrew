@@ -63,6 +63,38 @@ $(document).ready(function(){
 		}).open();
 	})
 	
+	//각 조건 확인
+	$("input[name=userName]").focusout(function(){
+		checkName();
+	})
+	
+	$("input[name=userEmail]").focusout(function(){
+		checkUserEmail();
+	})
+	
+	$("input[name=userTelNo]").focusout(function(){
+		checkCallNum();
+	})
+	
+	$("input[name=userAddress]").focusout(function(){
+		checkUserAddr();
+	})
+	
+	$("input[name=userImg]").focusout(function(){
+		checkImg();
+	})
+	
+	$("select[name=chooseMachineCode]").focusout(function(){
+		checkMachineCd();
+	})
+	
+	$("select[name=mechaLocation]").focusout(function(){
+		checkLocation();
+	})
+	
+	$("select[name=mechaLocationCode]").focusout(function(){
+		checkLocationCode();
+	})
 });
 
 //사진 확장자 체크-> 이미지 사진만 올리게 
@@ -121,3 +153,109 @@ function changeLocationCd(){
 		}
 	});
 }
+
+//주소 조건 체크
+function checkUserAddr() {
+	var userAddress = $("input[name=userAddress]");
+	if(userAddress.val() == ""){
+		$("#userAddrMsg").css("display","block");
+		return false;
+	}else {
+		$("#userAddrMsg").css("display","block");
+		return true;
+	}
+}
+
+//이메일 조건 체크
+function checkUserEmail() {
+	var userEmail = $("input[name=userEmail");
+	if(userEmail.val() == ""){
+		$("#emailMsg").css("display","block");
+		return false;
+	}else {
+		var regex=/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
+			if(!(regex).test(userEmail.val())){
+				$("#emailMsg").html("이메일을 다시 한 번 확인해주세요.")
+				$("#emailMsg").css("display","block");
+				return false;
+			}
+		$("#userAddreMsg").css("display","none");
+		return true;
+	}
+}
+//이름 조건 확인
+function checkName() {
+	var userName = $("input[name=userName");
+	if(userName.val() == ""){
+		$("#userNameMsg").css("display","block");
+		return false;
+	}else {
+		$("#userNameMsg").css("display","none");
+		return true;
+	}
+}
+
+//전화번호 조건 확인
+function checkCallNum() {
+	var userCallNum = $("input[name=userTelNo]");
+	if(userCallNum.val() == ""){
+		$("#userCallNumberMsg").css("display", "block");
+		return false;
+	}else {
+		var regex=/^\d{10,11}$/;
+			if(!(regex).test(userCallNum.val())){
+				$("#userCallNumberMsg").html("전화번호를 다시 한 번 확인해주세요.");
+				$("#userCallNumberMsg").css("display", "block");
+				return false;
+			}
+		$("#userCallNumberMsg").css("display", "none");
+		return true;
+	}
+}
+
+//활동 지역 조건 확인
+function checkLocation() {
+	if($("select[name=mechaLocation").val() == "== 선택 =="){
+		$("#locationCdMsg").css("display","block");
+		return false;
+	}else {
+		$("#locationCdMsg").css("display","none");
+		return true;
+	}
+}
+//활동 지역 상세 조건 확인
+function checkLocationCode() {
+	if($("select[name=mechaLocationCode").val() == "== 선택 =="){
+		$("#locationDtlCdMsg").css("display","block");
+		return false;
+	}else {
+		$("#locationDtlCdMsg").css("display","none");
+		return true;
+	}
+}
+
+//장비 코드 조건 확인
+function checkMachineCd() {
+	if($("select[name=chooseMachineCode").val == "== 선택 =="){
+		$("#machineCdMsg").css("display","block");
+		return false;
+	}else {
+		$("#machineCdMsg").css("display","none");
+		return true;
+	}
+}
+
+//사진 등록 여부 확인
+function checkImg() {
+	if($("input[name=userImg").val() == ""){
+		$("#imgFileMsg").css("display","block");
+		return false;
+	}else {
+		$("#imgFileMsg").css("display","none");
+		return true;
+	}
+}
+
+
+
+

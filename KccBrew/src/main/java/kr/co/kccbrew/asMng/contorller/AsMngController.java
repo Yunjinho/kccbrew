@@ -13,8 +13,8 @@ import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.sound.midi.MidiDevice.Info;
 
+import org.apache.http.HttpRequest;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -544,5 +544,13 @@ public class AsMngController {
 	public String deleteAS(@RequestParam String asInfoSeq) {
 		asMngService.deleteAs(asInfoSeq);
 		return "";
+	}
+	@RequestMapping(value="/view-as-history",method=RequestMethod.GET)
+	public String viewAsHistory(@RequestParam String asInfo,Model model,HttpServletRequest request) {
+		HttpSession session =request.getSession();
+		UserVo userVo=(UserVo)session.getAttribute("user");
+		List<AsMngVo> vo = asMngService.getAsHistory(asInfo,userVo.getUserTypeCd());
+		model.addAttribute("historyList", vo);
+		return "/asMng/asHistory";
 	}
 }
