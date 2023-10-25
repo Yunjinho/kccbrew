@@ -73,7 +73,8 @@ function createDiscussionElement(uuid, name, storageLocation, fileServerNm) {
   const photo = document.createElement("div");
   photo.classList.add("photo");
   const url= storageLocation + fileServerNm;
-  console.log(name+"#######################"+url);
+  console.log(storageLocation);
+  console.log(fileServerNm);
   photo.style.backgroundImage = `url(/${url})`;
   console.log(name+"22#######################"+url);
   const descContact = document.createElement("div");
