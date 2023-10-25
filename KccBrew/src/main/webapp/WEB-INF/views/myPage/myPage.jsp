@@ -59,7 +59,7 @@
 									<tr>
 										<td rowspan="4">
 											<sec:authorize access="hasAnyRole('ROLE_ADMIN', 'ROLE_MECHA')">
-												<c:set var="imagePath" value="${path}/${user.fileDetailLocation}${user.fileDetailServerName}" />
+												<c:set var="imagePath" value="${user.fileDetailLocation}" />
 													<img src="<c:out value='${imagePath}'/>" id="profileImg">
 											</sec:authorize>
 											<sec:authorize access="hasRole('ROLE_MANAGER')">

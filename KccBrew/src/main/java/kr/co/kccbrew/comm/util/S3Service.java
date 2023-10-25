@@ -6,13 +6,13 @@ import java.io.IOException;
 import java.util.Optional;
 import java.util.UUID;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
+import com.amazonaws.services.s3.model.DeleteObjectRequest;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 
 import lombok.RequiredArgsConstructor;
@@ -70,5 +70,9 @@ public class S3Service {
 	            return Optional.of(convertFile);
 	        }
 	        return Optional.empty();
+	    }
+	    public void deleteFile(String fileName){
+	        DeleteObjectRequest request = new DeleteObjectRequest(bucket, fileName);
+	        amazonS3Client.deleteObject(request);
 	    }
 	}
