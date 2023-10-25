@@ -2,7 +2,7 @@ function viewHistory(){
 	var asInfo=$("input[name=asInfoSeq]").val();
 	var url = "/view-as-history?asInfo="+asInfo;
     var name = "popup test";
-    var option = "width=600, height=550, top=130, left=450, scrollbars=yes, directories=no, location=no";
+    var option = "width=700, height=550, top=130, left=500, scrollbars=yes, directories=no, location=no";
     window.open(url, name, option);
     window.close();
 }
