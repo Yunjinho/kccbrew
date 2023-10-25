@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketHandler;
@@ -18,6 +19,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import kr.co.kccbrew.comm.security.model.UserVo;
 import kr.co.kccbrew.sysMng.alarm.model.AlarmVo;
 import kr.co.kccbrew.sysMng.alarm.service.IAlarmService;
+import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 
 /**
  * @ClassNmae : EchoHandler
@@ -33,16 +36,15 @@ import kr.co.kccbrew.sysMng.alarm.service.IAlarmService;
  * @version 1.0
  */
 
-
 public class EchoHandler extends TextWebSocketHandler implements WebSocketHandler{
 
 	@Autowired
 	private IAlarmService alarmService;
 
-	Map<String, WebSocketSession> userIdSessions = new HashMap<>();
-	Map<String, WebSocketSession> adminSessions = new HashMap<>();
-	Map<String, WebSocketSession> managerSessions = new HashMap<>();
-	Map<String, WebSocketSession> mechaSessions = new HashMap<>();
+	public static Map<String, WebSocketSession> userIdSessions = new HashMap<>();
+	public static Map<String, WebSocketSession> adminSessions = new HashMap<>();
+	public static Map<String, WebSocketSession> managerSessions = new HashMap<>();
+	public static Map<String, WebSocketSession> mechaSessions = new HashMap<>();
 
 	String userId = null;
 	String userType = null;
@@ -59,7 +61,6 @@ public class EchoHandler extends TextWebSocketHandler implements WebSocketHandle
 
 		// JSON타입 메세지 파싱
 		System.out.println("Received JSON: " + textMessage.getPayload());
-		System.out.println("userIdSessions: " + userIdSessions);
 
 		String messageJson = textMessage.getPayload();
 		ObjectMapper objectMapper = new ObjectMapper();

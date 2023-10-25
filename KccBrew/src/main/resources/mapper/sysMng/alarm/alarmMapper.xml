@@ -13,6 +13,7 @@
 		<result property="alarmTitle" column="ALARM_TITLE" />
 		<result property="alarmContent" column="ALARM_CONTENT" />
 		<result property="causeDate" column="CAUSE_DTTM" />
+		<result property="isPosted" column="IS_POSTED" />
 	</resultMap>
 
 
@@ -67,6 +68,23 @@
     ORDER BY CAUSE_DTTM DESC
     ]]>
 	</select>
+
+	<select id="selectNewAlarms" resultMap="alarmResult">
+		select * from alarm where IS_POSTED IS NULL
+	</select>
+
+
+	<update id="updatePosted" parameterType="java.util.List">
+		UPDATE alarm
+		SET IS_POSTED = 'Y'
+		WHERE ALARM_SEQ IN
+		<foreach item="item" collection="list" open="(" separator=","
+			close=")">
+			#{item}
+		</foreach>
+	</update>
+
+
 
 
 

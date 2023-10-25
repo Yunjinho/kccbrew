@@ -14,4 +14,5 @@ public class AlarmVo {
 	private String alarmTitle;
 	private String alarmContent;
 	private Date causeDate;
+	private String isPosted;
 }
