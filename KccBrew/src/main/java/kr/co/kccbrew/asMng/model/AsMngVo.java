@@ -97,6 +97,11 @@ public class AsMngVo {
 	//현재페이지
     private int currentPage;
     
+    private String asProcessNm;
+    private String asStatus;
+    private String asPerfromer;
+    private String asProcessDate;
+    private String userTypeNm;
 	//인자 없는 생성자
 	public AsMngVo() {
 		this.asInfoSeq = "";

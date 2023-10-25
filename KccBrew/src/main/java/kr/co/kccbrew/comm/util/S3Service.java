@@ -60,6 +60,9 @@ public class S3Service {
 	    private Optional<File> convert(MultipartFile file) throws IOException {
 	        File convertFile = new File(file.getOriginalFilename());
 	        System.out.println("convertFile = " + convertFile);
+	        if (convertFile.exists()) {
+	            convertFile.delete(); // 기존 파일 삭제
+	        }
 	        if(convertFile.createNewFile()) {
 	            try (FileOutputStream fos = new FileOutputStream(convertFile)) {
 	                fos.write(file.getBytes());

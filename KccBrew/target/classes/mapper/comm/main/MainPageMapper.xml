@@ -68,7 +68,7 @@
 		    user_type_cd        AS "userType",
 		    approve_yn          AS "approveStatus"
 			FROM users
-			WHERE APPROVE_YN = 'N' OR APPROVE_YN IS NULL
+			WHERE APPROVE_YN IS NULL
 		]]>
 	</select>
 	<!-- 전체 a/s 결과 리스트 -->
@@ -406,5 +406,4 @@
 			LIKE #{mechaLocationCode}||'%'
 		]]>
 	</select>
-	
 </mapper>

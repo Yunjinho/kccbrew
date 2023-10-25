@@ -129,6 +129,7 @@ public class MainService implements IMainService{
 	//사용자 정보 수정하기   
 	@Override
 	public void updateMyProfile(MainPageVo mainPageVo) {
+		mainPageVo.setUserAddress(mainPageVo.getUserAddress() + ", " + mainPageVo.getUserAddressDtl());
 		insertUserImg(mainPageVo);
 		mainRepository.updateMyProfile(mainPageVo);
 		
@@ -140,6 +141,7 @@ public class MainService implements IMainService{
 	//이미지를 제외하고 사용자 정보 수정하기
 	@Override
 	public void updateMyProfileExceptImg(MainPageVo mainPageVo) {
+		mainPageVo.setUserAddress(mainPageVo.getUserAddress() + ", " + mainPageVo.getUserAddressDtl());
 		mainRepository.updateMyProfileExceptImg(mainPageVo);
 		
 		if(mainPageVo.getMechaLocationCode().equals("지역 상세 선택")) {
@@ -182,16 +184,16 @@ public class MainService implements IMainService{
 	}
 	
 	//지역 코드 조회
-		@Override
-		public List<MainPageVo> selectLocationCd() {
-			List<MainPageVo> list = mainRepository.selectLocationCd();
-			return list;
-		}
-		
-		//상세 지역 코드 조회
-		@Override
-		public List<MainPageVo> selectLocationDtlCd(String locCd) {
-			List<MainPageVo> list = mainRepository.selectLocationDtlCd(locCd);
-			return list;
-		}
+	@Override
+	public List<MainPageVo> selectLocationCd() {
+		List<MainPageVo> list = mainRepository.selectLocationCd();
+		return list;
+	}
+	
+	//상세 지역 코드 조회
+	@Override
+	public List<MainPageVo> selectLocationDtlCd(String locCd) {
+		List<MainPageVo> list = mainRepository.selectLocationDtlCd(locCd);
+		return list;
+	}
 }

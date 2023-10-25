@@ -27,7 +27,7 @@ $(document).ready(function(){
 	//수정 확인 버튼
 	$("#confirmModBtn").click(function(){
 		var selectedMachineCode = $("#chooseMachineCode").val();
-		var selectedLocationCode = $("#chooseLocationCode").val();
+		var selectedLocationCode = $("#chooseDetailLocationCode").val();
 		var formData = new FormData();
 		formData.append('userImg', $('#file')[0].files[0]);
 
@@ -42,7 +42,7 @@ $(document).ready(function(){
 	//이미지를 제외한 수정 확인 버튼
 	$("#confirmModExceptImgBtn").click(function(){
 		var selectedMachineCode = $("#chooseMachineCode").val();
-		var selectedLocationCode = $("#chooseLocationCode").val();
+		var selectedLocationCode = $("#chooseDetailLocationCode").val();
 		var formData = new FormData();
 
 		$("#machineCodeHidden").val(selectedMachineCode);
@@ -52,6 +52,49 @@ $(document).ready(function(){
 		$("#updateProfileForm").attr("action","/confirmmodexceptimg");
 		$("#updateProfileForm").submit();
 	});
+	
+	//카카오 주소 API
+	$("#address_kakao").click(function(){
+		new daum.Postcode({
+			oncomplete: function(data) { //선택시 입력값 세팅
+				document.getElementById("address_kakao").value = data.address; // 주소 넣기
+				document.querySelector("input[name=userAddressDtl]").focus(); //상세입력 포커싱
+			}
+		}).open();
+	})
+	
+	//각 조건 확인
+	$("input[name=userName]").focusout(function(){
+		checkName();
+	})
+	
+	$("input[name=userEmail]").focusout(function(){
+		checkUserEmail();
+	})
+	
+	$("input[name=userTelNo]").focusout(function(){
+		checkCallNum();
+	})
+	
+	$("input[name=userAddress]").focusout(function(){
+		checkUserAddr();
+	})
+	
+	$("input[name=userImg]").focusout(function(){
+		checkImg();
+	})
+	
+	$("select[name=chooseMachineCode]").focusout(function(){
+		checkMachineCd();
+	})
+	
+	$("select[name=mechaLocation]").focusout(function(){
+		checkLocation();
+	})
+	
+	$("select[name=mechaLocationCode]").focusout(function(){
+		checkLocationCode();
+	})
 });
 
 //사진 확장자 체크-> 이미지 사진만 올리게 
@@ -111,19 +154,108 @@ function changeLocationCd(){
 	});
 }
 
-/*지역코드로 지역명 조회*/
-function getLocationName2(locationCodeValue) {
-	$.ajax({
-		url: '/getLocationName', // Ajax 요청을 처리할 URL
-		type: 'GET',
-		dataType: 'text', // 반환되는 데이터 형식을 text로 설정
-		data: { "mechaLocationCode": locationCodeValue },
-		success: function(data) {
-			$('#locationCd').removeAttr('hidden');
-			$('#locationCd').text(data);
-		},
-		error: function(error) {
-			console.log('Ajax 요청 실패:', error);
-		}
-	});
+//주소 조건 체크
+function checkUserAddr() {
+	var userAddress = $("input[name=userAddress]");
+	if(userAddress.val() == ""){
+		$("#userAddrMsg").css("display","block");
+		return false;
+	}else {
+		$("#userAddrMsg").css("display","block");
+		return true;
+	}
 }
+
+//이메일 조건 체크
+function checkUserEmail() {
+	var userEmail = $("input[name=userEmail");
+	if(userEmail.val() == ""){
+		$("#emailMsg").css("display","block");
+		return false;
+	}else {
+		var regex=/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
+			if(!(regex).test(userEmail.val())){
+				$("#emailMsg").html("이메일을 다시 한 번 확인해주세요.")
+				$("#emailMsg").css("display","block");
+				return false;
+			}
+		$("#userAddreMsg").css("display","none");
+		return true;
+	}
+}
+//이름 조건 확인
+function checkName() {
+	var userName = $("input[name=userName");
+	if(userName.val() == ""){
+		$("#userNameMsg").css("display","block");
+		return false;
+	}else {
+		$("#userNameMsg").css("display","none");
+		return true;
+	}
+}
+
+//전화번호 조건 확인
+function checkCallNum() {
+	var userCallNum = $("input[name=userTelNo]");
+	if(userCallNum.val() == ""){
+		$("#userCallNumberMsg").css("display", "block");
+		return false;
+	}else {
+		var regex=/^\d{10,11}$/;
+			if(!(regex).test(userCallNum.val())){
+				$("#userCallNumberMsg").html("전화번호를 다시 한 번 확인해주세요.");
+				$("#userCallNumberMsg").css("display", "block");
+				return false;
+			}
+		$("#userCallNumberMsg").css("display", "none");
+		return true;
+	}
+}
+
+//활동 지역 조건 확인
+function checkLocation() {
+	if($("select[name=mechaLocation").val() == "== 선택 =="){
+		$("#locationCdMsg").css("display","block");
+		return false;
+	}else {
+		$("#locationCdMsg").css("display","none");
+		return true;
+	}
+}
+//활동 지역 상세 조건 확인
+function checkLocationCode() {
+	if($("select[name=mechaLocationCode").val() == "== 선택 =="){
+		$("#locationDtlCdMsg").css("display","block");
+		return false;
+	}else {
+		$("#locationDtlCdMsg").css("display","none");
+		return true;
+	}
+}
+
+//장비 코드 조건 확인
+function checkMachineCd() {
+	if($("select[name=chooseMachineCode").val == "== 선택 =="){
+		$("#machineCdMsg").css("display","block");
+		return false;
+	}else {
+		$("#machineCdMsg").css("display","none");
+		return true;
+	}
+}
+
+//사진 등록 여부 확인
+function checkImg() {
+	if($("input[name=userImg").val() == ""){
+		$("#imgFileMsg").css("display","block");
+		return false;
+	}else {
+		$("#imgFileMsg").css("display","none");
+		return true;
+	}
+}
+
+
+
+

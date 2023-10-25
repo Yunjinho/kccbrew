@@ -19,7 +19,7 @@ button {
 .arrowAndContents{
 	background-color: #ffffff;
 	min-height: 600px;
-	padding: 30px 145px;
+	padding: 30px 125px;
 }
 .breadcrumb {
 	display:inline-block;
@@ -30,6 +30,7 @@ button {
 }
 .noti-head {
 	display: inline-block;
+	font-size: 30px;
 }
 label {
 	font-weight: normal;
@@ -81,27 +82,13 @@ label {
     margin-top:20px;
 }
 
-
-#search-box {
-	
-	width: 100%;
-	border-collapse: collapse;
-	border-top: 1px solid #ccc;
-	margin-top:50px;
-}
-
-#search-box td:first-child{
-	width: 100px; 
-	height: 130px; 
-	text-align: center;
-}
-
 #profileImg {
 	position:relative;
 	top:30px;
 	line-height:30px;
 	border: none;
-	height: 150px;
+	height: 130px;
+	width: 130px;
 }
 
 #imgFileMsg {
@@ -109,10 +96,24 @@ label {
 	display: none;
 }
 
-#search-box tr {
-	height:57px;
+#search-box, #store-list{
+	table-layout:fixed;
+	width: 100%;
+	border-collapse: collapse;
+	border-top: 1px solid #ccc;
+	margin-top:50px;
 }
-#search-box th {
+
+#search-box td:first-child{
+	width: 150px; 
+	height: 130px; 
+	text-align: center;
+}
+
+#search-box tr, #store-list tr{
+	height:57px !important;
+}
+#search-box th, #store-list th {
 	line-height:57px;
 	width:132px;
 	padding: 0 10px;
@@ -122,13 +123,38 @@ label {
 	vertical-align: top;
 }
 #search-box td {
-	line-height:57px;
+	line-height:62px;
+	height:62px;
 	padding: 0 10px;
 	border: 0px;
 	border-bottom: 1px solid #ccc;
 	text-align: left;
 	vertical-align: top;
 }
+#store-list td{
+	line-height:57px;
+	padding: 0 10px;
+	border: 0px;
+	border-bottom: 1px solid #ccc;
+	text-align: center;	
+	vertical-align: top;
+}
+
+#search-box th, #store-list th {
+	background-color: #f2f2f2;
+}
+
+.mechaTd, .locationTd, .storeTd{
+	text-align: center !important;
+}
+
+#address_kakao {
+	background-color: #ffffff;
+}
+.wide-td {
+	width:280px;
+}
+
 tr > th:nth-child(7) {
 	text-align: left;
 }
@@ -136,9 +162,6 @@ tr > th:nth-child(7) {
 	text-align: left !important;
 }
 
-#search-box th {
-	background-color: #f2f2f2;
-}
 
 input[type="text"] {
     width: 90%;
@@ -160,7 +183,7 @@ input[type="text"] {
 	margin-top: 40px;
 }
 #changeImageBtn{
-
+	margin-top:40px;
 	position:relative;
 	height:24px;
 	top:2px;

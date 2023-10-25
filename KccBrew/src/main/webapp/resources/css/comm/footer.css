@@ -26,7 +26,8 @@ footer {
 	justify-content: space-between;
 	height: 45px;
 	line-height: 45px;
-	width: 1200px;
+	width: 100%;
+	padding-left: 20px;
     margin: auto;
 }
 
@@ -53,7 +54,8 @@ footer {
 	height: 70px;
 	line-height: 35px;
 	font-size: 0.8em;
-	width: 1200px;
+	width: 100%;
+	padding-left:20px;
     margin: auto;
 }
 

@@ -36,7 +36,17 @@
 		 order by c.reg_dttm asc
 	</select>
 	
-
+<select id="getUser" resultType="kr.co.kccbrew.comm.chat.model.ChatDto" parameterType="String">	
+ SELECT 
+         c.user_id,
+		b.file_server_nm AS "fileServerNm",
+		b.storage_location AS "storageLocation",
+	c.uuid
+	FROM file_detail_info b, users u, chat c
+    where u.user_id = c.user_id
+    and u.file_seq=b.file_seq
+    and  c.uuid=#{uuid}
+</select>
 
 
 

@@ -28,6 +28,8 @@ import kr.co.kccbrew.comm.main.service.MainService;
 import kr.co.kccbrew.comm.security.model.UserVo;
 import kr.co.kccbrew.notice.model.NoticeVo;
 import kr.co.kccbrew.notice.service.INoticeService;
+import kr.co.kccbrew.userMng.model.UserMngVo;
+import kr.co.kccbrew.userMng.service.IUserMngService;
 import lombok.RequiredArgsConstructor;
 
 @Controller
@@ -35,8 +37,9 @@ import lombok.RequiredArgsConstructor;
 public class MainController {
 	@Autowired
 	MainService mainServiceImple;
-	
 	private final INoticeService noticeService;
+	
+	private final IUserMngService userMngService;
 
 	/**
 	 * 마이 페이지로 이동
@@ -54,9 +57,11 @@ public class MainController {
 				String userId = userDetails.getUsername();
 				List<MainPageVo> userInfoList = mainServiceImple.showUserInfoListById(userId);
 				List<MainPageVo> storeInfoList = mainServiceImple.showStoreInfoListById(userId);
+				List<UserMngVo> userDtl = userMngService.findByUserInfo(userId);
 
 				model.addAttribute("userInfoList", userInfoList);
 				model.addAttribute("storeInfoList",storeInfoList);
+				model.addAttribute("userDtl", userDtl);
 			}
 		}
 		return "MyPageP1";
@@ -77,10 +82,11 @@ public class MainController {
 			if(principal instanceof UserDetails) {
 				UserDetails userDetails = (UserDetails) principal;
 				String userId = userDetails.getUsername();
+				
 				List<MainPageVo> userInfoList = mainServiceImple.showUserInfoListById(userId);
 				List<MainPageVo> storeInfoList = mainServiceImple.showStoreInfoListById(userId);
 				List<MainPageVo> locationList = mainServiceImple.selectLocationCd();
-
+				
 				model.addAttribute("userInfoList", userInfoList);
 				model.addAttribute("storeInfoList",storeInfoList);
 				model.addAttribute("locationList", locationList);
@@ -100,8 +106,8 @@ public class MainController {
 	@RequestMapping(value= "/confirmmodexceptimg", method = RequestMethod.POST)
 	public String confirmModProfile(Model model,
 									@ModelAttribute MainPageVo mainPageVo,
-						            @RequestParam("machineCode") String machineCode,
-						            @RequestParam("mechaLocationCode") String mechaLocationCode) {
+						            @RequestParam(value = "machineCode", required=false) String machineCode,
+						            @RequestParam(value = "mechaLocationCode", required=false) String mechaLocationCode) {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		
 		if(authentication != null) {
@@ -113,6 +119,7 @@ public class MainController {
 				mainPageVo.setMachineCode(machineCode);
 	            mainPageVo.setMechaLocationCode(mechaLocationCode);
 				mainServiceImple.updateMyProfileExceptImg(mainPageVo);
+				System.out.println("--------------------------수리기사 활동 지역은 " + mechaLocationCode);
 			}
 		}
 		return "redirect:/mypage";

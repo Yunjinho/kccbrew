@@ -33,7 +33,7 @@ public interface IChatRepository {
 	 * @return 사용자 채팅로그
 	 */
     List<ChatDto> getLog(String getId);
-
+    ChatDto getUser(String uuid);
 
 }
 

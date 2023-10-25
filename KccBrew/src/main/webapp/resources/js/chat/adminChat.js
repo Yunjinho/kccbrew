@@ -1,7 +1,8 @@
 const webSocket = new WebSocket("ws://localhost:8080/adminchat");
 let userUuid = null;
 let name = null;
-
+var storageLocation =null;
+var fileServerNm =null;
 var chatIcon = document.querySelector('#chatIcon');
 var chatArea = document.querySelector(".chatArea");
 chatIcon.addEventListener('click', function(){
@@ -40,10 +41,25 @@ function handleUserVisit(node) {
   const uuid = node.key;
 //  form.setAttribute("data-key", uuid);
   name = node.user_id;
+  $.ajax({
+	    url: '/getUser',
+	    type: 'post',
+	    data: {
+	      "uuid": uuid
+	    },
+	    success: function(data) {
+	        	storageLocation = data.storageLocation;
+				fileServerNm = data.fileServerNm;
+				  const discussion = createDiscussionElement(uuid, name, storageLocation, fileServerNm);
 
-  const discussion = createDiscussionElement(uuid, name);
+				  $(".discussions").append(discussion);
+	    },
+	     error:function(request,status,error){
+	         console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+	        }
+	        		  
+	        	  });
 
-  $(".discussions").append(discussion);
 
 /*  const element = document.querySelector(".name2");
   element.innerHTML = name;*/
@@ -51,10 +67,15 @@ function handleUserVisit(node) {
   /*loadChatLog(uuid);*/
 }
 
-function createDiscussionElement(uuid, name) {
+function createDiscussionElement(uuid, name, storageLocation, fileServerNm) {
   const discussion = document.createElement("div");
   discussion.classList.add("discussion");
 
+  const photo = document.createElement("div");
+  photo.classList.add("photo");
+  const url=  storageLocation + fileServerNm;
+  console.log(url);
+  photo.style.backgroundImage = `url(/${url})`;
   const descContact = document.createElement("div");
   descContact.classList.add("desc-contact");
 
@@ -68,11 +89,12 @@ function createDiscussionElement(uuid, name) {
   discussion.setAttribute("data-key", uuid);
   descContact.appendChild(p1);
   descContact.appendChild(p2);
+  
+  discussion.appendChild(photo);
   discussion.appendChild(descContact);
-
   return discussion;
 }
-
+ 
 function loadChatLog(uuid) {
   $.ajax({
     url: '/getChatLog',

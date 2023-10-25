@@ -108,6 +108,9 @@ window.onload=function(){
 												</div></li>
 										</ul>
 									</div>
+									<div>
+										<div class="form-btn" onclick="viewHistory()" style="width:150px;margin-top:20px">해당 AS건 이력 조회</div>
+									</div>
 									<div class="as-receipt-info">
 										<!-- 기사 배정 및 반려 -->
 										<input type="hidden" name="storeSeq" id="storeSeq"

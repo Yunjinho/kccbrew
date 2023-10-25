@@ -93,5 +93,12 @@ public class ChatController {
 		else return null;
 	}
 
+	@ResponseBody
+	@RequestMapping(value="/getUser", method=RequestMethod.POST)
+	public ChatDto getUser(String uuid) {
+		System.out.println(uuid);
+		ChatDto chatDto= chatService.getUser(uuid);
+		return chatDto;
+	}
 
 }

@@ -134,4 +134,5 @@ public interface IAsMngRepository {
 	 * @param asInfoSeq
 	 */
 	public void deleteAs(@Param("asInfoSeq")String asInfoSeq);
+	public List<AsMngVo> getAsHistory(@Param("asInfoSeq")String asInfo,@Param("userCd")String userTypeCd);
 }

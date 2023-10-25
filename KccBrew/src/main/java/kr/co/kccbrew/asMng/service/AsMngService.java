@@ -245,6 +245,10 @@ System.out.println(asMngVo);
 	public void deleteAs(String asInfoSeq) {
 		asRepository.deleteAs(asInfoSeq);
 	}
+	@Override
+	public List<AsMngVo> getAsHistory(String asInfo,String userTypeCd) {
+		return asRepository.getAsHistory(asInfo,userTypeCd);
+	}
 
 
 }

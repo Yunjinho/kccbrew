@@ -49,6 +49,9 @@ public class ChatService implements IChatService{
 			return chatRepository.getLog(chatDto.getId());
 		}
 	}
-
+	@Override
+	public ChatDto getUser(String uuid) {
+		return chatRepository.getUser(uuid);
+	}
 
 }
