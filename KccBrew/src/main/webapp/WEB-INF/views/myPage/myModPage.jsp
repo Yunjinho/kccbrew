@@ -53,7 +53,7 @@
 									<c:forEach var="user" items="${userInfoList}" >
 										<tr>
 											<td rowspan="4">
-												<c:set var="imagePath" value="${path}/${user.fileDetailLocation}${user.fileDetailServerName}" />
+												<c:set var="imagePath" value="${user.fileDetailLocation}" />
 												<img src="<c:out value='${imagePath}'/>" id="profileImg" >
 												<input type="file" id="file" name="userImg" style="display:none" accept=".jpg, .jpeg, .png" onchange="imgTypeCheck(this)"/>
 												<button type="button" id="changeImageBtn" >이미지 변경</button>

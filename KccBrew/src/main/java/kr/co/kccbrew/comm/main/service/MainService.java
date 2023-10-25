@@ -2,8 +2,10 @@ package kr.co.kccbrew.comm.main.service;
 
 
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.stereotype.Service;
 import org.springframework.util.FileCopyUtils;
@@ -11,13 +13,14 @@ import org.springframework.web.multipart.MultipartFile;
 
 import kr.co.kccbrew.comm.main.dao.IMainRepository;
 import kr.co.kccbrew.comm.main.model.MainPageVo;
+import kr.co.kccbrew.comm.util.S3Service;
 import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
 public class MainService implements IMainService{
 	private final IMainRepository mainRepository;
-
+	private final S3Service s3Service;
 	//배정 리스트
 	@Override
 	public List<MainPageVo> showAllAsAssignList() {
@@ -130,6 +133,10 @@ public class MainService implements IMainService{
 	@Override
 	public void updateMyProfile(MainPageVo mainPageVo) {
 		mainPageVo.setUserAddress(mainPageVo.getUserAddress() + ", " + mainPageVo.getUserAddressDtl());
+		List<MainPageVo> vo = showUserInfoListById(mainPageVo.getUserId());
+		String fileNm=vo.get(0).getFileDetailLocation();
+		s3Service.deleteFile(fileNm);
+		
 		insertUserImg(mainPageVo);
 		mainRepository.updateMyProfile(mainPageVo);
 		
@@ -154,14 +161,21 @@ public class MainService implements IMainService{
 	public MainPageVo insertUserImg(MainPageVo mainPageVo) {
 		MainPageVo vo = new MainPageVo();
 		vo.setUserId(mainPageVo.getUserId());
+		UUID uuid= UUID.randomUUID();
 		//기본 파일정보 등록
 		mainRepository.insertFileInfo(vo);
 		MultipartFile imgFile = mainPageVo.getUserImg();
 		
 		vo.setFileOriginalName(imgFile.getOriginalFilename());
-		vo.setFileDetailServerName(mainPageVo.getUserId()+"_"+imgFile.getOriginalFilename());
+		vo.setFileDetailServerName(uuid+"_"+mainPageVo.getUserId()+"_"+imgFile.getOriginalFilename());
 		vo.setFileFmt(imgFile.getContentType());
-		vo.setFileDetailLocation(mainPageVo.getFileDetailLocation());
+		vo.setFileDetailLocation(uuid+"_"+mainPageVo.getFileDetailLocation());
+		try {
+			vo.setFileDetailLocation(s3Service.upload(imgFile, "register"));
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		mainPageVo.setFileId(vo.getFileId());
 		//파일 상세 정보 등록
 		mainRepository.insertFileDtlInfo(vo);

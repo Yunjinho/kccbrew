@@ -96,7 +96,7 @@ public class AsMngVo {
 	
 	//현재페이지
     private int currentPage;
-    
+    private String rowNumber;
     private String asProcessNm;
     private String asStatus;
     private String asPerfromer;

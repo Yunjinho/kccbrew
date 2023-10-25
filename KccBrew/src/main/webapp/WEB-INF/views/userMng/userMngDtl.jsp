@@ -22,7 +22,7 @@
 				<tr>
 					<th rowspan="4" colspan="2"
 						style="position:relative; height:140px; width: 120px;">
-							 <img src="/${userDtl.get(0).imgUrl}${userDtl.get(0).imgNm}" border="0"
+							 <img src="${userDtl.get(0).imgUrl}" border="0"
 								style="position:relative; width:120px; top: calc(  50% - 70px ); height:140px; "> 
 					</th>
 

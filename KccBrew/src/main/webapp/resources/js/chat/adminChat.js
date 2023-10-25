@@ -40,7 +40,7 @@ function handleUserVisit(node) {
 //  const form = document.querySelector(".template");
   const uuid = node.key;
 //  form.setAttribute("data-key", uuid);
-  name = node.user_id;
+ const name = node.user_id;
   $.ajax({
 	    url: '/getUser',
 	    type: 'post',
@@ -51,7 +51,6 @@ function handleUserVisit(node) {
 	        	storageLocation = data.storageLocation;
 				fileServerNm = data.fileServerNm;
 				  const discussion = createDiscussionElement(uuid, name, storageLocation, fileServerNm);
-
 				  $(".discussions").append(discussion);
 	    },
 	     error:function(request,status,error){
@@ -73,9 +72,11 @@ function createDiscussionElement(uuid, name, storageLocation, fileServerNm) {
 
   const photo = document.createElement("div");
   photo.classList.add("photo");
-  const url=  storageLocation + fileServerNm;
-  console.log(url);
+  const url= storageLocation + fileServerNm;
+  console.log(storageLocation);
+  console.log(fileServerNm);
   photo.style.backgroundImage = `url(/${url})`;
+  console.log(name+"22#######################"+url);
   const descContact = document.createElement("div");
   descContact.classList.add("desc-contact");
 

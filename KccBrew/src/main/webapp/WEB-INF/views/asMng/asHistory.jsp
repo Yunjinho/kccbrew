@@ -25,6 +25,7 @@
 				<table class="table">
 					<thead>
 						<tr>
+							<th>구분</th>
 							<th>AS 단계</th>
 							<th>날짜(최신순)</th>
 							<th>행위</th>
@@ -35,6 +36,7 @@
 					<tbody>
 						<c:forEach var="list" items="${historyList}">
 							<tr>
+								<td>${list.rowNumber}</td>
 								<td>${list.asProcessNm}</td>
 								<td>${list.asProcessDate}</td>
 								<td>${list.asStatus}</td>
