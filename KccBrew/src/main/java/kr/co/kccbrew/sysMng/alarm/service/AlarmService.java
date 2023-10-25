@@ -94,7 +94,7 @@ public class AlarmService implements IAlarmService{
 			for(AlarmVo newAlarm : newAlarms) {
 				alarmSeqs.add(newAlarm.getAlarmSeq());
 
-				// 받는사용자id에 따른 알람리스트 생성
+				// 받는사용자id에 따른 알림리스트 생성
 				if (userIdSessions.size() != 0 && !userIdSessions.isEmpty()) {
 					if (newAlarm.getReceiverId() != null && !newAlarm.getReceiverId().isEmpty()) {
 						String[] receiverIdArray = newAlarm.getReceiverId().split(",");
@@ -108,13 +108,13 @@ public class AlarmService implements IAlarmService{
 					}
 
 				}
-				// 권한에 따라 알림생성
+				// 권한에 따른 알림리스트생성
 				if (newAlarm.getReceiverType() != null && !newAlarm.getReceiverType().isEmpty()) {
 					String[] receiverTypeArray = newAlarm.getReceiverType().split(",");
 					for (int i = 0; i < receiverTypeArray.length; i++) {
 						String receiverType = receiverTypeArray[i];
 						// 관리자인 경우의 알림리스트 생성
-						if(receiverType.equals("관리자")) {
+						if(receiverType.equals("01")) {
 							alarmsForAdmin.add(newAlarm);
 						}
 					}

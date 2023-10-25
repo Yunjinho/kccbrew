@@ -31,8 +31,10 @@ public class CustomLogoutSuccessHandler implements LogoutSuccessHandler {
 		String userId = userDetails.getUsername();
 
 		Map<String, WebSocketSession> userIdSessions = EchoHandler.userIdSessions;
+		Map<String, WebSocketSession> adminIdSessions = EchoHandler.adminSessions;
 		userIdSessions.remove(userId);
+		adminIdSessions.remove(userId);
 
-		response.sendRedirect("/login?logout");
+		response.sendRedirect("/login");
 	}
 }
