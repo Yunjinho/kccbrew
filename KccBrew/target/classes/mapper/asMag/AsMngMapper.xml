@@ -505,19 +505,21 @@ SELECT as_process_nm AS "asProcessNm"
 		,as_stauts_nm AS "asStatus"
 		,as_performer AS "asPerfromer"
 		,as_process_date AS "asProcessDate"
-		,user_type_nm  AS "userTypeNm"
-FROM as_log al
-INNER JOIN (SELECT grp_cd_dtl_id,grp_cd_dtl_nm AS as_process_nm FROM group_code_detail where grp_cd_id='P') gcdp ON gcdp.grp_cd_dtl_id=al.as_process
-INNER JOIN (SELECT grp_cd_dtl_id,grp_cd_dtl_nm AS as_stauts_nm FROM group_code_detail where grp_cd_id='S') gcds ON gcds.grp_cd_dtl_id=al.as_status
-INNER JOIN users u ON u.user_id=al.as_performer
-INNER JOIN (SELECT grp_cd_dtl_id,grp_cd_dtl_nm AS user_type_nm FROM group_code_detail WHERE grp_cd_id='U') gcdu ON gcdu.grp_cd_dtl_id=u.user_type_cd
-WHERE al.as_info_seq=#{asInfoSeq}
-	<if test="userCd == '02'">
-		AND gcdp.grp_cd_dtl_id NOT IN ('03','05')	
-	</if>
-	<if test="userCd == '03'">
-		AND gcdp.grp_cd_dtl_id NOT IN ('03','07','06')	
-	</if>
-ORDER BY al.as_log_seq desc
+		,user_type_nm  AS "userTypeNm" 
+		,rownum AS "rowNumber"
+FROM (SELECT as_process_nm ,as_stauts_nm ,as_performer ,as_process_date ,user_type_nm
+		FROM as_log al
+		INNER JOIN (SELECT grp_cd_dtl_id,grp_cd_dtl_nm AS as_process_nm FROM group_code_detail where grp_cd_id='P') gcdp ON gcdp.grp_cd_dtl_id=al.as_process
+		INNER JOIN (SELECT grp_cd_dtl_id,grp_cd_dtl_nm AS as_stauts_nm FROM group_code_detail where grp_cd_id='S') gcds ON gcds.grp_cd_dtl_id=al.as_status
+		INNER JOIN users u ON u.user_id=al.as_performer
+		INNER JOIN (SELECT grp_cd_dtl_id,grp_cd_dtl_nm AS user_type_nm FROM group_code_detail WHERE grp_cd_id='U') gcdu ON gcdu.grp_cd_dtl_id=u.user_type_cd
+		WHERE al.as_info_seq=#{asInfoSeq}
+			<if test="userCd == '02'">
+				AND gcdp.grp_cd_dtl_id NOT IN ('03','05')	
+			</if>
+			<if test="userCd == '03'">
+				AND gcdp.grp_cd_dtl_id NOT IN ('03','07','06')	
+			</if>
+		ORDER BY al.as_log_seq desc)
 </select>
 </mapper>
