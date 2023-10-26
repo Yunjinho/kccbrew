@@ -152,7 +152,7 @@ function rejectConfirm(flag){
 	var mechanicId=$("select[name=mechanicId] option:selected").val();
 	var asAssignSeq=$("input[name=asAssignSeq]").val();
 	var asInfoSeq=$("input[name=asInfoSeq]").val();
-	if(flag='Y'){
+	if(flag=='Y'){
 		if(visitDttm=='' || mechanicId=='' || asAssignSeq=='' || asInfoSeq==''){
 			alert("모든 값을 입력해주세요")
 			return;

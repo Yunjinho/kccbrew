@@ -45,10 +45,20 @@
 					<td><input type="text" value="${codeMng.cdId}" name="cdId"
 						id="cdId" required></td>
 					<th>사용여부</th>
-					<td><select name="cdUseYn">
-							<option value="Y">Y</option>
-							<option value="N">N</option>
-					</select></td>
+					<td>
+						<select name="cdUseYn">
+							<c:choose>
+								<c:when test="${codeMng.cdUseYn eq 'Y'}">
+									<option value="Y" selected>Y</option>
+									<option value="N">N</option>
+								</c:when>
+								<c:otherwise>
+									<option value="Y">Y</option>
+									<option value="N" selected>N</option>
+								</c:otherwise>
+							</c:choose>
+						</select>
+					</td>
 				</tr>
 
 				<tr>
