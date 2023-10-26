@@ -46,10 +46,20 @@
 				<td><input type="text" name="cdDtlId" id="cdDtlId"
 					value="${codeMng.cdDtlId}" required></td>
 				<th>사용여부</th>
-				<td><select name="cdDtlUseYn">
-						<option value="Y">Y</option>
-						<option value="N">N</option>
-				</select></td>
+				<td>
+					<select name="cdUseYn">
+						<c:choose>
+							<c:when test="${codeMng.cdDtlUseYn eq 'Y'}">
+								<option value="Y" selected>Y</option>
+								<option value="N">N</option>
+							</c:when>
+							<c:otherwise>
+								<option value="Y">Y</option>
+								<option value="N" selected>N</option>
+							</c:otherwise>
+						</c:choose>
+					</select>
+				</td>
 			</tr>
 			<tr>
 				<th>등록일</th>
