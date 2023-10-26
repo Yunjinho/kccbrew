@@ -55,7 +55,7 @@ position: fixed; /* 화면에 고정 */
 #loadingIcon{
 	margin: 20% auto; /* 모달을 수직, 수평 가운데로 위치시킴 */
 	padding: 20px;
-	width: 15%;
+	width: 5%;
 	border-radius: 20px;
 	display: flex;
 	flex-direction: column;

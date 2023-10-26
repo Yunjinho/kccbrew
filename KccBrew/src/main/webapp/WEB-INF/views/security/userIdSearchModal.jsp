@@ -43,13 +43,30 @@
 }
 #strTable table thead{
 	font-weight: bolder;
+	
+	}
+	
+	#strTable table thead tr th{
 }
 
 #strTable th, td {
 	text-align: left !important;
 	padding: 8px !important;
 	text-align: center !important;
+	border-bottom: 1px solid #d6d7d9;
+	height: 32px;
 }
+.btn1{
+background-color: navy;
+    color: #ffffff;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    display: inline-block;
+    align-items: center;
+    text-decoration: none;
+    position: relative;
+    margin-right: 20px;}
 </style>
 <script>
 $(document).ready(function(){
@@ -89,13 +106,15 @@ $(document).ready(function(){
 					</tbody>
 				</table>
 			</div>
-				<h2 id="id_value"></h2>
+				<h2 id="id_value" 
+    style="margin-top: 10px;"
+				></h2>
 			<br>
 			<div>
-				<button type="button" id="pwSearch_btn" class="btn btn-danger btn-block">
+				<button type="button" id="pwSearch_btn" class="btn1">
 					비밀번호 찾기
 				</button>
-				<button type="button" id="close" class="btn btn-danger btn-block">
+				<button type="button" id="close" class="btn1">
 					닫기
 				</button>
 			</div>
