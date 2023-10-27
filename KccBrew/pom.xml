@@ -13,6 +13,7 @@
 		<org.springframework-version>4.3.9.RELEASE</org.springframework-version>
 		<org.aspectj-version>1.6.10</org.aspectj-version>
 		<org.slf4j-version>1.6.6</org.slf4j-version>
+		<spring.batch.version>3.0.1.RELEASE</spring.batch.version>
 	</properties>
 	<dependencies>
 
@@ -274,6 +275,18 @@
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-taglibs</artifactId>
 			<version>4.2.3.RELEASE</version>
+		</dependency>
+		
+		<!-- spring batch -->
+		<dependency>
+			<groupId>org.springframework.batch</groupId>
+			<artifactId>spring-batch-core</artifactId>
+			<version>${spring.batch.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.batch</groupId>
+			<artifactId>spring-batch-infrastructure</artifactId>
+			<version>${spring.batch.version}</version>
 		</dependency>
 
 		<!-- poi -->

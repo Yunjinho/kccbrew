@@ -20,6 +20,7 @@ import org.springframework.web.socket.WebSocketSession;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import kr.co.kccbrew.batch.JobDemo;
 import kr.co.kccbrew.sysMng.alarm.controller.EchoHandler;
 import kr.co.kccbrew.sysMng.alarm.dao.IAlarmRepository;
 import kr.co.kccbrew.sysMng.alarm.model.AlarmVo;
@@ -151,6 +152,12 @@ public class AlarmService implements IAlarmService{
 		}
 		if (alarmSeqs.size() !=0 && !alarmSeqs.isEmpty()) {
 			checkPosted(alarmSeqs);
+		}
+		
+		try {
+			JobDemo.main();
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 
