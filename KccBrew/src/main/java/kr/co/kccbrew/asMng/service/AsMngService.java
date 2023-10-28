@@ -26,18 +26,18 @@ import org.springframework.web.multipart.MultipartFile;
 
 import kr.co.kccbrew.asMng.dao.IAsMngRepository;
 import kr.co.kccbrew.asMng.model.AsMngVo;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 
 @Service
-@NoArgsConstructor
+@RequiredArgsConstructor
 public class AsMngService implements IAsMngService{
 	
 	/**
 	 * asRepository 변수 선언
 	 */
-	@Autowired
-	private IAsMngRepository asRepository;
+	private final IAsMngRepository asRepository;
 	
 	
 	/** 

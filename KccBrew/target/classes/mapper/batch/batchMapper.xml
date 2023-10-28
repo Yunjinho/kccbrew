@@ -11,31 +11,32 @@
 		<result property="asInfoSeq" column="AS_INFO_SEQ" />
 		<result property="storeSeq" column="STORE_SEQ" />
 		<result property="mechanicId" column="MECHANIC_ID" />
+		<result property="wishingEndDate" column="WISHING_END_DATE" />
 	</resultMap>
 
 	<select id="selectRecentAsLog" resultMap="asLogResult">
-		SELECT A.*
+		SELECT A.*,
+		C.WISHING_END_DATE
 		FROM AS_LOG A
 		JOIN (
-		SELECT AS_INFO_SEQ, MAX(AS_LOG_SEQ) AS MAX_AS_LOG_SEQ
+		SELECT AS_INFO_SEQ,
+		MAX(AS_LOG_SEQ) AS MAX_AS_LOG_SEQ
 		FROM AS_LOG
 		GROUP BY AS_INFO_SEQ
-		) B ON A.AS_INFO_SEQ = B.AS_INFO_SEQ AND A.AS_LOG_SEQ =
+		) B ON
+		A.AS_INFO_SEQ = B.AS_INFO_SEQ AND A.AS_LOG_SEQ =
 		B.MAX_AS_LOG_SEQ
-		ORDER BY as_log_seq
+		LEFT
+		JOIN as_information C ON A.AS_INFO_SEQ = C.AS_INFO_SEQ
+		ORDER BY
+		A.AS_info_SEQ
 	</select>
-	
-<update id="updateOmissionResult" parameterType="kr.co.kccbrew.asMng.model.AsMngVo">
-  <choose>
-    <when test="asMngVo == null">
-      <set></set>
-    </when>
-    <otherwise>
-      UPDATE as_information
-      SET IS_OMITTED = #{asMngVo.isOmitted}, OMISSION_CHECK_DTTM = #{asMngVo.omissionCheckDttm}
-      WHERE AS_INFO_SEQ = #{asMngVo.asInfoSeq}
-    </otherwise>
-  </choose>
-</update>
+
+	<update id="updateOmissionResult"
+		parameterType="kr.co.kccbrew.asMng.model.AsMngVo">
+		UPDATE as_information
+		SET IS_OMITTED = #{isOmitted}, OMISSION_CHECK_DTTM = #{omissionCheckDttm}
+		WHERE AS_INFO_SEQ = #{asInfoSeq}
+	</update>
 
 </mapper>

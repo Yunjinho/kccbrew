@@ -15,5 +15,8 @@ public class AsLogVo {
 	String storeSeq;
 	String mechanicId;
 
+	/*as상태가 01(접수중)인 경우*/
+	Date wishingEndDate;
+
 
 }

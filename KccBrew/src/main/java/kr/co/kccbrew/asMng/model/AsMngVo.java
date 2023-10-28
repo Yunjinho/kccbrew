@@ -10,6 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
 import kr.co.kccbrew.batch.AsLogVo;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 
 /**

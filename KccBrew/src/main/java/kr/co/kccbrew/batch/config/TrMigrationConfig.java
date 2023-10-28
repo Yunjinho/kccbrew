@@ -99,7 +99,7 @@ public class TrMigrationConfig extends DefaultBatchConfigurer{
 	 @JobScope
 	 public Step mybatisStep() throws Exception {
 	     return stepBuilderFactory.get("mybatisStep")
-	         .<AsLogVo, AsMngVo>chunk(10)
+	         .<AsLogVo, AsMngVo>chunk(100)
 	         .reader(mybatisItemReader(sqlSessionFactory()))
 	         .processor(mybatisItemProcessor)
 	         .writer(mybatisItemWriter(sqlSessionFactory()))
@@ -112,7 +112,7 @@ public class TrMigrationConfig extends DefaultBatchConfigurer{
 	        MyBatisPagingItemReader<AsLogVo> reader = new MyBatisPagingItemReader<>();
 	        reader.setSqlSessionFactory(sqlSessionFactory);
 	        reader.setQueryId("mapper.batch.batchMapper.selectRecentAsLog"); 
-	        reader.setPageSize(10); 
+	        reader.setPageSize(100); 
 	        return reader;
 	    }
 
