@@ -11,6 +11,6 @@
 	<task:scheduler id="asProgressScheduler" pool-size="10" />
 	<task:scheduled-tasks
 		scheduler="asProgressScheduler">
-		<task:scheduled ref="alarmService" method="sendRealTimeNotifications" fixed-delay="10000" />
+		<task:scheduled ref="alarmService" method="sendRealTimeNotifications" fixed-delay="600000" />
 	</task:scheduled-tasks>
 </beans>

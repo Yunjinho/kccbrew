@@ -78,7 +78,7 @@
 	<bean id="sqlSessionTemplate"
 	  class="org.mybatis.spring.SqlSessionTemplate">
 	  <constructor-arg index="0" ref="sqlSessionFactory" />
-	  <constructor-arg index="1" value="BATCH" />
+	 <!--  <constructor-arg index="1" value="BATCH" /> -->
 	 </bean>  
 	 
 	<!--  <bean id="trMigrationConfig" class="kr.co.kccbrew.batch.config.TrMigrationConfig">

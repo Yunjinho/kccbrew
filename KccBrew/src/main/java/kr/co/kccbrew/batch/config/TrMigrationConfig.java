@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
 
 import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -57,6 +58,7 @@ import javax.sql.DataSource;
  * @version 1.0
  */
 
+@Slf4j
 @Data
 @Configuration
 @EnableBatchProcessing
@@ -76,15 +78,12 @@ public class TrMigrationConfig extends DefaultBatchConfigurer{
 		SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
 		sqlSessionFactoryBean.setDataSource(dataSource);
 		sqlSessionFactoryBean.setConfigLocation(applicationContext.getResource("classpath:config/modelConfig.xml"));
-		System.out.println("birdsilver-test-dataSource: " + dataSource);
-		System.out.println("birdsilver-test-applicationContext: " + applicationContext);
-		System.out.println("birdsilver-test-sqlSessionFactoryBean: " + sqlSessionFactoryBean);
 		sqlSessionFactoryBean.setMapperLocations(applicationContext.getResources("classpath:mapper/**/*.xml"));
 
 		return sqlSessionFactoryBean.getObject();
 	}
 	
-
+/*job*/
 	 @Bean
 	    public Job mybatisBatchJob() throws Exception {
 	        return jobBuilderFactory.get("mybatisBatchJob")
@@ -92,7 +91,7 @@ public class TrMigrationConfig extends DefaultBatchConfigurer{
 	            .build();
 	    }
 
-	 
+	 /*step*/
 	 @JobScope
 	 public Step mybatisStep() throws Exception {
 	     return stepBuilderFactory.get("mybatisStep")
@@ -103,78 +102,35 @@ public class TrMigrationConfig extends DefaultBatchConfigurer{
 	         .build();
 	 }
 	    
-	    
+	    /*reader*/
 	    @StepScope
 	    public MyBatisPagingItemReader<AsLogVo> mybatisItemReader(SqlSessionFactory sqlSessionFactory) {
 	        MyBatisPagingItemReader<AsLogVo> reader = new MyBatisPagingItemReader<>();
 	        reader.setSqlSessionFactory(sqlSessionFactory);
-	        reader.setQueryId("mapper.batch.batchMapper.selectRecentAsLog"); // MyBatis 매퍼 쿼리 ID
-	        reader.setPageSize(10); // 페이지 당 읽을 레코드 수
+	        reader.setQueryId("mapper.batch.batchMapper.selectRecentAsLog"); 
+	        reader.setPageSize(10); 
 	        return reader;
 	    }
 
+	    /*processor*/
 	    @Bean
 	    @StepScope
 	    public ItemProcessor<AsLogVo, AsMngVo> mybatisItemProcessor() {
 	        return asLogVo -> {
+	        	log.info("asLogVo: " + asLogVo);
 	        	AsMngVo asMngVo = new AsMngVo(asLogVo);
 	            return asMngVo;
 	        };
 	    }
 	    
 	    
+	    /*writer*/
 	    @StepScope
 	    public MyBatisBatchItemWriter<AsMngVo> mybatisItemWriter(SqlSessionFactory sqlSessionFactory) {
 	        MyBatisBatchItemWriter<AsMngVo> writer = new MyBatisBatchItemWriter<>();
 	        writer.setSqlSessionFactory(sqlSessionFactory);
-	        writer.setStatementId("mapper.batch.batchMapper.updateOmissionResult"); // MyBatis 매퍼 쿼리 ID
+	        writer.setStatementId("mapper.batch.batchMapper.updateOmissionResult");
 	        return writer;
 	    }
-
-	//    @StepScope
-	//    @Bean
-	//    public RepositoryItemWriter<Accounts> trOrdersWriter() {
-	//        return new RepositoryItemWriterBuilder<Accounts>()
-	//                .repository(accountsRepository)
-	//                .methodName("save")
-	//                .build();
-	//    }
-
-/*	writer
-	@StepScope
-	@Bean
-	public ItemWriter<AsMngVo> trOrdersWriter() {
-		return new ItemWriter<AsMngVo>() {
-			@Override
-			public void write(List<? extends AsMngVo> items) throws Exception {
-				items.forEach(item -> System.out.println(item));
-			}
-		};
-	}*/
-
-	/*processor*/
-	@StepScope
-	@Bean
-	public ItemProcessor<AsLogVo, AsMngVo> trOrderProcessor() {
-		return new ItemProcessor<AsLogVo, AsMngVo>() {
-			@Override
-			public AsMngVo process(AsLogVo item) throws Exception {
-				return new AsMngVo(item);
-			}
-		};
-	}
-
-
-/*	reader
-	@StepScope
-	@Bean
-	public MyBatisPagingItemReader<AsLogVo> trOrdersReader() {
-		MyBatisPagingItemReader<AsLogVo> reader = new MyBatisPagingItemReader<>();
-		reader.setSqlSessionFactory(sqlSessionFactory);
-		reader.setQueryId("kr.co.kccbrew.batch.dao.IBatchRepository.selectRecentAsLog"); // MyBatis 매퍼의 쿼리 ID를 지정합니다.
-		reader.setPageSize(5);
-
-		return reader;
-	}*/
 
 }
