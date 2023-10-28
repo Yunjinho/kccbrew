@@ -1,6 +1,6 @@
 package kr.co.kccbrew.batch;
 
-import org.springframework.batch.core.Job; 
+import org.springframework.batch.core.Job;  
 import org.springframework.batch.core.JobParameters;
 import org.springframework.batch.core.JobParametersBuilder;
 import org.springframework.batch.core.JobParametersInvalidException;
@@ -9,12 +9,14 @@ import org.springframework.batch.core.launch.JobLauncher;
 import org.springframework.batch.core.repository.JobExecutionAlreadyRunningException;
 import org.springframework.batch.core.repository.JobInstanceAlreadyCompleteException;
 import org.springframework.batch.core.repository.JobRestartException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.support.GenericApplicationContext;
 import org.springframework.stereotype.Component;
 
-import kr.co.kccbrew.batch.config.BatchConfig;
+//import kr.co.kccbrew.batch.config.BatchConfig;
+import kr.co.kccbrew.batch.config.TrMigrationConfig;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
@@ -32,10 +34,10 @@ import java.util.Date;
  */
 
 public class JobDemo {
-
+	
 	public static void main(String... args) throws Exception {
 		GenericApplicationContext ctx =
-				new AnnotationConfigApplicationContext(BatchConfig.class);
+				new AnnotationConfigApplicationContext(TrMigrationConfig.class);
 
 		Job job = ctx.getBean(Job.class);
 		JobLauncher jobLauncher = ctx.getBean(JobLauncher.class);

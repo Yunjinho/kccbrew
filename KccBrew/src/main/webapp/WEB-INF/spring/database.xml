@@ -11,6 +11,10 @@
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
 		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
+	
+	<context:annotation-config />
+	<context:component-scan base-package="kr.co.kccbrew.batch.config" />
+	
 	<!-- Database Config database.properties 파일 src/main/resources에 추가 해서 값 
 		넣기 프로젝트 진행 시 url 통일 -->
 	<bean id="environmentVariablesConfiguration"
@@ -74,6 +78,21 @@
 	<bean id="sqlSessionTemplate"
 	  class="org.mybatis.spring.SqlSessionTemplate">
 	  <constructor-arg index="0" ref="sqlSessionFactory" />
+	  <constructor-arg index="1" value="BATCH" />
 	 </bean>  
+	 
+	<!--  <bean id="trMigrationConfig" class="kr.co.kccbrew.batch.config.TrMigrationConfig">
+  <property name="sqlSession" ref="sqlSessionTemplate" />
+</bean> -->
+
+<!-- 	<bean id="reader" class="org.mybatis.spring.batch.MyBatisPagingItemReader">
+  <property name="sqlSessionFactory" ref="sqlSessionFactory" />
+  <property name="queryId" value="kr.co.kccbrew.batch.dao.IBatchRepository.selectRecentAsLog" />
+</bean>
+
+<bean id="writer" class="org.mybatis.spring.batch.MyBatisBatchItemWriter">
+  <property name="sqlSessionFactory" ref="sqlSessionFactory" />
+  <property name="statementId" value="kr.co.kccbrew.batch.dao.IBatchRepository.updateOmissionResult" />
+</bean> -->
 
 </beans>
