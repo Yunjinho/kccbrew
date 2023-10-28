@@ -36,6 +36,7 @@ import org.springframework.stereotype.Component;
 
 import kr.co.kccbrew.asMng.model.AsMngVo;
 import kr.co.kccbrew.batch.AsLogVo;
+import kr.co.kccbrew.batch.MybatisItemProcessor;
 import kr.co.kccbrew.batch.dao.IBatchRepository;
 
 import java.util.Arrays;
@@ -63,6 +64,7 @@ import javax.sql.DataSource;
 @Configuration
 @EnableBatchProcessing
 @ComponentScan("kr.co.kccbrew.batch")
+@Component
 public class TrMigrationConfig extends DefaultBatchConfigurer{
 
 	@Autowired
@@ -70,6 +72,8 @@ public class TrMigrationConfig extends DefaultBatchConfigurer{
 
 	@Autowired
 	private StepBuilderFactory stepBuilderFactory;
+	
+	@Autowired MybatisItemProcessor mybatisItemProcessor;
 	
 	@Autowired DataSource dataSource;
 	@Autowired ApplicationContext applicationContext;
@@ -84,7 +88,7 @@ public class TrMigrationConfig extends DefaultBatchConfigurer{
 	}
 	
 /*job*/
-	 @Bean
+	@Bean
 	    public Job mybatisBatchJob() throws Exception {
 	        return jobBuilderFactory.get("mybatisBatchJob")
 	            .start(mybatisStep())
@@ -97,7 +101,7 @@ public class TrMigrationConfig extends DefaultBatchConfigurer{
 	     return stepBuilderFactory.get("mybatisStep")
 	         .<AsLogVo, AsMngVo>chunk(10)
 	         .reader(mybatisItemReader(sqlSessionFactory()))
-	         .processor(mybatisItemProcessor())
+	         .processor(mybatisItemProcessor)
 	         .writer(mybatisItemWriter(sqlSessionFactory()))
 	         .build();
 	 }
@@ -113,7 +117,7 @@ public class TrMigrationConfig extends DefaultBatchConfigurer{
 	    }
 
 	    /*processor*/
-	    @Bean
+/*	    @Bean
 	    @StepScope
 	    public ItemProcessor<AsLogVo, AsMngVo> mybatisItemProcessor() {
 	        return asLogVo -> {
@@ -121,7 +125,7 @@ public class TrMigrationConfig extends DefaultBatchConfigurer{
 	        	AsMngVo asMngVo = new AsMngVo(asLogVo);
 	            return asMngVo;
 	        };
-	    }
+	    }*/
 	    
 	    
 	    /*writer*/

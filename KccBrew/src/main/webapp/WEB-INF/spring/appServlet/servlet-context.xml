@@ -108,6 +108,8 @@
 		base-package="kr.co.kccbrew.sysMng.alarm.controller" />
 		<context:component-scan
 		base-package="kr.co.kccbrew.batch.config" />
+		<context:component-scan
+		base-package="kr.co.kccbrew.batch" />
 	<!-- Controller -->
 
 

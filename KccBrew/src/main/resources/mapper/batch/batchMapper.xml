@@ -25,8 +25,17 @@
 		ORDER BY as_log_seq
 	</select>
 	
-	<update id="updateOmissionResult">
-    UPDATE as_information
-    SET IS_OMITTED = 'Y'
-  </update>
+<update id="updateOmissionResult" parameterType="kr.co.kccbrew.asMng.model.AsMngVo">
+  <choose>
+    <when test="asMngVo == null">
+      <set></set>
+    </when>
+    <otherwise>
+      UPDATE as_information
+      SET IS_OMITTED = #{asMngVo.isOmitted}, OMISSION_CHECK_DTTM = #{asMngVo.omissionCheckDttm}
+      WHERE AS_INFO_SEQ = #{asMngVo.asInfoSeq}
+    </otherwise>
+  </choose>
+</update>
+
 </mapper>

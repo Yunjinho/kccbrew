@@ -3,12 +3,16 @@ package kr.co.kccbrew.asMng.dao;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
 
 import com.fasterxml.jackson.annotation.JsonTypeInfo.As;
 
 import kr.co.kccbrew.asMng.model.AsMngVo;
 
+@Mapper
+@Repository
 public interface IAsMngRepository {
 	/**
 	 * @return 조회한 AS 리스트

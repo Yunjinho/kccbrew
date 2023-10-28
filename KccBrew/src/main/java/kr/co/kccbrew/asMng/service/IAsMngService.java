@@ -6,8 +6,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Service;
 
 import kr.co.kccbrew.asMng.model.AsMngVo;
+
 
 public interface IAsMngService {
 	/**

@@ -17,6 +17,8 @@ import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.FileCopyUtils;
@@ -24,16 +26,18 @@ import org.springframework.web.multipart.MultipartFile;
 
 import kr.co.kccbrew.asMng.dao.IAsMngRepository;
 import kr.co.kccbrew.asMng.model.AsMngVo;
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 
 @Service
-@RequiredArgsConstructor
+@NoArgsConstructor
 public class AsMngService implements IAsMngService{
 	
 	/**
 	 * asRepository 변수 선언
 	 */
-	private final IAsMngRepository asRepository;
+	@Autowired
+	private IAsMngRepository asRepository;
 	
 	
 	/** 
