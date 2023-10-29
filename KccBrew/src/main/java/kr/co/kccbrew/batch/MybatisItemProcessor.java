@@ -31,11 +31,11 @@ public class MybatisItemProcessor implements ItemProcessor<AsLogVo, AsMngVo>{
 	@Override
 	public AsMngVo process(AsLogVo asLogVo) throws Exception {
 		String asStatus = asLogVo.getAsStatus();
-		if (asStatus.equals("01")) {
-			AsMngVo asMngVo = new AsMngVo();
-			String asInfoSeq = asLogVo.getAsInfoSeq();
-			asMngVo.setAsInfoSeq(asInfoSeq);
-
+		AsMngVo asMngVo = new AsMngVo();
+		String asInfoSeq = asLogVo.getAsInfoSeq();
+		asMngVo.setAsInfoSeq(asInfoSeq);
+		switch(asStatus) {
+	    case "01": 
 			// 날짜경과확인
 			if(asLogVo.getWishingEndDate() != null) {
 			Date wishingEndDate = asLogVo.getWishingEndDate();
@@ -53,8 +53,69 @@ public class MybatisItemProcessor implements ItemProcessor<AsLogVo, AsMngVo>{
 			return asMngVo;
 			}
 			return null;
-		}
-		
+	         
+	    case "02": 
+			// 해당일확인
+			if( asLogVo.getRejectContentStr() != null && asLogVo.getModDttm() != null) {
+			Date modDttm = asLogVo.getModDttm();
+			
+			Calendar calendar = Calendar.getInstance();
+			Date currentDate = new Date(calendar.getTime().getTime());
+
+			if (modDttm.compareTo(currentDate) == 0) {
+				asMngVo.setIsOmitted("Y");
+				asMngVo.setOmittedStatus("02");
+			} else {
+				asMngVo.setIsOmitted("N");
+			}
+			asMngVo.setOmissionCheckDttm(currentDate);
+			logger.info("as_info_seq: " + asLogVo.getAsInfoSeq() +", AS상태= " + asStatus + ", AS접수반려일= " + modDttm + ", 확인일= " +  currentDate + " ==> 누락여부: " + asMngVo.getIsOmitted());
+			return asMngVo;
+			}
+			return null;
+
+	    case "03": 
+	    	// 날짜경과확인
+			if(asLogVo.getVisitDttm() != null) {
+			Date visitDttm = asLogVo.getVisitDttm();
+			Calendar calendar = Calendar.getInstance();
+			Date currentDate = new Date(calendar.getTime().getTime());
+
+			if (visitDttm.before(currentDate)) {
+				asMngVo.setIsOmitted("Y");
+				asMngVo.setOmittedStatus("03");
+			} else {
+				asMngVo.setIsOmitted("N");
+			}
+			asMngVo.setOmissionCheckDttm(currentDate);
+			logger.info("as_info_seq: " + asLogVo.getAsInfoSeq() +", AS상태= " + asStatus + ", AS방문일= " + visitDttm + ", 확인일= " +  currentDate + " ==> 누락여부: " + asMngVo.getIsOmitted());
+			return asMngVo;
+			}
+			return null;
+	         
+	    case "04": 
+			// 해당일확인
+			if( asLogVo.getResultDttm() != null) {
+			Date resultDttm = asLogVo.getResultDttm();
+			
+			Calendar calendar = Calendar.getInstance();
+			Date currentDate = new Date(calendar.getTime().getTime());
+
+			if (resultDttm.compareTo(currentDate) == 0) {
+				asMngVo.setIsOmitted("Y");
+				asMngVo.setOmittedStatus("04");
+			} else {
+				asMngVo.setIsOmitted("N");
+			}
+			asMngVo.setOmissionCheckDttm(currentDate);
+			logger.info("as_info_seq: " + asLogVo.getAsInfoSeq() +", AS상태= " + asStatus + ", AS완료일= " + resultDttm + ", 확인일= " +  currentDate + " ==> 누락여부: " + asMngVo.getIsOmitted());
+			return asMngVo;
+			}
+			return null;
+	         
+	    default: 
+	         break;
+	}
 		return null;
 	}
 
