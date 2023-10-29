@@ -2,7 +2,7 @@ function viewHistory(){
 	var asInfo=$("input[name=asInfoSeq]").val();
 	var url = "/view-as-history?asInfo="+asInfo;
     var name = "popup test";
-    var option = "width=600, height=550, top=130, left=450, scrollbars=yes, directories=no, location=no";
+    var option = "width=700, height=550, top=130, left=500, scrollbars=yes, directories=no, location=no";
     window.open(url, name, option);
     window.close();
 }
@@ -152,7 +152,7 @@ function rejectConfirm(flag){
 	var mechanicId=$("select[name=mechanicId] option:selected").val();
 	var asAssignSeq=$("input[name=asAssignSeq]").val();
 	var asInfoSeq=$("input[name=asInfoSeq]").val();
-	if(flag='Y'){
+	if(flag=='Y'){
 		if(visitDttm=='' || mechanicId=='' || asAssignSeq=='' || asInfoSeq==''){
 			alert("모든 값을 입력해주세요")
 			return;
