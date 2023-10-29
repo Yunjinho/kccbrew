@@ -1,12 +1,16 @@
 package kr.co.kccbrew.asMng.model;
 
 import java.sql.Date;
+import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import kr.co.kccbrew.batch.AsLogVo;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 
 /**
@@ -93,6 +97,19 @@ public class AsMngVo {
     private String asPrice;
     private String resultReapply;
     private String reapplyConfirm;
+    
+    /*누락데이터*/
+    private String isOmitted;
+    private Date omissionCheckDttm;
+    public AsMngVo(AsLogVo asLogVo) {
+    	AsMngVo asMngVo = new AsMngVo();
+    	asMngVo.setAsInfoSeq(asLogVo.getAsInfoSeq());
+    	
+    	 LocalDate localDate = LocalDate.now();
+    	omissionCheckDttm = java.sql.Date.valueOf(localDate);
+    	asMngVo.setOmissionCheckDttm(omissionCheckDttm);
+    }
+    private String omittedStatus;
 	
 	//현재페이지
     private int currentPage;

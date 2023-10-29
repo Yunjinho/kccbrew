@@ -30,6 +30,8 @@
 	<mybatis-spring:scan base-package="kr.co.kccbrew.sysMng.statistics.dao" />
 	<mybatis-spring:scan base-package="kr.co.kccbrew.comm.chat.dao" />
 	<mybatis-spring:scan base-package="kr.co.kccbrew.sysMng.alarm.dao" />
+	<mybatis-spring:scan base-package="kr.co.kccbrew.batch.config" />
+	<mybatis-spring:scan base-package="kr.co.kccbrew.batch.dao" />
 
 
 	<!-- DAO -->
@@ -53,6 +55,7 @@
 	<context:component-scan base-package="kr.co.kccbrew.sysMng.statistics.service" />
 	<context:component-scan base-package="kr.co.kccbrew.comm.chat.service" />
 	<context:component-scan base-package="kr.co.kccbrew.sysMng.alarm.service" />
+		<mybatis-spring:scan base-package="kr.co.kccbrew.batch.config" />
 
 	<!--Service -->
 	<!-- @Transactional 사용하기 위한 태그 -->

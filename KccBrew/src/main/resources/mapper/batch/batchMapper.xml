@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mapper.batch.batchMapper">
+	<resultMap id="asLogResult"
+		type="kr.co.kccbrew.batch.AsLogVo">
+		<result property="asStatus" column="AS_STATUS" />
+		<result property="asProcess" column="AS_PROCESS" />
+		<result property="asPerformer" column="AS_PERFORMER" />
+		<result property="asProcessDate" column="AS_PROCESS_DATE" />
+		<result property="asLogSeq" column="AS_LOG_SEQ" />
+		<result property="asInfoSeq" column="AS_INFO_SEQ" />
+		<result property="storeSeq" column="STORE_SEQ" />
+		<result property="mechanicId" column="MECHANIC_ID" />
+		<result property="wishingEndDate" column="WISHING_END_DATE" />
+	</resultMap>
+
+	<select id="selectRecentAsLog" resultMap="asLogResult">
+		SELECT A.*,
+		C.WISHING_END_DATE
+		FROM AS_LOG A
+		JOIN (
+		SELECT AS_INFO_SEQ,
+		MAX(AS_LOG_SEQ) AS MAX_AS_LOG_SEQ
+		FROM AS_LOG
+		GROUP BY AS_INFO_SEQ
+		) B ON
+		A.AS_INFO_SEQ = B.AS_INFO_SEQ AND A.AS_LOG_SEQ =
+		B.MAX_AS_LOG_SEQ
+		LEFT
+		JOIN as_information C ON A.AS_INFO_SEQ = C.AS_INFO_SEQ
+		ORDER BY
+		A.AS_info_SEQ
+	</select>
+
+	<update id="updateOmissionResult"
+		parameterType="kr.co.kccbrew.asMng.model.AsMngVo">
+		UPDATE as_information
+		SET IS_OMITTED = #{isOmitted}, 
+		OMISSION_CHECK_DTTM = #{omissionCheckDttm},
+		OMITTED_STATUS = #{omittedStatus, jdbcType=VARCHAR}
+		WHERE AS_INFO_SEQ = #{asInfoSeq}
+	</update>
+
+</mapper>

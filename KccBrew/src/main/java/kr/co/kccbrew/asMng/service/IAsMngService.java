@@ -6,8 +6,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Service;
 
 import kr.co.kccbrew.asMng.model.AsMngVo;
+
 
 public interface IAsMngService {
 	/**
@@ -117,4 +119,5 @@ public interface IAsMngService {
 	public void deleteAs(@Param("asInfoSeq")String asInfoSeq);
 
 	public List<AsMngVo> getAsHistory(String asInfo, String userTypeCd);
+	
 }

@@ -49,25 +49,25 @@
 	</insert>
 
 	<!-- 여러 조건에 따른 알람리스트 조회(현재날짜를 기준으로 3일 이내의 데이터만 조회) -->
-	<select id="selectAlarmsByConditions" resultMap="alarmResult"
-		parameterType="map">
-		SELECT DISTINCT * FROM alarm
-		WHERE 1=1
-		<if test="receiverId != null and receiverId != ''">
+<select id="selectAlarmsByConditions" resultMap="alarmResult" parameterType="map">
+    SELECT DISTINCT * FROM alarm
+    WHERE 1=1
+    <if test="receiverId != null and receiverId != ''">
         <![CDATA[
-        AND RECEIVER_ID = #{receiverId}
+        AND INSTR(RECEIVER_ID, #{receiverId}) > 0
         ]]>
-		</if>
-		<if test="receiverType != null and receiverType != ''">
+    </if>
+    <if test="receiverType != null and receiverType != ''">
         <![CDATA[
         AND RECEIVER_TYPE = #{receiverType}
         ]]>
-		</if>
+    </if>
     <![CDATA[
     AND (TRUNC(SYSDATE) - TRUNC(CAUSE_DTTM)) <= 3
     ORDER BY CAUSE_DTTM DESC
     ]]>
-	</select>
+</select>
+
 
 	<select id="selectNewAlarms" resultMap="alarmResult">
 		select * from alarm where IS_POSTED IS NULL

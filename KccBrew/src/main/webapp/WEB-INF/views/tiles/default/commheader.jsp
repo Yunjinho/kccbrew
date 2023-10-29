@@ -18,6 +18,8 @@
 
 	var userType = '${roles}';
 	console.log(userType);
+	
+	var userTypeCd = "<c:out value='${user.userTypeCd}' />";
 </script>
 
 <!-- css -->

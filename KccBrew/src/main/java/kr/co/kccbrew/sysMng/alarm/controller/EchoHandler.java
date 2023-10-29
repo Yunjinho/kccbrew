@@ -69,7 +69,7 @@ public class EchoHandler extends TextWebSocketHandler implements WebSocketHandle
 		// 사용자 정보 저장
 		setUserInfo(session, messageMap);
 
-		// 행위에 따른 알람 메세지 전송
+	/*	// 행위에 따른 알람 메세지 전송
 		if (messageMap.containsKey("title")) {
 			String title = (String) messageMap.get("title");
 			switch(title){
@@ -89,7 +89,7 @@ public class EchoHandler extends TextWebSocketHandler implements WebSocketHandle
 				asAssignRejectMessage(messageMap);
 				break;
 			}
-		}
+		}*/
 	}
 
 

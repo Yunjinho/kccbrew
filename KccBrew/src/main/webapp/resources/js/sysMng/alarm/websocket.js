@@ -324,7 +324,7 @@ function getAlarmData() {
 		url: "/getAlarmData",
 		data: {
 			userId: userId,
-			userType: getUserType(userType)
+			userType: userTypeCd
 		},
 		success: function(data) {
 			var notificationList = document.getElementById("notification-list");
@@ -381,3 +381,4 @@ function getUserType(userType) {
 		return "수리기사";
 	}
 }
+

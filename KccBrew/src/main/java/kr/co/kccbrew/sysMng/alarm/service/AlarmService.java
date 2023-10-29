@@ -50,9 +50,6 @@ public class AlarmService implements IAlarmService{
 		alarms.addAll(alarmsByUserId);
 		alarms.addAll(alarmsByUserType);
 
-		log.info("AlarmService.getAlarmsByConditions");
-		log.info("alarms: " + alarms) ;
-
 		return alarms;
 	}
 
@@ -66,7 +63,6 @@ public class AlarmService implements IAlarmService{
 	@Override
 	public List<AlarmVo> getAlarmsByUserType(String userType) {
 		Map<String, Object> map = new HashMap<>();
-		map.put("receiverId", "all");
 		map.put("receiverType", userType);
 		return alarmRepository.selectAlarmsByConditions(map);
 	}
