@@ -35,7 +35,9 @@
 	<update id="updateOmissionResult"
 		parameterType="kr.co.kccbrew.asMng.model.AsMngVo">
 		UPDATE as_information
-		SET IS_OMITTED = #{isOmitted}, OMISSION_CHECK_DTTM = #{omissionCheckDttm}
+		SET IS_OMITTED = #{isOmitted}, 
+		OMISSION_CHECK_DTTM = #{omissionCheckDttm},
+		OMITTED_STATUS = #{omittedStatus, jdbcType=VARCHAR}
 		WHERE AS_INFO_SEQ = #{asInfoSeq}
 	</update>
 

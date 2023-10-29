@@ -109,6 +109,7 @@ public class AsMngVo {
     	omissionCheckDttm = java.sql.Date.valueOf(localDate);
     	asMngVo.setOmissionCheckDttm(omissionCheckDttm);
     }
+    private String omittedStatus;
 	
 	//현재페이지
     private int currentPage;

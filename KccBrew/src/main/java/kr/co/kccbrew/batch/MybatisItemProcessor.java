@@ -44,6 +44,7 @@ public class MybatisItemProcessor implements ItemProcessor<AsLogVo, AsMngVo>{
 
 			if (wishingEndDate.before(currentDate)) {
 				asMngVo.setIsOmitted("Y");
+				asMngVo.setOmittedStatus("01");
 			} else {
 				asMngVo.setIsOmitted("N");
 			}
