@@ -47,6 +47,7 @@
 									<!-- AS 접수-->
 									<form action="/receipt" method="post" id="receipt-form"
 										enctype="multipart/form-data">
+									
 										<h6>
 											<img src="/resources/img/asMng/check.png" class="tag-image">희망
 											신청일
@@ -79,6 +80,7 @@
 														</option>
 													</c:forEach>
 												</select>
+												 <input type="hidden" id="selectedStoreSeq" name="storeSeq">
 											</div>
 											<div
 												style="align-self: center; flex: 0.5; text-align: center;">
@@ -160,6 +162,7 @@
 											</div>
 										</div>
 									</form>
+									
 								</div>
 							</div>
 						</div>

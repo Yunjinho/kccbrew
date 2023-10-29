@@ -24,7 +24,13 @@ function changeStr(){
 
 	var addr=$("select[name=storeAddr]");
 	addr.prop("selectedIndex", index);
+
+	// storeSeq값도 controller로 전송
+	var select = document.getElementById("storeNm");
+	var selectedOption = select.options[select.selectedIndex];
+	document.getElementById("selectedStoreSeq").value = selectedOption.value;
 };
+
 function checkDate(){
 	var start=$("input[name=wishingStartDate]").val();
 	var end=$("input[name=wishingEndDate]").val();
@@ -55,7 +61,7 @@ function performSubmit() {
 			contentType: false, 
 			success: function(data) {
 				sendAsReceiptAlarm();
-				
+
 				window.location.href = '/as-list';
 				alert('AS접수가 등록되었습니다!');
 			},

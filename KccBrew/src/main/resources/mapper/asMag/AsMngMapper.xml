@@ -281,21 +281,43 @@
 <!-- AS접수 -->
 <insert id="insertAs" parameterType="kr.co.kccbrew.asMng.model.AsMngVo">
 <![CDATA[
-	INSERT INTO as_information VALUES(
-		as_info_seq.NEXTVAL,
-		#{wishingStartDate},
-		#{wishingEndDate},
-		#{asContent},
-		#{machineCd},
-		'01',
-		#{fileSeq},
-		#{userId},
-		#{userId},
-		SYSDATE,
-		SYSDATE,
-		'N',
-		null,
-		#{storeNm})
+INSERT INTO AS_INFORMATION (
+        "AS_INFO_SEQ",
+        "WISHING_START_DATE",
+        "WISHING_END_DATE",
+        "AS_CONTENT",
+        "MACHINE_CD",
+        "AS_STATUS",
+        "FILE_SEQ",
+        "STORE_MNG_ID",
+        "MOD_USER",
+        "MOD_DTTM",
+        "REG_DTTM",
+        "RESUBMISSION",
+        "REJECT_CONTENT_STR",
+        "STORE_SEQ",
+        "IS_OMITTED",
+        "OMISSION_CHECK_DTTM",
+        "OMITTED_STATUS"
+    ) VALUES (
+        AS_INFO_SEQ.NEXTVAL,
+        #{wishingStartDate},
+        #{wishingEndDate},
+        #{asContent},
+        #{machineCd},
+        '01',
+        #{fileSeq},
+        #{userId},
+        #{userId},
+        SYSDATE,
+        SYSDATE,
+        'N',
+        null,
+        #{storeSeq},
+        null,
+        null,
+        null
+    )
 ]]>
 </insert>
 <!-- AS 상세 조회 -->

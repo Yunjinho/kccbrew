@@ -22,12 +22,15 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.multipart.MultipartFile;
 
+import kr.co.kccbrew.asMng.contorller.AsMngController;
 import kr.co.kccbrew.asMng.dao.IAsMngRepository;
 import kr.co.kccbrew.asMng.model.AsMngVo;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class AsMngService implements IAsMngService{
 	
 	/**
@@ -86,6 +89,10 @@ public class AsMngService implements IAsMngService{
 	 */
 	@Transactional
 	public void insertAs(AsMngVo asMngVo) {
+		
+		log.info("AsMngService.insertAs");
+		log.info("asMngVo: " + asMngVo);
+		
 		asMngVo.setGrpCdDtlId("02");
 		asMngVo=insertImg(asMngVo);
 		asRepository.insertAs(asMngVo);
