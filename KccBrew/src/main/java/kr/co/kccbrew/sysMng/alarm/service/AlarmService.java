@@ -154,11 +154,11 @@ public class AlarmService implements IAlarmService{
 			checkPosted(alarmSeqs);
 		}
 		
-		try {
+	/*	try {
 			JobDemo.main();
 		} catch (Exception e) {
 			e.printStackTrace();
-		}
+		}*/
 	}
 
 
