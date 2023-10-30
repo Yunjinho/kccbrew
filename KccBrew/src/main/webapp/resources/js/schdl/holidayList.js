@@ -366,3 +366,4 @@ function cancelSchedule(scheduleId, startDate, endDate) {
 function reoload() {
 	window.location.reload();
 }
+
