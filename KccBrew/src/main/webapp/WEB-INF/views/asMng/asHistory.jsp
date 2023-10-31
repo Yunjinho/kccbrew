@@ -46,11 +46,11 @@
 					<thead>
 						<tr>
 							<th>구분</th>
-							<th>AS 단계</th>
+							<th>AS업무</th>
 							<th>날짜</th>
-							<th>행위</th>
-							<th>행위자</th>
-							<th>행위자ID</th>
+							<th>AS상태</th>
+							<th>처리자구분</th>
+							<th>처리자ID</th>
 						</tr>
 					</thead> 
 					<tbody>

@@ -537,7 +537,7 @@
 										<!-- 취소확인 모달 창 -->
 										<div id="cancelModal" class="modal">
 											<div class="modal-content">
-												<p style="padding-bottom: 10px;">정말로 휴가를 취소하시겠습니까?</p>
+												<p>정말로 휴가를 취소하시겠습니까?</p>
 												<button id="cancelYes">예</button>
 												<button id="cancelNo">아니오</button>
 											</div>
