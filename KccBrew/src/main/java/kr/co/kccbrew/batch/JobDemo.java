@@ -35,7 +35,7 @@ import java.util.Date;
 
 public class JobDemo {
 	
-	public static void main(String... args) throws Exception {
+	public void main() throws Exception {
 		GenericApplicationContext ctx =
 				new AnnotationConfigApplicationContext(TrMigrationConfig.class);
 
@@ -46,7 +46,6 @@ public class JobDemo {
 				.toJobParameters();
 		jobLauncher.run(job, jobParameters);
 
-		System.in.read();
 		ctx.close();
 	}
 }

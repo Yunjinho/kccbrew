@@ -36,9 +36,10 @@
 		<div class="user-profile">
 			<div class="inner-box">
 				<div class="photo-wrapper">
-						<!-- value="${user.storageLocation}${user.fileServerNm}" /> -->
-					<c:set var="imagePath"
-						value="${user.storageLocation}" />
+				<!-- s3 미사용 버전 -->
+				<c:set var="imagePath" value="${user.storageLocation}${user.fileServerNm}" />
+				<!-- s3 사용 버전 -->
+				<!--<c:set var="imagePath" value="${user.storageLocation}" />-->
 					<img src="<c:out value='${imagePath}'/>">
 				</div>
 
@@ -100,9 +101,10 @@
 			<div class="inner-box">
 
 				<div class="photo-wrapper">
-						<!-- value="${user.storageLocation}${user.fileServerNm}" /> -->
-					<c:set var="imagePath"
-						value="${user.storageLocation}" />
+				<!-- s3 미사용 버전 -->
+				<c:set var="imagePath" value="${user.storageLocation}${user.fileServerNm}" />
+				<!-- s3 사용 버전 -->
+				<!--<c:set var="imagePath" value="${user.storageLocation}" />-->
 					<img src="${path}/resources/img/baristar.png">	
 				</div>
 
