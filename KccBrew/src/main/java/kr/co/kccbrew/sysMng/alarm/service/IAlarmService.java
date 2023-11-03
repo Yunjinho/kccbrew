@@ -43,6 +43,11 @@ public interface IAlarmService {
 	public void sendRealTimeNotifications();
 	
 	/**
+	 * 스프링배치로 누락데이터 확인
+	 */
+	public void omittedCheck();
+	
+	/**
 	 * 모든 신규 메세지리스트 조회
 	 *  @return  List<AlarmVo>: 알람정보 리스트
 	 */

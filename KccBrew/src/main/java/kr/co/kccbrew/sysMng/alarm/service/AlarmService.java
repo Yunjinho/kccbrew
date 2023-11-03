@@ -149,12 +149,6 @@ public class AlarmService implements IAlarmService{
 		if (alarmSeqs.size() !=0 && !alarmSeqs.isEmpty()) {
 			checkPosted(alarmSeqs);
 		}
-		
-/*		try {
-			JobDemo.main();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}*/
 	}
 
 
@@ -168,6 +162,18 @@ public class AlarmService implements IAlarmService{
 	public void checkPosted(List<Integer> alarmSeqs) {
 		alarmRepository.updatePosted(alarmSeqs);
 	}
+
+
+	@Override
+	public void omittedCheck() {
+			try {
+		JobDemo.main();
+	} catch (Exception e) {
+		e.printStackTrace();
+	}
+	}
+	
+	
 
 
 
