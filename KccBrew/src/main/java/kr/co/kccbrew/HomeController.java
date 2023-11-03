@@ -43,7 +43,7 @@ public class HomeController {
 
 		String formattedDate = dateFormat.format(date);
 
-		model.addAttribute("serverTime", formattedDate );
+		/*model.addAttribute("serverTime", formattedDate );*/
 
 		/*권한에 따른 메인페이지 이동*/
 		UserDetails userDetails = (UserDetails) authentication.getPrincipal();
