@@ -42,6 +42,7 @@ public interface IAlarmService {
 	 */
 	public void sendRealTimeNotifications();
 	
+	
 	/**
 	 * 모든 신규 메세지리스트 조회
 	 *  @return  List<AlarmVo>: 알람정보 리스트

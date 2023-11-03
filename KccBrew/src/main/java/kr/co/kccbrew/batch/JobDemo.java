@@ -33,6 +33,7 @@ import java.util.Date;
  * @version 1.0
  */
 
+@Component
 public class JobDemo {
 	
 	public void main() throws Exception {
